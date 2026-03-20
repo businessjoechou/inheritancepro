@@ -595,56 +595,59 @@
   <div class="step" id="step4">
     <div class="step-label">步驟 4 / 5</div>
     <h2>遺產稅試算</h2>
-    <p class="subtitle">依《遺產及贈與稅法》（2025年最新稅率），輸入各項扣除額以計算應納稅額。</p>
+    <p class="subtitle">系統已根據你的繼承人狀況自動計算扣除額，也可以手動調整。</p>
 
     <div class="card">
-      <div class="section-title">基本免稅額</div>
+      <div class="section-title">自動帶入的扣除額</div>
+
       <div class="counter-row" style="padding-top:0">
         <div>
           <div class="counter-label">免稅額</div>
-          <div class="counter-sub">每人 NT$ 1,333萬（固定）</div>
+          <div class="counter-sub">每位被繼承人固定 1,333萬</div>
         </div>
-        <div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--muted)">1,333萬</div>
+        <div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--success)">NT$ 13,330,000</div>
+      </div>
+
+      <div class="counter-row" id="autoSpouseRow" style="display:none">
+        <div>
+          <div class="counter-label">配偶扣除額</div>
+          <div class="counter-sub">有配偶自動扣除 493萬</div>
+        </div>
+        <div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--success)">NT$ 4,930,000</div>
+      </div>
+
+      <div class="counter-row" id="autoFuneralRow">
+        <div>
+          <div class="counter-label">喪葬費扣除額</div>
+          <div class="counter-sub">固定上限 138萬</div>
+        </div>
+        <div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--success)">NT$ 1,380,000</div>
       </div>
     </div>
 
     <div class="card">
-      <div class="section-title">扣除額（選填）</div>
+      <div class="section-title">額外扣除額（選填）</div>
 
       <div class="input-group">
-        <label>配偶扣除額</label>
+        <label>子女扣除額 <span style="font-weight:400;color:var(--muted);font-size:12px">每人 50萬，填人數</span></label>
         <div class="input-prefix">
-          <span class="prefix-text">NT$</span>
-          <input type="number" id="deduct_spouse" placeholder="49,330,000（493萬）" min="0" inputmode="numeric">
+          <span class="prefix-text">人數</span>
+          <input type="number" id="deduct_children_count" placeholder="0" min="0" max="20" inputmode="numeric" oninput="updateChildDeduct()">
         </div>
+        <div id="childDeductAmt" style="font-size:12px;color:var(--success);margin-top:6px;font-family:'DM Mono',monospace"></div>
       </div>
 
       <div class="input-group">
-        <label>直系血親卑親屬扣除額</label>
+        <label>父母扣除額 <span style="font-weight:400;color:var(--muted);font-size:12px">每人 123萬，填人數</span></label>
         <div class="input-prefix">
-          <span class="prefix-text">NT$</span>
-          <input type="number" id="deduct_children_tax" placeholder="每人 500,000（50萬）" min="0" inputmode="numeric">
+          <span class="prefix-text">人數</span>
+          <input type="number" id="deduct_parents_count" placeholder="0" min="0" max="4" inputmode="numeric" oninput="updateParentDeduct()">
         </div>
-      </div>
-
-      <div class="input-group">
-        <label>父母扣除額</label>
-        <div class="input-prefix">
-          <span class="prefix-text">NT$</span>
-          <input type="number" id="deduct_parents_tax" placeholder="每人 1,230,000（123萬）" min="0" inputmode="numeric">
-        </div>
-      </div>
-
-      <div class="input-group">
-        <label>喪葬費扣除額</label>
-        <div class="input-prefix">
-          <span class="prefix-text">NT$</span>
-          <input type="number" id="deduct_funeral" placeholder="1,380,000（138萬，固定上限）" min="0" inputmode="numeric">
-        </div>
+        <div id="parentDeductAmt" style="font-size:12px;color:var(--success);margin-top:6px;font-family:'DM Mono',monospace"></div>
       </div>
 
       <div class="input-group" style="margin-bottom:0">
-        <label>其他扣除額（債務、醫療費等）</label>
+        <label>其他扣除額 <span style="font-weight:400;color:var(--muted);font-size:12px">債務、未償醫療費等</span></label>
         <div class="input-prefix">
           <span class="prefix-text">NT$</span>
           <input type="number" id="deduct_other" placeholder="0" min="0" inputmode="numeric">
@@ -653,10 +656,8 @@
     </div>
 
     <div class="info-box">
-      <strong>📋 2025年稅率級距</strong><br>
-      遺產淨額 5,621萬以下：<strong>10%</strong><br>
-      5,621萬 ～ 1億1,242萬：<strong>15%</strong>（加固定562萬1千元）<br>
-      超過 1億1,242萬：<strong>20%</strong>（加固定1,405萬2,500元）
+      <strong>📋 什麼是扣除額？</strong><br>
+      扣除額是法律允許從遺產中扣掉的金額，扣完之後才計算要繳多少稅。扣除額越多，要繳的稅越少。
     </div>
   </div>
 
@@ -705,6 +706,11 @@
     document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
     document.getElementById('step' + n).classList.add('active');
     document.getElementById('backBtn').style.display = n > 1 ? 'block' : 'none';
+
+    if (n === 4) {
+      // Auto-show spouse deduction row
+      document.getElementById('autoSpouseRow').style.display = state.hasSpouse ? 'flex' : 'none';
+    }
 
     if (n === totalSteps) {
       document.getElementById('nextBtn').style.display = 'none';
@@ -768,6 +774,18 @@
     return num/g + '/' + den/g;
   }
 
+  function updateChildDeduct() {
+    const n = parseInt(document.getElementById('deduct_children_count').value) || 0;
+    const amt = n * 500000;
+    document.getElementById('childDeductAmt').textContent = n > 0 ? `= NT$ ${amt.toLocaleString('zh-TW')}` : '';
+  }
+
+  function updateParentDeduct() {
+    const n = parseInt(document.getElementById('deduct_parents_count').value) || 0;
+    const amt = n * 1230000;
+    document.getElementById('parentDeductAmt').textContent = n > 0 ? `= NT$ ${amt.toLocaleString('zh-TW')}` : '';
+  }
+
   function calcTax(netEstate) {
     if (netEstate <= 0) return 0;
     const t1 = 56210000, t2 = 112420000;
@@ -784,9 +802,11 @@
       state[k] = 0;
       document.getElementById('val_' + k).textContent = '0';
     });
-    ['deduct_spouse','deduct_children_tax','deduct_parents_tax','deduct_funeral','deduct_other'].forEach(id => {
+    ['deduct_children_count','deduct_parents_count','deduct_other'].forEach(id => {
       document.getElementById(id).value = '';
     });
+    document.getElementById('childDeductAmt').textContent = '';
+    document.getElementById('parentDeductAmt').textContent = '';
     showStep(1);
   }
 
@@ -891,12 +911,12 @@
 
     // 遺產稅計算
     const exemption = 13330000;
-    const dSpouse = parseFloat(document.getElementById('deduct_spouse').value) || 0;
-    const dChildren = parseFloat(document.getElementById('deduct_children_tax').value) || 0;
-    const dParents = parseFloat(document.getElementById('deduct_parents_tax').value) || 0;
-    const dFuneral = parseFloat(document.getElementById('deduct_funeral').value) || 0;
+    const dSpouse = state.hasSpouse ? 4930000 : 0;
+    const dFuneral = 1380000;
+    const dChildren = (parseInt(document.getElementById('deduct_children_count').value) || 0) * 500000;
+    const dParents = (parseInt(document.getElementById('deduct_parents_count').value) || 0) * 1230000;
     const dOther = parseFloat(document.getElementById('deduct_other').value) || 0;
-    const totalDeduct = dSpouse + dChildren + dParents + dFuneral + dOther;
+    const totalDeduct = dSpouse + dFuneral + dChildren + dParents + dOther;
     const netEstate = Math.max(0, total - exemption - totalDeduct);
     const tax = calcTax(netEstate);
 
