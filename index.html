@@ -469,7 +469,7 @@
 
   <!-- Step 1: 遺產總額 -->
   <div class="step active" id="step1">
-    <div class="step-label">步驟 1 / 4</div>
+    <div class="step-label">步驟 1 / 5</div>
     <h2>遺產總額</h2>
     <p class="subtitle">請輸入被繼承人的遺產總額，系統將依台灣《民法》計算各繼承人的應繼分。</p>
 
@@ -499,7 +499,7 @@
 
   <!-- Step 2: 配偶 -->
   <div class="step" id="step2">
-    <div class="step-label">步驟 2 / 4</div>
+    <div class="step-label">步驟 2 / 5</div>
     <h2>配偶</h2>
     <p class="subtitle">配偶為當然繼承人，與各順序繼承人共同繼承，其應繼分依民法第1144條規定。</p>
 
@@ -526,7 +526,7 @@
 
   <!-- Step 3: 繼承人 -->
   <div class="step" id="step3">
-    <div class="step-label">步驟 3 / 4</div>
+    <div class="step-label">步驟 3 / 5</div>
     <h2>血親繼承人</h2>
     <p class="subtitle">依民法第1138條，繼承順序：①子女 ②父母 ③兄弟姊妹 ④祖父母。順位高者優先繼承。</p>
 
@@ -591,16 +591,84 @@
     </div>
   </div>
 
-  <!-- Step 4: 結果 -->
+  <!-- Step 4: 遺產稅扣除額 -->
   <div class="step" id="step4">
+    <div class="step-label">步驟 4 / 5</div>
+    <h2>遺產稅試算</h2>
+    <p class="subtitle">依《遺產及贈與稅法》（2025年最新稅率），輸入各項扣除額以計算應納稅額。</p>
+
+    <div class="card">
+      <div class="section-title">基本免稅額</div>
+      <div class="counter-row" style="padding-top:0">
+        <div>
+          <div class="counter-label">免稅額</div>
+          <div class="counter-sub">每人 NT$ 1,333萬（固定）</div>
+        </div>
+        <div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--muted)">1,333萬</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">扣除額（選填）</div>
+
+      <div class="input-group">
+        <label>配偶扣除額</label>
+        <div class="input-prefix">
+          <span class="prefix-text">NT$</span>
+          <input type="number" id="deduct_spouse" placeholder="49,330,000（493萬）" min="0" inputmode="numeric">
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>直系血親卑親屬扣除額</label>
+        <div class="input-prefix">
+          <span class="prefix-text">NT$</span>
+          <input type="number" id="deduct_children_tax" placeholder="每人 500,000（50萬）" min="0" inputmode="numeric">
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>父母扣除額</label>
+        <div class="input-prefix">
+          <span class="prefix-text">NT$</span>
+          <input type="number" id="deduct_parents_tax" placeholder="每人 1,230,000（123萬）" min="0" inputmode="numeric">
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>喪葬費扣除額</label>
+        <div class="input-prefix">
+          <span class="prefix-text">NT$</span>
+          <input type="number" id="deduct_funeral" placeholder="1,380,000（138萬，固定上限）" min="0" inputmode="numeric">
+        </div>
+      </div>
+
+      <div class="input-group" style="margin-bottom:0">
+        <label>其他扣除額（債務、醫療費等）</label>
+        <div class="input-prefix">
+          <span class="prefix-text">NT$</span>
+          <input type="number" id="deduct_other" placeholder="0" min="0" inputmode="numeric">
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <strong>📋 2025年稅率級距</strong><br>
+      遺產淨額 5,621萬以下：<strong>10%</strong><br>
+      5,621萬 ～ 1億1,242萬：<strong>15%</strong>（加固定562萬1千元）<br>
+      超過 1億1,242萬：<strong>20%</strong>（加固定1,405萬2,500元）
+    </div>
+  </div>
+
+  <!-- Step 5: 結果 -->
+  <div class="step" id="step5">
     <div class="step-label">計算結果</div>
     <h2>應繼分分配</h2>
     <p class="subtitle">依台灣《民法》計算各繼承人應繼分如下。</p>
 
     <div id="resultContainer"></div>
-
     <div class="law-note" id="lawNote"></div>
-
+    <div id="taxContainer"></div>
     <button class="restart-btn" onclick="restart()">🔄 重新計算</button>
   </div>
 
@@ -616,7 +684,7 @@
 
 <script>
   let currentStep = 1;
-  const totalSteps = 4;
+  const totalSteps = 5;
 
   let state = {
     totalEstate: 0,
@@ -643,7 +711,9 @@
       calculate();
     } else {
       document.getElementById('nextBtn').style.display = 'block';
-      document.getElementById('nextBtn').textContent = n === 3 ? '計算結果 →' : '繼續 →';
+      if (n === 3) document.getElementById('nextBtn').textContent = '下一步：遺產稅 →';
+      else if (n === 4) document.getElementById('nextBtn').textContent = '計算結果 →';
+      else document.getElementById('nextBtn').textContent = '繼續 →';
     }
     updateProgress();
     window.scrollTo(0, 0);
@@ -698,6 +768,14 @@
     return num/g + '/' + den/g;
   }
 
+  function calcTax(netEstate) {
+    if (netEstate <= 0) return 0;
+    const t1 = 56210000, t2 = 112420000;
+    if (netEstate <= t1) return netEstate * 0.10;
+    if (netEstate <= t2) return 5621000 + (netEstate - t1) * 0.15;
+    return 14052500 + (netEstate - t2) * 0.20;
+  }
+
   function restart() {
     currentStep = 1;
     state = { totalEstate: 0, hasWill: true, hasSpouse: true, regime: 'legal', children: 0, parents: 0, siblings: 0, grandparents: 0 };
@@ -706,12 +784,14 @@
       state[k] = 0;
       document.getElementById('val_' + k).textContent = '0';
     });
+    ['deduct_spouse','deduct_children_tax','deduct_parents_tax','deduct_funeral','deduct_other'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
     showStep(1);
   }
 
   function calculate() {
     const total = state.totalEstate;
-    const heirs = [];
     let lawText = '';
 
     // Determine active tier
@@ -722,28 +802,16 @@
     else if (state.grandparents > 0) tier = 4;
 
     // Spouse share
-    let spouseShare = 0; // fraction of estate
+    let spouseShare = 0;
     let spouseFrac = '';
     let bloodFrac = 1;
 
     if (state.hasSpouse) {
-      if (tier === 0) {
-        // Spouse alone
-        spouseShare = 1;
-        spouseFrac = '全部';
-        bloodFrac = 0;
-      } else if (tier === 1 || tier === 2 || tier === 3) {
-        spouseShare = 0.5;
-        spouseFrac = '1/2';
-        bloodFrac = 0.5;
-      } else if (tier === 4) {
-        spouseShare = 2/3;
-        spouseFrac = '2/3';
-        bloodFrac = 1/3;
-      }
+      if (tier === 0) { spouseShare = 1; spouseFrac = '全部'; bloodFrac = 0; }
+      else if (tier === 1 || tier === 2 || tier === 3) { spouseShare = 0.5; spouseFrac = '1/2'; bloodFrac = 0.5; }
+      else if (tier === 4) { spouseShare = 2/3; spouseFrac = '2/3'; bloodFrac = 1/3; }
     }
 
-    // Blood heirs
     let bloodCount = 0;
     let bloodLabel = '';
     if (tier === 1) { bloodCount = state.children; bloodLabel = '子女'; }
@@ -755,19 +823,15 @@
     const bloodPool = total * bloodFrac;
     const perBlood = bloodCount > 0 ? bloodPool / bloodCount : 0;
 
-    // Result cards
     let html = '';
 
-    // Summary hero
     html += `<div class="result-hero">
       <div class="label">遺產總額</div>
       <div class="result-total">${formatMoney(total)}</div>
       <div class="result-sub">繼承人共 ${(state.hasSpouse ? 1 : 0) + bloodCount} 人</div>
     </div>`;
 
-    // Spouse card
     if (state.hasSpouse) {
-      const reserves = state.hasWill ? formatMoney(spouseAmount / 2) : '—';
       html += `<div class="heir-card">
         <div class="heir-header">
           <span class="heir-name">配偶</span>
@@ -786,11 +850,8 @@
       </div>`;
     }
 
-    // Blood heirs
     if (bloodCount > 0 && perBlood > 0) {
-      const tierLabels = ['', '子女', '父母', '兄弟姊妹', '祖父母'];
       const reserveRates = [0, 0.5, 0.5, 1/3, 1/3];
-
       for (let i = 0; i < bloodCount; i++) {
         const label = bloodLabel + (bloodCount > 1 ? `（第${i+1}人）` : '');
         const reserve = state.hasWill ? perBlood * reserveRates[tier] : null;
@@ -817,7 +878,6 @@
       html += `<div class="info-box">⚠️ 無繼承人，遺產將歸屬國庫（民法第1185條）。</div>`;
     }
 
-    // Law note
     const tierNotes = ['', '子女（第一順位）與配偶共同繼承，各得1/2（民法第1144條第1款）。',
       '父母（第二順位）與配偶共同繼承，各得1/2（民法第1144條第2款）。',
       '兄弟姊妹（第三順位）與配偶共同繼承，各得1/2（民法第1144條第3款）。',
@@ -828,6 +888,59 @@
 
     document.getElementById('resultContainer').innerHTML = html;
     document.getElementById('lawNote').innerHTML = '⚖️ 法律依據：' + lawText;
+
+    // 遺產稅計算
+    const exemption = 13330000;
+    const dSpouse = parseFloat(document.getElementById('deduct_spouse').value) || 0;
+    const dChildren = parseFloat(document.getElementById('deduct_children_tax').value) || 0;
+    const dParents = parseFloat(document.getElementById('deduct_parents_tax').value) || 0;
+    const dFuneral = parseFloat(document.getElementById('deduct_funeral').value) || 0;
+    const dOther = parseFloat(document.getElementById('deduct_other').value) || 0;
+    const totalDeduct = dSpouse + dChildren + dParents + dFuneral + dOther;
+    const netEstate = Math.max(0, total - exemption - totalDeduct);
+    const tax = calcTax(netEstate);
+
+    let taxRate = '10%';
+    if (netEstate > 112420000) taxRate = '20%';
+    else if (netEstate > 56210000) taxRate = '15%';
+
+    const taxHtml = `
+    <div style="margin-top:16px">
+      <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">遺產稅試算（2025年）</div>
+      <div class="heir-card">
+        <div class="heir-header" style="background:${tax === 0 ? '#e8f5e9' : '#fff5f0'}">
+          <span class="heir-name">預估應納遺產稅</span>
+          <span class="heir-fraction" style="color:${tax === 0 ? 'var(--success)' : 'var(--accent)'}">${tax === 0 ? '免稅' : taxRate}</span>
+        </div>
+        <div class="heir-body">
+          <div class="heir-row">
+            <span class="heir-row-label">遺產總額</span>
+            <span class="heir-row-val" style="color:var(--muted)">${formatMoney(total)}</span>
+          </div>
+          <div class="heir-row">
+            <span class="heir-row-label">免稅額</span>
+            <span class="heir-row-val" style="color:var(--muted)">－ ${formatMoney(exemption)}</span>
+          </div>
+          ${totalDeduct > 0 ? `<div class="heir-row">
+            <span class="heir-row-label">各項扣除額</span>
+            <span class="heir-row-val" style="color:var(--muted)">－ ${formatMoney(totalDeduct)}</span>
+          </div>` : ''}
+          <div class="heir-row" style="border-top:1px solid var(--soft);padding-top:10px;margin-top:4px">
+            <span class="heir-row-label">遺產淨額</span>
+            <span class="heir-row-val" style="color:var(--ink)">${formatMoney(netEstate)}</span>
+          </div>
+          <div class="heir-row">
+            <span class="heir-row-label" style="font-weight:600;color:var(--ink)">預估應納稅額</span>
+            <span class="heir-row-val" style="font-size:17px;color:${tax === 0 ? 'var(--success)' : 'var(--accent)'}">${tax === 0 ? '免納遺產稅' : formatMoney(tax)}</span>
+          </div>
+        </div>
+      </div>
+      <div class="law-note" style="margin-top:10px">
+        ⚖️ 依《遺產及贈與稅法》第13條（2025年調整後稅率）。本試算僅供參考，實際稅額以國稅局核定為準。申報期限：被繼承人死亡後6個月內。
+      </div>
+    </div>`;
+
+    document.getElementById('taxContainer').innerHTML = taxHtml;
   }
 
   // Init
