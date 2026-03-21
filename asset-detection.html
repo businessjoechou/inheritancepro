@@ -481,6 +481,19 @@
     const deathDateEl = document.getElementById(source === 'manual' ? 'deathDate' : source === 'paste' ? 'deathDatePaste' : 'deathDateCSV');
     const deathDate = deathDateEl.value ? new Date(deathDateEl.value) : null;
 
+    // 驗證：交易日期不能晚於死亡日期
+    if (deathDate) {
+      const invalidRows = parsedData.filter(tx => {
+        if (!tx.date) return false;
+        const txDate = new Date(tx.date.replace(/\//g, '-'));
+        return !isNaN(txDate) && txDate > deathDate;
+      });
+      if (invalidRows.length > 0) {
+        alert(`發現 ${invalidRows.length} 筆交易日期（${invalidRows.map(r => r.date).join('、')}）晚於死亡日期，請確認日期是否正確。`);
+        return;
+      }
+    }
+
     const results = parsedData.map(tx => scoreTransaction(tx, deathDate));
     analysisResult = { results, deathDate, source };
     renderResults(results, deathDate);
@@ -592,7 +605,40 @@
 
     document.getElementById('lawRef').innerHTML = '⚖️ 相關法律依據：<br>' + laws.join('<br>');
 
-    document.getElementById('resultSection').style.display = 'block';
+    // 建議後續調查步驟
+    const stepsHTML = `
+    <div style="margin-top:16px">
+      <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px">建議後續調查步驟</div>
+      <div class="card" style="padding:16px 20px">
+        ${high > 0 ? `<div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--border)">
+          <div style="font-size:12px;font-weight:600;color:var(--danger);margin-bottom:6px">🔴 高優先度</div>
+          <div style="font-size:12px;color:var(--ink);line-height:1.9">
+            ▸ 向<strong>財政部國稅局</strong>申請調閱被繼承人歷年贈與稅申報紀錄<br>
+            ▸ 向<strong>地政事務所</strong>申請不動產異動歷程謄本（近10年）<br>
+            ▸ 向<strong>金融監理單位</strong>申請銀行帳戶交易明細（需法院令狀）<br>
+            ▸ 確認各筆贈與是否有申報並繳納<strong>贈與稅</strong>
+          </div>
+        </div>` : ''}
+        ${med > 0 ? `<div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--border)">
+          <div style="font-size:12px;font-weight:600;color:var(--warn);margin-bottom:6px">🟡 中優先度</div>
+          <div style="font-size:12px;color:var(--ink);line-height:1.9">
+            ▸ 蒐集各筆異動的<strong>原始憑證</strong>（匯款單、過戶證明、買賣契約）<br>
+            ▸ 確認不動產移轉是否以<strong>市價</strong>為基準，評估差額是否構成贈與<br>
+            ▸ 詢問相關當事人取得<strong>書面說明</strong>
+          </div>
+        </div>` : ''}
+        <div>
+          <div style="font-size:12px;font-weight:600;color:var(--muted);margin-bottom:6px">📋 一般建議</div>
+          <div style="font-size:12px;color:var(--ink);line-height:1.9">
+            ▸ 本分析依民法§1148-1、遺贈稅法§15等規定進行初步篩查，<strong>不構成鑑定意見</strong><br>
+            ▸ 發現可疑異動後，建議向國稅局補申報或聲明異議，避免裁罰<br>
+            ▸ 情節重大者可考慮向地檢署提出<strong>刑法第356條</strong>（損害債權罪）告訴
+          </div>
+        </div>
+      </div>
+    </div>`;
+
+    document.getElementById('lawRef').insertAdjacentHTML('afterend', stepsHTML);
     document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
