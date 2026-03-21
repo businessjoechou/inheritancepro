@@ -535,8 +535,8 @@
 
       <div class="counter-row">
         <div>
-          <div class="counter-label">子女（含養子女）</div>
-          <div class="counter-sub">代位繼承人請計入</div>
+          <div class="counter-label">子女人數（含養子女）</div>
+          <div class="counter-sub">包含已過世的子女</div>
         </div>
         <div class="counter-ctrl">
           <button class="cnt-btn" onclick="change('children', -1)">−</button>
@@ -545,12 +545,48 @@
         </div>
       </div>
 
+      <div id="childrenExtra" style="display:none">
+        <div class="divider" style="margin:8px 0"></div>
+
+        <div class="counter-row">
+          <div>
+            <div class="counter-label">其中拋棄繼承</div>
+            <div class="counter-sub">拋棄者份額由其他子女均分</div>
+          </div>
+          <div class="counter-ctrl">
+            <button class="cnt-btn" onclick="changeRenounce('children', -1)">−</button>
+            <span class="cnt-val" id="renounce_children">0</span>
+            <button class="cnt-btn" onclick="changeRenounce('children', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="counter-row" style="padding-bottom:0">
+          <div>
+            <div class="counter-label">其中已過世（代位繼承）</div>
+            <div class="counter-sub">過世子女的孫子女代位繼承其份額</div>
+          </div>
+          <div class="counter-ctrl">
+            <button class="cnt-btn" onclick="change('deceased_children', -1)">−</button>
+            <span class="cnt-val" id="val_deceased_children">0</span>
+            <button class="cnt-btn" onclick="change('deceased_children', 1)">+</button>
+          </div>
+        </div>
+
+        <div id="representativesSection" style="display:none;margin-top:12px">
+          <div class="info-box" style="margin-top:0">
+            <strong>代位繼承人（孫子女）</strong><br>
+            <span id="representativesHint"></span>
+          </div>
+          <div id="representativeInputs"></div>
+        </div>
+      </div>
+
       <div class="divider" style="margin:0"></div>
       <div class="section-title" style="margin-top:18px">第二順位</div>
 
       <div class="counter-row">
         <div>
-          <div class="counter-label">父母</div>
+          <div class="counter-label">父母人數</div>
           <div class="counter-sub">生父母或養父母</div>
         </div>
         <div class="counter-ctrl">
@@ -560,12 +596,27 @@
         </div>
       </div>
 
+      <div id="parentsExtra" style="display:none">
+        <div class="divider" style="margin:8px 0"></div>
+        <div class="counter-row" style="padding-bottom:0">
+          <div>
+            <div class="counter-label">其中拋棄繼承</div>
+            <div class="counter-sub">拋棄者份額由另一方父母繼承</div>
+          </div>
+          <div class="counter-ctrl">
+            <button class="cnt-btn" onclick="changeRenounce('parents', -1)">−</button>
+            <span class="cnt-val" id="renounce_parents">0</span>
+            <button class="cnt-btn" onclick="changeRenounce('parents', 1)">+</button>
+          </div>
+        </div>
+      </div>
+
       <div class="divider" style="margin:0"></div>
       <div class="section-title" style="margin-top:18px">第三順位</div>
 
       <div class="counter-row">
         <div>
-          <div class="counter-label">兄弟姊妹</div>
+          <div class="counter-label">兄弟姊妹人數</div>
         </div>
         <div class="counter-ctrl">
           <button class="cnt-btn" onclick="change('siblings', -1)">−</button>
@@ -574,12 +625,27 @@
         </div>
       </div>
 
+      <div id="siblingsExtra" style="display:none">
+        <div class="divider" style="margin:8px 0"></div>
+        <div class="counter-row" style="padding-bottom:0">
+          <div>
+            <div class="counter-label">其中拋棄繼承</div>
+            <div class="counter-sub">拋棄者份額由其他兄弟姊妹均分</div>
+          </div>
+          <div class="counter-ctrl">
+            <button class="cnt-btn" onclick="changeRenounce('siblings', -1)">−</button>
+            <span class="cnt-val" id="renounce_siblings">0</span>
+            <button class="cnt-btn" onclick="changeRenounce('siblings', 1)">+</button>
+          </div>
+        </div>
+      </div>
+
       <div class="divider" style="margin:0"></div>
       <div class="section-title" style="margin-top:18px">第四順位</div>
 
       <div class="counter-row" style="padding-bottom:0">
         <div>
-          <div class="counter-label">祖父母</div>
+          <div class="counter-label">祖父母人數</div>
           <div class="counter-sub">外祖父母亦同</div>
         </div>
         <div class="counter-ctrl">
@@ -588,6 +654,26 @@
           <button class="cnt-btn" onclick="change('grandparents', 1)">+</button>
         </div>
       </div>
+
+      <div id="grandparentsExtra" style="display:none">
+        <div class="divider" style="margin:8px 0"></div>
+        <div class="counter-row" style="padding-bottom:0">
+          <div>
+            <div class="counter-label">其中拋棄繼承</div>
+            <div class="counter-sub">拋棄者份額由其他祖父母繼承</div>
+          </div>
+          <div class="counter-ctrl">
+            <button class="cnt-btn" onclick="changeRenounce('grandparents', -1)">−</button>
+            <span class="cnt-val" id="renounce_grandparents">0</span>
+            <button class="cnt-btn" onclick="changeRenounce('grandparents', 1)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <strong>💡 拋棄繼承</strong>：繼承人可在知悉繼承後3個月內向法院聲請拋棄，拋棄後其份額由其他同順位繼承人均分。<br><br>
+      <strong>💡 代位繼承</strong>：子女在被繼承人死亡前已過世，由其子女（孫子女）代位繼承，繼承相同份額。
     </div>
   </div>
 
@@ -693,13 +779,75 @@
     hasSpouse: true,
     regime: 'legal',
     children: 0,
+    deceased_children: 0,
+    representatives: [],
     parents: 0,
     siblings: 0,
-    grandparents: 0
+    grandparents: 0,
+    renounce: { children: 0, parents: 0, siblings: 0, grandparents: 0 }
   };
 
   function updateProgress() {
     document.getElementById('progressFill').style.width = (currentStep / totalSteps * 100) + '%';
+  }
+
+  function toggleExtra(key) {
+    const el = document.getElementById(key + 'Extra');
+    if (el) el.style.display = state[key] > 0 ? 'block' : 'none';
+  }
+
+  function changeRenounce(key, delta) {
+    state.renounce[key] = Math.max(0, Math.min(state[key], state.renounce[key] + delta));
+    document.getElementById('renounce_' + key).textContent = state.renounce[key];
+  }
+
+  function changeRep(i, delta) {
+    state.representatives[i] = Math.max(1, state.representatives[i] + delta);
+    document.getElementById('rep_' + i).textContent = state.representatives[i];
+  }
+
+  function updateRepresentatives() {
+    const dec = state.deceased_children;
+    const section = document.getElementById('representativesSection');
+    const inputs = document.getElementById('representativeInputs');
+    if (dec === 0) { section.style.display = 'none'; state.representatives = []; return; }
+    section.style.display = 'block';
+    document.getElementById('representativesHint').textContent = '請填每位過世子女留下幾個孫子女：';
+    while (state.representatives.length < dec) state.representatives.push(1);
+    state.representatives = state.representatives.slice(0, dec);
+    let html = '';
+    for (let i = 0; i < dec; i++) {
+      html += `<div class="counter-row" style="${i === dec-1 ? 'padding-bottom:0' : ''}">
+        <div><div class="counter-label">第${i+1}位過世子女的孫子女</div></div>
+        <div class="counter-ctrl">
+          <button class="cnt-btn" onclick="changeRep(${i}, -1)">−</button>
+          <span class="cnt-val" id="rep_${i}">${state.representatives[i]}</span>
+          <button class="cnt-btn" onclick="changeRep(${i}, 1)">+</button>
+        </div>
+      </div>`;
+    }
+    inputs.innerHTML = html;
+  }
+
+  function change(key, delta) {
+    state[key] = Math.max(0, state[key] + delta);
+    document.getElementById('val_' + key).textContent = state[key];
+    if (key === 'children') {
+      state.renounce.children = Math.min(state.renounce.children, state.children);
+      state.deceased_children = Math.min(state.deceased_children, state.children);
+      document.getElementById('renounce_children').textContent = state.renounce.children;
+      document.getElementById('val_deceased_children').textContent = state.deceased_children;
+      toggleExtra('children');
+      updateRepresentatives();
+    }
+    if (key === 'deceased_children') {
+      state.deceased_children = Math.min(state.deceased_children, state.children);
+      document.getElementById('val_deceased_children').textContent = state.deceased_children;
+      updateRepresentatives();
+    }
+    if (key === 'parents') { state.renounce.parents = Math.min(state.renounce.parents, state.parents); document.getElementById('renounce_parents').textContent = state.renounce.parents; toggleExtra('parents'); }
+    if (key === 'siblings') { state.renounce.siblings = Math.min(state.renounce.siblings, state.siblings); document.getElementById('renounce_siblings').textContent = state.renounce.siblings; toggleExtra('siblings'); }
+    if (key === 'grandparents') { state.renounce.grandparents = Math.min(state.renounce.grandparents, state.grandparents); document.getElementById('renounce_grandparents').textContent = state.renounce.grandparents; toggleExtra('grandparents'); }
   }
 
   function showStep(n) {
@@ -758,11 +906,6 @@
     document.getElementById('regime_separate').classList.toggle('active', v === 'separate');
   }
 
-  function change(key, delta) {
-    state[key] = Math.max(0, state[key] + delta);
-    document.getElementById('val_' + key).textContent = state[key];
-  }
-
   function formatMoney(n) {
     return 'NT$ ' + Math.round(n).toLocaleString('zh-TW');
   }
@@ -796,17 +939,24 @@
 
   function restart() {
     currentStep = 1;
-    state = { totalEstate: 0, hasWill: true, hasSpouse: true, regime: 'legal', children: 0, parents: 0, siblings: 0, grandparents: 0 };
+    state = { totalEstate: 0, hasWill: true, hasSpouse: true, regime: 'legal', children: 0, deceased_children: 0, representatives: [], parents: 0, siblings: 0, grandparents: 0, renounce: { children: 0, parents: 0, siblings: 0, grandparents: 0 } };
     document.getElementById('totalEstate').value = '';
+    ['children','deceased_children','parents','siblings','grandparents'].forEach(k => {
+      const el = document.getElementById('val_' + k);
+      if (el) el.textContent = '0';
+    });
     ['children','parents','siblings','grandparents'].forEach(k => {
-      state[k] = 0;
-      document.getElementById('val_' + k).textContent = '0';
+      const el = document.getElementById('renounce_' + k);
+      if (el) el.textContent = '0';
+      const ex = document.getElementById(k + 'Extra');
+      if (ex) ex.style.display = 'none';
     });
     ['deduct_children_count','deduct_parents_count','deduct_other'].forEach(id => {
       document.getElementById(id).value = '';
     });
     document.getElementById('childDeductAmt').textContent = '';
     document.getElementById('parentDeductAmt').textContent = '';
+    document.getElementById('representativesSection').style.display = 'none';
     showStep(1);
   }
 
@@ -832,6 +982,8 @@
       else if (tier === 4) { spouseShare = 2/3; spouseFrac = '2/3'; bloodFrac = 1/3; }
     }
 
+    // Effective blood heirs after renunciation
+    const tierKey = ['','children','parents','siblings','grandparents'][tier];
     let bloodCount = 0;
     let bloodLabel = '';
     if (tier === 1) { bloodCount = state.children; bloodLabel = '子女'; }
@@ -839,16 +991,49 @@
     else if (tier === 3) { bloodCount = state.siblings; bloodLabel = '兄弟姊妹'; }
     else if (tier === 4) { bloodCount = state.grandparents; bloodLabel = '祖父母'; }
 
+    const renounced = tierKey ? (state.renounce[tierKey] || 0) : 0;
+    const effectiveBlood = bloodCount - renounced; // active inheritors (not counting representatives yet)
+
     const spouseAmount = total * spouseShare;
     const bloodPool = total * bloodFrac;
-    const perBlood = bloodCount > 0 ? bloodPool / bloodCount : 0;
 
+    // Build heir list with representation
+    // For tier 1: some may be deceased → replaced by their children (representatives)
+    let heirGroups = []; // { label, amount, isRepGroup, note }
+
+    if (tier === 1 && effectiveBlood > 0) {
+      const dec = state.deceased_children;
+      const aliveActive = effectiveBlood - dec; // living non-renounced children
+      // Total "slots" = aliveActive + dec (dec slots go to their representatives)
+      const totalSlots = aliveActive + dec;
+      const perSlot = totalSlots > 0 ? bloodPool / totalSlots : 0;
+
+      // Living children
+      for (let i = 0; i < aliveActive; i++) {
+        heirGroups.push({ label: `子女（第${i+1}人）`, amount: perSlot, note: null });
+      }
+      // Deceased → representatives
+      for (let i = 0; i < dec; i++) {
+        const repCount = state.representatives[i] || 1;
+        const perRep = perSlot / repCount;
+        for (let j = 0; j < repCount; j++) {
+          heirGroups.push({ label: `孫子女（代位第${i+1}位過世子女，第${j+1}人）`, amount: perRep, note: '代位繼承' });
+        }
+      }
+    } else if (effectiveBlood > 0) {
+      const perBlood = bloodPool / effectiveBlood;
+      for (let i = 0; i < effectiveBlood; i++) {
+        heirGroups.push({ label: bloodLabel + (effectiveBlood > 1 ? `（第${i+1}人）` : ''), amount: perBlood, note: null });
+      }
+    }
+
+    const totalHeirCount = (state.hasSpouse ? 1 : 0) + heirGroups.length + renounced;
     let html = '';
 
     html += `<div class="result-hero">
       <div class="label">遺產總額</div>
       <div class="result-total">${formatMoney(total)}</div>
-      <div class="result-sub">繼承人共 ${(state.hasSpouse ? 1 : 0) + bloodCount} 人</div>
+      <div class="result-sub">實際繼承人共 ${(state.hasSpouse ? 1 : 0) + heirGroups.length} 人${renounced > 0 ? `（${renounced}人拋棄）` : ''}</div>
     </div>`;
 
     if (state.hasSpouse) {
@@ -870,31 +1055,32 @@
       </div>`;
     }
 
-    if (bloodCount > 0 && perBlood > 0) {
-      const reserveRates = [0, 0.5, 0.5, 1/3, 1/3];
-      for (let i = 0; i < bloodCount; i++) {
-        const label = bloodLabel + (bloodCount > 1 ? `（第${i+1}人）` : '');
-        const reserve = state.hasWill ? perBlood * reserveRates[tier] : null;
-        html += `<div class="heir-card">
-          <div class="heir-header">
-            <span class="heir-name">${label}</span>
-            <span class="heir-fraction">${toFraction(Math.round(bloodFrac * 100), bloodCount * 100)}</span>
+    const reserveRates = [0, 0.5, 0.5, 1/3, 1/3];
+    heirGroups.forEach(heir => {
+      const reserve = state.hasWill ? heir.amount * reserveRates[tier] : null;
+      html += `<div class="heir-card">
+        <div class="heir-header">
+          <span class="heir-name">${heir.label}</span>
+          ${heir.note ? `<span class="heir-fraction" style="color:var(--gold)">${heir.note}</span>` : ''}
+        </div>
+        <div class="heir-body">
+          <div class="heir-row">
+            <span class="heir-row-label">應繼分金額</span>
+            <span class="heir-row-val">${formatMoney(heir.amount)}</span>
           </div>
-          <div class="heir-body">
-            <div class="heir-row">
-              <span class="heir-row-label">應繼分金額</span>
-              <span class="heir-row-val">${formatMoney(perBlood)}</span>
-            </div>
-            ${reserve !== null ? `<div class="heir-row">
-              <span class="heir-row-label">特留分（最低保障）</span>
-              <span class="heir-row-val" style="color:var(--gold)">${formatMoney(reserve)}</span>
-            </div>` : ''}
-          </div>
-        </div>`;
-      }
+          ${reserve !== null ? `<div class="heir-row">
+            <span class="heir-row-label">特留分（最低保障）</span>
+            <span class="heir-row-val" style="color:var(--gold)">${formatMoney(reserve)}</span>
+          </div>` : ''}
+        </div>
+      </div>`;
+    });
+
+    if (renounced > 0) {
+      html += `<div class="info-box">⚠️ ${renounced} 人已拋棄繼承，其份額已由其他繼承人均分。</div>`;
     }
 
-    if (!state.hasSpouse && bloodCount === 0) {
+    if (!state.hasSpouse && heirGroups.length === 0) {
       html += `<div class="info-box">⚠️ 無繼承人，遺產將歸屬國庫（民法第1185條）。</div>`;
     }
 
@@ -905,6 +1091,8 @@
 
     lawText = tier > 0 ? tierNotes[tier] : (state.hasSpouse ? '無血親繼承人，配偶單獨繼承全部遺產。' : '');
     if (state.hasWill) lawText += '<br>有遺囑時，各繼承人之<strong>特留分</strong>不得侵害（民法第1223條）。';
+    if (state.deceased_children > 0) lawText += '<br>已過世子女由其子女（孫子女）代位繼承（民法第1140條）。';
+    if (renounced > 0) lawText += `<br>${renounced}人拋棄繼承，其份額由其他同順位繼承人均分（民法第1174條）。`;
 
     document.getElementById('resultContainer').innerHTML = html;
     document.getElementById('lawNote').innerHTML = '⚖️ 法律依據：' + lawText;
