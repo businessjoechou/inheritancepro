@@ -756,6 +756,8 @@
     <div id="resultContainer"></div>
     <div class="law-note" id="lawNote"></div>
     <div id="taxContainer"></div>
+
+    <button class="btn-next" onclick="downloadPDF()" style="width:100%;margin-top:16px;margin-bottom:10px">⬇ 下載 PDF 報告</button>
     <button class="restart-btn" onclick="restart()">🔄 重新計算</button>
   </div>
 
@@ -1149,6 +1151,91 @@
     </div>`;
 
     document.getElementById('taxContainer').innerHTML = taxHtml;
+  }
+
+  function downloadPDF() {
+    const today = new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' });
+    const resultHTML = document.getElementById('resultContainer').innerHTML;
+    const lawHTML = document.getElementById('lawNote').innerHTML;
+    const taxHTML = document.getElementById('taxContainer').innerHTML;
+
+    const printContent = `
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>InheritancePro 遺產繼承計算報告</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans TC', sans-serif; background: #fff; color: #1a1410; font-size: 13px; padding: 40px; max-width: 700px; margin: 0 auto; }
+  .pdf-header { border-bottom: 3px solid #1a1410; padding-bottom: 20px; margin-bottom: 28px; display: flex; justify-content: space-between; align-items: flex-end; }
+  .pdf-logo { font-family: 'Noto Serif TC', serif; font-size: 24px; font-weight: 700; }
+  .pdf-logo span { color: #c4932a; }
+  .pdf-meta { font-size: 11px; color: #7a6f62; text-align: right; line-height: 1.8; font-family: 'DM Mono', monospace; }
+  h1 { font-family: 'Noto Serif TC', serif; font-size: 18px; margin-bottom: 6px; }
+  .section-title { font-size: 11px; color: #7a6f62; letter-spacing: 0.12em; text-transform: uppercase; font-family: 'DM Mono', monospace; margin: 20px 0 10px; }
+  .result-hero { background: #1a1410; color: #f5f0e8; border-radius: 10px; padding: 20px; text-align: center; margin-bottom: 14px; }
+  .result-hero .label { font-size: 11px; color: #7a6f62; letter-spacing: 0.12em; font-family: 'DM Mono', monospace; margin-bottom: 6px; }
+  .result-total { font-family: 'Noto Serif TC', serif; font-size: 24px; font-weight: 700; color: #c4932a; }
+  .result-sub { font-size: 12px; color: #7a6f62; margin-top: 4px; }
+  .heir-card { border: 1.5px solid #c8bfb0; border-radius: 10px; overflow: hidden; margin-bottom: 10px; break-inside: avoid; }
+  .heir-header { background: #e8e0d0; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; }
+  .heir-name { font-weight: 600; font-size: 13px; }
+  .heir-fraction { font-family: 'DM Mono', monospace; font-size: 12px; color: #8b2020; font-weight: 500; }
+  .heir-body { padding: 12px 14px; }
+  .heir-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .heir-row:last-child { margin-bottom: 0; }
+  .heir-row-label { font-size: 12px; color: #7a6f62; }
+  .heir-row-val { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; color: #2a6b4a; }
+  .law-note { background: #f8f8f8; border-left: 3px solid #c4932a; border-radius: 0 8px 8px 0; padding: 10px 14px; font-size: 11px; color: #7a6f62; line-height: 1.7; margin-bottom: 14px; }
+  .law-note strong { color: #1a1410; }
+  .info-box { background: #fffbf0; border: 1px solid #e8d48a; border-radius: 8px; padding: 10px 14px; font-size: 11px; color: #7a6020; line-height: 1.6; margin-bottom: 14px; }
+  .pdf-footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid #c8bfb0; font-size: 11px; color: #7a6f62; line-height: 1.8; text-align: center; }
+  .disclaimer { font-size: 10px; color: #aaa; margin-top: 8px; }
+  @media print {
+    body { padding: 20px; }
+    .pdf-header { break-after: avoid; }
+  }
+</style>
+</head>
+<body>
+  <div class="pdf-header">
+    <div>
+      <div class="pdf-logo">Inheritance<span>Pro</span></div>
+      <div style="font-size:12px;color:#7a6f62;margin-top:4px">台灣遺產繼承計算報告</div>
+    </div>
+    <div class="pdf-meta">
+      產出日期：${today}<br>
+      遺產總額：${formatMoney(state.totalEstate)}<br>
+      有無遺囑：${state.hasWill ? '有' : '無'}<br>
+      配偶：${state.hasSpouse ? '有' : '無'}
+    </div>
+  </div>
+
+  <div class="section-title">應繼分計算結果</div>
+  ${resultHTML}
+
+  ${lawHTML}
+
+  <div class="section-title">遺產稅試算</div>
+  ${taxHTML}
+
+  <div class="pdf-footer">
+    © ${new Date().getFullYear()} InheritancePro &nbsp;·&nbsp; inheritancepro.vercel.app
+    <div class="disclaimer">本報告僅供參考，不構成法律意見。實際繼承事宜請諮詢專業律師或法律顧問。<br>法律依據：中華民國《民法》繼承編、《遺產及贈與稅法》。</div>
+  </div>
+</body>
+</html>`;
+
+    const printWin = window.open('', '_blank');
+    printWin.document.write(printContent);
+    printWin.document.close();
+    printWin.onload = () => {
+      setTimeout(() => {
+        printWin.print();
+      }, 500);
+    };
   }
 
   // Init
