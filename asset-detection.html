@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>脫產偵測模組｜InheritancePro</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f1117;
+    --bg: #f4f4f0;
+    --card: #ffffff;
+    --border: #d8d5ce;
+    --muted: #7a7870;
+    --gold: #b8860b;
+    --danger: #c0392b;
+    --warn: #d4691e;
+    --ok: #2d6a4f;
+    --soft: #eaeae4;
+    --accent: #1a3a5c;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; font-size: 14px; min-height: 100vh; }
+
+  /* Header */
+  header { background: var(--ink); color: #f4f4f0; padding: 16px 28px; display: flex; align-items: center; justify-content: space-between; }
+  .logo { font-family: 'Noto Serif TC', serif; font-size: 18px; font-weight: 700; }
+  .logo span { color: var(--gold); }
+  .module-badge { background: var(--danger); color: #fff; font-size: 10px; font-family: 'DM Mono', monospace; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.1em; }
+  .back-link { color: #7a7870; font-size: 12px; text-decoration: none; font-family: 'DM Mono', monospace; }
+  .back-link:hover { color: var(--gold); }
+
+  main { max-width: 860px; margin: 0 auto; padding: 32px 20px 80px; }
+
+  /* Page title */
+  .page-title { margin-bottom: 28px; }
+  .page-title h1 { font-family: 'Noto Serif TC', serif; font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+  .page-title p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .law-tag { display: inline-block; background: #e8f0f8; color: var(--accent); font-size: 11px; font-family: 'DM Mono', monospace; padding: 2px 8px; border-radius: 3px; margin-top: 8px; }
+
+  /* Tabs */
+  .tabs { display: flex; gap: 0; border-bottom: 2px solid var(--border); margin-bottom: 24px; }
+  .tab { padding: 10px 20px; font-size: 13px; cursor: pointer; color: var(--muted); border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.2s; font-family: 'Noto Sans TC', sans-serif; background: none; border-top: none; border-left: none; border-right: none; }
+  .tab.active { color: var(--ink); border-bottom-color: var(--ink); font-weight: 500; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* Card */
+  .card { background: var(--card); border: 1.5px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+  .card-title { font-size: 12px; font-family: 'DM Mono', monospace; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
+
+  /* Manual input table */
+  .tx-table { width: 100%; border-collapse: collapse; }
+  .tx-table th { font-size: 11px; font-family: 'DM Mono', monospace; color: var(--muted); text-align: left; padding: 0 8px 10px; border-bottom: 1px solid var(--border); font-weight: 400; letter-spacing: 0.08em; }
+  .tx-table td { padding: 6px 8px; border-bottom: 1px solid #f0efea; vertical-align: middle; }
+  .tx-table tr:last-child td { border-bottom: none; }
+  .tx-table input, .tx-table select { width: 100%; padding: 7px 10px; border: 1.5px solid var(--border); border-radius: 6px; font-size: 13px; font-family: 'Noto Sans TC', sans-serif; background: var(--bg); color: var(--ink); }
+  .tx-table input:focus, .tx-table select:focus { outline: none; border-color: var(--accent); background: #fff; }
+  .tx-table input[type="number"] { font-family: 'DM Mono', monospace; }
+
+  .add-row-btn { margin-top: 12px; padding: 8px 16px; border: 1.5px dashed var(--border); border-radius: 6px; background: transparent; cursor: pointer; font-size: 13px; color: var(--muted); font-family: 'Noto Sans TC', sans-serif; width: 100%; transition: all 0.2s; }
+  .add-row-btn:hover { border-color: var(--accent); color: var(--accent); background: #f0f4f8; }
+
+  .del-btn { width: 28px; height: 28px; border: none; background: none; cursor: pointer; color: var(--border); font-size: 16px; transition: color 0.2s; padding: 0; display: flex; align-items: center; justify-content: center; }
+  .del-btn:hover { color: var(--danger); }
+
+  /* Paste area */
+  .paste-area { width: 100%; min-height: 160px; padding: 14px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 13px; font-family: 'DM Mono', monospace; background: var(--bg); color: var(--ink); resize: vertical; line-height: 1.8; }
+  .paste-area:focus { outline: none; border-color: var(--accent); background: #fff; }
+  .paste-hint { font-size: 11px; color: var(--muted); margin-top: 8px; line-height: 1.7; }
+  .parse-btn { margin-top: 12px; padding: 10px 20px; background: var(--accent); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-family: 'Noto Sans TC', sans-serif; }
+
+  /* CSV upload */
+  .upload-zone { border: 2px dashed var(--border); border-radius: 10px; padding: 40px 20px; text-align: center; cursor: pointer; transition: all 0.2s; }
+  .upload-zone:hover, .upload-zone.drag { border-color: var(--accent); background: #f0f4f8; }
+  .upload-zone p { color: var(--muted); font-size: 13px; margin-top: 10px; }
+  .upload-zone .icon { font-size: 32px; }
+  .upload-zone input[type="file"] { display: none; }
+  .upload-zone .file-name { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--ok); margin-top: 8px; }
+
+  /* Analyze btn */
+  .analyze-btn { width: 100%; padding: 14px; background: var(--ink); color: #f4f4f0; border: none; border-radius: 8px; font-size: 15px; font-weight: 500; cursor: pointer; font-family: 'Noto Sans TC', sans-serif; letter-spacing: 0.03em; transition: background 0.2s; margin-top: 8px; }
+  .analyze-btn:hover { background: #1e2530; }
+
+  /* Results */
+  #resultSection { display: none; }
+
+  .risk-summary { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+  .risk-box { border-radius: 8px; padding: 16px; text-align: center; }
+  .risk-box.high { background: #fdf0ef; border: 1.5px solid #e8b4b0; }
+  .risk-box.med { background: #fef6ed; border: 1.5px solid #f0d4b0; }
+  .risk-box.low { background: #edf7f1; border: 1.5px solid #a8d4b8; }
+  .risk-box .num { font-family: 'DM Mono', monospace; font-size: 28px; font-weight: 500; }
+  .risk-box.high .num { color: var(--danger); }
+  .risk-box.med .num { color: var(--warn); }
+  .risk-box.low .num { color: var(--ok); }
+  .risk-box .lbl { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+  .overall-risk { border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; }
+  .overall-risk.CRITICAL { background: #fdf0ef; border: 2px solid var(--danger); }
+  .overall-risk.HIGH { background: #fef0ea; border: 2px solid var(--warn); }
+  .overall-risk.MEDIUM { background: #fefbea; border: 2px solid #c9a227; }
+  .overall-risk.LOW { background: #edf7f1; border: 2px solid var(--ok); }
+  .overall-risk .risk-label { font-family: 'Noto Serif TC', serif; font-size: 18px; font-weight: 700; }
+  .overall-risk.CRITICAL .risk-label { color: var(--danger); }
+  .overall-risk.HIGH .risk-label { color: var(--warn); }
+  .overall-risk.MEDIUM .risk-label { color: #b8860b; }
+  .overall-risk.LOW .risk-label { color: var(--ok); }
+  .overall-risk .risk-desc { font-size: 12px; color: var(--muted); margin-top: 3px; }
+  .risk-score { font-family: 'DM Mono', monospace; font-size: 32px; font-weight: 500; }
+  .overall-risk.CRITICAL .risk-score { color: var(--danger); }
+  .overall-risk.HIGH .risk-score { color: var(--warn); }
+  .overall-risk.MEDIUM .risk-score { color: #b8860b; }
+  .overall-risk.LOW .risk-score { color: var(--ok); }
+
+  /* Transaction result rows */
+  .tx-result { border: 1.5px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 10px; }
+  .tx-result-header { padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .tx-result-header.HIGH, .tx-result-header.CRITICAL { background: #fdf0ef; border-left: 4px solid var(--danger); }
+  .tx-result-header.MEDIUM { background: #fef6ed; border-left: 4px solid var(--warn); }
+  .tx-result-header.LOW { background: #f8f8f4; border-left: 4px solid var(--border); }
+  .tx-meta { flex: 1; }
+  .tx-date { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+  .tx-desc { font-size: 13px; font-weight: 500; margin-top: 2px; }
+  .tx-amount { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; white-space: nowrap; }
+  .tx-amount.neg { color: var(--danger); }
+  .tx-badge { font-size: 10px; font-family: 'DM Mono', monospace; padding: 2px 8px; border-radius: 3px; white-space: nowrap; }
+  .tx-badge.HIGH, .tx-badge.CRITICAL { background: var(--danger); color: #fff; }
+  .tx-badge.MEDIUM { background: var(--warn); color: #fff; }
+  .tx-badge.LOW { background: var(--border); color: var(--muted); }
+  .tx-flags { padding: 8px 14px 10px; background: #fafaf6; }
+  .tx-flag { font-size: 11px; color: var(--muted); padding: 2px 0; }
+  .tx-flag.alert { color: var(--danger); }
+  .tx-flag.warn { color: var(--warn); }
+
+  .law-ref { background: #f0f4f8; border-radius: 6px; padding: 12px 14px; font-size: 11px; color: var(--accent); line-height: 1.8; margin-top: 16px; }
+  .law-ref strong { color: var(--ink); }
+
+  .pdf-btn { width: 100%; padding: 13px; background: var(--danger); color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'Noto Sans TC', sans-serif; margin-top: 16px; }
+
+  /* Info box */
+  .info-box { background: #fefbea; border: 1px solid #e8d470; border-radius: 8px; padding: 12px 14px; font-size: 12px; color: #7a6010; line-height: 1.7; margin-bottom: 16px; }
+
+  @media (max-width: 600px) {
+    .risk-summary { grid-template-columns: 1fr 1fr 1fr; }
+    .risk-box .num { font-size: 22px; }
+    .tx-table { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div style="display:flex;align-items:center;gap:14px">
+    <div class="logo">Inheritance<span>Pro</span></div>
+    <span class="module-badge">脫產偵測</span>
+  </div>
+  <a href="index.html" class="back-link">← 返回計算器</a>
+</header>
+
+<main>
+  <div class="page-title">
+    <h1>財產異動風險分析</h1>
+    <p>輸入被繼承人生前的財產異動紀錄，系統依台灣法律規定自動偵測可疑脫產行為並給出風險評級。</p>
+    <span class="law-tag">民法§1148-1 ｜ 遺贈稅§15 ｜ 刑法§356</span>
+  </div>
+
+  <div class="info-box">
+    ⚖️ <strong>法律重點：</strong>被繼承人死亡前<strong>2年內</strong>的贈與視為遺產（民法第1148-1條）；生前<strong>6年內</strong>的贈與需計入遺產總額課稅（遺贈稅法第15條）。
+  </div>
+
+  <!-- Input tabs -->
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('manual')">手動輸入</button>
+    <button class="tab" onclick="switchTab('paste')">貼上文字</button>
+    <button class="tab" onclick="switchTab('csv')">上傳 CSV</button>
+  </div>
+
+  <!-- Manual -->
+  <div class="tab-panel active" id="tab-manual">
+    <div class="card">
+      <div class="card-title">財產異動紀錄</div>
+      <table class="tx-table">
+        <thead>
+          <tr>
+            <th style="width:110px">日期</th>
+            <th style="width:80px">金額（萬）</th>
+            <th style="width:120px">類型</th>
+            <th>對象 / 說明</th>
+            <th style="width:36px"></th>
+          </tr>
+        </thead>
+        <tbody id="manualRows">
+          <tr>
+            <td><input type="date" class="tx-date-input"></td>
+            <td><input type="number" class="tx-amount-input" placeholder="0" min="0"></td>
+            <td>
+              <select class="tx-type-input">
+                <option value="">選擇類型</option>
+                <option value="gift_cash">現金贈與</option>
+                <option value="gift_property">不動產贈與</option>
+                <option value="gift_stock">股票/有價證券贈與</option>
+                <option value="transfer_low">低價出售（親屬）</option>
+                <option value="withdraw">大額提款</option>
+                <option value="insurance">壽險保費</option>
+                <option value="other">其他</option>
+              </select>
+            </td>
+            <td><input type="text" class="tx-note-input" placeholder="對象姓名或說明"></td>
+            <td><button class="del-btn" onclick="delRow(this)">×</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <button class="add-row-btn" onclick="addRow()">＋ 新增一筆</button>
+    </div>
+
+    <div class="card" style="padding:16px 20px">
+      <div class="card-title">基本資訊</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div>
+          <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">被繼承人死亡日期</label>
+          <input type="date" id="deathDate" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;background:var(--bg);color:var(--ink)">
+        </div>
+        <div>
+          <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">遺產申報總額（萬元）</label>
+          <input type="number" id="declaredEstate" placeholder="0" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;font-family:'DM Mono',monospace;background:var(--bg);color:var(--ink)">
+        </div>
+      </div>
+    </div>
+
+    <button class="analyze-btn" onclick="analyze('manual')">開始風險分析 →</button>
+  </div>
+
+  <!-- Paste -->
+  <div class="tab-panel" id="tab-paste">
+    <div class="card">
+      <div class="card-title">貼上交易紀錄</div>
+      <textarea class="paste-area" id="pasteData" placeholder="請貼上財產異動資料，每行一筆，格式範例：&#10;2023/01/15, 500萬, 現金贈與, 長子&#10;2022/08/20, 1200萬, 不動產贈與, 配偶&#10;2021/05/10, 300萬, 大額提款, 不明&#10;&#10;支援多種格式，系統會自動解析。"></textarea>
+      <div class="paste-hint">
+        支援格式：日期、金額、類型、對象，以逗號或空格分隔。<br>
+        日期格式：YYYY/MM/DD 或 YYYY-MM-DD。金額單位：萬元或元皆可。
+      </div>
+      <button class="parse-btn" onclick="parsePaste()">解析資料</button>
+    </div>
+
+    <div class="card" style="padding:16px 20px">
+      <div class="card-title">基本資訊</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div>
+          <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">被繼承人死亡日期</label>
+          <input type="date" id="deathDatePaste" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;background:var(--bg);color:var(--ink)">
+        </div>
+        <div>
+          <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">遺產申報總額（萬元）</label>
+          <input type="number" id="declaredEstatePaste" placeholder="0" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;font-family:'DM Mono',monospace;background:var(--bg);color:var(--ink)">
+        </div>
+      </div>
+    </div>
+
+    <div id="parsedPreview" style="display:none">
+      <div class="card">
+        <div class="card-title">解析結果預覽</div>
+        <table class="tx-table">
+          <thead><tr><th>日期</th><th>金額</th><th>類型</th><th>對象/說明</th></tr></thead>
+          <tbody id="parsedRows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <button class="analyze-btn" onclick="analyze('paste')">開始風險分析 →</button>
+  </div>
+
+  <!-- CSV -->
+  <div class="tab-panel" id="tab-csv">
+    <div class="card">
+      <div class="card-title">上傳 CSV 檔案</div>
+      <div class="upload-zone" id="uploadZone" onclick="document.getElementById('csvFile').click()" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+        <div class="icon">📄</div>
+        <p>點擊或拖曳 CSV 檔案至此</p>
+        <p style="font-size:11px;margin-top:4px">支援 .csv 格式，欄位：日期、金額、類型、對象</p>
+        <div class="file-name" id="csvFileName"></div>
+        <input type="file" id="csvFile" accept=".csv" onchange="handleCSV(this)">
+      </div>
+      <div class="paste-hint" style="margin-top:12px">
+        CSV 範本欄位：<span style="font-family:'DM Mono',monospace">日期, 金額(萬), 類型, 對象說明</span><br>
+        類型填寫：現金贈與 / 不動產贈與 / 低價出售 / 大額提款 / 壽險保費 / 其他
+      </div>
+    </div>
+
+    <div class="card" style="padding:16px 20px">
+      <div class="card-title">基本資訊</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div>
+          <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">被繼承人死亡日期</label>
+          <input type="date" id="deathDateCSV" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;background:var(--bg);color:var(--ink)">
+        </div>
+        <div>
+          <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">遺產申報總額（萬元）</label>
+          <input type="number" id="declaredEstateCSV" placeholder="0" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;font-family:'DM Mono',monospace;background:var(--bg);color:var(--ink)">
+        </div>
+      </div>
+    </div>
+
+    <div id="csvPreview" style="display:none">
+      <div class="card">
+        <div class="card-title">CSV 資料預覽</div>
+        <table class="tx-table">
+          <thead><tr><th>日期</th><th>金額</th><th>類型</th><th>對象/說明</th></tr></thead>
+          <tbody id="csvRows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <button class="analyze-btn" onclick="analyze('csv')">開始風險分析 →</button>
+  </div>
+
+  <!-- Results -->
+  <div id="resultSection">
+    <div style="border-top:2px solid var(--border);margin:32px 0 24px;padding-top:24px">
+      <div style="font-family:'Noto Serif TC',serif;font-size:18px;font-weight:700;margin-bottom:4px">風險分析報告</div>
+      <div style="font-size:12px;color:var(--muted)" id="reportMeta"></div>
+    </div>
+
+    <div class="overall-risk" id="overallRisk">
+      <div>
+        <div class="risk-label" id="overallLabel"></div>
+        <div class="risk-desc" id="overallDesc"></div>
+      </div>
+      <div class="risk-score" id="overallScore"></div>
+    </div>
+
+    <div class="risk-summary">
+      <div class="risk-box high">
+        <div class="num" id="countHigh">0</div>
+        <div class="lbl">高風險</div>
+      </div>
+      <div class="risk-box med">
+        <div class="num" id="countMed">0</div>
+        <div class="lbl">中風險</div>
+      </div>
+      <div class="risk-box low">
+        <div class="num" id="countLow">0</div>
+        <div class="lbl">低風險</div>
+      </div>
+    </div>
+
+    <div id="txResults"></div>
+
+    <div class="law-ref" id="lawRef"></div>
+
+    <button class="pdf-btn" onclick="downloadReport()">⬇ 下載風險分析報告 PDF</button>
+  </div>
+</main>
+
+<script>
+  let parsedData = [];
+  let analysisResult = null;
+
+  // Tab switching
+  function switchTab(tab) {
+    document.querySelectorAll('.tab').forEach((t, i) => t.classList.toggle('active', ['manual','paste','csv'][i] === tab));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+  }
+
+  // Manual rows
+  function addRow() {
+    const tbody = document.getElementById('manualRows');
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><input type="date" class="tx-date-input"></td>
+      <td><input type="number" class="tx-amount-input" placeholder="0" min="0"></td>
+      <td><select class="tx-type-input">
+        <option value="">選擇類型</option>
+        <option value="gift_cash">現金贈與</option>
+        <option value="gift_property">不動產贈與</option>
+        <option value="gift_stock">股票/有價證券贈與</option>
+        <option value="transfer_low">低價出售（親屬）</option>
+        <option value="withdraw">大額提款</option>
+        <option value="insurance">壽險保費</option>
+        <option value="other">其他</option>
+      </select></td>
+      <td><input type="text" class="tx-note-input" placeholder="對象姓名或說明"></td>
+      <td><button class="del-btn" onclick="delRow(this)">×</button></td>`;
+    tbody.appendChild(tr);
+  }
+
+  function delRow(btn) {
+    const rows = document.querySelectorAll('#manualRows tr');
+    if (rows.length > 1) btn.closest('tr').remove();
+  }
+
+  // Parse paste
+  function parsePaste() {
+    const text = document.getElementById('pasteData').value.trim();
+    if (!text) { alert('請先貼上資料'); return; }
+    const lines = text.split('\n').filter(l => l.trim());
+    parsedData = [];
+    const tbody = document.getElementById('parsedRows');
+    tbody.innerHTML = '';
+    lines.forEach(line => {
+      const parts = line.split(/[,，\t]+/).map(s => s.trim());
+      if (parts.length < 2) return;
+      const dateStr = parts[0] || '';
+      const amtStr = parts[1] || '';
+      const typeStr = parts[2] || '其他';
+      const noteStr = parts[3] || '';
+      const amount = parseFloat(amtStr.replace(/[^0-9.]/g, '')) || 0;
+      const item = { date: dateStr, amount, type: guessType(typeStr), note: noteStr };
+      parsedData.push(item);
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${dateStr}</td><td style="font-family:'DM Mono',monospace">${amount}萬</td><td>${typeStr}</td><td>${noteStr}</td>`;
+      tbody.appendChild(tr);
+    });
+    document.getElementById('parsedPreview').style.display = parsedData.length > 0 ? 'block' : 'none';
+  }
+
+  function guessType(str) {
+    if (/現金|cash/i.test(str)) return 'gift_cash';
+    if (/不動產|房|地|土地/i.test(str)) return 'gift_property';
+    if (/股票|證券/i.test(str)) return 'gift_stock';
+    if (/低價|出售/i.test(str)) return 'transfer_low';
+    if (/提款|提現|現金領/i.test(str)) return 'withdraw';
+    if (/保費|保險/i.test(str)) return 'insurance';
+    return 'other';
+  }
+
+  // CSV handling
+  function handleDragOver(e) { e.preventDefault(); document.getElementById('uploadZone').classList.add('drag'); }
+  function handleDragLeave(e) { document.getElementById('uploadZone').classList.remove('drag'); }
+  function handleDrop(e) {
+    e.preventDefault();
+    document.getElementById('uploadZone').classList.remove('drag');
+    const file = e.dataTransfer.files[0];
+    if (file) processCSV(file);
+  }
+  function handleCSV(input) { if (input.files[0]) processCSV(input.files[0]); }
+
+  function processCSV(file) {
+    document.getElementById('csvFileName').textContent = file.name;
+    const reader = new FileReader();
+    reader.onload = e => {
+      const lines = e.target.result.split('\n').filter(l => l.trim());
+      parsedData = [];
+      const tbody = document.getElementById('csvRows');
+      tbody.innerHTML = '';
+      const start = lines[0].match(/日期|date/i) ? 1 : 0;
+      for (let i = start; i < lines.length; i++) {
+        const parts = lines[i].split(',').map(s => s.trim().replace(/^"|"$/g, ''));
+        if (parts.length < 2) continue;
+        const amount = parseFloat(parts[1].replace(/[^0-9.]/g, '')) || 0;
+        const item = { date: parts[0], amount, type: guessType(parts[2] || ''), note: parts[3] || '' };
+        parsedData.push(item);
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${parts[0]}</td><td style="font-family:'DM Mono',monospace">${amount}萬</td><td>${parts[2]||''}</td><td>${parts[3]||''}</td>`;
+        tbody.appendChild(tr);
+      }
+      document.getElementById('csvPreview').style.display = parsedData.length > 0 ? 'block' : 'none';
+    };
+    reader.readAsText(file);
+  }
+
+  // Collect manual data
+  function collectManual() {
+    const rows = document.querySelectorAll('#manualRows tr');
+    parsedData = [];
+    rows.forEach(row => {
+      const date = row.querySelector('.tx-date-input').value;
+      const amount = parseFloat(row.querySelector('.tx-amount-input').value) || 0;
+      const type = row.querySelector('.tx-type-input').value;
+      const note = row.querySelector('.tx-note-input').value;
+      if (date || amount > 0) parsedData.push({ date, amount, type, note });
+    });
+  }
+
+  // Risk analysis
+  function analyze(source) {
+    if (source === 'manual') collectManual();
+    if (parsedData.length === 0) { alert('請先輸入至少一筆財產異動紀錄'); return; }
+
+    const deathDateEl = document.getElementById(source === 'manual' ? 'deathDate' : source === 'paste' ? 'deathDatePaste' : 'deathDateCSV');
+    const deathDate = deathDateEl.value ? new Date(deathDateEl.value) : null;
+
+    const results = parsedData.map(tx => scoreTransaction(tx, deathDate));
+    analysisResult = { results, deathDate, source };
+    renderResults(results, deathDate);
+  }
+
+  function scoreTransaction(tx, deathDate) {
+    let score = 0;
+    const flags = [];
+    const txDate = tx.date ? new Date(tx.date.replace(/\//g, '-')) : null;
+
+    // Days before death
+    let daysBefore = null;
+    if (txDate && deathDate && !isNaN(txDate)) {
+      daysBefore = (deathDate - txDate) / (1000 * 60 * 60 * 24);
+    }
+
+    // Rule 1: Within 2 years of death (民法1148-1)
+    if (daysBefore !== null && daysBefore >= 0 && daysBefore <= 730) {
+      score += 40;
+      flags.push({ level: 'alert', text: `死亡前 ${Math.round(daysBefore)} 天內的異動，依民法第1148-1條視為遺產` });
+    }
+
+    // Rule 2: Between 2-6 years (遺贈稅§15)
+    if (daysBefore !== null && daysBefore > 730 && daysBefore <= 2190) {
+      score += 20;
+      flags.push({ level: 'warn', text: `死亡前6年內的贈與，依遺贈稅法第15條需計入遺產課稅` });
+    }
+
+    // Rule 3: High amount
+    if (tx.amount >= 1000) { score += 30; flags.push({ level: 'alert', text: `金額達 ${tx.amount}萬元，屬重大財產移轉` }); }
+    else if (tx.amount >= 200) { score += 15; flags.push({ level: 'warn', text: `金額達 ${tx.amount}萬元，需注意是否有申報贈與稅` }); }
+
+    // Rule 4: Type risk
+    const typeRisk = { gift_cash: 25, gift_property: 30, gift_stock: 20, transfer_low: 35, withdraw: 20, insurance: 15, other: 5 };
+    score += typeRisk[tx.type] || 5;
+
+    if (tx.type === 'transfer_low') flags.push({ level: 'alert', text: '親屬間低價出售，可能構成實質贈與，需評估市價差額' });
+    if (tx.type === 'withdraw') flags.push({ level: 'warn', text: '大額現金提款，款項去向不明，具脫產風險' });
+    if (tx.type === 'gift_property') flags.push({ level: 'warn', text: '不動產贈與，需確認是否已申報土地增值稅及贈與稅' });
+
+    // Determine level
+    let level = 'LOW';
+    if (score >= 70) level = 'CRITICAL';
+    else if (score >= 50) level = 'HIGH';
+    else if (score >= 25) level = 'MEDIUM';
+
+    const typeLabels = { gift_cash:'現金贈與', gift_property:'不動產贈與', gift_stock:'股票贈與', transfer_low:'低價出售', withdraw:'大額提款', insurance:'壽險保費', other:'其他' };
+
+    return { ...tx, score, level, flags, daysBefore, typeLabel: typeLabels[tx.type] || tx.type };
+  }
+
+  function renderResults(results, deathDate) {
+    const high = results.filter(r => r.level === 'HIGH' || r.level === 'CRITICAL').length;
+    const med = results.filter(r => r.level === 'MEDIUM').length;
+    const low = results.filter(r => r.level === 'LOW').length;
+    const totalScore = Math.min(100, Math.round(results.reduce((s, r) => s + r.score, 0) / results.length));
+
+    let overallLevel = 'LOW';
+    if (totalScore >= 70) overallLevel = 'CRITICAL';
+    else if (totalScore >= 50) overallLevel = 'HIGH';
+    else if (totalScore >= 25) overallLevel = 'MEDIUM';
+
+    const levelLabels = { CRITICAL:'極高風險', HIGH:'高風險', MEDIUM:'中度風險', LOW:'低風險' };
+    const levelDescs = {
+      CRITICAL: '存在多項重大脫產疑慮，建議立即委請律師介入調查並向國稅局申請調閱資料',
+      HIGH: '發現明顯財產移轉行為，建議律師詳細審查並保留相關證據',
+      MEDIUM: '部分異動需進一步核查，建議取得相關交易憑證確認合法性',
+      LOW: '財產異動符合一般常規，風險相對較低'
+    };
+
+    document.getElementById('countHigh').textContent = high;
+    document.getElementById('countMed').textContent = med;
+    document.getElementById('countLow').textContent = low;
+
+    const overallEl = document.getElementById('overallRisk');
+    overallEl.className = 'overall-risk ' + overallLevel;
+    document.getElementById('overallLabel').textContent = levelLabels[overallLevel];
+    document.getElementById('overallDesc').textContent = levelDescs[overallLevel];
+    document.getElementById('overallScore').textContent = totalScore;
+
+    document.getElementById('reportMeta').textContent = `分析日期：${new Date().toLocaleDateString('zh-TW')}${deathDate ? ' ｜ 被繼承人死亡日期：' + deathDate.toLocaleDateString('zh-TW') : ''} ｜ 共 ${results.length} 筆紀錄`;
+
+    const container = document.getElementById('txResults');
+    container.innerHTML = '';
+    results.sort((a, b) => b.score - a.score).forEach(r => {
+      const div = document.createElement('div');
+      div.className = 'tx-result';
+      const flagsHTML = r.flags.map(f => `<div class="tx-flag ${f.level}">▸ ${f.text}</div>`).join('');
+      div.innerHTML = `
+        <div class="tx-result-header ${r.level}">
+          <div class="tx-meta">
+            <div class="tx-date">${r.date || '日期未填'}${r.daysBefore !== null ? ` ｜ 死亡前 ${Math.round(r.daysBefore)} 天` : ''}</div>
+            <div class="tx-desc">${r.typeLabel}${r.note ? ' — ' + r.note : ''}</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="tx-amount neg">NT$ ${(r.amount * 10000).toLocaleString('zh-TW')}</div>
+            <span class="tx-badge ${r.level}">${r.level === 'CRITICAL' ? '極高' : r.level === 'HIGH' ? '高' : r.level === 'MEDIUM' ? '中' : '低'}</span>
+          </div>
+        </div>
+        ${r.flags.length > 0 ? `<div class="tx-flags">${flagsHTML}</div>` : ''}`;
+      container.appendChild(div);
+    });
+
+    const laws = [];
+    if (results.some(r => r.daysBefore !== null && r.daysBefore <= 730)) laws.push('・<strong>民法第1148-1條</strong>：繼承人因被繼承人死亡前二年內贈與之財產，應計入遺產。');
+    if (results.some(r => r.daysBefore !== null && r.daysBefore <= 2190)) laws.push('・<strong>遺產及贈與稅法第15條</strong>：被繼承人死亡前六年內贈與繼承人之財產，應併入遺產課稅。');
+    if (results.some(r => r.type === 'transfer_low')) laws.push('・<strong>遺產及贈與稅法第5條</strong>：以顯著不相當之代價讓與財產，其差額視為贈與。');
+    laws.push('・<strong>刑法第356條</strong>：損害債權罪，隱匿或毀棄財產情節重大者，可能涉及刑事責任。');
+
+    document.getElementById('lawRef').innerHTML = '⚖️ 相關法律依據：<br>' + laws.join('<br>');
+
+    document.getElementById('resultSection').style.display = 'block';
+    document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // PDF report
+  function downloadReport() {
+    if (!analysisResult) return;
+    const { results, deathDate } = analysisResult;
+    const today = new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' });
+    const totalScore = Math.min(100, Math.round(results.reduce((s, r) => s + r.score, 0) / results.length));
+    let overallLevel = 'LOW';
+    if (totalScore >= 70) overallLevel = 'CRITICAL';
+    else if (totalScore >= 50) overallLevel = 'HIGH';
+    else if (totalScore >= 25) overallLevel = 'MEDIUM';
+    const levelLabels = { CRITICAL:'極高風險', HIGH:'高風險', MEDIUM:'中度風險', LOW:'低風險' };
+
+    let txHTML = '';
+    results.sort((a, b) => b.score - a.score).forEach(r => {
+      const flagsHTML = r.flags.map(f => `<li style="color:${f.level === 'alert' ? '#c0392b' : '#d4691e'}">${f.text}</li>`).join('');
+      txHTML += `<tr>
+        <td>${r.date || '—'}</td>
+        <td style="font-family:monospace">NT$ ${(r.amount * 10000).toLocaleString('zh-TW')}</td>
+        <td>${r.typeLabel}</td>
+        <td>${r.note || '—'}</td>
+        <td style="color:${r.level === 'CRITICAL' || r.level === 'HIGH' ? '#c0392b' : r.level === 'MEDIUM' ? '#d4691e' : '#2d6a4f'};font-weight:600">${r.level === 'CRITICAL' ? '極高' : r.level === 'HIGH' ? '高' : r.level === 'MEDIUM' ? '中' : '低'}</td>
+      </tr>
+      ${r.flags.length > 0 ? `<tr><td colspan="5" style="padding:4px 12px 10px;background:#fafafa"><ul style="font-size:11px;margin-left:16px">${flagsHTML}</ul></td></tr>` : ''}`;
+    });
+
+    const html = `<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8">
+<title>InheritancePro 脫產風險分析報告</title>
+<style>
+  body { font-family: 'Noto Sans TC', sans-serif; padding: 40px; max-width: 750px; margin: 0 auto; font-size: 13px; color: #0f1117; }
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500&display=swap');
+  .header { border-bottom: 3px solid #0f1117; padding-bottom: 18px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: flex-end; }
+  .logo { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; }
+  .logo span { color: #b8860b; }
+  .badge { background: #c0392b; color: #fff; font-size: 10px; padding: 2px 8px; border-radius: 3px; margin-left: 10px; }
+  .meta { font-size: 11px; color: #7a7870; text-align: right; line-height: 1.8; }
+  .risk-banner { padding: 16px 20px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+  .risk-banner.CRITICAL { background: #fdf0ef; border: 2px solid #c0392b; }
+  .risk-banner.HIGH { background: #fef0ea; border: 2px solid #d4691e; }
+  .risk-banner.MEDIUM { background: #fefbea; border: 2px solid #c9a227; }
+  .risk-banner.LOW { background: #edf7f1; border: 2px solid #2d6a4f; }
+  h2 { font-family: 'Noto Serif TC', serif; font-size: 16px; margin: 20px 0 10px; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th { background: #f4f4f0; padding: 8px 10px; text-align: left; font-weight: 500; border-bottom: 2px solid #d8d5ce; }
+  td { padding: 8px 10px; border-bottom: 1px solid #eaeae4; vertical-align: top; }
+  .law-box { background: #f0f4f8; border-left: 3px solid #1a3a5c; padding: 12px 14px; font-size: 11px; line-height: 1.8; margin-top: 20px; border-radius: 0 6px 6px 0; }
+  .footer { margin-top: 40px; padding-top: 14px; border-top: 1px solid #d8d5ce; font-size: 11px; color: #7a7870; text-align: center; line-height: 1.8; }
+  @media print { body { padding: 20px; } }
+</style></head><body>
+<div class="header">
+  <div>
+    <div class="logo">Inheritance<span>Pro</span><span class="badge">脫產偵測</span></div>
+    <div style="font-size:12px;color:#7a7870;margin-top:4px">財產異動風險分析報告</div>
+  </div>
+  <div class="meta">
+    產出日期：${today}<br>
+    ${deathDate ? '死亡日期：' + deathDate.toLocaleDateString('zh-TW') + '<br>' : ''}
+    分析筆數：${results.length} 筆
+  </div>
+</div>
+<div class="risk-banner ${overallLevel}">
+  <div>
+    <div style="font-family:'Noto Serif TC',serif;font-size:20px;font-weight:700;color:${overallLevel === 'CRITICAL' || overallLevel === 'HIGH' ? '#c0392b' : overallLevel === 'MEDIUM' ? '#b8860b' : '#2d6a4f'}">${levelLabels[overallLevel]}</div>
+    <div style="font-size:12px;color:#7a7870;margin-top:3px">綜合風險評分</div>
+  </div>
+  <div style="font-size:36px;font-weight:600;color:${overallLevel === 'CRITICAL' || overallLevel === 'HIGH' ? '#c0392b' : overallLevel === 'MEDIUM' ? '#b8860b' : '#2d6a4f'}">${totalScore}</div>
+</div>
+<h2>各筆異動風險明細</h2>
+<table><thead><tr><th>日期</th><th>金額</th><th>類型</th><th>對象/說明</th><th>風險</th></tr></thead><tbody>${txHTML}</tbody></table>
+<div class="law-box">
+  ⚖️ 相關法律依據<br>
+  ・<strong>民法第1148-1條</strong>：死亡前二年內贈與視為遺產。<br>
+  ・<strong>遺贈稅法第15條</strong>：死亡前六年內贈與需計入遺產課稅。<br>
+  ・<strong>遺贈稅法第5條</strong>：顯著不相當代價讓與之差額視為贈與。<br>
+  ・<strong>刑法第356條</strong>：損害債權罪。
+</div>
+<div class="footer">
+  © ${new Date().getFullYear()} InheritancePro &nbsp;·&nbsp; inheritancepro.vercel.app<br>
+  本報告由系統自動分析產生，僅供律師參考使用，不構成法律意見。實際案件請由執業律師綜合判斷。
+</div>
+</body></html>`;
+
+    const w = window.open('', '_blank');
+    w.document.write(html);
+    w.document.close();
+    w.onload = () => setTimeout(() => w.print(), 500);
+  }
+</script>
+</body>
+</html>
