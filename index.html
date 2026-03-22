@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InheritancePro｜台灣遺產法律工具平台</title>
+<meta name="description" content="台灣最專業的遺產法律計算工具，包含遺產繼承計算、剩餘財產差額分配請求權計算、脫產偵測分析。">
+<meta name="author" content="InheritancePro">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1410;
+    --paper: #f5f0e8;
+    --gold: #c4932a;
+    --muted: #7a6f62;
+    --border: #c8bfb0;
+    --soft: #e8e0d0;
+    --card: #ffffff;
+    --accent: #8b2020;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'Noto Sans TC', sans-serif;
+    min-height: 100vh;
+    font-size: 15px;
+  }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 0 24px;
+    max-width: 560px;
+    margin: 0 auto;
+    justify-content: center;
+  }
+
+  .hero-top {
+    padding-top: 48px;
+    margin-bottom: 64px;
+  }
+
+  .logo {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  .logo span { color: var(--gold); }
+
+  .tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    border: 1px solid #333;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-left: 12px;
+    vertical-align: middle;
+  }
+
+  .hero-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(32px, 8vw, 48px);
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 16px;
+    letter-spacing: 0.02em;
+  }
+
+  .hero-title em {
+    font-style: normal;
+    color: var(--gold);
+  }
+
+  .hero-sub {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 48px;
+  }
+
+  /* Tool cards */
+  .tools { display: flex; flex-direction: column; gap: 12px; margin-bottom: 48px; }
+
+  .tool-card {
+    display: block;
+    text-decoration: none;
+    border: 1.5px solid #2a2520;
+    border-radius: 12px;
+    padding: 20px 22px;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .tool-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--gold);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .tool-card:hover { border-color: var(--gold); transform: translateX(4px); }
+  .tool-card:hover::before { opacity: 0.04; }
+
+  .tool-card-inner { position: relative; z-index: 1; display: flex; align-items: center; gap: 18px; }
+
+  .tool-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    min-width: 24px;
+  }
+
+  .tool-info { flex: 1; }
+
+  .tool-name {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--paper);
+    margin-bottom: 4px;
+    line-height: 1.4;
+  }
+
+  .tool-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .tool-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  .tool-badge.free { background: #1a2e1a; color: #6abf6a; border: 1px solid #2a4a2a; }
+  .tool-badge.new { background: #2e1a1a; color: var(--gold); border: 1px solid #4a2a2a; }
+  .tool-badge.pro { background: #1a1e2e; color: #6a8abf; border: 1px solid #2a3a4a; }
+
+  .tool-arrow {
+    color: var(--muted);
+    font-size: 16px;
+    transition: transform 0.2s, color 0.2s;
+  }
+
+  .tool-card:hover .tool-arrow { transform: translateX(4px); color: var(--gold); }
+
+  /* Divider line */
+  .divider {
+    height: 1px;
+    background: #2a2520;
+    margin: 0 0 16px;
+  }
+
+  /* Footer */
+  .hero-footer {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: #3a3530;
+    letter-spacing: 0.08em;
+    padding-bottom: 48px;
+    line-height: 2;
+  }
+
+  .hero-footer a { color: #3a3530; text-decoration: none; }
+
+  /* Law strip */
+  .law-strip {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+
+  .law-pill {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: #4a4540;
+    border: 1px solid #2a2520;
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.08em;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-title { animation: fadeUp 0.5s ease both; }
+  .hero-sub { animation: fadeUp 0.5s 0.1s ease both; }
+  .law-strip { animation: fadeUp 0.5s 0.15s ease both; }
+  .tools { animation: fadeUp 0.5s 0.2s ease both; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-top">
+    <div class="logo">Inheritance<span>Pro</span><span class="tag">Beta</span></div>
+  </div>
+
+  <h1 class="hero-title">台灣遺產<br><em>法律工具</em>平台</h1>
+
+  <p class="hero-sub">
+    依中華民國民法、遺產及贈與稅法設計<br>
+    提供專業計算工具，協助民眾與法律從業人員<br>
+    快速釐清繼承權利與義務。
+  </p>
+
+  <div class="law-strip">
+    <span class="law-pill">民法繼承編</span>
+    <span class="law-pill">遺產及贈與稅法</span>
+    <span class="law-pill">2025年最新稅率</span>
+    <span class="law-pill">免費使用</span>
+  </div>
+
+  <div class="tools">
+
+    <a class="tool-card" href="calculator.html">
+      <div class="tool-card-inner">
+        <div class="tool-num">01</div>
+        <div class="tool-info">
+          <div class="tool-name">遺產繼承計算器</div>
+          <div class="tool-desc">應繼分、特留分、遺產稅試算<br>支援代位繼承、拋棄繼承，PDF報告輸出</div>
+        </div>
+        <span class="tool-badge free">免費</span>
+        <span class="tool-arrow">→</span>
+      </div>
+    </a>
+
+    <a class="tool-card" href="property-split.html">
+      <div class="tool-card-inner">
+        <div class="tool-num">02</div>
+        <div class="tool-info">
+          <div class="tool-name">剩餘財產差額分配請求權</div>
+          <div class="tool-desc">法定財產制下，配偶可請求之差額計算<br>依民法第1030-1條，含完整法律說明</div>
+        </div>
+        <span class="tool-badge new">新功能</span>
+        <span class="tool-arrow">→</span>
+      </div>
+    </a>
+
+    <a class="tool-card" href="asset-detection.html">
+      <div class="tool-card-inner">
+        <div class="tool-num">03</div>
+        <div class="tool-info">
+          <div class="tool-name">脫產偵測分析</div>
+          <div class="tool-desc">財產異動風險評估，依法律規定自動標記<br>支援CSV上傳，輸出專業風險報告</div>
+        </div>
+        <span class="tool-badge pro">專業版</span>
+        <span class="tool-arrow">→</span>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="hero-footer">
+    © 2025 InheritancePro. All rights reserved.<br>
+    本平台僅供參考，不構成法律意見。實際案件請諮詢專業律師。
+  </div>
+</div>
+
+</body>
+</html>
