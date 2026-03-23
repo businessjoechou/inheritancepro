@@ -164,6 +164,20 @@
 
   .tool-card:hover .tool-arrow { transform: translateX(4px); color: var(--gold); }
 
+  .category-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 6px 4px 4px;
+    border-bottom: 1px solid #2a2520;
+    margin-bottom: 6px;
+    margin-top: 8px;
+  }
+
+  .category-label:first-child { margin-top: 0; }
+
   /* Divider line */
   .divider {
     height: 1px;
@@ -222,19 +236,24 @@
   <h1 class="hero-title">台灣民法<br><em>財產權益</em>計算平台</h1>
 
   <p class="hero-sub">
-    依中華民國民法、遺產及贈與稅法設計<br>
-    提供專業計算工具，協助民眾與法律從業人員<br>
-    快速釐清繼承權利與義務。
+    涵蓋遺產繼承、剩餘財產分配、贍養費試算、脫產偵測<br>
+    依中華民國民法與相關法規設計<br>
+    協助民眾與法律從業人員快速釐清財產權益。
   </p>
 
   <div class="law-strip">
     <span class="law-pill">民法繼承編</span>
     <span class="law-pill">遺產及贈與稅法</span>
+    <span class="law-pill">民法第1030-1條</span>
+    <span class="law-pill">民法第1057條</span>
     <span class="law-pill">2025年最新稅率</span>
+    <span class="law-pill">脫產偵測</span>
     <span class="law-pill">免費使用</span>
   </div>
 
   <div class="tools">
+
+    <div class="category-label">繼承</div>
 
     <a class="tool-card" href="calculator.html">
       <div class="tool-card-inner">
@@ -243,10 +262,11 @@
           <div class="tool-name">遺產繼承計算器</div>
           <div class="tool-desc">應繼分、特留分、遺產稅試算<br>支援代位繼承、拋棄繼承，PDF報告輸出</div>
         </div>
-        <span class="tool-badge free">免費</span>
         <span class="tool-arrow">→</span>
       </div>
     </a>
+
+    <div class="category-label">離婚</div>
 
     <a class="tool-card" href="property-split.html">
       <div class="tool-card-inner">
@@ -255,19 +275,30 @@
           <div class="tool-name">剩餘財產差額分配請求權</div>
           <div class="tool-desc">法定財產制下，配偶可請求之差額計算<br>依民法第1030-1條，含完整法律說明</div>
         </div>
-        <span class="tool-badge new">新功能</span>
         <span class="tool-arrow">→</span>
       </div>
     </a>
 
-    <a class="tool-card" href="asset-detection.html">
+    <a class="tool-card" href="alimony.html">
       <div class="tool-card-inner">
         <div class="tool-num">03</div>
+        <div class="tool-info">
+          <div class="tool-name">贍養費試算</div>
+          <div class="tool-desc">依民法第1057條，輸入雙方收入、婚姻年數<br>估算合理贍養費範圍及給付期間</div>
+        </div>
+        <span class="tool-arrow">→</span>
+      </div>
+    </a>
+
+    <div class="category-label">調查分析</div>
+
+    <a class="tool-card" href="asset-detection.html">
+      <div class="tool-card-inner">
+        <div class="tool-num">04</div>
         <div class="tool-info">
           <div class="tool-name">脫產偵測分析</div>
           <div class="tool-desc">財產異動風險評估，依法律規定自動標記<br>支援CSV上傳，輸出專業風險報告</div>
         </div>
-        <span class="tool-badge pro">專業版</span>
         <span class="tool-arrow">→</span>
       </div>
     </a>
