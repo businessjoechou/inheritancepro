@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>未成年損害賠償試算｜InheritancePro</title>
+<meta name="description" content="未成年霸凌、傷害損害賠償試算，含父母連帶責任與學校責任，依民法第184、187、195條。">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#1a1410;--paper:#f5f0e8;--gold:#c4932a;--muted:#7a6f62;--border:#c8bfb0;--soft:#e8e0d0;--success:#2a6b4a;--accent:#1a3a5c;--danger:#8b2020;--warn:#b8600a;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);font-family:'Noto Sans TC',sans-serif;min-height:100vh;font-size:15px;}
+  header{background:var(--ink);color:var(--paper);padding:18px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+  .logo{font-family:'Noto Serif TC',serif;font-size:18px;font-weight:700;}
+  .logo span{color:var(--gold);}
+  .back-link{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:0.06em;}
+  main{max-width:480px;margin:0 auto;padding:28px 20px 80px;}
+  h2{font-family:'Noto Serif TC',serif;font-size:22px;font-weight:700;margin-bottom:6px;}
+  .subtitle{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:24px;}
+  .card{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:20px;margin-bottom:14px;}
+  .section-title{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:14px;}
+  .input-group{margin-bottom:14px;}
+  .input-group:last-child{margin-bottom:0;}
+  label{display:block;font-size:13px;font-weight:500;margin-bottom:7px;}
+  label .hint{font-weight:400;color:var(--muted);font-size:12px;margin-left:6px;}
+  .input-prefix{display:flex;align-items:center;gap:10px;border:1.5px solid var(--border);border-radius:8px;background:var(--paper);padding:0 14px;transition:border-color 0.2s;}
+  .input-prefix:focus-within{border-color:var(--gold);background:#fff;}
+  .prefix-text{font-size:13px;color:var(--muted);white-space:nowrap;}
+  .input-prefix input{border:none;background:transparent;padding:11px 0;flex:1;font-size:14px;font-family:'DM Mono',monospace;color:var(--ink);}
+  .input-prefix input:focus{outline:none;}
+  .toggle-group{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .toggle-group.three{grid-template-columns:1fr 1fr 1fr;}
+  .toggle-btn{padding:10px 8px;border:1.5px solid var(--border);border-radius:8px;background:var(--paper);cursor:pointer;text-align:center;font-size:13px;color:var(--muted);transition:all 0.2s;font-family:'Noto Sans TC',sans-serif;line-height:1.5;}
+  .toggle-btn.active{border-color:var(--accent);background:#f0f4f8;color:var(--accent);font-weight:500;}
+  .info-box{background:#fffbf0;border:1px solid #e8d48a;border-radius:8px;padding:12px 14px;font-size:12px;color:#7a6020;line-height:1.7;margin-bottom:14px;}
+  .info-box strong{color:#5a4010;}
+  .warn-box{background:#fdf0ef;border:1px solid #e8b0a8;border-radius:8px;padding:12px 14px;font-size:12px;color:var(--danger);line-height:1.7;margin-bottom:14px;}
+  #resultSection{display:none;}
+  .result-hero{background:var(--ink);color:var(--paper);border-radius:14px;padding:24px;text-align:center;margin-bottom:14px;}
+  .result-hero .label{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.12em;margin-bottom:8px;}
+  .result-total{font-family:'Noto Serif TC',serif;font-size:26px;font-weight:700;color:var(--gold);line-height:1.4;}
+  .result-sub{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.6;}
+  .breakdown-item{padding:11px 0;border-bottom:1px solid var(--soft);}
+  .breakdown-item:last-child{border-bottom:none;}
+  .breakdown-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:3px;}
+  .breakdown-name{font-size:13px;font-weight:600;color:var(--ink);}
+  .breakdown-amt{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;color:var(--success);margin-left:8px;white-space:nowrap;}
+  .breakdown-desc{font-size:11px;color:var(--muted);line-height:1.6;}
+  .case-ref{font-size:11px;color:var(--accent);margin-top:3px;}
+  .liability-card{border-radius:10px;padding:14px 16px;margin-bottom:10px;}
+  .liability-card.offender{background:#fdf0ef;border:1.5px solid #e8b0b0;}
+  .liability-card.parent{background:#fff8e8;border:1.5px solid #e8d088;}
+  .liability-card.school{background:#f0f4f8;border:1.5px solid #a8c0d8;}
+  .liability-title{font-size:13px;font-weight:600;margin-bottom:5px;}
+  .liability-card.offender .liability-title{color:var(--danger);}
+  .liability-card.parent .liability-title{color:var(--warn);}
+  .liability-card.school .liability-title{color:var(--accent);}
+  .liability-amt{font-family:'DM Mono',monospace;font-size:17px;font-weight:600;margin-bottom:5px;}
+  .liability-card.offender .liability-amt{color:var(--danger);}
+  .liability-card.parent .liability-amt{color:var(--warn);}
+  .liability-card.school .liability-amt{color:var(--accent);}
+  .liability-desc{font-size:11px;color:var(--muted);line-height:1.7;}
+  .law-note{background:#f8f8f8;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:12px 14px;font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:14px;}
+  .law-note strong{color:var(--ink);}
+  .disclaimer{background:#f0f0f0;border-radius:8px;padding:12px 14px;font-size:11px;color:var(--muted);line-height:1.7;margin-bottom:14px;}
+  .btn-calc{width:100%;padding:14px;background:var(--ink);color:var(--paper);border:none;border-radius:10px;font-size:15px;font-weight:500;cursor:pointer;font-family:'Noto Sans TC',sans-serif;margin-bottom:10px;}
+  .btn-pdf{width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;font-family:'Noto Sans TC',sans-serif;margin-bottom:10px;display:none;}
+  .btn-reset{width:100%;padding:13px;border:1.5px solid var(--border);border-radius:10px;background:transparent;font-size:14px;color:var(--muted);cursor:pointer;font-family:'Noto Sans TC',sans-serif;display:none;}
+</style>
+</head>
+<body>
+<header>
+  <div><div class="logo">Inheritance<span>Pro</span></div></div>
+  <a href="index.html" class="back-link">← 首頁</a>
+</header>
+<main>
+  <h2>未成年損害賠償試算</h2>
+  <p class="subtitle">霸凌或傷害事件的損害賠償參考試算，包含精神慰撫金、父母連帶責任及學校責任，依民法第184、187、195條及實務判決。</p>
+
+  <div class="warn-box">⚠ <strong>聲明：</strong>精神慰撫金無固定公式，本工具依實際判決案例提供<strong>參考範圍</strong>，實際金額由法院裁量。</div>
+
+  <!-- 事件概況 -->
+  <div class="card">
+    <div class="section-title">傷害類型與程度</div>
+    <div class="input-group">
+      <label>傷害類型</label>
+      <div class="toggle-group">
+        <div class="toggle-btn active" id="type_physical" onclick="sel('type','physical')">肢體暴力</div>
+        <div class="toggle-btn" id="type_mental" onclick="sel('type','mental')">精神/言語霸凌</div>
+      </div>
+    </div>
+    <div class="input-group">
+      <label>傷害程度</label>
+      <div class="toggle-group three">
+        <div class="toggle-btn active" id="injury_minor" onclick="sel('injury','minor')">輕傷<br><span style="font-size:11px">瘀傷、擦傷</span></div>
+        <div class="toggle-btn" id="injury_moderate" onclick="sel('injury','moderate')">中等<br><span style="font-size:11px">骨折、縫合</span></div>
+        <div class="toggle-btn" id="injury_severe" onclick="sel('injury','severe')">重傷<br><span style="font-size:11px">頭部、器官</span></div>
+      </div>
+    </div>
+    <div class="input-group">
+      <label>是否為持續性霸凌？</label>
+      <div class="toggle-group">
+        <div class="toggle-btn" id="ongoing_yes" onclick="sel('ongoing','yes')">是（多次/長期）</div>
+        <div class="toggle-btn active" id="ongoing_no" onclick="sel('ongoing','no')">否（單一事件）</div>
+      </div>
+    </div>
+    <div class="input-group">
+      <label>加害人人數</label>
+      <div class="input-prefix"><span class="prefix-text">人</span><input type="number" id="offender_count" placeholder="1" min="1" max="20" inputmode="numeric"></div>
+    </div>
+  </div>
+
+  <!-- 實際損失 -->
+  <div class="card">
+    <div class="section-title">實際財產損失</div>
+    <div class="input-group">
+      <label>已發生醫療費用</label>
+      <div class="input-prefix"><span class="prefix-text">NT$</span><input type="number" id="medical" placeholder="0" min="0" inputmode="numeric"></div>
+    </div>
+    <div class="input-group">
+      <label>後續治療費用預估<span class="hint">復健、心理諮商</span></label>
+      <div class="input-prefix"><span class="prefix-text">NT$</span><input type="number" id="future_medical" placeholder="0" min="0" inputmode="numeric"></div>
+    </div>
+    <div class="input-group">
+      <label>父母誤工損失<span class="hint">陪同就醫、照護請假</span></label>
+      <div class="input-prefix"><span class="prefix-text">NT$</span><input type="number" id="lost_work" placeholder="0" min="0" inputmode="numeric"></div>
+    </div>
+    <div class="input-group">
+      <label>其他損失<span class="hint">物品損壞等</span></label>
+      <div class="input-prefix"><span class="prefix-text">NT$</span><input type="number" id="other_loss" placeholder="0" min="0" inputmode="numeric"></div>
+    </div>
+  </div>
+
+  <!-- 永久傷害 -->
+  <div class="card">
+    <div class="section-title">永久傷害</div>
+    <div class="input-group">
+      <label>是否有永久性傷害？</label>
+      <div class="toggle-group">
+        <div class="toggle-btn" id="perm_yes" onclick="selPerm(true)">是</div>
+        <div class="toggle-btn active" id="perm_no" onclick="selPerm(false)">否</div>
+      </div>
+    </div>
+    <div id="permBox" style="display:none;margin-top:14px">
+      <div class="input-group">
+        <label>勞動能力減損比例</label>
+        <div class="toggle-group three">
+          <div class="toggle-btn active" id="prate_low" onclick="sel('permRate','low')">20%以下</div>
+          <div class="toggle-btn" id="prate_mid" onclick="sel('permRate','mid')">20～50%</div>
+          <div class="toggle-btn" id="prate_high" onclick="sel('permRate','high')">50%以上</div>
+        </div>
+      </div>
+      <div class="input-group">
+        <label>被害人目前年齡</label>
+        <div class="input-prefix"><span class="prefix-text">歲</span><input type="number" id="victim_age" placeholder="15" min="0" max="17" inputmode="numeric"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 加害人 -->
+  <div class="card">
+    <div class="section-title">加害人與學校</div>
+    <div class="input-group">
+      <label>加害人年齡</label>
+      <div class="toggle-group three">
+        <div class="toggle-btn" id="age_under7" onclick="sel('age','under7')">未滿7歲<br><span style="font-size:11px">無責任能力</span></div>
+        <div class="toggle-btn active" id="age_mid" onclick="sel('age','mid')">7～18歲<br><span style="font-size:11px">限制行為能力</span></div>
+        <div class="toggle-btn" id="age_adult" onclick="sel('age','adult')">成年<br><span style="font-size:11px">完全責任</span></div>
+      </div>
+    </div>
+    <div class="input-group">
+      <label>事件地點</label>
+      <div class="toggle-group">
+        <div class="toggle-btn active" id="loc_school" onclick="sel('loc','school')">學校內（含校車）</div>
+        <div class="toggle-btn" id="loc_outside" onclick="sel('loc','outside')">學校外</div>
+      </div>
+    </div>
+    <div class="input-group">
+      <label>學校是否有疏失？</label>
+      <div class="toggle-group three">
+        <div class="toggle-btn active" id="school_yes" onclick="sel('school','yes')">明顯疏失</div>
+        <div class="toggle-btn" id="school_maybe" onclick="sel('school','maybe')">不確定</div>
+        <div class="toggle-btn" id="school_no" onclick="sel('school','no')">無疏失</div>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn-calc" onclick="calculate()">試算賠償金額 →</button>
+
+  <div id="resultSection">
+    <div id="heroBox"></div>
+    <div class="card" id="breakdownCard"><div class="section-title">賠償項目明細</div><div id="breakdownItems"></div></div>
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin:16px 0 10px">責任歸屬</div>
+    <div id="liabilityCards"></div>
+    <div class="law-note" id="lawNote"></div>
+    <div class="disclaimer">⚠ 精神慰撫金無固定公式。本試算依實際判決案例校準，但每案情況不同，實際金額由法院裁量。請求時效：自知悉時起<strong>2年內</strong>（民法第197條）。</div>
+    <button class="btn-pdf" id="btnPdf" onclick="downloadPDF()">⬇ 下載試算報告 PDF</button>
+    <button class="btn-reset" id="btnReset" onclick="reset()">🔄 重新試算</button>
+  </div>
+</main>
+
+<script>
+  // 實際判決案例參考
+  // 精神霸凌單一：3-6萬（法院判6萬案例）
+  // 肢體輕傷單一：5-20萬
+  // 肢體中傷：10-50萬
+  // 重傷/持械：50-150萬
+  // 多人圍毆（補習班5人判28萬）：各加成
+  // 持續性霸凌：1.5-2.5倍
+
+  const SOLATIUM = {
+    mental: { minor:[30000,60000], moderate:[50000,150000], severe:[100000,300000] },
+    physical: { minor:[50000,200000], moderate:[100000,500000], severe:[500000,1500000] }
+  };
+
+  let state = { type:'physical', injury:'minor', ongoing:'no', age:'mid', loc:'school', school:'yes', perm:false, permRate:'low' };
+  let lastResult = null;
+
+  function sel(key, val){
+    const group = {
+      type:['physical','mental'],
+      injury:['minor','moderate','severe'],
+      ongoing:['yes','no'],
+      age:['under7','mid','adult'],
+      loc:['school','outside'],
+      school:['yes','maybe','no'],
+      permRate:['low','mid','high']
+    };
+    state[key] = val;
+    const prefix = key==='injury'?'injury_':key==='ongoing'?'ongoing_':key==='age'?'age_':key==='loc'?'loc_':key==='school'?'school_':key==='permRate'?'prate_':'type_';
+    group[key].forEach(k => {
+      const id = prefix+k;
+      const el = document.getElementById(id);
+      if(el) el.classList.toggle('active', k===val);
+    });
+  }
+
+  function selPerm(v){
+    state.perm = v;
+    document.getElementById('perm_yes').classList.toggle('active',v);
+    document.getElementById('perm_no').classList.toggle('active',!v);
+    document.getElementById('permBox').style.display = v?'block':'none';
+  }
+
+  function v(id){ return parseFloat(document.getElementById(id).value)||0; }
+  function fmt(n){ return 'NT$ '+Math.round(n).toLocaleString('zh-TW'); }
+
+  function calculate(){
+    const medical = v('medical');
+    const futureMed = v('future_medical');
+    const lostWork = v('lost_work');
+    const otherLoss = v('other_loss');
+    const propertyTotal = medical + futureMed + lostWork + otherLoss;
+    const offenderCount = Math.max(1, v('offender_count')||1);
+
+    // 精神慰撫金（依實際判決）
+    let [solLow, solHigh] = SOLATIUM[state.type][state.injury];
+
+    // 持續性加成
+    if(state.ongoing === 'yes'){ solLow = Math.round(solLow*1.8); solHigh = Math.round(solHigh*2.5); }
+
+    // 多人加成（每增一人+15%）
+    if(offenderCount > 1){
+      const multi = 1 + (offenderCount-1)*0.15;
+      solLow = Math.round(solLow*multi);
+      solHigh = Math.round(solHigh*multi);
+    }
+
+    // 勞動能力損失
+    let laborLoss = 0;
+    if(state.perm){
+      const age = v('victim_age') || 15;
+      const workYears = Math.max(0, 65 - Math.max(age, 18));
+      const minWage = 28590;
+      const rate = state.permRate==='low'?0.15:state.permRate==='mid'?0.35:0.65;
+      laborLoss = Math.round(minWage * 12 * workYears * rate * 0.7);
+    }
+
+    // 學校責任
+    let schoolRate = 0;
+    if(state.loc === 'school'){
+      if(state.school === 'yes') schoolRate = 0.3;
+      else if(state.school === 'maybe') schoolRate = 0.15;
+    }
+
+    const totalLow = propertyTotal + solLow + laborLoss;
+    const totalHigh = propertyTotal + solHigh + laborLoss;
+    const schoolLow = Math.round((propertyTotal + solLow) * schoolRate);
+    const schoolHigh = Math.round((propertyTotal + solHigh) * schoolRate);
+
+    lastResult = { propertyTotal, solLow, solHigh, laborLoss, totalLow, totalHigh, schoolLow, schoolHigh, schoolRate, medical, futureMed, lostWork, otherLoss, offenderCount };
+    renderResult(lastResult);
+  }
+
+  function renderResult(r){
+    const {propertyTotal,solLow,solHigh,laborLoss,totalLow,totalHigh,schoolLow,schoolHigh,schoolRate} = r;
+
+    document.getElementById('heroBox').innerHTML = `
+      <div class="result-hero">
+        <div class="label">可請求賠償範圍</div>
+        <div class="result-total">${fmt(totalLow)}<br><span style="font-size:18px;color:#a07020">～ ${fmt(totalHigh)}</span></div>
+        <div class="result-sub">依實際判決案例校準之參考範圍<br>法院依個案裁定，實際金額可能不同</div>
+      </div>`;
+
+    let bd = '';
+    if(r.medical>0) bd += bItem('已發生醫療費用', fmt(r.medical), '憑單據全額請求');
+    if(r.futureMed>0) bd += bItem('後續治療費用', fmt(r.futureMed), '需醫師診斷預估報告支持');
+    if(r.lostWork>0) bd += bItem('父母誤工損失', fmt(r.lostWork), '陪同就醫薪資損失，需薪資證明');
+    if(r.otherLoss>0) bd += bItem('其他財產損失', fmt(r.otherLoss), '物品損壞等，需估價單');
+    bd += `<div class="breakdown-item">
+      <div class="breakdown-header"><span class="breakdown-name">精神慰撫金</span><span class="breakdown-amt">${fmt(solLow)} ～ ${fmt(solHigh)}</span></div>
+      <div class="breakdown-desc">民法第195條，法院裁量。${state.ongoing==='yes'?'持續性霸凌金額較高。':''}${r.offenderCount>1?`${r.offenderCount}名加害人，可各別請求。`:''}</div>
+      <div class="case-ref">📋 參考：精神霸凌案判6萬；補習班5人霸凌案判28萬；重傷案可達百萬以上。</div>
+    </div>`;
+    if(laborLoss>0) bd += bItem('勞動能力損失', fmt(laborLoss), '霍夫曼係數估算至65歲，為參考值');
+    document.getElementById('breakdownItems').innerHTML = bd;
+
+    let lib = '';
+    if(state.age === 'under7'){
+      lib += lCard('offender','加害人（未滿7歲，無責任能力）','—','未滿7歲無侵權行為能力（民法第187條），由父母全部負責。');
+      lib += lCard('parent','加害人父母（全部責任）',fmt(totalHigh),'父母須負完全賠償責任。');
+    } else if(state.age === 'mid'){
+      lib += lCard('offender','加害人（7-18歲）',fmt(totalHigh),'7-18歲有限制行為能力，仍須負侵權責任（民法第187條）。');
+      lib += lCard('parent','加害人父母（連帶責任）',fmt(totalHigh),'與子女連帶負責，被害人可同時向兩方請求全額。父母若能證明已盡監督義務，得免責，但實務上舉證困難。');
+    } else {
+      lib += lCard('offender','加害人（成年）',fmt(totalHigh),'成年人自行負完全侵權責任（民法第184條）。');
+    }
+    if(schoolRate > 0){
+      lib += lCard('school',`學校責任（約${Math.round(schoolRate*100)}%）`,`${fmt(schoolLow)} ～ ${fmt(schoolHigh)}`,'事件於校內發生，學校有監督管理義務。有明顯疏失（未制止、未通報）可依國家賠償法或民法第188條請求。');
+    }
+    document.getElementById('liabilityCards').innerHTML = lib;
+
+    document.getElementById('lawNote').innerHTML = `⚖️ <strong>相關法律：</strong><br>
+      ・<strong>民法第184條</strong>：故意或過失不法侵害他人，負損害賠償責任。<br>
+      ・<strong>民法第187條</strong>：未成年人致他人損害，父母連帶負賠償責任。<br>
+      ・<strong>民法第195條</strong>：不法侵害身體、健康，得請求精神慰撫金。<br>
+      ・<strong>請求時效</strong>：自知悉時起2年，或自行為時起10年（民法第197條）。`;
+
+    document.getElementById('resultSection').style.display='block';
+    document.getElementById('btnPdf').style.display='block';
+    document.getElementById('btnReset').style.display='block';
+    document.getElementById('resultSection').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  function bItem(name, amt, desc){
+    return `<div class="breakdown-item">
+      <div class="breakdown-header"><span class="breakdown-name">${name}</span><span class="breakdown-amt">${amt}</span></div>
+      <div class="breakdown-desc">${desc}</div>
+    </div>`;
+  }
+
+  function lCard(cls, title, amt, desc){
+    return `<div class="liability-card ${cls}">
+      <div class="liability-title">${title}</div>
+      <div class="liability-amt">${amt}</div>
+      <div class="liability-desc">${desc}</div>
+    </div>`;
+  }
+
+  function reset(){
+    ['medical','future_medical','lost_work','other_loss','victim_age','offender_count'].forEach(id=>document.getElementById(id).value='');
+    state={type:'physical',injury:'minor',ongoing:'no',age:'mid',loc:'school',school:'yes',perm:false,permRate:'low'};
+    sel('type','physical');sel('injury','minor');sel('ongoing','no');sel('age','mid');sel('loc','school');sel('school','yes');selPerm(false);sel('permRate','low');
+    document.getElementById('resultSection').style.display='none';
+    document.getElementById('btnPdf').style.display='none';
+    document.getElementById('btnReset').style.display='none';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function downloadPDF(){
+    if(!lastResult)return;
+    const {propertyTotal,solLow,solHigh,laborLoss,totalLow,totalHigh,schoolLow,schoolHigh,schoolRate,medical,futureMed,lostWork,otherLoss,offenderCount}=lastResult;
+    const today=new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'long',day:'numeric'});
+    const typeLabel=state.type==='physical'?'肢體暴力':'精神/言語霸凌';
+    const injuryLabel=state.injury==='minor'?'輕傷':state.injury==='moderate'?'中等傷害':'重傷';
+    const html=`<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>未成年損害賠償試算報告</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500&family=DM+Mono:wght@400;500&display=swap');
+body{font-family:'Noto Sans TC',sans-serif;padding:40px;max-width:700px;margin:0 auto;font-size:13px;color:#1a1410;}
+.header{border-bottom:3px solid #1a1410;padding-bottom:18px;margin-bottom:28px;display:flex;justify-content:space-between;align-items:flex-end;}
+.logo{font-family:'Noto Serif TC',serif;font-size:22px;font-weight:700;}
+.logo span{color:#c4932a;}
+.meta{font-size:11px;color:#7a6f62;text-align:right;line-height:1.8;font-family:'DM Mono',monospace;}
+.result-box{background:#1a1410;color:#f5f0e8;border-radius:12px;padding:24px;text-align:center;margin-bottom:24px;}
+.result-box .lbl{font-size:11px;color:#7a6f62;letter-spacing:.12em;margin-bottom:8px;font-family:'DM Mono',monospace;}
+.result-box .amount{font-family:'Noto Serif TC',serif;font-size:24px;font-weight:700;color:#c4932a;line-height:1.5;}
+h2{font-family:'Noto Serif TC',serif;font-size:15px;margin:20px 0 10px;}
+table{width:100%;border-collapse:collapse;margin-bottom:20px;font-size:12px;}
+th{background:#f5f0e8;padding:8px 12px;text-align:left;font-weight:500;border-bottom:2px solid #c8bfb0;}
+td{padding:8px 12px;border-bottom:1px solid #e8e0d0;vertical-align:top;}
+.val{font-family:'DM Mono',monospace;font-weight:500;}
+.law-box{background:#f8f8f4;border-left:3px solid #c4932a;padding:12px 16px;font-size:11px;color:#7a6f62;line-height:1.8;border-radius:0 6px 6px 0;margin-bottom:16px;}
+.law-box strong{color:#1a1410;}
+.disclaimer{background:#f0f0f0;border-radius:6px;padding:10px 14px;font-size:10px;color:#7a6f62;line-height:1.7;margin-bottom:20px;}
+.footer{margin-top:32px;padding-top:14px;border-top:1px solid #c8bfb0;font-size:11px;color:#7a6f62;text-align:center;line-height:1.8;}
+@media print{body{padding:20px;}}
+</style></head><body>
+<div class="header"><div><div class="logo">Inheritance<span>Pro</span></div><div style="font-size:12px;color:#7a6f62;margin-top:4px">未成年損害賠償試算報告</div></div><div class="meta">產出日期：${today}<br>傷害類型：${typeLabel} / ${injuryLabel}<br>${state.ongoing==='yes'?'持續性霸凌':'單一事件'} / 加害人${offenderCount}名</div></div>
+<div class="result-box"><div class="lbl">可請求賠償範圍</div><div class="amount">${fmt(totalLow)}<br>～ ${fmt(totalHigh)}</div></div>
+<h2>賠償項目明細</h2>
+<table><thead><tr><th>項目</th><th>金額</th><th>說明</th></tr></thead><tbody>
+${medical>0?`<tr><td>醫療費用</td><td class="val">${fmt(medical)}</td><td>憑據全額</td></tr>`:''}
+${futureMed>0?`<tr><td>後續治療費用</td><td class="val">${fmt(futureMed)}</td><td>需醫師報告</td></tr>`:''}
+${lostWork>0?`<tr><td>父母誤工損失</td><td class="val">${fmt(lostWork)}</td><td>需薪資證明</td></tr>`:''}
+${otherLoss>0?`<tr><td>其他財產損失</td><td class="val">${fmt(otherLoss)}</td><td>需估價單</td></tr>`:''}
+<tr><td>精神慰撫金</td><td class="val">${fmt(solLow)} ～ ${fmt(solHigh)}</td><td>依實際判決案例校準</td></tr>
+${laborLoss>0?`<tr><td>勞動能力損失</td><td class="val">${fmt(laborLoss)}</td><td>霍夫曼係數估算</td></tr>`:''}
+${schoolRate>0?`<tr><td>學校責任部分</td><td class="val">${fmt(schoolLow)} ～ ${fmt(schoolHigh)}</td><td>${Math.round(schoolRate*100)}%</td></tr>`:''}
+</tbody></table>
+<div class="law-box"><strong>法律依據：</strong><br>
+・民法第184條：故意或過失不法侵害他人，負損害賠償責任。<br>
+・民法第187條：未成年人致損害，父母連帶負責。<br>
+・民法第195條：不法侵害身體健康，得請求精神慰撫金。<br>
+・民法第197條：請求時效自知悉時起2年，或自行為時起10年。<br>
+📋 實際案例參考：精神霸凌判6萬；5人補習班霸凌判28萬；重傷案可達百萬以上。
+</div>
+<div class="disclaimer">⚠ 精神慰撫金無固定公式，本試算依實際判決校準，但每案不同，實際金額由法院裁量。建議委請律師評估。</div>
+<div class="footer">© ${new Date().getFullYear()} InheritancePro &nbsp;·&nbsp; inheritancepro.vercel.app<br>本報告僅供參考，不構成法律意見。</div>
+</body></html>`;
+    const w=window.open('','_blank');
+    w.document.write(html);
+    w.document.close();
+    w.onload=()=>setTimeout(()=>w.print(),500);
+  }
+</script>
+</body>
+</html>
