@@ -17,12 +17,32 @@
   h2{font-family:'Noto Serif TC',serif;font-size:22px;font-weight:700;margin-bottom:6px;}
   .subtitle{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:24px;}
   .card{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:20px;margin-bottom:14px;}
+  .card-title{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:14px;display:flex;align-items:center;gap:6px;}
+  .card-title .icon{font-size:15px;}
   label{display:block;font-size:13px;font-weight:500;margin-bottom:8px;}
   .input-prefix{display:flex;align-items:center;gap:10px;border:1.5px solid var(--border);border-radius:8px;background:var(--paper);padding:0 14px;transition:border-color 0.2s;}
   .input-prefix:focus-within{border-color:var(--gold);background:#fff;}
   .input-prefix input{border:none;background:transparent;padding:11px 0;flex:1;font-size:14px;font-family:'DM Mono',monospace;color:var(--ink);}
   .input-prefix input:focus{outline:none;}
+
+  /* Situation toggles */
+  .toggle-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .toggle-item{position:relative;}
+  .toggle-item input[type=checkbox]{position:absolute;opacity:0;width:0;height:0;}
+  .toggle-label{display:flex;align-items:center;gap:8px;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:13px;color:var(--muted);transition:all 0.2s;background:var(--paper);user-select:none;}
+  .toggle-label .tl-icon{font-size:16px;}
+  .toggle-item input:checked + .toggle-label{border-color:var(--gold);background:#fffbf0;color:var(--ink);font-weight:500;}
+  .toggle-item input:checked + .toggle-label::after{content:'✓';margin-left:auto;color:var(--gold);font-size:13px;font-weight:700;}
+
   .btn-calc{width:100%;padding:14px;background:var(--ink);color:var(--paper);border:none;border-radius:10px;font-size:15px;font-weight:500;cursor:pointer;font-family:'Noto Sans TC',sans-serif;margin-top:4px;}
+
+  /* Summary bar */
+  .summary-bar{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
+  .summary-pill{font-family:'DM Mono',monospace;font-size:11px;padding:4px 10px;border-radius:20px;letter-spacing:0.06em;}
+  .summary-pill.urgent{background:#fde8e8;color:var(--danger);}
+  .summary-pill.warn{background:#fdf0d0;color:var(--warn);}
+  .summary-pill.ok{background:#dce8f4;color:var(--accent);}
+  .summary-pill.total{background:var(--soft);color:var(--muted);}
 
   /* Timeline */
   #timelineSection{display:none;}
@@ -42,22 +62,26 @@
   .timeline::before{content:'';position:absolute;left:9px;top:0;bottom:0;width:1.5px;background:var(--border);}
   .tl-item{position:relative;margin-bottom:14px;}
   .tl-dot{position:absolute;left:-28px;top:14px;width:18px;height:18px;border-radius:50%;border:2px solid var(--border);background:var(--paper);display:flex;align-items:center;justify-content:center;font-size:9px;}
-  .tl-dot.done{background:var(--success);border-color:var(--success);}
+  .tl-dot.expired{background:#d4d0cc;border-color:#b0aca8;}
   .tl-dot.urgent{background:var(--danger);border-color:var(--danger);}
   .tl-dot.warn{background:var(--warn);border-color:var(--warn);}
   .tl-dot.ok{background:var(--accent);border-color:var(--accent);}
   .tl-dot.future{background:var(--paper);border-color:var(--border);}
 
   .tl-card{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;transition:border-color 0.2s;}
-  .tl-card.done{border-color:#a8d4b8;background:#f5fbf7;}
+  .tl-card.expired{border-color:#c8c4c0;background:#f8f6f4;}
   .tl-card.urgent{border-color:#e8b0a8;background:#fdf5f4;}
   .tl-card.warn{border-color:#e8c878;background:#fffbf0;}
   .tl-card.ok{border-color:#a8bed4;background:#f4f7fb;}
+  .tl-card.future{border-color:var(--border);background:#fff;}
 
   .tl-header{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:6px;}
   .tl-title{font-size:14px;font-weight:600;color:var(--ink);line-height:1.4;}
+  .tl-tag{font-family:'DM Mono',monospace;font-size:9px;padding:2px 6px;border-radius:3px;letter-spacing:0.06em;flex-shrink:0;margin-top:2px;}
+  .tl-tag.optional{background:#f0f0e8;color:#8a8070;border:1px solid #d8d0c0;}
+
   .tl-badge{font-family:'DM Mono',monospace;font-size:10px;padding:2px 8px;border-radius:3px;white-space:nowrap;flex-shrink:0;}
-  .tl-badge.done{background:#d4edd9;color:var(--success);}
+  .tl-badge.expired{background:#e8e4e0;color:#7a7570;}
   .tl-badge.urgent{background:#fde8e8;color:var(--danger);}
   .tl-badge.warn{background:#fdf0d0;color:var(--warn);}
   .tl-badge.ok{background:#dce8f4;color:var(--accent);}
@@ -72,7 +96,7 @@
   .countdown-inline.urgent{background:#fde8e8;color:var(--danger);}
   .countdown-inline.warn{background:#fdf0d0;color:var(--warn);}
   .countdown-inline.ok{background:#dce8f4;color:var(--accent);}
-  .countdown-inline.done-tag{background:#d4edd9;color:var(--success);}
+  .countdown-inline.expired{background:#e8e4e0;color:#7a7570;}
   .countdown-inline.future{background:var(--soft);color:var(--muted);}
 
   .info-box{background:#fffbf0;border:1px solid #e8d48a;border-radius:8px;padding:12px 14px;font-size:12px;color:#7a6020;line-height:1.7;margin-bottom:14px;}
@@ -89,12 +113,42 @@
 </header>
 <main>
   <h2>繼承流程時間軸</h2>
-  <p class="subtitle">輸入被繼承人的死亡日期，系統自動計算各項法定期限，告訴你還剩幾天、要去哪裡辦。</p>
+  <p class="subtitle">輸入死亡日期與遺產狀況，自動產生個人化待辦清單，告訴你每項期限還剩幾天、要去哪裡辦。</p>
 
   <div class="card">
-    <label>被繼承人死亡日期</label>
+    <div class="card-title"><span class="icon">📅</span>被繼承人死亡日期</div>
     <div class="input-prefix">
       <input type="date" id="deathDate" max="">
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📋</span>遺產狀況（可多選）</div>
+    <div class="toggle-grid">
+      <div class="toggle-item">
+        <input type="checkbox" id="hasWill">
+        <label class="toggle-label" for="hasWill"><span class="tl-icon">📜</span>有遺囑</label>
+      </div>
+      <div class="toggle-item">
+        <input type="checkbox" id="hasProperty">
+        <label class="toggle-label" for="hasProperty"><span class="tl-icon">🏠</span>有不動產</label>
+      </div>
+      <div class="toggle-item">
+        <input type="checkbox" id="hasInsurance">
+        <label class="toggle-label" for="hasInsurance"><span class="tl-icon">🛡</span>有人壽保險</label>
+      </div>
+      <div class="toggle-item">
+        <input type="checkbox" id="hasLaborInsurance">
+        <label class="toggle-label" for="hasLaborInsurance"><span class="tl-icon">👷</span>有勞工保險</label>
+      </div>
+      <div class="toggle-item">
+        <input type="checkbox" id="hasStocks">
+        <label class="toggle-label" for="hasStocks"><span class="tl-icon">📈</span>有股票／基金</label>
+      </div>
+      <div class="toggle-item">
+        <input type="checkbox" id="hasVehicle">
+        <label class="toggle-label" for="hasVehicle"><span class="tl-icon">🚗</span>有車輛</label>
+      </div>
     </div>
   </div>
 
@@ -103,15 +157,17 @@
   <div id="timelineSection">
     <div style="height:24px"></div>
 
-    <!-- 倒數主視窗：遺產稅申報 -->
     <div class="deadline-hero" id="heroBox"></div>
+
+    <div id="summaryBar" class="summary-bar"></div>
 
     <div class="section-heading">所有待辦事項</div>
     <div class="timeline" id="timelineItems"></div>
 
     <div class="info-box">
       <strong>📋 注意事項：</strong>
-      以上期限為法律規定，逾期可能面臨罰款或喪失權利。實際辦理時請攜帶相關文件，建議提前確認各機關受理時間。
+      以上期限為法律規定，逾期可能面臨罰款或喪失權利。實際辦理時請攜帶相關文件，建議提前確認各機關受理時間。<br>
+      <span style="color:#9a7030">已過期項目若尚未辦理，請儘速諮詢律師或相關機關處理補救方式。</span>
     </div>
 
     <button class="btn-pdf" onclick="downloadPDF()">⬇ 下載時間軸 PDF</button>
@@ -125,6 +181,12 @@
   function addDays(date, days){
     const d = new Date(date);
     d.setDate(d.getDate() + days);
+    return d;
+  }
+
+  function addYears(date, years){
+    const d = new Date(date);
+    d.setFullYear(d.getFullYear() + years);
     return d;
   }
 
@@ -144,23 +206,15 @@
   }
 
   function getStatus(days){
-    if(days < 0) return 'done';
+    if(days < 0) return 'expired';
     if(days <= 7) return 'urgent';
     if(days <= 30) return 'warn';
     return 'ok';
   }
 
-  function statusLabel(days){
-    if(days < 0) return '已過期';
-    if(days === 0) return '今天到期！';
-    if(days <= 7) return `剩 ${days} 天`;
-    if(days <= 30) return `剩 ${days} 天`;
-    return `剩 ${days} 天`;
-  }
-
-  function badgeText(status){
-    if(status === 'done') return '已過期';
-    if(status === 'urgent') return '緊急';
+  function badgeText(status, days){
+    if(status === 'expired') return '已過期';
+    if(status === 'urgent') return days === 0 ? '今天到期' : '緊急';
     if(status === 'warn') return '注意';
     if(status === 'ok') return '尚早';
     return '未來';
@@ -172,6 +226,14 @@
     const death = new Date(val);
     death.setHours(0,0,0,0);
 
+    const hasWill    = document.getElementById('hasWill').checked;
+    const hasProp    = document.getElementById('hasProperty').checked;
+    const hasIns     = document.getElementById('hasInsurance').checked;
+    const hasLabor   = document.getElementById('hasLaborInsurance').checked;
+    const hasStocks  = document.getElementById('hasStocks').checked;
+    const hasVehicle = document.getElementById('hasVehicle').checked;
+
+    // ── 固定項目 ──
     const tasks = [
       {
         title: '死亡登記',
@@ -179,7 +241,15 @@
         desc: '應於死亡後30日內向戶政事務所辦理死亡登記。需攜帶死亡證明書、戶口名簿等文件。',
         where: '📍 戶政事務所',
         law: '戶籍法第48條',
-        days: 30
+        optional: false
+      },
+      {
+        title: '全民健保資格異動',
+        deadline: addDays(death, 30),
+        desc: '被保險人死亡後，眷屬或投保單位須於30日內向健保署辦理退保或轉換投保身分，以免溢繳保費或影響眷屬保障。',
+        where: '📍 健保署或各縣市聯合服務中心',
+        law: '全民健康保險法第18條',
+        optional: false
       },
       {
         title: '拋棄繼承期限',
@@ -187,42 +257,107 @@
         desc: '繼承人若不願繼承（例如遺產為負債），須在知悉繼承後3個月內向法院聲請拋棄繼承。逾期視為概括承受，包含債務。',
         where: '📍 管轄地方法院',
         law: '民法第1174條',
-        days: 90
+        optional: false
+      },
+      {
+        title: '限定繼承清冊陳報',
+        deadline: addDays(death, 90),
+        desc: '選擇「限定繼承」的繼承人，應於繼承後3個月內開具遺產清冊陳報法院。限定繼承人僅以繼承所得財產為限，對被繼承人之債務負清償責任，可有效避免以自有財產清償超額負債。',
+        where: '📍 管轄地方法院',
+        law: '民法第1156條',
+        optional: false
       },
       {
         title: '遺產稅申報',
         deadline: addDays(death, 180),
-        desc: '應於被繼承人死亡後6個月內向國稅局辦理遺產稅申報。未申報或逾期申報將加徵罰鍰。',
-        where: '📍 國稅局（依被繼承人戶籍地）',
+        desc: '應於被繼承人死亡後6個月內向國稅局辦理遺產稅申報。未申報或逾期申報將加徵罰鍰。可申請延期申報，但須於期限前提出申請。',
+        where: '📍 國稅局（依被繼承人戶籍地管轄）',
         law: '遺產及贈與稅法第23條',
-        days: 180,
+        optional: false,
         isMain: true
       },
       {
-        title: '清冊陳報（限定繼承）',
-        deadline: addDays(death, 90),
-        desc: '若繼承人選擇「限定繼承」，應於繼承後3個月內開具遺產清冊陳報法院。限定繼承人僅以繼承所得財產為限，對被繼承人之債務負清償責任。',
-        where: '📍 管轄地方法院',
-        law: '民法第1156條',
-        days: 90
-      },
-      {
-        title: '死亡年度所得稅申報',
+        title: `${death.getFullYear()}年度所得稅申報（代申報）`,
         deadline: new Date(death.getFullYear() + 1, 4, 31),
-        desc: `被繼承人當年度（${death.getFullYear()}年）的所得稅，由繼承人代為申報，申報期限為次年5月31日前。`,
-        where: '📍 國稅局或線上申報',
+        desc: `被繼承人當年度（${death.getFullYear()}年）的所得稅，由繼承人代為申報，期限為次年（${death.getFullYear()+1}年）5月31日前。需備妥被繼承人當年度各項所得資料。`,
+        where: '📍 國稅局或線上申報（財政部電子申報系統）',
         law: '所得稅法第71條',
-        days: null
-      },
-      {
-        title: '不動產繼承移轉登記',
-        deadline: addDays(death, 180),
-        desc: '繼承不動產應於取得繼承權後6個月內辦理所有權移轉登記，逾期每月罰款。',
-        where: '📍 地政事務所',
-        law: '土地法第73條',
-        days: 180
+        optional: false
       }
     ];
+
+    // ── 條件項目 ──
+    if(hasWill){
+      tasks.push({
+        title: '遺囑提示與確認',
+        deadline: addDays(death, 85),
+        desc: '持有遺囑者應儘速向全體繼承人提示遺囑內容，讓繼承人於拋棄繼承期限截止前做出正確決定。如有爭議，可向法院聲請確認遺囑真偽。公證遺囑直接生效；自書遺囑建議請律師確認形式要件是否符合。',
+        where: '📍 向繼承人提示；如有爭議可至法院',
+        law: '民法第1189-1198條',
+        optional: true,
+        optTag: '有遺囑'
+      });
+    }
+
+    if(hasProp){
+      tasks.push({
+        title: '不動產繼承移轉登記',
+        deadline: addDays(death, 180),
+        desc: '繼承不動產應於取得繼承權後6個月內辦理所有權移轉登記，逾期每月按公告地價或房屋評定現值千分之一罰款。辦理前須先完成遺產稅申報並取得完稅或免稅證明。',
+        where: '📍 地政事務所（依不動產所在地）',
+        law: '土地法第73條',
+        optional: true,
+        optTag: '有不動產'
+      });
+    }
+
+    if(hasVehicle){
+      tasks.push({
+        title: '車輛繼承過戶登記',
+        deadline: addDays(death, 180),
+        desc: '繼承汽機車應向公路監理機關辦理過戶登記。需備妥死亡證明、繼承同意書或法院裁定書、完稅或免稅證明等文件。逾期未過戶仍以被繼承人名義繳交燃料稅、牌照稅等，建議儘早辦理。',
+        where: '📍 公路監理所（依車籍地）',
+        law: '道路交通安全規則第16條',
+        optional: true,
+        optTag: '有車輛'
+      });
+    }
+
+    if(hasStocks){
+      tasks.push({
+        title: '股票／基金辦理繼承過戶',
+        deadline: addYears(death, 1),
+        desc: '繼承上市櫃股票須向集保結算所或券商辦理繼承申請；基金則向投信公司申請。需備妥遺產稅完稅或免稅證明、全體繼承人同意書等文件。部分機構作業時間較長，建議及早啟動。',
+        where: '📍 券商／投信公司／集保結算所',
+        law: '公司法第165條；證交法相關規定',
+        optional: true,
+        optTag: '有股票'
+      });
+    }
+
+    if(hasIns){
+      tasks.push({
+        title: '人壽保險理賠申請',
+        deadline: addYears(death, 2),
+        desc: '人壽保險保險金請求權時效為2年，自得請求之日起算，逾期消滅。受益人應儘速備妥死亡證明書、保單、繼承人身份證件等，向保險公司提出理賠申請。',
+        where: '📍 各保險公司理賠部門',
+        law: '保險法第65條',
+        optional: true,
+        optTag: '有人壽保險'
+      });
+    }
+
+    if(hasLabor){
+      tasks.push({
+        title: '勞保遺屬年金申請',
+        deadline: addYears(death, 5),
+        desc: '勞工保險遺屬年金給付請求權，自符合請領條件之日起5年內未請領視為放棄。符合條件之遺屬（配偶、子女、父母、祖父母等）應儘速向勞保局提出申請，申請後可溯及計算。',
+        where: '📍 勞動部勞工保險局（各地辦事處或線上申請）',
+        law: '勞工保險條例第65-1條',
+        optional: true,
+        optTag: '有勞工保險'
+      });
+    }
 
     // 計算各任務剩餘天數
     tasks.forEach(t => {
@@ -230,15 +365,15 @@
       t.status = getStatus(t.daysLeft);
     });
 
-    lastData = { death, tasks };
+    lastData = { death, tasks, hasWill, hasProp, hasIns, hasLabor, hasStocks, hasVehicle };
     render(death, tasks);
   }
 
   function render(death, tasks){
-    // Hero box：以遺產稅申報為主
+    // Hero box
     const mainTask = tasks.find(t => t.isMain);
     const dl = mainTask.daysLeft;
-    const isUrgent = dl <= 30;
+    const isUrgent = dl >= 0 && dl <= 30;
     document.getElementById('heroBox').innerHTML = `
       <div class="left">
         <div class="label">遺產稅申報期限</div>
@@ -246,9 +381,19 @@
         <div class="sub">死亡日期：${formatDate(death)}</div>
       </div>
       <div class="countdown-box ${isUrgent ? 'urgent' : ''}">
-        <div class="num">${dl < 0 ? '過期' : dl}</div>
+        <div class="num">${dl < 0 ? '已過期' : dl}</div>
         <div class="unit">${dl < 0 ? '' : '天後到期'}</div>
       </div>`;
+
+    // Summary bar
+    const urgentCount = tasks.filter(t => t.status === 'urgent').length;
+    const warnCount   = tasks.filter(t => t.status === 'warn').length;
+    const okCount     = tasks.filter(t => t.status === 'ok').length;
+    let summaryHtml = `<span class="summary-pill total">共 ${tasks.length} 項待辦</span>`;
+    if(urgentCount) summaryHtml += `<span class="summary-pill urgent">🔴 緊急 ${urgentCount} 項</span>`;
+    if(warnCount)   summaryHtml += `<span class="summary-pill warn">🟡 注意 ${warnCount} 項</span>`;
+    if(okCount)     summaryHtml += `<span class="summary-pill ok">🔵 尚早 ${okCount} 項</span>`;
+    document.getElementById('summaryBar').innerHTML = summaryHtml;
 
     // Sort by deadline
     const sorted = [...tasks].sort((a,b) => a.deadline - b.deadline);
@@ -258,17 +403,24 @@
       const s = t.status;
       const dl = t.daysLeft;
       const countdownHtml = dl < 0
-        ? `<span class="countdown-inline done-tag">已過期 ${Math.abs(dl)} 天</span>`
+        ? `<span class="countdown-inline expired">逾期 ${Math.abs(dl)} 天</span>`
         : dl === 0
           ? `<span class="countdown-inline urgent">今天到期！</span>`
           : `<span class="countdown-inline ${s}">剩 ${dl} 天</span>`;
+
+      const optTagHtml = t.optional
+        ? `<span class="tl-tag optional">${t.optTag}</span>`
+        : '';
 
       html += `<div class="tl-item">
         <div class="tl-dot ${s}"></div>
         <div class="tl-card ${s}">
           <div class="tl-header">
-            <div class="tl-title">${t.title}</div>
-            <span class="tl-badge ${s}">${badgeText(s)}</span>
+            <div>
+              <div class="tl-title">${t.title}</div>
+              ${optTagHtml}
+            </div>
+            <span class="tl-badge ${s}">${badgeText(s, dl)}</span>
           </div>
           <div class="tl-deadline">期限：<span>${formatDateShort(t.deadline)}</span>${countdownHtml}</div>
           <div class="tl-desc">${t.desc}</div>
@@ -284,6 +436,8 @@
 
   function reset(){
     document.getElementById('deathDate').value = '';
+    ['hasWill','hasProperty','hasInsurance','hasLaborInsurance','hasStocks','hasVehicle']
+      .forEach(id => document.getElementById(id).checked = false);
     document.getElementById('timelineSection').style.display = 'none';
     window.scrollTo({top:0, behavior:'smooth'});
   }
@@ -297,15 +451,19 @@
     const rows = sorted.map(t => {
       const dl = t.daysLeft;
       const status = dl < 0 ? '已過期' : dl <= 7 ? '緊急' : dl <= 30 ? '注意' : '尚早';
-      const color = dl < 0 ? '#8b2020' : dl <= 7 ? '#c0392b' : dl <= 30 ? '#b8600a' : '#1a3a5c';
+      const color  = dl < 0 ? '#7a7570' : dl <= 7 ? '#c0392b' : dl <= 30 ? '#b8600a' : '#1a3a5c';
+      const optBadge = t.optional ? `<span style="font-size:10px;background:#f0f0e8;color:#8a8070;border:1px solid #d8d0c0;border-radius:3px;padding:1px 5px;margin-left:4px">${t.optTag}</span>` : '';
       return `<tr>
-        <td><strong>${t.title}</strong><br><span style="font-size:11px;color:#7a6f62">${t.law}</span></td>
+        <td><strong>${t.title}</strong>${optBadge}<br><span style="font-size:11px;color:#7a6f62">${t.law}</span></td>
         <td style="font-family:monospace;white-space:nowrap">${formatDateShort(t.deadline)}</td>
-        <td style="color:${color};font-weight:600;white-space:nowrap">${dl < 0 ? '已過期' : `剩 ${dl} 天`}</td>
+        <td style="color:${color};font-weight:600;white-space:nowrap">${dl < 0 ? `逾期${Math.abs(dl)}天` : `剩 ${dl} 天`}</td>
         <td style="color:${color};font-weight:500">${status}</td>
       </tr>
       <tr><td colspan="4" style="font-size:11px;color:#7a6f62;padding:4px 12px 12px;background:#fafafa">${t.desc}<br><strong style="color:#1a3a5c">${t.where}</strong></td></tr>`;
     }).join('');
+
+    const urgentCount = tasks.filter(t=>t.status==='urgent').length;
+    const warnCount   = tasks.filter(t=>t.status==='warn').length;
 
     const html = `<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>繼承流程時間軸</title>
 <style>
@@ -315,10 +473,15 @@ body{font-family:'Noto Sans TC',sans-serif;padding:40px;max-width:720px;margin:0
 .logo{font-family:'Noto Serif TC',serif;font-size:22px;font-weight:700;}
 .logo span{color:#c4932a;}
 .meta{font-size:11px;color:#7a6f62;text-align:right;line-height:1.8;}
-.hero{background:#1a1410;color:#f5f0e8;border-radius:12px;padding:20px 24px;margin-bottom:24px;display:flex;justify-content:space-between;align-items:center;}
+.hero{background:#1a1410;color:#f5f0e8;border-radius:12px;padding:20px 24px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;}
 .hero .lbl{font-size:11px;color:#7a6f62;margin-bottom:4px;}
 .hero .dt{font-family:'Noto Serif TC',serif;font-size:18px;font-weight:700;}
 .hero .big{font-size:36px;font-weight:500;color:#c4932a;font-family:monospace;}
+.summary{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+.spill{font-family:monospace;font-size:11px;padding:3px 10px;border-radius:20px;}
+.spill.u{background:#fde8e8;color:#8b2020;}
+.spill.w{background:#fdf0d0;color:#b8600a;}
+.spill.t{background:#e8e4e0;color:#5a5550;}
 table{width:100%;border-collapse:collapse;font-size:12px;}
 th{background:#f5f0e8;padding:9px 12px;text-align:left;font-weight:500;border-bottom:2px solid #c8bfb0;}
 td{padding:9px 12px;border-bottom:1px solid #e8e0d0;vertical-align:top;}
@@ -327,11 +490,16 @@ td{padding:9px 12px;border-bottom:1px solid #e8e0d0;vertical-align:top;}
 </style></head><body>
 <div class="header">
   <div><div class="logo">Inheritance<span>Pro</span></div><div style="font-size:12px;color:#7a6f62;margin-top:4px">繼承流程時間軸</div></div>
-  <div class="meta">產出日期：${today}<br>死亡日期：${formatDate(death)}</div>
+  <div class="meta">產出日期：${today}<br>死亡日期：${formatDate(death)}<br>待辦項目：共 ${tasks.length} 項</div>
 </div>
 <div class="hero">
   <div><div class="lbl">遺產稅申報期限</div><div class="dt">${formatDate(tasks.find(t=>t.isMain).deadline)}</div></div>
-  <div style="text-align:center"><div class="big">${tasks.find(t=>t.isMain).daysLeft < 0 ? '已過期' : tasks.find(t=>t.isMain).daysLeft}</div><div style="font-size:11px;color:#7a6f62">天後到期</div></div>
+  <div style="text-align:center"><div class="big">${tasks.find(t=>t.isMain).daysLeft < 0 ? '已過期' : tasks.find(t=>t.isMain).daysLeft}</div><div style="font-size:11px;color:#7a6f62">${tasks.find(t=>t.isMain).daysLeft < 0 ? '' : '天後到期'}</div></div>
+</div>
+<div class="summary">
+  <span class="spill t">共 ${tasks.length} 項待辦</span>
+  ${urgentCount ? `<span class="spill u">緊急 ${urgentCount} 項</span>` : ''}
+  ${warnCount   ? `<span class="spill w">注意 ${warnCount} 項</span>`  : ''}
 </div>
 <table><thead><tr><th>項目</th><th>期限</th><th>剩餘天數</th><th>狀態</th></tr></thead><tbody>${rows}</tbody></table>
 <div class="footer">© ${new Date().getFullYear()} InheritancePro &nbsp;·&nbsp; inheritancepro.vercel.app<br>本工具僅供參考，實際辦理請洽相關機關或諮詢律師。</div>
