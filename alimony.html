@@ -124,6 +124,15 @@
         <div class="toggle-btn" id="caregiver_no" onclick="selectCaregiver(false)">否</div>
       </div>
     </div>
+    <div class="input-group">
+      <label>請求方目前年齡<span class="hint">影響工作恢復能力與給付期間</span></label>
+      <div class="toggle-group" style="grid-template-columns:1fr 1fr 1fr 1fr">
+        <div class="toggle-btn" id="age_young" onclick="selectAge('young')">未滿40</div>
+        <div class="toggle-btn" id="age_mid" onclick="selectAge('mid')">40–49歲</div>
+        <div class="toggle-btn active" id="age_senior" onclick="selectAge('senior')">50–59歲</div>
+        <div class="toggle-btn" id="age_elder" onclick="selectAge('elder')">60歲以上</div>
+      </div>
+    </div>
   </div>
 
   <!-- 負擔方 -->
@@ -190,12 +199,13 @@
     taichung:'臺中市', tainan:'臺南市', kaohsiung:'高雄市', province:'其他縣市'
   };
 
-  let state = { work:'none', fault:'other', caregiver:true };
+  let state = { work:'none', fault:'other', caregiver:true, age:'senior' };
   let lastResult = null;
 
   function selectWork(v){ state.work=v; ['full','partial','none'].forEach(k=>document.getElementById('work_'+k).classList.toggle('active',k===v)); }
   function selectFault(v){ state.fault=v; ['other','mutual'].forEach(k=>document.getElementById('fault_'+k).classList.toggle('active',k===v)); }
   function selectCaregiver(v){ state.caregiver=v; document.getElementById('caregiver_yes').classList.toggle('active',v); document.getElementById('caregiver_no').classList.toggle('active',!v); }
+  function selectAge(v){ state.age=v; ['young','mid','senior','elder'].forEach(k=>document.getElementById('age_'+k).classList.toggle('active',k===v)); }
 
   function v(id){ return parseFloat(document.getElementById(id).value)||0; }
   function fmt(n){ return 'NT$ '+Math.round(n).toLocaleString('zh-TW'); }
@@ -250,6 +260,18 @@
     // 6. 子女
     if(children > 0){ factors.push({label:`有 ${children} 名未成年子女`, tag:'pos', score:65, desc:'有子女照顧責任，強化生活困難主張'}); }
 
+    // 7. 年齡
+    const ageLabels = { young:'未滿40歲', mid:'40–49歲', senior:'50–59歲', elder:'60歲以上' };
+    if(state.age === 'elder'){
+      factors.push({label:`年齡：${ageLabels[state.age]}`, tag:'pos', score:90, desc:'高齡重返職場極為困難，法院通常認定工作能力恢復機率低，有利於贍養費請求'});
+    } else if(state.age === 'senior'){
+      factors.push({label:`年齡：${ageLabels[state.age]}`, tag:'pos', score:70, desc:'50歲後再就業有相當難度，尤其曾全職顧家者，法院通常予以正面考量'});
+    } else if(state.age === 'mid'){
+      factors.push({label:`年齡：${ageLabels[state.age]}`, tag:'neu', score:50, desc:'中年工作恢復有一定可能性，法院酌量認定，視個人狀況而定'});
+    } else {
+      factors.push({label:`年齡：${ageLabels[state.age]}`, tag:'neg', score:25, desc:'未滿40歲被認為有工作恢復能力，法院較不傾向給予長期贍養費'});
+    }
+
     // 計算金額
     const reqGap = Math.max(0, reqExpense - reqIncome); // 請求方缺口
     const payDisposable = Math.max(0, payIncome - payExpense); // 負擔方可支配
@@ -282,8 +304,12 @@
     if(state.work === 'none'){ durHigh = Math.min(durHigh + 2, 10); }
     if(state.caregiver){ durHigh = Math.min(durHigh + 1, 10); }
     if(state.fault === 'mutual'){ durHigh = Math.max(1, durHigh - 1); }
+    // 年齡影響給付期間
+    if(state.age === 'elder'){ durLow = Math.max(durLow, 3); durHigh = Math.min(durHigh + 3, 15); }
+    else if(state.age === 'senior'){ durHigh = Math.min(durHigh + 1, 12); }
+    else if(state.age === 'young'){ durHigh = Math.max(1, durHigh - 1); }
 
-    lastResult = { eligible, rejectedReason, low, high, durLow, durHigh, factors, reqGap, payDisposable, courtCeiling, minLife, city, years, children };
+    lastResult = { eligible, rejectedReason, low, high, durLow, durHigh, factors, reqGap, payDisposable, courtCeiling, minLife, city, years, children, age: state.age };
     renderResult(lastResult);
   }
 
@@ -343,8 +369,8 @@
 
   function reset(){
     ['req_income','req_expense','pay_income','pay_expense','marriage_years','children'].forEach(id=>document.getElementById(id).value='');
-    state={work:'none',fault:'other',caregiver:true};
-    selectWork('none');selectFault('other');selectCaregiver(true);
+    state={work:'none',fault:'other',caregiver:true,age:'senior'};
+    selectWork('none');selectFault('other');selectCaregiver(true);selectAge('senior');
     document.getElementById('resultSection').style.display='none';
     document.getElementById('btnPdf').style.display='none';
     document.getElementById('btnReset').style.display='none';

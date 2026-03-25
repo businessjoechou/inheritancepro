@@ -84,9 +84,16 @@
     <div class="section-title">傷害類型與程度</div>
     <div class="input-group">
       <label>傷害類型</label>
-      <div class="toggle-group">
+      <div class="toggle-group three">
         <div class="toggle-btn active" id="type_physical" onclick="sel('type','physical')">肢體暴力</div>
         <div class="toggle-btn" id="type_mental" onclick="sel('type','mental')">精神/言語霸凌</div>
+        <div class="toggle-btn" id="type_cyber" onclick="sel('type','cyber')">網路/社群霸凌</div>
+      </div>
+    </div>
+    <div class="input-group">
+      <label>事件發生日期<span class="hint">計算請求時效（2年）</span></label>
+      <div class="input-prefix">
+        <input type="date" id="incident_date" max="">
       </div>
     </div>
     <div class="input-group">
@@ -209,11 +216,15 @@
   // 持續性霸凌：1.5-2.5倍
 
   const SOLATIUM = {
-    mental: { minor:[30000,60000], moderate:[50000,150000], severe:[100000,300000] },
-    physical: { minor:[50000,200000], moderate:[100000,500000], severe:[500000,1500000] }
+    physical: { minor:[50000,200000], moderate:[100000,500000], severe:[500000,1500000] },
+    mental:   { minor:[30000,60000],  moderate:[50000,150000],  severe:[100000,300000]  },
+    cyber:    { minor:[40000,100000], moderate:[80000,250000],  severe:[150000,600000]  }
   };
 
   let state = { type:'physical', injury:'minor', ongoing:'no', age:'mid', loc:'school', school:'yes', perm:false, permRate:'low' };
+
+  // Set max date to today
+  document.getElementById('incident_date').max = new Date().toISOString().split('T')[0];
   let lastResult = null;
 
   function sel(key, val){
@@ -288,12 +299,24 @@
     const schoolLow = Math.round((propertyTotal + solLow) * schoolRate);
     const schoolHigh = Math.round((propertyTotal + solHigh) * schoolRate);
 
-    lastResult = { propertyTotal, solLow, solHigh, laborLoss, totalLow, totalHigh, schoolLow, schoolHigh, schoolRate, medical, futureMed, lostWork, otherLoss, offenderCount };
+    const incidentVal = document.getElementById('incident_date').value;
+    let deadlineInfo = null;
+    if(incidentVal){
+      const incidentDate = new Date(incidentVal);
+      const deadline = new Date(incidentDate);
+      deadline.setFullYear(deadline.getFullYear() + 2);
+      const today = new Date(); today.setHours(0,0,0,0);
+      const daysLeft = Math.ceil((deadline - today) / (1000*60*60*24));
+      deadlineInfo = { deadline, daysLeft, incidentDate };
+    }
+    lastResult = { propertyTotal, solLow, solHigh, laborLoss, totalLow, totalHigh, schoolLow, schoolHigh, schoolRate, medical, futureMed, lostWork, otherLoss, offenderCount, deadlineInfo };
     renderResult(lastResult);
   }
 
+  function fmtDate(d){ return `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`; }
+
   function renderResult(r){
-    const {propertyTotal,solLow,solHigh,laborLoss,totalLow,totalHigh,schoolLow,schoolHigh,schoolRate} = r;
+    const {propertyTotal,solLow,solHigh,laborLoss,totalLow,totalHigh,schoolLow,schoolHigh,schoolRate,deadlineInfo} = r;
 
     document.getElementById('heroBox').innerHTML = `
       <div class="result-hero">
@@ -330,11 +353,29 @@
     }
     document.getElementById('liabilityCards').innerHTML = lib;
 
-    document.getElementById('lawNote').innerHTML = `⚖️ <strong>相關法律：</strong><br>
+    // 請求時效倒數
+    let deadlineHtml = '';
+    if(deadlineInfo){
+      const { deadline, daysLeft } = deadlineInfo;
+      const isExpired = daysLeft < 0;
+      const isUrgent  = daysLeft >= 0 && daysLeft <= 90;
+      const boxColor  = isExpired ? '#fdf0ef' : isUrgent ? '#fffbf0' : '#f0f4f8';
+      const bdrColor  = isExpired ? '#e8b0a8' : isUrgent ? '#e8d48a' : '#a8c0d8';
+      const txtColor  = isExpired ? '#8b2020' : isUrgent ? '#7a6020' : '#1a3a5c';
+      const dayLabel  = isExpired
+        ? `⚠ 時效已過期 ${Math.abs(daysLeft)} 天，請立即諮詢律師確認補救途徑`
+        : `距期限還有 ${daysLeft} 天（${fmtDate(deadline)}）`;
+      deadlineHtml = `<div style="background:${boxColor};border:1px solid ${bdrColor};border-radius:8px;padding:12px 14px;font-size:12px;color:${txtColor};line-height:1.7;margin-bottom:14px">
+        ⏱ <strong>請求時效（民法第197條）：</strong>${dayLabel}
+      </div>`;
+    }
+    document.getElementById('lawNote').innerHTML = `${deadlineHtml}⚖️ <strong>相關法律：</strong><br>
       ・<strong>民法第184條</strong>：故意或過失不法侵害他人，負損害賠償責任。<br>
       ・<strong>民法第187條</strong>：未成年人致他人損害，父母連帶負賠償責任。<br>
       ・<strong>民法第195條</strong>：不法侵害身體、健康，得請求精神慰撫金。<br>
-      ・<strong>請求時效</strong>：自知悉時起2年，或自行為時起10年（民法第197條）。`;
+      ・<strong>請求時效</strong>：自知悉時起2年，或自行為時起10年（民法第197條）。<br>
+      ${state.type==='cyber'?'・<strong>網路霸凌補充</strong>：散布貼文、截圖、群組辱罵等均可構成侵權，受害範圍廣泛者法院慰撫金通常較高。相關截圖、對話紀錄應即時保存以備舉證。<br>':''}
+      ・<strong>學校事件補充</strong>：可同時向學校提出調查申訴（依校園霸凌防制準則），保存書面紀錄供訴訟使用。`;
 
     document.getElementById('resultSection').style.display='block';
     document.getElementById('btnPdf').style.display='block';
@@ -371,7 +412,7 @@
     if(!lastResult)return;
     const {propertyTotal,solLow,solHigh,laborLoss,totalLow,totalHigh,schoolLow,schoolHigh,schoolRate,medical,futureMed,lostWork,otherLoss,offenderCount}=lastResult;
     const today=new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'long',day:'numeric'});
-    const typeLabel=state.type==='physical'?'肢體暴力':'精神/言語霸凌';
+    const typeLabel=state.type==='physical'?'肢體暴力':state.type==='mental'?'精神/言語霸凌':'網路/社群霸凌';
     const injuryLabel=state.injury==='minor'?'輕傷':state.injury==='moderate'?'中等傷害':'重傷';
     const html=`<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>未成年損害賠償試算報告</title>
 <style>
