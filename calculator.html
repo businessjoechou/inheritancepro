@@ -700,7 +700,7 @@
           <div class="counter-label">配偶扣除額</div>
           <div class="counter-sub">有配偶自動扣除 553萬</div>
         </div>
-        <div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--success)">NT$ 4,930,000</div>
+        <div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--success)">NT$ 5,530,000</div>
       </div>
 
       <div class="counter-row" id="autoFuneralRow">
@@ -731,6 +731,15 @@
           <input type="number" id="deduct_parents_count" placeholder="0" min="0" max="4" inputmode="numeric" oninput="updateParentDeduct()">
         </div>
         <div id="parentDeductAmt" style="font-size:12px;color:var(--success);margin-top:6px;font-family:'DM Mono',monospace"></div>
+      </div>
+
+      <div class="input-group">
+        <label>身心障礙扣除額 <span style="font-weight:400;color:var(--muted);font-size:12px">重度以上，每人 693萬</span></label>
+        <div class="input-prefix">
+          <span class="prefix-text">人數</span>
+          <input type="number" id="deduct_disabled_count" placeholder="0" min="0" max="20" inputmode="numeric" oninput="updateDisabledDeduct()">
+        </div>
+        <div id="disabledDeductAmt" style="font-size:12px;color:var(--success);margin-top:6px;font-family:'DM Mono',monospace"></div>
       </div>
 
       <div class="input-group" style="margin-bottom:0">
@@ -860,8 +869,12 @@
     document.getElementById('backBtn').style.display = n > 1 ? 'block' : 'none';
 
     if (n === 4) {
-      // Auto-show spouse deduction row
       document.getElementById('autoSpouseRow').style.display = state.hasSpouse ? 'flex' : 'none';
+      // 自動帶入步驟3的子女/父母人數
+      const cEl = document.getElementById('deduct_children_count');
+      const pEl = document.getElementById('deduct_parents_count');
+      if (state.children > 0 && !cEl.value) { cEl.value = state.children; updateChildDeduct(); }
+      if (state.parents > 0 && !pEl.value) { pEl.value = state.parents; updateParentDeduct(); }
     }
 
     if (n === totalSteps) {
@@ -933,6 +946,12 @@
     document.getElementById('parentDeductAmt').textContent = n > 0 ? `= NT$ ${amt.toLocaleString('zh-TW')}` : '';
   }
 
+  function updateDisabledDeduct() {
+    const n = parseInt(document.getElementById('deduct_disabled_count').value) || 0;
+    const amt = n * 6930000;
+    document.getElementById('disabledDeductAmt').textContent = n > 0 ? `= NT$ ${amt.toLocaleString('zh-TW')}` : '';
+  }
+
   function calcTax(netEstate) {
     if (netEstate <= 0) return 0;
     const t1 = 56210000, t2 = 112420000;
@@ -955,11 +974,12 @@
       const ex = document.getElementById(k + 'Extra');
       if (ex) ex.style.display = 'none';
     });
-    ['deduct_children_count','deduct_parents_count','deduct_other'].forEach(id => {
+    ['deduct_children_count','deduct_parents_count','deduct_disabled_count','deduct_other'].forEach(id => {
       document.getElementById(id).value = '';
     });
     document.getElementById('childDeductAmt').textContent = '';
     document.getElementById('parentDeductAmt').textContent = '';
+    document.getElementById('disabledDeductAmt').textContent = '';
     document.getElementById('representativesSection').style.display = 'none';
     showStep(1);
   }
@@ -1105,10 +1125,11 @@
     const exemption = 13330000;
     const dSpouse = state.hasSpouse ? 5530000 : 0;
     const dFuneral = 1380000;
-    const dChildren = (parseInt(document.getElementById('deduct_children_count').value) || 0) * 560000;
-    const dParents = (parseInt(document.getElementById('deduct_parents_count').value) || 0) * 1380000;
-    const dOther = parseFloat(document.getElementById('deduct_other').value) || 0;
-    const totalDeduct = dSpouse + dFuneral + dChildren + dParents + dOther;
+    const dChildren  = (parseInt(document.getElementById('deduct_children_count').value) || 0) * 560000;
+    const dParents   = (parseInt(document.getElementById('deduct_parents_count').value) || 0) * 1380000;
+    const dDisabled  = (parseInt(document.getElementById('deduct_disabled_count').value) || 0) * 6930000;
+    const dOther     = parseFloat(document.getElementById('deduct_other').value) || 0;
+    const totalDeduct = dSpouse + dFuneral + dChildren + dParents + dDisabled + dOther;
     const netEstate = Math.max(0, total - exemption - totalDeduct);
     const tax = calcTax(netEstate);
 
@@ -1118,7 +1139,7 @@
 
     const taxHtml = `
     <div style="margin-top:16px">
-      <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">遺產稅試算（2025年）</div>
+      <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">遺產稅試算（2026年）</div>
       <div class="heir-card">
         <div class="heir-header" style="background:${tax === 0 ? '#e8f5e9' : '#fff5f0'}">
           <span class="heir-name">預估應納遺產稅</span>
@@ -1133,10 +1154,10 @@
             <span class="heir-row-label">免稅額</span>
             <span class="heir-row-val" style="color:var(--muted)">－ ${formatMoney(exemption)}</span>
           </div>
-          ${totalDeduct > 0 ? `<div class="heir-row">
-            <span class="heir-row-label">各項扣除額</span>
-            <span class="heir-row-val" style="color:var(--muted)">－ ${formatMoney(totalDeduct)}</span>
-          </div>` : ''}
+          ${dChildren > 0 ? `<div class="heir-row"><span class="heir-row-label">子女扣除額</span><span class="heir-row-val" style="color:var(--muted)">－ ${formatMoney(dChildren)}</span></div>` : ''}
+          ${dParents > 0 ? `<div class="heir-row"><span class="heir-row-label">父母扣除額</span><span class="heir-row-val" style="color:var(--muted)">－ ${formatMoney(dParents)}</span></div>` : ''}
+          ${dDisabled > 0 ? `<div class="heir-row"><span class="heir-row-label">身心障礙扣除額</span><span class="heir-row-val" style="color:var(--muted)">－ ${formatMoney(dDisabled)}</span></div>` : ''}
+          ${dOther > 0 ? `<div class="heir-row"><span class="heir-row-label">其他扣除額</span><span class="heir-row-val" style="color:var(--muted)">－ ${formatMoney(dOther)}</span></div>` : ''}
           <div class="heir-row" style="border-top:1px solid var(--soft);padding-top:10px;margin-top:4px">
             <span class="heir-row-label">遺產淨額</span>
             <span class="heir-row-val" style="color:var(--ink)">${formatMoney(netEstate)}</span>
@@ -1148,7 +1169,7 @@
         </div>
       </div>
       <div class="law-note" style="margin-top:10px">
-        ⚖️ 依《遺產及贈與稅法》第13條（2025年調整後稅率）。本試算僅供參考，實際稅額以國稅局核定為準。申報期限：被繼承人死亡後6個月內。
+        ⚖️ 依《遺產及贈與稅法》第13條（2026年適用稅率）。本試算僅供參考，實際稅額以國稅局核定為準。申報期限：被繼承人死亡後6個月內。
       </div>
     </div>`;
 
@@ -1271,7 +1292,7 @@
 
 <footer>
   <div class="footer-logo">Inheritance<span>Pro</span></div>
-  <div>© 2025 InheritancePro. All rights reserved.</div>
+  <div>© 2026 InheritancePro. All rights reserved.</div>
   <div class="disclaimer">
     本工具僅供參考，不構成法律意見。<br>
     實際繼承事宜請諮詢專業律師或法律顧問。<br>
