@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>婚後財產判斷器｜InheritancePro</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#1a1410;--paper:#f5f0e8;--gold:#c4932a;--muted:#7a6f62;--border:#c8bfb0;--soft:#e8e0d0;--success:#2a6b4a;--accent:#1a3a5c;--danger:#8b2020;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);font-family:'Noto Sans TC',sans-serif;min-height:100vh;font-size:15px;}
+  header{background:var(--ink);color:var(--paper);padding:18px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+  .logo{font-family:'Noto Serif TC',serif;font-size:18px;font-weight:700;}
+  .logo span{color:var(--gold);}
+  .back-link{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:0.06em;}
+  main{max-width:480px;margin:0 auto;padding:28px 20px 60px;}
+  h2{font-family:'Noto Serif TC',serif;font-size:20px;font-weight:700;margin-bottom:6px;}
+  .subtitle{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:24px;}
+
+  /* Progress */
+  .progress-wrap{margin-bottom:28px;}
+  .progress-label{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.1em;margin-bottom:8px;}
+  .progress-bar{height:3px;background:var(--soft);border-radius:2px;}
+  .progress-fill{height:100%;background:var(--gold);border-radius:2px;transition:width 0.4s ease;}
+
+  /* Question card */
+  .q-card{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:24px;margin-bottom:16px;animation:fadeIn 0.3s ease;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .q-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.1em;margin-bottom:10px;}
+  .q-text{font-family:'Noto Serif TC',serif;font-size:17px;font-weight:600;line-height:1.5;margin-bottom:6px;}
+  .q-hint{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:20px;}
+
+  /* Options */
+  .options{display:flex;flex-direction:column;gap:10px;}
+  .option-btn{padding:14px 16px;border:1.5px solid var(--border);border-radius:10px;background:var(--paper);cursor:pointer;text-align:left;font-size:14px;color:var(--ink);font-family:'Noto Sans TC',sans-serif;transition:all 0.2s;display:flex;align-items:center;gap:12px;line-height:1.5;}
+  .option-btn:hover{border-color:var(--gold);background:#fff;}
+  .option-btn:active{background:var(--soft);}
+  .option-icon{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;transition:all 0.2s;}
+  .option-btn:hover .option-icon{border-color:var(--gold);background:#fff8e8;}
+
+  /* Result */
+  .result-card{border-radius:14px;padding:24px;margin-bottom:16px;animation:fadeIn 0.3s ease;}
+  .result-card.yes{background:#edf7f1;border:2px solid #a8d4b8;}
+  .result-card.no{background:#fdf0ef;border:2px solid #e8b0a8;}
+  .result-card.partial{background:#fffbf0;border:2px solid #e8d48a;}
+  .result-icon{font-size:32px;margin-bottom:12px;}
+  .result-verdict{font-family:'Noto Serif TC',serif;font-size:20px;font-weight:700;margin-bottom:8px;}
+  .result-card.yes .result-verdict{color:var(--success);}
+  .result-card.no .result-verdict{color:var(--danger);}
+  .result-card.partial .result-verdict{color:#8b6010;}
+  .result-explain{font-size:13px;line-height:1.8;color:var(--ink);}
+  .result-law{margin-top:14px;background:rgba(255,255,255,0.6);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--muted);line-height:1.7;}
+  .result-law strong{color:var(--ink);}
+
+  .btn-again{width:100%;padding:13px;border:1.5px solid var(--border);border-radius:10px;background:transparent;font-size:14px;color:var(--muted);cursor:pointer;font-family:'Noto Sans TC',sans-serif;margin-bottom:10px;transition:all 0.2s;}
+  .btn-again:hover{border-color:var(--ink);color:var(--ink);}
+  .btn-back-calc{width:100%;padding:13px;background:var(--ink);color:var(--paper);border:none;border-radius:10px;font-size:14px;cursor:pointer;font-family:'Noto Sans TC',sans-serif;}
+
+  .breadcrumb{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap;}
+  .breadcrumb-item{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:0.06em;}
+  .breadcrumb-item.done{color:var(--gold);}
+  .breadcrumb-sep{font-size:11px;color:#3a3530;}
+</style>
+</head>
+<body>
+<header>
+  <div><div class="logo">Inheritance<span>Pro</span></div></div>
+  <a href="property-split.html" class="back-link">← 返回計算器</a>
+</header>
+<main>
+  <h2>這筆財產算婚後財產嗎？</h2>
+  <p class="subtitle">回答幾個問題，系統幫你判斷這筆財產是否應列入剩餘財產差額計算。</p>
+
+  <div class="progress-wrap">
+    <div class="progress-label" id="progressLabel">步驟 1 / 4</div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:25%"></div></div>
+  </div>
+
+  <div id="breadcrumb" class="breadcrumb"></div>
+  <div id="questionArea"></div>
+  <div id="resultArea"></div>
+</main>
+
+<script>
+  const questions = [
+    {
+      id: 'q1',
+      text: '這筆財產是什麼時候取得的？',
+      hint: '以結婚登記日為基準。',
+      options: [
+        { label: '結婚之前就有了', value: 'before', icon: '📅' },
+        { label: '結婚之後才取得', value: 'after', icon: '💍' },
+        { label: '不確定', value: 'unsure', icon: '❓' }
+      ]
+    },
+    {
+      id: 'q2',
+      text: '這筆財產是怎麼來的？',
+      hint: '選擇最符合的取得方式。',
+      options: [
+        { label: '工作薪資或事業所得', value: 'earn', icon: '💼' },
+        { label: '投資、股票、基金獲利', value: 'invest', icon: '📈' },
+        { label: '繼承（過世親人留下）', value: 'inherit', icon: '📜' },
+        { label: '受贈（別人送的，包含父母）', value: 'gift', icon: '🎁' },
+        { label: '不動產或資產增值', value: 'appreciate', icon: '🏠' },
+        { label: '保險理賠金或慰撫金', value: 'insurance', icon: '🏥' }
+      ]
+    },
+    {
+      id: 'q3',
+      text: '這筆財產目前是否仍存在？',
+      hint: '已花掉或轉換形式（例如賣掉後買其他東西）的財產，計算方式可能不同。',
+      options: [
+        { label: '是，目前仍持有', value: 'exists', icon: '✅' },
+        { label: '已花掉或消耗', value: 'spent', icon: '💸' },
+        { label: '已轉換成其他資產', value: 'converted', icon: '🔄' }
+      ]
+    },
+    {
+      id: 'q4',
+      text: '夫妻間有沒有另外約定財產制？',
+      hint: '法定財產制是預設，除非另外向法院登記約定，否則適用法定財產制。',
+      options: [
+        { label: '沒有，用法定財產制（預設）', value: 'legal', icon: '⚖️' },
+        { label: '有約定分別財產制', value: 'separate', icon: '📋' },
+        { label: '不確定', value: 'unknown', icon: '❓' }
+      ]
+    }
+  ];
+
+  let answers = {};
+  let currentQ = 0;
+  let path = [];
+
+  function render(){
+    // Check if we can conclude early
+    const early = checkEarlyResult();
+    if(early){
+      showResult(early);
+      return;
+    }
+    if(currentQ >= questions.length){
+      showResult(getFinalResult());
+      return;
+    }
+    const q = questions[currentQ];
+    updateProgress();
+    updateBreadcrumb();
+
+    document.getElementById('questionArea').innerHTML = `
+      <div class="q-card">
+        <div class="q-num">問題 ${currentQ+1}</div>
+        <div class="q-text">${q.text}</div>
+        <div class="q-hint">${q.hint}</div>
+        <div class="options">
+          ${q.options.map(o=>`
+            <button class="option-btn" onclick="answer('${q.id}','${o.value}')">
+              <div class="option-icon">${o.icon}</div>
+              <div>${o.label}</div>
+            </button>`).join('')}
+        </div>
+      </div>`;
+    document.getElementById('resultArea').innerHTML = '';
+  }
+
+  function answer(qid, val){
+    answers[qid] = val;
+    path.push({ qid, val });
+    currentQ++;
+    render();
+  }
+
+  function checkEarlyResult(){
+    // 婚前財產 → 不算（除非增值部分有爭議）
+    if(answers.q1 === 'before') return 'premarital';
+    if(answers.q1 === 'unsure') return 'unsure_time';
+
+    // 婚後取得
+    if(answers.q2 === 'inherit') return 'inherited';
+    if(answers.q2 === 'gift') return 'gifted';
+    if(answers.q2 === 'insurance') return 'insurance';
+
+    // 分別財產制
+    if(answers.q4 === 'separate') return 'separate_regime';
+    if(answers.q4 === 'unknown') return 'unknown_regime';
+
+    return null;
+  }
+
+  function getFinalResult(){
+    // 婚後取得、非繼承非贈與、仍存在、法定財產制
+    if(answers.q2 === 'earn') return 'counts_earn';
+    if(answers.q2 === 'invest') return 'counts_invest';
+    if(answers.q2 === 'appreciate') return 'counts_appreciate';
+    if(answers.q3 === 'spent') return 'spent';
+    if(answers.q3 === 'converted') return 'converted';
+    return 'counts_general';
+  }
+
+  const results = {
+    premarital: {
+      type: 'no',
+      icon: '❌',
+      verdict: '不算婚後財產',
+      explain: '婚前就已擁有的財產屬於「婚前財產」，不列入剩餘財產差額計算。即使婚後仍持有，也不因此變成婚後財產。',
+      law: '<strong>民法第1017條：</strong>夫或妻之財產分為婚前財產與婚後財產。婚前財產為結婚時所有之財產。不能證明為婚前或婚後財產者，推定為婚後財產。'
+    },
+    unsure_time: {
+      type: 'partial',
+      icon: '⚠️',
+      verdict: '需要進一步確認',
+      explain: '無法確定取得時間時，依民法規定推定為婚後財產。如果你主張是婚前財產，需要提出證明（如購買憑證、贈與書等）。建議蒐集相關文件後諮詢律師。',
+      law: '<strong>民法第1017條第2項：</strong>不能證明為婚前或婚後財產者，推定為婚後財產。'
+    },
+    inherited: {
+      type: 'no',
+      icon: '❌',
+      verdict: '不算剩餘財產（繼承所得）',
+      explain: '婚後因繼承取得的財產，依民法明文規定不列入剩餘財產差額計算。這是立法者為了保護家族財產傳承所設計的例外。',
+      law: '<strong>民法第1030-1條第1項但書：</strong>因繼承或其他無償取得之財產及慰撫金，不在分配之列。'
+    },
+    gifted: {
+      type: 'no',
+      icon: '❌',
+      verdict: '不算剩餘財產（贈與所得）',
+      explain: '婚後受贈的財產（包含父母的贈與）屬於「無償取得」，不列入剩餘財產差額計算。但若是夫妻互相贈與，則另當別論。',
+      law: '<strong>民法第1030-1條第1項但書：</strong>因繼承或其他無償取得之財產及慰撫金，不在分配之列。'
+    },
+    insurance: {
+      type: 'no',
+      icon: '❌',
+      verdict: '通常不算剩餘財產',
+      explain: '慰撫金（如車禍精神賠償）明文排除在外。保險理賠金視情況而定：若為人身保險金（壽險、意外險）通常不列入；若為財產保險理賠（補償財產損失），則可能列入。建議諮詢律師確認。',
+      law: '<strong>民法第1030-1條第1項但書：</strong>慰撫金不在分配之列。保險給付性質需個案判斷。'
+    },
+    separate_regime: {
+      type: 'no',
+      icon: '❌',
+      verdict: '分別財產制不適用本條',
+      explain: '剩餘財產差額分配請求權（民法第1030-1條）只適用於「法定財產制」。若夫妻已約定分別財產制，則無此請求權，各自管理、使用自己的財產。',
+      law: '<strong>民法第1030-1條：</strong>本條僅適用於法定財產制。分別財產制之夫妻，各保有其財產之所有權。'
+    },
+    unknown_regime: {
+      type: 'partial',
+      icon: '⚠️',
+      verdict: '需確認財產制種類',
+      explain: '若不確定是否有約定財產制，可至戶政事務所或法院查詢是否有登記。沒有登記的話，預設適用法定財產制，剩餘財產差額分配請求權適用。',
+      law: '<strong>民法第1005條：</strong>夫妻未以契約訂立夫妻財產制者，除本法另有規定外，以法定財產制為其夫妻財產制。'
+    },
+    counts_earn: {
+      type: 'yes',
+      icon: '✅',
+      verdict: '算！應列入婚後財產',
+      explain: '婚後靠工作或事業取得的薪資、獎金、報酬等，是最典型的婚後財產，應列入剩餘財產差額計算。',
+      law: '<strong>民法第1017條：</strong>婚後財產為婚姻關係存續中取得之財產。<br><strong>民法第1030-1條：</strong>婚後財產扣除債務後，差額應平均分配。'
+    },
+    counts_invest: {
+      type: 'yes',
+      icon: '✅',
+      verdict: '算！應列入婚後財產',
+      explain: '婚後以婚後財產進行投資所獲得的利益（股票獲利、基金收益等），屬於婚後財產。但若是以婚前財產投資所得，實務上有爭議，建議諮詢律師。',
+      law: '<strong>民法第1017條：</strong>婚後財產為婚姻關係存續中取得之財產，包含投資所得。'
+    },
+    counts_appreciate: {
+      type: 'partial',
+      icon: '⚠️',
+      verdict: '部分算，需視情況判斷',
+      explain: '若不動產是婚前購買，婚後增值的部分在實務上有爭議。通常法院認為婚前財產本身不算，但若增值是因婚後共同努力（如裝修、經營）所致，另當別論。建議諮詢律師釐清。',
+      law: '<strong>民法第1017條：</strong>婚前財產不列入，但婚後增值部分各法院見解不一，需個案判斷。'
+    },
+    spent: {
+      type: 'partial',
+      icon: '⚠️',
+      verdict: '已花掉，計算上較複雜',
+      explain: '婚後財產若已花掉，原則上不計入現存財產。但若是故意在離婚前大量消耗財產以減少對方請求，法院可能追究。建議保留相關支出憑證說明用途。',
+      law: '<strong>民法第1030-3條：</strong>夫或妻為減少他方對剩餘財產之分配，而於法律關係消滅前五年內處分其婚後財產者，他方得請求將該財產追加計算。'
+    },
+    converted: {
+      type: 'yes',
+      icon: '✅',
+      verdict: '算！轉換形式後仍列入',
+      explain: '婚後財產轉換形式（例如：薪水買了股票、賣房後存入銀行）後，仍屬婚後財產。應以目前持有的形式計算其價值列入。',
+      law: '<strong>民法第1030-1條：</strong>現存之婚後財產為計算基準，形式轉換不影響其婚後財產性質。'
+    },
+    counts_general: {
+      type: 'yes',
+      icon: '✅',
+      verdict: '算！應列入婚後財產',
+      explain: '此筆財產符合婚後財產的認定條件，應列入剩餘財產差額計算。',
+      law: '<strong>民法第1030-1條：</strong>法定財產制關係消滅時，婚後財產扣除債務後，差額應平均分配。'
+    }
+  };
+
+  function showResult(key){
+    const r = results[key];
+    updateProgress(true);
+    updateBreadcrumb();
+    document.getElementById('questionArea').innerHTML = '';
+    document.getElementById('resultArea').innerHTML = `
+      <div class="result-card ${r.type}">
+        <div class="result-icon">${r.icon}</div>
+        <div class="result-verdict">${r.verdict}</div>
+        <div class="result-explain">${r.explain}</div>
+        <div class="result-law">${r.law}</div>
+      </div>
+      <button class="btn-again" onclick="restart()">🔄 再判斷一筆財產</button>
+      <button class="btn-back-calc" onclick="window.location.href='property-split.html'">← 返回計算器</button>`;
+  }
+
+  function updateProgress(done){
+    const total = questions.length;
+    const current = Math.min(currentQ + 1, total);
+    const pct = done ? 100 : (currentQ / total * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent = done ? '判斷完成' : `步驟 ${current} / ${total}`;
+  }
+
+  function updateBreadcrumb(){
+    const bc = document.getElementById('breadcrumb');
+    if(path.length === 0){ bc.innerHTML=''; return; }
+    const labels = { before:'婚前取得', after:'婚後取得', unsure:'不確定時間', earn:'薪資所得', invest:'投資獲利', inherit:'繼承', gift:'受贈', appreciate:'增值', insurance:'保險', exists:'仍持有', spent:'已花掉', converted:'已轉換', legal:'法定財產制', separate:'分別財產制', unknown:'不確定財產制' };
+    bc.innerHTML = path.map((p,i)=>`<span class="breadcrumb-item done">${labels[p.val]||p.val}</span>${i<path.length-1?'<span class="breadcrumb-sep">›</span>':''}`).join('');
+  }
+
+  function restart(){
+    answers = {};
+    path = [];
+    currentQ = 0;
+    document.getElementById('resultArea').innerHTML = '';
+    render();
+  }
+
+  render();
+</script>
+</body>
+</html>

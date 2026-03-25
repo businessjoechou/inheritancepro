@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>台灣遺產計算器｜InheritancePro</title>
+<meta name="description" content="台灣專業遺產繼承計算工具，依民法快速計算應繼分與特留分。InheritancePro — 專為台灣法律設計。">
+<meta name="author" content="InheritancePro">
+<meta property="og:title" content="台灣遺產計算器｜InheritancePro">
+<meta property="og:description" content="台灣專業遺產繼承計算工具，依民法快速計算應繼分與特留分。">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1410;
+    --paper: #f5f0e8;
+    --accent: #8b2020;
+    --gold: #c4932a;
+    --soft: #e8e0d0;
+    --muted: #7a6f62;
+    --success: #2a6b4a;
+    --border: #c8bfb0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Noto Sans TC', sans-serif;
+    min-height: 100vh;
+    font-size: 15px;
+  }
+
+  /* Header */
+  header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logo {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  .logo span { color: var(--gold); }
+
+  .badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    margin-top: 2px;
+  }
+
+  /* Progress */
+  .progress-bar {
+    height: 3px;
+    background: var(--soft);
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--gold);
+    transition: width 0.4s ease;
+    width: 25%;
+  }
+
+  /* Main */
+  main { padding: 24px 20px 100px; max-width: 480px; margin: 0 auto; }
+
+  /* Step indicator */
+  .step-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  h2 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  /* Cards */
+  .card {
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 14px;
+  }
+
+  /* Input groups */
+  .input-group {
+    margin-bottom: 18px;
+  }
+
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  input[type="number"], input[type="text"] {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    background: var(--paper);
+    font-size: 15px;
+    font-family: 'DM Mono', monospace;
+    color: var(--ink);
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+  }
+
+  input:focus {
+    outline: none;
+    border-color: var(--gold);
+    background: #fff;
+  }
+
+  .input-prefix {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    background: var(--paper);
+    padding: 0 14px;
+    transition: border-color 0.2s;
+  }
+
+  .input-prefix:focus-within {
+    border-color: var(--gold);
+    background: #fff;
+  }
+
+  .prefix-text {
+    font-size: 14px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .input-prefix input {
+    border: none;
+    background: transparent;
+    padding: 12px 0;
+    flex: 1;
+  }
+
+  .input-prefix input:focus { outline: none; }
+
+  /* Toggle options */
+  .toggle-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .toggle-btn {
+    padding: 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    background: var(--paper);
+    cursor: pointer;
+    text-align: center;
+    font-size: 14px;
+    color: var(--muted);
+    transition: all 0.2s;
+    font-family: 'Noto Sans TC', sans-serif;
+  }
+
+  .toggle-btn.active {
+    border-color: var(--accent);
+    background: #fff5f5;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* Counter */
+  .counter-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--soft);
+  }
+
+  .counter-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .counter-row:first-child { padding-top: 0; }
+
+  .counter-label { font-size: 14px; color: var(--ink); }
+  .counter-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  .counter-ctrl {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .cnt-btn {
+    width: 32px;
+    height: 32px;
+    border: 1.5px solid var(--border);
+    border-radius: 50%;
+    background: var(--paper);
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink);
+    transition: all 0.15s;
+    line-height: 1;
+  }
+
+  .cnt-btn:active { background: var(--soft); }
+
+  .cnt-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 18px;
+    font-weight: 500;
+    min-width: 24px;
+    text-align: center;
+  }
+
+  /* Info box */
+  .info-box {
+    background: #fffbf0;
+    border: 1px solid #e8d48a;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 12px;
+    color: #7a6020;
+    line-height: 1.6;
+    margin-top: 14px;
+  }
+
+  .info-box strong { color: #5a4010; }
+
+  /* Navigation */
+  .nav-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-top: 1px solid var(--border);
+    padding: 16px 20px 28px;
+    display: flex;
+    gap: 12px;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .btn-back {
+    flex: 0 0 80px;
+    padding: 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    background: transparent;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--muted);
+    font-family: 'Noto Sans TC', sans-serif;
+    transition: all 0.2s;
+  }
+
+  .btn-back:active { background: var(--soft); }
+
+  .btn-next {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: var(--ink);
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--paper);
+    font-family: 'Noto Sans TC', sans-serif;
+    transition: all 0.2s;
+    letter-spacing: 0.03em;
+  }
+
+  .btn-next:active { background: #333; }
+  .btn-next.accent { background: var(--accent); }
+
+  /* Steps */
+  .step { display: none; }
+  .step.active { display: block; }
+
+  /* Result */
+  .result-hero {
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 16px;
+    padding: 28px 24px;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .result-hero .label {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    font-family: 'DM Mono', monospace;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .result-total {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.02em;
+    margin-bottom: 6px;
+  }
+
+  .result-sub { font-size: 13px; color: var(--muted); }
+
+  .heir-card {
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+
+  .heir-header {
+    background: var(--soft);
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .heir-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ink);
+  }
+
+  .heir-fraction {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .heir-body { padding: 14px 16px; }
+
+  .heir-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .heir-row:last-child { margin-bottom: 0; }
+
+  .heir-row-label { font-size: 13px; color: var(--muted); }
+
+  .heir-row-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--success);
+  }
+
+  .law-note {
+    background: #f8f8f8;
+    border-left: 3px solid var(--gold);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 14px;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 14px;
+  }
+
+  .law-note strong { color: var(--ink); }
+
+  .restart-btn {
+    width: 100%;
+    padding: 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    background: transparent;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--muted);
+    font-family: 'Noto Sans TC', sans-serif;
+    margin-top: 4px;
+    transition: all 0.2s;
+  }
+
+  .restart-btn:active { background: var(--soft); }
+
+  /* Spouse toggle */
+  .section-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--soft);
+    margin: 18px 0;
+  }
+
+  .chip {
+    display: inline-block;
+    padding: 3px 10px;
+    background: #fff0e8;
+    border-radius: 20px;
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 500;
+    margin-left: 8px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="logo">Inheritance<span>Pro</span></div>
+    <div class="badge">台灣遺產計算器 · Beta</div>
+  </div>
+  <a href="index.html" style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:0.06em;white-space:nowrap">← 首頁</a>
+</header>
+
+<div class="progress-bar">
+  <div class="progress-fill" id="progressFill"></div>
+</div>
+
+<main>
+
+  <!-- Step 1: 遺產總額 -->
+  <div class="step active" id="step1">
+    <div class="step-label">步驟 1 / 5</div>
+    <h2>遺產總額</h2>
+    <p class="subtitle">請輸入被繼承人的遺產總額，系統將依台灣《民法》計算各繼承人的應繼分。</p>
+
+    <div class="card">
+      <div class="input-group">
+        <label>遺產總額（新台幣）</label>
+        <div class="input-prefix">
+          <span class="prefix-text">NT$</span>
+          <input type="number" id="totalEstate" placeholder="0" min="0" inputmode="numeric">
+        </div>
+      </div>
+
+      <div class="input-group" style="margin-bottom:0">
+        <label>是否有遺囑？</label>
+        <div class="toggle-group">
+          <div class="toggle-btn" id="will_no" onclick="selectWill(false)">無遺囑</div>
+          <div class="toggle-btn active" id="will_yes" onclick="selectWill(true)">有遺囑（法定特留分保護）</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <strong>📋 台灣民法說明</strong><br>
+      遺產依《民法》第1138條規定，由法定繼承人依應繼分繼承。有遺囑時，仍需保障繼承人之<strong>特留分</strong>（民法第1223條）。
+    </div>
+  </div>
+
+  <!-- Step 2: 配偶 -->
+  <div class="step" id="step2">
+    <div class="step-label">步驟 2 / 5</div>
+    <h2>配偶</h2>
+    <p class="subtitle">配偶為當然繼承人，與各順序繼承人共同繼承，其應繼分依民法第1144條規定。</p>
+
+    <div class="card">
+      <div class="section-title">配偶狀況</div>
+      <div class="toggle-group">
+        <div class="toggle-btn active" id="spouse_yes" onclick="selectSpouse(true)">有配偶</div>
+        <div class="toggle-btn" id="spouse_no" onclick="selectSpouse(false)">無配偶</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section-title">夫妻財產制</div>
+      <div class="toggle-group">
+        <div class="toggle-btn active" id="regime_legal" onclick="selectRegime('legal')">法定財產制</div>
+        <div class="toggle-btn" id="regime_separate" onclick="selectRegime('separate')">分別財產制</div>
+      </div>
+
+      <div class="info-box" style="margin-top:14px">
+        <strong>💡 法定財產制下</strong>，配偶得先請求剩餘財產分配（民法第1030-1條），再計算遺產。本計算器以輸入之遺產金額為準。
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 3: 繼承人 -->
+  <div class="step" id="step3">
+    <div class="step-label">步驟 3 / 5</div>
+    <h2>血親繼承人</h2>
+    <p class="subtitle">依民法第1138條，繼承順序：①子女 ②父母 ③兄弟姊妹 ④祖父母。順位高者優先繼承。</p>
+
+    <div class="card">
+      <div class="section-title">第一順位</div>
+
+      <div class="counter-row">
+        <div>
+          <div class="counter-label">子女人數（含養子女）</div>
+          <div class="counter-sub">包含已過世的子女</div>
+        </div>
+        <div class="counter-ctrl">
+          <button class="cnt-btn" onclick="change('children', -1)">−</button>
+          <span class="cnt-val" id="val_children">0</span>
+          <button class="cnt-btn" onclick="change('children', 1)">+</button>
+        </div>
+      </div>
+
+      <div id="childrenExtra" style="display:none">
+        <div class="divider" style="margin:8px 0"></div>
+
+        <div class="counter-row">
+          <div>
+            <div class="counter-label">其中拋棄繼承</div>
+            <div class="counter-sub">拋棄者份額由其他子女均分</div>
+          </div>
+          <div class="counter-ctrl">
+            <button class="cnt-btn" onclick="changeRenounce('children', -1)">−</button>
+            <span class="cnt-val" id="renounce_children">0</span>
+            <button class="cnt-btn" onclick="changeRenounce('children', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="counter-row" style="padding-bottom:0">
+          <div>
+            <div class="counter-label">其中已過世（代位繼承）</div>
+            <div class="counter-sub">過世子女的孫子女代位繼承其份額</div>
+          </div>
+          <div class="counter-ctrl">
+            <button class="cnt-btn" onclick="change('deceased_children', -1)">−</button>
+            <span class="cnt-val" id="val_deceased_children">0</span>
+            <button class="cnt-btn" onclick="change('deceased_children', 1)">+</button>
+          </div>
+        </div>
+
+        <div id="representativesSection" style="display:none;margin-top:12px">
+          <div class="info-box" style="margin-top:0">
+            <strong>代位繼承人（孫子女）</strong><br>
+            <span id="representativesHint"></span>
+          </div>
+          <div id="representativeInputs"></div>
+        </div>
+      </div>
+
+      <div class="divider" style="margin:0"></div>
+      <div class="section-title" style="margin-top:18px">第二順位</div>
+
+      <div class="counter-row">
+        <div>
+          <div class="counter-label">父母人數</div>
+          <div class="counter-sub">生父母或養父母</div>
+        </div>
+        <div class="counter-ctrl">
+          <button class="cnt-btn" onclick="change('parents', -1)">−</button>
+          <span class="cnt-val" id="val_parents">0</span>
+          <button class="cnt-btn" onclick="change('parents', 1)">+</button>
+        </div>
+      </div>
+
+      <div id="parentsExtra" style="display:none">
+        <div class="divider" style="margin:8px 0"></div>
+        <div class="counter-row" style="padding-bottom:0">
+          <div>
+            <div class="counter-label">其中拋棄繼承</div>
+            <div class="counter-sub">拋棄者份額由另一方父母繼承</div>
+          </div>
+          <div class="counter-ctrl">
+            <button class="cnt-btn" onclick="changeRenounce('parents', -1)">−</button>
+            <span class="cnt-val" id="renounce_parents">0</span>
+            <button class="cnt-btn" onclick="changeRenounce('parents', 1)">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider" style="margin:0"></div>
+      <div class="section-title" style="margin-top:18px">第三順位</div>
+
+      <div class="counter-row">
+        <div>
+          <div class="counter-label">兄弟姊妹人數</div>
+        </div>
+        <div class="counter-ctrl">
+          <button class="cnt-btn" onclick="change('siblings', -1)">−</button>
+          <span class="cnt-val" id="val_siblings">0</span>
+          <button class="cnt-btn" onclick="change('siblings', 1)">+</button>
+        </div>
+      </div>
+
+      <div id="siblingsExtra" style="display:none">
+        <div class="divider" style="margin:8px 0"></div>
+        <div class="counter-row" style="padding-bottom:0">
+          <div>
+            <div class="counter-label">其中拋棄繼承</div>
+            <div class="counter-sub">拋棄者份額由其他兄弟姊妹均分</div>
+          </div>
+          <div class="counter-ctrl">
+            <button class="cnt-btn" onclick="changeRenounce('siblings', -1)">−</button>
+            <span class="cnt-val" id="renounce_siblings">0</span>
+            <button class="cnt-btn" onclick="changeRenounce('siblings', 1)">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider" style="margin:0"></div>
+      <div class="section-title" style="margin-top:18px">第四順位</div>
+
+      <div class="counter-row" style="padding-bottom:0">
+        <div>
+          <div class="counter-label">祖父母人數</div>
+          <div class="counter-sub">外祖父母亦同</div>
+        </div>
+        <div class="counter-ctrl">
+          <button class="cnt-btn" onclick="change('grandparents', -1)">−</button>
+          <span class="cnt-val" id="val_grandparents">0</span>
+          <button class="cnt-btn" onclick="change('grandparents', 1)">+</button>
+        </div>
+      </div>
+
+      <div id="grandparentsExtra" style="display:none">
+        <div class="divider" style="margin:8px 0"></div>
+        <div class="counter-row" style="padding-bottom:0">
+          <div>
+            <div class="counter-label">其中拋棄繼承</div>
+            <div class="counter-sub">拋棄者份額由其他祖父母繼承</div>
+          </div>
+          <div class="counter-ctrl">
+            <button class="cnt-btn" onclick="changeRenounce('grandparents', -1)">−</button>
+            <span class="cnt-val" id="renounce_grandparents">0</span>
+            <button class="cnt-btn" onclick="changeRenounce('grandparents', 1)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <strong>💡 拋棄繼承</strong>：繼承人可在知悉繼承後3個月內向法院聲請拋棄，拋棄後其份額由其他同順位繼承人均分。<br><br>
+      <strong>💡 代位繼承</strong>：子女在被繼承人死亡前已過世，由其子女（孫子女）代位繼承，繼承相同份額。
+    </div>
+  </div>
+
+  <!-- Step 4: 遺產稅扣除額 -->
+  <div class="step" id="step4">
+    <div class="step-label">步驟 4 / 5</div>
+    <h2>遺產稅試算</h2>
+    <p class="subtitle">系統已根據你的繼承人狀況自動計算扣除額，也可以手動調整。</p>
+
+    <div class="card">
+      <div class="section-title">自動帶入的扣除額</div>
+
+      <div class="counter-row" style="padding-top:0">
+        <div>
+          <div class="counter-label">免稅額</div>
+          <div class="counter-sub">每位被繼承人固定 1,333萬</div>
+        </div>
+        <div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--success)">NT$ 13,330,000</div>
+      </div>
+
+      <div class="counter-row" id="autoSpouseRow" style="display:none">
+        <div>
+          <div class="counter-label">配偶扣除額</div>
+          <div class="counter-sub">有配偶自動扣除 553萬</div>
+        </div>
+        <div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--success)">NT$ 4,930,000</div>
+      </div>
+
+      <div class="counter-row" id="autoFuneralRow">
+        <div>
+          <div class="counter-label">喪葬費扣除額</div>
+          <div class="counter-sub">固定上限 138萬</div>
+        </div>
+        <div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--success)">NT$ 1,380,000</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">額外扣除額（選填）</div>
+
+      <div class="input-group">
+        <label>子女扣除額 <span style="font-weight:400;color:var(--muted);font-size:12px">每人 56萬，填人數</span></label>
+        <div class="input-prefix">
+          <span class="prefix-text">人數</span>
+          <input type="number" id="deduct_children_count" placeholder="0" min="0" max="20" inputmode="numeric" oninput="updateChildDeduct()">
+        </div>
+        <div id="childDeductAmt" style="font-size:12px;color:var(--success);margin-top:6px;font-family:'DM Mono',monospace"></div>
+      </div>
+
+      <div class="input-group">
+        <label>父母扣除額 <span style="font-weight:400;color:var(--muted);font-size:12px">每人 138萬，填人數</span></label>
+        <div class="input-prefix">
+          <span class="prefix-text">人數</span>
+          <input type="number" id="deduct_parents_count" placeholder="0" min="0" max="4" inputmode="numeric" oninput="updateParentDeduct()">
+        </div>
+        <div id="parentDeductAmt" style="font-size:12px;color:var(--success);margin-top:6px;font-family:'DM Mono',monospace"></div>
+      </div>
+
+      <div class="input-group" style="margin-bottom:0">
+        <label>其他扣除額 <span style="font-weight:400;color:var(--muted);font-size:12px">債務、未償醫療費等</span></label>
+        <div class="input-prefix">
+          <span class="prefix-text">NT$</span>
+          <input type="number" id="deduct_other" placeholder="0" min="0" inputmode="numeric">
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <strong>📋 什麼是扣除額？</strong><br>
+      扣除額是法律允許從遺產中扣掉的金額，扣完之後才計算要繳多少稅。扣除額越多，要繳的稅越少。
+    </div>
+  </div>
+
+  <!-- Step 5: 結果 -->
+  <div class="step" id="step5">
+    <div class="step-label">計算結果</div>
+    <h2>應繼分分配</h2>
+    <p class="subtitle">依台灣《民法》計算各繼承人應繼分如下。</p>
+
+    <div id="resultContainer"></div>
+    <div class="law-note" id="lawNote"></div>
+    <div id="taxContainer"></div>
+
+    <button class="btn-next" onclick="downloadPDF()" style="width:100%;margin-top:16px;margin-bottom:10px">⬇ 下載 PDF 報告</button>
+    <a href="inheritance-timeline.html" style="display:block;text-align:center;margin-bottom:10px;padding:13px;border:1.5px solid var(--border);border-radius:10px;font-size:13px;color:var(--accent);text-decoration:none;background:#f4f7fb">📅 查看繼承辦理流程與期限時間軸 →</a>
+    <button class="restart-btn" onclick="restart()">🔄 重新計算</button>
+  </div>
+
+</main>
+
+<!-- Nav -->
+<div style="max-width:480px;margin:0 auto;position:fixed;bottom:0;left:0;right:0;">
+  <div style="background:#fff;border-top:1px solid var(--border);padding:16px 20px 28px;display:flex;gap:12px;" id="navBar">
+    <button class="btn-back" id="backBtn" onclick="goBack()" style="display:none">← 返回</button>
+    <button class="btn-next" id="nextBtn" onclick="goNext()">繼續 →</button>
+  </div>
+</div>
+
+<script>
+  let currentStep = 1;
+  const totalSteps = 5;
+
+  let state = {
+    totalEstate: 0,
+    hasWill: true,
+    hasSpouse: true,
+    regime: 'legal',
+    children: 0,
+    deceased_children: 0,
+    representatives: [],
+    parents: 0,
+    siblings: 0,
+    grandparents: 0,
+    renounce: { children: 0, parents: 0, siblings: 0, grandparents: 0 }
+  };
+
+  function updateProgress() {
+    document.getElementById('progressFill').style.width = (currentStep / totalSteps * 100) + '%';
+  }
+
+  function toggleExtra(key) {
+    const el = document.getElementById(key + 'Extra');
+    if (el) el.style.display = state[key] > 0 ? 'block' : 'none';
+  }
+
+  function changeRenounce(key, delta) {
+    state.renounce[key] = Math.max(0, Math.min(state[key], state.renounce[key] + delta));
+    document.getElementById('renounce_' + key).textContent = state.renounce[key];
+  }
+
+  function changeRep(i, delta) {
+    state.representatives[i] = Math.max(1, state.representatives[i] + delta);
+    document.getElementById('rep_' + i).textContent = state.representatives[i];
+  }
+
+  function updateRepresentatives() {
+    const dec = state.deceased_children;
+    const section = document.getElementById('representativesSection');
+    const inputs = document.getElementById('representativeInputs');
+    if (dec === 0) { section.style.display = 'none'; state.representatives = []; return; }
+    section.style.display = 'block';
+    document.getElementById('representativesHint').textContent = '請填每位過世子女留下幾個孫子女：';
+    while (state.representatives.length < dec) state.representatives.push(1);
+    state.representatives = state.representatives.slice(0, dec);
+    let html = '';
+    for (let i = 0; i < dec; i++) {
+      html += `<div class="counter-row" style="${i === dec-1 ? 'padding-bottom:0' : ''}">
+        <div><div class="counter-label">第${i+1}位過世子女的孫子女</div></div>
+        <div class="counter-ctrl">
+          <button class="cnt-btn" onclick="changeRep(${i}, -1)">−</button>
+          <span class="cnt-val" id="rep_${i}">${state.representatives[i]}</span>
+          <button class="cnt-btn" onclick="changeRep(${i}, 1)">+</button>
+        </div>
+      </div>`;
+    }
+    inputs.innerHTML = html;
+  }
+
+  function change(key, delta) {
+    state[key] = Math.max(0, state[key] + delta);
+    document.getElementById('val_' + key).textContent = state[key];
+    if (key === 'children') {
+      state.renounce.children = Math.min(state.renounce.children, state.children);
+      state.deceased_children = Math.min(state.deceased_children, state.children);
+      document.getElementById('renounce_children').textContent = state.renounce.children;
+      document.getElementById('val_deceased_children').textContent = state.deceased_children;
+      toggleExtra('children');
+      updateRepresentatives();
+    }
+    if (key === 'deceased_children') {
+      state.deceased_children = Math.min(state.deceased_children, state.children);
+      document.getElementById('val_deceased_children').textContent = state.deceased_children;
+      updateRepresentatives();
+    }
+    if (key === 'parents') { state.renounce.parents = Math.min(state.renounce.parents, state.parents); document.getElementById('renounce_parents').textContent = state.renounce.parents; toggleExtra('parents'); }
+    if (key === 'siblings') { state.renounce.siblings = Math.min(state.renounce.siblings, state.siblings); document.getElementById('renounce_siblings').textContent = state.renounce.siblings; toggleExtra('siblings'); }
+    if (key === 'grandparents') { state.renounce.grandparents = Math.min(state.renounce.grandparents, state.grandparents); document.getElementById('renounce_grandparents').textContent = state.renounce.grandparents; toggleExtra('grandparents'); }
+  }
+
+  function showStep(n) {
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById('step' + n).classList.add('active');
+    document.getElementById('backBtn').style.display = n > 1 ? 'block' : 'none';
+
+    if (n === 4) {
+      // Auto-show spouse deduction row
+      document.getElementById('autoSpouseRow').style.display = state.hasSpouse ? 'flex' : 'none';
+    }
+
+    if (n === totalSteps) {
+      document.getElementById('nextBtn').style.display = 'none';
+      calculate();
+    } else {
+      document.getElementById('nextBtn').style.display = 'block';
+      if (n === 3) document.getElementById('nextBtn').textContent = '下一步：遺產稅 →';
+      else if (n === 4) document.getElementById('nextBtn').textContent = '計算結果 →';
+      else document.getElementById('nextBtn').textContent = '繼續 →';
+    }
+    updateProgress();
+    window.scrollTo(0, 0);
+  }
+
+  function goNext() {
+    if (currentStep === 1) {
+      const v = parseFloat(document.getElementById('totalEstate').value);
+      if (!v || v <= 0) { alert('請輸入遺產總額'); return; }
+      state.totalEstate = v;
+    }
+    currentStep++;
+    showStep(currentStep);
+  }
+
+  function goBack() {
+    currentStep--;
+    showStep(currentStep);
+  }
+
+  function selectWill(v) {
+    state.hasWill = v;
+    document.getElementById('will_yes').classList.toggle('active', v);
+    document.getElementById('will_no').classList.toggle('active', !v);
+  }
+
+  function selectSpouse(v) {
+    state.hasSpouse = v;
+    document.getElementById('spouse_yes').classList.toggle('active', v);
+    document.getElementById('spouse_no').classList.toggle('active', !v);
+  }
+
+  function selectRegime(v) {
+    state.regime = v;
+    document.getElementById('regime_legal').classList.toggle('active', v === 'legal');
+    document.getElementById('regime_separate').classList.toggle('active', v === 'separate');
+  }
+
+  function formatMoney(n) {
+    return 'NT$ ' + Math.round(n).toLocaleString('zh-TW');
+  }
+
+  function gcd(a, b) { return b === 0 ? a : gcd(b, a % b); }
+
+  function toFraction(num, den) {
+    const g = gcd(num, den);
+    return num/g + '/' + den/g;
+  }
+
+  function updateChildDeduct() {
+    const n = parseInt(document.getElementById('deduct_children_count').value) || 0;
+    const amt = n * 560000;
+    document.getElementById('childDeductAmt').textContent = n > 0 ? `= NT$ ${amt.toLocaleString('zh-TW')}` : '';
+  }
+
+  function updateParentDeduct() {
+    const n = parseInt(document.getElementById('deduct_parents_count').value) || 0;
+    const amt = n * 1380000;
+    document.getElementById('parentDeductAmt').textContent = n > 0 ? `= NT$ ${amt.toLocaleString('zh-TW')}` : '';
+  }
+
+  function calcTax(netEstate) {
+    if (netEstate <= 0) return 0;
+    const t1 = 56210000, t2 = 112420000;
+    if (netEstate <= t1) return netEstate * 0.10;
+    if (netEstate <= t2) return 5621000 + (netEstate - t1) * 0.15;
+    return 14052500 + (netEstate - t2) * 0.20;
+  }
+
+  function restart() {
+    currentStep = 1;
+    state = { totalEstate: 0, hasWill: true, hasSpouse: true, regime: 'legal', children: 0, deceased_children: 0, representatives: [], parents: 0, siblings: 0, grandparents: 0, renounce: { children: 0, parents: 0, siblings: 0, grandparents: 0 } };
+    document.getElementById('totalEstate').value = '';
+    ['children','deceased_children','parents','siblings','grandparents'].forEach(k => {
+      const el = document.getElementById('val_' + k);
+      if (el) el.textContent = '0';
+    });
+    ['children','parents','siblings','grandparents'].forEach(k => {
+      const el = document.getElementById('renounce_' + k);
+      if (el) el.textContent = '0';
+      const ex = document.getElementById(k + 'Extra');
+      if (ex) ex.style.display = 'none';
+    });
+    ['deduct_children_count','deduct_parents_count','deduct_other'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    document.getElementById('childDeductAmt').textContent = '';
+    document.getElementById('parentDeductAmt').textContent = '';
+    document.getElementById('representativesSection').style.display = 'none';
+    showStep(1);
+  }
+
+  function calculate() {
+    const total = state.totalEstate;
+    let lawText = '';
+
+    // Determine active tier
+    let tier = 0;
+    if (state.children > 0) tier = 1;
+    else if (state.parents > 0) tier = 2;
+    else if (state.siblings > 0) tier = 3;
+    else if (state.grandparents > 0) tier = 4;
+
+    // Spouse share
+    let spouseShare = 0;
+    let spouseFrac = '';
+    let bloodFrac = 1;
+
+    if (state.hasSpouse) {
+      if (tier === 0) { spouseShare = 1; spouseFrac = '全部'; bloodFrac = 0; }
+      else if (tier === 1 || tier === 2 || tier === 3) { spouseShare = 0.5; spouseFrac = '1/2'; bloodFrac = 0.5; }
+      else if (tier === 4) { spouseShare = 2/3; spouseFrac = '2/3'; bloodFrac = 1/3; }
+    }
+
+    // Effective blood heirs after renunciation
+    const tierKey = ['','children','parents','siblings','grandparents'][tier];
+    let bloodCount = 0;
+    let bloodLabel = '';
+    if (tier === 1) { bloodCount = state.children; bloodLabel = '子女'; }
+    else if (tier === 2) { bloodCount = state.parents; bloodLabel = '父母'; }
+    else if (tier === 3) { bloodCount = state.siblings; bloodLabel = '兄弟姊妹'; }
+    else if (tier === 4) { bloodCount = state.grandparents; bloodLabel = '祖父母'; }
+
+    const renounced = tierKey ? (state.renounce[tierKey] || 0) : 0;
+    const effectiveBlood = bloodCount - renounced; // active inheritors (not counting representatives yet)
+
+    const spouseAmount = total * spouseShare;
+    const bloodPool = total * bloodFrac;
+
+    // Build heir list with representation
+    // For tier 1: some may be deceased → replaced by their children (representatives)
+    let heirGroups = []; // { label, amount, isRepGroup, note }
+
+    if (tier === 1 && effectiveBlood > 0) {
+      const dec = state.deceased_children;
+      const aliveActive = effectiveBlood - dec; // living non-renounced children
+      // Total "slots" = aliveActive + dec (dec slots go to their representatives)
+      const totalSlots = aliveActive + dec;
+      const perSlot = totalSlots > 0 ? bloodPool / totalSlots : 0;
+
+      // Living children
+      for (let i = 0; i < aliveActive; i++) {
+        heirGroups.push({ label: `子女（第${i+1}人）`, amount: perSlot, note: null });
+      }
+      // Deceased → representatives
+      for (let i = 0; i < dec; i++) {
+        const repCount = state.representatives[i] || 1;
+        const perRep = perSlot / repCount;
+        for (let j = 0; j < repCount; j++) {
+          heirGroups.push({ label: `孫子女（代位第${i+1}位過世子女，第${j+1}人）`, amount: perRep, note: '代位繼承' });
+        }
+      }
+    } else if (effectiveBlood > 0) {
+      const perBlood = bloodPool / effectiveBlood;
+      for (let i = 0; i < effectiveBlood; i++) {
+        heirGroups.push({ label: bloodLabel + (effectiveBlood > 1 ? `（第${i+1}人）` : ''), amount: perBlood, note: null });
+      }
+    }
+
+    const totalHeirCount = (state.hasSpouse ? 1 : 0) + heirGroups.length + renounced;
+    let html = '';
+
+    html += `<div class="result-hero">
+      <div class="label">遺產總額</div>
+      <div class="result-total">${formatMoney(total)}</div>
+      <div class="result-sub">實際繼承人共 ${(state.hasSpouse ? 1 : 0) + heirGroups.length} 人${renounced > 0 ? `（${renounced}人拋棄）` : ''}</div>
+    </div>`;
+
+    if (state.hasSpouse) {
+      html += `<div class="heir-card">
+        <div class="heir-header">
+          <span class="heir-name">配偶</span>
+          <span class="heir-fraction">${spouseFrac}</span>
+        </div>
+        <div class="heir-body">
+          <div class="heir-row">
+            <span class="heir-row-label">應繼分金額</span>
+            <span class="heir-row-val">${formatMoney(spouseAmount)}</span>
+          </div>
+          ${state.hasWill ? `<div class="heir-row">
+            <span class="heir-row-label">特留分（最低保障）</span>
+            <span class="heir-row-val" style="color:var(--gold)">${formatMoney(spouseAmount / 2)}</span>
+          </div>` : ''}
+        </div>
+      </div>`;
+    }
+
+    const reserveRates = [0, 0.5, 0.5, 1/3, 1/3];
+    heirGroups.forEach(heir => {
+      const reserve = state.hasWill ? heir.amount * reserveRates[tier] : null;
+      html += `<div class="heir-card">
+        <div class="heir-header">
+          <span class="heir-name">${heir.label}</span>
+          ${heir.note ? `<span class="heir-fraction" style="color:var(--gold)">${heir.note}</span>` : ''}
+        </div>
+        <div class="heir-body">
+          <div class="heir-row">
+            <span class="heir-row-label">應繼分金額</span>
+            <span class="heir-row-val">${formatMoney(heir.amount)}</span>
+          </div>
+          ${reserve !== null ? `<div class="heir-row">
+            <span class="heir-row-label">特留分（最低保障）</span>
+            <span class="heir-row-val" style="color:var(--gold)">${formatMoney(reserve)}</span>
+          </div>` : ''}
+        </div>
+      </div>`;
+    });
+
+    if (renounced > 0) {
+      html += `<div class="info-box">⚠️ ${renounced} 人已拋棄繼承，其份額已由其他繼承人均分。</div>`;
+    }
+
+    if (!state.hasSpouse && heirGroups.length === 0) {
+      html += `<div class="info-box">⚠️ 無繼承人，遺產將歸屬國庫（民法第1185條）。</div>`;
+    }
+
+    const tierNotes = ['', '子女（第一順位）與配偶共同繼承，各得1/2（民法第1144條第1款）。',
+      '父母（第二順位）與配偶共同繼承，各得1/2（民法第1144條第2款）。',
+      '兄弟姊妹（第三順位）與配偶共同繼承，各得1/2（民法第1144條第3款）。',
+      '祖父母（第四順位）與配偶共同繼承，配偶得2/3，祖父母得1/3（民法第1144條第4款）。'];
+
+    lawText = tier > 0 ? tierNotes[tier] : (state.hasSpouse ? '無血親繼承人，配偶單獨繼承全部遺產。' : '');
+    if (state.hasWill) lawText += '<br>有遺囑時，各繼承人之<strong>特留分</strong>不得侵害（民法第1223條）。';
+    if (state.deceased_children > 0) lawText += '<br>已過世子女由其子女（孫子女）代位繼承（民法第1140條）。';
+    if (renounced > 0) lawText += `<br>${renounced}人拋棄繼承，其份額由其他同順位繼承人均分（民法第1174條）。`;
+
+    document.getElementById('resultContainer').innerHTML = html;
+    document.getElementById('lawNote').innerHTML = '⚖️ 法律依據：' + lawText;
+
+    // 遺產稅計算
+    const exemption = 13330000;
+    const dSpouse = state.hasSpouse ? 5530000 : 0;
+    const dFuneral = 1380000;
+    const dChildren = (parseInt(document.getElementById('deduct_children_count').value) || 0) * 560000;
+    const dParents = (parseInt(document.getElementById('deduct_parents_count').value) || 0) * 1380000;
+    const dOther = parseFloat(document.getElementById('deduct_other').value) || 0;
+    const totalDeduct = dSpouse + dFuneral + dChildren + dParents + dOther;
+    const netEstate = Math.max(0, total - exemption - totalDeduct);
+    const tax = calcTax(netEstate);
+
+    let taxRate = '10%';
+    if (netEstate > 112420000) taxRate = '20%';
+    else if (netEstate > 56210000) taxRate = '15%';
+
+    const taxHtml = `
+    <div style="margin-top:16px">
+      <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">遺產稅試算（2025年）</div>
+      <div class="heir-card">
+        <div class="heir-header" style="background:${tax === 0 ? '#e8f5e9' : '#fff5f0'}">
+          <span class="heir-name">預估應納遺產稅</span>
+          <span class="heir-fraction" style="color:${tax === 0 ? 'var(--success)' : 'var(--accent)'}">${tax === 0 ? '免稅' : taxRate}</span>
+        </div>
+        <div class="heir-body">
+          <div class="heir-row">
+            <span class="heir-row-label">遺產總額</span>
+            <span class="heir-row-val" style="color:var(--muted)">${formatMoney(total)}</span>
+          </div>
+          <div class="heir-row">
+            <span class="heir-row-label">免稅額</span>
+            <span class="heir-row-val" style="color:var(--muted)">－ ${formatMoney(exemption)}</span>
+          </div>
+          ${totalDeduct > 0 ? `<div class="heir-row">
+            <span class="heir-row-label">各項扣除額</span>
+            <span class="heir-row-val" style="color:var(--muted)">－ ${formatMoney(totalDeduct)}</span>
+          </div>` : ''}
+          <div class="heir-row" style="border-top:1px solid var(--soft);padding-top:10px;margin-top:4px">
+            <span class="heir-row-label">遺產淨額</span>
+            <span class="heir-row-val" style="color:var(--ink)">${formatMoney(netEstate)}</span>
+          </div>
+          <div class="heir-row">
+            <span class="heir-row-label" style="font-weight:600;color:var(--ink)">預估應納稅額</span>
+            <span class="heir-row-val" style="font-size:17px;color:${tax === 0 ? 'var(--success)' : 'var(--accent)'}">${tax === 0 ? '免納遺產稅' : formatMoney(tax)}</span>
+          </div>
+        </div>
+      </div>
+      <div class="law-note" style="margin-top:10px">
+        ⚖️ 依《遺產及贈與稅法》第13條（2025年調整後稅率）。本試算僅供參考，實際稅額以國稅局核定為準。申報期限：被繼承人死亡後6個月內。
+      </div>
+    </div>`;
+
+    document.getElementById('taxContainer').innerHTML = taxHtml;
+  }
+
+  function downloadPDF() {
+    const today = new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' });
+    const resultHTML = document.getElementById('resultContainer').innerHTML;
+    const lawHTML = document.getElementById('lawNote').innerHTML;
+    const taxHTML = document.getElementById('taxContainer').innerHTML;
+
+    const printContent = `
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>InheritancePro 遺產繼承計算報告</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans TC', sans-serif; background: #fff; color: #1a1410; font-size: 13px; padding: 40px; max-width: 700px; margin: 0 auto; }
+  .pdf-header { border-bottom: 3px solid #1a1410; padding-bottom: 20px; margin-bottom: 28px; display: flex; justify-content: space-between; align-items: flex-end; }
+  .pdf-logo { font-family: 'Noto Serif TC', serif; font-size: 24px; font-weight: 700; }
+  .pdf-logo span { color: #c4932a; }
+  .pdf-meta { font-size: 11px; color: #7a6f62; text-align: right; line-height: 1.8; font-family: 'DM Mono', monospace; }
+  h1 { font-family: 'Noto Serif TC', serif; font-size: 18px; margin-bottom: 6px; }
+  .section-title { font-size: 11px; color: #7a6f62; letter-spacing: 0.12em; text-transform: uppercase; font-family: 'DM Mono', monospace; margin: 20px 0 10px; }
+  .result-hero { background: #1a1410; color: #f5f0e8; border-radius: 10px; padding: 20px; text-align: center; margin-bottom: 14px; }
+  .result-hero .label { font-size: 11px; color: #7a6f62; letter-spacing: 0.12em; font-family: 'DM Mono', monospace; margin-bottom: 6px; }
+  .result-total { font-family: 'Noto Serif TC', serif; font-size: 24px; font-weight: 700; color: #c4932a; }
+  .result-sub { font-size: 12px; color: #7a6f62; margin-top: 4px; }
+  .heir-card { border: 1.5px solid #c8bfb0; border-radius: 10px; overflow: hidden; margin-bottom: 10px; break-inside: avoid; }
+  .heir-header { background: #e8e0d0; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; }
+  .heir-name { font-weight: 600; font-size: 13px; }
+  .heir-fraction { font-family: 'DM Mono', monospace; font-size: 12px; color: #8b2020; font-weight: 500; }
+  .heir-body { padding: 12px 14px; }
+  .heir-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .heir-row:last-child { margin-bottom: 0; }
+  .heir-row-label { font-size: 12px; color: #7a6f62; }
+  .heir-row-val { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; color: #2a6b4a; }
+  .law-note { background: #f8f8f8; border-left: 3px solid #c4932a; border-radius: 0 8px 8px 0; padding: 10px 14px; font-size: 11px; color: #7a6f62; line-height: 1.7; margin-bottom: 14px; }
+  .law-note strong { color: #1a1410; }
+  .info-box { background: #fffbf0; border: 1px solid #e8d48a; border-radius: 8px; padding: 10px 14px; font-size: 11px; color: #7a6020; line-height: 1.6; margin-bottom: 14px; }
+  .pdf-footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid #c8bfb0; font-size: 11px; color: #7a6f62; line-height: 1.8; text-align: center; }
+  .disclaimer { font-size: 10px; color: #aaa; margin-top: 8px; }
+  @media print {
+    body { padding: 20px; }
+    .pdf-header { break-after: avoid; }
+  }
+</style>
+</head>
+<body>
+  <div class="pdf-header">
+    <div>
+      <div class="pdf-logo">Inheritance<span>Pro</span></div>
+      <div style="font-size:12px;color:#7a6f62;margin-top:4px">台灣遺產繼承計算報告</div>
+    </div>
+    <div class="pdf-meta">
+      產出日期：${today}<br>
+      遺產總額：${formatMoney(state.totalEstate)}<br>
+      有無遺囑：${state.hasWill ? '有' : '無'}<br>
+      配偶：${state.hasSpouse ? '有' : '無'}
+    </div>
+  </div>
+
+  <div class="section-title">應繼分計算結果</div>
+  ${resultHTML}
+
+  ${lawHTML}
+
+  <div class="section-title">遺產稅試算</div>
+  ${taxHTML}
+
+  <div class="pdf-footer">
+    © ${new Date().getFullYear()} InheritancePro &nbsp;·&nbsp; inheritancepro.vercel.app
+    <div class="disclaimer">本報告僅供參考，不構成法律意見。實際繼承事宜請諮詢專業律師或法律顧問。<br>法律依據：中華民國《民法》繼承編、《遺產及贈與稅法》。</div>
+  </div>
+</body>
+</html>`;
+
+    const printWin = window.open('', '_blank');
+    if(!printWin){alert('請允許本網站開啟彈出視窗以下載 PDF');return;}
+    printWin.document.write(printContent);
+    printWin.document.close();
+    setTimeout(() => printWin.print(), 600);
+  }
+
+  // Init
+  showStep(1);
+</script>
+
+<style>
+  footer {
+    background: var(--ink);
+    color: var(--muted);
+    text-align: center;
+    padding: 28px 20px 48px;
+    font-size: 12px;
+    line-height: 1.8;
+    margin-top: 0;
+  }
+  footer .footer-logo {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 16px;
+    color: var(--paper);
+    margin-bottom: 6px;
+    letter-spacing: 0.05em;
+  }
+  footer .footer-logo span { color: var(--gold); }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer .disclaimer {
+    max-width: 400px;
+    margin: 10px auto 0;
+    font-size: 11px;
+    color: #555;
+    line-height: 1.7;
+  }
+</style>
+
+<footer>
+  <div class="footer-logo">Inheritance<span>Pro</span></div>
+  <div>© 2025 InheritancePro. All rights reserved.</div>
+  <div class="disclaimer">
+    本工具僅供參考，不構成法律意見。<br>
+    實際繼承事宜請諮詢專業律師或法律顧問。<br>
+    法律依據：中華民國《民法》繼承編。
+  </div>
+</footer>
+
+</body>
+</html>

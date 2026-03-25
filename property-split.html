@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>剩餘財產差額分配請求權｜InheritancePro</title>
+<meta name="description" content="台灣民法第1030-1條，法定財產制下配偶剩餘財產差額分配請求權計算工具。">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --ink:#1a1410;--paper:#f5f0e8;--gold:#c4932a;--muted:#7a6f62;--border:#c8bfb0;--soft:#e8e0d0;--success:#2a6b4a;--accent:#1a3a5c; }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);font-family:'Noto Sans TC',sans-serif;min-height:100vh;font-size:15px;}
+  header{background:var(--ink);color:var(--paper);padding:18px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+  .logo{font-family:'Noto Serif TC',serif;font-size:18px;font-weight:700;}
+  .logo span{color:var(--gold);}
+  .back-link{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:0.06em;}
+  main{max-width:480px;margin:0 auto;padding:28px 20px 100px;}
+  h2{font-family:'Noto Serif TC',serif;font-size:22px;font-weight:700;margin-bottom:6px;}
+  .subtitle{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:24px;}
+  .card{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:20px;margin-bottom:14px;}
+  .section-title{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:14px;}
+  .input-group{margin-bottom:14px;}
+  .input-group:last-child{margin-bottom:0;}
+  label{display:block;font-size:13px;font-weight:500;margin-bottom:7px;}
+  label .hint{font-weight:400;color:var(--muted);font-size:12px;margin-left:6px;}
+  .input-prefix{display:flex;align-items:center;gap:10px;border:1.5px solid var(--border);border-radius:8px;background:var(--paper);padding:0 14px;transition:border-color 0.2s;}
+  .input-prefix:focus-within{border-color:var(--gold);background:#fff;}
+  .prefix-text{font-size:13px;color:var(--muted);white-space:nowrap;}
+  .input-prefix input{border:none;background:transparent;padding:11px 0;flex:1;font-size:14px;font-family:'DM Mono',monospace;color:var(--ink);}
+  .input-prefix input:focus{outline:none;}
+  .person-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+  .person-dot{width:10px;height:10px;border-radius:50%;}
+  .person-dot.a{background:var(--gold);}
+  .person-dot.b{background:var(--accent);}
+  .person-label{font-size:14px;font-weight:600;}
+  .info-box{background:#fffbf0;border:1px solid #e8d48a;border-radius:8px;padding:12px 14px;font-size:12px;color:#7a6020;line-height:1.7;margin-bottom:14px;}
+  .info-box strong{color:#5a4010;}
+  .result-hero{background:var(--ink);color:var(--paper);border-radius:14px;padding:24px;text-align:center;margin-bottom:14px;}
+  .result-hero .label{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;}
+  .result-amount{font-family:'Noto Serif TC',serif;font-size:28px;font-weight:700;color:var(--gold);}
+  .result-sub{font-size:12px;color:var(--muted);margin-top:6px;}
+  .result-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--soft);}
+  .result-row:last-child{border-bottom:none;padding-bottom:0;}
+  .result-row-label{font-size:13px;color:var(--muted);}
+  .result-row-val{font-family:'DM Mono',monospace;font-size:14px;font-weight:500;}
+  .law-note{background:#f8f8f8;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:12px 14px;font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:14px;}
+  .law-note strong{color:var(--ink);}
+  .no-claim{background:#edf7f1;border:1.5px solid #a8d4b8;border-radius:10px;padding:16px 18px;text-align:center;font-size:14px;color:var(--success);font-weight:500;margin-bottom:14px;}
+  .btn-calc{width:100%;padding:14px;background:var(--ink);color:var(--paper);border:none;border-radius:10px;font-size:15px;font-weight:500;cursor:pointer;font-family:'Noto Sans TC',sans-serif;letter-spacing:0.03em;margin-bottom:10px;}
+  .btn-pdf{width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;font-family:'Noto Sans TC',sans-serif;margin-bottom:10px;display:none;}
+  .btn-reset{width:100%;padding:13px;border:1.5px solid var(--border);border-radius:10px;background:transparent;font-size:14px;color:var(--muted);cursor:pointer;font-family:'Noto Sans TC',sans-serif;display:none;}
+  #resultSection{display:none;}
+</style>
+</head>
+<body>
+<header>
+  <div><div class="logo">Inheritance<span>Pro</span></div></div>
+  <a href="index.html" class="back-link">← 首頁</a>
+</header>
+<main>
+  <h2>剩餘財產差額<br>分配請求權</h2>
+  <p class="subtitle">依民法第1030-1條，法定財產制婚姻關係消滅時，財產較少的一方得向另一方請求差額的二分之一。</p>
+  <div class="info-box"><strong>⚖️ 適用條件：</strong>夫妻採<strong>法定財產制</strong>，且婚姻關係因<strong>死亡、離婚、改用其他財產制</strong>而消滅。分別財產制不適用本條。</div>
+
+  <div class="card">
+    <div class="person-header"><div class="person-dot a"></div><div class="person-label">甲方（請求人）</div></div>
+    <div class="section-title">婚後財產</div>
+    <div class="input-group">
+      <label>婚後取得之財產總額<span class="hint">不含繼承或贈與所得</span></label>
+      <div class="input-prefix"><span class="prefix-text">NT$</span><input type="number" id="a_asset" placeholder="0" min="0" inputmode="numeric"></div>
+    </div>
+    <div class="input-group">
+      <label>婚後負擔之債務總額</label>
+      <div class="input-prefix"><span class="prefix-text">NT$</span><input type="number" id="a_debt" placeholder="0" min="0" inputmode="numeric"></div>
+    </div>
+    <div class="section-title" style="margin-top:16px">扣除項目</div>
+    <div class="input-group">
+      <label>婚前帶入之財產</label>
+      <div class="input-prefix"><span class="prefix-text">NT$</span><input type="number" id="a_premarital" placeholder="0" min="0" inputmode="numeric"></div>
+    </div>
+    <div class="input-group">
+      <label>婚後繼承或受贈之財產<span class="hint">不列入剩餘財產</span></label>
+      <div class="input-prefix"><span class="prefix-text">NT$</span><input type="number" id="a_inherited" placeholder="0" min="0" inputmode="numeric"></div>
+    </div>
+    <a href="property-check.html" style="display:block;margin-top:10px;font-size:12px;color:var(--accent);text-decoration:none;font-family:'Noto Sans TC',sans-serif;">🔍 不確定某筆財產算不算婚後財產？點這裡判斷 →</a>
+  </div>
+
+  <div class="card">
+    <div class="person-header"><div class="person-dot b"></div><div class="person-label">乙方（他方配偶）</div></div>
+    <div class="section-title">婚後財產</div>
+    <div class="input-group">
+      <label>婚後取得之財產總額<span class="hint">不含繼承或贈與所得</span></label>
+      <div class="input-prefix"><span class="prefix-text">NT$</span><input type="number" id="b_asset" placeholder="0" min="0" inputmode="numeric"></div>
+    </div>
+    <div class="input-group">
+      <label>婚後負擔之債務總額</label>
+      <div class="input-prefix"><span class="prefix-text">NT$</span><input type="number" id="b_debt" placeholder="0" min="0" inputmode="numeric"></div>
+    </div>
+    <div class="section-title" style="margin-top:16px">扣除項目</div>
+    <div class="input-group">
+      <label>婚前帶入之財產</label>
+      <div class="input-prefix"><span class="prefix-text">NT$</span><input type="number" id="b_premarital" placeholder="0" min="0" inputmode="numeric"></div>
+    </div>
+    <div class="input-group">
+      <label>婚後繼承或受贈之財產<span class="hint">不列入剩餘財產</span></label>
+      <div class="input-prefix"><span class="prefix-text">NT$</span><input type="number" id="b_inherited" placeholder="0" min="0" inputmode="numeric"></div>
+    </div>
+    <a href="property-check.html" style="display:block;margin-top:10px;font-size:12px;color:var(--accent);text-decoration:none;font-family:'Noto Sans TC',sans-serif;">🔍 不確定某筆財產算不算婚後財產？點這裡判斷 →</a>
+  </div>
+
+  <button class="btn-calc" onclick="calculate()">計算請求金額 →</button>
+
+  <div id="resultSection">
+    <div id="resultHero"></div>
+    <div class="card">
+      <div class="section-title">計算明細</div>
+      <div id="resultDetail"></div>
+    </div>
+    <div class="law-note" id="lawNote"></div>
+    <button class="btn-pdf" id="btnPdf" onclick="downloadPDF()">⬇ 下載 PDF 報告</button>
+    <button class="btn-reset" id="btnReset" onclick="reset()">🔄 重新計算</button>
+  </div>
+</main>
+
+<script>
+  function v(id){return parseFloat(document.getElementById(id).value)||0;}
+  function fmt(n){return 'NT$ '+Math.round(n).toLocaleString('zh-TW');}
+  let lastResult=null;
+
+  function calculate(){
+    const aGross=v('a_asset')-v('a_debt');
+    const bGross=v('b_asset')-v('b_debt');
+    const aDeduct=v('a_premarital')+v('a_inherited');
+    const bDeduct=v('b_premarital')+v('b_inherited');
+
+    // 警示：扣除項大於婚後財產
+    let warn='';
+    if(aDeduct>v('a_asset')) warn+='⚠ 甲方：婚前財產與繼承受贈合計超過婚後財產總額，剩餘財產以0計算。<br>';
+    if(bDeduct>v('b_asset')) warn+='⚠ 乙方：婚前財產與繼承受贈合計超過婚後財產總額，剩餘財產以0計算。<br>';
+
+    const aNet=Math.max(0,aGross-aDeduct);
+    const bNet=Math.max(0,bGross-bDeduct);
+    const diff=Math.abs(aNet-bNet);
+    const claim=diff/2;
+    lastResult={aNet,bNet,diff,claim};
+
+    const heroEl=document.getElementById('resultHero');
+    const warnBox=warn?`<div style="background:#fef6ed;border:1px solid #f0d4b0;border-radius:8px;padding:10px 14px;font-size:12px;color:#8b4010;line-height:1.8;margin-bottom:12px">${warn}</div>`:'';
+    if(claim===0){
+      heroEl.innerHTML=warnBox+'<div class="no-claim">雙方剩餘財產相等，無請求權發生。</div>';
+    } else {
+      const requester=aNet<bNet?'甲方':'乙方';
+      const respondent=aNet<bNet?'乙方':'甲方';
+      heroEl.innerHTML=warnBox+`<div class="result-hero"><div class="label">可請求金額</div><div class="result-amount">${fmt(claim)}</div><div class="result-sub">${requester} 得向 ${respondent} 請求此金額</div></div>`;
+    }
+
+    document.getElementById('resultDetail').innerHTML=`
+      <div class="result-row"><span class="result-row-label">甲方剩餘財產</span><span class="result-row-val" style="color:var(--gold)">${fmt(aNet)}</span></div>
+      <div class="result-row"><span class="result-row-label">乙方剩餘財產</span><span class="result-row-val" style="color:var(--accent)">${fmt(bNet)}</span></div>
+      <div class="result-row"><span class="result-row-label">差額</span><span class="result-row-val">${fmt(diff)}</span></div>
+      <div class="result-row"><span class="result-row-label" style="font-weight:600;color:var(--ink)">請求金額（差額 × 1/2）</span><span class="result-row-val" style="color:var(--success);font-size:16px">${fmt(claim)}</span></div>`;
+
+    document.getElementById('lawNote').innerHTML=`⚖️ <strong>民法第1030-1條：</strong>法定財產制關係消滅時，夫或妻現存之婚後財產，扣除婚姻關係存續中所負債務後，如有剩餘，其雙方剩餘財產之差額，應平均分配。但因繼承或其他無償取得之財產及慰撫金不在此限。<br><br><strong>請求時效：</strong>自知悉時起2年，或自法律關係消滅時起5年（民法第1030-4條）。`;
+
+    document.getElementById('resultSection').style.display='block';
+    document.getElementById('btnPdf').style.display='block';
+    document.getElementById('btnReset').style.display='block';
+    document.getElementById('resultSection').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  function reset(){
+    ['a_asset','a_debt','a_premarital','a_inherited','b_asset','b_debt','b_premarital','b_inherited'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('resultSection').style.display='none';
+    document.getElementById('btnPdf').style.display='none';
+    document.getElementById('btnReset').style.display='none';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function downloadPDF(){
+    if(!lastResult)return;
+    const {aNet,bNet,diff,claim}=lastResult;
+    const today=new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'long',day:'numeric'});
+    const requester=aNet<bNet?'甲方':'乙方';
+    const respondent=aNet<bNet?'乙方':'甲方';
+    const html=`<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>剩餘財產差額分配報告</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500&family=DM+Mono:wght@400;500&display=swap');
+body{font-family:'Noto Sans TC',sans-serif;padding:40px;max-width:680px;margin:0 auto;font-size:13px;color:#1a1410;}
+.header{border-bottom:3px solid #1a1410;padding-bottom:18px;margin-bottom:28px;display:flex;justify-content:space-between;align-items:flex-end;}
+.logo{font-family:'Noto Serif TC',serif;font-size:22px;font-weight:700;}
+.logo span{color:#c4932a;}
+.meta{font-size:11px;color:#7a6f62;text-align:right;line-height:1.8;font-family:'DM Mono',monospace;}
+.result-box{background:#1a1410;color:#f5f0e8;border-radius:12px;padding:24px;text-align:center;margin-bottom:24px;}
+.result-box .lbl{font-size:11px;color:#7a6f62;letter-spacing:.12em;margin-bottom:8px;font-family:'DM Mono',monospace;}
+.result-box .amount{font-family:'Noto Serif TC',serif;font-size:30px;font-weight:700;color:#c4932a;}
+.result-box .sub{font-size:12px;color:#7a6f62;margin-top:6px;}
+table{width:100%;border-collapse:collapse;margin-bottom:20px;font-size:13px;}
+th{background:#f5f0e8;padding:9px 12px;text-align:left;font-weight:500;border-bottom:2px solid #c8bfb0;}
+td{padding:9px 12px;border-bottom:1px solid #e8e0d0;}
+.val{font-family:'DM Mono',monospace;font-weight:500;}
+.law-box{background:#f8f8f4;border-left:3px solid #c4932a;padding:12px 16px;font-size:11px;color:#7a6f62;line-height:1.8;border-radius:0 6px 6px 0;margin-bottom:24px;}
+.law-box strong{color:#1a1410;}
+.footer{margin-top:36px;padding-top:14px;border-top:1px solid #c8bfb0;font-size:11px;color:#7a6f62;text-align:center;line-height:1.8;}
+@media print{body{padding:20px;}}
+</style></head><body>
+<div class="header"><div><div class="logo">Inheritance<span>Pro</span></div><div style="font-size:12px;color:#7a6f62;margin-top:4px">剩餘財產差額分配請求權計算報告</div></div><div class="meta">產出日期：${today}<br>依民法第1030-1條</div></div>
+${claim>0?`<div class="result-box"><div class="lbl">可請求金額</div><div class="amount">${fmt(claim)}</div><div class="sub">${requester} 得向 ${respondent} 請求</div></div>`:`<div style="background:#edf7f1;border:1.5px solid #a8d4b8;border-radius:10px;padding:16px;text-align:center;color:#2a6b4a;font-weight:500;margin-bottom:24px">雙方剩餘財產相等，無請求權發生。</div>`}
+<table><thead><tr><th>項目</th><th>甲方</th><th>乙方</th></tr></thead><tbody>
+<tr><td>婚後財產</td><td class="val">${fmt(v('a_asset'))}</td><td class="val">${fmt(v('b_asset'))}</td></tr>
+<tr><td>婚後債務</td><td class="val">－ ${fmt(v('a_debt'))}</td><td class="val">－ ${fmt(v('b_debt'))}</td></tr>
+<tr><td>婚前財產</td><td class="val">－ ${fmt(v('a_premarital'))}</td><td class="val">－ ${fmt(v('b_premarital'))}</td></tr>
+<tr><td>繼承或受贈</td><td class="val">－ ${fmt(v('a_inherited'))}</td><td class="val">－ ${fmt(v('b_inherited'))}</td></tr>
+<tr style="background:#f5f0e8"><td><strong>剩餘財產</strong></td><td class="val"><strong>${fmt(aNet)}</strong></td><td class="val"><strong>${fmt(bNet)}</strong></td></tr>
+<tr><td>差額</td><td class="val" colspan="2">${fmt(diff)}</td></tr>
+<tr style="background:#f5f0e8"><td><strong>請求金額（差額×1/2）</strong></td><td class="val" colspan="2" style="color:#2a6b4a"><strong>${fmt(claim)}</strong></td></tr>
+</tbody></table>
+<div class="law-box"><strong>民法第1030-1條：</strong>法定財產制關係消滅時，夫或妻現存之婚後財產，扣除婚姻關係存續中所負債務後，如有剩餘，其雙方剩餘財產之差額，應平均分配。但因繼承或其他無償取得之財產及慰撫金不在此限。<br><strong>請求時效：</strong>自知悉時起2年，或自法律關係消滅時起5年。</div>
+<div class="footer">© ${new Date().getFullYear()} InheritancePro &nbsp;·&nbsp; inheritancepro.vercel.app<br>本報告僅供參考，不構成法律意見。實際案件請諮詢專業律師。</div>
+</body></html>`;
+    const w=window.open('','_blank');
+    if(!w){alert('請允許本網站開啟彈出視窗以下載 PDF');return;}
+    w.document.write(html);
+    w.document.close();
+    setTimeout(()=>w.print(),600);
+  }
+</script>
+</body>
+</html>

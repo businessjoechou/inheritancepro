@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>贍養費試算｜InheritancePro</title>
+<meta name="description" content="台灣離婚贍養費參考試算工具，依民法第1057條及司法院114年最低生活費標準計算。">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#1a1410;--paper:#f5f0e8;--gold:#c4932a;--muted:#7a6f62;--border:#c8bfb0;--soft:#e8e0d0;--success:#2a6b4a;--accent:#1a3a5c;--danger:#8b2020;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);font-family:'Noto Sans TC',sans-serif;min-height:100vh;font-size:15px;}
+  header{background:var(--ink);color:var(--paper);padding:18px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+  .logo{font-family:'Noto Serif TC',serif;font-size:18px;font-weight:700;}
+  .logo span{color:var(--gold);}
+  .back-link{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:0.06em;}
+  main{max-width:480px;margin:0 auto;padding:28px 20px 100px;}
+  h2{font-family:'Noto Serif TC',serif;font-size:22px;font-weight:700;margin-bottom:6px;}
+  .subtitle{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:24px;}
+  .card{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:20px;margin-bottom:14px;}
+  .section-title{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:14px;}
+  .input-group{margin-bottom:14px;}
+  .input-group:last-child{margin-bottom:0;}
+  label{display:block;font-size:13px;font-weight:500;margin-bottom:7px;}
+  label .hint{font-weight:400;color:var(--muted);font-size:12px;margin-left:6px;}
+  .input-prefix{display:flex;align-items:center;gap:10px;border:1.5px solid var(--border);border-radius:8px;background:var(--paper);padding:0 14px;transition:border-color 0.2s;}
+  .input-prefix:focus-within{border-color:var(--gold);background:#fff;}
+  .prefix-text{font-size:13px;color:var(--muted);white-space:nowrap;}
+  .input-prefix input,.input-prefix select{border:none;background:transparent;padding:11px 0;flex:1;font-size:14px;font-family:'Noto Sans TC',sans-serif;color:var(--ink);}
+  .input-prefix input{font-family:'DM Mono',monospace;}
+  .input-prefix input:focus,.input-prefix select:focus{outline:none;}
+  select{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;background:var(--paper);font-size:14px;font-family:'Noto Sans TC',sans-serif;color:var(--ink);appearance:none;}
+  select:focus{outline:none;border-color:var(--gold);}
+  .toggle-group{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .toggle-group.three{grid-template-columns:1fr 1fr 1fr;}
+  .toggle-btn{padding:10px 8px;border:1.5px solid var(--border);border-radius:8px;background:var(--paper);cursor:pointer;text-align:center;font-size:13px;color:var(--muted);transition:all 0.2s;font-family:'Noto Sans TC',sans-serif;}
+  .toggle-btn.active{border-color:var(--accent);background:#f0f4f8;color:var(--accent);font-weight:500;}
+  .info-box{background:#fffbf0;border:1px solid #e8d48a;border-radius:8px;padding:12px 14px;font-size:12px;color:#7a6020;line-height:1.7;margin-bottom:14px;}
+  .info-box strong{color:#5a4010;}
+  .warn-box{background:#fdf0ef;border:1px solid #e8b0a8;border-radius:8px;padding:12px 14px;font-size:12px;color:var(--danger);line-height:1.7;margin-bottom:14px;}
+  .result-hero{background:var(--ink);color:var(--paper);border-radius:14px;padding:24px;text-align:center;margin-bottom:14px;}
+  .result-hero .label{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;}
+  .result-range{font-family:'Noto Serif TC',serif;font-size:22px;font-weight:700;color:var(--gold);line-height:1.4;}
+  .result-sub{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.6;}
+  .result-row{display:flex;justify-content:space-between;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--soft);}
+  .result-row:last-child{border-bottom:none;padding-bottom:0;}
+  .result-row-label{font-size:13px;color:var(--muted);flex:1;}
+  .result-row-val{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;text-align:right;margin-left:12px;}
+  .factor-item{padding:10px 0;border-bottom:1px solid var(--soft);}
+  .factor-item:last-child{border-bottom:none;}
+  .factor-label{font-size:13px;color:var(--ink);margin-bottom:5px;}
+  .factor-tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:3px;font-family:'DM Mono',monospace;margin-left:8px;}
+  .factor-tag.pos{background:#e8f5e9;color:var(--success);}
+  .factor-tag.neg{background:#fdf0ef;color:var(--danger);}
+  .factor-tag.neu{background:var(--soft);color:var(--muted);}
+  .factor-bar{height:5px;border-radius:3px;background:var(--soft);margin-top:6px;}
+  .factor-fill{height:100%;border-radius:3px;}
+  .law-note{background:#f8f8f8;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:12px 14px;font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:14px;}
+  .law-note strong{color:var(--ink);}
+  .source-note{background:#f0f4f8;border-radius:8px;padding:12px 14px;font-size:11px;color:var(--accent);line-height:1.7;margin-bottom:14px;}
+  .disclaimer{background:#f0f0f0;border-radius:8px;padding:12px 14px;font-size:11px;color:var(--muted);line-height:1.7;margin-bottom:14px;}
+  .btn-calc{width:100%;padding:14px;background:var(--ink);color:var(--paper);border:none;border-radius:10px;font-size:15px;font-weight:500;cursor:pointer;font-family:'Noto Sans TC',sans-serif;letter-spacing:0.03em;margin-bottom:10px;}
+  .btn-pdf{width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;font-family:'Noto Sans TC',sans-serif;margin-bottom:10px;display:none;}
+  .btn-reset{width:100%;padding:13px;border:1.5px solid var(--border);border-radius:10px;background:transparent;font-size:14px;color:var(--muted);cursor:pointer;font-family:'Noto Sans TC',sans-serif;display:none;}
+  #resultSection{display:none;}
+  .rejected-box{background:#fdf0ef;border:2px solid var(--danger);border-radius:12px;padding:20px;text-align:center;margin-bottom:14px;}
+  .rejected-box .title{font-family:'Noto Serif TC',serif;font-size:18px;font-weight:700;color:var(--danger);margin-bottom:8px;}
+  .rejected-box .desc{font-size:13px;color:var(--muted);line-height:1.7;}
+</style>
+</head>
+<body>
+<header>
+  <div><div class="logo">Inheritance<span>Pro</span></div></div>
+  <a href="index.html" class="back-link">← 首頁</a>
+</header>
+<main>
+  <h2>贍養費試算</h2>
+  <p class="subtitle">依民法第1057條，離婚後無過失且生活陷入困難的一方，得向有過失的他方請求贍養費。本工具依司法院公告標準提供參考範圍。</p>
+
+  <div class="warn-box">⚠ <strong>重要聲明：</strong>台灣法院贍養費無固定公式，本工具依常見裁判標準提供<strong>參考範圍</strong>，不代表法院實際判決。條件嚴苛，有工作能力者實務上極難獲判。</div>
+
+  <!-- 請求方居住縣市 -->
+  <div class="card">
+    <div class="section-title">居住地區</div>
+    <div class="input-group">
+      <label>請求方居住縣市<span class="hint">影響法院參考之生活費標準</span></label>
+      <div class="input-prefix">
+        <select id="city">
+          <option value="taipei">臺北市</option>
+          <option value="newtaipei">新北市</option>
+          <option value="taoyuan">桃園市</option>
+          <option value="taichung">臺中市</option>
+          <option value="tainan">臺南市</option>
+          <option value="kaohsiung">高雄市</option>
+          <option value="province" selected>其他縣市</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- 請求方 -->
+  <div class="card">
+    <div class="section-title">請求方（離婚後生活困難者）</div>
+    <div class="input-group">
+      <label>每月收入<span class="hint">稅前，無收入填0</span></label>
+      <div class="input-prefix"><span class="prefix-text">NT$</span><input type="number" id="req_income" placeholder="0" min="0" inputmode="numeric"></div>
+    </div>
+    <div class="input-group">
+      <label>每月必要支出<span class="hint">房租、生活費、醫療等</span></label>
+      <div class="input-prefix"><span class="prefix-text">NT$</span><input type="number" id="req_expense" placeholder="0" min="0" inputmode="numeric"></div>
+    </div>
+    <div class="input-group">
+      <label>工作能力狀況</label>
+      <div class="toggle-group three">
+        <div class="toggle-btn" id="work_full" onclick="selectWork('full')">完全正常</div>
+        <div class="toggle-btn" id="work_partial" onclick="selectWork('partial')">部分受限</div>
+        <div class="toggle-btn active" id="work_none" onclick="selectWork('none')">無工作能力</div>
+      </div>
+    </div>
+    <div class="input-group">
+      <label>婚後是否為主要照顧者<span class="hint">放棄工作照顧家庭/子女</span></label>
+      <div class="toggle-group">
+        <div class="toggle-btn active" id="caregiver_yes" onclick="selectCaregiver(true)">是</div>
+        <div class="toggle-btn" id="caregiver_no" onclick="selectCaregiver(false)">否</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 負擔方 -->
+  <div class="card">
+    <div class="section-title">負擔方（被請求者）</div>
+    <div class="input-group">
+      <label>每月收入</label>
+      <div class="input-prefix"><span class="prefix-text">NT$</span><input type="number" id="pay_income" placeholder="0" min="0" inputmode="numeric"></div>
+    </div>
+    <div class="input-group">
+      <label>每月必要支出</label>
+      <div class="input-prefix"><span class="prefix-text">NT$</span><input type="number" id="pay_expense" placeholder="0" min="0" inputmode="numeric"></div>
+    </div>
+  </div>
+
+  <!-- 婚姻情況 -->
+  <div class="card">
+    <div class="section-title">婚姻情況</div>
+    <div class="input-group">
+      <label>婚姻年數</label>
+      <div class="input-prefix"><span class="prefix-text">年</span><input type="number" id="marriage_years" placeholder="0" min="0" max="80" inputmode="numeric"></div>
+    </div>
+    <div class="input-group">
+      <label>未成年子女人數</label>
+      <div class="input-prefix"><span class="prefix-text">人</span><input type="number" id="children" placeholder="0" min="0" max="20" inputmode="numeric"></div>
+    </div>
+    <div class="input-group">
+      <label>離婚原因</label>
+      <div class="toggle-group">
+        <div class="toggle-btn active" id="fault_other" onclick="selectFault('other')">他方單方有過失</div>
+        <div class="toggle-btn" id="fault_mutual" onclick="selectFault('mutual')">雙方均有過失</div>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn-calc" onclick="calculate()">試算贍養費範圍 →</button>
+
+  <div id="resultSection">
+    <div id="resultHero"></div>
+    <div id="factorCard"></div>
+    <div id="durationCard"></div>
+    <div class="source-note" id="sourceNote"></div>
+    <div class="law-note" id="lawNote"></div>
+    <div class="disclaimer">⚠ 本試算僅供參考，實際判決由法院依個案裁量，可能與試算結果有相當差異。建議委請律師評估。</div>
+    <button class="btn-pdf" id="btnPdf" onclick="downloadPDF()">⬇ 下載試算報告 PDF</button>
+    <button class="btn-reset" id="btnReset" onclick="reset()">🔄 重新試算</button>
+  </div>
+</main>
+
+<script>
+  // 114年司法院公告各縣市最低生活費（月）
+  const minLiving = {
+    taipei: 20379,
+    newtaipei: 16900,
+    taoyuan: 16768,
+    taichung: 16077,
+    tainan: 15515,
+    kaohsiung: 16040,
+    province: 15515
+  };
+
+  const cityNames = {
+    taipei:'臺北市', newtaipei:'新北市', taoyuan:'桃園市',
+    taichung:'臺中市', tainan:'臺南市', kaohsiung:'高雄市', province:'其他縣市'
+  };
+
+  let state = { work:'none', fault:'other', caregiver:true };
+  let lastResult = null;
+
+  function selectWork(v){ state.work=v; ['full','partial','none'].forEach(k=>document.getElementById('work_'+k).classList.toggle('active',k===v)); }
+  function selectFault(v){ state.fault=v; ['other','mutual'].forEach(k=>document.getElementById('fault_'+k).classList.toggle('active',k===v)); }
+  function selectCaregiver(v){ state.caregiver=v; document.getElementById('caregiver_yes').classList.toggle('active',v); document.getElementById('caregiver_no').classList.toggle('active',!v); }
+
+  function v(id){ return parseFloat(document.getElementById(id).value)||0; }
+  function fmt(n){ return 'NT$ '+Math.round(n).toLocaleString('zh-TW'); }
+
+  function calculate(){
+    const city = document.getElementById('city').value;
+    const minLife = minLiving[city];
+    // 以最低生活費作為生活基準參考（法院依個案裁量，無固定公式）
+    const courtCeiling = minLife * 1.2;
+
+    const reqIncome = v('req_income');
+    const reqExpense = v('req_expense');
+    const payIncome = v('pay_income');
+    const payExpense = v('pay_expense');
+    const years = v('marriage_years');
+    const children = v('children');
+
+    const factors = [];
+    let eligible = true;
+    let rejectedReason = '';
+
+    // 1. 有完整工作能力者實務上幾乎不獲判
+    if(state.work === 'full'){
+      eligible = false;
+      rejectedReason = '請求方有完整工作能力，依實務見解法院通常不予贍養費，除非有特殊情形（如長期照顧子女導致職涯中斷、健康因素等）。';
+    }
+
+    // 2. 雙方均有過失，但仍可能獲判（酌減）
+    if(state.fault === 'mutual'){
+      factors.push({label:'雙方均有過失', tag:'neg', score:30, desc:'法院得酌減贍養費（民法第1057條第2項）'});
+    } else {
+      factors.push({label:'他方單方有過失', tag:'pos', score:85, desc:'請求方無過失，符合基本請求要件'});
+    }
+
+    // 3. 工作能力
+    if(state.work === 'none'){
+      factors.push({label:'無工作能力', tag:'pos', score:95, desc:'最強力支持贍養費請求的事由'});
+    } else if(state.work === 'partial'){
+      factors.push({label:'工作能力受限', tag:'pos', score:65, desc:'法院可能酌情給予，但金額相對較低'});
+    }
+
+    // 4. 照顧者
+    if(state.caregiver){
+      factors.push({label:'婚後放棄工作照顧家庭', tag:'pos', score:75, desc:'法院通常認可此為生活困難的合理原因'});
+    }
+
+    // 5. 婚姻年數
+    if(years >= 20){ factors.push({label:`婚姻長達 ${years} 年`, tag:'pos', score:85, desc:'婚姻越長，法院越傾向給予較高贍養費'}); }
+    else if(years >= 10){ factors.push({label:`婚姻 ${years} 年`, tag:'pos', score:60, desc:'中等婚齡'}); }
+    else if(years > 0){ factors.push({label:`婚姻僅 ${years} 年`, tag:'neg', score:30, desc:'短期婚姻贍養費通常較低或不予'}); }
+
+    // 6. 子女
+    if(children > 0){ factors.push({label:`有 ${children} 名未成年子女`, tag:'pos', score:65, desc:'有子女照顧責任，強化生活困難主張'}); }
+
+    // 計算金額
+    const reqGap = Math.max(0, reqExpense - reqIncome); // 請求方缺口
+    const payDisposable = Math.max(0, payIncome - payExpense); // 負擔方可支配
+
+    // 基礎金額邏輯（參考實務）：
+    // 1. 以最低生活費×1.2為計算基準（僅供參考，非法定公式）
+    // 2. 不超過負擔方可支配所得的50%
+    // 3. 以請求方缺口為主要參考
+    let base = reqGap > 0 ? reqGap : courtCeiling * 0.5;
+    base = Math.min(base, courtCeiling);
+    base = Math.min(base, payDisposable * 0.5);
+    if(base <= 0 && payDisposable > 0) base = Math.min(payDisposable * 0.2, courtCeiling * 0.3);
+
+    // 依因素調整
+    let adjLow = 0.7, adjHigh = 1.0;
+    if(state.work === 'none'){ adjLow += 0.2; adjHigh += 0.1; }
+    if(state.caregiver){ adjLow += 0.1; adjHigh += 0.1; }
+    if(years >= 20){ adjLow += 0.15; adjHigh += 0.1; }
+    if(state.fault === 'mutual'){ adjLow *= 0.6; adjHigh *= 0.7; }
+
+    let low = Math.round(base * adjLow / 500) * 500;
+    let high = Math.round(base * adjHigh / 500) * 500;
+    if(low > high) low = high;
+    if(high === 0 && eligible) high = Math.round(courtCeiling * 0.3 / 500) * 500;
+
+    // 給付期間（實務：通常1-5年，長期婚姻可較長）
+    let durLow = 1, durHigh = 3;
+    if(years >= 20){ durLow = 3; durHigh = 8; }
+    else if(years >= 10){ durLow = 2; durHigh = 5; }
+    if(state.work === 'none'){ durHigh = Math.min(durHigh + 2, 10); }
+    if(state.caregiver){ durHigh = Math.min(durHigh + 1, 10); }
+    if(state.fault === 'mutual'){ durHigh = Math.max(1, durHigh - 1); }
+
+    lastResult = { eligible, rejectedReason, low, high, durLow, durHigh, factors, reqGap, payDisposable, courtCeiling, minLife, city, years, children };
+    renderResult(lastResult);
+  }
+
+  function renderResult(r){
+    const { eligible, rejectedReason, low, high, durLow, durHigh, factors, reqGap, payDisposable, courtCeiling, minLife, city } = r;
+
+    if(!eligible){
+      document.getElementById('resultHero').innerHTML = `
+        <div class="rejected-box">
+          <div class="title">實務上難以獲判</div>
+          <div class="desc">${rejectedReason}</div>
+        </div>`;
+      document.getElementById('factorCard').innerHTML = '';
+      document.getElementById('durationCard').innerHTML = '';
+      document.getElementById('sourceNote').innerHTML = '';
+      document.getElementById('lawNote').innerHTML = `⚖️ <strong>民法第1057條：</strong>夫妻無過失之一方，因判決離婚而陷於生活困難者，他方縱無過失，亦應給與相當之贍養費。`;
+    } else {
+      document.getElementById('resultHero').innerHTML = `
+        <div class="result-hero">
+          <div class="label">每月參考範圍</div>
+          <div class="result-range">${fmt(low)}<br>～ ${fmt(high)}</div>
+          <div class="result-sub">此為參考範圍，實際金額由法院依個案裁定</div>
+        </div>`;
+
+      let factorHTML = '<div class="card"><div class="section-title">影響因素分析</div>';
+      factors.forEach(f => {
+        const color = f.tag==='pos'?'var(--success)':f.tag==='neg'?'var(--danger)':'var(--muted)';
+        const tagLabel = f.tag==='pos'?'有利':'不利';
+        factorHTML += `<div class="factor-item">
+          <div class="factor-label">${f.label}<span class="factor-tag ${f.tag}">${tagLabel}</span></div>
+          <div style="font-size:11px;color:var(--muted);margin-top:3px">${f.desc}</div>
+          <div class="factor-bar"><div class="factor-fill" style="width:${f.score}%;background:${color}"></div></div>
+        </div>`;
+      });
+      factorHTML += '</div>';
+      document.getElementById('factorCard').innerHTML = factorHTML;
+
+      document.getElementById('durationCard').innerHTML = `
+        <div class="card">
+          <div class="section-title">給付期間與參考標準</div>
+          <div class="result-row"><span class="result-row-label">建議給付期間</span><span class="result-row-val" style="color:var(--accent)">${durLow} ～ ${durHigh} 年</span></div>
+          <div class="result-row"><span class="result-row-label">請求方每月收支缺口</span><span class="result-row-val">${fmt(reqGap)}</span></div>
+          <div class="result-row"><span class="result-row-label">負擔方每月可支配</span><span class="result-row-val">${fmt(payDisposable)}</span></div>
+          <div class="result-row"><span class="result-row-label">法院參考上限（${cityNames[r.city]}）</span><span class="result-row-val" style="color:var(--gold)">${fmt(courtCeiling)}</span></div>
+        </div>`;
+
+      document.getElementById('sourceNote').innerHTML = `📊 參考依據：司法院114年公告${cityNames[r.city]}最低生活費 NT$ ${minLife.toLocaleString('zh-TW')} 元。本試算以此為生活基準，惟法院實際裁量時依個案情形（雙方收入、財產、健康、婚姻年數等）綜合判斷，並無固定公式，僅供參考。`;
+
+      document.getElementById('lawNote').innerHTML = `⚖️ <strong>民法第1057條：</strong>夫妻無過失之一方，因判決離婚而陷於生活困難者，他方縱無過失，亦應給與相當之贍養費。雙方均有過失者，法院得酌減之。<br><br><strong>請求時效：</strong>離婚後2年內（民法第1058條準用相關規定）。再婚後喪失請求權。`;
+    }
+
+    document.getElementById('resultSection').style.display = 'block';
+    document.getElementById('btnPdf').style.display = 'block';
+    document.getElementById('btnReset').style.display = 'block';
+    document.getElementById('resultSection').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  function reset(){
+    ['req_income','req_expense','pay_income','pay_expense','marriage_years','children'].forEach(id=>document.getElementById(id).value='');
+    state={work:'none',fault:'other',caregiver:true};
+    selectWork('none');selectFault('other');selectCaregiver(true);
+    document.getElementById('resultSection').style.display='none';
+    document.getElementById('btnPdf').style.display='none';
+    document.getElementById('btnReset').style.display='none';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function downloadPDF(){
+    if(!lastResult)return;
+    const { eligible, rejectedReason, low, high, durLow, durHigh, factors, courtCeiling, minLife, city } = lastResult;
+    const today = new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'long',day:'numeric'});
+    const factorRows = factors.map(f=>`<tr><td>${f.label}</td><td>${f.desc}</td><td style="color:${f.tag==='pos'?'#2a6b4a':'#8b2020'};font-weight:500">${f.tag==='pos'?'有利':'不利'}</td></tr>`).join('');
+
+    const html=`<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>贍養費試算報告</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500&family=DM+Mono:wght@400;500&display=swap');
+body{font-family:'Noto Sans TC',sans-serif;padding:40px;max-width:680px;margin:0 auto;font-size:13px;color:#1a1410;}
+.header{border-bottom:3px solid #1a1410;padding-bottom:18px;margin-bottom:28px;display:flex;justify-content:space-between;align-items:flex-end;}
+.logo{font-family:'Noto Serif TC',serif;font-size:22px;font-weight:700;}
+.logo span{color:#c4932a;}
+.meta{font-size:11px;color:#7a6f62;text-align:right;line-height:1.8;font-family:'DM Mono',monospace;}
+.result-box{background:#1a1410;color:#f5f0e8;border-radius:12px;padding:24px;text-align:center;margin-bottom:24px;}
+.result-box .lbl{font-size:11px;color:#7a6f62;letter-spacing:.12em;margin-bottom:8px;font-family:'DM Mono',monospace;}
+.result-box .amount{font-family:'Noto Serif TC',serif;font-size:26px;font-weight:700;color:#c4932a;line-height:1.5;}
+.result-box .sub{font-size:12px;color:#7a6f62;margin-top:6px;}
+.reject-box{background:#fdf0ef;border:2px solid #8b2020;border-radius:10px;padding:20px;text-align:center;margin-bottom:24px;}
+h2{font-family:'Noto Serif TC',serif;font-size:15px;margin:20px 0 10px;}
+table{width:100%;border-collapse:collapse;margin-bottom:20px;font-size:12px;}
+th{background:#f5f0e8;padding:8px 12px;text-align:left;font-weight:500;border-bottom:2px solid #c8bfb0;}
+td{padding:8px 12px;border-bottom:1px solid #e8e0d0;vertical-align:top;}
+.law-box{background:#f8f8f4;border-left:3px solid #c4932a;padding:12px 16px;font-size:11px;color:#7a6f62;line-height:1.8;border-radius:0 6px 6px 0;margin-bottom:16px;}
+.law-box strong{color:#1a1410;}
+.source{background:#f0f4f8;border-radius:6px;padding:10px 14px;font-size:11px;color:#1a3a5c;line-height:1.7;margin-bottom:16px;}
+.disclaimer{background:#f0f0f0;border-radius:6px;padding:10px 14px;font-size:10px;color:#7a6f62;line-height:1.7;margin-bottom:20px;}
+.footer{margin-top:32px;padding-top:14px;border-top:1px solid #c8bfb0;font-size:11px;color:#7a6f62;text-align:center;line-height:1.8;}
+@media print{body{padding:20px;}}
+</style></head><body>
+<div class="header"><div><div class="logo">Inheritance<span>Pro</span></div><div style="font-size:12px;color:#7a6f62;margin-top:4px">贍養費試算報告</div></div><div class="meta">產出日期：${today}<br>依民法第1057條</div></div>
+${eligible
+  ? `<div class="result-box"><div class="lbl">每月參考範圍</div><div class="amount">${fmt(low)}<br>～ ${fmt(high)}</div><div class="sub">給付期間建議：${durLow} ～ ${durHigh} 年</div></div>`
+  : `<div class="reject-box"><div style="font-family:'Noto Serif TC',serif;font-size:18px;font-weight:700;color:#8b2020;margin-bottom:8px">實務上難以獲判</div><div style="font-size:12px;color:#7a6f62">${rejectedReason}</div></div>`}
+<h2>影響因素分析</h2>
+<table><thead><tr><th>因素</th><th>說明</th><th>方向</th></tr></thead><tbody>${factorRows}</tbody></table>
+<div class="source">📊 參考依據：司法院114年公告${cityNames[city]}最低生活費 NT$ ${minLife.toLocaleString('zh-TW')} 元。本試算以此為生活基準，惟法院依個案情形綜合裁量，並無固定公式，僅供參考。</div>
+<div class="law-box"><strong>民法第1057條：</strong>夫妻無過失之一方，因判決離婚而陷於生活困難者，他方縱無過失，亦應給與相當之贍養費。雙方均有過失者，法院得酌減之。</div>
+<div class="disclaimer">⚠ 本試算結果僅供參考，台灣法院依具體個案裁量，實際判決金額可能與試算結果有相當差異。建議委請律師評估實際案情。</div>
+<div class="footer">© ${new Date().getFullYear()} InheritancePro &nbsp;·&nbsp; inheritancepro.vercel.app<br>本報告僅供參考，不構成法律意見。</div>
+</body></html>`;
+    const w=window.open('','_blank');
+    if(!w){alert('請允許本網站開啟彈出視窗以下載 PDF');return;}
+    w.document.write(html);
+    w.document.close();
+    setTimeout(()=>w.print(),600);
+  }
+</script>
+</body>
+</html>
