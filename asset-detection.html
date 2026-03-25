@@ -138,6 +138,34 @@
 
   .pdf-btn { width: 100%; padding: 13px; background: var(--danger); color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'Noto Sans TC', sans-serif; margin-top: 16px; }
 
+  /* Gap analysis */
+  .gap-box { border-radius: 10px; padding: 18px 20px; margin-bottom: 20px; border: 2px solid var(--border); background: #fff; }
+  .gap-box-title { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
+  .gap-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--soft); font-size: 13px; }
+  .gap-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .gap-label { color: var(--muted); }
+  .gap-val { font-family: 'DM Mono', monospace; font-weight: 500; }
+  .gap-val.ok { color: var(--ok); }
+  .gap-val.warn { color: var(--warn); }
+  .gap-val.danger { color: var(--danger); }
+  .gap-badge { font-size: 10px; font-family: 'DM Mono', monospace; padding: 2px 8px; border-radius: 3px; margin-left: 10px; }
+  .gap-badge.ok { background: #edf7f1; color: var(--ok); }
+  .gap-badge.warn { background: #fef6ed; color: var(--warn); }
+  .gap-badge.danger { background: #fdf0ef; color: var(--danger); }
+
+  /* Law summary */
+  .law-summary { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+  .law-sum-box { background: #fff; border: 1.5px solid var(--border); border-radius: 8px; padding: 14px; text-align: center; }
+  .law-sum-box.active-2yr { border-color: var(--danger); background: #fdf0ef; }
+  .law-sum-box.active-6yr { border-color: var(--warn); background: #fef6ed; }
+  .law-sum-label { font-size: 10px; font-family: 'DM Mono', monospace; color: var(--muted); letter-spacing: 0.08em; margin-bottom: 6px; }
+  .law-sum-box.active-2yr .law-sum-label { color: var(--danger); }
+  .law-sum-box.active-6yr .law-sum-label { color: var(--warn); }
+  .law-sum-amt { font-family: 'DM Mono', monospace; font-size: 16px; font-weight: 600; color: var(--ink); }
+  .law-sum-box.active-2yr .law-sum-amt { color: var(--danger); }
+  .law-sum-box.active-6yr .law-sum-amt { color: var(--warn); }
+  .law-sum-count { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
   /* Info box */
   .info-box { background: #fefbea; border: 1px solid #e8d470; border-radius: 8px; padding: 12px 14px; font-size: 12px; color: #7a6010; line-height: 1.7; margin-bottom: 16px; }
 
@@ -186,7 +214,8 @@
             <th style="width:110px">日期</th>
             <th style="width:80px">金額（萬）</th>
             <th style="width:120px">類型</th>
-            <th>對象 / 說明</th>
+            <th style="width:110px">受贈人身分</th>
+            <th>說明</th>
             <th style="width:36px"></th>
           </tr>
         </thead>
@@ -206,7 +235,15 @@
                 <option value="other">其他</option>
               </select>
             </td>
-            <td><input type="text" class="tx-note-input" placeholder="對象姓名或說明"></td>
+            <td>
+              <select class="tx-recipient-input">
+                <option value="unknown">不明</option>
+                <option value="heir">繼承人（子女/父母等）</option>
+                <option value="heir_spouse">繼承人配偶</option>
+                <option value="third">第三人</option>
+              </select>
+            </td>
+            <td><input type="text" class="tx-note-input" placeholder="姓名或說明"></td>
             <td><button class="del-btn" onclick="delRow(this)">×</button></td>
           </tr>
         </tbody>
@@ -380,7 +417,13 @@
         <option value="insurance">壽險保費</option>
         <option value="other">其他</option>
       </select></td>
-      <td><input type="text" class="tx-note-input" placeholder="對象姓名或說明"></td>
+      <td><select class="tx-recipient-input">
+        <option value="unknown">不明</option>
+        <option value="heir">繼承人（子女/父母等）</option>
+        <option value="heir_spouse">繼承人配偶</option>
+        <option value="third">第三人</option>
+      </select></td>
+      <td><input type="text" class="tx-note-input" placeholder="姓名或說明"></td>
       <td><button class="del-btn" onclick="delRow(this)">×</button></td>`;
     tbody.appendChild(tr);
   }
@@ -477,8 +520,9 @@
       const date = row.querySelector('.tx-date-input').value;
       const amount = parseFloat(row.querySelector('.tx-amount-input').value) || 0;
       const type = row.querySelector('.tx-type-input').value;
+      const recipient = row.querySelector('.tx-recipient-input') ? row.querySelector('.tx-recipient-input').value : 'unknown';
       const note = row.querySelector('.tx-note-input').value;
-      if (date || amount > 0) parsedData.push({ date, amount, type, note });
+      if (date || amount > 0) parsedData.push({ date, amount, type, recipient, note });
     });
   }
 
@@ -515,9 +559,12 @@
     const errBox = document.getElementById('dateErrorBox');
     if (errBox) errBox.remove();
 
+    const declaredId = source === 'manual' ? 'declaredEstate' : source === 'paste' ? 'declaredEstatePaste' : 'declaredEstateCSV';
+    const declaredAmt = parseFloat(document.getElementById(declaredId).value) || 0;
+
     const results = parsedData.map(tx => scoreTransaction(tx, deathDate));
-    analysisResult = { results, deathDate, source };
-    renderResults(results, deathDate);
+    analysisResult = { results, deathDate, source, declaredAmt };
+    renderResults(results, deathDate, declaredAmt);
   }
 
   function scoreTransaction(tx, deathDate) {
@@ -551,9 +598,22 @@
     const typeRisk = { gift_cash: 25, gift_property: 30, gift_stock: 20, transfer_low: 35, withdraw: 20, insurance: 15, other: 5 };
     score += typeRisk[tx.type] || 5;
 
-    if (tx.type === 'transfer_low') flags.push({ level: 'alert', text: '親屬間低價出售，可能構成實質贈與，需評估市價差額' });
+    if (tx.type === 'transfer_low') flags.push({ level: 'alert', text: '親屬間低價出售，可能構成實質贈與，需評估市價差額（遺贈稅法第5條）' });
     if (tx.type === 'withdraw') flags.push({ level: 'warn', text: '大額現金提款，款項去向不明，具脫產風險' });
     if (tx.type === 'gift_property') flags.push({ level: 'warn', text: '不動產贈與，需確認是否已申報土地增值稅及贈與稅' });
+
+    // Rule 5: Recipient
+    const recipient = tx.recipient || 'unknown';
+    if (recipient === 'heir') {
+      score += 25;
+      flags.push({ level: 'alert', text: '受贈人為繼承人：民法§1148-1直接適用，2年內贈與法定視為遺產，不須另行舉證' });
+    } else if (recipient === 'heir_spouse') {
+      score += 15;
+      flags.push({ level: 'warn', text: '受贈人為繼承人配偶：需評估是否為間接移轉，實務上常見迴避方式' });
+    } else if (recipient === 'third') {
+      score += 10;
+      flags.push({ level: 'warn', text: '受贈人為第三人：可依民法§244聲請撤銷詐害債權行為，需評估被繼承人當時清償能力' });
+    }
 
     // Determine level
     let level = 'LOW';
@@ -562,11 +622,15 @@
     else if (score >= 25) level = 'MEDIUM';
 
     const typeLabels = { gift_cash:'現金贈與', gift_property:'不動產贈與', gift_stock:'股票贈與', transfer_low:'低價出售', withdraw:'大額提款', insurance:'壽險保費', other:'其他' };
+    const recipientLabels = { heir:'繼承人', heir_spouse:'繼承人配偶', third:'第三人', unknown:'不明' };
 
-    return { ...tx, score, level, flags, daysBefore, typeLabel: typeLabels[tx.type] || tx.type };
+    return { ...tx, score, level, flags, daysBefore, typeLabel: typeLabels[tx.type] || tx.type, recipientLabel: recipientLabels[tx.recipient || 'unknown'] };
   }
 
-  function renderResults(results, deathDate) {
+  function fmtAmt(n) { return 'NT$ ' + (n * 10000).toLocaleString('zh-TW') + '（' + n + '萬）'; }
+  function fmtWan(n) { return n.toLocaleString('zh-TW') + ' 萬'; }
+
+  function renderResults(results, deathDate, declaredAmt) {
     const high = results.filter(r => r.level === 'HIGH' || r.level === 'CRITICAL').length;
     const med = results.filter(r => r.level === 'MEDIUM').length;
     const low = results.filter(r => r.level === 'LOW').length;
@@ -585,9 +649,81 @@
       LOW: '財產異動符合一般常規，風險相對較低'
     };
 
+    // 法條彙總
+    const tx2yr  = results.filter(r => r.daysBefore !== null && r.daysBefore >= 0 && r.daysBefore <= 730);
+    const tx6yr  = results.filter(r => r.daysBefore !== null && r.daysBefore > 730 && r.daysBefore <= 2190);
+    const txOld  = results.filter(r => r.daysBefore === null || r.daysBefore > 2190 || r.daysBefore < 0);
+    const sum2yr = tx2yr.reduce((s,r) => s + r.amount, 0);
+    const sum6yr = tx6yr.reduce((s,r) => s + r.amount, 0);
+    const sumOld = txOld.reduce((s,r) => s + r.amount, 0);
+    const sumAll = results.reduce((s,r) => s + r.amount, 0);
+
+    // 法條彙總框
+    const lawSumHTML = `
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px">依法條期間彙總</div>
+    <div class="law-summary">
+      <div class="law-sum-box ${tx2yr.length > 0 ? 'active-2yr' : ''}">
+        <div class="law-sum-label">民法§1148-1<br>2年內</div>
+        <div class="law-sum-amt">${fmtWan(sum2yr)}</div>
+        <div class="law-sum-count">${tx2yr.length} 筆・視為遺產</div>
+      </div>
+      <div class="law-sum-box ${tx6yr.length > 0 ? 'active-6yr' : ''}">
+        <div class="law-sum-label">遺贈稅§15<br>2–6年</div>
+        <div class="law-sum-amt">${fmtWan(sum6yr)}</div>
+        <div class="law-sum-count">${tx6yr.length} 筆・計入課稅</div>
+      </div>
+      <div class="law-sum-box">
+        <div class="law-sum-label">其他<br>6年以前</div>
+        <div class="law-sum-amt">${fmtWan(sumOld)}</div>
+        <div class="law-sum-count">${txOld.length} 筆・供參考</div>
+      </div>
+    </div>`;
+
+    // 差距分析框
+    let gapHTML = '';
+    if (declaredAmt > 0) {
+      const gap2 = sum2yr - declaredAmt;
+      const gap6 = (sum2yr + sum6yr) - declaredAmt;
+      const gapAll = sumAll - declaredAmt;
+      const gapClass = (n) => n > 0 ? 'danger' : 'ok';
+      const gapBadge = (n) => n > 0
+        ? `<span class="gap-badge danger">超出 ${fmtWan(n)}</span>`
+        : `<span class="gap-badge ok">未超出</span>`;
+      gapHTML = `
+      <div class="gap-box">
+        <div class="gap-box-title">差距分析 — 申報 vs 發現</div>
+        <div class="gap-row">
+          <span class="gap-label">申報遺產總額</span>
+          <span class="gap-val">${fmtWan(declaredAmt)}</span>
+        </div>
+        <div class="gap-row">
+          <span class="gap-label">2年內可疑移轉（§1148-1）</span>
+          <span class="gap-val ${gapClass(gap2)}">${fmtWan(sum2yr)} ${gapBadge(gap2)}</span>
+        </div>
+        <div class="gap-row">
+          <span class="gap-label">6年內累計移轉（含§15）</span>
+          <span class="gap-val ${gapClass(gap6)}">${fmtWan(sum2yr + sum6yr)} ${gapBadge(gap6)}</span>
+        </div>
+        <div class="gap-row">
+          <span class="gap-label">全部紀錄合計</span>
+          <span class="gap-val ${gapClass(gapAll)}">${fmtWan(sumAll)} ${gapBadge(gapAll)}</span>
+        </div>
+      </div>`;
+    }
+
     document.getElementById('countHigh').textContent = high;
     document.getElementById('countMed').textContent = med;
     document.getElementById('countLow').textContent = low;
+
+    // 插入差距分析和法條彙總到結果頂端
+    const resultSection = document.getElementById('resultSection');
+    let extraBox = document.getElementById('extraAnalysis');
+    if (!extraBox) {
+      extraBox = document.createElement('div');
+      extraBox.id = 'extraAnalysis';
+      resultSection.insertBefore(extraBox, document.getElementById('overallRisk'));
+    }
+    extraBox.innerHTML = gapHTML + lawSumHTML;
 
     const overallEl = document.getElementById('overallRisk');
     overallEl.className = 'overall-risk ' + overallLevel;
@@ -606,8 +742,8 @@
       div.innerHTML = `
         <div class="tx-result-header ${r.level}">
           <div class="tx-meta">
-            <div class="tx-date">${r.date || '日期未填'}${r.daysBefore !== null ? ` ｜ 死亡前 ${Math.round(r.daysBefore)} 天` : ''}</div>
-            <div class="tx-desc">${r.typeLabel}${r.note ? ' — ' + r.note : ''}</div>
+            <div class="tx-date">${r.date || '日期未填'}${r.daysBefore !== null && r.daysBefore >= 0 ? ` ｜ 死亡前 ${Math.round(r.daysBefore)} 天` : r.daysBefore !== null ? ' ｜ 死亡後' : ''}</div>
+            <div class="tx-desc">${r.typeLabel} ▸ ${r.recipientLabel}${r.note ? ' — ' + r.note : ''}</div>
           </div>
           <div style="display:flex;align-items:center;gap:10px">
             <div class="tx-amount neg">NT$ ${(r.amount * 10000).toLocaleString('zh-TW')}</div>
@@ -667,9 +803,15 @@
   // PDF report
   function downloadReport() {
     if (!analysisResult) return;
-    const { results, deathDate } = analysisResult;
+    const { results, deathDate, declaredAmt } = analysisResult;
     const today = new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' });
     const totalScore = Math.min(100, Math.round(results.reduce((s, r) => s + r.score, 0) / results.length));
+
+    const tx2yr  = results.filter(r => r.daysBefore !== null && r.daysBefore >= 0 && r.daysBefore <= 730);
+    const tx6yr  = results.filter(r => r.daysBefore !== null && r.daysBefore > 730 && r.daysBefore <= 2190);
+    const sum2yr = tx2yr.reduce((s,r) => s + r.amount, 0);
+    const sum6yr = tx6yr.reduce((s,r) => s + r.amount, 0);
+    const sumAll = results.reduce((s,r) => s + r.amount, 0);
     let overallLevel = 'LOW';
     if (totalScore >= 70) overallLevel = 'CRITICAL';
     else if (totalScore >= 50) overallLevel = 'HIGH';
@@ -683,7 +825,7 @@
         <td>${r.date || '—'}</td>
         <td style="font-family:monospace">NT$ ${(r.amount * 10000).toLocaleString('zh-TW')}</td>
         <td>${r.typeLabel}</td>
-        <td>${r.note || '—'}</td>
+        <td>${r.recipientLabel || '—'}${r.note ? '・' + r.note : ''}</td>
         <td style="color:${r.level === 'CRITICAL' || r.level === 'HIGH' ? '#c0392b' : r.level === 'MEDIUM' ? '#d4691e' : '#2d6a4f'};font-weight:600">${r.level === 'CRITICAL' ? '極高' : r.level === 'HIGH' ? '高' : r.level === 'MEDIUM' ? '中' : '低'}</td>
       </tr>
       ${r.flags.length > 0 ? `<tr><td colspan="5" style="padding:4px 12px 10px;background:#fafafa"><ul style="font-size:11px;margin-left:16px">${flagsHTML}</ul></td></tr>` : ''}`;
@@ -730,8 +872,16 @@
   </div>
   <div style="font-size:36px;font-weight:600;color:${overallLevel === 'CRITICAL' || overallLevel === 'HIGH' ? '#c0392b' : overallLevel === 'MEDIUM' ? '#b8860b' : '#2d6a4f'}">${totalScore}</div>
 </div>
+${declaredAmt > 0 ? `
+<h2>差距分析</h2>
+<table style="margin-bottom:16px"><thead><tr><th>項目</th><th>金額</th><th>備註</th></tr></thead><tbody>
+<tr><td>申報遺產總額</td><td style="font-family:monospace">${fmtWan(declaredAmt)}</td><td>—</td></tr>
+<tr><td>2年內可疑移轉（民法§1148-1）</td><td style="font-family:monospace;color:${sum2yr > declaredAmt ? '#c0392b':'#2d6a4f'}">${fmtWan(sum2yr)}</td><td>${tx2yr.length}筆・${sum2yr > declaredAmt ? '超出 '+fmtWan(sum2yr-declaredAmt) : '未超出申報額'}</td></tr>
+<tr><td>6年內累計移轉（含§15）</td><td style="font-family:monospace;color:${(sum2yr+sum6yr) > declaredAmt ? '#c0392b':'#2d6a4f'}">${fmtWan(sum2yr+sum6yr)}</td><td>${tx2yr.length+tx6yr.length}筆・${(sum2yr+sum6yr) > declaredAmt ? '超出 '+fmtWan(sum2yr+sum6yr-declaredAmt) : '未超出申報額'}</td></tr>
+<tr><td>全部紀錄合計</td><td style="font-family:monospace">${fmtWan(sumAll)}</td><td>${results.length}筆</td></tr>
+</tbody></table>` : ''}
 <h2>各筆異動風險明細</h2>
-<table><thead><tr><th>日期</th><th>金額</th><th>類型</th><th>對象/說明</th><th>風險</th></tr></thead><tbody>${txHTML}</tbody></table>
+<table><thead><tr><th>日期</th><th>金額</th><th>類型</th><th>受贈人・說明</th><th>風險</th></tr></thead><tbody>${txHTML}</tbody></table>
 <div class="law-box">
   ⚖️ 相關法律依據<br>
   ・<strong>民法第1148-1條</strong>：死亡前二年內贈與視為遺產。<br>
