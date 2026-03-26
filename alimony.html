@@ -78,6 +78,11 @@
   .rejected-box{background:#fdf0ef;border:2px solid var(--danger);border-radius:12px;padding:20px;text-align:center;margin-bottom:14px;}
   .rejected-box .title{font-family:'Noto Serif TC',serif;font-size:18px;font-weight:700;color:var(--danger);margin-bottom:8px;}
   .rejected-box .desc{font-size:13px;color:var(--muted);line-height:1.7;}
+  .faq-wrap{max-width:480px;margin:48px auto 0;padding:0 20px 64px;}
+  .faq-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+  .faq-item{padding:16px 0;border-bottom:1px solid var(--border);}
+  .faq-q{font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px;line-height:1.5;}
+  .faq-a{font-size:13px;color:var(--muted);line-height:1.8;}
 </style>
 </head>
 <body>
@@ -436,6 +441,36 @@ ${eligible
     w.document.close();
     setTimeout(()=>w.print(),600);
   }
+</script>
+<div class="faq-wrap">
+  <div class="faq-label">常見問題</div>
+  <div class="faq-item">
+    <div class="faq-q">台灣離婚贍養費一般是多少？</div>
+    <div class="faq-a">台灣贍養費沒有固定金額，由法院依個案情況裁定。實務上常以司法院公布的最低生活費為基準，通常落在每月新台幣15,000至50,000元之間，給付期間從數年到終身不等，視雙方情況而定。</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">請求贍養費的條件是什麼？</div>
+    <div class="faq-a">依民法第1057條，須同時符合三個條件：(1) 因判決離婚，(2) 無過失的一方，(3) 離婚後無法維持生活。協議離婚也可在離婚協議書中約定贍養費，不受此條件限制。</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">贍養費可以一次付清嗎？</div>
+    <div class="faq-a">可以。贍養費給付方式可由雙方協議，選擇按月給付或一次性給付。一次性給付需考量現值折算，建議與律師討論最有利的方式。</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">贍養費和扶養費有什麼不同？</div>
+    <div class="faq-a">贍養費是離婚後給付前配偶的生活費，依民法第1057條；扶養費則是給付未成年子女的費用，依民法第1116-2條。兩者法律依據不同，計算方式也不同，本工具計算的是贍養費部分。</div>
+  </div>
+</div>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "台灣離婚贍養費一般是多少？", "acceptedAnswer": {"@type": "Answer", "text": "台灣贍養費由法院依個案裁定，實務上常以最低生活費為基準，通常每月15,000至50,000元，給付期間從數年到終身不等。"}},
+    {"@type": "Question", "name": "請求贍養費的條件是什麼？", "acceptedAnswer": {"@type": "Answer", "text": "依民法第1057條，須同時符合：因判決離婚、無過失的一方、離婚後無法維持生活三個條件。"}},
+    {"@type": "Question", "name": "贍養費和扶養費有什麼不同？", "acceptedAnswer": {"@type": "Answer", "text": "贍養費是離婚後給付前配偶的生活費（民法第1057條）；扶養費是給付未成年子女的費用（民法第1116-2條），兩者法律依據不同。"}}
+  ]
+}
 </script>
 </body>
 </html>

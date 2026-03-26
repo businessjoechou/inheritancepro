@@ -236,6 +236,14 @@
   .hero-sub { animation: fadeUp 0.5s 0.1s ease both; }
   .law-strip { animation: fadeUp 0.5s 0.15s ease both; }
   .tools { animation: fadeUp 0.5s 0.2s ease both; }
+
+  /* FAQ SEO Section */
+  .faq-section { padding: 0 24px 64px; max-width: 560px; margin: 0 auto; }
+  .faq-heading { font-family: 'DM Mono', monospace; font-size: 10px; color: #3a3530; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 20px; }
+  .faq-item { border-top: 1px solid #2a2520; padding: 18px 0; }
+  .faq-q { font-family: 'Noto Serif TC', serif; font-size: 14px; font-weight: 600; color: var(--paper); margin-bottom: 8px; line-height: 1.5; }
+  .faq-a { font-size: 13px; color: var(--muted); line-height: 1.8; }
+  .faq-a a { color: var(--gold); text-decoration: none; }
 </style>
 </head>
 <body>
@@ -349,6 +357,40 @@
   </div>
 </div>
 
+<section class="faq-section" aria-label="常見問題">
+  <div class="faq-heading">常見問題 FAQ</div>
+
+  <div class="faq-item">
+    <div class="faq-q">台灣遺產繼承順序是什麼？</div>
+    <div class="faq-a">依民法規定，繼承順位為：第一順位是直系血親卑親屬（子女、孫子女），第二順位是父母，第三順位是兄弟姊妹，第四順位是祖父母。配偶則與各順位繼承人共同繼承。可使用<a href="calculator.html">遺產繼承計算器</a>計算各繼承人的應繼分與特留分。</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">離婚後可以請求多少財產分配？</div>
+    <div class="faq-a">依民法第1030-1條，法定財產制下，婚姻消滅時財產較少的一方可向另一方請求剩餘財產差額的二分之一。計算基礎為婚後各自取得的財產，婚前財產、繼承及受贈財產須排除。可使用<a href="property-split.html">剩餘財產差額分配計算器</a>快速試算。</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">拋棄繼承的期限是幾天？</div>
+    <div class="faq-a">依民法第1174條，繼承人應於知悉其得繼承之時起3個月內，以書面向法院聲請拋棄繼承。逾期未辦理則視為概括承受，包含被繼承人的所有債務。使用<a href="inheritance-timeline.html">繼承流程時間軸</a>可自動計算各項期限倒數。</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">台灣贍養費怎麼計算？</div>
+    <div class="faq-a">依民法第1057條，離婚後無法維持生活且非因自己過失者，得向他方請求贍養費。金額由法院依雙方經濟能力、婚姻年數、年齡、工作能力等因素決定，通常以司法院公布的最低生活費為基準。可使用<a href="alimony.html">贍養費試算工具</a>參考估算範圍。</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">遺產稅申報期限是多久？</div>
+    <div class="faq-a">依遺產及贈與稅法第23條，繼承人應於被繼承人死亡後6個月內，向被繼承人戶籍所在地的國稅局辦理遺產稅申報。逾期申報除補稅外，還會加徵罰鍰。2026年遺產稅免稅額為新台幣1,333萬元。</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">什麼是脫產？繼承人怎麼應對？</div>
+    <div class="faq-a">脫產是指被繼承人或債務人在死亡或訴訟前，將財產轉移給他人以規避繼承或債務清償的行為。依民法第1148-1條，被繼承人於繼承開始前2年內贈與繼承人的財產，視為遺產。遺贈稅法第15條則規定6年內的特定贈與須計入遺產。使用<a href="asset-detection.html">脫產偵測工具</a>可分析財產異動風險。</div>
+  </div>
+</section>
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -361,6 +403,44 @@
   "offers": {"@type": "Offer", "price": "0", "priceCurrency": "TWD"},
   "inLanguage": "zh-TW",
   "author": {"@type": "Organization", "name": "InheritancePro", "url": "https://inheritancepro.vercel.app"}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "台灣遺產繼承順序是什麼？",
+      "acceptedAnswer": {"@type": "Answer", "text": "依民法規定，繼承順位為：第一順位是直系血親卑親屬（子女、孫子女），第二順位是父母，第三順位是兄弟姊妹，第四順位是祖父母。配偶則與各順位繼承人共同繼承。"}
+    },
+    {
+      "@type": "Question",
+      "name": "離婚後可以請求多少財產分配？",
+      "acceptedAnswer": {"@type": "Answer", "text": "依民法第1030-1條，法定財產制下，婚姻消滅時財產較少的一方可向另一方請求剩餘財產差額的二分之一。計算基礎為婚後各自取得的財產，婚前財產、繼承及受贈財產須排除。"}
+    },
+    {
+      "@type": "Question",
+      "name": "拋棄繼承的期限是幾天？",
+      "acceptedAnswer": {"@type": "Answer", "text": "依民法第1174條，繼承人應於知悉其得繼承之時起3個月（90天）內，以書面向法院聲請拋棄繼承。逾期未辦理則視為概括承受，包含被繼承人的所有債務。"}
+    },
+    {
+      "@type": "Question",
+      "name": "遺產稅申報期限是多久？",
+      "acceptedAnswer": {"@type": "Answer", "text": "依遺產及贈與稅法第23條，繼承人應於被繼承人死亡後6個月內，向國稅局辦理遺產稅申報。逾期申報除補稅外，還會加徵罰鍰。"}
+    },
+    {
+      "@type": "Question",
+      "name": "台灣贍養費怎麼計算？",
+      "acceptedAnswer": {"@type": "Answer", "text": "依民法第1057條，離婚後無法維持生活且非因自己過失者，得向他方請求贍養費。金額由法院依雙方經濟能力、婚姻年數、年齡、工作能力等因素決定。"}
+    },
+    {
+      "@type": "Question",
+      "name": "什麼是脫產？",
+      "acceptedAnswer": {"@type": "Answer", "text": "脫產是指被繼承人在死亡前，將財產轉移給他人以規避繼承的行為。依民法第1148-1條，繼承開始前2年內贈與繼承人的財產視為遺產；遺贈稅法第15條規定6年內特定贈與須計入遺產。"}
+    }
+  ]
 }
 </script>
 </body>
