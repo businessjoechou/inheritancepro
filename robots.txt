@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /property-check.html
 
-Sitemap: https://inheritancepro.vercel.app/sitemap.xml
+Sitemap: https://inheritancepro.app/sitemap.xml
