@@ -760,8 +760,82 @@
       .replace(/"/g, '&quot;');
   }
 
+  // ── Label maps ──────────────────────────────────────────────────────
+  const LABEL_MAP = {
+    // 遺產繼承 calculator.html
+    regime: '繼承方式', hasWill: '有無遺囑', hasSpouse: '有無配偶',
+    totalEstate: '遺產總額', children: '子女人數', parents: '父母人數',
+    siblings: '兄弟姊妹人數', grandparents: '祖父母人數',
+    deceased_children: '已故子女人數', representatives: '代位繼承人數',
+    renounce: '拋棄繼承人數', childCount: '子女人數',
+    spouseShare: '配偶應繼分', totalTax: '遺產稅試算',
+    // 剩餘財產 property-split.html
+    wifeMarriage: '妻婚後財產', husbandMarriage: '夫婚後財產',
+    wifePre: '妻婚前財產', husbandPre: '夫婚前財產',
+    wifeDebt: '妻負債', husbandDebt: '夫負債', claim: '請求差額',
+    claimant: '請求方',
+    // 贍養費 alimony.html
+    marriageYears: '婚姻年數', requestorIncome: '請求人月收入',
+    payorIncome: '對方月收入', requestorAge: '請求人年齡',
+    fault: '是否有過失', estimatedAlimony: '試算贍養費',
+    // 繼承時間軸 inheritance-timeline.html
+    deathDate: '死亡日期', deadlines: '期限列表',
+    // 脫產偵測 asset-detection.html
+    riskLevel: '風險等級', totalScore: '風險分數',
+    txCount: '異動筆數', declaredAmt: '申報遺產總額',
+    sum2yr: '2年內可疑移轉', results: '分析筆數',
+    // 小額損害 minor-damages.html
+    category: '損害類型', amount: '請求金額', basis: '法律依據',
+    // 時效 prescription.html
+    prescriptionYears: '時效年數', startDate: '起算日', expiryDate: '到期日',
+    // 勞基法類
+    monthlySalary: '月薪', dailyWage: '日薪', hourlyWage: '時薪',
+    injuryDays: '受傷天數', compensation: '補償金額',
+    overtimePay: '加班費', workYears: '年資（年）',
+  };
+
+  const REGIME_MAP = { legal: '法定繼承', testamentary: '遺囑繼承', will: '遺囑繼承' };
+
+  // ── Format a single value ────────────────────────────────────────────
+  function formatValue(k, v) {
+    if (typeof v === 'boolean') return v ? '是' : '否';
+
+    // Special cases
+    if (k === 'regime') return REGIME_MAP[v] || v;
+    if (k === 'claimant') return v === 'wife' ? '妻方' : v === 'husband' ? '夫方' : v;
+    if (k === 'riskLevel') {
+      const m = { CRITICAL: '極高', HIGH: '高', MEDIUM: '中', LOW: '低' };
+      return m[v] || v;
+    }
+
+    // renounce object → "子女 N 人、父母 N 人…"
+    if (k === 'renounce' && typeof v === 'object' && !Array.isArray(v)) {
+      const sub = { children: '子女', parents: '父母', siblings: '兄弟姊妹', grandparents: '祖父母' };
+      return Object.entries(v).filter(([,n]) => n > 0)
+        .map(([sk, n]) => `${sub[sk] || sk} ${n} 人`).join('、') || '無';
+    }
+
+    if (Array.isArray(v)) return `${v.length} 筆`;
+
+    if (typeof v === 'object') {
+      // Generic object — show key count
+      return `${Object.keys(v).length} 項`;
+    }
+
+    if (typeof v === 'number') {
+      // Count-like keys → show as "N 人"
+      const countKeys = ['children','parents','siblings','grandparents','deceased_children','representatives','childCount','workYears','marriageYears','injuryDays','prescriptionYears'];
+      if (countKeys.includes(k)) return `${v} ${['marriageYears','workYears','prescriptionYears'].includes(k) ? '年' : ['injuryDays'].includes(k) ? '天' : '人'}`;
+      // Money
+      if (v > 999) return `NT$\u00a0${v.toLocaleString('zh-TW')}`;
+      return String(v);
+    }
+
+    return String(v);
+  }
+
+  // ── Modal ────────────────────────────────────────────────────────────
   function showDetailModal(item) {
-    // Remove any existing modal
     document.getElementById('detail-modal')?.remove();
 
     const toolLabel = item.tool || '';
@@ -773,14 +847,13 @@
     overlay.className = 'modal-overlay';
     overlay.id = 'detail-modal';
 
-    // Build data rows
     const dataRows = renderDataRows(data);
 
     overlay.innerHTML = `
       <div class="modal-sheet">
         <div class="modal-header">
           <div class="modal-title">${escapeHtml(title)}</div>
-          <button class="modal-close" id="modal-close-btn">✕</button>
+          <button class="modal-close" id="modal-close-btn" aria-label="關閉">✕</button>
         </div>
         <div class="modal-body">
           <div class="modal-meta">
@@ -788,74 +861,92 @@
           </div>
           ${item.summary ? `<div style="font-size:13px;color:var(--ink);margin-bottom:16px;padding:10px 14px;background:var(--soft);border-radius:8px;">${escapeHtml(item.summary)}</div>` : ''}
           ${dataRows}
+          <button id="modal-print-btn" style="
+            display:block;width:100%;margin-top:20px;padding:12px;
+            background:var(--ink);color:var(--paper);border:none;border-radius:8px;
+            font-family:'Noto Sans TC',sans-serif;font-size:14px;font-weight:500;cursor:pointer;
+          ">⬇ 列印 / 儲存 PDF</button>
         </div>
       </div>
     `;
 
     document.body.appendChild(overlay);
 
-    // Close handlers
     overlay.querySelector('#modal-close-btn').addEventListener('click', () => overlay.remove());
-    overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.remove(); });
+    // No click-outside close — prevent accidental dismissal
+
+    overlay.querySelector('#modal-print-btn').addEventListener('click', () => {
+      printRecord(item);
+    });
   }
 
   function renderDataRows(data) {
     if (!data || typeof data !== 'object' || Array.isArray(data)) {
       return `<div style="font-size:13px;color:var(--muted);">無詳細資料</div>`;
     }
-
-    const labelMap = {
-      // 遺產繼承
-      totalEstate: '遺產總額', hasWill: '有無遺囑', hasSpouse: '有無配偶',
-      childCount: '子女人數', spouseShare: '配偶應繼分', totalTax: '遺產稅試算',
-      // 贍養費
-      marriageYears: '婚姻年數', requestorIncome: '請求人月收入', payorIncome: '對方月收入',
-      estimatedAlimony: '試算贍養費',
-      // 剩餘財產
-      wifeMarriage: '妻婚後財產', husbandMarriage: '夫婚後財產', claim: '請求差額',
-      // 繼承時間軸
-      deathDate: '死亡日期', deadlines: '期限列表',
-      // 脫產偵測
-      riskLevel: '風險等級', totalScore: '風險分數', txCount: '異動筆數',
-      // 職災/工時等
-      dailyWage: '日薪', injuryDays: '受傷天數', compensation: '補償金額',
-      monthlySalary: '月薪', overtimePay: '加班費',
-    };
-
-    const sections = [];
     const keys = Object.keys(data);
     if (keys.length === 0) return `<div style="font-size:13px;color:var(--muted);">無詳細資料</div>`;
 
-    sections.push('<div class="modal-section-title">計算資料</div>');
-
-    keys.forEach(k => {
+    const rows = keys.map(k => {
       const v = data[k];
-      if (v === null || v === undefined) return;
-      const label = labelMap[k] || k;
-      let display = '';
-
-      if (typeof v === 'boolean') {
-        display = v ? '是' : '否';
-      } else if (typeof v === 'number') {
-        // Format numbers with commas if large
-        display = v > 999 ? `NT$ ${v.toLocaleString('zh-TW')}` : String(v);
-      } else if (Array.isArray(v)) {
-        display = `${v.length} 筆`;
-      } else if (typeof v === 'object') {
-        display = JSON.stringify(v).substring(0, 60) + (JSON.stringify(v).length > 60 ? '…' : '');
-      } else {
-        display = String(v);
-      }
-
-      sections.push(`
+      if (v === null || v === undefined) return '';
+      const label = LABEL_MAP[k] || k;
+      const display = formatValue(k, v);
+      return `
         <div class="modal-row">
           <span class="modal-key">${escapeHtml(label)}</span>
           <span class="modal-val">${escapeHtml(display)}</span>
-        </div>
-      `);
-    });
+        </div>`;
+    }).filter(Boolean);
 
-    return sections.join('');
+    return `<div class="modal-section-title">計算資料</div>${rows.join('')}`;
+  }
+
+  function printRecord(item) {
+    const title = item.title || '計算紀錄';
+    const dateStr = item.created_at ? formatDate(item.created_at) : '—';
+    const data = item.data || {};
+    const summary = item.summary || '';
+    const tool = item.tool || '';
+
+    const rows = Object.entries(data).filter(([,v]) => v !== null && v !== undefined).map(([k, v]) => {
+      const label = LABEL_MAP[k] || k;
+      const display = formatValue(k, v);
+      return `<tr><td>${label}</td><td>${display}</td></tr>`;
+    }).join('');
+
+    const html = `<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8">
+<title>${title}</title>
+<style>
+  body{font-family:'Noto Sans TC',sans-serif;padding:40px;max-width:600px;margin:0 auto;font-size:13px;color:#1a1410;}
+  .header{border-bottom:3px solid #1a1410;padding-bottom:16px;margin-bottom:24px;display:flex;justify-content:space-between;align-items:flex-end;}
+  .logo{font-family:serif;font-size:22px;font-weight:700;}
+  .logo span{color:#c4932a;}
+  .meta{font-size:11px;color:#7a6f62;text-align:right;line-height:1.8;}
+  h2{font-size:18px;font-weight:700;margin-bottom:6px;}
+  .summary{background:#f5f0e8;border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:20px;}
+  table{width:100%;border-collapse:collapse;}
+  td{padding:9px 10px;border-bottom:1px solid #e8e0d0;font-size:13px;}
+  td:first-child{color:#7a6f62;width:40%;}
+  td:last-child{font-weight:500;text-align:right;}
+  .footer{margin-top:36px;padding-top:12px;border-top:1px solid #d0c8b8;font-size:11px;color:#a09880;text-align:center;line-height:1.8;}
+  @media print{body{padding:20px;}}
+</style></head><body>
+<div class="header">
+  <div><div class="logo">Inheritance<span>Pro</span></div><div style="font-size:12px;color:#7a6f62;margin-top:4px">${tool ? tool + '　計算紀錄' : '計算紀錄'}</div></div>
+  <div class="meta">產出日期：${new Date().toLocaleDateString('zh-TW')}<br>儲存日期：${dateStr}</div>
+</div>
+<h2>${title}</h2>
+${summary ? `<div class="summary">${summary}</div>` : ''}
+<table><tbody>${rows}</tbody></table>
+<div class="footer">© ${new Date().getFullYear()} InheritancePro &nbsp;·&nbsp; inheritancepro.app<br>本報告僅供參考，不構成法律意見。</div>
+</body></html>`;
+
+    const w = window.open('', '_blank');
+    if (!w) { alert('請允許彈出視窗以列印'); return; }
+    w.document.write(html);
+    w.document.close();
+    w.onload = () => setTimeout(() => w.print(), 400);
   }
 
   init();
