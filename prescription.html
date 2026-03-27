@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>消滅時效計算器｜InheritancePro</title>
+<meta name="description" content="依台灣民法計算各類請求權消滅時效，涵蓋一般15年、定期給付5年、侵權2+10年等，自動計算截止日與剩餘天數。">
+<meta name="keywords" content="消滅時效,時效計算,民法第125條,民法第126條,民法第127條,侵權行為時效,請求權時效,台灣民法">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://inheritancepro.app/prescription.html">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1410; --paper: #f5f0e8; --accent: #8b2020; --gold: #c4932a;
+    --soft: #e8e0d0; --muted: #7a6f62; --success: #2a6b4a; --danger: #8b2020;
+    --border: #c8bfb0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--paper); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; min-height: 100vh; font-size: 15px; }
+  header { background: var(--ink); color: var(--paper); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .logo { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 700; letter-spacing: 0.04em; }
+  .logo span { color: var(--gold); }
+  .home-link { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; }
+  .home-link:hover { color: var(--gold); }
+  .progress-bar { height: 3px; background: var(--soft); }
+  .progress-fill { height: 100%; background: var(--gold); transition: width 0.4s ease; }
+  main { padding: 24px 20px 100px; max-width: 480px; margin: 0 auto; }
+  .step-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
+  h2 { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
+  .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
+  .card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 14px; }
+  .input-group { margin-bottom: 18px; }
+  .input-group:last-child { margin-bottom: 0; }
+  label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 8px; }
+  input[type="date"] { width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 8px; background: var(--paper); font-size: 15px; font-family: 'DM Mono', monospace; color: var(--ink); transition: border-color 0.2s; -webkit-appearance: none; }
+  input[type="date"]:focus { outline: none; border-color: var(--gold); }
+  /* Type select grid */
+  .type-grid { display: flex; flex-direction: column; gap: 8px; }
+  .type-item { display: flex; align-items: flex-start; gap: 14px; padding: 14px 16px; border: 1.5px solid var(--border); border-radius: 10px; cursor: pointer; background: var(--paper); transition: all 0.2s; }
+  .type-item:hover { border-color: var(--gold); }
+  .type-item.active { border-color: var(--accent); background: #fdf5f5; }
+  .type-dot { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px; transition: all 0.2s; }
+  .type-item.active .type-dot { background: var(--accent); border-color: var(--accent); }
+  .type-text { flex: 1; }
+  .type-name { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 2px; }
+  .type-item.active .type-name { color: var(--accent); }
+  .type-desc { font-size: 11px; color: var(--muted); line-height: 1.5; }
+  .type-badge { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; color: var(--accent); background: #fdf5f5; border: 1px solid #e8b0b0; border-radius: 4px; padding: 2px 7px; white-space: nowrap; margin-top: 2px; display: inline-block; }
+  .type-item.active .type-badge { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .cat-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; margin: 16px 0 6px; padding-bottom: 4px; border-bottom: 1px solid var(--soft); }
+  .cat-label:first-child { margin-top: 0; }
+  .info-box { background: #fdf5f5; border: 1px solid #e8c0b8; border-left: 3px solid var(--accent); border-radius: 6px; padding: 12px 14px; font-size: 12px; color: var(--accent); line-height: 1.7; margin-bottom: 14px; }
+  .warn-box { background: #fdf3e7; border: 1px solid #e8c882; border-left: 3px solid var(--gold); border-radius: 6px; padding: 12px 14px; font-size: 12px; color: #7a5a10; line-height: 1.7; margin-bottom: 14px; }
+  .danger-box { background: #fdf0f0; border: 1px solid #e8b0b0; border-left: 3px solid var(--danger); border-radius: 6px; padding: 12px 14px; font-size: 12px; color: var(--danger); line-height: 1.7; margin-bottom: 14px; }
+  .law-note { border-left: 3px solid var(--gold); padding-left: 12px; font-size: 12px; color: var(--muted); line-height: 1.7; margin-top: 10px; }
+  /* Results */
+  .result-hero { background: var(--ink); color: var(--paper); border-radius: 12px; padding: 24px 20px; margin-bottom: 14px; text-align: center; }
+  .result-hero-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 8px; }
+  .result-hero-date { font-family: 'Noto Serif TC', serif; font-size: 28px; font-weight: 700; color: var(--gold); margin-bottom: 6px; }
+  .result-hero-sub { font-size: 13px; color: var(--muted); }
+  .countdown-card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .countdown-label { font-size: 13px; color: var(--ink); font-weight: 500; line-height: 1.5; }
+  .countdown-days { font-family: 'DM Mono', monospace; font-size: 36px; font-weight: 500; text-align: right; min-width: 80px; }
+  .countdown-days.safe { color: var(--success); }
+  .countdown-days.warn { color: var(--gold); }
+  .countdown-days.danger { color: var(--danger); }
+  /* Two-period card */
+  .dual-card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 14px; }
+  .dual-header { background: var(--soft); padding: 12px 16px; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; }
+  .dual-row { display: flex; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--soft); gap: 12px; }
+  .dual-row:last-child { border-bottom: none; }
+  .dual-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .dual-row-info { flex: 1; }
+  .dual-row-label { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 2px; }
+  .dual-row-desc { font-size: 11px; color: var(--muted); line-height: 1.5; }
+  .dual-row-date { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; text-align: right; white-space: nowrap; }
+  .dot-start { background: var(--muted); }
+  .dot-deadline { background: var(--danger); }
+  .dot-warn { background: var(--gold); }
+  .dot-ok { background: var(--success); }
+  /* Interrupt section */
+  .interrupt-card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 14px; }
+  .interrupt-title { font-size: 13px; font-weight: 600; margin-bottom: 12px; }
+  .interrupt-row { display: flex; gap: 10px; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid var(--soft); }
+  .interrupt-row:last-child { border-bottom: none; }
+  .interrupt-num { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); min-width: 20px; margin-top: 1px; }
+  .interrupt-text { font-size: 12px; color: var(--ink); line-height: 1.6; }
+  .interrupt-note { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  /* Step */
+  .step { display: none; }
+  .step.active { display: block; animation: fadeUp 0.3s ease both; }
+  /* Nav */
+  .nav-bar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); background: #fff; border-top: 1px solid var(--border); padding: 14px 20px; display: flex; gap: 10px; width: 100%; max-width: 480px; }
+  .btn { flex: 1; padding: 14px; border-radius: 10px; border: none; font-size: 15px; font-family: 'Noto Sans TC', sans-serif; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+  .btn-primary { background: var(--ink); color: var(--paper); }
+  .btn-primary:hover { background: #2a1a10; }
+  .btn-secondary { background: var(--soft); color: var(--muted); }
+  .btn-print { background: var(--accent); color: #fff; flex: 2; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  @media print { header, .nav-bar, .progress-bar { display: none; } main { padding: 20px; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Inheritance<span>Pro</span></div>
+  <a href="index.html" class="home-link">← 首頁</a>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:50%"></div></div>
+
+<main>
+
+  <!-- Step 1：選擇類型 + 輸入日期 -->
+  <div class="step active" id="step1">
+    <div class="step-label">Step 1 of 2 · 請求權資訊</div>
+    <h2>消滅時效計算</h2>
+    <p class="subtitle">選擇請求權類型，系統依民法規定自動計算時效截止日與剩餘天數。</p>
+
+    <div class="card">
+      <div class="input-group">
+        <label>請求權類型</label>
+        <div class="type-grid" id="typeGrid">
+
+          <div class="cat-label">一般請求權</div>
+
+          <div class="type-item active" onclick="selectType(this,'general')">
+            <div class="type-dot"></div>
+            <div class="type-text">
+              <div class="type-name">一般請求權</div>
+              <div class="type-desc">借款本金、一般契約債務、不當得利、其他未特別規定者</div>
+            </div>
+            <div class="type-badge">15 年</div>
+          </div>
+
+          <div class="cat-label">定期給付（民法第126條）</div>
+
+          <div class="type-item" onclick="selectType(this,'periodic')">
+            <div class="type-dot"></div>
+            <div class="type-text">
+              <div class="type-name">利息、紅利、租金、贍養費</div>
+              <div class="type-desc">利息、紅利、租金（房地）、贍養費、退職金及其他一年或不及一年之定期給付</div>
+            </div>
+            <div class="type-badge">5 年</div>
+          </div>
+
+          <div class="cat-label">特定職業報酬（民法第127條）</div>
+
+          <div class="type-item" onclick="selectType(this,'hotel')">
+            <div class="type-dot"></div>
+            <div class="type-text">
+              <div class="type-name">旅館、飲食店、娛樂場所費用</div>
+              <div class="type-desc">住宿費、飲食費、座費、消費物代價及墊款</div>
+            </div>
+            <div class="type-badge">2 年</div>
+          </div>
+
+          <div class="type-item" onclick="selectType(this,'transport')">
+            <div class="type-dot"></div>
+            <div class="type-text">
+              <div class="type-name">運送費及墊款</div>
+              <div class="type-desc">各類運送費用及運送人所墊之款</div>
+            </div>
+            <div class="type-badge">2 年</div>
+          </div>
+
+          <div class="type-item" onclick="selectType(this,'rental')">
+            <div class="type-dot"></div>
+            <div class="type-text">
+              <div class="type-name">動產租賃費</div>
+              <div class="type-desc">以租賃動產為業者之租價</div>
+            </div>
+            <div class="type-badge">2 年</div>
+          </div>
+
+          <div class="type-item" onclick="selectType(this,'medical')">
+            <div class="type-dot"></div>
+            <div class="type-text">
+              <div class="type-name">醫療報酬（醫師、藥師、看護）</div>
+              <div class="type-desc">診費、藥費、護理報酬及其墊款</div>
+            </div>
+            <div class="type-badge">2 年</div>
+          </div>
+
+          <div class="type-item" onclick="selectType(this,'legal')">
+            <div class="type-dot"></div>
+            <div class="type-text">
+              <div class="type-name">律師、會計師、公證人報酬</div>
+              <div class="type-desc">專業服務報酬及墊款，含當事人文件返還請求</div>
+            </div>
+            <div class="type-badge">2 年</div>
+          </div>
+
+          <div class="type-item" onclick="selectType(this,'contractor')">
+            <div class="type-dot"></div>
+            <div class="type-text">
+              <div class="type-name">技師、承攬人報酬</div>
+              <div class="type-desc">工程技師、各類承攬工作之報酬及墊款</div>
+            </div>
+            <div class="type-badge">2 年</div>
+          </div>
+
+          <div class="type-item" onclick="selectType(this,'merchant')">
+            <div class="type-dot"></div>
+            <div class="type-text">
+              <div class="type-name">商人、製造人、手工業人商品代價</div>
+              <div class="type-desc">所供給商品、製造物及產物之代價</div>
+            </div>
+            <div class="type-badge">2 年</div>
+          </div>
+
+          <div class="cat-label">特殊時效規定</div>
+
+          <div class="type-item" onclick="selectType(this,'tort')">
+            <div class="type-dot"></div>
+            <div class="type-text">
+              <div class="type-name">侵權行為損害賠償</div>
+              <div class="type-desc">人身傷害、財產損失、名譽侵害、隱私侵害等<br>雙重時效：知悉起2年 ／ 侵權行為時起10年</div>
+            </div>
+            <div class="type-badge">2 年 ／ 10 年</div>
+          </div>
+
+          <div class="type-item" onclick="selectType(this,'labor')">
+            <div class="type-dot"></div>
+            <div class="type-text">
+              <div class="type-name">勞工薪資請求權</div>
+              <div class="type-desc">工資、加班費、特休未休折算，各期薪資各自起算</div>
+            </div>
+            <div class="type-badge">5 年</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="dateCard">
+      <div class="input-group" id="startDateGroup">
+        <label id="startDateLabel">請求權可行使日（起算日）</label>
+        <input type="date" id="startDate">
+        <div class="law-note" id="startDateNote" style="margin-top:8px">
+          民法第128條：消滅時效，自請求權可行使時起算。以不行為為目的之請求權，自為行為時起算。
+        </div>
+      </div>
+      <div class="input-group" id="tortDateGroup" style="display:none">
+        <label>侵權行為發生日（10年客觀時效起算）</label>
+        <input type="date" id="tortDate">
+        <div class="law-note" style="margin-top:8px">
+          民法第197條：侵權行為損害賠償請求權，自知有損害及賠償義務人時起2年；自有侵權行為時起，逾10年者亦同。
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Step 2：結果 -->
+  <div class="step" id="step2">
+    <div class="step-label">結果 · 消滅時效分析</div>
+    <h2>時效計算結果</h2>
+    <p class="subtitle">依民法規定計算，以下為本案請求權之時效截止日與現況。</p>
+    <div id="resultContent"></div>
+  </div>
+
+</main>
+
+<div class="nav-bar" id="navBar">
+  <button class="btn btn-primary" id="btnCalc" onclick="calculate()">計算時效 →</button>
+</div>
+
+<script>
+  let selectedType = 'general';
+
+  // 時效設定表
+  const typeConfig = {
+    general:    { years: 15, label: '一般請求權', law: '民法第125條', note: '所有未特別規定之請求權，適用15年一般時效。' },
+    periodic:   { years: 5,  label: '定期給付（利息、租金、贍養費等）', law: '民法第126條', note: '利息、紅利、租金、贍養費、退職金及其他一年或不及一年之定期給付，各期請求權各自起算。' },
+    hotel:      { years: 2,  label: '旅館、飲食店、娛樂場所費用', law: '民法第127條第1款', note: '住宿費、飲食費、座費及消費物代價，自費用發生時起算。' },
+    transport:  { years: 2,  label: '運送費及墊款', law: '民法第127條第2款', note: '各類運送費用，自運送完成或費用確定時起算。' },
+    rental:     { years: 2,  label: '動產租賃費', law: '民法第127條第3款', note: '以租賃動產為業者之租價，自各期租金到期時起算。' },
+    medical:    { years: 2,  label: '醫療報酬', law: '民法第127條第4款', note: '醫師、藥師、看護生之診費、藥費及報酬，自醫療行為完成時起算。' },
+    legal:      { years: 2,  label: '律師、會計師、公證人報酬', law: '民法第127條第5、6款', note: '專業服務報酬及墊款，自服務完成時起算。文件返還請求，自委任關係終止時起算。' },
+    contractor: { years: 2,  label: '技師、承攬人報酬', law: '民法第127條第7款', note: '承攬工作之報酬及墊款，自工作完成或應付款日起算。' },
+    merchant:   { years: 2,  label: '商品、製造物代價', law: '民法第127條第8款', note: '商人、製造人、手工業人所供給商品及產物之代價，自交付商品時起算。' },
+    tort:       { years: 2,  label: '侵權行為損害賠償', law: '民法第197條', note: '雙重時效：①知悉損害及賠償義務人起2年；②侵權行為發生起10年。以先屆至者為準。', isTort: true },
+    labor:      { years: 5,  label: '勞工薪資請求權', law: '民法第126條（勞基法準用）', note: '工資、加班費各期各自起算，自原應給付日起5年。特休未休工資亦同。' },
+  };
+
+  function selectType(el, type) {
+    document.querySelectorAll('.type-item').forEach(i => i.classList.remove('active'));
+    el.classList.add('active');
+    selectedType = type;
+    const cfg = typeConfig[type];
+
+    // 侵權行為需輸入兩個日期
+    const tortGroup = document.getElementById('tortDateGroup');
+    const startGroup = document.getElementById('startDateGroup');
+    const startLabel = document.getElementById('startDateLabel');
+    const startNote = document.getElementById('startDateNote');
+
+    if (cfg.isTort) {
+      tortGroup.style.display = 'block';
+      startLabel.textContent = '知悉損害及賠償義務人日期（2年主觀時效起算）';
+      startNote.innerHTML = '民法第197條第1項：自知有損害及賠償義務人時起2年不行使而消滅。';
+    } else {
+      tortGroup.style.display = 'none';
+      startLabel.textContent = cfg.label.includes('薪資') ? '薪資應給付日（各期各自起算）' : '請求權可行使日（起算日）';
+      startNote.innerHTML = `民法第128條：消滅時效，自請求權可行使時起算。<br>本案適用：<strong>${cfg.law}</strong>，時效期間 <strong>${cfg.years} 年</strong>。`;
+    }
+  }
+
+  function calculate() {
+    const startDateVal = document.getElementById('startDate').value;
+    if (!startDateVal) { alert('請輸入起算日期'); return; }
+
+    const cfg = typeConfig[selectedType];
+    const startDate = new Date(startDateVal);
+
+    if (cfg.isTort) {
+      const tortDateVal = document.getElementById('tortDate').value;
+      if (!tortDateVal) { alert('請輸入侵權行為發生日期'); return; }
+      renderTortResults(startDate, new Date(tortDateVal));
+    } else {
+      renderNormalResults(startDate, cfg);
+    }
+
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById('step2').classList.add('active');
+    document.getElementById('progressFill').style.width = '100%';
+    document.getElementById('navBar').innerHTML = `
+      <button class="btn btn-secondary" onclick="reset()">← 重新計算</button>
+      <button class="btn btn-print" onclick="window.print()">列印 / PDF</button>
+    `;
+    window.scrollTo(0, 0);
+  }
+
+  function addYears(date, y) { const d = new Date(date); d.setFullYear(d.getFullYear() + y); return d; }
+  function addMonths(date, m) { const d = new Date(date); d.setMonth(d.getMonth() + m); return d; }
+  function fmtDate(d) { return `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`; }
+  function fmtROC(d) { return `民國${d.getFullYear()-1911}年${String(d.getMonth()+1).padStart(2,'0')}月${String(d.getDate()).padStart(2,'0')}日`; }
+  function daysLeft(d) { const t=new Date(); t.setHours(0,0,0,0); const dt=new Date(d); dt.setHours(0,0,0,0); return Math.ceil((dt-t)/86400000); }
+
+  function statusBox(remaining, deadline) {
+    if (remaining < 0) return `<div class="danger-box">✕ 請求權消滅時效已完成（${Math.abs(remaining)} 天前到期）。債務人得拒絕給付（民法第144條抗辯權）。若仍有必要，建議確認是否有中斷或不完成事由，或另行評估其他救濟途徑。</div>`;
+    if (remaining === 0) return `<div class="danger-box">⚠ 消滅時效今日到期，請立即採取中斷時效措施（起訴、聲請調解或取得債務人書面承認）。</div>`;
+    if (remaining <= 30) return `<div class="danger-box">⚠ 消滅時效僅剩 <strong>${remaining} 天</strong>，請立即起訴或採取中斷措施，否則請求權將消滅。</div>`;
+    if (remaining <= 90) return `<div class="warn-box">注意：消滅時效剩餘 <strong>${remaining} 天</strong>，建議盡快起訴或取得債務人書面承認以中斷時效。</div>`;
+    return '';
+  }
+
+  function countdownClass(remaining) {
+    if (remaining < 0) return 'danger';
+    if (remaining <= 30) return 'danger';
+    if (remaining <= 180) return 'warn';
+    return 'safe';
+  }
+
+  function renderNormalResults(startDate, cfg) {
+    const deadline = addYears(startDate, cfg.years);
+    const remaining = daysLeft(deadline);
+    const requestWindow = addMonths(deadline, -6); // 6個月前提出請求仍有意義
+
+    document.getElementById('resultContent').innerHTML = `
+      <div class="result-hero">
+        <div class="result-hero-label">消滅時效截止日（${cfg.law}）</div>
+        <div class="result-hero-date">${fmtDate(deadline)}</div>
+        <div class="result-hero-sub">${fmtROC(deadline)}｜時效期間 ${cfg.years} 年</div>
+      </div>
+
+      ${statusBox(remaining, deadline)}
+
+      <div class="countdown-card">
+        <div class="countdown-label">
+          距離時效截止<br>
+          <span style="font-size:11px;color:var(--muted)">今日 ${fmtDate(new Date())}</span>
+        </div>
+        <div>
+          <div class="countdown-days ${countdownClass(remaining)}">${remaining < 0 ? '已消滅' : remaining}</div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);text-align:right">${remaining < 0 ? '' : '天'}</div>
+        </div>
+      </div>
+
+      <div class="dual-card">
+        <div class="dual-header">時效時間軸</div>
+        <div class="dual-row">
+          <div class="dual-dot dot-start"></div>
+          <div class="dual-row-info">
+            <div class="dual-row-label">起算日</div>
+            <div class="dual-row-desc">${cfg.label}請求權可行使日</div>
+          </div>
+          <div class="dual-row-date">${fmtDate(startDate)}</div>
+        </div>
+        ${remaining > 30 ? `
+        <div class="dual-row">
+          <div class="dual-dot dot-warn"></div>
+          <div class="dual-row-info">
+            <div class="dual-row-label">建議最晚採取行動日</div>
+            <div class="dual-row-desc">距截止前6個月，提出請求或起訴以中斷時效</div>
+          </div>
+          <div class="dual-row-date">${fmtDate(requestWindow)}</div>
+        </div>` : ''}
+        <div class="dual-row">
+          <div class="dual-dot dot-deadline"></div>
+          <div class="dual-row-info">
+            <div class="dual-row-label">消滅時效截止日</div>
+            <div class="dual-row-desc">${cfg.years} 年期滿（${cfg.law}）</div>
+          </div>
+          <div class="dual-row-date" style="color:var(--danger);font-weight:600">${fmtDate(deadline)}</div>
+        </div>
+      </div>
+
+      ${renderInterruptCard()}
+
+      <div class="card">
+        <div class="law-note">
+          <strong>${cfg.law}</strong>：${cfg.note}<br><br>
+          <strong>民法第144條</strong>：時效完成後，債務人得拒絕給付。但時效利益得拋棄，且不得預先拋棄。法院不得依職權適用，須由債務人主張。<br><br>
+          <strong>民法第129條</strong>：時效因起訴、聲請調解、仲裁、強制執行，或債務人承認債務而中斷；中斷後重新起算。<br><br>
+          <strong>民法第130條</strong>：請求（催告）後若未於6個月內起訴，視為未中斷。
+        </div>
+      </div>
+    `;
+  }
+
+  function renderTortResults(knowledgeDate, tortDate) {
+    const subjective = addYears(knowledgeDate, 2);   // 知悉起2年
+    const objective  = addYears(tortDate, 10);        // 侵權行為起10年
+    const effective  = subjective < objective ? subjective : objective; // 以先到期者為準
+
+    const remSubj = daysLeft(subjective);
+    const remObj  = daysLeft(objective);
+    const remEff  = daysLeft(effective);
+
+    const isSubjFirst = subjective <= objective;
+
+    document.getElementById('resultContent').innerHTML = `
+      <div class="result-hero">
+        <div class="result-hero-label">有效截止日（以先屆至者為準）</div>
+        <div class="result-hero-date">${fmtDate(effective)}</div>
+        <div class="result-hero-sub">${isSubjFirst ? '2年主觀時效先到期' : '10年客觀時效先到期'}｜民法第197條</div>
+      </div>
+
+      ${statusBox(remEff, effective)}
+
+      <div class="countdown-card">
+        <div class="countdown-label">
+          有效剩餘天數<br>
+          <span style="font-size:11px;color:var(--muted)">今日 ${fmtDate(new Date())}</span>
+        </div>
+        <div>
+          <div class="countdown-days ${countdownClass(remEff)}">${remEff < 0 ? '已消滅' : remEff}</div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);text-align:right">${remEff < 0 ? '' : '天'}</div>
+        </div>
+      </div>
+
+      <div class="dual-card">
+        <div class="dual-header">侵權行為雙重時效（民法第197條）</div>
+        <div class="dual-row">
+          <div class="dual-dot dot-start"></div>
+          <div class="dual-row-info">
+            <div class="dual-row-label">侵權行為發生日</div>
+            <div class="dual-row-desc">10年客觀時效起算日</div>
+          </div>
+          <div class="dual-row-date">${fmtDate(tortDate)}</div>
+        </div>
+        <div class="dual-row">
+          <div class="dual-dot dot-start"></div>
+          <div class="dual-row-info">
+            <div class="dual-row-label">知悉損害及賠償義務人日</div>
+            <div class="dual-row-desc">2年主觀時效起算日</div>
+          </div>
+          <div class="dual-row-date">${fmtDate(knowledgeDate)}</div>
+        </div>
+        <div class="dual-row">
+          <div class="dual-dot ${remSubj < 0 ? 'dot-start' : 'dot-deadline'}"></div>
+          <div class="dual-row-info">
+            <div class="dual-row-label">2年主觀時效截止${isSubjFirst ? '（★ 先到期）' : ''}</div>
+            <div class="dual-row-desc">自知悉損害及加害人起算2年</div>
+          </div>
+          <div class="dual-row-date" style="${isSubjFirst ? 'color:var(--danger);font-weight:600' : ''}">${fmtDate(subjective)}${remSubj < 0 ? '（已逾）' : ''}</div>
+        </div>
+        <div class="dual-row">
+          <div class="dual-dot ${!isSubjFirst ? 'dot-deadline' : 'dot-start'}"></div>
+          <div class="dual-row-info">
+            <div class="dual-row-label">10年客觀時效截止${!isSubjFirst ? '（★ 先到期）' : ''}</div>
+            <div class="dual-row-desc">自侵權行為發生時起算10年</div>
+          </div>
+          <div class="dual-row-date" style="${!isSubjFirst ? 'color:var(--danger);font-weight:600' : ''}">${fmtDate(objective)}${remObj < 0 ? '（已逾）' : ''}</div>
+        </div>
+      </div>
+
+      ${renderInterruptCard()}
+
+      <div class="card">
+        <div class="law-note">
+          <strong>民法第197條第1項</strong>：因侵權行為所生之損害賠償請求權，自請求權人知有損害及賠償義務人時起，二年間不行使而消滅。自有侵權行為時起，逾十年者亦同。<br><br>
+          <strong>民法第197條第2項</strong>：損害賠償之義務人，因侵權行為受有利益者，受害人得依不當得利之規定，請求返還。（此情形適用15年一般時效）<br><br>
+          <strong>民法第144條</strong>：時效完成後，債務人得拒絕給付。須由債務人主動主張，法院不得依職權適用。
+        </div>
+      </div>
+    `;
+  }
+
+  function renderInterruptCard() {
+    return `
+      <div class="interrupt-card">
+        <div class="interrupt-title">時效中斷方式（民法第129條）</div>
+        <div class="interrupt-row">
+          <div class="interrupt-num">①</div>
+          <div>
+            <div class="interrupt-text">起訴（包含反訴、提起上訴）</div>
+            <div class="interrupt-note">最有效的中斷方式，時效從判決確定後重新起算</div>
+          </div>
+        </div>
+        <div class="interrupt-row">
+          <div class="interrupt-num">②</div>
+          <div>
+            <div class="interrupt-text">聲請調解、仲裁或強制執行</div>
+            <div class="interrupt-note">法院調解、仲裁機構仲裁均可中斷；調解不成立者，視為未中斷</div>
+          </div>
+        </div>
+        <div class="interrupt-row">
+          <div class="interrupt-num">③</div>
+          <div>
+            <div class="interrupt-text">債務人書面承認債務</div>
+            <div class="interrupt-note">最簡便的中斷方式；口頭承認爭議較大，建議取得書面</div>
+          </div>
+        </div>
+        <div class="interrupt-row">
+          <div class="interrupt-num">⚠</div>
+          <div>
+            <div class="interrupt-text">書面催告（請求）—— 僅暫停6個月</div>
+            <div class="interrupt-note">民法第130條：催告後若未於6個月內起訴，視為未中斷時效</div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function reset() {
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById('step1').classList.add('active');
+    document.getElementById('progressFill').style.width = '50%';
+    document.getElementById('navBar').innerHTML = `<button class="btn btn-primary" onclick="calculate()">計算時效 →</button>`;
+    window.scrollTo(0, 0);
+  }
+
+  // 預設今天
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('startDate').value = today;
+  document.getElementById('tortDate').value = today;
+</script>
+</body>
+</html>
