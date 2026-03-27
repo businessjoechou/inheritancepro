@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InheritancePro — 募資簡報</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #1a1410;
+    color: #f5f0e8;
+    font-family: 'Noto Sans TC', sans-serif;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    cursor: none;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+  }
+
+  .slide.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  /* Progress bar */
+  .progress {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: #c4932a;
+    transition: width 0.4s ease;
+    z-index: 100;
+  }
+
+  /* Slide counter */
+  .counter {
+    position: fixed;
+    bottom: 24px;
+    right: 32px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: #3a3530;
+    letter-spacing: 0.1em;
+    z-index: 100;
+  }
+
+  /* Gold line */
+  .gold-line {
+    width: 48px;
+    height: 3px;
+    background: #c4932a;
+    margin-bottom: 32px;
+  }
+
+  /* Typography */
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: #c4932a;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .hero-text {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 700;
+    line-height: 1.3;
+    text-align: center;
+    letter-spacing: 0.02em;
+  }
+
+  .hero-text em {
+    font-style: normal;
+    color: #c4932a;
+  }
+
+  .sub-text {
+    font-size: clamp(14px, 1.8vw, 20px);
+    color: #7a6f62;
+    line-height: 1.9;
+    text-align: center;
+    margin-top: 28px;
+    max-width: 640px;
+  }
+
+  .sub-text em {
+    font-style: normal;
+    color: #f5f0e8;
+  }
+
+  /* Stat cards */
+  .stats {
+    display: flex;
+    gap: 48px;
+    margin-top: 16px;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'DM Mono', monospace;
+    font-size: clamp(40px, 6vw, 72px);
+    font-weight: 500;
+    color: #c4932a;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 13px;
+    color: #7a6f62;
+    margin-top: 10px;
+    letter-spacing: 0.05em;
+  }
+
+  /* Feature list */
+  .features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 48px;
+    margin-top: 8px;
+    text-align: left;
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    font-size: 15px;
+    color: #c8bfb0;
+    line-height: 1.6;
+  }
+
+  .feature-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #c4932a;
+    margin-top: 8px;
+    flex-shrink: 0;
+  }
+
+  /* Plans */
+  .plans {
+    display: flex;
+    gap: 20px;
+    margin-top: 8px;
+    width: 100%;
+    max-width: 800px;
+  }
+
+  .plan {
+    flex: 1;
+    border: 1.5px solid #2a2520;
+    border-radius: 12px;
+    padding: 24px 20px;
+    text-align: center;
+  }
+
+  .plan.highlight {
+    border-color: #c4932a;
+    background: rgba(196, 147, 42, 0.06);
+  }
+
+  .plan-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    color: #7a6f62;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .plan-price {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #f5f0e8;
+    margin-bottom: 4px;
+  }
+
+  .plan-price span {
+    font-size: 13px;
+    color: #7a6f62;
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 400;
+  }
+
+  .plan-desc {
+    font-size: 12px;
+    color: #7a6f62;
+    line-height: 1.7;
+    margin-top: 12px;
+  }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .slide.active .gold-line { animation: fadeIn 0.5s 0.1s both; }
+  .slide.active .tag { animation: fadeUp 0.5s 0.1s both; }
+  .slide.active .hero-text { animation: fadeUp 0.6s 0.2s both; }
+  .slide.active .sub-text { animation: fadeUp 0.6s 0.35s both; }
+  .slide.active .stats { animation: fadeUp 0.6s 0.4s both; }
+  .slide.active .features { animation: fadeUp 0.6s 0.3s both; }
+  .slide.active .plans { animation: fadeUp 0.6s 0.3s both; }
+
+  /* Slide 1 — special bg */
+  #s1 { background: #1a1410; }
+  #s1::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 60%, rgba(196,147,42,0.08) 0%, transparent 70%);
+  }
+
+  /* Slide 3 — quote style */
+  .quote {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(20px, 3vw, 36px);
+    font-weight: 600;
+    line-height: 1.8;
+    text-align: center;
+    color: #c8bfb0;
+    max-width: 760px;
+  }
+
+  .quote em {
+    font-style: normal;
+    color: #f5f0e8;
+  }
+
+  /* Divider */
+  .divider {
+    width: 1px;
+    height: 48px;
+    background: #2a2520;
+    margin: 0 auto 32px;
+  }
+
+  /* CTA slide */
+  .cta-url {
+    font-family: 'DM Mono', monospace;
+    font-size: clamp(16px, 2.5vw, 28px);
+    color: #c4932a;
+    margin-top: 32px;
+    letter-spacing: 0.06em;
+  }
+
+  .logo {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #f5f0e8;
+    margin-bottom: 48px;
+  }
+
+  .logo span { color: #c4932a; }
+</style>
+</head>
+<body>
+
+<!-- Slide 1: 開場 -->
+<div class="slide active" id="s1">
+  <div class="logo">Inheritance<span>Pro</span></div>
+  <div class="gold-line"></div>
+  <h1 class="hero-text">台灣民法<br><em>財產權益</em>計算平台</h1>
+  <p class="sub-text">讓每個台灣人，都能看懂自己的財產權益</p>
+</div>
+
+<!-- Slide 2: 問題1 離婚 -->
+<div class="slide" id="s2">
+  <div class="tag">真實場景</div>
+  <div class="quote">
+    離婚協議桌上，<br>
+    <em>你不知道自己能分到多少財產，</em><br>
+    對方說的數字你沒辦法驗算。
+  </div>
+</div>
+
+<!-- Slide 3: 問題2 繼承 -->
+<div class="slide" id="s3">
+  <div class="tag">真實場景</div>
+  <div class="quote">
+    家人過世的那一刻，<br>
+    你要同時處理悲傷，<br>
+    <em>還要搞懂遺產稅、拋棄繼承期限、不動產過戶。</em>
+  </div>
+</div>
+
+<!-- Slide 4: 解決方案 -->
+<div class="slide" id="s4">
+  <div class="tag">解決方案</div>
+  <h2 class="hero-text">這些時刻，你需要的<br>不是一本法律書<br>而是一個<em>直接給你答案</em>的工具</h2>
+</div>
+
+<!-- Slide 5: 功能 -->
+<div class="slide" id="s5">
+  <div class="tag">六項免費工具</div>
+  <div class="gold-line"></div>
+  <div class="features">
+    <div class="feature-item"><div class="feature-dot"></div>遺產繼承計算器（應繼分、特留分、遺產稅）</div>
+    <div class="feature-item"><div class="feature-dot"></div>剩餘財產差額分配（民法第1030-1條）</div>
+    <div class="feature-item"><div class="feature-dot"></div>繼承期限倒數（拋棄繼承、遺產稅申報）</div>
+    <div class="feature-item"><div class="feature-dot"></div>贍養費試算（民法第1057條）</div>
+    <div class="feature-item"><div class="feature-dot"></div>脫產偵測分析（財產異動風險評估）</div>
+    <div class="feature-item"><div class="feature-dot"></div>未成年損害賠償試算</div>
+  </div>
+  <p class="sub-text" style="margin-top:32px">全部免費 · 不用註冊 · 可下載 PDF 報告</p>
+</div>
+
+<!-- Slide 6: 數據 -->
+<div class="slide" id="s6">
+  <div class="tag">台灣每年</div>
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num">16萬</div>
+      <div class="stat-label">件繼承案</div>
+    </div>
+    <div class="stat" style="color:#2a2520; font-size:48px; align-self:center;">+</div>
+    <div class="stat">
+      <div class="stat-num">5萬</div>
+      <div class="stat-label">件離婚案</div>
+    </div>
+  </div>
+  <p class="sub-text" style="margin-top:40px">大多數人在這些時刻，<em>不懂得保護自己的權益</em></p>
+</div>
+
+<!-- Slide 7: 募資訴求 -->
+<div class="slide" id="s7">
+  <div class="tag">為什麼需要你的支持</div>
+  <h2 class="hero-text" style="font-size:clamp(28px,4vw,52px)">這是<em>我一個人</em>做的工具<br>你的訂閱讓它<em>持續免費</em><br>提供給更多需要的人</h2>
+</div>
+
+<!-- Slide 8: 方案 -->
+<div class="slide" id="s8">
+  <div class="tag">訂閱方案</div>
+  <div class="plans">
+    <div class="plan">
+      <div class="plan-name">支持者</div>
+      <div class="plan-price">NT$99<span> / 月</span></div>
+      <div class="plan-desc">無廣告<br>無限下載 PDF 報告<br>感謝名單</div>
+    </div>
+    <div class="plan highlight">
+      <div class="plan-name">專業版</div>
+      <div class="plan-price">NT$299<span> / 月</span></div>
+      <div class="plan-desc">以上全部<br>優先體驗新功能<br>每月法律重點電子報</div>
+    </div>
+    <div class="plan">
+      <div class="plan-name">事務所方案</div>
+      <div class="plan-price">NT$999<span> / 月</span></div>
+      <div class="plan-desc">以上全部<br>3 組帳號共用<br>客製化 PDF 報告抬頭</div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 9: CTA -->
+<div class="slide" id="s9">
+  <div class="gold-line"></div>
+  <h2 class="hero-text">不只是捐款<br>是讓這個工具<em>活下去</em><br>而且變得更好</h2>
+  <div class="cta-url">inheritancepro.app</div>
+</div>
+
+<div class="progress" id="progress"></div>
+<div class="counter" id="counter">1 / 9</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  let current = 0;
+
+  function go(n) {
+    slides[current].classList.remove('active');
+    current = (n + total) % total;
+    slides[current].classList.add('active');
+    document.getElementById('progress').style.width = ((current + 1) / total * 100) + '%';
+    document.getElementById('counter').textContent = (current + 1) + ' / ' + total;
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); go(current + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); go(current - 1); }
+  });
+
+  document.addEventListener('click', () => go(current + 1));
+
+  go(0);
+  document.getElementById('progress').style.width = (1 / total * 100) + '%';
+</script>
+</body>
+</html>

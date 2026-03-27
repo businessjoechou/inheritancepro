@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "inheritancepro",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "3456"],
+      "port": 3456
+    },
+    {
+      "name": "adminpro",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["/Users/chouchunyeh/Desktop/台灣行政法計算機/server.py"],
+      "port": 3457
+    }
+  ]
+}
