@@ -121,6 +121,9 @@
   .btn-reset{width:100%;padding:13px;border:1.5px solid var(--border);border-radius:10px;background:transparent;font-size:14px;color:var(--muted);cursor:pointer;font-family:'Noto Sans TC',sans-serif;margin-top:10px;}
   .disclaimer-bar{max-width:560px;margin:0 auto;padding:16px 24px 40px;font-size:11.5px;color:rgba(255,255,255,0.35);line-height:1.7;border-top:1px solid rgba(255,255,255,0.07);}
   .disclaimer-bar strong{color:rgba(255,255,255,0.55);}
+  .save-btn { display: block; width: 100%; padding: 12px; background: var(--accent); color: white; border: none; border-radius: 10px; font-size: 14px; font-family: 'Noto Sans TC', sans-serif; font-weight: 500; cursor: pointer; margin-top: 16px; transition: opacity 0.2s; }
+  .save-btn:hover { opacity: 0.85; }
+  .save-btn:disabled { opacity: 0.6; cursor: default; }
 </style>
 </head>
 <body>
@@ -189,6 +192,7 @@
 
     <button class="btn-pdf" onclick="downloadPDF()">⬇ 下載時間軸 PDF</button>
     <button class="btn-reset" onclick="reset()">🔄 重新輸入</button>
+    <div id="save-btn-container"></div>
   </div>
 </main>
 
@@ -449,6 +453,13 @@
     document.getElementById('timelineItems').innerHTML = html;
     document.getElementById('timelineSection').style.display = 'block';
     document.getElementById('timelineSection').scrollIntoView({behavior:'smooth', block:'start'});
+
+    initSaveButton(
+      'inheritance-timeline',
+      `繼承時間軸 ${new Date().toLocaleDateString('zh-TW')}`,
+      `死亡日期：${formatDate(death)}`,
+      { ...lastData }
+    );
   }
 
   function reset(){
@@ -457,6 +468,37 @@
       .forEach(id => document.getElementById(id).checked = false);
     document.getElementById('timelineSection').style.display = 'none';
     window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  async function initSaveButton(tool, title, summary, data) {
+    const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+    const sb = createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+    const { data: { user } } = await sb.auth.getUser();
+
+    const container = document.getElementById('save-btn-container');
+    if (!container) return;
+
+    if (!user) {
+      container.innerHTML = `<p style="text-align:center;font-size:12px;color:var(--muted);margin-top:8px;"><a href="/login.html" style="color:var(--accent)">登入</a>後可儲存此次結果</p>`;
+      return;
+    }
+
+    container.innerHTML = `<button onclick="doSave()" class="save-btn" id="save-btn">儲存此次結果</button>`;
+
+    window.doSave = async () => {
+      const btn = document.getElementById('save-btn');
+      btn.textContent = '儲存中…';
+      btn.disabled = true;
+      const { saveCalculation } = await import('./js/save.js');
+      const result = await saveCalculation({ tool, title, summary, data });
+      if (result.success) {
+        btn.textContent = '✓ 已儲存';
+        btn.style.background = '#2a6e3e';
+      } else {
+        btn.textContent = '儲存失敗';
+        btn.disabled = false;
+      }
+    };
   }
 
   function downloadPDF(){

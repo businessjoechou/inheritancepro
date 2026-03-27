@@ -367,6 +367,18 @@
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
+  /* Calculation history */
+  .history-list { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+  .history-item { background: var(--soft); border-radius: 10px; padding: 14px 16px; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .history-item-info { flex: 1; }
+  .history-item-title { font-weight: 600; font-size: 14px; color: var(--ink); margin-bottom: 3px; }
+  .history-item-summary { font-size: 12px; color: var(--muted); }
+  .history-item-date { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); white-space: nowrap; }
+  .history-delete { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 16px; padding: 0 4px; line-height: 1; }
+  .history-delete:hover { color: var(--accent); }
+  .history-empty { text-align: center; color: var(--muted); font-size: 13px; padding: 24px 0; }
+  .tool-badge { display: inline-block; font-size: 10px; font-family: 'DM Mono', monospace; background: var(--soft); border: 1px solid var(--border); border-radius: 4px; padding: 1px 6px; margin-right: 6px; color: var(--muted); }
+
   /* Hidden util */
   .hidden { display: none !important; }
 </style>
@@ -492,7 +504,15 @@
       </ul>
     </div>
 
-    <!-- 4. Danger zone -->
+    <!-- 4. Calculation history card -->
+    <div class="card" id="history-card">
+      <div class="card-title">🗂 計算紀錄</div>
+      <div id="history-list-container">
+        <div class="history-empty">載入中…</div>
+      </div>
+    </div>
+
+    <!-- 5. Danger zone -->
     <div class="card">
       <div class="card-title">帳號操作</div>
       <button class="btn-signout" id="btn-signout">
@@ -511,6 +531,7 @@
 
 <script type="module">
   import { supabase, getProfile, redeemCode } from './js/auth.js';
+  import { getCalculations, deleteCalculation } from './js/save.js';
 
   async function init() {
     const { data: { user } } = await supabase.auth.getUser();
@@ -527,6 +548,9 @@
     }
 
     contentEl.classList.remove('hidden');
+
+    // Load calculation history
+    renderHistory();
 
     // Populate account info
     const profile = await getProfile();
@@ -616,6 +640,72 @@
     } catch {
       return isoString;
     }
+  }
+
+  async function renderHistory() {
+    const container = document.getElementById('history-list-container');
+    if (!container) return;
+
+    const items = await getCalculations();
+
+    if (!items.length) {
+      container.innerHTML = '<div class="history-empty">尚無計算紀錄</div>';
+      return;
+    }
+
+    const list = document.createElement('div');
+    list.className = 'history-list';
+
+    items.forEach(item => {
+      const el = document.createElement('div');
+      el.className = 'history-item';
+
+      const dateStr = item.created_at ? formatDate(item.created_at) : '—';
+      const toolLabel = item.tool || '';
+      const title = item.title || '（未命名）';
+      const summary = item.summary || '';
+
+      el.innerHTML = `
+        <div class="history-item-info">
+          <div class="history-item-title">
+            ${toolLabel ? `<span class="tool-badge">${escapeHtml(toolLabel)}</span>` : ''}${escapeHtml(title)}
+          </div>
+          ${summary ? `<div class="history-item-summary">${escapeHtml(summary)}</div>` : ''}
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;">
+          <span class="history-item-date">${dateStr}</span>
+          <button class="history-delete" title="刪除" data-id="${item.id}">✕</button>
+        </div>
+      `;
+
+      list.appendChild(el);
+    });
+
+    container.innerHTML = '';
+    container.appendChild(list);
+
+    container.querySelectorAll('.history-delete').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const id = btn.dataset.id;
+        btn.disabled = true;
+        btn.textContent = '…';
+        const ok = await deleteCalculation(id);
+        if (ok) {
+          await renderHistory();
+        } else {
+          btn.disabled = false;
+          btn.textContent = '✕';
+        }
+      });
+    });
+  }
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
   }
 
   init();
