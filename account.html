@@ -381,6 +381,53 @@
 
   /* Hidden util */
   .hidden { display: none !important; }
+
+  /* History detail modal */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(26,20,16,0.72);
+    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+    z-index: 9000; display: flex; align-items: flex-end; justify-content: center;
+    animation: fadeIn 0.2s ease both;
+  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .modal-sheet {
+    background: var(--card); border-radius: 16px 16px 0 0;
+    width: 100%; max-width: 540px; max-height: 82vh;
+    overflow-y: auto; padding: 0 0 40px;
+    animation: slideUp 0.25s ease both;
+  }
+  @keyframes slideUp { from { transform: translateY(20px); opacity:0; } to { transform: translateY(0); opacity:1; } }
+  .modal-header {
+    position: sticky; top: 0; background: var(--card);
+    padding: 16px 20px 12px; border-bottom: 1px solid var(--soft);
+    display: flex; align-items: center; justify-content: space-between;
+    z-index: 1;
+  }
+  .modal-title { font-family: 'Noto Serif TC', serif; font-size: 16px; font-weight: 700; }
+  .modal-close {
+    background: var(--soft); border: none; border-radius: 50%;
+    width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 14px; color: var(--muted); flex-shrink: 0;
+  }
+  .modal-close:hover { background: var(--border); color: var(--ink); }
+  .modal-body { padding: 20px 20px 0; }
+  .modal-meta { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); margin-bottom: 16px; }
+  .modal-section-title {
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted);
+    letter-spacing: 0.12em; text-transform: uppercase;
+    margin: 16px 0 8px; padding-bottom: 6px; border-bottom: 1px solid var(--soft);
+  }
+  .modal-row {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 12px; padding: 7px 0; border-bottom: 1px solid var(--soft); font-size: 13px;
+  }
+  .modal-row:last-child { border-bottom: none; }
+  .modal-key { color: var(--muted); flex-shrink: 0; }
+  .modal-val { color: var(--ink); font-weight: 500; text-align: right; word-break: break-all; }
+
+  /* History item clickable */
+  .history-item { cursor: pointer; transition: background 0.15s; }
+  .history-item:hover { background: var(--border); }
 </style>
 </head>
 <body>
@@ -677,6 +724,12 @@
         </div>
       `;
 
+      // Click to view detail (not on delete button)
+      el.addEventListener('click', (e) => {
+        if (e.target.closest('.history-delete')) return;
+        showDetailModal(item);
+      });
+
       list.appendChild(el);
     });
 
@@ -705,6 +758,104 @@
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;');
+  }
+
+  function showDetailModal(item) {
+    // Remove any existing modal
+    document.getElementById('detail-modal')?.remove();
+
+    const toolLabel = item.tool || '';
+    const title = item.title || '（未命名）';
+    const dateStr = item.created_at ? formatDate(item.created_at) : '—';
+    const data = item.data || {};
+
+    const overlay = document.createElement('div');
+    overlay.className = 'modal-overlay';
+    overlay.id = 'detail-modal';
+
+    // Build data rows
+    const dataRows = renderDataRows(data);
+
+    overlay.innerHTML = `
+      <div class="modal-sheet">
+        <div class="modal-header">
+          <div class="modal-title">${escapeHtml(title)}</div>
+          <button class="modal-close" id="modal-close-btn">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-meta">
+            ${toolLabel ? escapeHtml(toolLabel) + '　·　' : ''}儲存於 ${dateStr}
+          </div>
+          ${item.summary ? `<div style="font-size:13px;color:var(--ink);margin-bottom:16px;padding:10px 14px;background:var(--soft);border-radius:8px;">${escapeHtml(item.summary)}</div>` : ''}
+          ${dataRows}
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    // Close handlers
+    overlay.querySelector('#modal-close-btn').addEventListener('click', () => overlay.remove());
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.remove(); });
+  }
+
+  function renderDataRows(data) {
+    if (!data || typeof data !== 'object' || Array.isArray(data)) {
+      return `<div style="font-size:13px;color:var(--muted);">無詳細資料</div>`;
+    }
+
+    const labelMap = {
+      // 遺產繼承
+      totalEstate: '遺產總額', hasWill: '有無遺囑', hasSpouse: '有無配偶',
+      childCount: '子女人數', spouseShare: '配偶應繼分', totalTax: '遺產稅試算',
+      // 贍養費
+      marriageYears: '婚姻年數', requestorIncome: '請求人月收入', payorIncome: '對方月收入',
+      estimatedAlimony: '試算贍養費',
+      // 剩餘財產
+      wifeMarriage: '妻婚後財產', husbandMarriage: '夫婚後財產', claim: '請求差額',
+      // 繼承時間軸
+      deathDate: '死亡日期', deadlines: '期限列表',
+      // 脫產偵測
+      riskLevel: '風險等級', totalScore: '風險分數', txCount: '異動筆數',
+      // 職災/工時等
+      dailyWage: '日薪', injuryDays: '受傷天數', compensation: '補償金額',
+      monthlySalary: '月薪', overtimePay: '加班費',
+    };
+
+    const sections = [];
+    const keys = Object.keys(data);
+    if (keys.length === 0) return `<div style="font-size:13px;color:var(--muted);">無詳細資料</div>`;
+
+    sections.push('<div class="modal-section-title">計算資料</div>');
+
+    keys.forEach(k => {
+      const v = data[k];
+      if (v === null || v === undefined) return;
+      const label = labelMap[k] || k;
+      let display = '';
+
+      if (typeof v === 'boolean') {
+        display = v ? '是' : '否';
+      } else if (typeof v === 'number') {
+        // Format numbers with commas if large
+        display = v > 999 ? `NT$ ${v.toLocaleString('zh-TW')}` : String(v);
+      } else if (Array.isArray(v)) {
+        display = `${v.length} 筆`;
+      } else if (typeof v === 'object') {
+        display = JSON.stringify(v).substring(0, 60) + (JSON.stringify(v).length > 60 ? '…' : '');
+      } else {
+        display = String(v);
+      }
+
+      sections.push(`
+        <div class="modal-row">
+          <span class="modal-key">${escapeHtml(label)}</span>
+          <span class="modal-val">${escapeHtml(display)}</span>
+        </div>
+      `);
+    });
+
+    return sections.join('');
   }
 
   init();
