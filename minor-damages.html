@@ -473,6 +473,8 @@ ${schoolRate>0?`<tr><td>學校責任部分</td><td class="val">${fmt(schoolLow)}
 </div>
 <div class="disclaimer">⚠ 精神慰撫金無固定公式，本試算依實際判決校準，但每案不同，實際金額由法院裁量。建議委請律師評估。</div>
 <div class="footer">© ${new Date().getFullYear()} InheritancePro &nbsp;·&nbsp; inheritancepro.app<br>本報告僅供參考，不構成法律意見。</div>
+<script src="js/supabase-config.js"></script>
+<script type="module" src="js/auth-bar.js"></script>
 </body></html>`;
     const w=window.open('','_blank');
     if(!w){alert('請允許本網站開啟彈出視窗以下載 PDF');return;}
@@ -482,5 +484,7 @@ ${schoolRate>0?`<tr><td>學校責任部分</td><td class="val">${fmt(schoolLow)}
   }
 </script>
 <div class="disclaimer-bar"><strong>免責聲明</strong>：本平台之計算結果僅供初步參考，不構成法律意見或法律諮詢服務。實際案件因個案事實、適用法規及法院見解不同，結果可能有所差異，建議諮詢具執照之律師或相關法律專業人員。</div>
+<script src="js/supabase-config.js"></script>
+<script type="module" src="js/auth-bar.js"></script>
 </body>
 </html>

@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>我的帳號｜InheritancePro</title>
+<meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="js/supabase-config.js"></script>
+<style>
+  :root {
+    --ink: #1a1410;
+    --paper: #f5f0e8;
+    --gold: #c4932a;
+    --muted: #7a6f62;
+    --border: #c8bfb0;
+    --soft: #e8e0d0;
+    --card: #ffffff;
+    --accent: #8b2020;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Noto Sans TC', sans-serif;
+    min-height: 100vh;
+    font-size: 15px;
+  }
+
+  /* Header */
+  header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logo {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  .logo span { color: var(--gold); }
+
+  .home-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+  }
+  .home-link:hover { color: var(--gold); }
+
+  /* Main layout */
+  main {
+    padding: 28px 20px 80px;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  /* Page title */
+  .page-title-row {
+    margin-bottom: 24px;
+  }
+
+  .step-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  h1 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  /* Card base */
+  .card {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 14px;
+  }
+
+  .card-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--soft);
+  }
+
+  /* Account info rows */
+  .info-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--soft);
+    gap: 12px;
+  }
+  .info-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .info-row:first-of-type { padding-top: 0; }
+
+  .info-key {
+    font-size: 13px;
+    color: var(--muted);
+    flex-shrink: 0;
+    line-height: 1.5;
+  }
+
+  .info-val {
+    font-size: 13px;
+    color: var(--ink);
+    font-weight: 500;
+    text-align: right;
+    word-break: break-all;
+    line-height: 1.5;
+  }
+
+  /* Status badge */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 20px;
+    letter-spacing: 0.02em;
+  }
+  .badge-free {
+    background: var(--soft);
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+  .badge-pro {
+    background: linear-gradient(135deg, #c4932a, #e8b84b);
+    color: var(--ink);
+    border: none;
+  }
+
+  /* Redemption form */
+  .redeem-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .redeem-input {
+    flex: 1;
+    padding: 12px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    background: var(--paper);
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    color: var(--ink);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+  }
+  .redeem-input::placeholder {
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--muted);
+    opacity: 0.7;
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 13px;
+  }
+  .redeem-input:focus {
+    outline: none;
+    border-color: var(--gold);
+  }
+
+  .btn-redeem {
+    padding: 12px 18px;
+    background: var(--ink);
+    border: none;
+    border-radius: 8px;
+    color: var(--paper);
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .btn-redeem:hover { background: #2a1a10; }
+  .btn-redeem:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .redeem-note {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .redeem-success {
+    display: none;
+    margin-top: 10px;
+    padding: 12px 14px;
+    background: #f0fdf6;
+    border: 1px solid #a8d8bc;
+    border-left: 3px solid #2a6b4a;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #1a5c38;
+    line-height: 1.65;
+  }
+  .redeem-success.visible { display: block; }
+
+  .redeem-error {
+    display: none;
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: #fdf5f5;
+    border: 1px solid #e8c0c0;
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--accent);
+    line-height: 1.6;
+  }
+  .redeem-error.visible { display: block; }
+
+  /* Pro features list */
+  .pro-feature-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .pro-feature-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--soft);
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .pro-feature-list li:last-child { border-bottom: none; padding-bottom: 0; }
+  .pro-feature-list li:first-child { padding-top: 0; }
+
+  .pro-check {
+    width: 18px;
+    height: 18px;
+    background: linear-gradient(135deg, #c4932a, #e8b84b);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .pro-check svg {
+    width: 10px;
+    height: 10px;
+    stroke: #1a1410;
+    stroke-width: 2.5;
+    fill: none;
+  }
+
+  .feature-coming {
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    color: var(--muted);
+    background: var(--soft);
+    border-radius: 4px;
+    padding: 1px 6px;
+    margin-left: 4px;
+    vertical-align: middle;
+    letter-spacing: 0.04em;
+  }
+
+  /* Danger zone */
+  .btn-signout {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 18px;
+    background: transparent;
+    border: 1.5px solid rgba(139, 32, 32, 0.35);
+    border-radius: 8px;
+    color: var(--accent);
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 100%;
+    justify-content: center;
+  }
+  .btn-signout:hover {
+    background: rgba(139, 32, 32, 0.06);
+    border-color: var(--accent);
+  }
+
+  /* Not-logged-in state */
+  .not-logged-in-card {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 32px 24px;
+    text-align: center;
+  }
+  .not-logged-in-card h2 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .not-logged-in-card p {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+  .btn-to-login {
+    display: inline-block;
+    padding: 12px 28px;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+  .btn-to-login:hover { background: #2a1a10; }
+
+  /* Loading state */
+  .loading-state {
+    text-align: center;
+    padding: 60px 24px;
+    color: var(--muted);
+  }
+  .loading-spinner {
+    width: 28px;
+    height: 28px;
+    border: 2.5px solid var(--soft);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 14px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Hidden util */
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Inheritance<span>Pro</span></div>
+  <a class="home-link" href="/">← 首頁</a>
+</header>
+
+<main>
+
+  <!-- Loading state -->
+  <div id="loading-state" class="loading-state">
+    <div class="loading-spinner"></div>
+    <div style="font-size:13px;">載入中…</div>
+  </div>
+
+  <!-- Not logged in -->
+  <div id="not-logged-in" class="hidden">
+    <div class="not-logged-in-card">
+      <h2>尚未登入</h2>
+      <p>請先登入以查看帳號資訊及管理 Pro 功能。</p>
+      <a class="btn-to-login" href="/login.html">前往登入</a>
+    </div>
+  </div>
+
+  <!-- Logged in content -->
+  <div id="logged-in-content" class="hidden">
+
+    <div class="page-title-row">
+      <div class="step-label">Account</div>
+      <h1>我的帳號</h1>
+    </div>
+
+    <!-- 1. Account info card -->
+    <div class="card">
+      <div class="card-title">帳號資訊</div>
+
+      <div class="info-row">
+        <span class="info-key">電子信箱</span>
+        <span class="info-val" id="account-email">—</span>
+      </div>
+
+      <div class="info-row">
+        <span class="info-key">會員狀態</span>
+        <span class="info-val" id="account-status">—</span>
+      </div>
+
+      <div class="info-row" id="activated-row" style="display:none;">
+        <span class="info-key">Pro 啟用日期</span>
+        <span class="info-val" id="account-activated">—</span>
+      </div>
+
+      <div class="info-row">
+        <span class="info-key">加入日期</span>
+        <span class="info-val" id="account-created">—</span>
+      </div>
+    </div>
+
+    <!-- 2. Redemption card -->
+    <div class="card" id="redeem-card">
+      <div class="card-title">序號兌換</div>
+
+      <div class="redeem-row">
+        <input
+          class="redeem-input"
+          type="text"
+          id="redeem-input"
+          placeholder="輸入兌換序號"
+          maxlength="32"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="characters"
+          spellcheck="false"
+        >
+        <button class="btn-redeem" id="btn-redeem">兌換</button>
+      </div>
+
+      <div class="redeem-note">
+        贊助者可至贊助頁面取得序號，兌換後立即升級為 Pro 帳號。
+      </div>
+
+      <div class="redeem-success" id="redeem-success"></div>
+      <div class="redeem-error" id="redeem-error"></div>
+    </div>
+
+    <!-- 3. Pro features card (always visible) -->
+    <div class="card">
+      <div class="card-title">Pro 功能說明</div>
+      <ul class="pro-feature-list">
+        <li>
+          <div class="pro-check">
+            <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+          </div>
+          <span>PDF 報告輸出（各計算機結果）</span>
+        </li>
+        <li>
+          <div class="pro-check">
+            <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+          </div>
+          <span>
+            計算紀錄儲存
+            <span class="feature-coming">即將推出</span>
+          </span>
+        </li>
+        <li>
+          <div class="pro-check">
+            <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+          </div>
+          <span>
+            法規更新通知
+            <span class="feature-coming">即將推出</span>
+          </span>
+        </li>
+        <li>
+          <div class="pro-check">
+            <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+          </div>
+          <span>無廣告體驗</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 4. Danger zone -->
+    <div class="card">
+      <div class="card-title">帳號操作</div>
+      <button class="btn-signout" id="btn-signout">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+          <polyline points="16 17 21 12 16 7"/>
+          <line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+        登出
+      </button>
+    </div>
+
+  </div><!-- /logged-in-content -->
+
+</main>
+
+<script type="module">
+  import { supabase, getProfile, redeemCode } from './js/auth.js';
+
+  async function init() {
+    const { data: { user } } = await supabase.auth.getUser();
+
+    const loadingEl = document.getElementById('loading-state');
+    const notLoggedInEl = document.getElementById('not-logged-in');
+    const contentEl = document.getElementById('logged-in-content');
+
+    loadingEl.classList.add('hidden');
+
+    if (!user) {
+      notLoggedInEl.classList.remove('hidden');
+      return;
+    }
+
+    contentEl.classList.remove('hidden');
+
+    // Populate account info
+    const profile = await getProfile();
+    const isPro = profile?.is_pro || false;
+
+    document.getElementById('account-email').textContent = user.email || '—';
+
+    document.getElementById('account-status').innerHTML = isPro
+      ? '<span class="badge badge-pro">✦ Pro</span>'
+      : '<span class="badge badge-free">免費版</span>';
+
+    if (isPro && profile?.activated_at) {
+      const activatedRow = document.getElementById('activated-row');
+      activatedRow.style.display = 'flex';
+      document.getElementById('account-activated').textContent =
+        formatDate(profile.activated_at);
+    }
+
+    const createdAt = profile?.created_at || user.created_at;
+    document.getElementById('account-created').textContent =
+      createdAt ? formatDate(createdAt) : '—';
+
+    // Hide redeem card if already Pro
+    if (isPro) {
+      document.getElementById('redeem-card').style.display = 'none';
+    }
+
+    // Redeem code handler
+    document.getElementById('btn-redeem').addEventListener('click', async () => {
+      const code = document.getElementById('redeem-input').value.trim();
+      const successEl = document.getElementById('redeem-success');
+      const errorEl = document.getElementById('redeem-error');
+      const btn = document.getElementById('btn-redeem');
+
+      successEl.classList.remove('visible');
+      errorEl.classList.remove('visible');
+
+      if (!code) {
+        errorEl.textContent = '請輸入兌換序號。';
+        errorEl.classList.add('visible');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = '兌換中…';
+
+      const result = await redeemCode(code);
+
+      btn.disabled = false;
+      btn.textContent = '兌換';
+
+      if (result.error) {
+        errorEl.textContent = result.error;
+        errorEl.classList.add('visible');
+      } else {
+        successEl.innerHTML = `✓ 兌換成功！您已升級為 Pro${result.tier ? '（' + result.tier + '）' : ''}，頁面即將重新載入。`;
+        successEl.classList.add('visible');
+        document.getElementById('redeem-input').disabled = true;
+        btn.disabled = true;
+        setTimeout(() => window.location.reload(), 2000);
+      }
+    });
+
+    // Enter key on redeem input
+    document.getElementById('redeem-input').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') document.getElementById('btn-redeem').click();
+    });
+
+    // Sign out
+    document.getElementById('btn-signout').addEventListener('click', async () => {
+      const btn = document.getElementById('btn-signout');
+      btn.textContent = '登出中…';
+      btn.disabled = true;
+      await supabase.auth.signOut();
+      window.location.href = '/';
+    });
+  }
+
+  function formatDate(isoString) {
+    try {
+      const d = new Date(isoString);
+      return d.toLocaleDateString('zh-TW', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+      });
+    } catch {
+      return isoString;
+    }
+  }
+
+  init();
+</script>
+</body>
+</html>

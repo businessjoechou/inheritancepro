@@ -520,6 +520,8 @@ td{padding:9px 12px;border-bottom:1px solid #e8e0d0;vertical-align:top;}
 </div>
 <table><thead><tr><th>項目</th><th>期限</th><th>剩餘天數</th><th>狀態</th></tr></thead><tbody>${rows}</tbody></table>
 <div class="footer">© ${new Date().getFullYear()} InheritancePro &nbsp;·&nbsp; inheritancepro.app<br>本工具僅供參考，實際辦理請洽相關機關或諮詢律師。</div>
+<script src="js/supabase-config.js"></script>
+<script type="module" src="js/auth-bar.js"></script>
 </body></html>`;
 
     const w = window.open('','_blank');
@@ -533,5 +535,7 @@ td{padding:9px 12px;border-bottom:1px solid #e8e0d0;vertical-align:top;}
   document.getElementById('deathDate').max = new Date().toISOString().split('T')[0];
 </script>
 <div class="disclaimer-bar"><strong>免責聲明</strong>：本平台之計算結果僅供初步參考，不構成法律意見或法律諮詢服務。實際案件因個案事實、適用法規及法院見解不同，結果可能有所差異，建議諮詢具執照之律師或相關法律專業人員。</div>
+<script src="js/supabase-config.js"></script>
+<script type="module" src="js/auth-bar.js"></script>
 </body>
 </html>
