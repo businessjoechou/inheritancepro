@@ -121,6 +121,7 @@
         <div class="toggle-row">
           <button class="toggle-btn active" id="btnInjury" onclick="setType('injury')">傷害事故</button>
           <button class="toggle-btn" id="btnDeath" onclick="setType('death')">死亡事故</button>
+          <button class="toggle-btn" id="btnDisability" onclick="setType('disability')">永久失能</button>
         </div>
       </div>
       <div class="input-group">
@@ -182,6 +183,50 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section D：永久失能 -->
+    <div id="disabilitySection" class="hidden">
+      <div class="card">
+        <div class="section-title">D — 永久失能項目</div>
+        <div class="input-group">
+          <label>失能等級（1–15 級）</label>
+          <select id="disabilityLevel" style="width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:8px;background:var(--paper);font-size:14px;font-family:'Noto Sans TC',sans-serif;color:var(--ink);">
+            <option value="1">第1級－完全喪失工作能力（如植物人、四肢癱瘓）</option>
+            <option value="2">第2級－極重度失能（如雙眼失明、兩上肢截斷）</option>
+            <option value="3">第3級－重度失能（如一上肢截斷＋一下肢截斷）</option>
+            <option value="4">第4級－重度失能（如一眼失明＋嚴重顏面傷殘）</option>
+            <option value="5">第5級－中重度失能（如一上肢三大關節全失功能）</option>
+            <option value="6">第6級－中度失能（如一下肢三大關節全失功能）</option>
+            <option value="7">第7級－中度失能（如一眼視力剩0.06以下）</option>
+            <option value="8">第8級－輕中度失能（如脊柱運動障礙）</option>
+            <option value="9">第9級－輕中度失能（如一手拇指末節截斷）</option>
+            <option value="10">第10級－輕度失能（如一手食指截斷）</option>
+            <option value="11">第11級－輕度失能（如一耳失聰）</option>
+            <option value="12">第12級－輕微失能（如一手拇指缺失）</option>
+            <option value="13">第13級－輕微失能（如一腳趾截斷）</option>
+            <option value="14">第14級－極輕微失能（如外表可見之疤痕）</option>
+            <option value="15">第15級－極輕微失能（如嗅覺或味覺喪失）</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>您的年齡（歲）</label>
+          <input type="number" id="disabilityAge" placeholder="例如：40" min="0" max="65" value="40">
+          <div class="law-note" style="margin-top:8px">勞動力喪失計算至65歲退休，剩餘工作年數 = 65 − 年齡。</div>
+        </div>
+        <div class="input-group">
+          <label>醫療費用（元）</label>
+          <input type="number" id="disabilityMedical" placeholder="已支出醫療費" min="0" value="0">
+        </div>
+        <div class="input-group">
+          <label>每日看護費用（元）<span style="font-weight:400;color:var(--muted);font-size:12px">法院實務 NT$2,000–3,000，預設 NT$2,400</span></label>
+          <input type="number" id="disabilityCareRate" value="2400" min="500" max="5000" inputmode="numeric">
+        </div>
+        <div class="input-group">
+          <label>看護天數（天）</label>
+          <input type="number" id="disabilityCareDays" placeholder="例如：60" min="0" value="0">
         </div>
       </div>
     </div>
@@ -259,6 +304,17 @@
   let solatiumLevel = 'light'; // 傷害
   let deathSolatiumLevel = 'low'; // 死亡
 
+  const DISABILITY_INSURANCE = {
+    1: 2000000, 2: 1800000, 3: 1500000, 4: 1300000, 5: 1100000,
+    6: 900000,  7: 700000,  8: 500000,  9: 400000, 10: 300000,
+    11: 200000, 12: 150000, 13: 100000, 14: 60000,  15: 30000
+  };
+  const WORK_LOSS_RATE = {
+    1: 1.0, 2: 0.9, 3: 0.8, 4: 0.7, 5: 0.6,
+    6: 0.5, 7: 0.4, 8: 0.3, 9: 0.25, 10: 0.2,
+    11: 0.15, 12: 0.10, 13: 0.08, 14: 0.05, 15: 0.03
+  };
+
   const SOLATIUM_MAP = {
     light:   { low: 100000,  high: 500000,  mid: 200000  },
     serious: { low: 500000,  high: 2000000, mid: 1000000 },
@@ -274,8 +330,10 @@
     accidentType = t;
     document.getElementById('btnInjury').classList.toggle('active', t === 'injury');
     document.getElementById('btnDeath').classList.toggle('active', t === 'death');
+    document.getElementById('btnDisability').classList.toggle('active', t === 'disability');
     document.getElementById('injurySection').classList.toggle('hidden', t !== 'injury');
     document.getElementById('deathSection').classList.toggle('hidden', t !== 'death');
+    document.getElementById('disabilitySection').classList.toggle('hidden', t !== 'disability');
   }
 
   function updateFaultDisplay() {
@@ -301,6 +359,11 @@
   function calculate() {
     const faultPct = parseInt(document.getElementById('faultPct').value) / 100;
     const monthlySalary = parseFloat(document.getElementById('monthlySalary').value) || 0;
+
+    if (accidentType === 'disability') {
+      calculateDisability(faultPct, monthlySalary);
+      return;
+    }
 
     let rows = [];
     let subtotal = 0;
@@ -505,6 +568,113 @@
       `車禍損害賠償試算 ${new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit'})}`,
       `對方應賠金額：${fmt(netAmount)}（${accidentType === 'injury' ? '傷害' : '死亡'}案）`,
       { accidentType, faultPct, netAmount }
+    );
+  }
+
+  function calculateDisability(faultPct, monthlySalary) {
+    const level = parseInt(document.getElementById('disabilityLevel').value) || 1;
+    const age = parseInt(document.getElementById('disabilityAge').value) || 40;
+    const medical = parseFloat(document.getElementById('disabilityMedical').value) || 0;
+    const careRate = parseInt(document.getElementById('disabilityCareRate').value) || 2400;
+    const careDays = parseFloat(document.getElementById('disabilityCareDays').value) || 0;
+
+    const workRate = WORK_LOSS_RATE[level] || 0;
+    const remainingYears = Math.max(0, 65 - age);
+    const workLoss = monthlySalary * 12 * remainingYears * workRate;
+    const careTotal = careDays * careRate;
+
+    // 慰撫金依等級
+    let solatium = 500000;
+    if (level <= 3) solatium = 2000000;
+    else if (level <= 7) solatium = 1000000;
+
+    const subtotal = medical + careTotal + workLoss + solatium;
+    const disabilityInsurance = DISABILITY_INSURANCE[level] || 0;
+    // 強制險殘廢給付抵扣（醫療費用部分，不超過醫療費）
+    const insuranceOffset = Math.min(disabilityInsurance, medical);
+    const afterInsurance = Math.max(0, subtotal - insuranceOffset);
+    const netAmount = Math.max(0, afterInsurance * faultPct);
+
+    document.getElementById('resultContent').innerHTML = `
+      <div class="result-hero">
+        <div class="result-hero-label">對方應賠金額（估算）</div>
+        <div class="result-hero-amount">${fmt(netAmount)}</div>
+        <div class="result-hero-sub">永久失能第 ${level} 級｜對方過失比例 ${Math.round(faultPct * 100)}%</div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">損害明細</div>
+        <div class="result-row">
+          <span class="result-label">醫療費用</span>
+          <span class="result-value">${fmt(medical)}</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">看護費（${careDays}天 × NT$${careRate.toLocaleString()}）</span>
+          <span class="result-value">${fmt(careTotal)}</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">勞動力喪失（月薪×12×${remainingYears}年×${(workRate*100).toFixed(0)}%失能率）</span>
+          <span class="result-value">${fmt(workLoss)}</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">慰撫金（${level <= 3 ? '1-3級200萬' : level <= 7 ? '4-7級100萬' : '8-15級50萬'}）</span>
+          <span class="result-value">${fmt(solatium)}</span>
+        </div>
+        <div class="result-row" style="margin-top:4px">
+          <span class="result-label" style="font-weight:600">損害合計</span>
+          <span class="result-value" style="font-weight:700">${fmt(subtotal)}</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">強制險抵扣與過失比例</div>
+        <div class="result-row">
+          <span class="result-label">損害合計</span>
+          <span class="result-value">${fmt(subtotal)}</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">強制險第${level}級殘廢給付（上限 ${fmt(disabilityInsurance)}）</span>
+          <span class="result-value success">－ ${fmt(insuranceOffset)}</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">扣除強制險後損害</span>
+          <span class="result-value">${fmt(afterInsurance)}</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">對方過失比例</span>
+          <span class="result-value">${Math.round(faultPct * 100)}%</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label" style="font-weight:600">對方應賠（依過失比例）</span>
+          <span class="result-value accent" style="font-weight:700">${fmt(netAmount)}</span>
+        </div>
+      </div>
+
+      <div class="warn-box">⚠ 時效提醒：侵權行為損害賠償請求權，自知悉損害及賠償義務人起 <strong>2年</strong> 消滅時效；自事故發生起 <strong>10年</strong> 絕對時效（民法§197）。</div>
+
+      <div class="card">
+        <div class="law-note">
+          <strong>民法§193</strong>：不法侵害他人之身體或健康者，對於被害人因此喪失或減少勞動能力或增加生活上需要時，應負損害賠償責任。<br><br>
+          <strong>民法§194</strong>：精神慰撫金請求（失能情形類推適用）。<br><br>
+          <strong>強制汽車責任保險法§25</strong>：永久失能給付依等級最高200萬元（第1級）；強制險殘廢給付抵扣醫療費用部分，慰撫金及勞動力喪失不在強制險補償範圍。
+        </div>
+      </div>
+    `;
+
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById('step2').classList.add('active');
+    document.getElementById('progressFill').style.width = '100%';
+    document.getElementById('navBar').innerHTML = `
+      <button class="btn btn-secondary" onclick="reset()">← 重新計算</button>
+      <button class="btn btn-print" onclick="window.print()">列印 / PDF</button>
+    `;
+    window.scrollTo(0, 0);
+
+    initSaveButton(
+      'accident',
+      `車禍損害賠償試算 ${new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit'})}`,
+      `對方應賠金額：${fmt(netAmount)}（永久失能第${level}級）`,
+      { accidentType, faultPct, netAmount, level }
     );
   }
 

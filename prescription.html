@@ -428,6 +428,8 @@
           <strong>民法第130條</strong>：請求（催告）後若未於6個月內起訴，視為未中斷。
         </div>
       </div>
+
+      ${renderInterruptRecalcCard(cfg.years)}
     `;
     const deadlineStr = fmtDate(deadline);
     initSaveButton(
@@ -514,6 +516,8 @@
           <strong>民法第144條</strong>：時效完成後，債務人得拒絕給付。須由債務人主動主張，法院不得依職權適用。
         </div>
       </div>
+
+      ${renderInterruptRecalcCard(2)}
     `;
     const deadlineStr = fmtDate(effective);
     initSaveButton(
@@ -522,6 +526,88 @@
       `雙期間計算`,
       { claimType: selectedType, knowledgeDate: knowledgeDate.toISOString(), tortDate: tortDate.toISOString(), _html: buildPrintHtml() }
     );
+  }
+
+  function renderInterruptRecalcCard(originalYears) {
+    return `
+      <div class="card" style="margin-top:14px">
+        <div class="step-label">時效中斷重算（選填）</div>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:14px">若已發生中斷事由（起訴、催告、承認），可重新計算中斷後的新期限。</p>
+        <div class="input-group">
+          <label>中斷事由</label>
+          <select id="interruptType" onchange="onInterruptTypeChange(${originalYears})" style="width:100%;padding:12px;border:1.5px solid var(--border);border-radius:8px;background:var(--paper);font-size:14px">
+            <option value="">── 選擇中斷事由 ──</option>
+            <option value="lawsuit">起訴（§129①）</option>
+            <option value="demand">支付命令／催告（§129②③）</option>
+            <option value="acknowledge">債務承認（§129③）</option>
+          </select>
+        </div>
+        <div class="input-group" id="interruptDateGroup" style="display:none">
+          <label>中斷日期</label>
+          <input type="date" id="interruptDate" oninput="calcInterruptResult(${originalYears})">
+          <div style="font-size:11px;color:var(--muted);margin-top:4px">催告後6個月內須起訴，否則中斷效力不發生（§130）</div>
+        </div>
+        <div id="interruptResult" style="display:none"></div>
+      </div>
+    `;
+  }
+
+  function onInterruptTypeChange(originalYears) {
+    const type = document.getElementById('interruptType')?.value;
+    const dateGroup = document.getElementById('interruptDateGroup');
+    const resultDiv = document.getElementById('interruptResult');
+    if (!type) {
+      if (dateGroup) dateGroup.style.display = 'none';
+      if (resultDiv) { resultDiv.style.display = 'none'; resultDiv.innerHTML = ''; }
+    } else {
+      if (dateGroup) dateGroup.style.display = 'block';
+      calcInterruptResult(originalYears);
+    }
+  }
+
+  function calcInterruptResult(originalYears) {
+    const type = document.getElementById('interruptType')?.value;
+    const dateVal = document.getElementById('interruptDate')?.value;
+    const resultDiv = document.getElementById('interruptResult');
+    if (!type || !dateVal || !resultDiv) return;
+
+    const interruptDate = new Date(dateVal);
+    // 中斷後新起算日：中斷事由終了後翌日
+    // 簡化：起訴/承認 中斷日翌日即重新起算；催告後6個月內須起訴
+    const newStart = new Date(interruptDate);
+    newStart.setDate(newStart.getDate() + 1);
+    const newDeadline = addYears(newStart, originalYears);
+    const newRemaining = daysLeft(newDeadline);
+
+    const isDemand = type === 'demand';
+    const mustSueBefore = new Date(interruptDate);
+    mustSueBefore.setMonth(mustSueBefore.getMonth() + 6);
+
+    resultDiv.style.display = 'block';
+    resultDiv.innerHTML = `
+      <div style="border-top:1px solid var(--soft);margin-top:12px;padding-top:12px">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:10px">中斷後新時效</div>
+        <div class="result-row">
+          <span class="result-label">中斷日期</span>
+          <span class="result-value">${fmtDate(interruptDate)}</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">中斷後新起算日</span>
+          <span class="result-value">${fmtDate(newStart)}</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">新截止日（＋${originalYears}年）</span>
+          <span class="result-value" style="color:var(--accent);font-weight:600">${fmtDate(newDeadline)}</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">距新截止日</span>
+          <span class="result-value ${newRemaining < 0 ? 'accent' : newRemaining <= 180 ? '' : 'success'}">${newRemaining < 0 ? '已逾' : newRemaining + ' 天'}</span>
+        </div>
+        ${isDemand ? `<div class="warn-box" style="margin-top:10px;margin-bottom:0">⚠ 催告注意：須於 <strong>${fmtDate(mustSueBefore)}</strong> 前起訴，否則中斷效力不發生（§130）。</div>` : ''}
+        ${type === 'lawsuit' ? `<div style="font-size:12px;color:var(--muted);margin-top:8px">起訴中斷後，時效自判決確定（或訴訟終結）翌日重新起算。</div>` : ''}
+        ${type === 'acknowledge' ? `<div style="font-size:12px;color:var(--muted);margin-top:8px">債務人書面承認後，時效自承認翌日重新起算。建議取得書面記錄。</div>` : ''}
+      </div>
+    `;
   }
 
   function renderInterruptCard() {

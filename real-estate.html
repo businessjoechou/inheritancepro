@@ -101,15 +101,9 @@
     </div>
 
     <div class="card">
-      <div class="section-title">不動產評定現值</div>
-      <div class="input-group">
-        <label>土地公告現值（元）</label>
-        <input type="number" id="landValue" placeholder="例如：5000000" min="0">
-      </div>
-      <div class="input-group">
-        <label>房屋評定現值（元）</label>
-        <input type="number" id="buildingValue" placeholder="例如：1200000" min="0">
-      </div>
+      <div class="section-title">不動產明細</div>
+      <div id="propertyRows"></div>
+      <button type="button" onclick="addPropertyRow()" style="width:100%;padding:11px;border:1.5px dashed var(--border);border-radius:8px;background:transparent;font-size:14px;color:var(--muted);cursor:pointer;margin-top:4px;font-family:'Noto Sans TC',sans-serif;">＋ 新增不動產</button>
     </div>
 
     <div class="card">
@@ -118,22 +112,14 @@
         <label>繼承人總人數</label>
         <input type="number" id="heirCount" placeholder="例如：3" min="1" value="1">
       </div>
-      <div class="input-group">
-        <label>是否為自用住宅</label>
-        <div class="toggle-row">
-          <button class="toggle-btn active" id="btnSelfYes" onclick="setSelf(true)">是（自用住宅）</button>
-          <button class="toggle-btn" id="btnSelfNo" onclick="setSelf(false)">否（一般住宅）</button>
-        </div>
-        <div class="law-note" style="margin-top:8px">自用住宅享地價稅優惠稅率0.2%（一般稅率1%）。</div>
-      </div>
     </div>
 
     <div class="card">
       <div class="section-title">地價稅試算（選填）</div>
       <div class="input-group" id="taxRateGroup">
-        <label>地價稅率（%）</label>
+        <label>地價稅率（%）<span style="font-weight:400;color:var(--muted);font-size:12px">　自用住宅含自住房屋勾選後自動計算</span></label>
         <input type="number" id="taxRate" placeholder="自用住宅：0.2，一般：1" step="0.01" min="0" max="10" value="0.2">
-        <div class="law-note" style="margin-top:8px">土地稅法§14：一般地價稅1%；自用住宅§17優惠稅率0.2%。</div>
+        <div class="law-note" style="margin-top:8px">土地稅法§14：一般地價稅1%；自用住宅§17優惠稅率0.2%。系統依各房產自住勾選加總後自動推算。</div>
       </div>
     </div>
 
@@ -161,14 +147,56 @@
 </div>
 
 <script>
-  let isSelfUse = true;
+  let propertyRowCount = 0;
 
-  function setSelf(val) {
-    isSelfUse = val;
-    document.getElementById('btnSelfYes').classList.toggle('active', val);
-    document.getElementById('btnSelfNo').classList.toggle('active', !val);
-    document.getElementById('taxRate').value = val ? '0.2' : '1';
+  function addPropertyRow() {
+    const container = document.getElementById('propertyRows');
+    const id = propertyRowCount++;
+    const div = document.createElement('div');
+    div.id = `propRow_${id}`;
+    div.style.cssText = 'border:1.5px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px;background:var(--paper);';
+    div.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.1em;">不動產 #${id+1}</span>
+        <button type="button" onclick="removePropertyRow(${id})" class="remove-prop-btn" style="border:none;background:none;color:var(--muted);font-size:18px;cursor:pointer;line-height:1;padding:0 4px;">×</button>
+      </div>
+      <div class="input-group" style="margin-bottom:10px">
+        <label style="font-size:12px;margin-bottom:6px">不動產名稱／說明</label>
+        <input type="text" id="propName_${id}" placeholder="如「台北市大安區自宅」" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;background:#fff;font-size:14px;font-family:'Noto Sans TC',sans-serif;color:var(--ink);">
+      </div>
+      <div class="input-group" style="margin-bottom:10px">
+        <label style="font-size:12px;margin-bottom:6px">土地公告現值（元）</label>
+        <input type="number" id="propLand_${id}" placeholder="例如：5000000" min="0" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;background:#fff;font-size:14px;font-family:'Noto Sans TC',sans-serif;color:var(--ink);">
+      </div>
+      <div class="input-group" style="margin-bottom:10px">
+        <label style="font-size:12px;margin-bottom:6px">房屋評定現值（元）</label>
+        <input type="number" id="propBuilding_${id}" placeholder="例如：1200000" min="0" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;background:#fff;font-size:14px;font-family:'Noto Sans TC',sans-serif;color:var(--ink);">
+      </div>
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;">
+        <input type="checkbox" id="propSelf_${id}" checked style="width:16px;height:16px;accent-color:var(--accent);">
+        自用住宅（地價稅0.2%；房屋稅1.2%）
+      </label>
+    `;
+    container.appendChild(div);
+    updateRemoveButtons();
   }
+
+  function removePropertyRow(id) {
+    const el = document.getElementById(`propRow_${id}`);
+    if (el) el.remove();
+    updateRemoveButtons();
+  }
+
+  function updateRemoveButtons() {
+    const rows = document.querySelectorAll('#propertyRows > div');
+    rows.forEach(r => {
+      const btn = r.querySelector('.remove-prop-btn');
+      if (btn) btn.style.display = rows.length <= 1 ? 'none' : 'inline';
+    });
+  }
+
+  // init one row on load
+  addPropertyRow();
 
   function fmt(n) {
     return 'NT$ ' + Math.round(n).toLocaleString('zh-TW');
@@ -188,46 +216,79 @@
     return '稅率 10% / 15% / 20% 累進';
   }
 
-  function calculate() {
-    const land = parseFloat(document.getElementById('landValue').value) || 0;
-    const building = parseFloat(document.getElementById('buildingValue').value) || 0;
-    const heirCount = Math.max(1, parseInt(document.getElementById('heirCount').value) || 1);
-    const taxRate = parseFloat(document.getElementById('taxRate').value) || (isSelfUse ? 0.2 : 1);
+  function collectProperties() {
+    const rows = document.querySelectorAll('#propertyRows > div');
+    const props = [];
+    rows.forEach(r => {
+      const id = r.id.replace('propRow_', '');
+      const name = (document.getElementById(`propName_${id}`)?.value || '').trim() || `不動產 #${parseInt(id)+1}`;
+      const land = parseFloat(document.getElementById(`propLand_${id}`)?.value) || 0;
+      const building = parseFloat(document.getElementById(`propBuilding_${id}`)?.value) || 0;
+      const selfUse = document.getElementById(`propSelf_${id}`)?.checked ?? true;
+      props.push({ name, land, building, selfUse });
+    });
+    return props;
+  }
 
-    const EXEMPTION = 13330000; // 1,333萬
-    const estateTaxBase = land + building;
+  function calculate() {
+    const props = collectProperties();
+    const heirCount = Math.max(1, parseInt(document.getElementById('heirCount').value) || 1);
+    const taxRate = parseFloat(document.getElementById('taxRate').value);
+
+    const totalLand = props.reduce((s, p) => s + p.land, 0);
+    const totalBuilding = props.reduce((s, p) => s + p.building, 0);
+    const estateTaxBase = totalLand + totalBuilding;
+
+    const EXEMPTION = 13330000;
     const netEstate = Math.max(0, estateTaxBase - EXEMPTION);
     const excess = netEstate;
     const estateTax = calcEstateTax(netEstate);
     const share = estateTaxBase / heirCount;
 
-    // 年地價稅 = 土地公告現值 × 稅率%（僅供參考，不依面積）
-    const annualLandTax = land > 0 ? land * (taxRate / 100) : 0;
+    // Auto-compute recommended land tax rate based on properties
+    const anySelfUse = props.some(p => p.selfUse);
+    const effectiveTaxRate = !isNaN(taxRate) ? taxRate : (anySelfUse ? 0.2 : 1);
+    const annualLandTax = totalLand > 0 ? totalLand * (effectiveTaxRate / 100) : 0;
+
+    // Per-property house tax rows
+    const propDetailRows = props.map(p => {
+      const houseTaxRate = p.selfUse ? 0.012 : 0.024;
+      const houseTax = p.building * houseTaxRate;
+      return `
+        <div class="result-row">
+          <span class="result-label">${p.name}（${p.selfUse ? '自住1.2%' : '非自住2.4%'}）</span>
+          <span class="result-value">${p.building > 0 ? fmt(houseTax) + ' / 年' : '—'}</span>
+        </div>`;
+    }).join('');
+
+    const propSummaryRows = props.map((p, i) => `
+      <div class="result-row">
+        <span class="result-label">${p.name}</span>
+        <span class="result-value">${fmt(p.land + p.building)}</span>
+      </div>`).join('');
+
+    const totalHouseTax = props.reduce((s, p) => {
+      const r = p.selfUse ? 0.012 : 0.024;
+      return s + p.building * r;
+    }, 0);
 
     document.getElementById('resultContent').innerHTML = `
       <div class="result-hero">
-        <div class="result-hero-label">不動產遺產稅基</div>
+        <div class="result-hero-label">不動產遺產稅基合計</div>
         <div class="result-hero-amount">${fmt(estateTaxBase)}</div>
-        <div class="result-hero-sub">土地 + 房屋評定現值合計</div>
+        <div class="result-hero-sub">共 ${props.length} 筆不動產｜土地 + 房屋評定現值</div>
       </div>
 
       ${excess > 0
-        ? `<div class="info-box">⚠ 本不動產遺產稅基超過免稅額 NT$13,330,000，超額部分估算遺產稅 <strong>${fmt(estateTax)}</strong>（${estateTaxRateLabel(netEstate)}）。建議搭配全部遺產申報，實際稅額以國稅局核定為準。</div>`
-        : `<div class="success-box">✓ 本不動產遺產稅基未超過免稅額（1,333萬），若全部遺產亦未超過，無需繳納遺產稅。</div>`
+        ? `<div class="info-box">⚠ 不動產遺產稅基超過免稅額 NT$13,330,000，超額部分估算遺產稅 <strong>${fmt(estateTax)}</strong>（${estateTaxRateLabel(netEstate)}）。建議搭配全部遺產申報，實際稅額以國稅局核定為準。</div>`
+        : `<div class="success-box">✓ 不動產遺產稅基未超過免稅額（1,333萬），若全部遺產亦未超過，無需繳納遺產稅。</div>`
       }
 
       <div class="card">
-        <div class="section-title">遺產稅試算明細</div>
-        <div class="result-row">
-          <span class="result-label">土地公告現值</span>
-          <span class="result-value">${fmt(land)}</span>
-        </div>
-        <div class="result-row">
-          <span class="result-label">房屋評定現值</span>
-          <span class="result-value">${fmt(building)}</span>
-        </div>
-        <div class="result-row">
-          <span class="result-label">不動產遺產稅基合計</span>
+        <div class="section-title">各筆不動產稅基</div>
+        ${propSummaryRows}
+        <div class="result-row" style="margin-top:4px">
+          <span class="result-label" style="font-weight:600">不動產遺產稅基合計</span>
           <span class="result-value" style="font-weight:700">${fmt(estateTaxBase)}</span>
         </div>
         <div class="result-row">
@@ -245,7 +306,7 @@
       </div>
 
       <div class="card">
-        <div class="section-title">應繼分與土地稅</div>
+        <div class="section-title">應繼分與地價稅</div>
         <div class="result-row">
           <span class="result-label">您的應繼分（不動產部分）</span>
           <span class="result-value" style="font-weight:700">${fmt(share)}</span>
@@ -258,23 +319,32 @@
           <span class="result-label">土地增值稅</span>
           <span class="result-value success">免徵</span>
         </div>
-        ${land > 0 ? `
+        ${totalLand > 0 ? `
         <div class="result-row">
-          <span class="result-label">年地價稅估算（${taxRate}%）</span>
+          <span class="result-label">年地價稅估算（${effectiveTaxRate}%）</span>
           <span class="result-value">${fmt(annualLandTax)} / 年</span>
         </div>` : ''}
       </div>
 
+      <div class="card">
+        <div class="section-title">年房屋稅估算（持有期間）</div>
+        ${propDetailRows}
+        <div class="result-row" style="margin-top:4px">
+          <span class="result-label" style="font-weight:600">合計年房屋稅</span>
+          <span class="result-value" style="font-weight:700">${fmt(totalHouseTax)} / 年</span>
+        </div>
+      </div>
+
       <div class="success-box">✓ 繼承取得土地免徵土地增值稅（土地稅法§28-1）。此免徵優惠僅適用繼承情形，嗣後出售仍需課徵。</div>
 
-      ${isSelfUse ? `<div class="warn-box">自用住宅優惠：地價稅稅率0.2%，房屋稅優惠稅率1.2%（一般非自住2.4%）。申請自用住宅須符合設籍、未出租等條件。</div>` : ''}
+      ${anySelfUse ? `<div class="warn-box">自用住宅優惠：地價稅稅率0.2%，房屋稅優惠稅率1.2%（非自住2.4%）。申請自用住宅須符合設籍、未出租等條件。</div>` : ''}
 
       <div class="card">
         <div class="law-note">
           <strong>遺產及贈與稅法§10</strong>：遺產價值以被繼承人死亡時之時價估定，土地以公告現值、房屋以評定現值計算。<br><br>
           <strong>土地稅法§28-1</strong>：因繼承而移轉之土地，免徵土地增值稅。<br><br>
-          <strong>土地稅法§14</strong>：地價稅每年徵收一次；土地稅法§17規定自用住宅優惠稅率0.2%。<br><br>
-          <strong>房屋稅條例§4</strong>：房屋稅以房屋評定現值為課稅依據；自住用途享較低稅率。
+          <strong>土地稅法§14</strong>：地價稅每年徵收一次；§17規定自用住宅優惠稅率0.2%。<br><br>
+          <strong>房屋稅條例§4</strong>：自住用途1.2%；非自住2.4%。
         </div>
       </div>
     `;
@@ -292,7 +362,7 @@
       'real-estate',
       `不動產繼承試算 ${new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit'})}`,
       `遺產稅基：${fmt(estateTaxBase)}，應繼分：${fmt(share)}`,
-      { land, building, heirCount, isSelfUse, taxRate }
+      { props, heirCount, estateTaxBase }
     );
   }
 
