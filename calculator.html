@@ -778,9 +778,7 @@
     <div class="law-note" id="lawNote"></div>
     <div id="taxContainer"></div>
 
-    <button class="btn-next" onclick="downloadPDF()" style="width:100%;margin-top:16px;margin-bottom:10px">⬇ 下載 PDF 報告</button>
-    <a href="inheritance-timeline.html" style="display:block;text-align:center;margin-bottom:10px;padding:13px;border:1.5px solid var(--border);border-radius:10px;font-size:13px;color:var(--accent);text-decoration:none;background:#f4f7fb">📅 查看繼承辦理流程與期限時間軸 →</a>
-    <button class="restart-btn" onclick="restart()">🔄 重新計算</button>
+    <a href="inheritance-timeline.html" style="display:block;text-align:center;margin:16px 0 10px;padding:13px;border:1.5px solid var(--border);border-radius:10px;font-size:13px;color:var(--accent);text-decoration:none;background:#f4f7fb">📅 查看繼承辦理流程與期限時間軸 →</a>
     <div id="save-btn-container"></div>
   </div>
 
@@ -878,8 +876,6 @@
   function showStep(n) {
     document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
     document.getElementById('step' + n).classList.add('active');
-    document.getElementById('backBtn').style.display = n > 1 ? 'block' : 'none';
-
     if (n === 4) {
       document.getElementById('autoSpouseRow').style.display = state.hasSpouse ? 'flex' : 'none';
       // 自動帶入步驟3的子女/父母人數
@@ -890,13 +886,17 @@
     }
 
     if (n === totalSteps) {
-      document.getElementById('nextBtn').style.display = 'none';
+      // 結果頁：navBar 換成「重新計算」＋「列印/PDF」
+      document.getElementById('navBar').innerHTML = `
+        <button class="btn-back" onclick="restart()" style="flex:1;display:block">← 重新計算</button>
+        <button class="btn-next" onclick="downloadPDF()" style="flex:1">列印 / PDF</button>
+      `;
       calculate();
     } else {
-      document.getElementById('nextBtn').style.display = 'block';
-      if (n === 3) document.getElementById('nextBtn').textContent = '下一步：遺產稅 →';
-      else if (n === 4) document.getElementById('nextBtn').textContent = '計算結果 →';
-      else document.getElementById('nextBtn').textContent = '繼續 →';
+      document.getElementById('navBar').innerHTML = `
+        <button class="btn-back" id="backBtn" onclick="goBack()" style="${n > 1 ? 'display:block' : 'display:none'}">← 返回</button>
+        <button class="btn-next" id="nextBtn" onclick="goNext()">${n === 3 ? '下一步：遺產稅 →' : n === 4 ? '計算結果 →' : '繼續 →'}</button>
+      `;
     }
     updateProgress();
     window.scrollTo(0, 0);
