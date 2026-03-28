@@ -455,9 +455,9 @@
 
     initSaveButton(
       'inheritance-timeline',
-      `繼承時間軸 ${new Date().toLocaleDateString('zh-TW')}`,
+      `繼承時間軸 ${new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit'})}`,
       `死亡日期：${formatDate(death)}`,
-      { ...lastData }
+      { ...lastData, _html: buildPrintHtml() }
     );
   }
 
@@ -500,8 +500,8 @@
     };
   }
 
-  function downloadPDF(){
-    if(!lastData) return;
+  function buildPrintHtml(){
+    if(!lastData) return '';
     const { death, tasks } = lastData;
     const today = new Date().toLocaleDateString('zh-TW', {year:'numeric', month:'long', day:'numeric'});
     const sorted = [...tasks].sort((a,b) => a.deadline - b.deadline);
@@ -523,7 +523,7 @@
     const urgentCount = tasks.filter(t=>t.status==='urgent').length;
     const warnCount   = tasks.filter(t=>t.status==='warn').length;
 
-    const html = `<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>繼承流程時間軸</title>
+    return `<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>繼承流程時間軸</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500&display=swap');
 body{font-family:'Noto Sans TC',sans-serif;padding:40px;max-width:720px;margin:0 auto;font-size:13px;color:#1a1410;}
@@ -562,7 +562,11 @@ td{padding:9px 12px;border-bottom:1px solid #e8e0d0;vertical-align:top;}
 <table><thead><tr><th>項目</th><th>期限</th><th>剩餘天數</th><th>狀態</th></tr></thead><tbody>${rows}</tbody></table>
 <div class="footer">© ${new Date().getFullYear()} InheritancePro &nbsp;·&nbsp; inheritancepro.app<br>本工具僅供參考，實際辦理請洽相關機關或諮詢律師。</div>
 </body></html>`;
+  }
 
+  function downloadPDF(){
+    const html = buildPrintHtml();
+    if(!html){return;}
     const w = window.open('','_blank');
     if(!w){alert('請允許本網站開啟彈出視窗以下載 PDF');return;}
     w.document.write(html);

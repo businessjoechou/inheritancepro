@@ -427,9 +427,9 @@
     const deadlineStr = fmtDate(deadline);
     initSaveButton(
       'prescription',
-      `消滅時效 - ${typeConfig[selectedType]?.label||''} ${new Date().toLocaleDateString('zh-TW')}`,
+      `消滅時效 - ${typeConfig[selectedType]?.label||''} ${new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit'})}`,
       `截止日：${deadlineStr}`,
-      { claimType: selectedType, startDate: startDate.toISOString() }
+      { claimType: selectedType, startDate: startDate.toISOString(), _html: buildPrintHtml() }
     );
   }
 
@@ -513,9 +513,9 @@
     const deadlineStr = fmtDate(effective);
     initSaveButton(
       'prescription',
-      `侵權行為時效試算 ${new Date().toLocaleDateString('zh-TW')}`,
+      `侵權行為時效試算 ${new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit'})}`,
       `雙期間計算`,
-      { claimType: selectedType, knowledgeDate: knowledgeDate.toISOString(), tortDate: tortDate.toISOString() }
+      { claimType: selectedType, knowledgeDate: knowledgeDate.toISOString(), tortDate: tortDate.toISOString(), _html: buildPrintHtml() }
     );
   }
 
@@ -567,6 +567,8 @@
   const today = new Date().toISOString().split('T')[0];
   document.getElementById('startDate').value = today;
   document.getElementById('tortDate').value = today;
+
+  function buildPrintHtml() { return ''; }
 
   async function initSaveButton(tool, title, summary, data) {
     const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');

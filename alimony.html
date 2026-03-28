@@ -392,9 +392,9 @@
 
     initSaveButton(
       'alimony',
-      `贍養費試算 ${new Date().toLocaleDateString('zh-TW')}`,
+      `贍養費試算 ${new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit'})}`,
       `月薪差距基礎試算`,
-      { ...state, ...lastResult }
+      { ...state, ...lastResult, _html: buildPrintHtml() }
     );
   }
 
@@ -439,13 +439,12 @@
     };
   }
 
-  function downloadPDF(){
-    if(!lastResult)return;
+  function buildPrintHtml(){
+    if(!lastResult)return null;
     const { eligible, rejectedReason, low, high, durLow, durHigh, factors, courtCeiling, minLife, city } = lastResult;
     const today = new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'long',day:'numeric'});
     const factorRows = factors.map(f=>`<tr><td>${f.label}</td><td>${f.desc}</td><td style="color:${f.tag==='pos'?'#2a6b4a':'#8b2020'};font-weight:500">${f.tag==='pos'?'有利':'不利'}</td></tr>`).join('');
-
-    const html=`<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>贍養費試算報告</title>
+    return `<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>贍養費試算報告</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500&family=DM+Mono:wght@400;500&display=swap');
 body{font-family:'Noto Sans TC',sans-serif;padding:40px;max-width:680px;margin:0 auto;font-size:13px;color:#1a1410;}
@@ -480,11 +479,12 @@ ${eligible
 <div class="disclaimer">⚠ 本試算結果僅供參考，台灣法院依具體個案裁量，實際判決金額可能與試算結果有相當差異。建議委請律師評估實際案情。</div>
 <div class="footer">© ${new Date().getFullYear()} InheritancePro &nbsp;·&nbsp; inheritancepro.app<br>本報告僅供參考，不構成法律意見。</div>
 </body></html>`;
+  }
+  function downloadPDF(){
+    const html=buildPrintHtml(); if(!html)return;
     const w=window.open('','_blank');
     if(!w){alert('請允許本網站開啟彈出視窗以下載 PDF');return;}
-    w.document.write(html);
-    w.document.close();
-    setTimeout(()=>w.print(),600);
+    w.document.write(html); w.document.close(); setTimeout(()=>w.print(),600);
   }
 </script>
 <div class="faq-wrap">

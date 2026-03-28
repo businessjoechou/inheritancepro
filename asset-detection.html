@@ -820,9 +820,9 @@
     document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
     initSaveButton(
       'asset-detection',
-      `脫產偵測 ${new Date().toLocaleDateString('zh-TW')}`,
+      `脫產偵測 ${new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit'})}`,
       `風險分析結果`,
-      { ...analysisResult }
+      { ...analysisResult, _html: buildPrintHtml() }
     );
   }
 

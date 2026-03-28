@@ -402,9 +402,9 @@
     document.getElementById('resultSection').scrollIntoView({behavior:'smooth',block:'start'});
     initSaveButton(
       'minor-damages',
-      `未成年損害賠償試算 ${new Date().toLocaleDateString('zh-TW')}`,
+      `未成年損害賠償試算 ${new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit'})}`,
       `賠償金額試算`,
-      { ...state }
+      { ...state, _html: buildPrintHtml() }
     );
   }
 
@@ -433,13 +433,13 @@
     window.scrollTo({top:0,behavior:'smooth'});
   }
 
-  function downloadPDF(){
-    if(!lastResult)return;
+  function buildPrintHtml(){
+    if(!lastResult)return '';
     const {propertyTotal,solLow,solHigh,laborLoss,totalLow,totalHigh,schoolLow,schoolHigh,schoolRate,medical,futureMed,lostWork,otherLoss,offenderCount}=lastResult;
     const today=new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'long',day:'numeric'});
     const typeLabel=state.type==='physical'?'肢體暴力':state.type==='mental'?'精神/言語霸凌':'網路/社群霸凌';
     const injuryLabel=state.injury==='minor'?'輕傷':state.injury==='moderate'?'中等傷害':'重傷';
-    const html=`<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>未成年損害賠償試算報告</title>
+    return `<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>未成年損害賠償試算報告</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500&family=DM+Mono:wght@400;500&display=swap');
 body{font-family:'Noto Sans TC',sans-serif;padding:40px;max-width:700px;margin:0 auto;font-size:13px;color:#1a1410;}
@@ -483,6 +483,11 @@ ${schoolRate>0?`<tr><td>學校責任部分</td><td class="val">${fmt(schoolLow)}
 <div class="disclaimer">⚠ 精神慰撫金無固定公式，本試算依實際判決校準，但每案不同，實際金額由法院裁量。建議委請律師評估。</div>
 <div class="footer">© ${new Date().getFullYear()} InheritancePro &nbsp;·&nbsp; inheritancepro.app<br>本報告僅供參考，不構成法律意見。</div>
 </body></html>`;
+  }
+
+  function downloadPDF(){
+    const html=buildPrintHtml();
+    if(!html)return;
     const w=window.open('','_blank');
     if(!w){alert('請允許本網站開啟彈出視窗以下載 PDF');return;}
     w.document.write(html);

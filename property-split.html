@@ -378,9 +378,9 @@
 
     initSaveButton(
       'property-split',
-      `剩餘財產分配試算 ${new Date().toLocaleDateString('zh-TW')}`,
+      `剩餘財產分配試算 ${new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit'})}`,
       `應分配金額試算`,
-      { ...lastResult }
+      { ...lastResult, _html: buildPrintHtml() }
     );
   }
 
@@ -458,8 +458,8 @@
     };
   }
 
-  function downloadPDF() {
-    if (!lastResult) return;
+  function buildPrintHtml() {
+    if (!lastResult) return '';
     const { aAsset, aDebt, aPre, aInh, aSol, bAsset, bDebt, bPre, bInh, bSol, aNet, bNet, diff, claim } = lastResult;
     const termination = getTermination();
     const today = new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' });
@@ -471,7 +471,7 @@
       return val > 0 ? `<tr><td>${label}</td><td class="val" style="color:#a00">－ ${fmtP(val)}</td><td class="val" style="color:#a00">－ ${fmtP(val === aSol ? bSol : 0)}</td></tr>` : '';
     }
 
-    const html = `<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>剩餘財產差額分配報告</title>
+    return `<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>剩餘財產差額分配報告</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500&family=DM+Mono:wght@400;500&display=swap');
 body{font-family:'Noto Sans TC',sans-serif;padding:40px;max-width:700px;margin:0 auto;font-size:13px;color:#1a1410;}
@@ -523,7 +523,11 @@ ${claim > 0
 <div class="law-box accent"><strong>民法第1030-4條（請求時效）：</strong>第1030-1條之請求權，自請求權人知有剩餘財產之差額時起，二年間不行使而消滅。自法律關係消滅時起，逾五年者，亦同。</div>
 <div class="footer">© ${new Date().getFullYear()} InheritancePro &nbsp;·&nbsp; inheritancepro.app<br>本報告僅供參考，不構成法律意見。實際案件請諮詢專業律師。</div>
 </body></html>`;
+  }
 
+  function downloadPDF() {
+    const html = buildPrintHtml();
+    if (!html) return;
     const w = window.open('', '_blank');
     if (!w) { alert('請允許本網站開啟彈出視窗以下載 PDF'); return; }
     w.document.write(html);

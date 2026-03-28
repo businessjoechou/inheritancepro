@@ -1195,17 +1195,17 @@
 
     initSaveButton(
       'inheritance',
-      `遺產繼承試算 ${new Date().toLocaleDateString('zh-TW')}`,
+      `遺產繼承試算 ${new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit'})}`,
       `遺產總額 $${(state.totalEstate||0).toLocaleString()} ／ ${(state.hasSpouse ? 1 : 0) + heirGroups.length} 位繼承人`,
-      { ...state }
+      { ...state, _html: buildPrintHtml() }
     );
   }
 
-  function downloadPDF() {
+  function buildPrintHtml() {
     const today = new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' });
-    const resultHTML = document.getElementById('resultContainer').innerHTML;
-    const lawHTML = document.getElementById('lawNote').innerHTML;
-    const taxHTML = document.getElementById('taxContainer').innerHTML;
+    const resultHTML = document.getElementById('resultContainer')?.innerHTML || '';
+    const lawHTML = document.getElementById('lawNote')?.innerHTML || '';
+    const taxHTML = document.getElementById('taxContainer')?.innerHTML || '';
 
     const printContent = `
 <!DOCTYPE html>
@@ -1276,9 +1276,13 @@
 </body>
 </html>`;
 
+    return printContent;
+  }
+  function downloadPDF() {
+    const html = buildPrintHtml();
     const printWin = window.open('', '_blank');
     if(!printWin){alert('請允許本網站開啟彈出視窗以下載 PDF');return;}
-    printWin.document.write(printContent);
+    printWin.document.write(html);
     printWin.document.close();
     setTimeout(() => printWin.print(), 600);
   }

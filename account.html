@@ -767,7 +767,7 @@
     totalEstate: '遺產總額', children: '子女人數', parents: '父母人數',
     siblings: '兄弟姊妹人數', grandparents: '祖父母人數',
     deceased_children: '已故子女人數', representatives: '代位繼承人數',
-    renounce: '拋棄繼承人數', childCount: '子女人數',
+    renounce: '拋棄繼承', childCount: '子女人數',
     spouseShare: '配偶應繼分', totalTax: '遺產稅試算',
     // 剩餘財產 property-split.html
     wifeMarriage: '妻婚後財產', husbandMarriage: '夫婚後財產',
@@ -775,9 +775,16 @@
     wifeDebt: '妻負債', husbandDebt: '夫負債', claim: '請求差額',
     claimant: '請求方',
     // 贍養費 alimony.html
-    marriageYears: '婚姻年數', requestorIncome: '請求人月收入',
-    payorIncome: '對方月收入', requestorAge: '請求人年齡',
-    fault: '是否有過失', estimatedAlimony: '試算贍養費',
+    work: '工作能力', fault: '過失歸屬', caregiver: '曾放棄工作照顧子女',
+    age: '年齡層', eligible: '符合請求資格', rejectedReason: '不符合原因',
+    low: '贍養費下限', high: '贍養費上限',
+    durLow: '給付期間下限（年）', durHigh: '給付期間上限（年）',
+    factors: '考量因素', reqGap: '請求方月缺口',
+    payDisposable: '對方可支配收入', courtCeiling: '法院參考上限',
+    minLife: '最低生活費', city: '縣市地區',
+    years: '婚姻年數', marriageYears: '婚姻年數',
+    requestorIncome: '請求人月收入', payorIncome: '對方月收入',
+    estimatedAlimony: '試算贍養費',
     // 繼承時間軸 inheritance-timeline.html
     deathDate: '死亡日期', deadlines: '期限列表',
     // 脫產偵測 asset-detection.html
@@ -791,47 +798,62 @@
     // 勞基法類
     monthlySalary: '月薪', dailyWage: '日薪', hourlyWage: '時薪',
     injuryDays: '受傷天數', compensation: '補償金額',
-    overtimePay: '加班費', workYears: '年資（年）',
+    overtimePay: '加班費', workYears: '年資',
   };
 
-  const REGIME_MAP = { legal: '法定繼承', testamentary: '遺囑繼承', will: '遺囑繼承' };
+  // 值對照表
+  const VALUE_MAP = {
+    regime:  { legal: '法定繼承', testamentary: '遺囑繼承', will: '遺囑繼承' },
+    claimant:{ wife: '妻方', husband: '夫方' },
+    work:    { none: '無工作能力', limited: '工作能力受限', full: '有工作能力' },
+    fault:   { other: '他方過失', mutual: '雙方均有過失', self: '自身過失' },
+    age:     { elder: '65歲以上', senior: '50–64歲', middle: '40–49歲', young: '40歲以下' },
+    city:    { province: '非六都縣市', taipei: '台北市', newTaipei: '新北市',
+               taichung: '台中市', tainan: '台南市', kaohsiung: '高雄市', taoyuan: '桃園市' },
+    riskLevel:{ CRITICAL: '極高風險', HIGH: '高風險', MEDIUM: '中風險', LOW: '低風險' },
+  };
+
+  // 數字單位對照
+  const UNIT_MAP = {
+    years:'年', marriageYears:'年', workYears:'年', prescriptionYears:'年',
+    durLow:'年', durHigh:'年',
+    injuryDays:'天',
+    children:'人', parents:'人', siblings:'人', grandparents:'人',
+    deceased_children:'人', representatives:'人', childCount:'人',
+  };
 
   // ── Format a single value ────────────────────────────────────────────
   function formatValue(k, v) {
     if (typeof v === 'boolean') return v ? '是' : '否';
 
-    // Special cases
-    if (k === 'regime') return REGIME_MAP[v] || v;
-    if (k === 'claimant') return v === 'wife' ? '妻方' : v === 'husband' ? '夫方' : v;
-    if (k === 'riskLevel') {
-      const m = { CRITICAL: '極高', HIGH: '高', MEDIUM: '中', LOW: '低' };
-      return m[v] || v;
-    }
-
     // renounce object → "子女 N 人、父母 N 人…"
     if (k === 'renounce' && typeof v === 'object' && !Array.isArray(v)) {
-      const sub = { children: '子女', parents: '父母', siblings: '兄弟姊妹', grandparents: '祖父母' };
-      return Object.entries(v).filter(([,n]) => n > 0)
-        .map(([sk, n]) => `${sub[sk] || sk} ${n} 人`).join('、') || '無';
+      const sub = { children:'子女', parents:'父母', siblings:'兄弟姊妹', grandparents:'祖父母' };
+      const parts = Object.entries(v).filter(([,n]) => n > 0).map(([sk, n]) => `${sub[sk]||sk} ${n} 人`);
+      return parts.length ? parts.join('、') : '無';
     }
 
     if (Array.isArray(v)) return `${v.length} 筆`;
+    if (typeof v === 'object') return `${Object.keys(v).length} 項`;
 
-    if (typeof v === 'object') {
-      // Generic object — show key count
-      return `${Object.keys(v).length} 項`;
-    }
+    // 值對照
+    if (VALUE_MAP[k] && VALUE_MAP[k][v] !== undefined) return VALUE_MAP[k][v];
 
     if (typeof v === 'number') {
-      // Count-like keys → show as "N 人"
-      const countKeys = ['children','parents','siblings','grandparents','deceased_children','representatives','childCount','workYears','marriageYears','injuryDays','prescriptionYears'];
-      if (countKeys.includes(k)) return `${v} ${['marriageYears','workYears','prescriptionYears'].includes(k) ? '年' : ['injuryDays'].includes(k) ? '天' : '人'}`;
-      // Money
+      const unit = UNIT_MAP[k];
+      if (unit) return `${v}\u00a0${unit}`;
       if (v > 999) return `NT$\u00a0${v.toLocaleString('zh-TW')}`;
       return String(v);
     }
 
     return String(v);
+  }
+
+  // ── 統一日期格式：2026/03/28（補零）──────────────────────────────────
+  function fmtDate(isoOrDate) {
+    const d = isoOrDate instanceof Date ? isoOrDate : new Date(isoOrDate);
+    if (isNaN(d)) return String(isoOrDate);
+    return d.toLocaleDateString('zh-TW', { year:'numeric', month:'2-digit', day:'2-digit' });
   }
 
   // ── Modal ────────────────────────────────────────────────────────────
@@ -903,17 +925,32 @@
   }
 
   function printRecord(item) {
+    const data = item.data || {};
+
+    // 優先使用計算機存好的原始 print HTML
+    if (data._html) {
+      const w = window.open('', '_blank');
+      if (!w) { alert('請允許彈出視窗以列印'); return; }
+      w.document.write(data._html);
+      w.document.close();
+      w.onload = () => setTimeout(() => w.print(), 400);
+      return;
+    }
+
+    // 舊紀錄 fallback：簡易表格格式
     const title = item.title || '計算紀錄';
     const dateStr = item.created_at ? formatDate(item.created_at) : '—';
-    const data = item.data || {};
     const summary = item.summary || '';
     const tool = item.tool || '';
+    const today = new Date().toLocaleDateString('zh-TW', {year:'numeric', month:'2-digit', day:'2-digit'});
 
-    const rows = Object.entries(data).filter(([,v]) => v !== null && v !== undefined).map(([k, v]) => {
-      const label = LABEL_MAP[k] || k;
-      const display = formatValue(k, v);
-      return `<tr><td>${label}</td><td>${display}</td></tr>`;
-    }).join('');
+    const rows = Object.entries(data)
+      .filter(([k, v]) => k !== '_html' && v !== null && v !== undefined)
+      .map(([k, v]) => {
+        const label = LABEL_MAP[k] || k;
+        const display = formatValue(k, v);
+        return `<tr><td>${label}</td><td>${display}</td></tr>`;
+      }).join('');
 
     const html = `<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8">
 <title>${title}</title>
@@ -934,7 +971,7 @@
 </style></head><body>
 <div class="header">
   <div><div class="logo">Inheritance<span>Pro</span></div><div style="font-size:12px;color:#7a6f62;margin-top:4px">${tool ? tool + '　計算紀錄' : '計算紀錄'}</div></div>
-  <div class="meta">產出日期：${new Date().toLocaleDateString('zh-TW')}<br>儲存日期：${dateStr}</div>
+  <div class="meta">產出日期：${today}<br>儲存日期：${dateStr}</div>
 </div>
 <h2>${title}</h2>
 ${summary ? `<div class="summary">${summary}</div>` : ''}
