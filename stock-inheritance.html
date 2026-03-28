@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>股票繼承估算｜InheritancePro</title>
+<meta name="description" content="計算繼承股票之遺產估值，上市股票以收盤價，未上市股票以資產淨值法計算，依遺產及贈與稅法第10條設計。">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://inheritancepro.app/stock-inheritance.html">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1410; --paper: #f5f0e8; --accent: #8b2020; --gold: #c4932a;
+    --soft: #e8e0d0; --muted: #7a6f62; --success: #2a6b4a; --danger: #8b2020;
+    --border: #c8bfb0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--paper); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; min-height: 100vh; font-size: 15px; }
+  header { background: var(--ink); color: var(--paper); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .logo { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 700; letter-spacing: 0.04em; }
+  .logo span { color: var(--gold); }
+  .home-link { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; }
+  .home-link:hover { color: var(--gold); }
+  .progress-bar { height: 3px; background: var(--soft); }
+  .progress-fill { height: 100%; background: var(--gold); transition: width 0.4s ease; }
+  main { padding: 24px 20px 100px; max-width: 480px; margin: 0 auto; }
+  .step-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
+  h2 { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
+  .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
+  .card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 14px; }
+  .input-group { margin-bottom: 18px; }
+  .input-group:last-child { margin-bottom: 0; }
+  label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 8px; }
+  input[type="number"], input[type="text"], input[type="date"], select {
+    width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 8px;
+    background: var(--paper); font-size: 15px; font-family: 'Noto Sans TC', sans-serif;
+    color: var(--ink); transition: border-color 0.2s; -webkit-appearance: none;
+  }
+  input:focus, select:focus { outline: none; border-color: var(--gold); }
+  .law-pill { font-family: 'DM Mono', monospace; font-size: 10px; background: #fdf5f5; color: var(--accent); border: 1px solid #e8b0b0; border-radius: 4px; padding: 2px 7px; display: inline-block; margin: 2px 3px 2px 0; }
+  .law-note { border-left: 3px solid var(--gold); padding-left: 12px; font-size: 12px; color: var(--muted); line-height: 1.7; margin-top: 10px; }
+  .info-box { background: #fdf5f5; border: 1px solid #e8c0b8; border-left: 3px solid var(--accent); border-radius: 6px; padding: 12px 14px; font-size: 12px; color: var(--accent); line-height: 1.7; margin-bottom: 14px; }
+  .warn-box { background: #fdf3e7; border: 1px solid #e8c882; border-left: 3px solid var(--gold); border-radius: 6px; padding: 12px 14px; font-size: 12px; color: #7a5a10; line-height: 1.7; margin-bottom: 14px; }
+  .success-box { background: #f0fdf4; border: 1px solid #a8d5b5; border-left: 3px solid var(--success); border-radius: 6px; padding: 12px 14px; font-size: 12px; color: var(--success); line-height: 1.7; margin-bottom: 14px; }
+  /* Stock row */
+  .stock-row { background: var(--paper); border: 1.5px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 10px; position: relative; }
+  .stock-row-title { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.1em; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+  .stock-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .stock-grid .input-group { margin-bottom: 0; }
+  .remove-btn { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 18px; padding: 0 4px; line-height: 1; }
+  .remove-btn:hover { color: var(--danger); }
+  .add-stock-btn { width: 100%; padding: 12px; border: 1.5px dashed var(--border); border-radius: 10px; background: transparent; font-size: 14px; color: var(--muted); cursor: pointer; font-family: 'Noto Sans TC', sans-serif; transition: all 0.2s; margin-bottom: 14px; }
+  .add-stock-btn:hover { border-color: var(--gold); color: var(--gold); }
+  /* Results */
+  .result-hero { background: var(--ink); color: var(--paper); border-radius: 12px; padding: 24px 20px; margin-bottom: 14px; text-align: center; }
+  .result-hero-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 8px; }
+  .result-hero-amount { font-family: 'Noto Serif TC', serif; font-size: 28px; font-weight: 700; color: var(--gold); margin-bottom: 6px; }
+  .result-hero-sub { font-size: 13px; color: var(--muted); }
+  .result-row { display: flex; justify-content: space-between; align-items: baseline; padding: 10px 0; border-bottom: 1px solid var(--soft); }
+  .result-row:last-child { border-bottom: none; }
+  .result-label { font-size: 13px; color: var(--muted); }
+  .result-value { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; color: var(--ink); }
+  .result-value.accent { color: var(--accent); }
+  .result-value.success { color: var(--success); }
+  .section-title { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 12px; }
+  .stock-detail-row { display: flex; align-items: baseline; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--soft); gap: 8px; }
+  .stock-detail-row:last-child { border-bottom: none; }
+  .stock-detail-name { font-size: 13px; color: var(--ink); font-weight: 500; flex: 1; }
+  .stock-detail-type { font-family: 'DM Mono', monospace; font-size: 10px; background: var(--soft); color: var(--muted); border-radius: 3px; padding: 2px 6px; white-space: nowrap; }
+  .stock-detail-val { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--ink); white-space: nowrap; }
+  .step { display: none; }
+  .step.active { display: block; animation: fadeUp 0.3s ease both; }
+  .nav-bar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); background: #fff; border-top: 1px solid var(--border); padding: 14px 20px; display: flex; gap: 10px; width: 100%; max-width: 480px; }
+  .btn { flex: 1; padding: 14px; border-radius: 10px; border: none; font-size: 15px; font-family: 'Noto Sans TC', sans-serif; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+  .btn-primary { background: var(--ink); color: var(--paper); }
+  .btn-primary:hover { background: #2a1a10; }
+  .btn-secondary { background: var(--soft); color: var(--muted); }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  @media print { header, .nav-bar, .progress-bar { display: none; } main { padding: 20px; } }
+  .disclaimer-bar { max-width: 560px; margin: 0 auto; padding: 16px 24px 40px; font-size: 11.5px; color: rgba(0,0,0,0.35); line-height: 1.7; border-top: 1px solid var(--border); }
+  .disclaimer-bar strong { color: rgba(0,0,0,0.55); }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" style="text-decoration:none;color:inherit"><div class="logo">Inheritance<span>Pro</span></div></a>
+  <a href="index.html" class="home-link">← 首頁</a>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:50%"></div></div>
+
+<main>
+
+  <!-- Step 1 -->
+  <div class="step active" id="step1">
+    <div class="step-label">Step 1 of 2 · 股票持有資料</div>
+    <h2>股票繼承估算</h2>
+    <p class="subtitle">輸入被繼承人持有之各股票資料，估算遺產稅基及各繼承人應繼分。</p>
+
+    <div style="margin-bottom:14px">
+      <span class="law-pill">遺贈稅法§10第1項第3款（上市股票）</span>
+      <span class="law-pill">遺贈稅法§10第1項第4款（未上市資產淨值法）</span>
+    </div>
+
+    <div class="warn-box">上市／上櫃股票應以被繼承人死亡當日收盤價認列（死亡當日未交易者，以前後各二日平均）。請填入實際收盤價。</div>
+
+    <div id="stockList">
+      <!-- 股票列 動態新增 -->
+    </div>
+    <button class="add-stock-btn" onclick="addStock()">＋ 新增一筆股票</button>
+
+    <div class="card">
+      <div class="section-title">繼承基本資料</div>
+      <div class="input-group">
+        <label>被繼承人死亡日期</label>
+        <input type="date" id="deathDate">
+        <div class="law-note" style="margin-top:8px">遺贈稅法§10：以死亡日時價認列。上市股票以當日收盤價，未上市以資產淨值法。</div>
+      </div>
+      <div class="input-group">
+        <label>繼承人總人數（等分計算）</label>
+        <input type="number" id="heirCount" placeholder="例如：3" min="1" value="1">
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Step 2：結果 -->
+  <div class="step" id="step2">
+    <div class="step-label">結果 · 股票繼承估算</div>
+    <h2>試算結果</h2>
+    <p class="subtitle">以下為依您輸入股票資料之遺產估值，僅供初步參考。</p>
+    <div id="resultContent"></div>
+    <div id="save-btn-container"></div>
+  </div>
+
+</main>
+
+<div class="nav-bar" id="navBar">
+  <button class="btn btn-primary" onclick="calculate()">計算結果 →</button>
+</div>
+
+<script>
+  let stockCount = 0;
+
+  function addStock() {
+    stockCount++;
+    const idx = stockCount;
+    const div = document.createElement('div');
+    div.className = 'stock-row';
+    div.id = `stock-${idx}`;
+    div.innerHTML = `
+      <div class="stock-row-title">
+        <span>股票 #${idx}</span>
+        <button class="remove-btn" onclick="removeStock(${idx})">×</button>
+      </div>
+      <div class="input-group">
+        <label>股票名稱／代號</label>
+        <input type="text" id="sname-${idx}" placeholder="例如：台積電 2330">
+      </div>
+      <div class="stock-grid">
+        <div class="input-group">
+          <label>股票類型</label>
+          <select id="stype-${idx}" onchange="togglePriceLabel(${idx})">
+            <option value="listed">上市（TWSE）</option>
+            <option value="otc">上櫃（OTC）</option>
+            <option value="unlisted">未上市</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>持股張數（每張1000股）</label>
+          <input type="number" id="slots-${idx}" placeholder="例如：10" min="0">
+        </div>
+      </div>
+      <div class="input-group">
+        <label id="sprice-label-${idx}">每股收盤價（元）</label>
+        <input type="number" id="sprice-${idx}" placeholder="例如：780" min="0" step="0.01">
+        <div class="law-note" id="sprice-note-${idx}" style="margin-top:8px">上市/上櫃：請填入死亡當日實際收盤價。</div>
+      </div>
+    `;
+    document.getElementById('stockList').appendChild(div);
+  }
+
+  function removeStock(idx) {
+    const el = document.getElementById(`stock-${idx}`);
+    if (el) el.remove();
+  }
+
+  function togglePriceLabel(idx) {
+    const t = document.getElementById(`stype-${idx}`).value;
+    const lbl = document.getElementById(`sprice-label-${idx}`);
+    const note = document.getElementById(`sprice-note-${idx}`);
+    if (t === 'unlisted') {
+      lbl.textContent = '每股淨值（元，資產淨值法）';
+      note.innerHTML = '未上市股票依遺贈稅法§10第1項第4款，以每股資產淨值計算。';
+    } else {
+      lbl.textContent = '每股收盤價（元）';
+      note.innerHTML = '上市/上櫃：請填入被繼承人死亡當日之實際收盤價（遺贈稅法§10第1項第3款）。';
+    }
+  }
+
+  function fmt(n) {
+    return 'NT$ ' + Math.round(n).toLocaleString('zh-TW');
+  }
+
+  function calculate() {
+    const heirCount = Math.max(1, parseInt(document.getElementById('heirCount').value) || 1);
+    const EXEMPTION = 13330000;
+
+    const rows = document.querySelectorAll('.stock-row');
+    if (rows.length === 0) { alert('請至少新增一筆股票'); return; }
+
+    let total = 0;
+    let details = [];
+    let valid = true;
+
+    rows.forEach(row => {
+      const id = row.id.replace('stock-', '');
+      const name = document.getElementById(`sname-${id}`)?.value || '未命名';
+      const type = document.getElementById(`stype-${id}`)?.value || 'listed';
+      const lots = parseFloat(document.getElementById(`slots-${id}`)?.value) || 0;
+      const price = parseFloat(document.getElementById(`sprice-${id}`)?.value) || 0;
+      const value = lots * 1000 * price;
+      const typeLabel = type === 'listed' ? '上市' : type === 'otc' ? '上櫃' : '未上市';
+      details.push({ name, type, typeLabel, lots, price, value });
+      total += value;
+    });
+
+    const excess = Math.max(0, total - EXEMPTION);
+    const estateTax = excess * 0.10;
+    const share = total / heirCount;
+
+    const detailRows = details.map(d => `
+      <div class="stock-detail-row">
+        <span class="stock-detail-name">${d.name}</span>
+        <span class="stock-detail-type">${d.typeLabel}</span>
+        <span class="stock-detail-val">${fmt(d.value)}</span>
+      </div>
+    `).join('');
+
+    document.getElementById('resultContent').innerHTML = `
+      <div class="result-hero">
+        <div class="result-hero-label">股票遺產總估值</div>
+        <div class="result-hero-amount">${fmt(total)}</div>
+        <div class="result-hero-sub">共 ${details.length} 支股票合計</div>
+      </div>
+
+      ${excess > 0
+        ? `<div class="info-box">⚠ 股票遺產總估值超過免稅額 NT$13,330,000，超額部分估算遺產稅 <strong>${fmt(estateTax)}</strong>（稅率10%）。實際稅額以國稅局核定為準，並需合計全部遺產。</div>`
+        : `<div class="success-box">✓ 股票遺產總估值未超過免稅額（1,333萬），若全部遺產合計亦未超過，無需繳納遺產稅。</div>`
+      }
+
+      <div class="card">
+        <div class="section-title">各股票估值明細</div>
+        ${detailRows}
+        <div class="result-row" style="margin-top:8px">
+          <span class="result-label" style="font-weight:600">合計</span>
+          <span class="result-value" style="font-weight:700">${fmt(total)}</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">遺產稅試算</div>
+        <div class="result-row">
+          <span class="result-label">股票遺產合計</span>
+          <span class="result-value">${fmt(total)}</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">遺產稅免稅額（2026年）</span>
+          <span class="result-value">NT$ 13,330,000</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">超過免稅額部分</span>
+          <span class="result-value ${excess > 0 ? 'accent' : 'success'}">${excess > 0 ? fmt(excess) : '未超過'}</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">超額遺產稅估算（10%）</span>
+          <span class="result-value ${excess > 0 ? 'accent' : 'success'}">${excess > 0 ? fmt(estateTax) : '—'}</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">繼承人總人數</span>
+          <span class="result-value">${heirCount} 人</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">每人應繼分（股票部分）</span>
+          <span class="result-value" style="font-weight:700">${fmt(share)}</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="law-note">
+          <strong>遺贈稅法§10第1項第3款</strong>：上市、上櫃及興櫃股票，以繼承開始日之收盤價估算；當日停止買賣或無成交量者，以其前後各二個最近交易日收盤價平均值計算。<br><br>
+          <strong>遺贈稅法§10第1項第4款</strong>：未上市、未上櫃且非興櫃股票，以繼承開始日該公司之資產淨值估算（每股淨值法）。<br><br>
+          <strong>注意</strong>：遺產稅以全部遺產扣除免稅額後之淨額課徵，股票僅為遺產之一部分，實際稅額需加計不動產、存款等其他遺產後計算。
+        </div>
+      </div>
+    `;
+
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById('step2').classList.add('active');
+    document.getElementById('progressFill').style.width = '100%';
+    document.getElementById('navBar').innerHTML = `
+      <button class="btn btn-secondary" onclick="reset()">← 重新計算</button>
+    `;
+    window.scrollTo(0, 0);
+
+    initSaveButton(
+      'stock-inheritance',
+      `股票繼承估算 ${new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit'})}`,
+      `股票遺產總估值：${fmt(total)}，每人應繼分：${fmt(share)}`,
+      { total, heirCount, details }
+    );
+  }
+
+  function reset() {
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById('step1').classList.add('active');
+    document.getElementById('progressFill').style.width = '50%';
+    document.getElementById('navBar').innerHTML = `<button class="btn btn-primary" onclick="calculate()">計算結果 →</button>`;
+    window.scrollTo(0, 0);
+  }
+
+  async function initSaveButton(tool, title, summary, data) {
+    const container = document.getElementById('save-btn-container');
+    if (!container) return;
+    const sb = (await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm')).createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+    const { data: { user } } = await sb.auth.getUser();
+    if (!user) {
+      container.innerHTML = `<p style="text-align:center;font-size:13px;color:var(--muted);margin-top:12px;"><a href="login.html" style="color:var(--accent)">登入</a>後可儲存此次結果</p>`;
+      return;
+    }
+    container.innerHTML = `<button class="btn" id="save-btn" onclick="window.doSave()" style="margin-top:12px;background:var(--success);color:#fff;width:100%;padding:14px;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;">儲存此次結果</button>`;
+    window.doSave = async () => {
+      const btn = document.getElementById('save-btn');
+      btn.textContent = '儲存中…'; btn.disabled = true;
+      const { saveCalculation } = await import('./js/save.js');
+      const result = await saveCalculation({ tool, title, summary, data });
+      if (result.success) { btn.textContent = '✓ 已儲存'; btn.style.background = '#2a6b4a'; }
+      else { btn.textContent = '儲存失敗'; btn.disabled = false; }
+    };
+  }
+
+  // 預設新增一筆股票
+  addStock();
+
+  // 預設今天
+  document.getElementById('deathDate').value = new Date().toISOString().split('T')[0];
+</script>
+
+<div class="disclaimer-bar"><strong>免責聲明</strong>：本平台之計算結果僅供初步參考，不構成法律意見或法律諮詢服務。實際案件因個案事實、適用法規及法院見解不同，結果可能有所差異，建議諮詢具執照之律師或相關法律專業人員。</div>
+<script src="js/supabase-config.js"></script>
+<script type="module" src="js/auth-bar.js"></script>
+</body>
+</html>

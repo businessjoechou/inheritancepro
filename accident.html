@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>車禍損害賠償試算｜InheritancePro</title>
+<meta name="description" content="依台灣民法§184§192§193§194及強制汽車責任保險法，計算車禍損害賠償金額，含醫療費、看護費、工作損失、慰撫金與強制險給付。">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://inheritancepro.app/accident.html">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1410; --paper: #f5f0e8; --accent: #8b2020; --gold: #c4932a;
+    --soft: #e8e0d0; --muted: #7a6f62; --success: #2a6b4a; --danger: #8b2020;
+    --border: #c8bfb0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--paper); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; min-height: 100vh; font-size: 15px; }
+  header { background: var(--ink); color: var(--paper); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .logo { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 700; letter-spacing: 0.04em; }
+  .logo span { color: var(--gold); }
+  .home-link { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; }
+  .home-link:hover { color: var(--gold); }
+  .progress-bar { height: 3px; background: var(--soft); }
+  .progress-fill { height: 100%; background: var(--gold); transition: width 0.4s ease; }
+  main { padding: 24px 20px 100px; max-width: 480px; margin: 0 auto; }
+  .step-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
+  h2 { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
+  .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
+  .card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 14px; }
+  .input-group { margin-bottom: 18px; }
+  .input-group:last-child { margin-bottom: 0; }
+  label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 8px; }
+  input[type="number"] { width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 8px; background: var(--paper); font-size: 15px; font-family: 'Noto Sans TC', sans-serif; color: var(--ink); transition: border-color 0.2s; -webkit-appearance: none; }
+  input[type="number"]:focus { outline: none; border-color: var(--gold); }
+  input[type="range"] { width: 100%; accent-color: var(--accent); }
+  .range-display { font-family: 'DM Mono', monospace; font-size: 18px; font-weight: 500; color: var(--accent); margin-top: 6px; }
+  .law-pill { font-family: 'DM Mono', monospace; font-size: 10px; background: #fdf5f5; color: var(--accent); border: 1px solid #e8b0b0; border-radius: 4px; padding: 2px 7px; display: inline-block; margin: 2px 3px 2px 0; }
+  .law-note { border-left: 3px solid var(--gold); padding-left: 12px; font-size: 12px; color: var(--muted); line-height: 1.7; margin-top: 10px; }
+  .info-box { background: #fdf5f5; border: 1px solid #e8c0b8; border-left: 3px solid var(--accent); border-radius: 6px; padding: 12px 14px; font-size: 12px; color: var(--accent); line-height: 1.7; margin-bottom: 14px; }
+  .warn-box { background: #fdf3e7; border: 1px solid #e8c882; border-left: 3px solid var(--gold); border-radius: 6px; padding: 12px 14px; font-size: 12px; color: #7a5a10; line-height: 1.7; margin-bottom: 14px; }
+  .success-box { background: #f0fdf4; border: 1px solid #a8d5b5; border-left: 3px solid var(--success); border-radius: 6px; padding: 12px 14px; font-size: 12px; color: var(--success); line-height: 1.7; margin-bottom: 14px; }
+  .toggle-row { display: flex; gap: 10px; }
+  .toggle-btn { flex: 1; padding: 11px 8px; border: 1.5px solid var(--border); border-radius: 8px; background: var(--paper); font-size: 14px; font-family: 'Noto Sans TC', sans-serif; color: var(--muted); cursor: pointer; text-align: center; transition: all 0.2s; }
+  .toggle-btn.active { border-color: var(--accent); background: #fdf5f5; color: var(--accent); font-weight: 600; }
+  .radio-grid { display: flex; flex-direction: column; gap: 8px; }
+  .radio-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; background: var(--paper); transition: all 0.2s; }
+  .radio-item:hover { border-color: var(--gold); }
+  .radio-item.active { border-color: var(--accent); background: #fdf5f5; }
+  .radio-dot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0; transition: all 0.2s; }
+  .radio-item.active .radio-dot { background: var(--accent); border-color: var(--accent); }
+  .radio-text { font-size: 13px; font-weight: 500; }
+  .radio-item.active .radio-text { color: var(--accent); }
+  .radio-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .hidden { display: none !important; }
+  /* Results */
+  .result-hero { background: var(--ink); color: var(--paper); border-radius: 12px; padding: 24px 20px; margin-bottom: 14px; text-align: center; }
+  .result-hero-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 8px; }
+  .result-hero-amount { font-family: 'Noto Serif TC', serif; font-size: 28px; font-weight: 700; color: var(--gold); margin-bottom: 6px; }
+  .result-hero-sub { font-size: 13px; color: var(--muted); }
+  .result-row { display: flex; justify-content: space-between; align-items: baseline; padding: 10px 0; border-bottom: 1px solid var(--soft); gap: 8px; }
+  .result-row:last-child { border-bottom: none; }
+  .result-label { font-size: 13px; color: var(--muted); flex: 1; }
+  .result-value { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; color: var(--ink); white-space: nowrap; }
+  .result-value.accent { color: var(--accent); }
+  .result-value.success { color: var(--success); }
+  .section-title { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 12px; }
+  .step { display: none; }
+  .step.active { display: block; animation: fadeUp 0.3s ease both; }
+  .nav-bar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); background: #fff; border-top: 1px solid var(--border); padding: 14px 20px; display: flex; gap: 10px; width: 100%; max-width: 480px; }
+  .btn { flex: 1; padding: 14px; border-radius: 10px; border: none; font-size: 15px; font-family: 'Noto Sans TC', sans-serif; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+  .btn-primary { background: var(--ink); color: var(--paper); }
+  .btn-primary:hover { background: #2a1a10; }
+  .btn-secondary { background: var(--soft); color: var(--muted); }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  @media print { header, .nav-bar, .progress-bar { display: none; } main { padding: 20px; } }
+  .disclaimer-bar { max-width: 560px; margin: 0 auto; padding: 16px 24px 40px; font-size: 11.5px; color: rgba(0,0,0,0.35); line-height: 1.7; border-top: 1px solid var(--border); }
+  .disclaimer-bar strong { color: rgba(0,0,0,0.55); }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" style="text-decoration:none;color:inherit"><div class="logo">Inheritance<span>Pro</span></div></a>
+  <a href="index.html" class="home-link">← 首頁</a>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:50%"></div></div>
+
+<main>
+
+  <!-- Step 1 -->
+  <div class="step active" id="step1">
+    <div class="step-label">Step 1 of 2 · 事故資料</div>
+    <h2>車禍損害賠償試算</h2>
+    <p class="subtitle">依民法侵權行為規定及強制汽車責任保險法，估算您可請求之損害賠償金額。</p>
+
+    <div style="margin-bottom:14px">
+      <span class="law-pill">民法§184（侵權行為）</span>
+      <span class="law-pill">民法§192（死亡賠償）</span>
+      <span class="law-pill">民法§193（身體傷害）</span>
+      <span class="law-pill">民法§194（慰撫金）</span>
+      <span class="law-pill">強制責任險§25</span>
+    </div>
+
+    <!-- Section A：基本資料 -->
+    <div class="card">
+      <div class="section-title">A — 事故基本資料</div>
+      <div class="input-group">
+        <label>事故類型</label>
+        <div class="toggle-row">
+          <button class="toggle-btn active" id="btnInjury" onclick="setType('injury')">傷害事故</button>
+          <button class="toggle-btn" id="btnDeath" onclick="setType('death')">死亡事故</button>
+        </div>
+      </div>
+      <div class="input-group">
+        <label>對方過失比例（%）</label>
+        <input type="range" id="faultPct" min="0" max="100" value="100" oninput="updateFaultDisplay()">
+        <div class="range-display" id="faultDisplay">100%</div>
+        <div class="law-note" style="margin-top:8px">民法§184：按過失比例計算應賠金額。若雙方均有過失，法院依比例酌減。</div>
+      </div>
+      <div class="input-group">
+        <label>您的月薪（元）</label>
+        <input type="number" id="monthlySalary" placeholder="例如：45000" min="0">
+        <div class="law-note" style="margin-top:8px">用於計算工作損失（日薪 = 月薪 ÷ 30）。</div>
+      </div>
+    </div>
+
+    <!-- Section B：傷害 -->
+    <div id="injurySection">
+      <div class="card">
+        <div class="section-title">B — 醫療與損害（傷害事故）</div>
+        <div class="input-group">
+          <label>醫療費用（元）</label>
+          <input type="number" id="medicalFee" placeholder="已支出醫療費" min="0" value="0">
+        </div>
+        <div class="input-group">
+          <label>看護天數（天）</label>
+          <input type="number" id="careDays" placeholder="例如：30" min="0" value="0">
+          <div class="law-note" style="margin-top:8px">看護費以每日 NT$1,500 計算（實務通行標準）。</div>
+        </div>
+        <div class="input-group">
+          <label>工作損失天數（住院＋療養）</label>
+          <input type="number" id="workLossDays" placeholder="例如：60" min="0" value="0">
+        </div>
+        <div class="input-group">
+          <label>精神慰撫金（民法§194）</label>
+          <div class="radio-grid">
+            <div class="radio-item active" onclick="setSolatiumLevel(this,'light')">
+              <div class="radio-dot"></div>
+              <div>
+                <div class="radio-text">輕傷（10–50 萬）</div>
+                <div class="radio-sub">一般骨折、輕度外傷、短暫住院</div>
+              </div>
+            </div>
+            <div class="radio-item" onclick="setSolatiumLevel(this,'serious')">
+              <div class="radio-dot"></div>
+              <div>
+                <div class="radio-text">重傷（50–200 萬）</div>
+                <div class="radio-sub">多處骨折、長期住院、殘留障礙</div>
+              </div>
+            </div>
+            <div class="radio-item" onclick="setSolatiumLevel(this,'severe')">
+              <div class="radio-dot"></div>
+              <div>
+                <div class="radio-text">極重傷（200–400 萬）</div>
+                <div class="radio-sub">永久殘廢、植物人狀態、四肢癱瘓</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section C：死亡 -->
+    <div id="deathSection" class="hidden">
+      <div class="card">
+        <div class="section-title">C — 死亡賠償項目</div>
+        <div class="input-group">
+          <label>殯葬費（元）</label>
+          <input type="number" id="funeralFee" placeholder="例如：200000" min="0" value="0">
+        </div>
+        <div class="input-group">
+          <label>受撫養人數</label>
+          <input type="number" id="dependentCount" placeholder="例如：2" min="0" value="0">
+        </div>
+        <div class="input-group">
+          <label>平均受撫養年數（年）</label>
+          <input type="number" id="dependentYears" placeholder="例如：15" min="0" value="0">
+          <div class="law-note" style="margin-top:8px">民法§192：被害人對受撫養義務人每年應給付金額 = 月薪 × 12，依撫養年數計算。</div>
+        </div>
+        <div class="input-group">
+          <label>精神慰撫金（民法§194）</label>
+          <div class="radio-grid" id="deathSolatiumGrid">
+            <div class="radio-item active" onclick="setDeathSolatiumLevel(this,'low')">
+              <div class="radio-dot"></div>
+              <div>
+                <div class="radio-text">一般（150 萬）</div>
+                <div class="radio-sub">法院實務通常採150–250萬區間</div>
+              </div>
+            </div>
+            <div class="radio-item" onclick="setDeathSolatiumLevel(this,'mid')">
+              <div class="radio-dot"></div>
+              <div>
+                <div class="radio-text">中（200 萬）</div>
+                <div class="radio-sub">有幼年子女、配偶依賴等加重因素</div>
+              </div>
+            </div>
+            <div class="radio-item" onclick="setDeathSolatiumLevel(this,'high')">
+              <div class="radio-dot"></div>
+              <div>
+                <div class="radio-text">較高（250 萬）</div>
+                <div class="radio-sub">對方明顯重大過失、多名至親受害</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Step 2：結果 -->
+  <div class="step" id="step2">
+    <div class="step-label">結果 · 車禍損害賠償試算</div>
+    <h2>試算結果</h2>
+    <p class="subtitle">以下為依您輸入資料估算之損害賠償金額，強制險部分已自動扣除，僅供初步參考。</p>
+    <div id="resultContent"></div>
+    <div id="save-btn-container"></div>
+  </div>
+
+</main>
+
+<div class="nav-bar" id="navBar">
+  <button class="btn btn-primary" onclick="calculate()">計算結果 →</button>
+</div>
+
+<script>
+  let accidentType = 'injury';
+  let solatiumLevel = 'light'; // 傷害
+  let deathSolatiumLevel = 'low'; // 死亡
+
+  const SOLATIUM_MAP = { light: 300000, serious: 1250000, severe: 3000000 };
+  const DEATH_SOLATIUM_MAP = { low: 1500000, mid: 2000000, high: 2500000 };
+
+  function setType(t) {
+    accidentType = t;
+    document.getElementById('btnInjury').classList.toggle('active', t === 'injury');
+    document.getElementById('btnDeath').classList.toggle('active', t === 'death');
+    document.getElementById('injurySection').classList.toggle('hidden', t !== 'injury');
+    document.getElementById('deathSection').classList.toggle('hidden', t !== 'death');
+  }
+
+  function updateFaultDisplay() {
+    document.getElementById('faultDisplay').textContent = document.getElementById('faultPct').value + '%';
+  }
+
+  function setSolatiumLevel(el, level) {
+    solatiumLevel = level;
+    document.querySelectorAll('#injurySection .radio-item').forEach(i => i.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  function setDeathSolatiumLevel(el, level) {
+    deathSolatiumLevel = level;
+    document.querySelectorAll('#deathSolatiumGrid .radio-item').forEach(i => i.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  function fmt(n) {
+    return 'NT$ ' + Math.round(n).toLocaleString('zh-TW');
+  }
+
+  function calculate() {
+    const faultPct = parseInt(document.getElementById('faultPct').value) / 100;
+    const monthlySalary = parseFloat(document.getElementById('monthlySalary').value) || 0;
+
+    let rows = [];
+    let subtotal = 0;
+    let compulsoryInsurance = 0;
+    let compulsoryLabel = '';
+
+    if (accidentType === 'injury') {
+      const medical = parseFloat(document.getElementById('medicalFee').value) || 0;
+      const careDays = parseFloat(document.getElementById('careDays').value) || 0;
+      const workDays = parseFloat(document.getElementById('workLossDays').value) || 0;
+      const careTotal = careDays * 1500;
+      const workLoss = (monthlySalary / 30) * workDays;
+      const solatium = SOLATIUM_MAP[solatiumLevel];
+
+      rows = [
+        { label: '醫療費用', value: medical },
+        { label: '看護費（' + careDays + '天 × NT$1,500）', value: careTotal },
+        { label: '工作損失（' + workDays + '天）', value: workLoss },
+        { label: '精神慰撫金', value: solatium },
+      ];
+      subtotal = medical + careTotal + workLoss + solatium;
+
+      // 強制險：傷害醫療最高20萬
+      compulsoryInsurance = Math.min(medical, 200000);
+      compulsoryLabel = `強制險傷害醫療給付（上限20萬）`;
+    } else {
+      const funeral = parseFloat(document.getElementById('funeralFee').value) || 0;
+      const depCount = parseFloat(document.getElementById('dependentCount').value) || 0;
+      const depYears = parseFloat(document.getElementById('dependentYears').value) || 0;
+      const maintenance = monthlySalary * 12 * depYears * depCount;
+      const solatium = DEATH_SOLATIUM_MAP[deathSolatiumLevel];
+
+      rows = [
+        { label: '殯葬費', value: funeral },
+        { label: `撫養費（${depCount}人 × ${depYears}年）`, value: maintenance },
+        { label: '精神慰撫金', value: solatium },
+      ];
+      subtotal = funeral + maintenance + solatium;
+
+      // 強制險：死亡給付200萬
+      compulsoryInsurance = 2000000;
+      compulsoryLabel = `強制險死亡給付（固定200萬）`;
+    }
+
+    const faultShare = subtotal * faultPct;
+    const netAmount = Math.max(0, faultShare - compulsoryInsurance);
+
+    const detailRows = rows.map(r =>
+      `<div class="result-row"><span class="result-label">${r.label}</span><span class="result-value">${fmt(r.value)}</span></div>`
+    ).join('');
+
+    document.getElementById('resultContent').innerHTML = `
+      <div class="result-hero">
+        <div class="result-hero-label">對方應賠金額（估算）</div>
+        <div class="result-hero-amount">${fmt(netAmount)}</div>
+        <div class="result-hero-sub">已扣除強制險給付｜對方過失比例 ${Math.round(faultPct * 100)}%</div>
+      </div>
+
+      ${netAmount <= 0 ? `<div class="success-box">強制險給付已足以涵蓋本案損害，對方額外應賠金額為零或須另行確認。</div>` : ''}
+
+      <div class="card">
+        <div class="section-title">損害明細</div>
+        ${detailRows}
+        <div class="result-row" style="margin-top:4px">
+          <span class="result-label" style="font-weight:600">損害合計</span>
+          <span class="result-value" style="font-weight:700">${fmt(subtotal)}</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">過失與強制險扣除</div>
+        <div class="result-row">
+          <span class="result-label">損害合計</span>
+          <span class="result-value">${fmt(subtotal)}</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">對方過失比例</span>
+          <span class="result-value">${Math.round(faultPct * 100)}%</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">按過失比例應賠金額</span>
+          <span class="result-value">${fmt(faultShare)}</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">${compulsoryLabel}</span>
+          <span class="result-value success">－ ${fmt(compulsoryInsurance)}</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label" style="font-weight:600">對方額外應賠金額</span>
+          <span class="result-value accent" style="font-weight:700">${fmt(netAmount)}</span>
+        </div>
+      </div>
+
+      <div class="warn-box">⚠ 時效提醒：侵權行為損害賠償請求權，自知悉損害及賠償義務人起 <strong>2年</strong> 消滅時效；自事故發生起 <strong>10年</strong> 絕對時效（民法§197）。請盡早起訴或取得對方書面承認以中斷時效。</div>
+
+      <div class="card">
+        <div class="law-note">
+          <strong>民法§184</strong>：因故意或過失，不法侵害他人之權利者，負損害賠償責任。<br><br>
+          <strong>民法§193</strong>：不法侵害他人之身體或健康者，對於被害人因此喪失或減少勞動能力或增加生活上需要時，應負損害賠償責任。<br><br>
+          <strong>民法§192</strong>：不法侵害他人致死者，對於支出殯葬費之人，及依法應受被害人扶養之人，負損害賠償責任。<br><br>
+          <strong>民法§194</strong>：不法侵害他人致死者，被害人之父、母、子、女及配偶，雖非財產上之損害，亦得請求賠償相當之金額（精神慰撫金）。<br><br>
+          <strong>強制汽車責任保險法§25</strong>：傷害醫療給付上限新台幣20萬元；死亡或永久失能給付上限200萬元。此給付由保險公司先行支付，不影響對加害人之民事請求，但應予扣除重複。
+        </div>
+      </div>
+    `;
+
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById('step2').classList.add('active');
+    document.getElementById('progressFill').style.width = '100%';
+    document.getElementById('navBar').innerHTML = `
+      <button class="btn btn-secondary" onclick="reset()">← 重新計算</button>
+    `;
+    window.scrollTo(0, 0);
+
+    initSaveButton(
+      'accident',
+      `車禍損害賠償試算 ${new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit'})}`,
+      `對方應賠金額：${fmt(netAmount)}（${accidentType === 'injury' ? '傷害' : '死亡'}案）`,
+      { accidentType, faultPct, netAmount }
+    );
+  }
+
+  function reset() {
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById('step1').classList.add('active');
+    document.getElementById('progressFill').style.width = '50%';
+    document.getElementById('navBar').innerHTML = `<button class="btn btn-primary" onclick="calculate()">計算結果 →</button>`;
+    window.scrollTo(0, 0);
+  }
+
+  async function initSaveButton(tool, title, summary, data) {
+    const container = document.getElementById('save-btn-container');
+    if (!container) return;
+    const sb = (await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm')).createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+    const { data: { user } } = await sb.auth.getUser();
+    if (!user) {
+      container.innerHTML = `<p style="text-align:center;font-size:13px;color:var(--muted);margin-top:12px;"><a href="login.html" style="color:var(--accent)">登入</a>後可儲存此次結果</p>`;
+      return;
+    }
+    container.innerHTML = `<button class="btn" id="save-btn" onclick="window.doSave()" style="margin-top:12px;background:var(--success);color:#fff;width:100%;padding:14px;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;">儲存此次結果</button>`;
+    window.doSave = async () => {
+      const btn = document.getElementById('save-btn');
+      btn.textContent = '儲存中…'; btn.disabled = true;
+      const { saveCalculation } = await import('./js/save.js');
+      const result = await saveCalculation({ tool, title, summary, data });
+      if (result.success) { btn.textContent = '✓ 已儲存'; btn.style.background = '#2a6b4a'; }
+      else { btn.textContent = '儲存失敗'; btn.disabled = false; }
+    };
+  }
+</script>
+
+<div class="disclaimer-bar"><strong>免責聲明</strong>：本平台之計算結果僅供初步參考，不構成法律意見或法律諮詢服務。實際案件因個案事實、適用法規及法院見解不同，結果可能有所差異，建議諮詢具執照之律師或相關法律專業人員。</div>
+<script src="js/supabase-config.js"></script>
+<script type="module" src="js/auth-bar.js"></script>
+</body>
+</html>

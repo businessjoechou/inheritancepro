@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>照顧者繼承特別貢獻試算｜InheritancePro</title>
+<meta name="description" content="依台灣民法§1149估算長期照顧被繼承人之照顧貢獻價值，協助法定繼承人或非繼承人了解可主張之遺產酌給請求權。">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://inheritancepro.app/caregiver.html">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1410; --paper: #f5f0e8; --accent: #8b2020; --gold: #c4932a;
+    --soft: #e8e0d0; --muted: #7a6f62; --success: #2a6b4a; --danger: #8b2020;
+    --border: #c8bfb0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--paper); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; min-height: 100vh; font-size: 15px; }
+  header { background: var(--ink); color: var(--paper); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .logo { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 700; letter-spacing: 0.04em; }
+  .logo span { color: var(--gold); }
+  .home-link { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; }
+  .home-link:hover { color: var(--gold); }
+  .progress-bar { height: 3px; background: var(--soft); }
+  .progress-fill { height: 100%; background: var(--gold); transition: width 0.4s ease; }
+  main { padding: 24px 20px 100px; max-width: 480px; margin: 0 auto; }
+  .step-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
+  h2 { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
+  .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
+  .card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 14px; }
+  .input-group { margin-bottom: 18px; }
+  .input-group:last-child { margin-bottom: 0; }
+  label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 8px; }
+  input[type="number"] { width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 8px; background: var(--paper); font-size: 15px; font-family: 'Noto Sans TC', sans-serif; color: var(--ink); transition: border-color 0.2s; -webkit-appearance: none; }
+  input[type="number"]:focus { outline: none; border-color: var(--gold); }
+  .law-pill { font-family: 'DM Mono', monospace; font-size: 10px; background: #fdf5f5; color: var(--accent); border: 1px solid #e8b0b0; border-radius: 4px; padding: 2px 7px; display: inline-block; margin: 2px 3px 2px 0; }
+  .law-note { border-left: 3px solid var(--gold); padding-left: 12px; font-size: 12px; color: var(--muted); line-height: 1.7; margin-top: 10px; }
+  .info-box { background: #fdf5f5; border: 1px solid #e8c0b8; border-left: 3px solid var(--accent); border-radius: 6px; padding: 12px 14px; font-size: 12px; color: var(--accent); line-height: 1.7; margin-bottom: 14px; }
+  .warn-box { background: #fdf3e7; border: 1px solid #e8c882; border-left: 3px solid var(--gold); border-radius: 6px; padding: 12px 14px; font-size: 12px; color: #7a5a10; line-height: 1.7; margin-bottom: 14px; }
+  .success-box { background: #f0fdf4; border: 1px solid #a8d5b5; border-left: 3px solid var(--success); border-radius: 6px; padding: 12px 14px; font-size: 12px; color: var(--success); line-height: 1.7; margin-bottom: 14px; }
+  .law-highlight { background: #fdf8f0; border: 1px solid #e8d5a0; border-left: 3px solid var(--gold); border-radius: 6px; padding: 14px 16px; font-size: 12px; color: var(--ink); line-height: 1.8; margin-bottom: 14px; }
+  .law-highlight strong { color: var(--gold); }
+  .toggle-row { display: flex; gap: 10px; }
+  .toggle-btn { flex: 1; padding: 11px 8px; border: 1.5px solid var(--border); border-radius: 8px; background: var(--paper); font-size: 14px; font-family: 'Noto Sans TC', sans-serif; color: var(--muted); cursor: pointer; text-align: center; transition: all 0.2s; }
+  .toggle-btn.active { border-color: var(--accent); background: #fdf5f5; color: var(--accent); font-weight: 600; }
+  .hidden { display: none !important; }
+  /* Results */
+  .result-hero { background: var(--ink); color: var(--paper); border-radius: 12px; padding: 24px 20px; margin-bottom: 14px; text-align: center; }
+  .result-hero-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 8px; }
+  .result-hero-amount { font-family: 'Noto Serif TC', serif; font-size: 28px; font-weight: 700; color: var(--gold); margin-bottom: 6px; }
+  .result-hero-sub { font-size: 13px; color: var(--muted); }
+  .result-row { display: flex; justify-content: space-between; align-items: baseline; padding: 10px 0; border-bottom: 1px solid var(--soft); gap: 8px; }
+  .result-row:last-child { border-bottom: none; }
+  .result-label { font-size: 13px; color: var(--muted); flex: 1; }
+  .result-value { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; color: var(--ink); white-space: nowrap; }
+  .result-value.accent { color: var(--accent); }
+  .result-value.success { color: var(--success); }
+  .result-value.gold { color: var(--gold); }
+  .section-title { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 12px; }
+  .strategy-block { background: var(--soft); border-radius: 10px; padding: 16px; margin-bottom: 10px; }
+  .strategy-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+  .strategy-content { font-size: 12px; color: var(--muted); line-height: 1.8; }
+  .strategy-content strong { color: var(--ink); }
+  .step { display: none; }
+  .step.active { display: block; animation: fadeUp 0.3s ease both; }
+  .nav-bar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); background: #fff; border-top: 1px solid var(--border); padding: 14px 20px; display: flex; gap: 10px; width: 100%; max-width: 480px; }
+  .btn { flex: 1; padding: 14px; border-radius: 10px; border: none; font-size: 15px; font-family: 'Noto Sans TC', sans-serif; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+  .btn-primary { background: var(--ink); color: var(--paper); }
+  .btn-primary:hover { background: #2a1a10; }
+  .btn-secondary { background: var(--soft); color: var(--muted); }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  @media print { header, .nav-bar, .progress-bar { display: none; } main { padding: 20px; } }
+  .disclaimer-bar { max-width: 560px; margin: 0 auto; padding: 16px 24px 40px; font-size: 11.5px; color: rgba(0,0,0,0.35); line-height: 1.7; border-top: 1px solid var(--border); }
+  .disclaimer-bar strong { color: rgba(0,0,0,0.55); }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" style="text-decoration:none;color:inherit"><div class="logo">Inheritance<span>Pro</span></div></a>
+  <a href="index.html" class="home-link">← 首頁</a>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:50%"></div></div>
+
+<main>
+
+  <!-- Step 1 -->
+  <div class="step active" id="step1">
+    <div class="step-label">Step 1 of 2 · 照顧者資料</div>
+    <h2>照顧者繼承特別貢獻</h2>
+    <p class="subtitle">長期照顧被繼承人之人，可依民法§1149請求酌給遺產，或主張貢獻分取得更多份額。</p>
+
+    <div style="margin-bottom:14px">
+      <span class="law-pill">民法§1149（扶養受益人酌給遺產）</span>
+      <span class="law-pill">民法§1173（歸扣）</span>
+      <span class="law-pill">繼承編修正草案（貢獻分）</span>
+    </div>
+
+    <div class="law-highlight">
+      <strong>民法§1149</strong>：被繼承人生前繼續扶養之人，應由親屬會議依其所受扶養之程度及其他繼承人之有無，酌給遺產。此條亦擴及對非繼承人之長期照顧者之保護。
+    </div>
+
+    <div class="card">
+      <div class="section-title">照顧者身份</div>
+      <div class="input-group">
+        <label>您的身份</label>
+        <div class="toggle-row">
+          <button class="toggle-btn active" id="btnHeir" onclick="setRole('heir')">法定繼承人<br><small style="font-size:11px;font-weight:400">（子女、配偶等）</small></button>
+          <button class="toggle-btn" id="btnNonHeir" onclick="setRole('nonheir')">非繼承人<br><small style="font-size:11px;font-weight:400">（媳婦、照顧者等）</small></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">照顧年數與強度</div>
+      <div class="input-group">
+        <label>照顧年數</label>
+        <input type="number" id="careYears" placeholder="例如：5" min="0" step="0.5">
+      </div>
+      <div class="input-group">
+        <label>每月平均照顧時數（小時）</label>
+        <input type="number" id="careHoursPerMonth" placeholder="例如：120" min="0">
+        <div class="law-note" style="margin-top:8px">用於估算等值機構照顧費用（時薪NT$200保守估算）。</div>
+      </div>
+      <div class="input-group">
+        <label>是否為專職照顧（放棄工作）</label>
+        <div class="toggle-row">
+          <button class="toggle-btn active" id="btnFullYes" onclick="setFull(true)">是（放棄工作）</button>
+          <button class="toggle-btn" id="btnFullNo" onclick="setFull(false)">否（兼職照顧）</button>
+        </div>
+      </div>
+      <div class="input-group" id="salaryGroup">
+        <label>放棄工作之月薪（元）</label>
+        <input type="number" id="forgoneSalary" placeholder="例如：40000" min="0" value="0">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">費用與遺產資料</div>
+      <div class="input-group">
+        <label>照顧期間自費支出（元）</label>
+        <input type="number" id="outOfPocket" placeholder="例如：300000" min="0" value="0">
+        <div class="law-note" style="margin-top:8px">含自費購買照護用品、醫療耗材、無障礙設施等費用。</div>
+      </div>
+      <div class="input-group">
+        <label>遺產總額（元）</label>
+        <input type="number" id="totalEstate" placeholder="例如：5000000" min="0" value="0">
+        <div class="law-note" style="margin-top:8px">用於計算建議主張之比例，可填概估金額。</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Step 2：結果 -->
+  <div class="step" id="step2">
+    <div class="step-label">結果 · 照顧貢獻試算</div>
+    <h2>試算結果</h2>
+    <p class="subtitle">以下為依您輸入資料估算之照顧貢獻價值與建議主張策略，僅供初步參考。</p>
+    <div id="resultContent"></div>
+    <div id="save-btn-container"></div>
+  </div>
+
+</main>
+
+<div class="nav-bar" id="navBar">
+  <button class="btn btn-primary" onclick="calculate()">計算結果 →</button>
+</div>
+
+<script>
+  let careRole = 'heir';
+  let isFulltime = true;
+
+  function setRole(r) {
+    careRole = r;
+    document.getElementById('btnHeir').classList.toggle('active', r === 'heir');
+    document.getElementById('btnNonHeir').classList.toggle('active', r === 'nonheir');
+  }
+
+  function setFull(val) {
+    isFulltime = val;
+    document.getElementById('btnFullYes').classList.toggle('active', val);
+    document.getElementById('btnFullNo').classList.toggle('active', !val);
+    document.getElementById('salaryGroup').style.display = val ? 'block' : 'none';
+  }
+
+  function fmt(n) {
+    return 'NT$ ' + Math.round(n).toLocaleString('zh-TW');
+  }
+
+  function calculate() {
+    const years = parseFloat(document.getElementById('careYears').value) || 0;
+    const hoursPerMonth = parseFloat(document.getElementById('careHoursPerMonth').value) || 0;
+    const forgoneSalary = isFulltime ? (parseFloat(document.getElementById('forgoneSalary').value) || 0) : 0;
+    const outOfPocket = parseFloat(document.getElementById('outOfPocket').value) || 0;
+    const totalEstate = parseFloat(document.getElementById('totalEstate').value) || 0;
+
+    // 機構照顧費推估：時數 × 月 × 年 × NT$200/hr
+    const institutionalCost = years * 12 * hoursPerMonth * 200;
+
+    // 機會成本
+    const opportunityCost = forgoneSalary * 12 * years;
+
+    // 總貢獻估值 = max(機構費, 機會成本) + 自費費用
+    const baseContribution = Math.max(institutionalCost, opportunityCost);
+    const totalContribution = baseContribution + outOfPocket;
+
+    // 比例
+    const proportion = totalEstate > 0 ? totalContribution / totalEstate : 0;
+    const proportionPct = Math.min(proportion * 100, 33.33).toFixed(1);
+
+    // 非繼承人：酌給範圍30-60%的貢獻估值
+    const qiyiLow = totalContribution * 0.30;
+    const qiyiHigh = totalContribution * 0.60;
+
+    const roleLabel = careRole === 'heir' ? '法定繼承人' : '非繼承人（§1149請求人）';
+
+    let strategyBlock = '';
+    if (careRole === 'heir') {
+      strategyBlock = `
+        <div class="strategy-block">
+          <div class="strategy-title">法定繼承人策略：主張貢獻分</div>
+          <div class="strategy-content">
+            您為法定繼承人，可在繼承分割協議或遺產分割訴訟中，<strong>主張因長期照顧所貢獻之特別利益</strong>，要求分配較多遺產份額（參考繼承編修正草案「貢獻分」制度）。<br><br>
+            建議主張：遺產總額之 <strong>${proportionPct}%</strong>（以總貢獻估值與遺產之比例為基礎，不超過1/3參考上限）<br><br>
+            實作方式：①於遺產分割協議中與其他繼承人協商；②若無法達成協議，可聲請法院調解或提起遺產分割之訴，由法院依貢獻程度酌定分配。
+          </div>
+        </div>
+      `;
+    } else {
+      strategyBlock = `
+        <div class="strategy-block">
+          <div class="strategy-title">非繼承人策略：依§1149請求酌給遺產</div>
+          <div class="strategy-content">
+            您非法定繼承人，可依<strong>民法§1149</strong>向親屬會議請求，或於繼承開始後向法院聲請，請求從遺產中<strong>酌給</strong>一定金額。<br><br>
+            法院實務：通常酌給照顧貢獻估值的 30%～60%，具體金額依法院裁量。<br>
+            本案建議請求範圍：<strong>${fmt(qiyiLow)}</strong> ～ <strong>${fmt(qiyiHigh)}</strong><br><br>
+            注意：§1149請求為<strong>繼承人以外之人</strong>之特別保護，需能舉證「繼續扶養關係」及貢獻程度。建議蒐集：照護紀錄、費用收據、醫療紀錄、家人證人。
+          </div>
+        </div>
+      `;
+    }
+
+    document.getElementById('resultContent').innerHTML = `
+      <div class="result-hero">
+        <div class="result-hero-label">照顧貢獻總估值</div>
+        <div class="result-hero-amount">${fmt(totalContribution)}</div>
+        <div class="result-hero-sub">${roleLabel}｜照顧年數 ${years} 年</div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">貢獻估值明細</div>
+        <div class="result-row">
+          <span class="result-label">機構照顧費推估（${hoursPerMonth}時/月 × NT$200）</span>
+          <span class="result-value">${fmt(institutionalCost)}</span>
+        </div>
+        ${isFulltime ? `
+        <div class="result-row">
+          <span class="result-label">機會成本（放棄薪資）</span>
+          <span class="result-value">${fmt(opportunityCost)}</span>
+        </div>` : ''}
+        <div class="result-row">
+          <span class="result-label">取較高基礎（機構費 vs 機會成本）</span>
+          <span class="result-value gold">${fmt(baseContribution)}</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">自費支出費用</span>
+          <span class="result-value">${fmt(outOfPocket)}</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label" style="font-weight:600">照顧貢獻總估值</span>
+          <span class="result-value" style="font-weight:700">${fmt(totalContribution)}</span>
+        </div>
+        ${totalEstate > 0 ? `
+        <div class="result-row">
+          <span class="result-label">佔遺產總額比例</span>
+          <span class="result-value">${(proportion * 100).toFixed(1)}%</span>
+        </div>` : ''}
+      </div>
+
+      ${strategyBlock}
+
+      ${careRole === 'nonheir' ? `
+      <div class="law-highlight">
+        <strong>民法§1149 說明</strong>：被繼承人生前繼續扶養之人，應由親屬會議依其所受扶養之程度及其他繼承人之有無，酌給遺產。若親屬會議無法召集或決議不公平，可聲請法院裁定。<br><br>
+        法院對「酌給」有廣泛裁量空間，強調實際照顧貢獻、受照顧者生活需求程度，以及其他繼承人之狀況。
+      </div>` : ''}
+
+      <div class="warn-box">⚠ 時效提醒：依民法相關規定，繼承相關請求應於<strong>繼承開始後2年內</strong>提出，逾期恐喪失請求權，請及早諮詢律師。</div>
+
+      <div class="warn-box">⚠ 法律說明：貢獻分制度目前仍在立法討論階段，尚未正式入法。現行法院實務主要依民法§1149（非繼承人）及分割協議（繼承人間）處理，具體成效仍有個案差異，<strong>強烈建議諮詢具繼承法專業之律師</strong>，以確認您的最佳主張策略。</div>
+
+      <div class="card">
+        <div class="law-note">
+          <strong>民法§1149</strong>：被繼承人生前繼續扶養之人，應由親屬會議依其所受扶養之程度及其他繼承人之有無，酌給遺產。<br><br>
+          <strong>民法§1173</strong>：繼承人中，有在繼承開始前因結婚、分居或營業，已從被繼承人受有財產之贈與者，應將該贈與價額加入繼承開始時被繼承人所有之財產中，為應繼遺產。但被繼承人於贈與時有反對之意思表示者，不在此限（歸扣制度）。<br><br>
+          <strong>繼承編修正草案</strong>：參考日本「寄與分」制度，擬引入「貢獻分」規定，允許對被繼承人有特別貢獻之繼承人（含照顧、療養）主張增加應繼分。法案尚在審議中（截至2026年）。
+        </div>
+      </div>
+    `;
+
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById('step2').classList.add('active');
+    document.getElementById('progressFill').style.width = '100%';
+    document.getElementById('navBar').innerHTML = `
+      <button class="btn btn-secondary" onclick="reset()">← 重新計算</button>
+    `;
+    window.scrollTo(0, 0);
+
+    initSaveButton(
+      'caregiver',
+      `照顧者貢獻試算 ${new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit'})}`,
+      `照顧貢獻估值：${fmt(totalContribution)}（${careRole === 'heir' ? '法定繼承人' : '非繼承人'}）`,
+      { careRole, years, isFulltime, totalContribution, totalEstate }
+    );
+  }
+
+  function reset() {
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById('step1').classList.add('active');
+    document.getElementById('progressFill').style.width = '50%';
+    document.getElementById('navBar').innerHTML = `<button class="btn btn-primary" onclick="calculate()">計算結果 →</button>`;
+    window.scrollTo(0, 0);
+  }
+
+  async function initSaveButton(tool, title, summary, data) {
+    const container = document.getElementById('save-btn-container');
+    if (!container) return;
+    const sb = (await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm')).createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+    const { data: { user } } = await sb.auth.getUser();
+    if (!user) {
+      container.innerHTML = `<p style="text-align:center;font-size:13px;color:var(--muted);margin-top:12px;"><a href="login.html" style="color:var(--accent)">登入</a>後可儲存此次結果</p>`;
+      return;
+    }
+    container.innerHTML = `<button class="btn" id="save-btn" onclick="window.doSave()" style="margin-top:12px;background:var(--success);color:#fff;width:100%;padding:14px;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;">儲存此次結果</button>`;
+    window.doSave = async () => {
+      const btn = document.getElementById('save-btn');
+      btn.textContent = '儲存中…'; btn.disabled = true;
+      const { saveCalculation } = await import('./js/save.js');
+      const result = await saveCalculation({ tool, title, summary, data });
+      if (result.success) { btn.textContent = '✓ 已儲存'; btn.style.background = '#2a6b4a'; }
+      else { btn.textContent = '儲存失敗'; btn.disabled = false; }
+    };
+  }
+</script>
+
+<div class="disclaimer-bar"><strong>免責聲明</strong>：本平台之計算結果僅供初步參考，不構成法律意見或法律諮詢服務。實際案件因個案事實、適用法規及法院見解不同，結果可能有所差異，建議諮詢具執照之律師或相關法律專業人員。</div>
+<script src="js/supabase-config.js"></script>
+<script type="module" src="js/auth-bar.js"></script>
+</body>
+</html>
