@@ -99,6 +99,11 @@
   .save-btn:disabled { opacity: 0.6; cursor: default; }
   #resultSection { display: none; animation: fadeUp 0.3s ease both; }
   #selfResideGroup { display: none; }
+  .cross-links { margin-top: 20px; border-top: 1px solid var(--border); padding-top: 16px; }
+  .cross-links-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+  .cross-link-btn { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 10px; text-decoration: none; color: var(--ink); background: #fff; margin-bottom: 8px; font-size: 13px; transition: border-color 0.2s; }
+  .cross-link-btn:hover { border-color: var(--gold); }
+  .cross-link-btn span { color: var(--muted); font-size: 18px; }
 </style>
 </head>
 <body>
@@ -277,6 +282,11 @@
 
     <button class="btn btn-print" style="width:100%;margin-top:14px;padding:13px;border-radius:10px;font-size:14px;" onclick="window.print()">列印 / 儲存 PDF</button>
     <div id="save-btn-container"></div>
+    <div class="cross-links">
+      <div class="cross-links-label">相關工具</div>
+      <a class="cross-link-btn" href="real-estate.html">🏠 不動產繼承試算　回到繼承估算 <span>→</span></a>
+      <a class="cross-link-btn" href="inheritance-timeline.html">📅 繼承流程時間軸　確認過戶期限 <span>→</span></a>
+    </div>
   </div>
 
 </main>

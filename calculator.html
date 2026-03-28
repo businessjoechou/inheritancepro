@@ -469,6 +469,11 @@
   .save-btn { display: block; width: 100%; padding: 12px; background: var(--accent); color: white; border: none; border-radius: 10px; font-size: 14px; font-family: 'Noto Sans TC', sans-serif; font-weight: 500; cursor: pointer; margin-top: 16px; transition: opacity 0.2s; }
   .save-btn:hover { opacity: 0.85; }
   .save-btn:disabled { opacity: 0.6; cursor: default; }
+  .cross-links { margin-top: 20px; border-top: 1px solid var(--border); padding-top: 16px; }
+  .cross-links-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+  .cross-link-btn { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 10px; text-decoration: none; color: var(--ink); background: #fff; margin-bottom: 8px; font-size: 13px; transition: border-color 0.2s; }
+  .cross-link-btn:hover { border-color: var(--gold); }
+  .cross-link-btn span { color: var(--muted); font-size: 18px; }
 </style>
 </head>
 <body>
@@ -819,6 +824,13 @@
 
     <a href="inheritance-timeline.html" style="display:block;text-align:center;margin:16px 0 10px;padding:13px;border:1.5px solid var(--border);border-radius:10px;font-size:13px;color:var(--accent);text-decoration:none;background:#f4f7fb">📅 查看繼承辦理流程與期限時間軸 →</a>
     <div id="save-btn-container"></div>
+    <div class="cross-links">
+      <div class="cross-links-label">下一步建議</div>
+      <a class="cross-link-btn" href="inheritance-timeline.html">📅 繼承流程時間軸　查看所有辦理期限 <span>→</span></a>
+      <a class="cross-link-btn" href="real-estate.html">🏠 不動產繼承試算　含地價稅、房屋估價 <span>→</span></a>
+      <a class="cross-link-btn" href="stock-inheritance.html">📈 股票繼承估算　上市/未上市股票估值 <span>→</span></a>
+      <a class="cross-link-btn" href="gift-tax.html">🎁 贈與稅試算　比較贈與vs繼承節稅策略 <span>→</span></a>
+    </div>
   </div>
 
 </main>

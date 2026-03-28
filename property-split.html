@@ -158,6 +158,11 @@
   .save-btn { display: block; width: 100%; padding: 12px; background: var(--accent); color: white; border: none; border-radius: 10px; font-size: 14px; font-family: 'Noto Sans TC', sans-serif; font-weight: 500; cursor: pointer; margin-top: 16px; transition: opacity 0.2s; }
   .save-btn:hover { opacity: 0.85; }
   .save-btn:disabled { opacity: 0.6; cursor: default; }
+  .cross-links { margin-top: 20px; border-top: 1px solid var(--border); padding-top: 16px; }
+  .cross-links-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+  .cross-link-btn { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 10px; text-decoration: none; color: var(--ink); background: #fff; margin-bottom: 8px; font-size: 13px; transition: border-color 0.2s; }
+  .cross-link-btn:hover { border-color: var(--gold); }
+  .cross-link-btn span { color: var(--muted); font-size: 18px; }
 </style>
 </head>
 <body>
@@ -275,14 +280,19 @@
     <!-- 時效計算器 -->
     <div class="limitation-card">
       <div class="section-title">請求時效計算器</div>
-      <div class="input-group" style="margin-bottom:0">
+      <div class="input-group">
         <label style="font-size:13px;color:#2a4a6a">知悉日期（知悉婚姻關係消滅之日）</label>
         <div class="input-prefix" style="border-color:#b8d0e8;background:#fff;">
           <input type="date" id="knowledgeDate" style="font-family:'DM Mono',monospace;font-size:13px;border:none;background:transparent;padding:10px 0;flex:1;color:var(--ink);" oninput="calcLimitation()">
         </div>
       </div>
+      <div class="input-group" style="margin-bottom:0">
+        <label style="font-size:13px;color:#2a4a6a">婚姻終止日期（離婚登記日或死亡日）<span style="font-weight:400;color:var(--muted);font-size:12px">用於計算5年絕對時效</span></label>
+        <div class="input-prefix" style="border-color:#b8d0e8;background:#fff;">
+          <input type="date" id="terminationDate" style="font-family:'DM Mono',monospace;font-size:13px;border:none;background:transparent;padding:10px 0;flex:1;color:var(--ink);" oninput="calcLimitation()">
+        </div>
+      </div>
       <div id="limitationResult"></div>
-      <div class="lim-abs">另有絕對期限：自法律關係消滅時起 <strong>5年</strong> 內亦須行使（民法第1030-4條），兩期限以先屆至者為準。</div>
     </div>
 
     <!-- 法律說明 -->
@@ -299,6 +309,11 @@
     <button class="btn-pdf" id="btnPdf" onclick="downloadPDF()">⬇ 下載 PDF 報告</button>
     <button class="btn-reset" id="btnReset" onclick="resetForm()">重新計算</button>
     <div id="save-btn-container"></div>
+    <div class="cross-links">
+      <div class="cross-links-label">離婚相關工具</div>
+      <a class="cross-link-btn" href="alimony.html">💼 贍養費試算　離婚後扶養費估算 <span>→</span></a>
+      <a class="cross-link-btn" href="prescription.html">⏱ 消滅時效計算機　請求權2年時效 <span>→</span></a>
+    </div>
   </div>
 </main>
 
@@ -380,6 +395,7 @@
     // 重置時效結果
     document.getElementById('limitationResult').innerHTML = '';
     document.getElementById('knowledgeDate').value = '';
+    document.getElementById('terminationDate').value = '';
 
     initSaveButton(
       'property-split',
@@ -390,40 +406,72 @@
   }
 
   function calcLimitation() {
-    const dateStr = document.getElementById('knowledgeDate').value;
-    if (!dateStr) { document.getElementById('limitationResult').innerHTML = ''; return; }
-
-    const known = new Date(dateStr);
-    if (isNaN(known.getTime())) { document.getElementById('limitationResult').innerHTML = ''; return; }
-
-    const expire = new Date(known);
-    expire.setFullYear(expire.getFullYear() + 2);
+    const knowledgeDateStr = document.getElementById('knowledgeDate').value;
+    const terminationDateStr = document.getElementById('terminationDate').value;
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    const diffMs = expire - today;
-    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-
-    const expireStr = expire.toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' });
-    let cls, msg;
-    if (diffDays < 0) {
-      cls = 'expired';
-      msg = `<span class="lim-date">到期日：${expireStr}</span><span class="lim-days">⚠ 時效已於 ${Math.abs(diffDays)} 天前屆至，請立即諮詢律師確認是否有中斷或不完成事由。</span>`;
-    } else if (diffDays <= 90) {
-      cls = 'warn';
-      msg = `<span class="lim-date">到期日：${expireStr}</span><span class="lim-days">注意！距時效屆至僅剩 <strong>${diffDays} 天</strong>，建議儘速向法院提起訴訟或進行調解。</span>`;
-    } else {
-      cls = 'ok';
-      msg = `<span class="lim-date">到期日：${expireStr}</span><span class="lim-days">距時效屆至尚有 <strong>${diffDays} 天</strong>，時效充裕，仍建議及早準備。</span>`;
+    function daysDiff(d) { return Math.floor((d - today) / (1000 * 60 * 60 * 24)); }
+    function fmtDate(d) { return d.toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' }); }
+    function limBlock(label, expire, days) {
+      let cls, msg;
+      if (days < 0) {
+        cls = 'expired';
+        msg = `<span class="lim-date">${label}：${fmtDate(expire)}</span><span class="lim-days">⚠ 時效已於 ${Math.abs(days)} 天前屆至，請立即諮詢律師確認是否有中斷或不完成事由。</span>`;
+      } else if (days <= 90) {
+        cls = 'warn';
+        msg = `<span class="lim-date">${label}：${fmtDate(expire)}</span><span class="lim-days">注意！距時效屆至僅剩 <strong>${days} 天</strong>，建議儘速向法院提起訴訟或進行調解。</span>`;
+      } else {
+        cls = 'ok';
+        msg = `<span class="lim-date">${label}：${fmtDate(expire)}</span><span class="lim-days">距時效屆至尚有 <strong>${days} 天</strong>，時效充裕，仍建議及早準備。</span>`;
+      }
+      return `<div class="lim-result ${cls}" style="margin-top:12px">${msg}</div>`;
     }
-    document.getElementById('limitationResult').innerHTML = `<div class="lim-result ${cls}" style="margin-top:12px">${msg}</div>`;
+
+    let html = '';
+    let expire2 = null, expire5 = null, days2 = null, days5 = null;
+
+    if (knowledgeDateStr) {
+      const known = new Date(knowledgeDateStr);
+      if (!isNaN(known.getTime())) {
+        expire2 = new Date(known);
+        expire2.setFullYear(expire2.getFullYear() + 2);
+        days2 = daysDiff(expire2);
+        html += limBlock('2年時效截止（知悉日起算）', expire2, days2);
+      }
+    }
+
+    if (terminationDateStr) {
+      const termination = new Date(terminationDateStr);
+      if (!isNaN(termination.getTime())) {
+        expire5 = new Date(termination);
+        expire5.setFullYear(expire5.getFullYear() + 5);
+        days5 = daysDiff(expire5);
+        html += limBlock('5年時效截止（婚姻終止日起算）', expire5, days5);
+      }
+    }
+
+    if (expire2 && expire5) {
+      const binding = expire2 < expire5 ? '2年時效（知悉日起算）' : '5年絕對時效（婚姻終止日起算）';
+      const bindingDays = expire2 < expire5 ? days2 : days5;
+      const warnCls = bindingDays < 0 ? 'expired' : bindingDays <= 90 ? 'warn' : 'ok';
+      html += `<div class="lim-result ${warnCls}" style="margin-top:10px;border-style:dashed">
+        <span class="lim-date">⚖ 實際拘束期限：以較早者為準 → ${binding}</span>
+        <span class="lim-days">民法第1030-4條：兩期限以先屆至者為準，請務必在較早期限前行使請求權。</span>
+      </div>`;
+    } else if (!knowledgeDateStr && !terminationDateStr) {
+      html = '';
+    }
+
+    document.getElementById('limitationResult').innerHTML = html;
   }
 
   function resetForm() {
     ['a_asset','a_debt','a_premarital','a_inherited','a_solatium',
      'b_asset','b_debt','b_premarital','b_inherited','b_solatium'].forEach(id => document.getElementById(id).value = '');
     document.getElementById('knowledgeDate').value = '';
+    document.getElementById('terminationDate').value = '';
     document.getElementById('limitationResult').innerHTML = '';
     document.getElementById('resultSection').style.display = 'none';
     document.getElementById('btnPdf').style.display = 'none';

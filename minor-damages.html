@@ -87,6 +87,11 @@
   .save-btn { display: block; width: 100%; padding: 12px; background: var(--accent); color: white; border: none; border-radius: 10px; font-size: 14px; font-family: 'Noto Sans TC', sans-serif; font-weight: 500; cursor: pointer; margin-top: 16px; transition: opacity 0.2s; }
   .save-btn:hover { opacity: 0.85; }
   .save-btn:disabled { opacity: 0.6; cursor: default; }
+  .cross-links { margin-top: 20px; border-top: 1px solid var(--border); padding-top: 16px; }
+  .cross-links-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+  .cross-link-btn { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 10px; text-decoration: none; color: var(--ink); background: #fff; margin-bottom: 8px; font-size: 13px; transition: border-color 0.2s; }
+  .cross-link-btn:hover { border-color: var(--gold); }
+  .cross-link-btn span { color: var(--muted); font-size: 18px; }
 </style>
 </head>
 <body>
@@ -227,6 +232,11 @@
     <button class="btn-pdf" id="btnPdf" onclick="downloadPDF()">⬇ 下載試算報告 PDF</button>
     <button class="btn-reset" id="btnReset" onclick="reset()">🔄 重新試算</button>
     <div id="save-btn-container"></div>
+    <div class="cross-links">
+      <div class="cross-links-label">相關工具</div>
+      <a class="cross-link-btn" href="prescription.html">⏱ 消滅時效計算機　侵權行為2年時效 <span>→</span></a>
+      <a class="cross-link-btn" href="accident.html">🚗 車禍損害賠償　涉及交通事故時適用 <span>→</span></a>
+    </div>
   </div>
 </main>
 

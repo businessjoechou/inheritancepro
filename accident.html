@@ -80,6 +80,11 @@
   @media print { header, .nav-bar, .progress-bar { display: none; } main { padding: 20px; } }
   .disclaimer-bar { max-width: 560px; margin: 0 auto; padding: 16px 24px 40px; font-size: 11.5px; color: rgba(0,0,0,0.60); line-height: 1.7; border-top: 1px solid var(--border); }
   .disclaimer-bar strong { color: rgba(0,0,0,0.78); }
+  .cross-links { margin-top: 20px; border-top: 1px solid var(--border); padding-top: 16px; }
+  .cross-links-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+  .cross-link-btn { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 10px; text-decoration: none; color: var(--ink); background: #fff; margin-bottom: 8px; font-size: 13px; transition: border-color 0.2s; }
+  .cross-link-btn:hover { border-color: var(--gold); }
+  .cross-link-btn span { color: var(--muted); font-size: 18px; }
 </style>
 </head>
 <body>
@@ -140,9 +145,13 @@
           <input type="number" id="medicalFee" placeholder="已支出醫療費" min="0" value="0">
         </div>
         <div class="input-group">
+          <label>每日看護費用（元）<span style="font-weight:400;color:var(--muted);font-size:12px">法院實務 NT$2,000–3,000，預設 NT$2,400</span></label>
+          <input type="number" id="careRate" value="2400" min="500" max="5000" inputmode="numeric">
+        </div>
+        <div class="input-group">
           <label>看護天數（天）</label>
           <input type="number" id="careDays" placeholder="例如：30" min="0" value="0">
-          <div class="law-note" style="margin-top:8px">看護費以每日 NT$1,500 計算（實務通行標準）。</div>
+          <div class="law-note" style="margin-top:8px">看護費以每日看護費用 × 天數計算（法院實務 NT$2,000–3,000/日）。</div>
         </div>
         <div class="input-group">
           <label>工作損失天數（住院＋療養）</label>
@@ -155,21 +164,21 @@
               <div class="radio-dot"></div>
               <div>
                 <div class="radio-text">輕傷（10–50 萬）</div>
-                <div class="radio-sub">一般骨折、輕度外傷、短暫住院</div>
+                <div class="radio-sub">一般骨折、輕度外傷、短暫住院｜以中間值 NT$20萬 估算</div>
               </div>
             </div>
             <div class="radio-item" onclick="setSolatiumLevel(this,'serious')">
               <div class="radio-dot"></div>
               <div>
                 <div class="radio-text">重傷（50–200 萬）</div>
-                <div class="radio-sub">多處骨折、長期住院、殘留障礙</div>
+                <div class="radio-sub">多處骨折、長期住院、殘留障礙｜以中間值 NT$100萬 估算</div>
               </div>
             </div>
             <div class="radio-item" onclick="setSolatiumLevel(this,'severe')">
               <div class="radio-dot"></div>
               <div>
-                <div class="radio-text">極重傷（200–400 萬）</div>
-                <div class="radio-sub">永久殘廢、植物人狀態、四肢癱瘓</div>
+                <div class="radio-text">極重傷（150–300 萬）</div>
+                <div class="radio-sub">永久殘廢、植物人狀態、四肢癱瘓｜以中間值 NT$200萬 估算</div>
               </div>
             </div>
           </div>
@@ -200,22 +209,22 @@
             <div class="radio-item active" onclick="setDeathSolatiumLevel(this,'low')">
               <div class="radio-dot"></div>
               <div>
-                <div class="radio-text">一般（150 萬）</div>
-                <div class="radio-sub">法院實務通常採150–250萬區間</div>
+                <div class="radio-text">每位請求人（100–250萬）</div>
+                <div class="radio-sub">一般情形｜以中間值 NT$150萬 估算</div>
               </div>
             </div>
             <div class="radio-item" onclick="setDeathSolatiumLevel(this,'mid')">
               <div class="radio-dot"></div>
               <div>
-                <div class="radio-text">中（200 萬）</div>
-                <div class="radio-sub">有幼年子女、配偶依賴等加重因素</div>
+                <div class="radio-text">加重因素（100–250萬）</div>
+                <div class="radio-sub">有幼年子女、配偶依賴等加重因素｜以 NT$175萬 估算</div>
               </div>
             </div>
             <div class="radio-item" onclick="setDeathSolatiumLevel(this,'high')">
               <div class="radio-dot"></div>
               <div>
-                <div class="radio-text">較高（250 萬）</div>
-                <div class="radio-sub">對方明顯重大過失、多名至親受害</div>
+                <div class="radio-text">重大過失（100–250萬）</div>
+                <div class="radio-sub">對方明顯重大過失、多名至親受害｜以 NT$200萬 估算</div>
               </div>
             </div>
           </div>
@@ -232,6 +241,11 @@
     <p class="subtitle">以下為依您輸入資料估算之損害賠償金額，強制險部分已自動扣除，僅供初步參考。</p>
     <div id="resultContent"></div>
     <div id="save-btn-container"></div>
+    <div class="cross-links">
+      <div class="cross-links-label">相關工具</div>
+      <a class="cross-link-btn" href="prescription.html">⏱ 消滅時效計算機　侵權行為2年時效 <span>→</span></a>
+      <a class="cross-link-btn" href="minor-damages.html">👨‍👩‍👧 未成年損害賠償　涉及未成年人時適用 <span>→</span></a>
+    </div>
   </div>
 
 </main>
@@ -245,8 +259,16 @@
   let solatiumLevel = 'light'; // 傷害
   let deathSolatiumLevel = 'low'; // 死亡
 
-  const SOLATIUM_MAP = { light: 300000, serious: 1250000, severe: 3000000 };
-  const DEATH_SOLATIUM_MAP = { low: 1500000, mid: 2000000, high: 2500000 };
+  const SOLATIUM_MAP = {
+    light:   { low: 100000,  high: 500000,  mid: 200000  },
+    serious: { low: 500000,  high: 2000000, mid: 1000000 },
+    severe:  { low: 1500000, high: 3000000, mid: 2000000 }
+  };
+  const DEATH_SOLATIUM_MAP = {
+    low:  { low: 1000000, high: 2500000, mid: 1500000 },
+    mid:  { low: 1000000, high: 2500000, mid: 1750000 },
+    high: { low: 1000000, high: 2500000, mid: 2000000 }
+  };
 
   function setType(t) {
     accidentType = t;
@@ -287,38 +309,122 @@
 
     if (accidentType === 'injury') {
       const medical = parseFloat(document.getElementById('medicalFee').value) || 0;
+      const careRateVal = parseInt(document.getElementById('careRate').value) || 2400;
       const careDays = parseFloat(document.getElementById('careDays').value) || 0;
       const workDays = parseFloat(document.getElementById('workLossDays').value) || 0;
-      const careTotal = careDays * 1500;
+      const careTotal = careDays * careRateVal;
       const workLoss = (monthlySalary / 30) * workDays;
-      const solatium = SOLATIUM_MAP[solatiumLevel];
+      const solMap = SOLATIUM_MAP[solatiumLevel];
+      const solatium = solMap.mid;
+      const solatiumRange = `NT$${(solMap.low/10000).toFixed(0)}萬–NT$${(solMap.high/10000).toFixed(0)}萬（以中間值估算）`;
 
       rows = [
         { label: '醫療費用', value: medical },
-        { label: '看護費（' + careDays + '天 × NT$1,500）', value: careTotal },
-        { label: '工作損失（' + workDays + '天）', value: workLoss },
-        { label: '精神慰撫金', value: solatium },
+        { label: `看護費（${careDays}天 × NT$${careRateVal.toLocaleString()}）`, value: careTotal },
+        { label: `工作損失（${workDays}天）`, value: workLoss },
+        { label: `精神慰撫金（${solatiumRange}）`, value: solatium },
       ];
       subtotal = medical + careTotal + workLoss + solatium;
 
-      // 強制險：傷害醫療最高20萬
-      compulsoryInsurance = Math.min(medical, 200000);
-      compulsoryLabel = `強制險傷害醫療給付（上限20萬）`;
+      // 強制險：傷害醫療最高20萬，僅抵扣醫療費用部分
+      const insuranceOffset = Math.min(200000, medical);
+      compulsoryInsurance = insuranceOffset;
+      compulsoryLabel = `強制險醫療給付抵扣（上限20萬，僅限醫療費用）`;
+
+      const faultShare = subtotal * faultPct;
+      const netAmount = Math.max(0, (subtotal - insuranceOffset) * faultPct);
+
+      const detailRows = rows.map(r =>
+        `<div class="result-row"><span class="result-label">${r.label}</span><span class="result-value">${fmt(r.value)}</span></div>`
+      ).join('');
+
+      document.getElementById('resultContent').innerHTML = `
+      <div class="result-hero">
+        <div class="result-hero-label">對方應賠金額（估算）</div>
+        <div class="result-hero-amount">${fmt(netAmount)}</div>
+        <div class="result-hero-sub">強制險僅抵扣醫療費用｜對方過失比例 ${Math.round(faultPct * 100)}%</div>
+      </div>
+
+      ${netAmount <= 0 ? `<div class="success-box">強制險給付已足以涵蓋醫療費用，對方額外應賠金額為零或須另行確認。</div>` : ''}
+
+      <div class="card">
+        <div class="section-title">損害明細</div>
+        ${detailRows}
+        <div class="result-row" style="margin-top:4px">
+          <span class="result-label" style="font-weight:600">損害合計</span>
+          <span class="result-value" style="font-weight:700">${fmt(subtotal)}</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">過失與強制險扣除</div>
+        <div class="result-row">
+          <span class="result-label">損害合計</span>
+          <span class="result-value">${fmt(subtotal)}</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">強制險抵扣（僅醫療費用部分）</span>
+          <span class="result-value success">－ ${fmt(insuranceOffset)}</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">扣除強制險後損害</span>
+          <span class="result-value">${fmt(subtotal - insuranceOffset)}</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">對方過失比例</span>
+          <span class="result-value">${Math.round(faultPct * 100)}%</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label" style="font-weight:600">對方應賠（依過失比例）</span>
+          <span class="result-value accent" style="font-weight:700">${fmt(netAmount)}</span>
+        </div>
+      </div>
+
+      <div class="warn-box">⚠ 時效提醒：侵權行為損害賠償請求權，自知悉損害及賠償義務人起 <strong>2年</strong> 消滅時效；自事故發生起 <strong>10年</strong> 絕對時效（民法§197）。請盡早起訴或取得對方書面承認以中斷時效。</div>
+
+      <div class="card">
+        <div class="law-note">
+          <strong>民法§184</strong>：因故意或過失，不法侵害他人之權利者，負損害賠償責任。<br><br>
+          <strong>民法§193</strong>：不法侵害他人之身體或健康者，對於被害人因此喪失或減少勞動能力或增加生活上需要時，應負損害賠償責任。<br><br>
+          <strong>民法§194</strong>：不法侵害他人致死者，被害人之父、母、子、女及配偶，雖非財產上之損害，亦得請求賠償相當之金額（精神慰撫金）。<br><br>
+          <strong>強制汽車責任保險法§25</strong>：傷害醫療給付上限新台幣20萬元，<strong>僅抵扣醫療費用部分</strong>；慰撫金及工作損失不在強制險補償範圍內，仍可向加害人全額請求。
+        </div>
+      </div>
+    `;
+
+      document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+      document.getElementById('step2').classList.add('active');
+      document.getElementById('progressFill').style.width = '100%';
+      document.getElementById('navBar').innerHTML = `
+        <button class="btn btn-secondary" onclick="reset()">← 重新計算</button>
+        <button class="btn btn-print" onclick="window.print()">列印 / PDF</button>
+      `;
+      window.scrollTo(0, 0);
+
+      initSaveButton(
+        'accident',
+        `車禍損害賠償試算 ${new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit'})}`,
+        `對方應賠金額：${fmt(netAmount)}（傷害案）`,
+        { accidentType, faultPct, netAmount }
+      );
+      return;
     } else {
       const funeral = parseFloat(document.getElementById('funeralFee').value) || 0;
       const depCount = parseFloat(document.getElementById('dependentCount').value) || 0;
       const depYears = parseFloat(document.getElementById('dependentYears').value) || 0;
       const maintenance = monthlySalary * 12 * depYears * depCount;
-      const solatium = DEATH_SOLATIUM_MAP[deathSolatiumLevel];
+      const solMap = DEATH_SOLATIUM_MAP[deathSolatiumLevel];
+      const solatium = solMap.mid;
+      const solatiumRange = `NT$${(solMap.low/10000).toFixed(0)}萬–NT$${(solMap.high/10000).toFixed(0)}萬（以中間值估算）`;
 
       rows = [
         { label: '殯葬費', value: funeral },
         { label: `撫養費（${depCount}人 × ${depYears}年）`, value: maintenance },
-        { label: '精神慰撫金', value: solatium },
+        { label: `精神慰撫金（${solatiumRange}）`, value: solatium },
       ];
       subtotal = funeral + maintenance + solatium;
 
-      // 強制險：死亡給付200萬
+      // 強制險：死亡給付200萬，抵扣全部損害
       compulsoryInsurance = 2000000;
       compulsoryLabel = `強制險死亡給付（固定200萬）`;
     }
@@ -334,10 +440,10 @@
       <div class="result-hero">
         <div class="result-hero-label">對方應賠金額（估算）</div>
         <div class="result-hero-amount">${fmt(netAmount)}</div>
-        <div class="result-hero-sub">已扣除強制險給付｜對方過失比例 ${Math.round(faultPct * 100)}%</div>
+        <div class="result-hero-sub">強制險死亡給付已扣除｜對方過失比例 ${Math.round(faultPct * 100)}%</div>
       </div>
 
-      ${netAmount <= 0 ? `<div class="success-box">強制險給付已足以涵蓋本案損害，對方額外應賠金額為零或須另行確認。</div>` : ''}
+      ${netAmount <= 0 ? `<div class="success-box">強制險死亡給付已足以涵蓋本案損害，對方額外應賠金額為零或須另行確認。</div>` : ''}
 
       <div class="card">
         <div class="section-title">損害明細</div>
@@ -367,7 +473,7 @@
           <span class="result-value success">－ ${fmt(compulsoryInsurance)}</span>
         </div>
         <div class="result-row">
-          <span class="result-label" style="font-weight:600">對方額外應賠金額</span>
+          <span class="result-label" style="font-weight:600">對方應賠（依過失比例）</span>
           <span class="result-value accent" style="font-weight:700">${fmt(netAmount)}</span>
         </div>
       </div>
@@ -380,7 +486,7 @@
           <strong>民法§193</strong>：不法侵害他人之身體或健康者，對於被害人因此喪失或減少勞動能力或增加生活上需要時，應負損害賠償責任。<br><br>
           <strong>民法§192</strong>：不法侵害他人致死者，對於支出殯葬費之人，及依法應受被害人扶養之人，負損害賠償責任。<br><br>
           <strong>民法§194</strong>：不法侵害他人致死者，被害人之父、母、子、女及配偶，雖非財產上之損害，亦得請求賠償相當之金額（精神慰撫金）。<br><br>
-          <strong>強制汽車責任保險法§25</strong>：傷害醫療給付上限新台幣20萬元；死亡或永久失能給付上限200萬元。此給付由保險公司先行支付，不影響對加害人之民事請求，但應予扣除重複。
+          <strong>強制汽車責任保險法§25</strong>：傷害醫療給付上限新台幣20萬元；死亡或永久失能給付上限200萬元。死亡給付係就全部賠償金額扣除，傷害案件之強制險則<strong>僅限抵扣醫療費用部分</strong>。
         </div>
       </div>
     `;

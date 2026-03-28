@@ -83,6 +83,11 @@
   @media print { header, .nav-bar, .progress-bar { display: none; } main { padding: 20px; } }
   .disclaimer-bar { max-width: 560px; margin: 0 auto; padding: 16px 24px 40px; font-size: 11.5px; color: rgba(0,0,0,0.60); line-height: 1.7; border-top: 1px solid var(--border); }
   .disclaimer-bar strong { color: rgba(0,0,0,0.78); }
+  .cross-links { margin-top: 20px; border-top: 1px solid var(--border); padding-top: 16px; }
+  .cross-links-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+  .cross-link-btn { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 10px; text-decoration: none; color: var(--ink); background: #fff; margin-bottom: 8px; font-size: 13px; transition: border-color 0.2s; }
+  .cross-link-btn:hover { border-color: var(--gold); }
+  .cross-link-btn span { color: var(--muted); font-size: 18px; }
 </style>
 </head>
 <body>
@@ -137,6 +142,12 @@
     <p class="subtitle">以下為依您輸入股票資料之遺產估值，僅供初步參考。</p>
     <div id="resultContent"></div>
     <div id="save-btn-container"></div>
+    <div class="cross-links">
+      <div class="cross-links-label">相關工具</div>
+      <a class="cross-link-btn" href="calculator.html">📋 遺產繼承計算器　計算各繼承人應繼分 <span>→</span></a>
+      <a class="cross-link-btn" href="inheritance-timeline.html">📅 繼承流程時間軸　股票繼承過戶期限 <span>→</span></a>
+      <a class="cross-link-btn" href="prescription.html">⏱ 消滅時效計算機　股票相關請求權時效 <span>→</span></a>
+    </div>
   </div>
 
 </main>
@@ -169,6 +180,7 @@
           <select id="stype-${idx}" onchange="togglePriceLabel(${idx})">
             <option value="listed">上市（TWSE）</option>
             <option value="otc">上櫃（OTC）</option>
+            <option value="emerging">興櫃（收盤價法）</option>
             <option value="unlisted">未上市</option>
           </select>
         </div>
@@ -198,10 +210,27 @@
     if (t === 'unlisted') {
       lbl.textContent = '每股淨值（元，資產淨值法）';
       note.innerHTML = '未上市股票依遺贈稅法§10第1項第4款，以每股資產淨值計算。';
+    } else if (t === 'emerging') {
+      lbl.textContent = '每股收盤價（元）';
+      note.innerHTML = '興櫃股票依遺贈稅法§10第1項第3款，與上市股票相同，以死亡當日收盤價計算。';
     } else {
       lbl.textContent = '每股收盤價（元）';
       note.innerHTML = '上市/上櫃：請填入被繼承人死亡當日之實際收盤價（遺贈稅法§10第1項第3款）。';
     }
+  }
+
+  function calcEstateTax(net) {
+    if (net <= 0) return 0;
+    const t1 = 50000000, t2 = 100000000;
+    if (net <= t1) return Math.round(net * 0.10);
+    if (net <= t2) return Math.round(t1 * 0.10 + (net - t1) * 0.15);
+    return Math.round(t1 * 0.10 + (t2 - t1) * 0.15 + (net - t2) * 0.20);
+  }
+
+  function estateTaxRateLabel(netEstate) {
+    if (netEstate <= 50000000) return '稅率 10%';
+    if (netEstate <= 100000000) return '稅率 10%（5,000萬以下）+ 15%（超出部分）';
+    return '稅率 10% / 15% / 20% 累進';
   }
 
   function fmt(n) {
@@ -226,13 +255,13 @@
       const lots = parseFloat(document.getElementById(`slots-${id}`)?.value) || 0;
       const price = parseFloat(document.getElementById(`sprice-${id}`)?.value) || 0;
       const value = lots * 1000 * price;
-      const typeLabel = type === 'listed' ? '上市' : type === 'otc' ? '上櫃' : '未上市';
+      const typeLabel = type === 'listed' ? '上市' : type === 'otc' ? '上櫃' : type === 'emerging' ? '興櫃' : '未上市';
       details.push({ name, type, typeLabel, lots, price, value });
       total += value;
     });
 
     const excess = Math.max(0, total - EXEMPTION);
-    const estateTax = excess * 0.10;
+    const estateTax = calcEstateTax(excess);
     const share = total / heirCount;
 
     const detailRows = details.map(d => `
@@ -251,7 +280,7 @@
       </div>
 
       ${excess > 0
-        ? `<div class="info-box">⚠ 股票遺產總估值超過免稅額 NT$13,330,000，超額部分估算遺產稅 <strong>${fmt(estateTax)}</strong>（稅率10%）。實際稅額以國稅局核定為準，並需合計全部遺產。</div>`
+        ? `<div class="info-box">⚠ 股票遺產總估值超過免稅額 NT$13,330,000，超額部分估算遺產稅 <strong>${fmt(estateTax)}</strong>（${estateTaxRateLabel(excess)}）。實際稅額以國稅局核定為準，並需合計全部遺產。</div>`
         : `<div class="success-box">✓ 股票遺產總估值未超過免稅額（1,333萬），若全部遺產合計亦未超過，無需繳納遺產稅。</div>`
       }
 
@@ -279,7 +308,7 @@
           <span class="result-value ${excess > 0 ? 'accent' : 'success'}">${excess > 0 ? fmt(excess) : '未超過'}</span>
         </div>
         <div class="result-row">
-          <span class="result-label">超額遺產稅估算（10%）</span>
+          <span class="result-label">超額遺產稅估算（${excess > 0 ? estateTaxRateLabel(excess) : '10%'}）</span>
           <span class="result-value ${excess > 0 ? 'accent' : 'success'}">${excess > 0 ? fmt(estateTax) : '—'}</span>
         </div>
         <div class="result-row">

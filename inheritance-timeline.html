@@ -121,6 +121,7 @@
 
   .btn-pdf{width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;font-family:'Noto Sans TC',sans-serif;margin-top:16px;}
   .btn-reset{width:100%;padding:13px;border:1.5px solid var(--border);border-radius:10px;background:transparent;font-size:14px;color:var(--muted);cursor:pointer;font-family:'Noto Sans TC',sans-serif;margin-top:10px;}
+  .warn-box { background: #fdf3e7; border: 1px solid #e8c882; border-left: 3px solid var(--gold); border-radius: 6px; padding: 12px 14px; font-size: 12px; color: #7a5a10; line-height: 1.7; margin: 8px 0 14px; }
   .disclaimer-bar{max-width:560px;margin:0 auto;padding:16px 24px 40px;font-size:11.5px;color:rgba(0,0,0,0.62);line-height:1.7;border-top:1px solid rgba(0,0,0,0.12);}
   .disclaimer-bar strong{color:rgba(0,0,0,0.80);}
   .save-btn { display: block; width: 100%; padding: 12px; background: var(--accent); color: white; border: none; border-radius: 10px; font-size: 14px; font-family: 'Noto Sans TC', sans-serif; font-weight: 500; cursor: pointer; margin-top: 16px; transition: opacity 0.2s; }
@@ -279,7 +280,7 @@
       {
         title: '拋棄繼承期限',
         deadline: addDays(death, 90),
-        desc: '繼承人若不願繼承（例如遺產為負債），須在知悉繼承後3個月內向法院聲請拋棄繼承。逾期視為概括承受，包含債務。',
+        desc: '繼承人若不願繼承（例如遺產為負債），須在知悉繼承後3個月內向法院聲請拋棄繼承。逾期視為概括承受，包含債務。<div class="warn-box">⚠️ 注意：依民法§1174，拋棄繼承3個月期限係自<strong>繼承人知悉其得繼承之時</strong>起算，而非一律以死亡日起算。若繼承人晚於死亡日才獲知，期限相應延後，請以實際知悉日計算。</div>',
         where: '📍 管轄地方法院',
         law: '民法第1174條',
         optional: false

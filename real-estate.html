@@ -67,6 +67,11 @@
   @media print { header, .nav-bar, .progress-bar { display: none; } main { padding: 20px; } }
   .disclaimer-bar { max-width: 560px; margin: 0 auto; padding: 16px 24px 40px; font-size: 11.5px; color: rgba(0,0,0,0.60); line-height: 1.7; border-top: 1px solid var(--border); }
   .disclaimer-bar strong { color: rgba(0,0,0,0.78); }
+  .cross-links { margin-top: 20px; border-top: 1px solid var(--border); padding-top: 16px; }
+  .cross-links-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+  .cross-link-btn { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 10px; text-decoration: none; color: var(--ink); background: #fff; margin-bottom: 8px; font-size: 13px; transition: border-color 0.2s; }
+  .cross-link-btn:hover { border-color: var(--gold); }
+  .cross-link-btn span { color: var(--muted); font-size: 18px; }
 </style>
 </head>
 <body>
@@ -114,15 +119,6 @@
         <input type="number" id="heirCount" placeholder="例如：3" min="1" value="1">
       </div>
       <div class="input-group">
-        <label>您的繼承順位</label>
-        <select id="heirOrder">
-          <option value="1">第一順位（子女、孫子女）</option>
-          <option value="2">第二順位（父母、兄弟姊妹）</option>
-          <option value="3">第三順位（祖父母及其他）</option>
-          <option value="0">配偶（與各順位共同繼承）</option>
-        </select>
-      </div>
-      <div class="input-group">
         <label>是否為自用住宅</label>
         <div class="toggle-row">
           <button class="toggle-btn active" id="btnSelfYes" onclick="setSelf(true)">是（自用住宅）</button>
@@ -134,10 +130,6 @@
 
     <div class="card">
       <div class="section-title">地價稅試算（選填）</div>
-      <div class="input-group">
-        <label>持有土地面積（平方公尺）</label>
-        <input type="number" id="landArea" placeholder="例如：80" min="0">
-      </div>
       <div class="input-group" id="taxRateGroup">
         <label>地價稅率（%）</label>
         <input type="number" id="taxRate" placeholder="自用住宅：0.2，一般：1" step="0.01" min="0" max="10" value="0.2">
@@ -154,6 +146,12 @@
     <p class="subtitle">以下為依您輸入資料所試算之不動產繼承稅務概況，僅供參考。</p>
     <div id="resultContent"></div>
     <div id="save-btn-container"></div>
+    <div class="cross-links">
+      <div class="cross-links-label">相關工具</div>
+      <a class="cross-link-btn" href="property-sale-tax.html">💰 房地合一稅試算　規劃繼承後出售 <span>→</span></a>
+      <a class="cross-link-btn" href="calculator.html">📋 遺產繼承計算器　計算各繼承人應繼分 <span>→</span></a>
+      <a class="cross-link-btn" href="inheritance-timeline.html">📅 繼承流程時間軸　不動產過戶期限提醒 <span>→</span></a>
+    </div>
   </div>
 
 </main>
@@ -176,21 +174,35 @@
     return 'NT$ ' + Math.round(n).toLocaleString('zh-TW');
   }
 
+  function calcEstateTax(net) {
+    if (net <= 0) return 0;
+    const t1 = 50000000, t2 = 100000000;
+    if (net <= t1) return Math.round(net * 0.10);
+    if (net <= t2) return Math.round(t1 * 0.10 + (net - t1) * 0.15);
+    return Math.round(t1 * 0.10 + (t2 - t1) * 0.15 + (net - t2) * 0.20);
+  }
+
+  function estateTaxRateLabel(netEstate) {
+    if (netEstate <= 50000000) return '稅率 10%';
+    if (netEstate <= 100000000) return '稅率 10%（5,000萬以下）+ 15%（超出部分）';
+    return '稅率 10% / 15% / 20% 累進';
+  }
+
   function calculate() {
     const land = parseFloat(document.getElementById('landValue').value) || 0;
     const building = parseFloat(document.getElementById('buildingValue').value) || 0;
     const heirCount = Math.max(1, parseInt(document.getElementById('heirCount').value) || 1);
-    const area = parseFloat(document.getElementById('landArea').value) || 0;
     const taxRate = parseFloat(document.getElementById('taxRate').value) || (isSelfUse ? 0.2 : 1);
 
     const EXEMPTION = 13330000; // 1,333萬
     const estateTaxBase = land + building;
-    const excess = Math.max(0, estateTaxBase - EXEMPTION);
-    const estateTax = excess * 0.10;
+    const netEstate = Math.max(0, estateTaxBase - EXEMPTION);
+    const excess = netEstate;
+    const estateTax = calcEstateTax(netEstate);
     const share = estateTaxBase / heirCount;
 
-    // 年地價稅 = 土地公告現值 × 稅率%
-    const annualLandTax = area > 0 ? land * (taxRate / 100) : 0;
+    // 年地價稅 = 土地公告現值 × 稅率%（僅供參考，不依面積）
+    const annualLandTax = land > 0 ? land * (taxRate / 100) : 0;
 
     document.getElementById('resultContent').innerHTML = `
       <div class="result-hero">
@@ -200,7 +212,7 @@
       </div>
 
       ${excess > 0
-        ? `<div class="info-box">⚠ 本不動產遺產稅基超過免稅額 NT$13,330,000，超額部分估算遺產稅 <strong>${fmt(estateTax)}</strong>（稅率10%）。建議搭配全部遺產申報，實際稅額以國稅局核定為準。</div>`
+        ? `<div class="info-box">⚠ 本不動產遺產稅基超過免稅額 NT$13,330,000，超額部分估算遺產稅 <strong>${fmt(estateTax)}</strong>（${estateTaxRateLabel(netEstate)}）。建議搭配全部遺產申報，實際稅額以國稅局核定為準。</div>`
         : `<div class="success-box">✓ 本不動產遺產稅基未超過免稅額（1,333萬），若全部遺產亦未超過，無需繳納遺產稅。</div>`
       }
 
@@ -227,7 +239,7 @@
           <span class="result-value ${excess > 0 ? 'accent' : 'success'}">${excess > 0 ? fmt(excess) : '未超過'}</span>
         </div>
         <div class="result-row">
-          <span class="result-label">超額遺產稅估算（10%）</span>
+          <span class="result-label">超額遺產稅估算（${excess > 0 ? estateTaxRateLabel(netEstate) : '10%'}）</span>
           <span class="result-value ${excess > 0 ? 'accent' : 'success'}">${excess > 0 ? fmt(estateTax) : '— '}</span>
         </div>
       </div>
@@ -246,7 +258,7 @@
           <span class="result-label">土地增值稅</span>
           <span class="result-value success">免徵</span>
         </div>
-        ${area > 0 ? `
+        ${land > 0 ? `
         <div class="result-row">
           <span class="result-label">年地價稅估算（${taxRate}%）</span>
           <span class="result-value">${fmt(annualLandTax)} / 年</span>
@@ -280,7 +292,7 @@
       'real-estate',
       `不動產繼承試算 ${new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit'})}`,
       `遺產稅基：${fmt(estateTaxBase)}，應繼分：${fmt(share)}`,
-      { land, building, heirCount, isSelfUse, area, taxRate }
+      { land, building, heirCount, isSelfUse, taxRate }
     );
   }
 
