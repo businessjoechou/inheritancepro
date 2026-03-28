@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>贈與稅試算｜InheritancePro</title>
+<meta name="description" content="台灣贈與稅試算工具，依遺產及贈與稅法§22計算年度244萬免稅額、分年規劃節稅策略、與繼承稅比較。InheritancePro。">
+<meta name="keywords" content="贈與稅,贈與稅試算,244萬免稅,分年贈與,節稅規劃,遺贈稅法,台灣贈與稅">
+<meta name="robots" content="index, follow">
+<meta name="author" content="InheritancePro">
+<meta property="og:title" content="贈與稅試算｜InheritancePro">
+<meta property="og:description" content="台灣贈與稅試算，244萬年度免稅額、分年規劃、與繼承稅比較節稅估算。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://inheritancepro.app/gift-tax.html">
+<meta property="og:site_name" content="InheritancePro">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="贈與稅試算｜InheritancePro">
+<link rel="canonical" href="https://inheritancepro.app/gift-tax.html">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1410; --paper: #f5f0e8; --accent: #8b2020; --gold: #c4932a;
+    --soft: #e8e0d0; --muted: #7a6f62; --success: #2a6b4a; --danger: #8b2020;
+    --border: #c8bfb0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--paper); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; min-height: 100vh; font-size: 15px; }
+  header { background: var(--ink); color: var(--paper); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .logo { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 700; letter-spacing: 0.04em; }
+  .logo span { color: var(--gold); }
+  .page-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 3px; font-family: 'DM Mono', monospace; letter-spacing: 0.06em; }
+  .home-link { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; }
+  .home-link:hover { color: var(--gold); }
+  .progress-bar { height: 3px; background: var(--soft); }
+  .progress-fill { height: 100%; background: var(--gold); transition: width 0.4s ease; }
+  main { padding: 24px 20px 120px; max-width: 480px; margin: 0 auto; }
+  .step-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
+  h2 { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
+  .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
+  .card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 14px; }
+  .section-title { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--soft); }
+  .input-group { margin-bottom: 18px; }
+  .input-group:last-child { margin-bottom: 0; }
+  label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 8px; }
+  input[type="number"], input[type="text"] {
+    width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 8px;
+    background: var(--paper); font-size: 15px; font-family: 'DM Mono', monospace;
+    color: var(--ink); transition: border-color 0.2s; -webkit-appearance: none;
+  }
+  input:focus { outline: none; border-color: var(--gold); background: #fff; }
+  .toggle-group { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .toggle-btn {
+    padding: 10px 8px; border: 1.5px solid var(--border); border-radius: 8px;
+    background: var(--paper); cursor: pointer; text-align: center; font-size: 13px;
+    color: var(--muted); transition: all 0.2s; font-family: 'Noto Sans TC', sans-serif;
+  }
+  .toggle-btn.active { border-color: var(--accent); background: #fff5f5; color: var(--accent); font-weight: 500; }
+  .info-box { background: #fffbf0; border: 1px solid #e8d48a; border-left: 3px solid var(--gold); border-radius: 6px; padding: 12px 14px; font-size: 12px; color: #7a6020; line-height: 1.7; margin-bottom: 14px; }
+  .info-box strong { color: #5a4010; }
+  .warn-box { background: #fdf3e7; border: 1px solid #e8c882; border-left: 3px solid var(--gold); border-radius: 6px; padding: 12px 14px; font-size: 12px; color: #7a5a10; line-height: 1.7; margin-bottom: 14px; }
+  .law-note { border-left: 3px solid var(--gold); padding-left: 12px; font-size: 12px; color: var(--muted); line-height: 1.7; margin-top: 10px; }
+  /* Results */
+  .result-hero { background: var(--ink); color: var(--paper); border-radius: 16px; padding: 28px 24px; margin-bottom: 14px; text-align: center; }
+  .result-hero .label { font-size: 12px; color: var(--muted); letter-spacing: 0.12em; font-family: 'DM Mono', monospace; text-transform: uppercase; margin-bottom: 10px; }
+  .result-total { font-family: 'Noto Serif TC', serif; font-size: 28px; font-weight: 700; color: var(--gold); margin-bottom: 6px; }
+  .result-sub { font-size: 13px; color: var(--muted); }
+  .heir-card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 10px; }
+  .heir-header { background: var(--soft); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; }
+  .heir-name { font-weight: 600; font-size: 14px; color: var(--ink); }
+  .heir-fraction { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent); font-weight: 500; }
+  .heir-body { padding: 14px 16px; }
+  .heir-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .heir-row:last-child { margin-bottom: 0; }
+  .heir-row-label { font-size: 13px; color: var(--muted); }
+  .heir-row-val { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; color: var(--success); }
+  /* Table */
+  .plan-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 10px; }
+  .plan-table th { background: var(--soft); padding: 8px 10px; text-align: left; font-size: 11px; font-family: 'DM Mono', monospace; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+  .plan-table td { padding: 8px 10px; border-bottom: 1px solid var(--soft); color: var(--ink); }
+  .plan-table tr:last-child td { border-bottom: none; }
+  .plan-table td:last-child { font-family: 'DM Mono', monospace; color: var(--success); text-align: right; }
+  .plan-table td:nth-child(2) { font-family: 'DM Mono', monospace; text-align: right; color: var(--muted); }
+  /* Nav */
+  .nav-bar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); background: #fff; border-top: 1px solid var(--border); padding: 16px 20px 28px; display: flex; gap: 10px; width: 100%; max-width: 480px; }
+  .btn { flex: 1; padding: 14px; border-radius: 10px; border: none; font-size: 15px; font-family: 'Noto Sans TC', sans-serif; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+  .btn-primary { background: var(--ink); color: var(--paper); }
+  .btn-primary:hover { background: #2a1a10; }
+  .btn-print { background: var(--accent); color: #fff; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  @media print { header, .nav-bar, #navBar, .progress-bar { display: none !important; } main { padding: 20px; } }
+  .disclaimer-bar { max-width: 560px; margin: 0 auto; padding: 16px 24px 40px; font-size: 11.5px; color: rgba(0,0,0,0.62); line-height: 1.7; border-top: 1px solid rgba(0,0,0,0.12); }
+  .disclaimer-bar strong { color: rgba(0,0,0,0.80); }
+  .save-btn { display: block; width: 100%; padding: 12px; background: var(--accent); color: white; border: none; border-radius: 10px; font-size: 14px; font-family: 'Noto Sans TC', sans-serif; font-weight: 500; cursor: pointer; margin-top: 16px; transition: opacity 0.2s; }
+  .save-btn:hover { opacity: 0.85; }
+  .save-btn:disabled { opacity: 0.6; cursor: default; }
+  #resultSection { display: none; animation: fadeUp 0.3s ease both; }
+  .badge-pill { display: inline-block; font-family: 'DM Mono', monospace; font-size: 11px; padding: 2px 8px; border-radius: 12px; font-weight: 500; }
+  .badge-ok { background: #e8f5e9; color: var(--success); }
+  .badge-warn { background: #fff3e0; color: #c4722a; }
+  .badge-danger { background: #fdf0f0; color: var(--danger); }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" style="text-decoration:none;color:inherit">
+    <div class="logo">Inheritance<span>Pro</span></div>
+    <div class="page-sub">贈與稅試算</div>
+  </a>
+  <a href="index.html" class="home-link">← 首頁</a>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:100%"></div></div>
+
+<main>
+
+  <div class="step-label">贈與稅試算 · 遺贈稅法§22§19</div>
+  <h2>贈與稅試算</h2>
+  <p class="subtitle">依遺產及贈與稅法計算年度贈與稅，提供分年規劃建議及與繼承稅之比較。2026年年度免稅額 244 萬元。</p>
+
+  <!-- Section 1: 年度贈與試算 -->
+  <div class="card">
+    <div class="section-title">1 · 年度贈與試算</div>
+
+    <div class="input-group">
+      <label>贈與人稱呼 <span style="font-weight:400;color:var(--muted);font-size:12px">選填，用於結果顯示</span></label>
+      <input type="text" id="donor_name" placeholder="例：父親、王先生">
+    </div>
+
+    <div class="input-group">
+      <label>本年度已累計贈與金額（元）<span style="font-weight:400;color:var(--muted);font-size:12px">含本次以前之贈與</span></label>
+      <input type="number" id="prior_gifts" placeholder="0" min="0" inputmode="numeric" oninput="liveCalc()">
+    </div>
+
+    <div class="input-group">
+      <label>本次擬贈與金額（元）</label>
+      <input type="number" id="current_gift" placeholder="0" min="0" inputmode="numeric" oninput="liveCalc()">
+    </div>
+
+    <div class="input-group" style="margin-bottom:0">
+      <label>受贈人身份</label>
+      <div class="toggle-group">
+        <button class="toggle-btn active" id="btn_general" onclick="setRecipient('general')">一般人</button>
+        <button class="toggle-btn" id="btn_spouse" onclick="setRecipient('spouse')">配偶</button>
+        <button class="toggle-btn" id="btn_child" onclick="setRecipient('child')">子女</button>
+      </div>
+      <div id="spouse_note" style="display:none;font-size:11px;color:var(--muted);margin-top:6px;">配偶贈與另享 222 萬免稅額，合計可免稅轉移 466 萬/年。</div>
+    </div>
+  </div>
+
+  <!-- Section 2: 分年規劃 -->
+  <div class="card">
+    <div class="section-title">2 · 多年分年規劃試算</div>
+
+    <div class="input-group">
+      <label>擬贈與總金額（元）</label>
+      <input type="number" id="total_gift_plan" placeholder="0" min="0" inputmode="numeric" oninput="liveCalc()">
+    </div>
+
+    <div class="input-group" style="margin-bottom:0">
+      <label>目標年數 <span style="font-weight:400;color:var(--muted);font-size:12px">1–20 年</span></label>
+      <input type="number" id="plan_years" placeholder="5" min="1" max="20" value="5" inputmode="numeric" oninput="liveCalc()">
+    </div>
+  </div>
+
+  <!-- Section 3: 與繼承比較 -->
+  <div class="card">
+    <div class="section-title">3 · 贈與 vs 繼承 節稅比較</div>
+
+    <div class="input-group" style="margin-bottom:0">
+      <label>預估遺產總值（元）<span style="font-weight:400;color:var(--muted);font-size:12px">填入大概金額以試算節稅效果</span></label>
+      <input type="number" id="estate_value" placeholder="0" min="0" inputmode="numeric" oninput="liveCalc()">
+    </div>
+  </div>
+
+  <div class="info-box">
+    <strong>法律依據</strong>：遺贈稅法§22（年度免稅額）、§19（稅率：2,500萬以下10%、2,500萬～5,000萬15%、5,000萬以上20%）、§5（視為贈與）。配偶之間的贈與依§20另享222萬免稅額。
+  </div>
+
+  <!-- Results -->
+  <div id="resultSection">
+
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">試算結果</div>
+
+    <!-- 年度贈與結果 -->
+    <div class="heir-card">
+      <div class="heir-header" id="resultHeader">
+        <span class="heir-name">本次贈與稅試算</span>
+        <span class="heir-fraction" id="resultBadge">—</span>
+      </div>
+      <div class="heir-body">
+        <div class="heir-row">
+          <span class="heir-row-label">年度免稅額</span>
+          <span class="heir-row-val" style="color:var(--muted)" id="r_exemption">—</span>
+        </div>
+        <div class="heir-row">
+          <span class="heir-row-label">本年已累計贈與</span>
+          <span class="heir-row-val" style="color:var(--muted)" id="r_prior">—</span>
+        </div>
+        <div class="heir-row">
+          <span class="heir-row-label">本次贈與</span>
+          <span class="heir-row-val" style="color:var(--muted)" id="r_current">—</span>
+        </div>
+        <div class="heir-row" style="border-top:1px solid var(--soft);padding-top:8px;margin-top:4px">
+          <span class="heir-row-label">累計贈與合計</span>
+          <span class="heir-row-val" style="color:var(--ink)" id="r_total_gifts">—</span>
+        </div>
+        <div class="heir-row">
+          <span class="heir-row-label">本年已用免稅空間</span>
+          <span class="heir-row-val" style="color:var(--muted)" id="r_used">—</span>
+        </div>
+        <div class="heir-row">
+          <span class="heir-row-label">剩餘免稅空間</span>
+          <span class="heir-row-val" id="r_remaining">—</span>
+        </div>
+        <div class="heir-row">
+          <span class="heir-row-label">本次課稅贈與淨額</span>
+          <span class="heir-row-val" style="color:var(--muted)" id="r_net_gift">—</span>
+        </div>
+        <div class="heir-row" style="border-top:1px solid var(--soft);padding-top:10px;margin-top:4px">
+          <span class="heir-row-label" style="font-weight:600;color:var(--ink)">本次應繳贈與稅</span>
+          <span class="heir-row-val" style="font-size:17px" id="r_tax">—</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 分年規劃表 -->
+    <div class="heir-card" id="planCard" style="display:none">
+      <div class="heir-header">
+        <span class="heir-name">分年規劃試算</span>
+        <span class="heir-fraction" id="r_plan_label">—</span>
+      </div>
+      <div class="heir-body" style="padding:0">
+        <table class="plan-table" id="planTable">
+          <thead>
+            <tr>
+              <th>年度</th>
+              <th>累計轉移（萬）</th>
+              <th>本年節省稅額</th>
+            </tr>
+          </thead>
+          <tbody id="planTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 與繼承比較 -->
+    <div class="heir-card" id="compareCard" style="display:none">
+      <div class="heir-header" style="background:#e8f5e9">
+        <span class="heir-name">贈與 vs 繼承 節稅估算</span>
+        <span class="heir-fraction" style="color:var(--success)" id="r_save_label">—</span>
+      </div>
+      <div class="heir-body">
+        <div class="heir-row">
+          <span class="heir-row-label">預估遺產總值</span>
+          <span class="heir-row-val" style="color:var(--muted)" id="r_estate">—</span>
+        </div>
+        <div class="heir-row">
+          <span class="heir-row-label">繼承稅概估（1,333萬免稅）</span>
+          <span class="heir-row-val" style="color:var(--accent)" id="r_estate_tax">—</span>
+        </div>
+        <div class="heir-row">
+          <span class="heir-row-label">分年贈與後剩餘遺產繼承稅</span>
+          <span class="heir-row-val" style="color:var(--muted)" id="r_remaining_estate_tax">—</span>
+        </div>
+        <div class="heir-row" style="border-top:1px solid var(--soft);padding-top:10px;margin-top:4px">
+          <span class="heir-row-label" style="font-weight:600;color:var(--ink)">預計節省稅額</span>
+          <span class="heir-row-val" style="font-size:17px;color:var(--success)" id="r_savings">—</span>
+        </div>
+        <div id="r_compare_note" style="font-size:11px;color:var(--muted);margin-top:8px;line-height:1.6"></div>
+      </div>
+    </div>
+
+    <div class="law-note">
+      ⚖️ 依《遺產及贈與稅法》第19條（2026年適用）、第22條（年度免稅額244萬）。本試算僅供參考，實際稅額以國稅局核定為準。贈與稅申報期限：贈與行為發生後30日內。
+    </div>
+
+    <button class="btn btn-print" style="width:100%;margin-top:14px;padding:13px;border-radius:10px;font-size:14px;" onclick="window.print()">列印 / 儲存 PDF</button>
+    <div id="save-btn-container"></div>
+  </div>
+
+</main>
+
+<div id="navBar" class="nav-bar">
+  <button class="btn btn-primary" onclick="calculate()" style="flex:2">計算贈與稅</button>
+</div>
+
+<script>
+  let recipientType = 'general';
+
+  function setRecipient(type) {
+    recipientType = type;
+    ['general','spouse','child'].forEach(t => {
+      document.getElementById('btn_' + t).classList.toggle('active', t === type);
+    });
+    document.getElementById('spouse_note').style.display = type === 'spouse' ? 'block' : 'none';
+    liveCalc();
+  }
+
+  function fmt(n) { return 'NT$ ' + Math.round(n).toLocaleString('zh-TW'); }
+  function fmtWan(n) { return (n / 10000).toFixed(1) + ' 萬'; }
+
+  // 2026年贈與稅
+  const GIFT_ANNUAL_EXEMPT = 2440000; // 244萬
+  const GIFT_SPOUSE_EXEMPT = 2220000; // 配偶222萬（另計，合計466萬）
+
+  function calcGiftTax(netGiftAmount) {
+    if (netGiftAmount <= 0) return 0;
+    let tax = 0;
+    const t1 = 25000000, t2 = 50000000;
+    if (netGiftAmount <= t1) {
+      tax = netGiftAmount * 0.10;
+    } else if (netGiftAmount <= t2) {
+      tax = t1 * 0.10 + (netGiftAmount - t1) * 0.15;
+    } else {
+      tax = t1 * 0.10 + (t2 - t1) * 0.15 + (netGiftAmount - t2) * 0.20;
+    }
+    return Math.round(tax);
+  }
+
+  function calcEstateTax(net) {
+    if (net <= 0) return 0;
+    const t1 = 50000000, t2 = 100000000;
+    if (net <= t1) return Math.round(net * 0.10);
+    if (net <= t2) return Math.round(t1 * 0.10 + (net - t1) * 0.15);
+    return Math.round(t1 * 0.10 + (t2 - t1) * 0.15 + (net - t2) * 0.20);
+  }
+
+  function liveCalc() {
+    // trigger calculate silently for live preview
+    const priorGifts = parseFloat(document.getElementById('prior_gifts').value) || 0;
+    const currentGift = parseFloat(document.getElementById('current_gift').value) || 0;
+    if (priorGifts > 0 || currentGift > 0) {
+      calculate(true);
+    }
+  }
+
+  function calculate(silent) {
+    const priorGifts = parseFloat(document.getElementById('prior_gifts').value) || 0;
+    const currentGift = parseFloat(document.getElementById('current_gift').value) || 0;
+    const totalGiftPlan = parseFloat(document.getElementById('total_gift_plan').value) || 0;
+    const planYears = Math.max(1, Math.min(20, parseInt(document.getElementById('plan_years').value) || 5));
+    const estateValue = parseFloat(document.getElementById('estate_value').value) || 0;
+
+    const annualExempt = GIFT_ANNUAL_EXEMPT + (recipientType === 'spouse' ? GIFT_SPOUSE_EXEMPT : 0);
+    const totalThisYear = priorGifts + currentGift;
+    const usedExempt = Math.min(priorGifts, annualExempt);
+    const remainingExempt = Math.max(0, annualExempt - priorGifts);
+    const netGift = Math.max(0, totalThisYear - annualExempt);
+    const giftTax = calcGiftTax(netGift);
+
+    // Update year result
+    document.getElementById('r_exemption').textContent = fmt(annualExempt) + (recipientType === 'spouse' ? '（含配偶額外222萬）' : '');
+    document.getElementById('r_prior').textContent = fmt(priorGifts);
+    document.getElementById('r_current').textContent = fmt(currentGift);
+    document.getElementById('r_total_gifts').textContent = fmt(totalThisYear);
+    document.getElementById('r_used').textContent = fmt(Math.min(totalThisYear, annualExempt));
+    document.getElementById('r_remaining').textContent = fmt(Math.max(0, annualExempt - totalThisYear));
+    document.getElementById('r_remaining').style.color = remainingExempt > 0 ? 'var(--success)' : 'var(--danger)';
+    document.getElementById('r_net_gift').textContent = fmt(netGift);
+    document.getElementById('r_tax').textContent = giftTax === 0 ? '免稅' : fmt(giftTax);
+    document.getElementById('r_tax').style.color = giftTax === 0 ? 'var(--success)' : 'var(--accent)';
+
+    const headerBg = giftTax === 0 ? '#e8f5e9' : '#fff5f0';
+    document.getElementById('resultHeader').style.background = headerBg;
+    document.getElementById('resultBadge').textContent = giftTax === 0 ? '免稅' : (netGift <= 25000000 ? '10%' : netGift <= 50000000 ? '15%' : '20%');
+    document.getElementById('resultBadge').style.color = giftTax === 0 ? 'var(--success)' : 'var(--accent)';
+
+    // 分年規劃
+    if (totalGiftPlan > 0) {
+      document.getElementById('planCard').style.display = 'block';
+      const freeYears = Math.floor(totalGiftPlan / annualExempt);
+      const remainder = totalGiftPlan % annualExempt;
+      const actualYears = Math.min(planYears, freeYears + (remainder > 0 ? 1 : 0));
+
+      document.getElementById('r_plan_label').textContent = `可免稅轉移 ${freeYears} 年`;
+
+      let tbody = '';
+      let cumulative = 0;
+      let totalSaved = 0;
+      const rows = Math.min(planYears, 20);
+      for (let y = 1; y <= rows; y++) {
+        const thisYear = Math.min(annualExempt, totalGiftPlan - (y - 1) * annualExempt);
+        if (thisYear <= 0) break;
+        cumulative += thisYear;
+        // 如果一次性繼承整筆金額要繳的稅（假設扣1333萬免稅後）
+        const taxIfInherit = calcGiftTax(Math.max(0, thisYear)); // 贈與稅若超過免稅
+        const saved = thisYear <= annualExempt ? calcGiftTax(Math.max(0, thisYear - annualExempt + annualExempt)) : 0;
+        // 實際節省的是：若此金額走繼承，遺產淨額多出這筆 → 節省對應遺產稅
+        const inheritTaxOnThis = calcEstateTax(thisYear) - calcEstateTax(0); // approximate
+        tbody += `<tr><td>第 ${y} 年</td><td>${(cumulative/10000).toFixed(0)} 萬</td><td>${fmt(thisYear <= annualExempt ? 0 : calcGiftTax(thisYear - annualExempt))}</td></tr>`;
+      }
+      document.getElementById('planTableBody').innerHTML = tbody;
+    } else {
+      document.getElementById('planCard').style.display = 'none';
+    }
+
+    // 繼承比較
+    if (estateValue > 0) {
+      document.getElementById('compareCard').style.display = 'block';
+      const ESTATE_EXEMPT = 13330000;
+      const estateNetFull = Math.max(0, estateValue - ESTATE_EXEMPT);
+      const estateNetAfterGift = Math.max(0, estateValue - totalGiftPlan - ESTATE_EXEMPT);
+      const taxFull = calcEstateTax(estateNetFull);
+      const taxAfterGift = calcEstateTax(estateNetAfterGift);
+      const savings = taxFull - taxAfterGift;
+
+      document.getElementById('r_estate').textContent = fmt(estateValue);
+      document.getElementById('r_estate_tax').textContent = fmt(taxFull);
+      document.getElementById('r_remaining_estate_tax').textContent = fmt(taxAfterGift);
+      document.getElementById('r_savings').textContent = fmt(Math.max(0, savings));
+      document.getElementById('r_save_label').textContent = savings > 0 ? '可節稅' : '結果相近';
+      const planY = Math.ceil(totalGiftPlan / annualExempt);
+      document.getElementById('r_compare_note').textContent = totalGiftPlan > 0
+        ? `若分 ${planY} 年每年贈與 ${(annualExempt/10000).toFixed(0)} 萬，合計轉移 ${(totalGiftPlan/10000).toFixed(0)} 萬，預計可節省遺產稅約 ${fmt(Math.max(0, savings))}。`
+        : '請填入擬贈與總金額以計算節稅效果。';
+    } else {
+      document.getElementById('compareCard').style.display = 'none';
+    }
+
+    document.getElementById('resultSection').style.display = 'block';
+
+    if (!silent) {
+      initSaveButton(
+        'gift_tax',
+        `贈與稅試算 ${new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit'})}`,
+        `本次贈與 ${fmt(currentGift)}，應繳稅額 ${fmt(giftTax)}`,
+        { priorGifts, currentGift, recipientType, totalGiftPlan, planYears, estateValue }
+      );
+    }
+  }
+
+  async function initSaveButton(tool, title, summary, data) {
+    const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+    const sb = createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+    const { data: { user } } = await sb.auth.getUser();
+    const container = document.getElementById('save-btn-container');
+    if (!container) return;
+    if (!user) {
+      container.innerHTML = `<p style="text-align:center;font-size:12px;color:var(--muted);margin-top:8px;"><a href="/login.html" style="color:var(--accent)">登入</a>後可儲存此次結果</p>`;
+      return;
+    }
+    container.innerHTML = `<button onclick="doSave()" class="save-btn" id="save-btn">儲存此次結果</button>`;
+    window.doSave = async () => {
+      const btn = document.getElementById('save-btn');
+      btn.textContent = '儲存中…';
+      btn.disabled = true;
+      const { saveCalculation } = await import('./js/save.js');
+      const result = await saveCalculation({ tool, title, summary, data });
+      if (result.success) { btn.textContent = '✓ 已儲存'; btn.style.background = '#6b1a1a'; }
+      else { btn.textContent = '儲存失敗'; btn.disabled = false; }
+    };
+  }
+</script>
+<div class="disclaimer-bar"><strong>免責聲明</strong>：本平台之計算結果僅供初步參考，不構成法律意見或法律諮詢服務。</div>
+<script src="js/supabase-config.js"></script>
+<script type="module" src="js/auth-bar.js"></script>
+</body>
+</html>

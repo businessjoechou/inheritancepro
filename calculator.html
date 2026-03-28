@@ -255,6 +255,15 @@
   }
 
   /* Info box */
+  .counter-display {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--success);
+    white-space: nowrap;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
   .info-box {
     background: #fffbf0;
     border: 1px solid #e8d48a;
@@ -753,11 +762,41 @@
         <div id="disabledDeductAmt" style="font-size:12px;color:var(--success);margin-top:6px;font-family:'DM Mono',monospace"></div>
       </div>
 
-      <div class="input-group" style="margin-bottom:0">
+      <div class="input-group">
         <label>其他扣除額 <span style="font-weight:400;color:var(--muted);font-size:12px">債務、未償醫療費等</span></label>
         <div class="input-prefix">
           <span class="prefix-text">NT$</span>
           <input type="number" id="deduct_other" placeholder="0" min="0" inputmode="numeric">
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>農業用地 / 公共設施保留地（元）<span style="font-weight:400;color:var(--muted);font-size:12px">全額扣除，遺贈稅法§17</span></label>
+        <div style="display:flex;align-items:center;gap:12px">
+          <input type="number" id="deduct_agri" placeholder="0" min="0" inputmode="numeric" oninput="updateAgriDeduct()" style="flex:1">
+          <span class="counter-display" id="deductAgriDisplay">NT$ 0</span>
+        </div>
+      </div>
+      <div class="input-group">
+        <label>人壽保險死亡給付（元）<span style="font-weight:400;color:var(--muted);font-size:12px">每位被繼承人最高 3,330 萬免計入遺產</span></label>
+        <div style="display:flex;align-items:center;gap:12px">
+          <input type="number" id="deduct_insurance" placeholder="0" min="0" inputmode="numeric" oninput="updateInsDeduct()" style="flex:1">
+          <span class="counter-display" id="deductInsDisplay">NT$ 0</span>
+        </div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px;">超過 3,330 萬部分仍計入遺產總額</div>
+      </div>
+      <div class="input-group">
+        <label>勞保 / 公保 / 軍保死亡給付（元）<span style="font-weight:400;color:var(--muted);font-size:12px">全額不計入遺產</span></label>
+        <div style="display:flex;align-items:center;gap:12px">
+          <input type="number" id="deduct_labor_ins" placeholder="0" min="0" inputmode="numeric" oninput="updateLaborDeduct()" style="flex:1">
+          <span class="counter-display" id="deductLaborDisplay">NT$ 0</span>
+        </div>
+      </div>
+      <div class="input-group" style="margin-bottom:0">
+        <label>5年內再次繼承同一財產扣除（元）<span style="font-weight:400;color:var(--muted);font-size:12px">按剩餘年數/5 比例扣除，遺贈稅法§16-1</span></label>
+        <div style="display:flex;align-items:center;gap:12px">
+          <input type="number" id="deduct_retax" placeholder="0" min="0" inputmode="numeric" oninput="updateRetaxDeduct()" style="flex:1">
+          <span class="counter-display" id="deductRetaxDisplay">NT$ 0</span>
         </div>
       </div>
     </div>
@@ -964,6 +1003,25 @@
     document.getElementById('disabledDeductAmt').textContent = n > 0 ? `= NT$ ${amt.toLocaleString('zh-TW')}` : '';
   }
 
+  function updateAgriDeduct() {
+    const v = parseFloat(document.getElementById('deduct_agri').value) || 0;
+    document.getElementById('deductAgriDisplay').textContent = 'NT$ ' + v.toLocaleString('zh-TW');
+  }
+  function updateInsDeduct() {
+    const v = parseFloat(document.getElementById('deduct_insurance').value) || 0;
+    const exempt = Math.min(v, 33300000);
+    const taxable = Math.max(0, v - 33300000);
+    document.getElementById('deductInsDisplay').textContent = 'NT$ ' + v.toLocaleString('zh-TW') + (taxable > 0 ? '（超過部分 NT$ ' + taxable.toLocaleString('zh-TW') + ' 計入遺產）' : '');
+  }
+  function updateLaborDeduct() {
+    const v = parseFloat(document.getElementById('deduct_labor_ins').value) || 0;
+    document.getElementById('deductLaborDisplay').textContent = 'NT$ ' + v.toLocaleString('zh-TW');
+  }
+  function updateRetaxDeduct() {
+    const v = parseFloat(document.getElementById('deduct_retax').value) || 0;
+    document.getElementById('deductRetaxDisplay').textContent = 'NT$ ' + v.toLocaleString('zh-TW');
+  }
+
   function calcTax(netEstate) {
     if (netEstate <= 0) return 0;
     const t1 = 56210000, t2 = 112420000;
@@ -986,12 +1044,16 @@
       const ex = document.getElementById(k + 'Extra');
       if (ex) ex.style.display = 'none';
     });
-    ['deduct_children_count','deduct_parents_count','deduct_disabled_count','deduct_other'].forEach(id => {
+    ['deduct_children_count','deduct_parents_count','deduct_disabled_count','deduct_other','deduct_agri','deduct_insurance','deduct_labor_ins','deduct_retax'].forEach(id => {
       document.getElementById(id).value = '';
     });
     document.getElementById('childDeductAmt').textContent = '';
     document.getElementById('parentDeductAmt').textContent = '';
     document.getElementById('disabledDeductAmt').textContent = '';
+    document.getElementById('deductAgriDisplay').textContent = 'NT$ 0';
+    document.getElementById('deductInsDisplay').textContent = 'NT$ 0';
+    document.getElementById('deductLaborDisplay').textContent = 'NT$ 0';
+    document.getElementById('deductRetaxDisplay').textContent = 'NT$ 0';
     document.getElementById('representativesSection').style.display = 'none';
     showStep(1);
   }
@@ -1134,6 +1196,20 @@
     document.getElementById('lawNote').innerHTML = '⚖️ 法律依據：' + lawText;
 
     // 遺產稅計算
+    // 保險金處理：人壽保險超過3330萬部分計入遺產
+    const insurancePaid = parseFloat(document.getElementById('deduct_insurance').value) || 0;
+    const insuranceTaxable = Math.max(0, insurancePaid - 33300000); // 超過3330萬計入
+    const insuranceExcluded = Math.min(insurancePaid, 33300000); // 最多3330萬免計
+
+    // 勞保全額不計
+    const laborIns = parseFloat(document.getElementById('deduct_labor_ins').value) || 0;
+    const agriDeduct = parseFloat(document.getElementById('deduct_agri').value) || 0;
+    const retaxDeduct = parseFloat(document.getElementById('deduct_retax').value) || 0;
+
+    // 遺產總額（加回超過3330萬的保險金）
+    const adjustedTotal = total + insuranceTaxable;
+
+    // 各項扣除
     const exemption = 13330000;
     const dSpouse = state.hasSpouse ? 5530000 : 0;
     const dFuneral = 1380000;
@@ -1141,13 +1217,45 @@
     const dParents   = (parseInt(document.getElementById('deduct_parents_count').value) || 0) * 1380000;
     const dDisabled  = (parseInt(document.getElementById('deduct_disabled_count').value) || 0) * 6930000;
     const dOther     = parseFloat(document.getElementById('deduct_other').value) || 0;
-    const totalDeduct = dSpouse + dFuneral + dChildren + dParents + dDisabled + dOther;
-    const netEstate = Math.max(0, total - exemption - totalDeduct);
-    const tax = calcTax(netEstate);
+    const totalDeduct = dSpouse + dFuneral + dChildren + dParents + dDisabled + dOther + agriDeduct + retaxDeduct;
+    const netEstate = Math.max(0, adjustedTotal - exemption - totalDeduct);
+
+    // 正確累進稅率計算
+    function calcEstateTax(net) {
+      if (net <= 0) return 0;
+      let tax = 0;
+      const t1 = 50000000, t2 = 100000000;
+      if (net <= t1) {
+        tax = net * 0.10;
+      } else if (net <= t2) {
+        tax = t1 * 0.10 + (net - t1) * 0.15;
+      } else {
+        tax = t1 * 0.10 + (t2 - t1) * 0.15 + (net - t2) * 0.20;
+      }
+      return Math.round(tax);
+    }
+    const estateTax = calcEstateTax(netEstate);
+    const tax = estateTax;
 
     let taxRate = '10%';
-    if (netEstate > 112420000) taxRate = '20%';
-    else if (netEstate > 56210000) taxRate = '15%';
+    if (netEstate > 100000000) taxRate = '20%';
+    else if (netEstate > 50000000) taxRate = '15%';
+
+    // 累進稅率分段說明
+    let taxBracketHtml = '';
+    if (netEstate > 0) {
+      const t1 = 50000000, t2 = 100000000;
+      if (netEstate <= t1) {
+        taxBracketHtml = `<div class="heir-row"><span class="heir-row-label" style="color:var(--muted)">10% × ${formatMoney(netEstate)}</span><span class="heir-row-val" style="color:var(--muted)">${formatMoney(Math.round(netEstate*0.10))}</span></div>`;
+      } else if (netEstate <= t2) {
+        taxBracketHtml = `<div class="heir-row"><span class="heir-row-label" style="color:var(--muted)">10% × ${formatMoney(t1)}</span><span class="heir-row-val" style="color:var(--muted)">${formatMoney(Math.round(t1*0.10))}</span></div>
+        <div class="heir-row"><span class="heir-row-label" style="color:var(--muted)">15% × ${formatMoney(netEstate-t1)}</span><span class="heir-row-val" style="color:var(--muted)">${formatMoney(Math.round((netEstate-t1)*0.15))}</span></div>`;
+      } else {
+        taxBracketHtml = `<div class="heir-row"><span class="heir-row-label" style="color:var(--muted)">10% × ${formatMoney(t1)}</span><span class="heir-row-val" style="color:var(--muted)">${formatMoney(Math.round(t1*0.10))}</span></div>
+        <div class="heir-row"><span class="heir-row-label" style="color:var(--muted)">15% × ${formatMoney(t2-t1)}</span><span class="heir-row-val" style="color:var(--muted)">${formatMoney(Math.round((t2-t1)*0.15))}</span></div>
+        <div class="heir-row"><span class="heir-row-label" style="color:var(--muted)">20% × ${formatMoney(netEstate-t2)}</span><span class="heir-row-val" style="color:var(--muted)">${formatMoney(Math.round((netEstate-t2)*0.20))}</span></div>`;
+      }
+    }
 
     const taxHtml = `
     <div style="margin-top:16px">
@@ -1159,29 +1267,49 @@
         </div>
         <div class="heir-body">
           <div class="heir-row">
-            <span class="heir-row-label">遺產總額</span>
+            <span class="heir-row-label">申報遺產總額</span>
             <span class="heir-row-val" style="color:var(--muted)">${formatMoney(total)}</span>
           </div>
+          ${insuranceTaxable > 0 ? `<div class="heir-row"><span class="heir-row-label">保險金超額計入（遺贈稅法§16-1）</span><span class="heir-row-val" style="color:var(--accent)">＋ ${formatMoney(insuranceTaxable)}</span></div>` : ''}
+          <div class="heir-row" style="border-top:1px solid var(--soft);padding-top:8px;margin-top:4px">
+            <span class="heir-row-label" style="font-weight:500">遺產總額（調整後）</span>
+            <span class="heir-row-val" style="color:var(--ink)">${formatMoney(adjustedTotal)}</span>
+          </div>
           <div class="heir-row">
-            <span class="heir-row-label">免稅額</span>
+            <span class="heir-row-label">免稅額（遺贈稅法§18）</span>
             <span class="heir-row-val" style="color:var(--muted)">－ ${formatMoney(exemption)}</span>
           </div>
+          ${dSpouse > 0 ? `<div class="heir-row"><span class="heir-row-label">配偶扣除額</span><span class="heir-row-val" style="color:var(--muted)">－ ${formatMoney(dSpouse)}</span></div>` : ''}
+          <div class="heir-row"><span class="heir-row-label">喪葬費扣除額</span><span class="heir-row-val" style="color:var(--muted)">－ ${formatMoney(dFuneral)}</span></div>
           ${dChildren > 0 ? `<div class="heir-row"><span class="heir-row-label">子女扣除額</span><span class="heir-row-val" style="color:var(--muted)">－ ${formatMoney(dChildren)}</span></div>` : ''}
           ${dParents > 0 ? `<div class="heir-row"><span class="heir-row-label">父母扣除額</span><span class="heir-row-val" style="color:var(--muted)">－ ${formatMoney(dParents)}</span></div>` : ''}
           ${dDisabled > 0 ? `<div class="heir-row"><span class="heir-row-label">身心障礙扣除額</span><span class="heir-row-val" style="color:var(--muted)">－ ${formatMoney(dDisabled)}</span></div>` : ''}
           ${dOther > 0 ? `<div class="heir-row"><span class="heir-row-label">其他扣除額</span><span class="heir-row-val" style="color:var(--muted)">－ ${formatMoney(dOther)}</span></div>` : ''}
+          ${agriDeduct > 0 ? `<div class="heir-row"><span class="heir-row-label">農業用地扣除額（§17）</span><span class="heir-row-val" style="color:var(--muted)">－ ${formatMoney(agriDeduct)}</span></div>` : ''}
+          ${retaxDeduct > 0 ? `<div class="heir-row"><span class="heir-row-label">再次繼承扣除額（§16-1）</span><span class="heir-row-val" style="color:var(--muted)">－ ${formatMoney(retaxDeduct)}</span></div>` : ''}
           <div class="heir-row" style="border-top:1px solid var(--soft);padding-top:10px;margin-top:4px">
-            <span class="heir-row-label">遺產淨額</span>
-            <span class="heir-row-val" style="color:var(--ink)">${formatMoney(netEstate)}</span>
+            <span class="heir-row-label" style="font-weight:500">各項扣除合計</span>
+            <span class="heir-row-val" style="color:var(--muted)">－ ${formatMoney(exemption + totalDeduct)}</span>
           </div>
           <div class="heir-row">
+            <span class="heir-row-label" style="font-weight:500">遺產淨額</span>
+            <span class="heir-row-val" style="color:var(--ink)">${formatMoney(netEstate)}</span>
+          </div>
+          ${netEstate > 0 ? `<div style="border-top:1px solid var(--soft);padding-top:8px;margin-top:4px;margin-bottom:4px;font-size:11px;color:var(--muted)">累進稅率計算</div>${taxBracketHtml}` : ''}
+          <div class="heir-row" style="border-top:1px solid var(--soft);padding-top:10px;margin-top:4px">
             <span class="heir-row-label" style="font-weight:600;color:var(--ink)">預估應納稅額</span>
             <span class="heir-row-val" style="font-size:17px;color:${tax === 0 ? 'var(--success)' : 'var(--accent)'}">${tax === 0 ? '免納遺產稅' : formatMoney(tax)}</span>
           </div>
+          ${(insuranceExcluded > 0 || laborIns > 0) ? `
+          <div style="border-top:1px solid var(--soft);padding-top:8px;margin-top:8px;font-size:11px;color:var(--muted)">
+            <div style="font-weight:600;color:var(--ink);margin-bottom:4px">免計遺產項目</div>
+            ${insuranceExcluded > 0 ? `<div>人壽保險免計入遺產：NT$ ${insuranceExcluded.toLocaleString('zh-TW')}（上限3,330萬）</div>` : ''}
+            ${laborIns > 0 ? `<div>勞保/公保/軍保給付全額免計：NT$ ${laborIns.toLocaleString('zh-TW')}</div>` : ''}
+          </div>` : ''}
         </div>
       </div>
       <div class="law-note" style="margin-top:10px">
-        ⚖️ 依《遺產及贈與稅法》第13條（2026年適用稅率）。本試算僅供參考，實際稅額以國稅局核定為準。申報期限：被繼承人死亡後6個月內。
+        ⚖️ 依《遺產及贈與稅法》第13條（2026年適用稅率：5,000萬以下10%、5,000萬～1億15%、1億以上20%）。本試算僅供參考，實際稅額以國稅局核定為準。申報期限：被繼承人死亡後6個月內。
       </div>
     </div>`;
 

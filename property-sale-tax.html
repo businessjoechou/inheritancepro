@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>房地合一稅試算（繼承後出售）｜InheritancePro</title>
+<meta name="description" content="繼承不動產後出售的房地合一稅2.0試算，持有年數從被繼承人取得日起算，自住優惠、累進稅率、節稅建議。InheritancePro。">
+<meta name="keywords" content="房地合一稅,繼承出售,房地合一2.0,自住優惠,不動產稅,繼承不動產,持有年數,所得稅法§4-4">
+<meta name="robots" content="index, follow">
+<meta name="author" content="InheritancePro">
+<meta property="og:title" content="房地合一稅試算（繼承後出售）｜InheritancePro">
+<meta property="og:description" content="繼承後出售不動產的房地合一稅試算，持有期間從被繼承人取得日起算，含自住優惠計算。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://inheritancepro.app/property-sale-tax.html">
+<meta property="og:site_name" content="InheritancePro">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="房地合一稅試算（繼承後出售）｜InheritancePro">
+<link rel="canonical" href="https://inheritancepro.app/property-sale-tax.html">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1410; --paper: #f5f0e8; --accent: #8b2020; --gold: #c4932a;
+    --soft: #e8e0d0; --muted: #7a6f62; --success: #2a6b4a; --danger: #8b2020;
+    --border: #c8bfb0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--paper); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; min-height: 100vh; font-size: 15px; }
+  header { background: var(--ink); color: var(--paper); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .logo { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 700; letter-spacing: 0.04em; }
+  .logo span { color: var(--gold); }
+  .page-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 3px; font-family: 'DM Mono', monospace; letter-spacing: 0.06em; }
+  .home-link { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; }
+  .home-link:hover { color: var(--gold); }
+  .progress-bar { height: 3px; background: var(--soft); }
+  .progress-fill { height: 100%; background: var(--gold); transition: width 0.4s ease; }
+  main { padding: 24px 20px 120px; max-width: 480px; margin: 0 auto; }
+  .step-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
+  h2 { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
+  .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
+  .card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 14px; }
+  .section-title { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--soft); }
+  .input-group { margin-bottom: 18px; }
+  .input-group:last-child { margin-bottom: 0; }
+  label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 8px; }
+  input[type="number"], input[type="date"], input[type="text"] {
+    width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 8px;
+    background: var(--paper); font-size: 15px; font-family: 'DM Mono', monospace;
+    color: var(--ink); transition: border-color 0.2s; -webkit-appearance: none;
+  }
+  input:focus { outline: none; border-color: var(--gold); background: #fff; }
+  .toggle-group { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .toggle-group-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .toggle-btn {
+    padding: 10px 8px; border: 1.5px solid var(--border); border-radius: 8px;
+    background: var(--paper); cursor: pointer; text-align: center; font-size: 13px;
+    color: var(--muted); transition: all 0.2s; font-family: 'Noto Sans TC', sans-serif;
+  }
+  .toggle-btn.active { border-color: var(--accent); background: #fff5f5; color: var(--accent); font-weight: 500; }
+  .info-box { background: #fffbf0; border: 1px solid #e8d48a; border-left: 3px solid var(--gold); border-radius: 6px; padding: 12px 14px; font-size: 12px; color: #7a6020; line-height: 1.7; margin-bottom: 14px; }
+  .info-box strong { color: #5a4010; }
+  .warn-box { background: #fdf3e7; border: 1px solid #e8c882; border-left: 3px solid var(--gold); border-radius: 6px; padding: 12px 14px; font-size: 12px; color: #7a5a10; line-height: 1.7; margin-bottom: 14px; }
+  .law-note { border-left: 3px solid var(--gold); padding-left: 12px; font-size: 12px; color: var(--muted); line-height: 1.7; margin-top: 10px; }
+  /* Results */
+  .result-hero { background: var(--ink); color: var(--paper); border-radius: 16px; padding: 28px 24px; margin-bottom: 14px; text-align: center; }
+  .result-hero .label { font-size: 12px; color: var(--muted); letter-spacing: 0.12em; font-family: 'DM Mono', monospace; text-transform: uppercase; margin-bottom: 10px; }
+  .result-total { font-family: 'Noto Serif TC', serif; font-size: 28px; font-weight: 700; color: var(--gold); margin-bottom: 6px; }
+  .result-sub { font-size: 13px; color: var(--muted); }
+  .heir-card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 10px; }
+  .heir-header { background: var(--soft); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; }
+  .heir-name { font-weight: 600; font-size: 14px; color: var(--ink); }
+  .heir-fraction { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent); font-weight: 500; }
+  .heir-body { padding: 14px 16px; }
+  .heir-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .heir-row:last-child { margin-bottom: 0; }
+  .heir-row-label { font-size: 13px; color: var(--muted); }
+  .heir-row-val { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; color: var(--success); }
+  /* Rate table */
+  .rate-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 10px; }
+  .rate-table th { background: var(--soft); padding: 7px 10px; text-align: left; font-size: 10px; font-family: 'DM Mono', monospace; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+  .rate-table td { padding: 7px 10px; border-bottom: 1px solid var(--soft); color: var(--ink); }
+  .rate-table tr:last-child td { border-bottom: none; }
+  .rate-table tr.active-rate td { background: #fff5f0; font-weight: 600; color: var(--accent); }
+  .rate-table tr.active-rate td:last-child { color: var(--accent); }
+  /* Nav */
+  .nav-bar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); background: #fff; border-top: 1px solid var(--border); padding: 16px 20px 28px; display: flex; gap: 10px; width: 100%; max-width: 480px; }
+  .btn { flex: 1; padding: 14px; border-radius: 10px; border: none; font-size: 15px; font-family: 'Noto Sans TC', sans-serif; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+  .btn-primary { background: var(--ink); color: var(--paper); }
+  .btn-primary:hover { background: #2a1a10; }
+  .btn-print { background: var(--accent); color: #fff; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  @media print { header, .nav-bar, #navBar, .progress-bar { display: none !important; } main { padding: 20px; } }
+  .disclaimer-bar { max-width: 560px; margin: 0 auto; padding: 16px 24px 40px; font-size: 11.5px; color: rgba(0,0,0,0.62); line-height: 1.7; border-top: 1px solid rgba(0,0,0,0.12); }
+  .disclaimer-bar strong { color: rgba(0,0,0,0.80); }
+  .save-btn { display: block; width: 100%; padding: 12px; background: var(--accent); color: white; border: none; border-radius: 10px; font-size: 14px; font-family: 'Noto Sans TC', sans-serif; font-weight: 500; cursor: pointer; margin-top: 16px; transition: opacity 0.2s; }
+  .save-btn:hover { opacity: 0.85; }
+  .save-btn:disabled { opacity: 0.6; cursor: default; }
+  #resultSection { display: none; animation: fadeUp 0.3s ease both; }
+  #selfResideGroup { display: none; }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" style="text-decoration:none;color:inherit">
+    <div class="logo">Inheritance<span>Pro</span></div>
+    <div class="page-sub">房地合一稅試算</div>
+  </a>
+  <a href="index.html" class="home-link">← 首頁</a>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:100%"></div></div>
+
+<main>
+
+  <div class="step-label">房地合一稅 2.0 · 所得稅法§4-4§14-4</div>
+  <h2>房地合一稅試算</h2>
+  <p class="subtitle">繼承後出售不動產時，持有年數從<strong>被繼承人取得日</strong>起算（非繼承日），計算適用稅率及應納稅額。</p>
+
+  <div class="info-box">
+    <strong>重要提醒</strong>：2021/7/1 後出售的房地，適用房地合一稅2.0。繼承取得者，持有期間合併計算被繼承人的持有年數（所得稅法§4-5第1項第5款）。
+  </div>
+
+  <!-- Step 1: 基本資料 -->
+  <div class="card">
+    <div class="section-title">Step 1 · 基本資料</div>
+
+    <div class="input-group">
+      <label>被繼承人取得不動產日期 <span style="font-weight:400;color:var(--muted);font-size:12px">持有年數起算點</span></label>
+      <input type="date" id="acquire_date" onchange="calcHoldYears()">
+    </div>
+
+    <div class="input-group">
+      <label>繼承日期 <span style="font-weight:400;color:var(--muted);font-size:12px">被繼承人死亡日期</span></label>
+      <input type="date" id="inherit_date" onchange="calcHoldYears()">
+    </div>
+
+    <div class="input-group">
+      <label>出售日期 <span style="font-weight:400;color:var(--muted);font-size:12px">預計或實際出售日</span></label>
+      <input type="date" id="sale_date" onchange="calcHoldYears()">
+    </div>
+
+    <div id="hold_years_preview" style="display:none;background:var(--soft);border-radius:8px;padding:10px 14px;margin-top:-8px;margin-bottom:16px;font-size:13px;color:var(--ink)">
+      持有年數（從被繼承人取得日至出售日）：<strong id="hold_years_text" style="color:var(--accent)">—</strong>
+    </div>
+
+    <div class="input-group">
+      <label>出售價格（元）</label>
+      <input type="number" id="sale_price" placeholder="0" min="0" inputmode="numeric">
+    </div>
+
+    <div class="input-group">
+      <label>取得成本（被繼承人當時買入價格，元）<span style="font-weight:400;color:var(--muted);font-size:12px">若不明，可填公告現值或0</span></label>
+      <input type="number" id="acquisition_cost" placeholder="0" min="0" inputmode="numeric">
+    </div>
+
+    <div class="input-group" style="margin-bottom:0">
+      <label>可列舉費用（元）<span style="font-weight:400;color:var(--muted);font-size:12px">修繕費、仲介費、廣告費等</span></label>
+      <input type="number" id="expenses" placeholder="0" min="0" inputmode="numeric">
+    </div>
+  </div>
+
+  <!-- Step 2: 稅務條件 -->
+  <div class="card">
+    <div class="section-title">Step 2 · 稅務條件</div>
+
+    <div class="input-group">
+      <label>不動產類型</label>
+      <div class="toggle-group-3">
+        <button class="toggle-btn active" id="btn_residential" onclick="setPropertyType('residential')">住宅</button>
+        <button class="toggle-btn" id="btn_commercial" onclick="setPropertyType('commercial')">商業</button>
+        <button class="toggle-btn" id="btn_land" onclick="setPropertyType('land')">土地</button>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label>是否自住（設籍並居住）</label>
+      <div class="toggle-group">
+        <button class="toggle-btn" id="btn_self_yes" onclick="setSelfOccupied(true)">是</button>
+        <button class="toggle-btn active" id="btn_self_no" onclick="setSelfOccupied(false)">否</button>
+      </div>
+    </div>
+
+    <div class="input-group" id="selfResideGroup" style="margin-bottom:0">
+      <label>連續設籍居住年數 <span style="font-weight:400;color:var(--muted);font-size:12px">達6年可適用10%自住優惠稅率</span></label>
+      <input type="number" id="self_reside_years" placeholder="0" min="0" max="99" inputmode="numeric">
+      <div style="font-size:11px;color:var(--muted);margin-top:4px;">自住優惠條件：本人、配偶或未成年子女設籍，且無出租、無供營業，連續居住滿6年，課稅所得前400萬免稅，稅率10%。</div>
+    </div>
+  </div>
+
+  <!-- 稅率參照表 -->
+  <div class="card">
+    <div class="section-title">房地合一稅率參照表（2021/7/1起）</div>
+    <table class="rate-table" id="rateTable">
+      <thead>
+        <tr><th>持有年數</th><th>稅率</th><th>說明</th></tr>
+      </thead>
+      <tbody>
+        <tr id="rate_row_45"><td>未滿 2 年</td><td>45%</td><td>短期交易</td></tr>
+        <tr id="rate_row_35"><td>2 年以上未滿 5 年</td><td>35%</td><td>短期持有</td></tr>
+        <tr id="rate_row_20"><td>5 年以上未滿 10 年</td><td>20%</td><td>一般持有</td></tr>
+        <tr id="rate_row_15"><td>10 年以上</td><td>15%</td><td>長期持有</td></tr>
+        <tr id="rate_row_self"><td>自住滿 6 年</td><td>10%</td><td>自住優惠（課稅所得400萬免稅）</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Results -->
+  <div id="resultSection">
+
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">試算結果</div>
+
+    <!-- 主要結果 -->
+    <div class="result-hero">
+      <div class="label">預估應納房地合一稅</div>
+      <div class="result-total" id="r_tax">NT$ —</div>
+      <div class="result-sub" id="r_rate_label">—</div>
+    </div>
+
+    <!-- 詳細計算 -->
+    <div class="heir-card">
+      <div class="heir-header" id="r_header">
+        <span class="heir-name">計算明細</span>
+        <span class="heir-fraction" id="r_rate_badge">—</span>
+      </div>
+      <div class="heir-body">
+        <div class="heir-row">
+          <span class="heir-row-label">持有年數（從被繼承人取得日）</span>
+          <span class="heir-row-val" style="color:var(--muted)" id="r_hold_years">—</span>
+        </div>
+        <div class="heir-row">
+          <span class="heir-row-label">適用稅率</span>
+          <span class="heir-row-val" style="color:var(--accent)" id="r_rate">—</span>
+        </div>
+        <div class="heir-row" style="border-top:1px solid var(--soft);padding-top:8px;margin-top:4px">
+          <span class="heir-row-label">出售價格</span>
+          <span class="heir-row-val" style="color:var(--muted)" id="r_sale_price">—</span>
+        </div>
+        <div class="heir-row">
+          <span class="heir-row-label">取得成本</span>
+          <span class="heir-row-val" style="color:var(--muted)" id="r_cost">—</span>
+        </div>
+        <div class="heir-row">
+          <span class="heir-row-label">可列舉費用</span>
+          <span class="heir-row-val" style="color:var(--muted)" id="r_expenses">—</span>
+        </div>
+        <div class="heir-row" style="border-top:1px solid var(--soft);padding-top:8px;margin-top:4px">
+          <span class="heir-row-label">課稅所得</span>
+          <span class="heir-row-val" style="color:var(--ink)" id="r_gain">—</span>
+        </div>
+        <div id="r_self_exemption_row" class="heir-row" style="display:none">
+          <span class="heir-row-label">自住免稅額（400萬上限）</span>
+          <span class="heir-row-val" style="color:var(--success)" id="r_self_exemption">—</span>
+        </div>
+        <div class="heir-row">
+          <span class="heir-row-label">應稅課稅所得</span>
+          <span class="heir-row-val" style="color:var(--ink)" id="r_taxable_gain">—</span>
+        </div>
+        <div class="heir-row" style="border-top:1px solid var(--soft);padding-top:10px;margin-top:4px">
+          <span class="heir-row-label" style="font-weight:600;color:var(--ink)">預估應納稅額</span>
+          <span class="heir-row-val" style="font-size:17px" id="r_tax_detail">—</span>
+        </div>
+        <div class="heir-row">
+          <span class="heir-row-label" style="font-weight:500;color:var(--ink)">稅後實得金額</span>
+          <span class="heir-row-val" style="color:var(--success)" id="r_after_tax">—</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 建議提示 -->
+    <div id="r_suggestion_box" style="display:none" class="warn-box"></div>
+
+    <div class="law-note">
+      ⚖️ 依《所得稅法》§4-4、§4-5、§14-4（房地合一稅2.0，2021/7/1起）。繼承取得者持有期間合併計算被繼承人持有年數（§4-5第1項第5款）。本試算僅供參考，實際稅額以國稅局核定為準，建議諮詢稅務專業人員。
+    </div>
+
+    <button class="btn btn-print" style="width:100%;margin-top:14px;padding:13px;border-radius:10px;font-size:14px;" onclick="window.print()">列印 / 儲存 PDF</button>
+    <div id="save-btn-container"></div>
+  </div>
+
+</main>
+
+<div id="navBar" class="nav-bar">
+  <button class="btn btn-primary" onclick="calculate()" style="flex:2">計算房地合一稅</button>
+</div>
+
+<script>
+  let propertyType = 'residential';
+  let isSelfOccupied = false;
+
+  function setPropertyType(type) {
+    propertyType = type;
+    ['residential','commercial','land'].forEach(t => {
+      document.getElementById('btn_' + t).classList.toggle('active', t === type);
+    });
+  }
+
+  function setSelfOccupied(val) {
+    isSelfOccupied = val;
+    document.getElementById('btn_self_yes').classList.toggle('active', val);
+    document.getElementById('btn_self_no').classList.toggle('active', !val);
+    document.getElementById('selfResideGroup').style.display = val ? 'block' : 'none';
+  }
+
+  function calcHoldYears() {
+    const acquireDate = document.getElementById('acquire_date').value;
+    const saleDate = document.getElementById('sale_date').value;
+    if (!acquireDate || !saleDate) {
+      document.getElementById('hold_years_preview').style.display = 'none';
+      return;
+    }
+    const ad = new Date(acquireDate);
+    const sd = new Date(saleDate);
+    const years = (sd - ad) / (365.25 * 24 * 3600 * 1000);
+    if (years < 0) {
+      document.getElementById('hold_years_text').textContent = '出售日不能早於取得日';
+      document.getElementById('hold_years_preview').style.display = 'block';
+      return;
+    }
+    const y = Math.floor(years);
+    const m = Math.floor((years - y) * 12);
+    document.getElementById('hold_years_text').textContent = `${y} 年 ${m} 個月`;
+    document.getElementById('hold_years_preview').style.display = 'block';
+    highlightRateRow(years);
+  }
+
+  function highlightRateRow(years) {
+    const selfResideYears = parseInt(document.getElementById('self_reside_years').value) || 0;
+    ['45','35','20','15','self'].forEach(id => {
+      document.getElementById('rate_row_' + id).classList.remove('active-rate');
+    });
+    const rateInfo = getPropertyTaxRate(years, isSelfOccupied, selfResideYears);
+    if (isSelfOccupied && selfResideYears >= 6) document.getElementById('rate_row_self').classList.add('active-rate');
+    else if (years < 2) document.getElementById('rate_row_45').classList.add('active-rate');
+    else if (years < 5) document.getElementById('rate_row_35').classList.add('active-rate');
+    else if (years < 10) document.getElementById('rate_row_20').classList.add('active-rate');
+    else document.getElementById('rate_row_15').classList.add('active-rate');
+  }
+
+  function getPropertyTaxRate(holdYears, isSelfOccupied, selfOccupiedYears) {
+    if (isSelfOccupied && selfOccupiedYears >= 6) {
+      return { rate: 0.10, label: '自住優惠稅率（持有且設籍6年以上）' };
+    }
+    if (holdYears < 2) return { rate: 0.45, label: '持有未滿2年（45%）' };
+    if (holdYears < 5) return { rate: 0.35, label: '持有2年以上未滿5年（35%）' };
+    if (holdYears < 10) return { rate: 0.20, label: '持有5年以上未滿10年（20%）' };
+    return { rate: 0.15, label: '持有10年以上（15%）' };
+  }
+
+  function fmt(n) { return 'NT$ ' + Math.round(n).toLocaleString('zh-TW'); }
+
+  function calculate() {
+    const acquireDateVal = document.getElementById('acquire_date').value;
+    const saleDateVal = document.getElementById('sale_date').value;
+    const salePrice = parseFloat(document.getElementById('sale_price').value) || 0;
+    const acquisitionCost = parseFloat(document.getElementById('acquisition_cost').value) || 0;
+    const expenses = parseFloat(document.getElementById('expenses').value) || 0;
+    const selfResideYears = parseInt(document.getElementById('self_reside_years').value) || 0;
+
+    if (!acquireDateVal || !saleDateVal) {
+      alert('請填入被繼承人取得不動產日期及出售日期。');
+      return;
+    }
+    if (salePrice <= 0) {
+      alert('請填入出售價格。');
+      return;
+    }
+
+    const acquireDate = new Date(acquireDateVal);
+    const saleDate = new Date(saleDateVal);
+    const holdYears = (saleDate - acquireDate) / (365.25 * 24 * 3600 * 1000);
+
+    if (holdYears < 0) {
+      alert('出售日期不能早於取得日期。');
+      return;
+    }
+
+    const rateInfo = getPropertyTaxRate(holdYears, isSelfOccupied, selfResideYears);
+    const { rate, label } = rateInfo;
+
+    // 課稅所得 = 售價 - 取得成本 - 費用
+    const gain = salePrice - acquisitionCost - expenses;
+    // 自住優惠：課稅所得400萬免稅
+    const selfOccupiedExemption = (isSelfOccupied && selfResideYears >= 6) ? 4000000 : 0;
+    const actualSelfExemption = Math.min(Math.max(0, gain), selfOccupiedExemption);
+    const taxableGain = Math.max(0, gain - actualSelfExemption);
+    const tax = Math.round(taxableGain * rate);
+    const afterTax = salePrice - tax;
+
+    // Highlight active rate
+    highlightRateRow(holdYears);
+
+    const y = Math.floor(holdYears);
+    const m = Math.floor((holdYears - y) * 12);
+    const holdStr = `${y} 年 ${m} 個月`;
+
+    // Update result
+    document.getElementById('r_tax').textContent = fmt(tax);
+    document.getElementById('r_rate_label').textContent = label;
+    document.getElementById('r_hold_years').textContent = holdStr + '（從被繼承人取得日起算）';
+    document.getElementById('r_rate').textContent = (rate * 100).toFixed(0) + '%';
+    document.getElementById('r_rate_badge').textContent = (rate * 100).toFixed(0) + '%';
+    document.getElementById('r_sale_price').textContent = fmt(salePrice);
+    document.getElementById('r_cost').textContent = fmt(acquisitionCost);
+    document.getElementById('r_expenses').textContent = fmt(expenses);
+    document.getElementById('r_gain').textContent = fmt(Math.max(0, gain));
+    document.getElementById('r_taxable_gain').textContent = fmt(taxableGain);
+    document.getElementById('r_tax_detail').textContent = tax === 0 ? '免納稅額' : fmt(tax);
+    document.getElementById('r_tax_detail').style.color = tax === 0 ? 'var(--success)' : 'var(--accent)';
+    document.getElementById('r_after_tax').textContent = fmt(afterTax);
+
+    // 自住免稅
+    if (actualSelfExemption > 0) {
+      document.getElementById('r_self_exemption_row').style.display = 'flex';
+      document.getElementById('r_self_exemption').textContent = '－ ' + fmt(actualSelfExemption);
+    } else {
+      document.getElementById('r_self_exemption_row').style.display = 'none';
+    }
+
+    // 稅率換檔建議
+    const suggBox = document.getElementById('r_suggestion_box');
+    let suggestion = '';
+    if (holdYears < 2) {
+      const daysTo2yr = Math.ceil((2 * 365.25) - holdYears * 365.25);
+      suggestion = `目前持有未滿2年，適用45%高稅率。若再持有約 <strong>${daysTo2yr} 天</strong>，稅率可降至35%，可節省大量稅金。`;
+    } else if (holdYears < 5) {
+      const daysTo5yr = Math.ceil((5 * 365.25) - holdYears * 365.25);
+      const taxAt35 = Math.round(taxableGain * 0.35);
+      const taxAt20 = Math.round(taxableGain * 0.20);
+      suggestion = `目前持有滿2年，適用35%稅率。若再持有約 <strong>${daysTo5yr} 天</strong>，稅率可降至20%，預計可節省稅額 <strong>${fmt(taxAt35 - taxAt20)}</strong>。`;
+    } else if (holdYears < 10) {
+      const daysTo10yr = Math.ceil((10 * 365.25) - holdYears * 365.25);
+      const taxAt20 = Math.round(taxableGain * 0.20);
+      const taxAt15 = Math.round(taxableGain * 0.15);
+      suggestion = `目前持有滿5年，適用20%稅率。若再持有約 <strong>${daysTo10yr} 天</strong>，稅率可降至15%，預計可節省稅額 <strong>${fmt(taxAt20 - taxAt15)}</strong>。`;
+    } else if (!isSelfOccupied || selfResideYears < 6) {
+      suggestion = `目前持有10年以上，適用15%最低一般稅率。若符合自住條件（設籍居住滿6年），可申請10%優惠稅率，且前400萬課稅所得免稅，可進一步降低稅負。`;
+    }
+
+    if (suggestion) {
+      suggBox.style.display = 'block';
+      suggBox.innerHTML = suggestion;
+    } else {
+      suggBox.style.display = 'none';
+    }
+
+    document.getElementById('resultSection').style.display = 'block';
+    document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    initSaveButton(
+      'property_sale_tax',
+      `房地合一稅試算 ${new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit'})}`,
+      `持有 ${holdStr}，稅率 ${(rate*100).toFixed(0)}%，應納稅額 ${fmt(tax)}`,
+      { acquireDate: acquireDateVal, saleDate: saleDateVal, salePrice, acquisitionCost, expenses, propertyType, isSelfOccupied, selfResideYears }
+    );
+  }
+
+  async function initSaveButton(tool, title, summary, data) {
+    const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+    const sb = createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+    const { data: { user } } = await sb.auth.getUser();
+    const container = document.getElementById('save-btn-container');
+    if (!container) return;
+    if (!user) {
+      container.innerHTML = `<p style="text-align:center;font-size:12px;color:var(--muted);margin-top:8px;"><a href="/login.html" style="color:var(--accent)">登入</a>後可儲存此次結果</p>`;
+      return;
+    }
+    container.innerHTML = `<button onclick="doSave()" class="save-btn" id="save-btn">儲存此次結果</button>`;
+    window.doSave = async () => {
+      const btn = document.getElementById('save-btn');
+      btn.textContent = '儲存中…';
+      btn.disabled = true;
+      const { saveCalculation } = await import('./js/save.js');
+      const result = await saveCalculation({ tool, title, summary, data });
+      if (result.success) { btn.textContent = '✓ 已儲存'; btn.style.background = '#6b1a1a'; }
+      else { btn.textContent = '儲存失敗'; btn.disabled = false; }
+    };
+  }
+</script>
+<div class="disclaimer-bar"><strong>免責聲明</strong>：本平台之計算結果僅供初步參考，不構成法律意見或法律諮詢服務。</div>
+<script src="js/supabase-config.js"></script>
+<script type="module" src="js/auth-bar.js"></script>
+</body>
+</html>
