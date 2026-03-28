@@ -89,7 +89,10 @@
 </head>
 <body>
 <header>
-  <a href="index.html" style="text-decoration:none;color:inherit"><div class="logo">Inheritance<span>Pro</span></div></a>
+  <a href="index.html" style="text-decoration:none;color:inherit">
+    <div class="logo">Inheritance<span>Pro</span></div>
+    <div class="page-sub">未成年損害賠償</div>
+  </a>
 </header>
 <main>
   <h2>未成年損害賠償試算</h2>
@@ -512,7 +515,7 @@ ${schoolRate>0?`<tr><td>學校責任部分</td><td class="val">${fmt(schoolLow)}
       btn.disabled = true;
       const { saveCalculation } = await import('./js/save.js');
       const result = await saveCalculation({ tool, title, summary, data });
-      if (result.success) { btn.textContent = '✓ 已儲存'; btn.style.background = '#2a6e3e'; }
+      if (result.success) { btn.textContent = '✓ 已儲存'; btn.style.background = '#6b1a1a'; }
       else { btn.textContent = '儲存失敗'; btn.disabled = false; }
     };
   }

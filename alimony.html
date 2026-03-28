@@ -94,7 +94,10 @@
 </head>
 <body>
 <header>
-  <a href="index.html" style="text-decoration:none;color:inherit"><div class="logo">Inheritance<span>Pro</span></div></a>
+  <a href="index.html" style="text-decoration:none;color:inherit">
+    <div class="logo">Inheritance<span>Pro</span></div>
+    <div class="page-sub">贍養費試算</div>
+  </a>
 </header>
 <main>
   <h2>贍養費試算</h2>
@@ -431,7 +434,7 @@
       const result = await saveCalculation({ tool, title, summary, data });
       if (result.success) {
         btn.textContent = '✓ 已儲存';
-        btn.style.background = '#2a6e3e';
+        btn.style.background = '#6b1a1a';
       } else {
         btn.textContent = '儲存失敗';
         btn.disabled = false;

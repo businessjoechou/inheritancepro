@@ -21,6 +21,8 @@
   header { background: var(--ink); color: var(--paper); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
   .logo { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 700; letter-spacing: 0.04em; }
   .logo span { color: var(--gold); }
+  .page-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 3px; font-family: 'DM Mono', monospace; letter-spacing: 0.06em; }
+
   .home-link { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; }
   .home-link:hover { color: var(--gold); }
   .progress-bar { height: 3px; background: var(--soft); }
@@ -86,8 +88,10 @@
 <body>
 
 <header>
-  <a href="index.html" style="text-decoration:none;color:inherit"><div class="logo">Inheritance<span>Pro</span></div></a>
-  <a href="index.html" class="home-link">← 首頁</a>
+  <a href="index.html" style="text-decoration:none;color:inherit">
+    <div class="logo">Inheritance<span>Pro</span></div>
+    <div class="page-sub">股票繼承估算</div>
+  </a>
 </header>
 <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:50%"></div></div>
 
@@ -331,13 +335,13 @@
       container.innerHTML = `<p style="text-align:center;font-size:13px;color:var(--muted);margin-top:12px;"><a href="login.html" style="color:var(--accent)">登入</a>後可儲存此次結果</p>`;
       return;
     }
-    container.innerHTML = `<button class="btn" id="save-btn" onclick="window.doSave()" style="margin-top:12px;background:var(--success);color:#fff;width:100%;padding:14px;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;">儲存此次結果</button>`;
+    container.innerHTML = `<button class="btn" id="save-btn" onclick="window.doSave()" style="margin-top:12px;background:var(--accent);color:#fff;width:100%;padding:14px;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;">儲存此次結果</button>`;
     window.doSave = async () => {
       const btn = document.getElementById('save-btn');
       btn.textContent = '儲存中…'; btn.disabled = true;
       const { saveCalculation } = await import('./js/save.js');
       const result = await saveCalculation({ tool, title, summary, data });
-      if (result.success) { btn.textContent = '✓ 已儲存'; btn.style.background = '#2a6b4a'; }
+      if (result.success) { btn.textContent = '✓ 已儲存'; btn.style.background = '#6b1a1a'; }
       else { btn.textContent = '儲存失敗'; btn.disabled = false; }
     };
   }

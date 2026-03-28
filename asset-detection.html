@@ -41,6 +41,8 @@
   header { background: var(--ink); color: #f4f4f0; padding: 16px 28px; display: flex; align-items: center; justify-content: space-between; }
   .logo { font-family: 'Noto Serif TC', serif; font-size: 18px; font-weight: 700; }
   .logo span { color: var(--gold); }
+  .page-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 3px; font-family: 'DM Mono', monospace; letter-spacing: 0.06em; }
+
   .module-badge { background: var(--danger); color: #fff; font-size: 10px; font-family: 'DM Mono', monospace; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.1em; }
   .back-link { color: #7a7870; font-size: 12px; text-decoration: none; font-family: 'DM Mono', monospace; }
   .back-link:hover { color: var(--gold); }
@@ -200,7 +202,10 @@
 
 <header>
   <a href="index.html" style="text-decoration:none;color:inherit;display:flex;align-items:center;gap:14px">
+    <a href="index.html" style="text-decoration:none;color:inherit">
     <div class="logo">Inheritance<span>Pro</span></div>
+    <div class="page-sub">脫產偵測分析</div>
+  </a>
     <span class="module-badge">脫產偵測</span>
   </a>
 </header>
@@ -944,7 +949,7 @@ ${declaredAmt > 0 ? `
       btn.disabled = true;
       const { saveCalculation } = await import('./js/save.js');
       const result = await saveCalculation({ tool, title, summary, data });
-      if (result.success) { btn.textContent = '✓ 已儲存'; btn.style.background = '#2a6e3e'; }
+      if (result.success) { btn.textContent = '✓ 已儲存'; btn.style.background = '#6b1a1a'; }
       else { btn.textContent = '儲存失敗'; btn.disabled = false; }
     };
   }
