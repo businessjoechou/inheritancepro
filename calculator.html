@@ -504,6 +504,70 @@
     <strong>📋 什麼是扣除額？</strong><br>
     扣除額是法律允許從遺產中扣掉的金額，扣完之後才計算要繳多少稅。扣除額越多，要繳的稅越少。
   </div>
+
+  <!-- 照顧者特別貢獻 -->
+  <div class="card">
+    <div class="section-title">照顧者特別貢獻（選填）</div>
+    <div style="margin-bottom:12px">
+      <span class="law-pill">民法§1149</span>
+      <span class="law-pill">繼承編貢獻分草案</span>
+    </div>
+    <div class="input-group">
+      <label>是否有照顧者情形</label>
+      <div class="toggle-group">
+        <div class="toggle-btn" id="care_yes" onclick="setCareEnabled(true)">有照顧者（估算貢獻值）</div>
+        <div class="toggle-btn active" id="care_no" onclick="setCareEnabled(false)">無</div>
+      </div>
+    </div>
+    <div id="careSection" style="display:none">
+      <div class="input-group">
+        <label>照顧者身份</label>
+        <div class="toggle-group">
+          <div class="toggle-btn active" id="careRole_heir" onclick="setCareRole('heir')">法定繼承人</div>
+          <div class="toggle-btn" id="careRole_nonheir" onclick="setCareRole('nonheir')">非繼承人（媳婦等）</div>
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="input-group">
+          <label>照顧年數</label>
+          <input type="number" id="careYears" placeholder="5" min="0" step="0.5" inputmode="decimal" oninput="updateCareValue()">
+        </div>
+        <div class="input-group">
+          <label>每月時數（小時）</label>
+          <input type="number" id="careHours" placeholder="120" min="0" inputmode="numeric" oninput="updateCareValue()">
+        </div>
+      </div>
+      <div class="input-group">
+        <label>機構照顧時薪（元）<span style="font-weight:400;color:var(--muted);font-size:12px">　外籍看護約250，本國約350</span></label>
+        <input type="number" id="careRate" value="280" min="100" inputmode="numeric" oninput="updateCareValue()">
+      </div>
+      <div class="input-group">
+        <label>是否專職照顧（放棄工作）</label>
+        <div class="toggle-group">
+          <div class="toggle-btn active" id="careFull_yes" onclick="setCareFulltime(true)">是（放棄工作）</div>
+          <div class="toggle-btn" id="careFull_no" onclick="setCareFulltime(false)">否（兼職）</div>
+        </div>
+      </div>
+      <div class="input-group" id="careSalaryGroup">
+        <label>放棄工作月薪（元）</label>
+        <div class="input-prefix">
+          <span class="prefix-text">NT$</span>
+          <input type="number" id="careSalary" placeholder="40000" min="0" inputmode="numeric" oninput="updateCareValue()">
+        </div>
+      </div>
+      <div class="input-group" style="margin-bottom:0">
+        <label>照顧期間自費支出（元）</label>
+        <div class="input-prefix">
+          <span class="prefix-text">NT$</span>
+          <input type="number" id="careOOP" placeholder="0" min="0" inputmode="numeric" oninput="updateCareValue()">
+        </div>
+      </div>
+      <div id="careValueDisplay" style="display:none;margin-top:14px;padding:14px;background:var(--soft);border-radius:10px">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.1em;margin-bottom:6px">照顧貢獻估值</div>
+        <div id="careValueAmount" style="font-family:'Noto Serif TC',serif;font-size:20px;font-weight:700;color:var(--accent)">NT$ 0</div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ─── Step 5：結果 ─── -->
@@ -516,6 +580,7 @@
   <div id="taxContainer"></div>
   <div id="realEstateContainer"></div>
   <div id="stockContainer"></div>
+  <div id="careContainer"></div>
   <a href="inheritance-timeline.html" style="display:block;text-align:center;margin:16px 0 10px;padding:13px;border:1.5px solid var(--border);border-radius:10px;font-size:13px;color:var(--accent);text-decoration:none;background:#f4f7fb">📅 查看繼承辦理流程與期限時間軸 →</a>
   <div id="save-btn-container"></div>
   <div class="cross-links">
@@ -541,6 +606,9 @@
   const totalSteps = 5;
   let propRowCount = 0;
   let stockCount = 0;
+  let careEnabled = false;
+  let careRole = 'heir';
+  let careFulltime = true;
 
   let state = {
     hasWill: true,
@@ -610,6 +678,91 @@
     if (totalStockValue > 0) rows += `<div class="asset-total-row"><span class="atr-label">股票估值</span><span class="atr-val">${fmt(totalStockValue)}</span></div>`;
     if (otherAssets > 0) rows += `<div class="asset-total-row"><span class="atr-label">其他資產</span><span class="atr-val">${fmt(otherAssets)}</span></div>`;
     el.innerHTML = rows + `<div class="asset-total-sum"><span class="atr-label">估算遺產總額</span><span class="atr-val">${fmt(totalEstate)}</span></div>`;
+  }
+
+  /* ─── Care helpers ─── */
+  function setCareEnabled(v) {
+    careEnabled = v;
+    document.getElementById('care_yes').classList.toggle('active', v);
+    document.getElementById('care_no').classList.toggle('active', !v);
+    document.getElementById('careSection').style.display = v ? 'block' : 'none';
+    if (v) updateCareValue();
+  }
+  function setCareRole(r) {
+    careRole = r;
+    document.getElementById('careRole_heir').classList.toggle('active', r === 'heir');
+    document.getElementById('careRole_nonheir').classList.toggle('active', r === 'nonheir');
+  }
+  function setCareFulltime(v) {
+    careFulltime = v;
+    document.getElementById('careFull_yes').classList.toggle('active', v);
+    document.getElementById('careFull_no').classList.toggle('active', !v);
+    document.getElementById('careSalaryGroup').style.display = v ? 'block' : 'none';
+    updateCareValue();
+  }
+  function updateCareValue() {
+    if (!careEnabled) return;
+    const years = parseFloat(document.getElementById('careYears').value) || 0;
+    const hours = parseFloat(document.getElementById('careHours').value) || 0;
+    const rate = parseFloat(document.getElementById('careRate').value) || 280;
+    const salary = careFulltime ? (parseFloat(document.getElementById('careSalary').value) || 0) : 0;
+    const oop = parseFloat(document.getElementById('careOOP').value) || 0;
+    const institutional = years * 12 * hours * rate;
+    const opportunity = salary * 12 * years;
+    const base = Math.max(institutional, opportunity);
+    const total = base + oop;
+    const display = document.getElementById('careValueDisplay');
+    const amount = document.getElementById('careValueAmount');
+    if (total > 0) {
+      display.style.display = 'block';
+      amount.textContent = 'NT$ ' + Math.round(total).toLocaleString('zh-TW');
+    } else {
+      display.style.display = 'none';
+    }
+  }
+
+  /* ─── 房地合一稅 helpers ─── */
+  function togglePropSale(i) {
+    const el = document.getElementById(`propSalePanel_${i}`);
+    if (!el) return;
+    const isOpen = el.style.display !== 'none';
+    el.style.display = isOpen ? 'none' : 'block';
+    const btn = document.getElementById(`propSaleBtn_${i}`);
+    if (btn) btn.textContent = isOpen ? '展開試算 ▼' : '收起 ▲';
+  }
+  function calcPropSale(i) {
+    const salePrice = parseFloat(document.getElementById(`ps_sale_${i}`)?.value) || 0;
+    const cost = parseFloat(document.getElementById(`ps_cost_${i}`)?.value) || 0;
+    const expenses = parseFloat(document.getElementById(`ps_exp_${i}`)?.value) || 0;
+    const acquireDate = document.getElementById(`ps_acquire_${i}`)?.value;
+    const saleDate = document.getElementById(`ps_saledate_${i}`)?.value;
+    const selfUse6 = document.getElementById(`ps_selfuse6_${i}`)?.checked;
+    const resultEl = document.getElementById(`ps_result_${i}`);
+    if (!resultEl) return;
+    if (!acquireDate || !saleDate) { resultEl.innerHTML = '<div style="color:var(--accent);font-size:12px">請填入取得日期與出售日期</div>'; return; }
+    const holdMs = new Date(saleDate) - new Date(acquireDate);
+    if (holdMs < 0) { resultEl.innerHTML = '<div style="color:var(--accent);font-size:12px">出售日期不可早於取得日期</div>'; return; }
+    const holdYears = holdMs / (365.25 * 24 * 3600 * 1000);
+    let rate, rateLabel;
+    if (selfUse6 && holdYears >= 6) { rate = 0.10; rateLabel = '10%（自住滿6年）'; }
+    else if (holdYears < 2) { rate = 0.45; rateLabel = '45%（持有未滿2年）'; }
+    else if (holdYears < 5) { rate = 0.35; rateLabel = '35%（持有2–5年）'; }
+    else if (holdYears < 10) { rate = 0.20; rateLabel = '20%（持有5–10年）'; }
+    else { rate = 0.15; rateLabel = '15%（持有滿10年）'; }
+    const gain = salePrice - cost - expenses;
+    const selfExemption = (selfUse6 && holdYears >= 6) ? Math.min(Math.max(0, gain), 4000000) : 0;
+    const taxableGain = Math.max(0, gain - selfExemption);
+    const tax = Math.round(taxableGain * rate);
+    resultEl.innerHTML = `
+      <div class="heir-row"><span class="heir-row-label">持有年數</span><span class="heir-row-val" style="color:var(--muted)">${holdYears.toFixed(1)} 年</span></div>
+      <div class="heir-row"><span class="heir-row-label">適用稅率</span><span class="heir-row-val" style="color:var(--accent)">${rateLabel}</span></div>
+      <div class="heir-row"><span class="heir-row-label">交易所得</span><span class="heir-row-val" style="color:var(--muted)">${fmt(gain)}</span></div>
+      ${selfExemption > 0 ? `<div class="heir-row"><span class="heir-row-label">自住免稅額（上限400萬）</span><span class="heir-row-val" style="color:var(--muted)">－ ${fmt(selfExemption)}</span></div>` : ''}
+      <div class="heir-row"><span class="heir-row-label">應稅所得</span><span class="heir-row-val" style="color:var(--ink)">${fmt(taxableGain)}</span></div>
+      <div class="heir-row" style="border-top:1px solid var(--soft);padding-top:8px;margin-top:4px">
+        <span class="heir-row-label" style="font-weight:600">預估房地合一稅</span>
+        <span class="heir-row-val" style="font-size:15px;color:${tax === 0 ? 'var(--success)' : 'var(--accent)'}">${tax === 0 ? '免稅' : fmt(tax)}</span>
+      </div>`;
   }
 
   /* ─── Property rows ─── */
@@ -1072,11 +1225,48 @@
       const annualLandTaxNon = properties.filter(p => !p.selfUse).reduce((s, p) => s + p.land * 0.01, 0);
       const annualLandTax = annualLandTaxSelf + annualLandTaxNon;
 
-      const propDetailRows = properties.map(p => {
+      const propDetailRows = properties.map((p, i) => {
         const houseTax = p.building * (p.selfUse ? 0.012 : 0.024);
         return `<div class="heir-row">
           <span class="heir-row-label">${p.name}（${p.selfUse ? '自住1.2%' : '非自住2.4%'}）</span>
           <span class="heir-row-val" style="color:var(--muted)">${p.building > 0 ? fmt(houseTax) + ' / 年' : '—'}</span>
+        </div>
+        <div style="padding:0 0 10px 0">
+          <button id="propSaleBtn_${i}" type="button" onclick="togglePropSale(${i})" style="font-size:11px;color:var(--accent);background:none;border:1px solid var(--border);border-radius:6px;padding:4px 10px;cursor:pointer;margin-top:2px">展開試算 ▼</button>
+          <div id="propSalePanel_${i}" style="display:none;margin-top:10px;background:var(--soft);border-radius:8px;padding:12px">
+            <div style="font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:0.1em;margin-bottom:10px">房地合一稅 2.0 試算（${p.name}）</div>
+            <div class="two-col" style="margin-bottom:10px">
+              <div>
+                <label style="font-size:12px;margin-bottom:4px;display:block">被繼承人取得日期</label>
+                <input type="date" id="ps_acquire_${i}" style="width:100%;padding:7px 10px;border:1.5px solid var(--border);border-radius:7px;font-size:13px">
+              </div>
+              <div>
+                <label style="font-size:12px;margin-bottom:4px;display:block">預計出售日期</label>
+                <input type="date" id="ps_saledate_${i}" style="width:100%;padding:7px 10px;border:1.5px solid var(--border);border-radius:7px;font-size:13px">
+              </div>
+            </div>
+            <div class="two-col" style="margin-bottom:10px">
+              <div>
+                <label style="font-size:12px;margin-bottom:4px;display:block">出售價格（元）</label>
+                <input type="number" id="ps_sale_${i}" placeholder="0" min="0" inputmode="numeric" style="width:100%;padding:7px 10px;border:1.5px solid var(--border);border-radius:7px;font-size:13px">
+              </div>
+              <div>
+                <label style="font-size:12px;margin-bottom:4px;display:block">取得成本（元）</label>
+                <input type="number" id="ps_cost_${i}" placeholder="0" min="0" inputmode="numeric" style="width:100%;padding:7px 10px;border:1.5px solid var(--border);border-radius:7px;font-size:13px">
+              </div>
+            </div>
+            <div style="margin-bottom:10px">
+              <label style="font-size:12px;margin-bottom:4px;display:block">移轉費用（代書、仲介等，元）</label>
+              <input type="number" id="ps_exp_${i}" placeholder="0" min="0" inputmode="numeric" style="width:100%;padding:7px 10px;border:1.5px solid var(--border);border-radius:7px;font-size:13px">
+            </div>
+            <label style="display:flex;align-items:center;gap:8px;font-size:12px;cursor:pointer;font-weight:400;margin-bottom:12px">
+              <input type="checkbox" id="ps_selfuse6_${i}" ${p.selfUse ? 'checked' : ''} style="width:15px;height:15px;accent-color:var(--accent)">
+              自住滿6年（適用10%優惠稅率；可扣除400萬免稅額）
+            </label>
+            <button type="button" onclick="calcPropSale(${i})" style="width:100%;padding:9px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer">計算房地合一稅</button>
+            <div id="ps_result_${i}" style="margin-top:10px"></div>
+            <div style="margin-top:8px;font-size:10px;color:var(--muted)">※ 持有期間自被繼承人取得日起算（所得稅法§4-5）。繼承取得屬被動，稅率以原始取得日計算。</div>
+          </div>
         </div>`;
       }).join('');
 
@@ -1129,6 +1319,56 @@
       </div>`;
     } else {
       document.getElementById('stockContainer').innerHTML = '';
+    }
+
+    // Caregiver section
+    if (careEnabled) {
+      const years = parseFloat(document.getElementById('careYears').value) || 0;
+      const hours = parseFloat(document.getElementById('careHours').value) || 0;
+      const rate = parseFloat(document.getElementById('careRate').value) || 280;
+      const salary = careFulltime ? (parseFloat(document.getElementById('careSalary').value) || 0) : 0;
+      const oop = parseFloat(document.getElementById('careOOP').value) || 0;
+      const institutional = years * 12 * hours * rate;
+      const opportunity = salary * 12 * years;
+      const base = Math.max(institutional, opportunity);
+      const careTotal = base + oop;
+      const proportion = careTotal > 0 && total > 0 ? Math.min(careTotal / total * 100, 33.33) : 0;
+      const isNonHeir = careRole === 'nonheir';
+      document.getElementById('careContainer').innerHTML = careTotal > 0 ? `
+      <div style="margin-top:16px">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">照顧者特別貢獻估算</div>
+        <div class="heir-card">
+          <div class="heir-header" style="background:#f4f0ff">
+            <span class="heir-name">照顧貢獻估值</span>
+            <span class="heir-fraction" style="color:#7c3aed">${fmt(careTotal)}</span>
+          </div>
+          <div class="heir-body">
+            ${institutional > 0 ? `<div class="heir-row"><span class="heir-row-label">機構替代成本（${years}年×12月×${hours}hr×NT$${rate}）</span><span class="heir-row-val" style="color:var(--muted)">${fmt(institutional)}</span></div>` : ''}
+            ${opportunity > 0 ? `<div class="heir-row"><span class="heir-row-label">放棄薪資機會成本（月薪${salary.toLocaleString('zh-TW')}×${years}年）</span><span class="heir-row-val" style="color:var(--muted)">${fmt(opportunity)}</span></div>` : ''}
+            ${oop > 0 ? `<div class="heir-row"><span class="heir-row-label">自墊照顧費用</span><span class="heir-row-val" style="color:var(--muted)">${fmt(oop)}</span></div>` : ''}
+            <div class="heir-row" style="border-top:1px solid var(--soft);padding-top:8px;margin-top:4px">
+              <span class="heir-row-label" style="font-weight:600">貢獻估值合計</span>
+              <span class="heir-row-val" style="font-weight:700;color:#7c3aed">${fmt(careTotal)}</span>
+            </div>
+            ${!isNonHeir ? `
+            <div class="heir-row" style="margin-top:4px">
+              <span class="heir-row-label">占遺產比例（最高1/3）</span>
+              <span class="heir-row-val" style="color:var(--muted)">${proportion.toFixed(1)}%</span>
+            </div>
+            <div class="heir-row">
+              <span class="heir-row-label">建議主張分配額</span>
+              <span class="heir-row-val" style="color:#7c3aed">${fmt(total * proportion / 100)}</span>
+            </div>` : `
+            <div style="margin-top:8px;padding:10px;background:#f4f0ff;border-radius:6px;font-size:12px;color:#5b21b6;line-height:1.7">
+              <div style="font-weight:600;margin-bottom:4px">非繼承人求償範圍（民法§1149）</div>
+              <div>建議主張低估：${fmt(careTotal * 0.30)}　高估：${fmt(careTotal * 0.60)}</div>
+            </div>`}
+          </div>
+        </div>
+        <div class="law-note" style="margin-top:8px">⚖️ 民法§1149：繼承人中如有對被繼承人扶養或照顧特別貢獻者，得主張自遺產中扣除相當數額後再行分配；上限通常為遺產1/3。非繼承人（如媳婦）可依不當得利或委任關係另行求償。本估算僅供參考，實際金額應由繼承人協議或法院認定。</div>
+      </div>` : '';
+    } else {
+      document.getElementById('careContainer').innerHTML = '';
     }
 
     initSaveButton(
