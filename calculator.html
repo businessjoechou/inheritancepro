@@ -163,6 +163,19 @@
   <div class="step-label">步驟 1 / 5</div>
   <h2>遺產項目</h2>
   <p class="subtitle">輸入各類遺產，系統自動加總並分項試算稅務，無需再分頁計算。</p>
+  <div class="card" style="margin-bottom:20px">
+    <div class="section-title">案件資訊 <span class="law-pill" style="font-weight:400;font-size:11px">選填，供工作底稿使用</span></div>
+    <div class="two-col">
+      <div class="input-group" style="margin-bottom:0">
+        <label>案件名稱</label>
+        <input type="text" id="caseName" placeholder="如：王○○繼承案">
+      </div>
+      <div class="input-group" style="margin-bottom:0">
+        <label>案件編號</label>
+        <input type="text" id="caseRef" placeholder="如：2026-001">
+      </div>
+    </div>
+  </div>
 
   <!-- 基本資訊 -->
   <div class="card">
@@ -581,6 +594,11 @@
   <div id="realEstateContainer"></div>
   <div id="stockContainer"></div>
   <div id="careContainer"></div>
+  <div id="taxPlanContainer"></div>
+  <div style="display:flex;gap:10px;margin-top:20px">
+    <button onclick="downloadPDF()" style="flex:1;padding:12px;background:var(--ink);color:var(--paper);border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Noto Sans TC',sans-serif">↓ PDF 報告</button>
+    <button onclick="downloadWorkpaper()" style="flex:1;padding:12px;background:#1a3a5c;color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Noto Sans TC',sans-serif">↓ 工作底稿</button>
+  </div>
   <a href="inheritance-timeline.html" style="display:block;text-align:center;margin:16px 0 10px;padding:13px;border:1.5px solid var(--border);border-radius:10px;font-size:13px;color:var(--accent);text-decoration:none;background:#f4f7fb">📅 查看繼承辦理流程與期限時間軸 →</a>
   <div id="save-btn-container"></div>
   <div class="cross-links">
@@ -848,6 +866,24 @@
       <div class="input-group" style="margin-bottom:0">
         <label id="sprice-label-${idx}" style="font-size:12px;margin-bottom:6px">每股收盤價（元）</label>
         <input type="number" id="sprice-${idx}" placeholder="例如：780" min="0" step="0.01" inputmode="decimal" oninput="updateAssetTotal()">
+      </div>
+      <div id="sunlisted-${idx}" style="display:none;margin-top:12px;padding:12px;background:var(--soft);border-radius:8px">
+        <div style="font-size:11px;color:var(--muted);letter-spacing:0.08em;margin-bottom:10px">資產淨值法（遺贈稅法§10第4款）</div>
+        <div class="two-col" style="margin-bottom:10px">
+          <div>
+            <label style="font-size:12px;margin-bottom:4px;display:block">公司總資產（元）</label>
+            <input type="number" id="s_assets_${idx}" placeholder="0" min="0" inputmode="numeric" style="width:100%;padding:8px 10px;border:1.5px solid var(--border);border-radius:7px;font-size:13px" oninput="calcNavPerShare(${idx})">
+          </div>
+          <div>
+            <label style="font-size:12px;margin-bottom:4px;display:block">公司總負債（元）</label>
+            <input type="number" id="s_liabilities_${idx}" placeholder="0" min="0" inputmode="numeric" style="width:100%;padding:8px 10px;border:1.5px solid var(--border);border-radius:7px;font-size:13px" oninput="calcNavPerShare(${idx})">
+          </div>
+        </div>
+        <div style="margin-bottom:8px">
+          <label style="font-size:12px;margin-bottom:4px;display:block">公司發行股數（千股）</label>
+          <input type="number" id="s_shares_${idx}" placeholder="例：10000（代表1000萬股）" min="0" inputmode="numeric" style="width:100%;padding:8px 10px;border:1.5px solid var(--border);border-radius:7px;font-size:13px" oninput="calcNavPerShare(${idx})">
+        </div>
+        <div id="s_nav_display_${idx}" style="font-size:13px;color:var(--muted);min-height:20px"></div>
       </div>`;
     document.getElementById('stockList').appendChild(div);
     updateRemoveStockButtons();
@@ -871,8 +907,23 @@
   function togglePriceLabel(idx) {
     const t = document.getElementById(`stype-${idx}`).value;
     const lbl = document.getElementById(`sprice-label-${idx}`);
+    const panel = document.getElementById(`sunlisted-${idx}`);
     if (!lbl) return;
-    lbl.textContent = t === 'unlisted' ? '每股淨值（元，資產淨值法）' : '每股收盤價（元）';
+    lbl.textContent = t === 'unlisted' ? '每股淨值（元，自動計算）' : '每股收盤價（元）';
+    if (panel) panel.style.display = t === 'unlisted' ? 'block' : 'none';
+  }
+
+  function calcNavPerShare(idx) {
+    const assets = parseFloat(document.getElementById(`s_assets_${idx}`)?.value) || 0;
+    const liabilities = parseFloat(document.getElementById(`s_liabilities_${idx}`)?.value) || 0;
+    const shares = parseFloat(document.getElementById(`s_shares_${idx}`)?.value) || 0;
+    const display = document.getElementById(`s_nav_display_${idx}`);
+    const priceInput = document.getElementById(`sprice-${idx}`);
+    if (shares <= 0) { if (display) display.textContent = '請輸入發行股數'; return; }
+    const nav = (assets - liabilities) / (shares * 1000);
+    if (nav < 0) { if (display) display.innerHTML = `<span style="color:var(--accent)">負淨值（每股 ${nav.toFixed(2)} 元），請確認數字</span>`; return; }
+    if (display) display.innerHTML = `每股淨值 <strong style="color:var(--accent)">${nav.toFixed(2)} 元</strong>　已自動填入上方欄位`;
+    if (priceInput) { priceInput.value = nav.toFixed(2); updateAssetTotal(); }
   }
 
   /* ─── Step navigation ─── */
@@ -1371,6 +1422,37 @@
       document.getElementById('careContainer').innerHTML = '';
     }
 
+    // 節稅規劃比較
+    const annualGiftExemption = 2440000;
+    const giftScenarios = [5, 10, 15].map(yrs => {
+      const giftable = yrs * annualGiftExemption;
+      const reducedEstate = Math.max(0, total - giftable);
+      const reducedNet = Math.max(0, reducedEstate + (total > 0 ? (adjustedTotal - total) : 0) - exemption - totalDeduct);
+      const reducedTax = calcEstateTax(reducedNet);
+      return { yrs, giftable, reducedTax, saving: tax - reducedTax };
+    });
+    document.getElementById('taxPlanContainer').innerHTML = `
+    <div style="margin-top:16px">
+      <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">生前贈與 vs 繼承節稅試算</div>
+      <div class="heir-card">
+        <div class="heir-header" style="background:#f0f4ff">
+          <span class="heir-name">節稅規劃比較</span>
+          <span class="heir-fraction" style="color:#1a3a8c">年免稅額 244 萬</span>
+        </div>
+        <div class="heir-body">
+          <div class="heir-row"><span class="heir-row-label">現況繼承稅負</span><span class="heir-row-val" style="color:var(--accent)">${tax === 0 ? '免稅' : fmt(tax)}</span></div>
+          <div style="border-top:1px solid var(--soft);padding-top:8px;margin-top:4px;margin-bottom:4px;font-size:11px;color:var(--muted)">分年贈與策略（每年贈與244萬，免贈與稅）</div>
+          ${giftScenarios.map(s => `
+          <div class="heir-row">
+            <span class="heir-row-label">提前 ${s.yrs} 年贈與（共 ${fmt(s.giftable)} ）</span>
+            <span class="heir-row-val" style="color:${s.saving > 0 ? 'var(--success)' : 'var(--muted)'}">節省 ${s.saving > 0 ? fmt(s.saving) : '—'}</span>
+          </div>`).join('')}
+          ${tax === 0 ? `<div style="margin-top:8px;font-size:12px;color:var(--muted)">目前遺產稅已免稅，贈與規劃對稅負影響有限。</div>` : ''}
+        </div>
+      </div>
+      <div class="law-note" style="margin-top:8px">⚖️ 每人每年贈與免稅額244萬（遺贈稅法§22，2026年）。生前贈與可降低遺產稅基，但2年內贈與給繼承人仍須計入遺產（民法§1148-1）。建議結合人壽保險規劃（3,330萬免計）一併評估。</div>
+    </div>`;
+
     initSaveButton(
       'inheritance',
       `遺產繼承試算 ${new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })}`,
@@ -1433,6 +1515,133 @@ ${stockHTML ? `<div class="section-title">股票估值明細</div>${stockHTML}` 
     const html = buildPrintHtml();
     const printWin = window.open('', '_blank');
     if (!printWin) { alert('請允許本網站開啟彈出視窗以下載 PDF'); return; }
+    printWin.document.write(html);
+    printWin.document.close();
+    setTimeout(() => printWin.print(), 600);
+  }
+
+  function buildWorkpaperHtml() {
+    const { cash, otherAssets, totalPropertyBase, totalStockValue, totalEstate, properties, stocks } = computeAssets();
+    const caseName = document.getElementById('caseName')?.value || '（未填）';
+    const caseRef = document.getElementById('caseRef')?.value || '—';
+    const deathDateRaw = document.getElementById('deathDate')?.value;
+    const deathDateStr = deathDateRaw ? new Date(deathDateRaw).toLocaleDateString('zh-TW', {year:'numeric',month:'2-digit',day:'2-digit'}) : '（未填）';
+    const deadlineStr = deathDateRaw ? new Date(new Date(deathDateRaw).getTime() + 183*24*3600*1000).toLocaleDateString('zh-TW', {year:'numeric',month:'2-digit',day:'2-digit'}) : '—';
+    const today = new Date().toLocaleDateString('zh-TW', {year:'numeric',month:'2-digit',day:'2-digit'});
+
+    const insurancePaid = parseFloat(document.getElementById('deduct_insurance')?.value) || 0;
+    const insuranceTaxable = Math.max(0, insurancePaid - 33300000);
+    const adjustedTotal = totalEstate + insuranceTaxable;
+    const exemption = 13330000;
+    const dSpouse = state.hasSpouse ? 5530000 : 0;
+    const dFuneral = 1380000;
+    const dChildren = (parseInt(document.getElementById('deduct_children_count')?.value) || 0) * 560000;
+    const dParents = (parseInt(document.getElementById('deduct_parents_count')?.value) || 0) * 1380000;
+    const dDisabled = (parseInt(document.getElementById('deduct_disabled_count')?.value) || 0) * 6930000;
+    const dOther = parseFloat(document.getElementById('deduct_other')?.value) || 0;
+    const agriDeduct = parseFloat(document.getElementById('deduct_agri')?.value) || 0;
+    const retaxDeduct = parseFloat(document.getElementById('deduct_retax')?.value) || 0;
+    const totalDeduct = dSpouse + dFuneral + dChildren + dParents + dDisabled + dOther + agriDeduct + retaxDeduct;
+    const netEstate = Math.max(0, adjustedTotal - exemption - totalDeduct);
+    const tax = calcEstateTax(netEstate);
+    const fmtN = n => Math.round(n).toLocaleString('zh-TW');
+
+    let assetRows = '';
+    let lineNo = 1;
+    if (cash > 0) assetRows += `<tr><td>${lineNo++}</td><td>現金及存款</td><td style="text-align:right">${fmtN(cash)}</td></tr>`;
+    properties.forEach(p => {
+      assetRows += `<tr><td>${lineNo++}</td><td>${p.name}（土地公告現值）</td><td style="text-align:right">${fmtN(p.land)}</td></tr>`;
+      if (p.building > 0) assetRows += `<tr><td></td><td style="padding-left:24px">└ ${p.name}（建物評定現值）</td><td style="text-align:right">${fmtN(p.building)}</td></tr>`;
+    });
+    stocks.forEach(s => {
+      assetRows += `<tr><td>${lineNo++}</td><td>${s.name}（${s.typeLabel}，${s.lots}張×${s.price}元）</td><td style="text-align:right">${fmtN(s.value)}</td></tr>`;
+    });
+    if (otherAssets > 0) assetRows += `<tr><td>${lineNo++}</td><td>其他財產</td><td style="text-align:right">${fmtN(otherAssets)}</td></tr>`;
+
+    let deductRows = `
+      <tr><td>免稅額</td><td style="text-align:right">${fmtN(exemption)}</td></tr>
+      ${dSpouse > 0 ? `<tr><td>配偶扣除額</td><td style="text-align:right">${fmtN(dSpouse)}</td></tr>` : ''}
+      <tr><td>喪葬費扣除額</td><td style="text-align:right">${fmtN(dFuneral)}</td></tr>
+      ${dChildren > 0 ? `<tr><td>子女扣除額</td><td style="text-align:right">${fmtN(dChildren)}</td></tr>` : ''}
+      ${dParents > 0 ? `<tr><td>父母扣除額</td><td style="text-align:right">${fmtN(dParents)}</td></tr>` : ''}
+      ${dDisabled > 0 ? `<tr><td>身心障礙特別扣除額</td><td style="text-align:right">${fmtN(dDisabled)}</td></tr>` : ''}
+      ${agriDeduct > 0 ? `<tr><td>農業用地扣除額</td><td style="text-align:right">${fmtN(agriDeduct)}</td></tr>` : ''}
+      ${retaxDeduct > 0 ? `<tr><td>再次繼承扣除額</td><td style="text-align:right">${fmtN(retaxDeduct)}</td></tr>` : ''}
+      ${dOther > 0 ? `<tr><td>其他扣除額</td><td style="text-align:right">${fmtN(dOther)}</td></tr>` : ''}`;
+
+    return `<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8">
+<title>遺產稅申報工作底稿－${caseName}</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans TC','微軟正黑體',sans-serif;font-size:12px;color:#111;background:#fff;padding:32px 40px;max-width:800px;margin:0 auto;}
+.wp-header{border-bottom:3px double #111;padding-bottom:14px;margin-bottom:20px;}
+.wp-title{font-size:20px;font-weight:700;letter-spacing:0.05em;margin-bottom:6px;}
+.wp-meta{display:grid;grid-template-columns:1fr 1fr;gap:4px 24px;font-size:11px;color:#444;margin-top:10px;}
+.wp-meta span{display:flex;gap:8px;}<br>.wp-meta strong{color:#111;min-width:80px;}
+h3{font-size:13px;font-weight:700;background:#f0f0f0;padding:6px 10px;margin:20px 0 0;border-left:4px solid #111;}
+table{width:100%;border-collapse:collapse;margin-top:0;}
+th{background:#f8f8f8;text-align:left;padding:6px 10px;font-size:11px;border:1px solid #ccc;font-weight:600;}
+td{padding:5px 10px;border:1px solid #ddd;font-size:12px;vertical-align:top;}
+.total-row td{font-weight:700;background:#f8f8f8;border-top:2px solid #111;}
+.tax-row td{font-weight:700;font-size:13px;background:#fff8e8;}
+.sig-block{margin-top:40px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;}
+.sig-box{border-top:1px solid #aaa;padding-top:8px;font-size:11px;color:#555;}
+.sig-box strong{display:block;margin-bottom:20px;color:#111;}
+.disclaimer{margin-top:24px;font-size:10px;color:#888;line-height:1.7;border-top:1px solid #ddd;padding-top:10px;}
+@media print{body{padding:16px;}}
+</style></head><body>
+<div class="wp-header">
+  <div class="wp-title">遺產稅申報工作底稿</div>
+  <div class="wp-meta">
+    <span><strong>案件名稱</strong>${caseName}</span>
+    <span><strong>案件編號</strong>${caseRef}</span>
+    <span><strong>被繼承人死亡日</strong>${deathDateStr}</span>
+    <span><strong>申報期限</strong>${deadlineStr}</span>
+    <span><strong>製作日期</strong>${today}</span>
+    <span><strong>有無遺囑</strong>${state.hasWill ? '有' : '無'}</span>
+  </div>
+</div>
+
+<h3>附表一　遺產清冊</h3>
+<table>
+  <tr><th style="width:36px">#</th><th>項目說明</th><th style="width:160px;text-align:right">金額（新台幣元）</th></tr>
+  ${assetRows}
+  ${insuranceTaxable > 0 ? `<tr><td></td><td>保險金超額計入（超過3,330萬部分）</td><td style="text-align:right">＋ ${fmtN(insuranceTaxable)}</td></tr>` : ''}
+  <tr class="total-row"><td></td><td>遺產總額（調整後）</td><td style="text-align:right">${fmtN(adjustedTotal)}</td></tr>
+</table>
+
+<h3>附表二　扣除額明細</h3>
+<table>
+  <tr><th>項目</th><th style="width:160px;text-align:right">金額（新台幣元）</th></tr>
+  ${deductRows}
+  <tr class="total-row"><td>扣除額合計</td><td style="text-align:right">${fmtN(exemption + totalDeduct)}</td></tr>
+</table>
+
+<h3>附表三　遺產稅計算</h3>
+<table>
+  <tr><th>項目</th><th style="width:160px;text-align:right">金額（新台幣元）</th></tr>
+  <tr><td>遺產總額（調整後）</td><td style="text-align:right">${fmtN(adjustedTotal)}</td></tr>
+  <tr><td>減：免稅額及扣除額合計</td><td style="text-align:right">（${fmtN(exemption + totalDeduct)}）</td></tr>
+  <tr><td>遺產淨額</td><td style="text-align:right">${fmtN(netEstate)}</td></tr>
+  <tr class="tax-row"><td>預估應納遺產稅</td><td style="text-align:right">${tax === 0 ? '免稅' : fmtN(tax)}</td></tr>
+</table>
+
+<div class="sig-block">
+  <div class="sig-box"><strong>製表人</strong>簽章：________________<br>日期：________________</div>
+  <div class="sig-box"><strong>複核人</strong>簽章：________________<br>日期：________________</div>
+  <div class="sig-box"><strong>負責會計師</strong>簽章：________________<br>日期：________________</div>
+</div>
+<div class="disclaimer">
+  本工作底稿由 InheritancePro 系統產出，僅供申報前初步試算參考。實際申報數字應以國稅局核定及原始憑證為準。<br>
+  稅法依據：遺產及贈與稅法（2026年）。申報期限：被繼承人死亡後6個月內。
+</div>
+</body></html>`;
+  }
+
+  function downloadWorkpaper() {
+    const html = buildWorkpaperHtml();
+    const printWin = window.open('', '_blank');
+    if (!printWin) { alert('請允許本網站開啟彈出視窗'); return; }
     printWin.document.write(html);
     printWin.document.close();
     setTimeout(() => printWin.print(), 600);

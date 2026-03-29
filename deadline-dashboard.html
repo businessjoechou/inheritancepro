@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>繼承期限管理儀表板｜InheritancePro</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1410; --paper: #f5f0e8; --gold: #c4932a;
+    --muted: #7a6f62; --border: #c8bfb0; --soft: #e8e0d0;
+    --accent: #8b2020; --success: #2a6b4a;
+    --warn: #c47a1a; --danger: #b02020;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--paper); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; font-size: 14px; min-height: 100vh; }
+
+  .top-bar { background: var(--ink); color: var(--paper); padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; }
+  .top-bar-logo { font-family: 'Noto Serif TC', serif; font-size: 15px; font-weight: 700; }
+  .top-bar-logo span { color: var(--gold); }
+  .top-bar a { color: var(--muted); font-size: 12px; text-decoration: none; }
+  .top-bar a:hover { color: var(--paper); }
+
+  .container { max-width: 720px; margin: 0 auto; padding: 24px 20px 80px; }
+
+  h1 { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+  .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
+
+  /* Add case form */
+  .add-form { background: #fff; border: 1.5px solid var(--border); border-radius: 14px; padding: 20px; margin-bottom: 28px; }
+  .add-form h2 { font-size: 14px; font-weight: 600; margin-bottom: 14px; color: var(--muted); letter-spacing: 0.04em; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; align-items: end; }
+  .form-group label { font-size: 12px; color: var(--muted); display: block; margin-bottom: 5px; }
+  .form-group input { width: 100%; padding: 9px 12px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 13px; font-family: inherit; background: var(--paper); }
+  .form-group input:focus { outline: none; border-color: var(--gold); }
+  .add-btn { padding: 9px 20px; background: var(--ink); color: var(--paper); border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; font-family: inherit; height: 38px; }
+  .add-btn:hover { background: #2a2218; }
+
+  /* Stats bar */
+  .stats-bar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 24px; }
+  .stat-card { background: #fff; border: 1.5px solid var(--border); border-radius: 10px; padding: 14px 16px; text-align: center; }
+  .stat-num { font-family: 'Noto Serif TC', serif; font-size: 26px; font-weight: 700; }
+  .stat-label { font-size: 11px; color: var(--muted); margin-top: 2px; font-family: 'DM Mono', monospace; letter-spacing: 0.08em; }
+  .stat-card.danger .stat-num { color: var(--danger); }
+  .stat-card.warn .stat-num { color: var(--warn); }
+  .stat-card.ok .stat-num { color: var(--success); }
+
+  /* Case cards */
+  .case-card { background: #fff; border: 1.5px solid var(--border); border-radius: 14px; margin-bottom: 14px; overflow: hidden; }
+  .case-header { padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; cursor: pointer; user-select: none; }
+  .case-header:hover { background: #faf8f4; }
+  .case-title { font-family: 'Noto Serif TC', serif; font-size: 15px; font-weight: 600; }
+  .case-meta { font-size: 11px; color: var(--muted); margin-top: 3px; font-family: 'DM Mono', monospace; }
+  .case-badges { display: flex; gap: 6px; flex-shrink: 0; align-items: center; }
+  .badge { font-family: 'DM Mono', monospace; font-size: 10px; padding: 3px 8px; border-radius: 4px; white-space: nowrap; font-weight: 500; }
+  .badge.overdue { background: #fde8e8; color: var(--danger); border: 1px solid #f5c0c0; }
+  .badge.urgent { background: #fff3e0; color: var(--warn); border: 1px solid #f5d8a0; }
+  .badge.ok { background: #e8f5ee; color: var(--success); border: 1px solid #a8d8bc; }
+  .badge.done { background: #f0f0f0; color: #888; border: 1px solid #ddd; }
+  .del-btn { background: none; border: none; color: var(--muted); font-size: 16px; cursor: pointer; padding: 2px 6px; border-radius: 4px; line-height: 1; }
+  .del-btn:hover { background: #f5e8e8; color: var(--danger); }
+
+  .case-body { border-top: 1px solid var(--soft); padding: 14px 18px; display: none; }
+  .case-card.open .case-body { display: block; }
+  .case-card.open .case-chevron { transform: rotate(180deg); }
+  .case-chevron { width: 14px; height: 14px; opacity: 0.4; transition: transform 0.2s; flex-shrink: 0; }
+
+  /* Deadline rows */
+  .deadline-row { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--soft); }
+  .deadline-row:last-child { border-bottom: none; }
+  .dl-check { width: 18px; height: 18px; accent-color: var(--success); flex-shrink: 0; cursor: pointer; }
+  .dl-info { flex: 1; }
+  .dl-name { font-size: 13px; font-weight: 500; }
+  .dl-date { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .dl-countdown { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 600; white-space: nowrap; flex-shrink: 0; }
+  .dl-countdown.overdue { color: var(--danger); }
+  .dl-countdown.urgent { color: var(--warn); }
+  .dl-countdown.ok { color: var(--success); }
+  .dl-countdown.done { color: #aaa; text-decoration: line-through; }
+
+  .empty-state { text-align: center; padding: 48px 20px; color: var(--muted); }
+  .empty-state .empty-icon { font-size: 40px; margin-bottom: 12px; }
+  .empty-state p { font-size: 14px; line-height: 1.7; }
+
+  .disclaimer { font-size: 11px; color: var(--muted); line-height: 1.7; border-top: 1px solid var(--border); padding-top: 16px; margin-top: 32px; }
+
+  @media (max-width: 480px) {
+    .form-row { grid-template-columns: 1fr; }
+    .stats-bar { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="top-bar-logo">Inheritance<span>Pro</span></div>
+  <a href="index.html">← 返回主頁</a>
+</div>
+
+<div class="container">
+  <h1>繼承期限管理儀表板</h1>
+  <p class="subtitle">輸入案件名稱與死亡日期，系統自動計算所有法定期限並追蹤進度。</p>
+
+  <div class="add-form">
+    <h2>新增案件</h2>
+    <div class="form-row">
+      <div class="form-group">
+        <label>案件名稱（如：王○○繼承案）</label>
+        <input type="text" id="newCaseName" placeholder="案件名稱">
+      </div>
+      <div class="form-group">
+        <label>被繼承人死亡日期</label>
+        <input type="date" id="newDeathDate">
+      </div>
+      <button class="add-btn" onclick="addCase()">＋ 新增</button>
+    </div>
+  </div>
+
+  <div class="stats-bar" id="statsBar"></div>
+  <div id="caseList"></div>
+
+  <div class="disclaimer">
+    本儀表板資料儲存於您的裝置（localStorage），清除瀏覽器資料後將消失。各期限依中華民國民法及遺贈稅法計算，僅供參考，請以官方公告為準。
+  </div>
+</div>
+
+<script>
+  const DEADLINES = [
+    { id: 'death_reg',   name: '死亡登記',           days: 30,  law: '戶籍法§47' },
+    { id: 'renounce',    name: '拋棄繼承聲請',        days: 90,  law: '民法§1174' },
+    { id: 'estate_inv',  name: '遺產清冊陳報',        days: 90,  law: '民法§1156' },
+    { id: 'estate_tax',  name: '遺產稅申報',          days: 183, law: '遺贈稅法§23' },
+    { id: 'limit_acc',   name: '限定繼承聲請',        days: 90,  law: '民法§1156' },
+    { id: 'creditor',    name: '債權人公告催告期滿',  days: 180, law: '民法§1157' },
+  ];
+
+  let cases = JSON.parse(localStorage.getItem('ip_deadline_cases') || '[]');
+
+  function save() { localStorage.setItem('ip_deadline_cases', JSON.stringify(cases)); }
+
+  function addCase() {
+    const name = document.getElementById('newCaseName').value.trim();
+    const date = document.getElementById('newDeathDate').value;
+    if (!name || !date) { alert('請填入案件名稱與死亡日期'); return; }
+    cases.unshift({ id: Date.now(), name, deathDate: date, done: {} });
+    save(); render();
+    document.getElementById('newCaseName').value = '';
+    document.getElementById('newDeathDate').value = '';
+  }
+
+  function deleteCase(id) {
+    if (!confirm('確定刪除此案件？')) return;
+    cases = cases.filter(c => c.id !== id);
+    save(); render();
+  }
+
+  function toggleDone(caseId, dlId) {
+    const c = cases.find(c => c.id === caseId);
+    if (!c) return;
+    c.done[dlId] = !c.done[dlId];
+    save(); render();
+  }
+
+  function toggleOpen(id) {
+    const el = document.getElementById('case-' + id);
+    if (el) el.classList.toggle('open');
+  }
+
+  function getStatus(deadlineDate, done) {
+    if (done) return 'done';
+    const today = new Date(); today.setHours(0,0,0,0);
+    const dl = new Date(deadlineDate); dl.setHours(0,0,0,0);
+    const diff = Math.round((dl - today) / 86400000);
+    if (diff < 0) return 'overdue';
+    if (diff <= 14) return 'urgent';
+    return 'ok';
+  }
+
+  function countdownText(deadlineDate, done) {
+    if (done) return '已完成';
+    const today = new Date(); today.setHours(0,0,0,0);
+    const dl = new Date(deadlineDate); dl.setHours(0,0,0,0);
+    const diff = Math.round((dl - today) / 86400000);
+    if (diff < 0) return `逾期 ${Math.abs(diff)} 天`;
+    if (diff === 0) return '今日到期';
+    return `剩 ${diff} 天`;
+  }
+
+  function caseUrgency(c) {
+    const statuses = DEADLINES.map(dl => {
+      const date = new Date(new Date(c.deathDate).getTime() + dl.days * 86400000).toISOString().split('T')[0];
+      return getStatus(date, c.done[dl.id]);
+    });
+    if (statuses.includes('overdue')) return 'overdue';
+    if (statuses.includes('urgent')) return 'urgent';
+    if (statuses.every(s => s === 'done')) return 'done';
+    return 'ok';
+  }
+
+  function render() {
+    // Stats
+    let overdue = 0, urgent = 0, ok = 0;
+    cases.forEach(c => {
+      const u = caseUrgency(c);
+      if (u === 'overdue') overdue++;
+      else if (u === 'urgent') urgent++;
+      else ok++;
+    });
+    document.getElementById('statsBar').innerHTML = cases.length === 0 ? '' : `
+      <div class="stat-card danger"><div class="stat-num">${overdue}</div><div class="stat-label">逾期案件</div></div>
+      <div class="stat-card warn"><div class="stat-num">${urgent}</div><div class="stat-label">14天內到期</div></div>
+      <div class="stat-card ok"><div class="stat-num">${ok}</div><div class="stat-label">進度正常</div></div>`;
+
+    // Cases
+    const list = document.getElementById('caseList');
+    if (cases.length === 0) {
+      list.innerHTML = `<div class="empty-state"><div class="empty-icon">📋</div><p>尚未建立任何案件<br>在上方填入案件名稱與死亡日期開始追蹤</p></div>`;
+      return;
+    }
+    list.innerHTML = cases.map(c => {
+      const urgency = caseUrgency(c);
+      const badgeText = urgency === 'overdue' ? '有逾期' : urgency === 'urgent' ? '即將到期' : urgency === 'done' ? '全部完成' : '進行中';
+      const deathStr = new Date(c.deathDate).toLocaleDateString('zh-TW', {year:'numeric',month:'2-digit',day:'2-digit'});
+
+      const rows = DEADLINES.map(dl => {
+        const dlDate = new Date(new Date(c.deathDate).getTime() + dl.days * 86400000);
+        const dlStr = dlDate.toLocaleDateString('zh-TW', {year:'numeric',month:'2-digit',day:'2-digit'});
+        const status = getStatus(dlDate.toISOString().split('T')[0], c.done[dl.id]);
+        const cdText = countdownText(dlDate.toISOString().split('T')[0], c.done[dl.id]);
+        return `<div class="deadline-row">
+          <input class="dl-check" type="checkbox" ${c.done[dl.id] ? 'checked' : ''} onchange="toggleDone(${c.id}, '${dl.id}')">
+          <div class="dl-info">
+            <div class="dl-name">${dl.name}</div>
+            <div class="dl-date">${dlStr}　${dl.law}　死亡後${dl.days}天</div>
+          </div>
+          <div class="dl-countdown ${status}">${cdText}</div>
+        </div>`;
+      }).join('');
+
+      return `<div class="case-card" id="case-${c.id}">
+        <div class="case-header" onclick="toggleOpen(${c.id})">
+          <div>
+            <div class="case-title">${c.name}</div>
+            <div class="case-meta">死亡日：${deathStr}</div>
+          </div>
+          <div class="case-badges">
+            <span class="badge ${urgency}">${badgeText}</span>
+            <button class="del-btn" onclick="event.stopPropagation();deleteCase(${c.id})" title="刪除">×</button>
+            <svg class="case-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="4,6 8,10 12,6"/></svg>
+          </div>
+        </div>
+        <div class="case-body">${rows}</div>
+      </div>`;
+    }).join('');
+  }
+
+  render();
+</script>
+</body>
+</html>
