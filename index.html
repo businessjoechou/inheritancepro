@@ -150,17 +150,17 @@
 
   .tool-name {
     font-family: 'Noto Serif TC', serif;
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 600;
     color: var(--paper);
-    margin-bottom: 4px;
+    margin-bottom: 6px;
     line-height: 1.4;
   }
 
   .tool-desc {
-    font-size: 12px;
+    font-size: 13px;
     color: var(--muted);
-    line-height: 1.6;
+    line-height: 1.65;
   }
 
   .tool-badge {
@@ -235,54 +235,32 @@
     letter-spacing: 0.08em;
   }
 
-  /* Accordion categories */
-  .tool-group { margin-bottom: 4px; }
-
-  .tool-group-summary {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    padding: 10px 4px;
-    border-bottom: 1px solid #2a2520;
-    cursor: pointer;
-    user-select: none;
+  /* Tab nav */
+  .tab-nav {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    list-style: none;
-    transition: color 0.2s;
-  }
-  .tool-group-summary::-webkit-details-marker { display: none; }
-  .tool-group-summary:hover { color: var(--paper); }
-
-  .tool-group-chevron {
-    width: 14px; height: 14px; opacity: 0.4;
-    transition: transform 0.22s ease;
-    flex-shrink: 0;
-  }
-  details[open] > .tool-group-summary .tool-group-chevron { transform: rotate(180deg); opacity: 0.8; }
-
-  .tool-group-body {
-    padding-top: 10px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    gap: 6px;
     margin-bottom: 16px;
+    flex-wrap: wrap;
   }
-  .tool-group-body .tool-card { padding: 18px 18px 16px; }
-  .tool-group-body .tool-card-inner { flex-direction: column; align-items: flex-start; gap: 10px; }
-  .tool-group-body .tool-num { font-size: 10px; }
-  .tool-group-body .tool-name { font-size: 15px; }
-  .tool-group-body .tool-desc { font-size: 12px; line-height: 1.6; margin-top: 4px; }
-  .tool-group-body .tool-arrow { align-self: flex-end; margin-top: auto; }
+  .tab-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: none;
+    border: 1.5px solid #2a2520;
+    border-radius: 20px;
+    padding: 6px 16px;
+    cursor: pointer;
+    transition: all 0.18s;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { color: var(--paper); border-color: #3a3530; }
+  .tab-btn.active { color: var(--ink); background: var(--paper); border-color: var(--paper); }
 
-  .tool-group-count {
-    font-size: 10px; color: #3a3530;
-    margin-left: 6px;
-  }
-  details[open] .tool-group-count { display: none; }
+  .tab-panel { display: none; flex-direction: column; gap: 12px; }
+  .tab-panel.active { display: flex; }
 
   /* Featured tool variant */
   .tool-card.featured {
@@ -339,169 +317,143 @@
     協助民眾與法律從業人員快速釐清財產權益。
   </p>
 
+  <!-- Tab nav -->
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('inheritance', this)">繼承</button>
+    <button class="tab-btn" onclick="switchTab('divorce', this)">離婚</button>
+    <button class="tab-btn" onclick="switchTab('other', this)">調查．賠償．時效</button>
+  </div>
+
   <div class="tools">
 
-    <!-- 主力工具：常駐顯示 -->
-    <a class="tool-card featured" href="calculator.html">
-      <div class="tool-card-inner">
-        <div class="tool-info">
-          <div class="tool-name">遺產繼承計算器</div>
-          <div class="tool-desc" style="margin-top:6px">不動產、股票、應繼分、遺產稅、照顧者貢獻、房地合一稅<br>一次輸入，完整輸出</div>
+    <!-- 繼承 tab -->
+    <div class="tab-panel active" id="tab-inheritance">
+      <a class="tool-card featured" href="calculator.html">
+        <div class="tool-card-inner">
+          <div class="tool-info">
+            <div class="tool-name">遺產繼承計算器</div>
+            <div class="tool-desc" style="margin-top:6px">不動產、股票、應繼分、遺產稅、照顧者貢獻、房地合一稅．一次輸入，完整輸出</div>
+          </div>
+          <span class="tool-arrow" style="font-size:20px">→</span>
         </div>
-        <span class="tool-arrow" style="font-size:20px">→</span>
-      </div>
-    </a>
-
-    <a class="tool-card" href="inheritance-timeline.html">
-      <div class="tool-card-inner">
-        <div class="tool-num">⏱</div>
-        <div class="tool-info">
-          <div class="tool-name">繼承流程時間軸</div>
-          <div class="tool-desc">死亡登記、拋棄繼承、遺產稅申報各項期限倒數</div>
+      </a>
+      <a class="tool-card" href="inheritance-timeline.html">
+        <div class="tool-card-inner">
+          <div class="tool-info">
+            <div class="tool-name">繼承流程時間軸</div>
+            <div class="tool-desc">死亡登記、拋棄繼承、遺產稅申報各項期限倒數</div>
+          </div>
+          <span class="tool-arrow">→</span>
         </div>
-        <span class="tool-arrow">→</span>
-      </div>
-    </a>
+      </a>
+      <a class="tool-card" href="caregiver.html">
+        <div class="tool-card-inner">
+          <div class="tool-info">
+            <div class="tool-name">照顧者特別貢獻</div>
+            <div class="tool-desc">民法§1149，照顧貢獻估值與主張策略、酌給遺產請求</div>
+          </div>
+          <span class="tool-arrow">→</span>
+        </div>
+      </a>
+      <a class="tool-card" href="gift-tax.html">
+        <div class="tool-card-inner">
+          <div class="tool-info">
+            <div class="tool-name">贈與稅試算</div>
+            <div class="tool-desc">244萬年度免稅額、分年規劃節稅、vs 繼承比較</div>
+          </div>
+          <span class="tool-arrow">→</span>
+        </div>
+      </a>
+      <a class="tool-card" href="property-sale-tax.html">
+        <div class="tool-card-inner">
+          <div class="tool-info">
+            <div class="tool-name">房地合一稅試算</div>
+            <div class="tool-desc">繼承後出售稅率、自住優惠、持有年數計算</div>
+          </div>
+          <span class="tool-arrow">→</span>
+        </div>
+      </a>
+      <a class="tool-card" href="real-estate.html">
+        <div class="tool-card-inner">
+          <div class="tool-info">
+            <div class="tool-name">不動產繼承試算</div>
+            <div class="tool-desc">地價稅、房屋稅、土地增值稅免徵（獨立版）</div>
+          </div>
+          <span class="tool-arrow">→</span>
+        </div>
+      </a>
+      <a class="tool-card" href="stock-inheritance.html">
+        <div class="tool-card-inner">
+          <div class="tool-info">
+            <div class="tool-name">股票繼承估算</div>
+            <div class="tool-desc">上市收盤價、未上市資產淨值法（獨立版）</div>
+          </div>
+          <span class="tool-arrow">→</span>
+        </div>
+      </a>
+    </div>
 
-    <!-- 繼承輔助工具 -->
-    <details class="tool-group">
-      <summary class="tool-group-summary">
-        <span>繼承輔助工具<span class="tool-group-count">（5項）</span></span>
-        <svg class="tool-group-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="4,6 8,10 12,6"/></svg>
-      </summary>
-      <div class="tool-group-body">
-        <a class="tool-card" href="caregiver.html">
-          <div class="tool-card-inner">
-            <div class="tool-num">01</div>
-            <div class="tool-info">
-              <div class="tool-name">照顧者特別貢獻</div>
-              <div class="tool-desc">民法§1149，照顧貢獻估值與主張策略</div>
-            </div>
-            <span class="tool-arrow">→</span>
+    <!-- 離婚 tab -->
+    <div class="tab-panel" id="tab-divorce">
+      <a class="tool-card" href="property-split.html">
+        <div class="tool-card-inner">
+          <div class="tool-info">
+            <div class="tool-name">剩餘財產差額分配請求權</div>
+            <div class="tool-desc">民法§1030-1，法定財產制下配偶可請求之差額計算</div>
           </div>
-        </a>
-        <a class="tool-card" href="gift-tax.html">
-          <div class="tool-card-inner">
-            <div class="tool-num">02</div>
-            <div class="tool-info">
-              <div class="tool-name">贈與稅試算</div>
-              <div class="tool-desc">244萬年度免稅、分年規劃、vs 繼承比較</div>
-            </div>
-            <span class="tool-arrow">→</span>
+          <span class="tool-arrow">→</span>
+        </div>
+      </a>
+      <a class="tool-card" href="alimony.html">
+        <div class="tool-card-inner">
+          <div class="tool-info">
+            <div class="tool-name">贍養費試算</div>
+            <div class="tool-desc">民法§1057，雙方收入、婚姻年數、給付期間估算</div>
           </div>
-        </a>
-        <a class="tool-card" href="property-sale-tax.html">
-          <div class="tool-card-inner">
-            <div class="tool-num">03</div>
-            <div class="tool-info">
-              <div class="tool-name">房地合一稅試算</div>
-              <div class="tool-desc">繼承後出售稅率、自住優惠、持有年數</div>
-            </div>
-            <span class="tool-arrow">→</span>
-          </div>
-        </a>
-        <a class="tool-card" href="real-estate.html">
-          <div class="tool-card-inner">
-            <div class="tool-num">04</div>
-            <div class="tool-info">
-              <div class="tool-name">不動產繼承試算</div>
-              <div class="tool-desc">地價稅、房屋稅、土地增值稅免徵（獨立版）</div>
-            </div>
-            <span class="tool-arrow">→</span>
-          </div>
-        </a>
-        <a class="tool-card" href="stock-inheritance.html">
-          <div class="tool-card-inner">
-            <div class="tool-num">05</div>
-            <div class="tool-info">
-              <div class="tool-name">股票繼承估算</div>
-              <div class="tool-desc">上市收盤價、未上市資產淨值法（獨立版）</div>
-            </div>
-            <span class="tool-arrow">→</span>
-          </div>
-        </a>
-      </div>
-    </details>
+          <span class="tool-arrow">→</span>
+        </div>
+      </a>
+    </div>
 
-    <!-- 離婚 -->
-    <details class="tool-group">
-      <summary class="tool-group-summary">
-        <span>離婚財產<span class="tool-group-count">（2項）</span></span>
-        <svg class="tool-group-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="4,6 8,10 12,6"/></svg>
-      </summary>
-      <div class="tool-group-body">
-        <a class="tool-card" href="property-split.html">
-          <div class="tool-card-inner">
-            <div class="tool-num">01</div>
-            <div class="tool-info">
-              <div class="tool-name">剩餘財產差額分配請求權</div>
-              <div class="tool-desc">民法§1030-1，法定財產制配偶差額計算</div>
-            </div>
-            <span class="tool-arrow">→</span>
+    <!-- 其他 tab -->
+    <div class="tab-panel" id="tab-other">
+      <a class="tool-card" href="asset-detection.html">
+        <div class="tool-card-inner">
+          <div class="tool-info">
+            <div class="tool-name">脫產偵測分析</div>
+            <div class="tool-desc">財產異動風險評估，依法律規定自動標記，支援 CSV 上傳</div>
           </div>
-        </a>
-        <a class="tool-card" href="alimony.html">
-          <div class="tool-card-inner">
-            <div class="tool-num">02</div>
-            <div class="tool-info">
-              <div class="tool-name">贍養費試算</div>
-              <div class="tool-desc">民法§1057，雙方收入、婚姻年數、給付期間估算</div>
-            </div>
-            <span class="tool-arrow">→</span>
+          <span class="tool-arrow">→</span>
+        </div>
+      </a>
+      <a class="tool-card" href="minor-damages.html">
+        <div class="tool-card-inner">
+          <div class="tool-info">
+            <div class="tool-name">未成年損害賠償試算</div>
+            <div class="tool-desc">霸凌、傷害事件，含父母連帶責任、精神慰撫金</div>
           </div>
-        </a>
-      </div>
-    </details>
-
-    <!-- 調查 + 侵權 + 時效 -->
-    <details class="tool-group">
-      <summary class="tool-group-summary">
-        <span>調查、賠償、時效<span class="tool-group-count">（4項）</span></span>
-        <svg class="tool-group-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="4,6 8,10 12,6"/></svg>
-      </summary>
-      <div class="tool-group-body">
-        <a class="tool-card" href="asset-detection.html">
-          <div class="tool-card-inner">
-            <div class="tool-num">01</div>
-            <div class="tool-info">
-              <div class="tool-name">脫產偵測分析</div>
-              <div class="tool-desc">財產異動風險評估，支援 CSV 上傳</div>
-            </div>
-            <span class="tool-arrow">→</span>
+          <span class="tool-arrow">→</span>
+        </div>
+      </a>
+      <a class="tool-card" href="accident.html">
+        <div class="tool-card-inner">
+          <div class="tool-info">
+            <div class="tool-name">車禍損害賠償分析</div>
+            <div class="tool-desc">傷害／死亡賠償明細，自動扣除強制責任險給付</div>
           </div>
-        </a>
-        <a class="tool-card" href="minor-damages.html">
-          <div class="tool-card-inner">
-            <div class="tool-num">02</div>
-            <div class="tool-info">
-              <div class="tool-name">未成年損害賠償試算</div>
-              <div class="tool-desc">霸凌、傷害事件，含父母連帶責任、精神慰撫金</div>
-            </div>
-            <span class="tool-arrow">→</span>
+          <span class="tool-arrow">→</span>
+        </div>
+      </a>
+      <a class="tool-card" href="prescription.html">
+        <div class="tool-card-inner">
+          <div class="tool-info">
+            <div class="tool-name">消滅時效計算機</div>
+            <div class="tool-desc">§125–127、§197 各類請求權時效，含時效中斷提醒</div>
           </div>
-        </a>
-        <a class="tool-card" href="accident.html">
-          <div class="tool-card-inner">
-            <div class="tool-num">03</div>
-            <div class="tool-info">
-              <div class="tool-name">車禍損害賠償分析</div>
-              <div class="tool-desc">傷害／死亡賠償明細，自動扣除強制險給付</div>
-            </div>
-            <span class="tool-arrow">→</span>
-          </div>
-        </a>
-        <a class="tool-card" href="prescription.html">
-          <div class="tool-card-inner">
-            <div class="tool-num">04</div>
-            <div class="tool-info">
-              <div class="tool-name">消滅時效計算機</div>
-              <div class="tool-desc">§125–127、§197 各類請求權時效，含中斷提醒</div>
-            </div>
-            <span class="tool-arrow">→</span>
-          </div>
-        </a>
-      </div>
-    </details>
+          <span class="tool-arrow">→</span>
+        </div>
+      </a>
+    </div>
 
   </div>
 
@@ -603,6 +555,13 @@
 <script src="js/supabase-config.js"></script>
 <script type="module" src="js/auth-bar.js"></script>
 <script>
+  function switchTab(id, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+
   document.querySelectorAll('.faq-q').forEach(q => {
     q.addEventListener('click', () => {
       const item = q.closest('.faq-item');
