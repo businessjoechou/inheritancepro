@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InheritancePro｜請選擇您的身份</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1410;
+    --paper: #f5f0e8;
+    --gold: #c4932a;
+    --muted: #7a6f62;
+    --border: #2a2520;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'Noto Sans TC', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px 60px;
+  }
+
+  .logo {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    margin-bottom: 56px;
+    opacity: 0.9;
+  }
+  .logo span { color: var(--gold); }
+
+  .headline {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(22px, 5vw, 32px);
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.4;
+    margin-bottom: 10px;
+    animation: fadeUp 0.5s ease both;
+  }
+  .headline em { font-style: normal; color: var(--gold); }
+
+  .subline {
+    font-size: 13px;
+    color: var(--muted);
+    text-align: center;
+    margin-bottom: 48px;
+    line-height: 1.7;
+    animation: fadeUp 0.5s 0.1s ease both;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    max-width: 860px;
+    width: 100%;
+    animation: fadeUp 0.5s 0.2s ease both;
+  }
+
+  .persona-card {
+    background: #100e0c;
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 24px 24px;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--paper);
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s, transform 0.2s, background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .persona-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .persona-card:hover { transform: translateY(-4px); }
+
+  /* 民眾 */
+  .card-public { border-color: #3a3020; }
+  .card-public::before { background: radial-gradient(circle at 50% 0%, rgba(196,147,42,0.08), transparent 70%); }
+  .card-public:hover { border-color: var(--gold); }
+  .card-public::before { opacity: 1; }
+  .card-public .card-icon-bg { background: rgba(196,147,42,0.1); color: var(--gold); }
+  .card-public .cta { background: var(--gold); color: var(--ink); }
+  .card-public .cta:hover { background: #d4a33a; }
+
+  /* 會計師 */
+  .card-accountant { border-color: #1e2e40; }
+  .card-accountant::before { background: radial-gradient(circle at 50% 0%, rgba(60,120,200,0.08), transparent 70%); opacity: 1; }
+  .card-accountant:hover { border-color: #4a7ab0; }
+  .card-accountant .card-icon-bg { background: rgba(60,120,200,0.12); color: #6a9fd0; }
+  .card-accountant .cta { background: #1a3a5c; color: #e8f0ff; }
+  .card-accountant .cta:hover { background: #244e7a; }
+
+  /* 律師 */
+  .card-lawyer { border-color: #1e2e20; }
+  .card-lawyer::before { background: radial-gradient(circle at 50% 0%, rgba(42,107,74,0.1), transparent 70%); opacity: 1; }
+  .card-lawyer:hover { border-color: #3a7a50; }
+  .card-lawyer .card-icon-bg { background: rgba(42,107,74,0.15); color: #5aaf7a; }
+  .card-lawyer .cta { background: #1a3a28; color: #c0f0d8; }
+  .card-lawyer .cta:hover { background: #224e36; }
+
+  .card-inner { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; }
+
+  .card-icon-bg {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    margin-bottom: 18px;
+  }
+
+  .card-role {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .card-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .card-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 20px;
+    flex: 1;
+  }
+
+  .card-features {
+    list-style: none;
+    margin-bottom: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .card-features li {
+    font-size: 12px;
+    color: #5a5048;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    line-height: 1.4;
+  }
+  .card-features li::before {
+    content: '—';
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    opacity: 0.5;
+    flex-shrink: 0;
+  }
+
+  .cta {
+    width: 100%;
+    padding: 11px;
+    border: none;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Noto Sans TC', sans-serif;
+    letter-spacing: 0.04em;
+    transition: background 0.15s;
+  }
+
+  .footer-note {
+    margin-top: 40px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: #2a2520;
+    letter-spacing: 0.1em;
+    text-align: center;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 680px) {
+    .cards { grid-template-columns: 1fr; max-width: 360px; }
+    .logo { margin-bottom: 36px; }
+    .headline { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="logo">Inheritance<span>Pro</span></div>
+
+<h1 class="headline">您是哪一種<em>使用者</em>？</h1>
+<p class="subline">選擇身份，系統自動顯示最適合您的工具組合。<br>隨時可在主頁切換。</p>
+
+<div class="cards">
+
+  <!-- 民眾 -->
+  <div class="persona-card card-public" onclick="choose('public')">
+    <div class="card-inner">
+      <div class="card-icon-bg">🏠</div>
+      <div class="card-role">General Public</div>
+      <div class="card-title">一般民眾</div>
+      <div class="card-desc">了解自己的繼承權益、離婚財產分配，或協助家人處理遺產事務。</div>
+      <ul class="card-features">
+        <li>應繼分、特留分、遺產稅試算</li>
+        <li>拋棄繼承期限倒數</li>
+        <li>離婚剩餘財產分配</li>
+        <li>贍養費估算</li>
+      </ul>
+      <button class="cta">以民眾身份使用 →</button>
+    </div>
+  </div>
+
+  <!-- 會計師 -->
+  <div class="persona-card card-accountant" onclick="choose('accountant')">
+    <div class="card-inner">
+      <div class="card-icon-bg">📊</div>
+      <div class="card-role">Accountant / CPA</div>
+      <div class="card-title">會計師</div>
+      <div class="card-desc">協助客戶申報遺產稅、規劃節稅策略，管理多案件期限。</div>
+      <ul class="card-features">
+        <li>遺產稅申報工作底稿匯出</li>
+        <li>生前贈與 vs 繼承節稅比較</li>
+        <li>未上市股票資產淨值法</li>
+        <li>多案件期限管理儀表板</li>
+      </ul>
+      <button class="cta">以會計師身份使用 →</button>
+    </div>
+  </div>
+
+  <!-- 律師 -->
+  <div class="persona-card card-lawyer" onclick="choose('lawyer')">
+    <div class="card-inner">
+      <div class="card-icon-bg">⚖️</div>
+      <div class="card-role">Attorney / Lawyer</div>
+      <div class="card-title">律師</div>
+      <div class="card-desc">協助客戶進行財產爭議分析、訴訟策略規劃與脫產偵測。</div>
+      <ul class="card-features">
+        <li>脫產偵測與財產異動分析</li>
+        <li>特留分侵害、消滅時效計算</li>
+        <li>損害賠償試算（車禍、未成年）</li>
+        <li>案件期限追蹤</li>
+      </ul>
+      <button class="cta">以律師身份使用 →</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer-note">© 2026 InheritancePro · 本平台僅供參考，不構成法律意見</div>
+
+<script>
+  function choose(persona) {
+    localStorage.setItem('ip_persona', persona);
+    window.location.href = 'index.html';
+  }
+  // If already set, skip landing
+  if (localStorage.getItem('ip_persona')) {
+    window.location.href = 'index.html';
+  }
+</script>
+</body>
+</html>
