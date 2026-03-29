@@ -460,57 +460,46 @@
             public:     '應繼分、特留分、遺產稅一次計算，支援代位繼承與拋棄繼承',
             accountant: '含工作底稿匯出、節稅比較試算、未上市股票資產淨值法',
             lawyer:     '應繼分、特留分侵害分析，支援代位繼承與拋棄繼承',
-          },
-          personas: ['public', 'accountant', 'lawyer'] },
+          } },
         { href: 'inheritance-timeline.html', name: '繼承流程時間軸',
-          desc: { all: '死亡登記、拋棄繼承、遺產稅申報各項期限倒數' },
-          personas: ['public', 'accountant', 'lawyer'] },
+          desc: { all: '死亡登記、拋棄繼承、遺產稅申報各項期限倒數' } },
         { href: 'deadline-dashboard.html', name: '期限管理儀表板',
-          desc: { all: '多案件並排追蹤，六項法定期限自動倒數，可勾選完成' },
-          personas: ['accountant', 'lawyer'] },
+          desc: {
+            all:        '多案件並排追蹤，六項法定期限自動倒數，可勾選完成',
+            accountant: '多案件並排管理，一眼掌握哪個案子快到期',
+          } },
         { href: 'caregiver.html', name: '照顧者特別貢獻',
-          desc: { all: '民法§1149，照顧貢獻估值、主張策略、酌給遺產請求' },
-          personas: ['public', 'lawyer'] },
+          desc: { all: '民法§1149，照顧貢獻估值、主張策略、酌給遺產請求' } },
         { href: 'gift-tax.html', name: '贈與稅試算',
-          desc: { all: '244萬年度免稅額、分年規劃節稅、vs 繼承稅負比較' },
-          personas: ['public', 'accountant'] },
+          desc: { all: '244萬年度免稅額、分年規劃節稅、vs 繼承稅負比較' } },
         { href: 'property-sale-tax.html', name: '房地合一稅試算',
-          desc: { all: '繼承後出售稅率、自住優惠、持有年數計算' },
-          personas: ['public', 'accountant'] },
+          desc: { all: '繼承後出售稅率、自住優惠、持有年數計算' } },
         { href: 'real-estate.html', name: '不動產繼承試算',
-          desc: { all: '地價稅、房屋稅、土地增值稅免徵（獨立版）' },
-          personas: ['accountant'] },
+          desc: { all: '地價稅、房屋稅、土地增值稅免徵（獨立版）' } },
         { href: 'stock-inheritance.html', name: '股票繼承估算',
-          desc: { all: '上市收盤價、未上市資產淨值法（獨立版）' },
-          personas: ['accountant'] },
+          desc: { all: '上市收盤價、未上市資產淨值法（獨立版）' } },
       ]
     },
     {
       id: 'divorce', label: { all: '離婚' },
       tools: [
         { href: 'property-split.html', name: '剩餘財產差額分配請求權',
-          desc: { all: '民法§1030-1，法定財產制下配偶可請求之差額計算' },
-          personas: ['public', 'lawyer'] },
+          desc: { all: '民法§1030-1，法定財產制下配偶可請求之差額計算' } },
         { href: 'alimony.html', name: '贍養費試算',
-          desc: { all: '民法§1057，雙方收入、婚姻年數、給付期間估算' },
-          personas: ['public', 'lawyer'] },
+          desc: { all: '民法§1057，雙方收入、婚姻年數、給付期間估算' } },
       ]
     },
     {
       id: 'litigation', label: { all: '調查．賠償．時效' },
       tools: [
         { href: 'asset-detection.html', name: '脫產偵測分析',
-          desc: { all: '財產異動風險評估，依法律規定自動標記，支援 CSV 上傳' },
-          personas: ['lawyer'] },
+          desc: { all: '財產異動風險評估，依法律規定自動標記，支援 CSV 上傳' } },
         { href: 'minor-damages.html', name: '未成年損害賠償試算',
-          desc: { all: '霸凌、傷害事件，含父母連帶責任、精神慰撫金' },
-          personas: ['lawyer'] },
+          desc: { all: '霸凌、傷害事件，含父母連帶責任、精神慰撫金' } },
         { href: 'accident.html', name: '車禍損害賠償分析',
-          desc: { all: '傷害／死亡賠償明細，自動扣除強制責任險給付' },
-          personas: ['lawyer'] },
+          desc: { all: '傷害／死亡賠償明細，自動扣除強制責任險給付' } },
         { href: 'prescription.html', name: '消滅時效計算機',
-          desc: { all: '§125–127、§197 各類請求權時效，含時效中斷提醒' },
-          personas: ['lawyer'] },
+          desc: { all: '§125–127、§197 各類請求權時效，含時效中斷提醒' } },
       ]
     },
   ];
@@ -531,25 +520,18 @@
     document.getElementById('personaBadge').className = 'persona-badge ' + p.cls;
     document.getElementById('heroSub').textContent = p.sub;
 
-    // Filter tabs visible for this persona
-    const visibleTabs = TABS.filter(tab =>
-      tab.tools.some(t => t.personas.includes(persona))
-    );
-
-    if (!activeTab || !visibleTabs.find(t => t.id === activeTab)) {
-      activeTab = visibleTabs[0]?.id;
-    }
+    if (!activeTab) activeTab = TABS[0].id;
 
     // Tab nav
-    document.getElementById('tabNav').innerHTML = visibleTabs.map(tab => {
+    document.getElementById('tabNav').innerHTML = TABS.map(tab => {
       const label = tab.label[persona] || tab.label.all;
       return `<button class="tab-btn ${tab.id === activeTab ? 'active' : ''}"
         onclick="setTab('${tab.id}')">${label}</button>`;
     }).join('');
 
     // Tool cards
-    const currentTab = visibleTabs.find(t => t.id === activeTab);
-    const tools = (currentTab?.tools || []).filter(t => t.personas.includes(persona));
+    const currentTab = TABS.find(t => t.id === activeTab);
+    const tools = currentTab?.tools || [];
 
     document.getElementById('toolsContainer').innerHTML = tools.map(tool => {
       const desc = getDesc(tool, persona);

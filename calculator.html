@@ -163,7 +163,7 @@
   <div class="step-label">步驟 1 / 5</div>
   <h2>遺產項目</h2>
   <p class="subtitle">輸入各類遺產，系統自動加總並分項試算稅務，無需再分頁計算。</p>
-  <div class="card" style="margin-bottom:20px">
+  <div class="card pro-only" style="margin-bottom:20px">
     <div class="section-title">案件資訊 <span class="law-pill" style="font-weight:400;font-size:11px">選填，供工作底稿使用</span></div>
     <div class="two-col">
       <div class="input-group" style="margin-bottom:0">
@@ -597,7 +597,7 @@
   <div id="taxPlanContainer"></div>
   <div style="display:flex;gap:10px;margin-top:20px">
     <button onclick="downloadPDF()" style="flex:1;padding:12px;background:var(--ink);color:var(--paper);border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Noto Sans TC',sans-serif">↓ PDF 報告</button>
-    <button onclick="downloadWorkpaper()" style="flex:1;padding:12px;background:#1a3a5c;color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Noto Sans TC',sans-serif">↓ 工作底稿</button>
+    <button onclick="downloadWorkpaper()" class="accountant-only" style="flex:1;padding:12px;background:#1a3a5c;color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Noto Sans TC',sans-serif">↓ 工作底稿</button>
   </div>
   <a href="inheritance-timeline.html" style="display:block;text-align:center;margin:16px 0 10px;padding:13px;border:1.5px solid var(--border);border-radius:10px;font-size:13px;color:var(--accent);text-decoration:none;background:#f4f7fb">📅 查看繼承辦理流程與期限時間軸 →</a>
   <div id="save-btn-container"></div>
@@ -1689,7 +1689,19 @@ td{padding:5px 10px;border:1px solid #ddd;font-size:12px;vertical-align:top;}
     };
   }
 
-  // Init
+  // Init — persona-based feature visibility
+  (function applyPersona() {
+    const persona = localStorage.getItem('ip_persona') || 'public';
+    // pro-only = accountant + lawyer
+    if (persona === 'public') {
+      document.querySelectorAll('.pro-only').forEach(el => el.style.display = 'none');
+    }
+    // accountant-only = accountant only
+    if (persona !== 'accountant') {
+      document.querySelectorAll('.accountant-only').forEach(el => el.style.display = 'none');
+    }
+  })();
+
   showStep(1);
 </script>
 
