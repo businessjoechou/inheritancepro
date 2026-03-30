@@ -20,6 +20,7 @@
 <meta name="twitter:description" content="輸入死亡日期，自動產生繼承期限倒數清單。">
 <link rel="canonical" href="https://inheritancepro.app/inheritance-timeline.html">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="js/persona.js"></script>
 <style>
   :root{--ink:#1a1410;--paper:#f5f0e8;--gold:#c4932a;--muted:#7a6f62;--border:#c8bfb0;--soft:#e8e0d0;--success:#2a6b4a;--accent:#1a3a5c;--danger:#8b2020;--warn:#b8600a;}
   *{box-sizing:border-box;margin:0;padding:0;}
@@ -198,6 +199,26 @@
     <button class="btn-pdf" onclick="downloadPDF()">⬇ 下載時間軸 PDF</button>
     <button class="btn-reset" onclick="reset()">🔄 重新輸入</button>
     <div id="save-btn-container"></div>
+
+    <div class="accountant-only" style="background:#eef8f2;border:1.5px solid #2a6b4a;border-radius:12px;padding:16px 20px;margin-top:16px">
+      <div style="font-size:12px;font-weight:700;color:#2a6b4a;letter-spacing:0.04em;margin-bottom:10px">📊 遺產稅申報文件清單</div>
+      <div style="font-size:12px;color:#1a3a28;line-height:1.9">
+        <strong>不動產</strong>：土地登記謄本、繼承日公告現值（地政事務所）、建物謄本、房屋稅籍證明。<br>
+        <strong>金融資產</strong>：各銀行存款餘額證明（繼承當日）、股票庫存（上市收盤均價；未上市用資產淨值法）、基金單位數及淨值。<br>
+        <strong>保險</strong>：各壽險保單死亡給付通知書（確認是否納入遺產）、投資型保單帳戶價值證明。<br>
+        <strong>其他</strong>：遺囑正本（若有公證遺囑須備公證書）、死亡前 6 年贈與資料（遺贈稅法 §15）、債務文件（借款合約、稅單欠費）。<br>
+        <strong>申報期限</strong>：183 天（遺贈稅法 §23），若繼承人在國外可延長，但須事先申請。
+      </div>
+    </div>
+    <div class="lawyer-only" style="background:#eef3fa;border:1.5px solid #3a5a80;border-radius:12px;padding:16px 20px;margin-top:16px">
+      <div style="font-size:12px;font-weight:700;color:#1a3a5c;letter-spacing:0.04em;margin-bottom:10px">⚖ 律師策略備忘</div>
+      <div style="font-size:12px;color:#1a2a3a;line-height:1.9">
+        <strong>遺囑效力</strong>：若遺囑效力有爭議（形式不符、受脅迫），應於繼承開始後盡早提出確認訴訟，拖延越久越不利。<br>
+        <strong>拋棄繼承決策</strong>：90 天期限緊迫，若遺產中有不明債務，建議先陳報遺產清冊（§1156）做限定繼承，而非倉促拋棄。<br>
+        <strong>特留分侵害</strong>：扣減請求權自知悉侵害起 <strong>1 年</strong>（§1224），繼承開始起 <strong>10 年</strong>絕對除斥期間，應及早清查遺囑及生前贈與。<br>
+        <strong>遺產分割訴訟</strong>：若繼承人意見不一致，可提起遺產分割之訴（家事事件法），法院得斟酌各繼承人需求決定分割方法，非必然均分現金。
+      </div>
+    </div>
   </div>
 </main>
 

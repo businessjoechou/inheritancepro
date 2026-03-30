@@ -21,6 +21,7 @@
 <meta name="twitter:description" content="依台灣民法計算應繼分、特留分、遺產稅，支援不動產、股票、代位繼承與拋棄繼承，免費PDF報告。">
 <link rel="canonical" href="https://inheritancepro.app/calculator.html">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="js/persona.js"></script>
 <style>
   :root {
     --ink: #1a1410;
@@ -1688,19 +1689,6 @@ td{padding:5px 10px;border:1px solid #ddd;font-size:12px;vertical-align:top;}
       else { btn.textContent = '儲存失敗'; btn.disabled = false; }
     };
   }
-
-  // Init — persona-based feature visibility
-  (function applyPersona() {
-    const persona = localStorage.getItem('ip_persona') || 'public';
-    // pro-only = accountant + lawyer
-    if (persona === 'public') {
-      document.querySelectorAll('.pro-only').forEach(el => el.style.display = 'none');
-    }
-    // accountant-only = accountant only
-    if (persona !== 'accountant') {
-      document.querySelectorAll('.accountant-only').forEach(el => el.style.display = 'none');
-    }
-  })();
 
   showStep(1);
 </script>

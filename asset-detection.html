@@ -20,6 +20,7 @@
 <meta name="twitter:description" content="分析被繼承人生前財產異動風險，依台灣法律自動標記可疑移轉。">
 <link rel="canonical" href="https://inheritancepro.app/asset-detection.html">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="js/persona.js"></script>
 <style>
   :root {
     --ink: #0f1117;
@@ -416,6 +417,18 @@
 
     <button class="pdf-btn" onclick="downloadReport()">⬇ 下載風險分析報告 PDF</button>
     <div id="save-btn-container"></div>
+
+    <div class="lawyer-only" style="background:#eef3fa;border:1.5px solid #3a5a80;border-radius:12px;padding:16px 20px;margin-top:16px">
+      <div style="font-size:12px;font-weight:700;color:#1a3a5c;letter-spacing:0.04em;margin-bottom:10px">⚖ 律師訴訟策略備忘</div>
+      <div style="font-size:12px;color:#1a2a3a;line-height:1.9">
+        <strong>§1148-1 擬制遺產</strong>：繼承開始前 <strong>2 年內</strong>對繼承人以外第三人的贈與，視為遺產，可追加計入繼承財產。<br>
+        <strong>遺贈稅法 §15</strong>：死亡前 <strong>6 年內</strong>贈與配偶、繼承人者，須併入遺產申報，稅務追溯期與民法不同，需分別計算。<br>
+        <strong>§244 撤銷詐害</strong>：被繼承人生前以詐害繼承人為目的而處分財產者，繼承人可提起撤銷訴訟（§244），自知悉起 <strong>1 年</strong>、行為起 <strong>10 年</strong>除斥期間。<br>
+        <strong>假扣押保全</strong>：發現高風險異動後，應儘速向法院聲請假扣押，凍結受讓人財產以備將來執行。<br>
+        <strong>刑事途徑</strong>：若有偽造文書、隱匿遺產或詐欺情事，可考慮同步提出刑事告訴，增加談判籌碼。
+      </div>
+    </div>
+
     <div class="cross-links">
       <div class="cross-links-label">進一步分析</div>
       <a class="cross-link-btn" href="gift-tax.html">🎁 贈與稅試算　確認異常贈與是否已申報 <span>→</span></a>

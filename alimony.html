@@ -20,6 +20,7 @@
 <meta name="twitter:description" content="依民法第1057條試算台灣離婚贍養費參考範圍。免費使用。">
 <link rel="canonical" href="https://inheritancepro.app/alimony.html">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="js/persona.js"></script>
 <style>
   :root{--ink:#1a1410;--paper:#f5f0e8;--gold:#c4932a;--muted:#7a6f62;--border:#c8bfb0;--soft:#e8e0d0;--success:#2a6b4a;--accent:#1a3a5c;--danger:#8b2020;}
   *{box-sizing:border-box;margin:0;padding:0;}
@@ -213,6 +214,18 @@
     <button class="btn-pdf" id="btnPdf" onclick="downloadPDF()">⬇ 下載試算報告 PDF</button>
     <button class="btn-reset" id="btnReset" onclick="reset()">🔄 重新試算</button>
     <div id="save-btn-container"></div>
+
+    <div class="lawyer-only" style="background:#eef3fa;border:1.5px solid #3a5a80;border-radius:12px;padding:16px 20px;margin-top:16px">
+      <div style="font-size:12px;font-weight:700;color:#1a3a5c;letter-spacing:0.04em;margin-bottom:10px">⚖ 律師訴訟策略備忘</div>
+      <div style="font-size:12px;color:#1a2a3a;line-height:1.9">
+        <strong>聲請時機</strong>：可於離婚訴訟中一併聲請，亦可離婚後 <strong>2 年內</strong>單獨提起（民法 §1058 類推，請務必確認個案時效）。<br>
+        <strong>核心要件</strong>：① 判決離婚（非協議） ② 請求方無過失或過失較小 ③ 離婚後陷於生活困難（無財產、無工作能力、高齡）。<br>
+        <strong>有過失方</strong>：雙方均有過失者，法院「得」酌減，但不一定全額駁回，可積極主張對方過失較重。<br>
+        <strong>再婚</strong>：請求方再婚後喪失請求權（§1058），若已再婚應預告客戶風險。<br>
+        <strong>給付方式</strong>：一次給付 vs 定期給付，評估對方支付能力、客觀預期收入，一次給付可避免日後執行困難。
+      </div>
+    </div>
+
     <div class="cross-links">
       <div class="cross-links-label">離婚相關工具</div>
       <a class="cross-link-btn" href="property-split.html">⚖️ 剩餘財產差額分配　夫妻財產清算 <span>→</span></a>
