@@ -4,8 +4,12 @@ import { supabase } from './auth.js';
 export async function saveCalculation({ tool, title, summary, data }) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: '請先登入' };
+  const enrichedData = {
+    ...data,
+    _persona: localStorage.getItem('ip_persona') || 'public',
+  };
   const { error } = await supabase.from('calculations').insert({
-    user_id: user.id, tool, title, summary, data
+    user_id: user.id, tool, title, summary, data: enrichedData
   });
   return error ? { error: error.message } : { success: true };
 }
