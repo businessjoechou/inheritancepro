@@ -3,9 +3,15 @@
   <url><loc>https://inheritancepro.app/</loc><changefreq>monthly</changefreq><priority>1.0</priority></url>
   <url><loc>https://inheritancepro.app/calculator.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://inheritancepro.app/inheritance-timeline.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://inheritancepro.app/caregiver.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://inheritancepro.app/property-split.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://inheritancepro.app/alimony.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://inheritancepro.app/asset-detection.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://inheritancepro.app/minor-damages.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://inheritancepro.app/prescription.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://inheritancepro.app/gift-tax.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://inheritancepro.app/real-estate.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://inheritancepro.app/stock-inheritance.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://inheritancepro.app/property-sale-tax.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://inheritancepro.app/asset-detection.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://inheritancepro.app/accident.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://inheritancepro.app/minor-damages.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
 </urlset>
