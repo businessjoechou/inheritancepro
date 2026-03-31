@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>離婚協議書草稿產生器｜InheritancePro</title>
+<meta name="description" content="台灣離婚協議書草稿產生工具，填寫雙方資料、子女監護、財產分配、贍養費等條款，自動生成可列印的協議書草稿。InheritancePro。">
+<meta name="keywords" content="離婚協議書,離婚協議,兩願離婚,子女監護協議,離婚財產分配">
+<meta name="robots" content="index, follow">
+<meta name="author" content="InheritancePro">
+<meta property="og:title" content="離婚協議書草稿產生器｜InheritancePro">
+<meta property="og:description" content="填寫基本資料，自動生成兩願離婚協議書草稿，含監護、財產、贍養費條款。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://inheritancepro.app/divorce-agreement.html">
+<meta property="og:site_name" content="InheritancePro">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="離婚協議書草稿產生器｜InheritancePro">
+<link rel="canonical" href="https://inheritancepro.app/divorce-agreement.html">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="js/persona.js"></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"離婚協議書草稿產生器","url":"https://inheritancepro.app/divorce-agreement.html","applicationCategory":"LegalService","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro"}}
+</script>
+<style>
+  :root {
+    --ink: #1a1410; --paper: #f5f0e8; --accent: #8b2020; --gold: #c4932a;
+    --soft: #e8e0d0; --muted: #7a6f62; --success: #2a6b4a; --danger: #8b2020;
+    --border: #c8bfb0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--paper); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; min-height: 100vh; font-size: 15px; }
+  header { background: var(--ink); color: var(--paper); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .logo { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 700; letter-spacing: 0.04em; }
+  .logo span { color: var(--gold); }
+  .page-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 3px; font-family: 'DM Mono', monospace; letter-spacing: 0.06em; }
+  .home-link { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; }
+  .home-link:hover { color: var(--gold); }
+  main { padding: 24px 20px 80px; max-width: 480px; margin: 0 auto; }
+  h1 { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
+  .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
+  .card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 14px; }
+  .section-title { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--soft); }
+  .input-group { margin-bottom: 14px; }
+  .input-group:last-child { margin-bottom: 0; }
+  label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 5px; }
+  .label-hint { font-size: 11px; color: var(--muted); font-weight: 400; margin-left: 6px; }
+  input[type="text"], input[type="number"], input[type="date"], select, textarea {
+    width: 100%; padding: 11px 13px; border: 1.5px solid var(--border); border-radius: 8px;
+    background: var(--paper); font-size: 14px; font-family: 'Noto Sans TC', sans-serif;
+    color: var(--ink); transition: border-color 0.2s; -webkit-appearance: none;
+  }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--gold); background: #fff; }
+  textarea { resize: none; font-size: 13px; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .checkbox-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .checkbox-row input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--gold); cursor: pointer; flex-shrink: 0; }
+  .checkbox-row label { margin: 0; cursor: pointer; font-size: 13px; }
+
+  .gen-btn {
+    width: 100%; padding: 16px; background: var(--accent); color: #fff;
+    border: none; border-radius: 10px; font-size: 15px; font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 500; cursor: pointer; letter-spacing: 0.04em; margin-top: 8px; transition: background 0.2s;
+  }
+  .gen-btn:hover { background: #6b1818; }
+
+  /* Agreement output */
+  #agreeOutput { display: none; margin-top: 20px; }
+  .agree-paper {
+    background: #fff; border: 1.5px solid var(--border); border-radius: 12px;
+    padding: 32px 28px; font-size: 14px; line-height: 2; color: #111;
+    font-family: 'Noto Serif TC', serif;
+  }
+  .agree-paper h2 { text-align: center; font-size: 20px; font-weight: 700; margin-bottom: 24px; letter-spacing: 0.1em; }
+  .agree-paper .preamble { margin-bottom: 20px; }
+  .agree-paper .article { margin-bottom: 16px; }
+  .agree-paper .article-title { font-weight: 700; margin-bottom: 4px; }
+  .agree-paper .sig-section { margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .agree-paper .sig-block { border-top: 1px solid #ccc; padding-top: 12px; font-size: 13px; line-height: 1.8; }
+  .agree-paper .blank { display: inline-block; min-width: 80px; border-bottom: 1px solid #555; }
+  .warn-box { background: rgba(139,32,32,0.07); border: 1px solid rgba(139,32,32,0.2); border-radius: 8px; padding: 12px 14px; font-size: 12px; color: var(--muted); line-height: 1.7; margin-top: 14px; }
+  .warn-box strong { color: var(--danger); }
+  .action-row { display: flex; gap: 10px; margin-top: 14px; }
+  .print-btn, .copy-btn {
+    flex: 1; padding: 13px; border-radius: 8px; font-size: 13px; cursor: pointer;
+    font-family: 'Noto Sans TC', sans-serif; letter-spacing: 0.04em; transition: all 0.2s;
+  }
+  .print-btn { background: var(--ink); color: #fff; border: none; }
+  .print-btn:hover { background: #2a2420; }
+  .copy-btn { background: transparent; color: var(--muted); border: 1.5px solid var(--border); }
+  .copy-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+  @media print {
+    header, .card, .gen-btn, .action-row, .warn-box, .subtitle, h1, .page-sub { display: none !important; }
+    #agreeOutput { display: block !important; margin: 0; }
+    .agree-paper { border: none; padding: 0; }
+    main { padding: 0; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="logo">Inheritance<span>Pro</span></div>
+    <div class="page-sub">離婚協議書草稿產生器</div>
+  </div>
+  <a class="home-link" href="index.html">← 返回</a>
+</header>
+
+<main>
+  <h1>離婚協議書草稿產生器</h1>
+  <p class="subtitle">填寫雙方資料與協議條款，自動生成兩願離婚協議書草稿。僅供參考，正式文件請諮詢律師。</p>
+
+  <!-- 雙方資料 -->
+  <div class="card">
+    <div class="section-title">甲方（丈夫／一方）</div>
+    <div class="two-col">
+      <div class="input-group"><label>姓名</label><input type="text" id="aName" placeholder="姓名"></div>
+      <div class="input-group"><label>身分證字號</label><input type="text" id="aId" placeholder="A123456789"></div>
+    </div>
+    <div class="input-group"><label>戶籍地址</label><input type="text" id="aAddr" placeholder="縣市、鄉鎮市區、路段"></div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">乙方（妻子／另一方）</div>
+    <div class="two-col">
+      <div class="input-group"><label>姓名</label><input type="text" id="bName" placeholder="姓名"></div>
+      <div class="input-group"><label>身分證字號</label><input type="text" id="bId" placeholder="A123456789"></div>
+    </div>
+    <div class="input-group"><label>戶籍地址</label><input type="text" id="bAddr" placeholder="縣市、鄉鎮市區、路段"></div>
+  </div>
+
+  <!-- 子女 -->
+  <div class="card">
+    <div class="section-title">子女監護</div>
+    <div class="checkbox-row">
+      <input type="checkbox" id="hasChild" onchange="toggleChild()">
+      <label for="hasChild">有未成年子女</label>
+    </div>
+    <div id="childSection" style="display:none">
+      <div class="input-group">
+        <label>子女姓名與出生年月日<span class="label-hint">如有多名，以逗號分隔</span></label>
+        <input type="text" id="childNames" placeholder="例：王小明（民國100年1月1日）">
+      </div>
+      <div class="input-group">
+        <label>監護權歸屬</label>
+        <select id="custodyWho">
+          <option value="A">歸甲方單獨行使</option>
+          <option value="B">歸乙方單獨行使</option>
+          <option value="joint">雙方共同行使</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label>探視安排<span class="label-hint">非監護方</span></label>
+        <input type="text" id="visitation" placeholder="例：每月第一、三週六上午10時至下午5時">
+      </div>
+      <div class="input-group">
+        <label>子女扶養費<span class="label-hint">非監護方每月給付金額（元）</span></label>
+        <input type="number" id="childSupportAmt" placeholder="0">
+      </div>
+    </div>
+  </div>
+
+  <!-- 財產 -->
+  <div class="card">
+    <div class="section-title">財產分配</div>
+    <div class="input-group">
+      <label>剩餘財產差額分配<span class="label-hint">元，可留空</span></label>
+      <input type="number" id="propertyAmt" placeholder="0">
+    </div>
+    <div class="input-group">
+      <label>給付方式</label>
+      <select id="propertyMethod">
+        <option value="lump">一次給付</option>
+        <option value="installment">分期給付（請於備註說明期數）</option>
+        <option value="none">無財產差額分配</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label>不動產處理<span class="label-hint">可留空</span></label>
+      <input type="text" id="realEstate" placeholder="例：坐落台北市○○區○○段○○號不動產移轉登記予乙方">
+    </div>
+  </div>
+
+  <!-- 贍養費 -->
+  <div class="card">
+    <div class="section-title">贍養費</div>
+    <div class="checkbox-row">
+      <input type="checkbox" id="hasAlimony" onchange="toggleAlimony()">
+      <label for="hasAlimony">約定給付贍養費</label>
+    </div>
+    <div id="alimonySection" style="display:none">
+      <div class="two-col">
+        <div class="input-group"><label>給付方<span class="label-hint">哪方給付</span></label>
+          <select id="alimonyPayer"><option value="A">甲方</option><option value="B">乙方</option></select>
+        </div>
+        <div class="input-group"><label>每月金額<span class="label-hint">元</span></label>
+          <input type="number" id="alimonyAmt" placeholder="0">
+        </div>
+      </div>
+      <div class="input-group" style="margin-bottom:0"><label>給付期間</label>
+        <input type="text" id="alimonyPeriod" placeholder="例：自離婚登記起算，給付 5 年">
+      </div>
+    </div>
+  </div>
+
+  <!-- 其他條款 -->
+  <div class="card">
+    <div class="section-title">其他條款（選填）</div>
+    <div class="input-group">
+      <label>補充約定事項<span class="label-hint">如：互不追究、不主張損害賠償等</span></label>
+      <textarea id="extraTerms" rows="3" placeholder="例：雙方同意本協議書經戶政機關辦理離婚登記後，互不再行追究任何民刑事責任。"></textarea>
+    </div>
+    <div class="input-group" style="margin-bottom:0">
+      <label>協議日期</label>
+      <input type="date" id="agreeDate">
+    </div>
+  </div>
+
+  <button class="gen-btn" onclick="generate()">產生協議書草稿</button>
+
+  <div id="agreeOutput">
+    <div class="agree-paper" id="agreePaper"></div>
+
+    <div class="warn-box">
+      <strong>⚠ 重要提醒：</strong>本草稿僅供參考，不構成法律意見。兩願離婚協議書須經雙方簽名蓋章、2位以上證人見證，並至戶政事務所辦理登記方為有效。涉及不動產或子女監護之約定，建議至法院或公證人處辦理公證。
+    </div>
+
+    <div class="action-row">
+      <button class="print-btn" onclick="window.print()">🖨 列印 / 儲存 PDF</button>
+      <button class="copy-btn" onclick="copyText()">📋 複製全文</button>
+    </div>
+  </div>
+</main>
+
+<script>
+  function toggleChild() {
+    document.getElementById('childSection').style.display =
+      document.getElementById('hasChild').checked ? 'block' : 'none';
+  }
+  function toggleAlimony() {
+    document.getElementById('alimonySection').style.display =
+      document.getElementById('hasAlimony').checked ? 'block' : 'none';
+  }
+
+  function v(id) { return document.getElementById(id).value.trim(); }
+  function blank(text) { return text || '＿＿＿＿'; }
+  const FMT = n => parseInt(n || 0).toLocaleString('zh-TW');
+
+  function generate() {
+    const aName = blank(v('aName'));
+    const aId = blank(v('aId'));
+    const aAddr = blank(v('aAddr'));
+    const bName = blank(v('bName'));
+    const bId = blank(v('bId'));
+    const bAddr = blank(v('bAddr'));
+
+    const today = v('agreeDate') || new Date().toLocaleDateString('zh-TW', {year:'numeric',month:'2-digit',day:'2-digit'}).replace(/\//g,'年').replace(/(\d+)年(\d+)年/, '$1年$2月') + '日';
+    const dateStr = v('agreeDate') ? formatROCDate(v('agreeDate')) : '　　年　月　日';
+
+    const hasChild = document.getElementById('hasChild').checked;
+    const hasAlimony = document.getElementById('hasAlimony').checked;
+
+    let articles = [];
+    let artNum = 1;
+
+    // Art 1: Divorce
+    articles.push(`第${artNum++}條（離婚合意）\n　甲方${aName}與乙方${bName}雙方同意自願離婚，並依中華民國民法第一千零四十九條規定，共同至戶政機關辦理離婚登記。`);
+
+    // Art: Children
+    if (hasChild) {
+      const childNames = blank(v('childNames'));
+      const custodyWho = document.getElementById('custodyWho').value;
+      const custodyText = custodyWho === 'A' ? `由甲方單獨行使` : custodyWho === 'B' ? `由乙方單獨行使` : `由甲乙雙方共同行使`;
+      const visitation = v('visitation') || '雙方另行協商';
+      const supportAmt = v('childSupportAmt');
+      const nonCustody = custodyWho === 'A' ? '乙方' : custodyWho === 'B' ? '甲方' : '—';
+      const custody = custodyWho === 'A' ? '甲方' : '乙方';
+
+      let childArt = `第${artNum++}條（子女監護）\n　雙方所生未成年子女 ${childNames}，其親權（監護權）${custodyText}。`;
+      if (custodyWho !== 'joint') {
+        childArt += `\n　${nonCustody}得依下列約定探視子女：${visitation}。`;
+      }
+      if (supportAmt && parseInt(supportAmt) > 0) {
+        childArt += `\n　${nonCustody}應自離婚登記翌月起，按月於每月五日前給付子女扶養費新臺幣 ${FMT(supportAmt)} 元予${custody}，至子女成年或完成大學教育時止。`;
+      }
+      articles.push(childArt);
+    }
+
+    // Art: Property
+    const propertyAmt = v('propertyAmt');
+    const propertyMethod = document.getElementById('propertyMethod').value;
+    const realEstate = v('realEstate');
+    if ((propertyAmt && parseInt(propertyAmt) > 0) || realEstate) {
+      let propArt = `第${artNum++}條（財產分配）`;
+      if (propertyAmt && parseInt(propertyAmt) > 0 && propertyMethod !== 'none') {
+        const methodText = propertyMethod === 'lump' ? '一次' : '分期';
+        propArt += `\n　依民法第一千零三十條之一，乙方應給付甲方剩餘財產差額新臺幣 ${FMT(propertyAmt)} 元，以${methodText}方式給付，於離婚登記後三十日內完成。`;
+      }
+      if (realEstate) {
+        propArt += `\n　${realEstate}。`;
+      }
+      articles.push(propArt);
+    }
+
+    // Art: Alimony
+    if (hasAlimony) {
+      const payer = document.getElementById('alimonyPayer').value === 'A' ? '甲方' : '乙方';
+      const payee = document.getElementById('alimonyPayer').value === 'A' ? '乙方' : '甲方';
+      const alimonyAmt = v('alimonyAmt');
+      const period = blank(v('alimonyPeriod'));
+      articles.push(`第${artNum++}條（贍養費）\n　依民法第一千零五十七條，${payer}應按月給付${payee}贍養費新臺幣 ${FMT(alimonyAmt)} 元，${period}。`);
+    }
+
+    // Extra terms
+    const extra = v('extraTerms');
+    if (extra) {
+      articles.push(`第${artNum++}條（其他約定）\n　${extra}`);
+    }
+
+    // Final article
+    articles.push(`第${artNum++}條（協議效力）\n　本協議書一式二份，甲乙雙方各執一份，均具同等法律效力。本協議書經雙方及證人簽名蓋章後生效。`);
+
+    const body = articles.join('\n\n');
+
+    const html = `
+      <h2>兩　願　離　婚　協　議　書</h2>
+      <div class="preamble">
+        立協議書人：<br>
+        甲方：${aName}，身分證字號：${aId}<br>
+        　　　戶籍地址：${aAddr}<br><br>
+        乙方：${bName}，身分證字號：${bId}<br>
+        　　　戶籍地址：${bAddr}<br><br>
+        茲因雙方感情不睦，無法繼續共同生活，雙方同意依中華民國民法第一千零四十九條規定辦理兩願離婚，並就相關事項協議如下：
+      </div>
+      ${articles.map(a => `<div class="article"><pre style="white-space:pre-wrap;font-family:inherit;font-size:14px;line-height:2">${a}</pre></div>`).join('')}
+      <div class="sig-section">
+        <div class="sig-block">
+          甲方簽名：<span class="blank"></span><br>
+          身分證字號：${aId}<br>
+          日期：${dateStr}
+        </div>
+        <div class="sig-block">
+          乙方簽名：<span class="blank"></span><br>
+          身分證字號：${bId}<br>
+          日期：${dateStr}
+        </div>
+      </div>
+      <div style="margin-top:32px">
+        <div style="font-size:13px;margin-bottom:8px">證人（至少2人）：</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+          <div style="border-top:1px solid #ccc;padding-top:10px;font-size:13px;line-height:2">
+            證人一 姓名：<span class="blank"></span><br>
+            身分證字號：<span class="blank"></span>
+          </div>
+          <div style="border-top:1px solid #ccc;padding-top:10px;font-size:13px;line-height:2">
+            證人二 姓名：<span class="blank"></span><br>
+            身分證字號：<span class="blank"></span>
+          </div>
+        </div>
+      </div>`;
+
+    document.getElementById('agreePaper').innerHTML = html;
+    document.getElementById('agreeOutput').style.display = 'block';
+    document.getElementById('agreeOutput').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function formatROCDate(dateStr) {
+    const d = new Date(dateStr);
+    const roc = d.getFullYear() - 1911;
+    return `中華民國${roc}年${d.getMonth()+1}月${d.getDate()}日`;
+  }
+
+  function copyText() {
+    const text = document.getElementById('agreePaper').innerText;
+    navigator.clipboard.writeText(text).then(() => alert('已複製到剪貼簿'));
+  }
+
+  // Default date to today
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('agreeDate').value = today;
+</script>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>子女扶養費計算｜InheritancePro</title>
+<meta name="description" content="台灣子女扶養費計算工具，依民法§1084、§1116-2，按雙方收入比例分擔，支援多名子女試算。InheritancePro。">
+<meta name="keywords" content="子女扶養費,扶養費計算,離婚扶養費,民法1084,親權,監護費用">
+<meta name="robots" content="index, follow">
+<meta name="author" content="InheritancePro">
+<meta property="og:title" content="子女扶養費計算｜InheritancePro">
+<meta property="og:description" content="依雙方收入比例計算子女扶養費分擔，支援多名子女。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://inheritancepro.app/child-support.html">
+<meta property="og:site_name" content="InheritancePro">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="子女扶養費計算｜InheritancePro">
+<link rel="canonical" href="https://inheritancepro.app/child-support.html">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="js/persona.js"></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"子女扶養費計算","url":"https://inheritancepro.app/child-support.html","applicationCategory":"LegalService","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro"}}
+</script>
+<style>
+  :root {
+    --ink: #1a1410; --paper: #f5f0e8; --accent: #8b2020; --gold: #c4932a;
+    --soft: #e8e0d0; --muted: #7a6f62; --success: #2a6b4a; --danger: #8b2020;
+    --border: #c8bfb0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--paper); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; min-height: 100vh; font-size: 15px; }
+  header { background: var(--ink); color: var(--paper); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .logo { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 700; letter-spacing: 0.04em; }
+  .logo span { color: var(--gold); }
+  .page-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 3px; font-family: 'DM Mono', monospace; letter-spacing: 0.06em; }
+  .home-link { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; }
+  .home-link:hover { color: var(--gold); }
+  main { padding: 24px 20px 120px; max-width: 480px; margin: 0 auto; }
+  h1 { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
+  .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
+  .card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 14px; }
+  .section-title { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--soft); }
+  .input-group { margin-bottom: 16px; }
+  .input-group:last-child { margin-bottom: 0; }
+  label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+  .label-hint { font-size: 11px; color: var(--muted); font-weight: 400; margin-left: 6px; }
+  input[type="number"], select {
+    width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 8px;
+    background: var(--paper); font-size: 15px; font-family: 'DM Mono', monospace;
+    color: var(--ink); transition: border-color 0.2s; -webkit-appearance: none;
+  }
+  input:focus, select:focus { outline: none; border-color: var(--gold); background: #fff; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .person-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; margin-bottom: 10px; padding: 5px 10px; border-radius: 20px; display: inline-block; }
+  .label-a { background: rgba(139,32,32,0.1); color: var(--danger); }
+  .label-b { background: rgba(42,107,74,0.1); color: var(--success); }
+
+  /* Child rows */
+  .child-row { background: var(--paper); border: 1px solid var(--soft); border-radius: 10px; padding: 14px; margin-bottom: 10px; }
+  .child-row-title { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+  .remove-btn { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 16px; line-height: 1; padding: 0 4px; }
+  .remove-btn:hover { color: var(--danger); }
+  .add-child-btn {
+    width: 100%; padding: 12px; background: transparent; border: 1.5px dashed var(--border);
+    border-radius: 8px; color: var(--muted); font-size: 13px; cursor: pointer;
+    font-family: 'Noto Sans TC', sans-serif; transition: all 0.2s; margin-top: 4px;
+  }
+  .add-child-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+  .calc-btn {
+    width: 100%; padding: 16px; background: var(--ink); color: var(--paper);
+    border: none; border-radius: 10px; font-size: 15px; font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 500; cursor: pointer; letter-spacing: 0.04em; margin-top: 8px; transition: background 0.2s;
+  }
+  .calc-btn:hover { background: #2a2420; }
+
+  #results { display: none; margin-top: 20px; }
+  .result-card { background: var(--ink); color: var(--paper); border-radius: 12px; padding: 24px; margin-bottom: 14px; }
+  .result-title { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 16px; }
+  .result-row { display: flex; justify-content: space-between; align-items: baseline; padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 13px; }
+  .result-row:last-child { border-bottom: none; }
+  .result-row .lbl { color: rgba(255,255,255,0.65); }
+  .result-row .val { font-family: 'DM Mono', monospace; }
+  .val.gold { color: var(--gold); font-weight: 700; font-size: 17px; }
+  .val.red { color: #f28b6e; }
+  .val.green { color: #7ecba1; }
+
+  .child-result { background: rgba(255,255,255,0.05); border-radius: 8px; padding: 14px; margin-bottom: 10px; }
+  .child-result:last-child { margin-bottom: 0; }
+  .child-result-name { font-size: 12px; color: rgba(255,255,255,0.5); font-family: 'DM Mono', monospace; margin-bottom: 8px; letter-spacing: 0.08em; }
+  .child-result-row { display: flex; justify-content: space-between; font-size: 13px; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .child-result-row:last-child { border-bottom: none; }
+  .child-result-row .lbl { color: rgba(255,255,255,0.55); font-size: 12px; }
+  .child-result-row .val { font-family: 'DM Mono', monospace; font-size: 13px; }
+
+  .total-band { background: rgba(196,147,42,0.15); border: 1px solid rgba(196,147,42,0.3); border-radius: 8px; padding: 14px 16px; margin-top: 4px; display: flex; justify-content: space-between; align-items: center; }
+  .total-band .lbl { font-size: 13px; color: rgba(255,255,255,0.8); }
+  .total-band .val { font-family: 'DM Mono', monospace; font-size: 22px; font-weight: 700; color: var(--gold); }
+
+  .law-note { background: rgba(196,147,42,0.08); border: 1px solid rgba(196,147,42,0.25); border-radius: 8px; padding: 12px 14px; font-size: 12px; color: var(--muted); line-height: 1.7; margin-top: 14px; }
+  .law-note strong { color: var(--gold); }
+
+  /* Lawyer panel */
+  .lawyer-only .panel-title { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.12em; margin-bottom: 10px; }
+  .tip-item { font-size: 12px; color: var(--muted); padding: 7px 0; border-bottom: 1px solid var(--soft); line-height: 1.6; }
+  .tip-item:last-child { border-bottom: none; }
+  .tip-tag { display: inline-block; background: rgba(139,32,32,0.1); color: var(--danger); border-radius: 4px; padding: 1px 7px; font-size: 10px; font-family: 'DM Mono', monospace; margin-right: 6px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="logo">Inheritance<span>Pro</span></div>
+    <div class="page-sub">子女扶養費計算</div>
+  </div>
+  <a class="home-link" href="index.html">← 返回</a>
+</header>
+
+<main>
+  <h1>子女扶養費計算</h1>
+  <p class="subtitle">依民法§1084、§1116-2，按雙方稅後收入比例計算各方應分擔之扶養費，支援多名子女。</p>
+
+  <!-- 雙方收入 -->
+  <div class="card">
+    <div class="section-title">雙方收入</div>
+    <div class="two-col">
+      <div class="input-group" style="margin-bottom:0">
+        <div class="person-label label-a">甲方（請求人）</div>
+        <label>每月稅後收入<span class="label-hint">元</span></label>
+        <input type="number" id="incomeA" placeholder="0" min="0">
+      </div>
+      <div class="input-group" style="margin-bottom:0">
+        <div class="person-label label-b">乙方（義務人）</div>
+        <label>每月稅後收入<span class="label-hint">元</span></label>
+        <input type="number" id="incomeB" placeholder="0" min="0">
+      </div>
+    </div>
+    <div class="input-group" style="margin-top:16px; margin-bottom:0">
+      <label>親權歸屬<span class="label-hint">子女主要由哪方照顧</span></label>
+      <select id="custody">
+        <option value="A">甲方（請求對方給付）</option>
+        <option value="B">乙方（對方請求甲方給付）</option>
+        <option value="shared">共同監護（輪流，費用各半）</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- 子女資料 -->
+  <div class="card">
+    <div class="section-title">子女資料</div>
+    <div id="childrenList"></div>
+    <button class="add-child-btn" onclick="addChild()">＋ 新增子女</button>
+  </div>
+
+  <!-- 進階法律功能：策略建議 -->
+  <div class="card lawyer-only">
+    <div class="panel-title">⚖ 訴訟策略提示</div>
+    <div class="tip-item"><span class="tip-tag">§1116-2</span>父母對未成年子女負連帶扶養義務，收入比例為法院主要參考依據。</div>
+    <div class="tip-item"><span class="tip-tag">調整</span>可主張對方有隱匿收入（調薪紀錄、匯款、資產）要求法院命提出財產聲明。</div>
+    <div class="tip-item"><span class="tip-tag">起算</span>扶養費得請求自起訴時起算，亦可主張自提出請求之日起算（有催告紀錄較有利）。</div>
+    <div class="tip-item"><span class="tip-tag">調整</span>扶養費得隨物價、子女需求或雙方收入變動聲請法院酌定調整（非永久固定）。</div>
+  </div>
+
+  <button class="calc-btn" onclick="calculate()">計算扶養費分擔</button>
+
+  <div id="results">
+    <div class="result-card">
+      <div class="result-title">收入比例</div>
+      <div class="result-row"><span class="lbl">甲方月收入</span><span class="val" id="r-incA">—</span></div>
+      <div class="result-row"><span class="lbl">乙方月收入</span><span class="val" id="r-incB">—</span></div>
+      <div class="result-row"><span class="lbl">甲方占比</span><span class="val red" id="r-ratioA">—</span></div>
+      <div class="result-row"><span class="lbl">乙方占比</span><span class="val green" id="r-ratioB">—</span></div>
+    </div>
+
+    <div class="result-card">
+      <div class="result-title">各子女扶養費明細</div>
+      <div id="childResults"></div>
+    </div>
+
+    <div class="result-card">
+      <div class="result-title">每月應給付金額</div>
+      <div id="summaryContent"></div>
+      <div class="total-band" style="margin-top:14px">
+        <span class="lbl" id="payerLabel">乙方每月應給付甲方</span>
+        <span class="val" id="r-totalPay">—</span>
+      </div>
+    </div>
+
+    <div class="law-note">
+      <strong>說明：</strong>本試算以雙方稅後收入比例為基礎，依§1116-2計算各方應分擔比例。法院實際裁定時亦會考量子女實際需求、雙方生活水準及其他特殊狀況。扶養費標準可參考各縣市政府公告之每人每月最低生活費。
+    </div>
+  </div>
+</main>
+
+<script>
+  const FMT = v => '$ ' + Math.round(v).toLocaleString('zh-TW');
+  const PCT = v => (v * 100).toFixed(1) + '%';
+
+  let childCount = 0;
+
+  function addChild() {
+    childCount++;
+    const id = childCount;
+    const div = document.createElement('div');
+    div.className = 'child-row';
+    div.id = 'child-' + id;
+    div.innerHTML = `
+      <div class="child-row-title">
+        <span>子女 ${id}</span>
+        <button class="remove-btn" onclick="removeChild(${id})" title="移除">✕</button>
+      </div>
+      <div class="two-col">
+        <div class="input-group" style="margin-bottom:0">
+          <label>年齡<span class="label-hint">歲</span></label>
+          <input type="number" id="age-${id}" placeholder="0" min="0" max="25">
+        </div>
+        <div class="input-group" style="margin-bottom:0">
+          <label>每月基本需求<span class="label-hint">元</span></label>
+          <input type="number" id="need-${id}" placeholder="例：15000" min="0">
+        </div>
+      </div>`;
+    document.getElementById('childrenList').appendChild(div);
+  }
+
+  function removeChild(id) {
+    const el = document.getElementById('child-' + id);
+    if (el) el.remove();
+  }
+
+  function getChildren() {
+    const list = document.getElementById('childrenList');
+    const rows = list.querySelectorAll('.child-row');
+    return Array.from(rows).map((row, i) => {
+      const idMatch = row.id.match(/child-(\d+)/);
+      const cid = idMatch ? idMatch[1] : i + 1;
+      const age = parseFloat(document.getElementById('age-' + cid)?.value) || 0;
+      const need = parseFloat(document.getElementById('need-' + cid)?.value) || 0;
+      return { index: i + 1, age, need };
+    });
+  }
+
+  function calculate() {
+    const incA = parseFloat(document.getElementById('incomeA').value) || 0;
+    const incB = parseFloat(document.getElementById('incomeB').value) || 0;
+    const custody = document.getElementById('custody').value;
+    const children = getChildren();
+
+    if (!incA && !incB) { alert('請輸入雙方收入'); return; }
+    if (children.length === 0) { alert('請至少新增一名子女'); return; }
+
+    const totalInc = incA + incB;
+    const ratioA = totalInc > 0 ? incA / totalInc : 0.5;
+    const ratioB = totalInc > 0 ? incB / totalInc : 0.5;
+
+    document.getElementById('results').style.display = 'block';
+    document.getElementById('r-incA').textContent = FMT(incA);
+    document.getElementById('r-incB').textContent = FMT(incB);
+    document.getElementById('r-ratioA').textContent = PCT(ratioA);
+    document.getElementById('r-ratioB').textContent = PCT(ratioB);
+
+    let totalPayByB = 0;
+
+    const childHtml = children.map(c => {
+      const needAmt = c.need || 0;
+      const shareA = needAmt * ratioA;
+      const shareB = needAmt * ratioB;
+
+      let payNote = '';
+      if (custody === 'A') {
+        payNote = `乙方每月給付甲方：${FMT(shareB)}`;
+        totalPayByB += shareB;
+      } else if (custody === 'B') {
+        payNote = `甲方每月給付乙方：${FMT(shareA)}`;
+        totalPayByB -= shareA;
+      } else {
+        payNote = `各自負擔 50%：${FMT(needAmt * 0.5)}`;
+      }
+
+      return `<div class="child-result">
+        <div class="child-result-name">子女 ${c.index}（${c.age ? c.age + ' 歲' : '年齡未填'}）</div>
+        <div class="child-result-row"><span class="lbl">每月需求金額</span><span class="val">${FMT(needAmt)}</span></div>
+        <div class="child-result-row"><span class="lbl">甲方應分擔（${PCT(ratioA)}）</span><span class="val">${FMT(shareA)}</span></div>
+        <div class="child-result-row"><span class="lbl">乙方應分擔（${PCT(ratioB)}）</span><span class="val">${FMT(shareB)}</span></div>
+        <div class="child-result-row" style="margin-top:4px"><span class="lbl" style="color:rgba(255,255,255,0.8)">結論</span><span class="val" style="color:var(--gold)">${payNote}</span></div>
+      </div>`;
+    }).join('');
+
+    document.getElementById('childResults').innerHTML = childHtml;
+
+    // Summary
+    let summaryHtml = '';
+    const totalNeed = children.reduce((s, c) => s + (c.need || 0), 0);
+    summaryHtml += `<div class="result-row"><span class="lbl">子女每月需求合計</span><span class="val">${FMT(totalNeed)}</span></div>`;
+
+    let payerLabelText = '';
+    let displayPay = 0;
+    if (custody === 'A') {
+      payerLabelText = '乙方每月應給付甲方';
+      displayPay = totalPayByB;
+    } else if (custody === 'B') {
+      payerLabelText = '甲方每月應給付乙方';
+      displayPay = Math.abs(totalPayByB);
+    } else {
+      payerLabelText = '各方每月自行負擔';
+      displayPay = totalNeed * 0.5;
+    }
+
+    document.getElementById('summaryContent').innerHTML = summaryHtml;
+    document.getElementById('payerLabel').textContent = payerLabelText;
+    document.getElementById('r-totalPay').textContent = FMT(displayPay);
+
+    document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Add one child by default
+  addChild();
+</script>
+</body>
+</html>
