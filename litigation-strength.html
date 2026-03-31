@@ -189,7 +189,7 @@
     document.querySelectorAll(`.score-btn[data-id="${id}"]`).forEach(btn => {
       btn.classList.toggle('selected', parseInt(btn.dataset.val) === val);
     });
-    if (document.getElementById('results').style.display !== 'none') calculate(true);
+    if (document.getElementById('results').style.display === 'block') calculate(true);
   }
 
   const BAND_CONFIG = [

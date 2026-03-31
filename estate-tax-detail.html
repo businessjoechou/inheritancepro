@@ -295,7 +295,7 @@
 
   function autoCalc() {
     // Silently update if results are showing
-    if (document.getElementById('results').style.display !== 'none') {
+    if (document.getElementById('results').style.display === 'block') {
       calculate(true);
     }
   }

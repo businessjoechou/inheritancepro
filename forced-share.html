@@ -262,7 +262,7 @@
   }
 
   function autoCalc() {
-    if (document.getElementById('results').style.display !== 'none') calculate(true);
+    if (document.getElementById('results').style.display === 'block') calculate(true);
   }
 
   function calculate(silent = false) {
