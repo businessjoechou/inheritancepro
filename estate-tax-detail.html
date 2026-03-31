@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>遺產稅精算模組｜InheritancePro</title>
+<meta name="description" content="完整遺產稅精算工具，涵蓋全部法定扣除額：免稅額1333萬、配偶扣除額553萬、直系血親卑親屬56萬/人，精確計算課稅遺產淨額與應納稅額。InheritancePro。">
+<meta name="keywords" content="遺產稅精算,遺產稅扣除額,遺產稅計算,免稅額1333萬,遺產稅申報,課稅遺產淨額">
+<meta name="robots" content="index, follow">
+<meta name="author" content="InheritancePro">
+<meta property="og:title" content="遺產稅精算模組｜InheritancePro">
+<meta property="og:description" content="完整遺產稅精算，含所有法定扣除額逐項計算，精確估算應納稅額。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://inheritancepro.app/estate-tax-detail.html">
+<meta property="og:site_name" content="InheritancePro">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="遺產稅精算模組｜InheritancePro">
+<link rel="canonical" href="https://inheritancepro.app/estate-tax-detail.html">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="js/persona.js"></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"遺產稅精算模組","url":"https://inheritancepro.app/estate-tax-detail.html","applicationCategory":"FinanceApplication","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro"}}
+</script>
+<style>
+  :root {
+    --ink: #1a1410; --paper: #f5f0e8; --accent: #8b2020; --gold: #c4932a;
+    --soft: #e8e0d0; --muted: #7a6f62; --success: #2a6b4a; --danger: #8b2020;
+    --border: #c8bfb0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--paper); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; min-height: 100vh; font-size: 15px; }
+  header { background: var(--ink); color: var(--paper); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .logo { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 700; letter-spacing: 0.04em; }
+  .logo span { color: var(--gold); }
+  .page-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 3px; font-family: 'DM Mono', monospace; letter-spacing: 0.06em; }
+  .home-link { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; }
+  .home-link:hover { color: var(--gold); }
+  main { padding: 24px 20px 120px; max-width: 480px; margin: 0 auto; }
+  h1 { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
+  .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
+  .card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 14px; }
+  .section-title { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--soft); }
+  .input-group { margin-bottom: 16px; }
+  .input-group:last-child { margin-bottom: 0; }
+  label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+  .label-hint { font-size: 11px; color: var(--muted); font-weight: 400; margin-left: 6px; }
+  input[type="number"], input[type="text"] {
+    width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 8px;
+    background: var(--paper); font-size: 15px; font-family: 'DM Mono', monospace;
+    color: var(--ink); transition: border-color 0.2s; -webkit-appearance: none;
+  }
+  input:focus { outline: none; border-color: var(--gold); background: #fff; }
+  input[readonly] { background: var(--soft); color: var(--muted); }
+  .row { display: flex; gap: 10px; align-items: center; }
+  .row input { flex: 1; }
+  .row .count-input { width: 80px; flex: none; }
+  .checkbox-row { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .checkbox-row input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--gold); cursor: pointer; }
+  .checkbox-row label { margin: 0; cursor: pointer; }
+  .calc-btn {
+    width: 100%; padding: 16px; background: var(--ink); color: var(--paper);
+    border: none; border-radius: 10px; font-size: 15px; font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 500; cursor: pointer; letter-spacing: 0.04em; margin-top: 8px;
+    transition: background 0.2s;
+  }
+  .calc-btn:hover { background: #2a2420; }
+  #results { display: none; }
+  .result-card { background: var(--ink); color: var(--paper); border-radius: 12px; padding: 24px; margin-bottom: 14px; }
+  .result-title { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 16px; }
+  .result-row { display: flex; justify-content: space-between; align-items: baseline; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 13px; }
+  .result-row:last-child { border-bottom: none; }
+  .result-row .label { color: rgba(255,255,255,0.65); }
+  .result-row .value { font-family: 'DM Mono', monospace; color: var(--paper); }
+  .result-row .value.deduct { color: #7ecba1; }
+  .result-row .value.highlight { color: var(--gold); font-size: 18px; font-weight: 700; }
+  .result-row .value.tax { color: #f28b6e; font-size: 20px; font-weight: 700; }
+  .result-row .value.rate { color: rgba(255,255,255,0.8); }
+  .bracket-table { width: 100%; font-size: 12px; margin-top: 12px; border-collapse: collapse; }
+  .bracket-table th { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.45); letter-spacing: 0.1em; text-align: left; padding: 6px 4px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .bracket-table td { padding: 7px 4px; border-bottom: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.75); font-family: 'DM Mono', monospace; font-size: 11px; }
+  .bracket-table tr.active td { color: var(--gold); font-weight: 500; }
+  .print-btn {
+    width: 100%; padding: 14px; background: transparent; color: var(--muted);
+    border: 1.5px solid var(--border); border-radius: 10px; font-size: 13px;
+    cursor: pointer; font-family: 'Noto Sans TC', sans-serif; letter-spacing: 0.04em;
+    transition: all 0.2s; margin-top: 4px;
+  }
+  .print-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .law-note { background: rgba(196,147,42,0.08); border: 1px solid rgba(196,147,42,0.25); border-radius: 8px; padding: 12px 14px; font-size: 12px; color: var(--muted); line-height: 1.7; margin-top: 14px; }
+  .law-note strong { color: var(--gold); }
+  @media print {
+    header { position: static; }
+    .calc-btn, .print-btn { display: none; }
+    #results { display: block !important; }
+    .card { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="logo">Inheritance<span>Pro</span></div>
+    <div class="page-sub">ESTATE TAX · DETAIL MODULE</div>
+  </div>
+  <a class="home-link" href="index.html">← 返回</a>
+</header>
+
+<main>
+  <h1>遺產稅精算模組</h1>
+  <p class="subtitle">依遺產及贈與稅法逐項計算扣除額，精確估算課稅遺產淨額與應納稅額。</p>
+
+  <!-- 遺產總額 -->
+  <div class="card">
+    <div class="section-title">A · 遺產總額</div>
+    <div class="input-group">
+      <label>遺產總額（積極遺產）<span class="label-hint">元</span></label>
+      <input type="number" id="grossEstate" placeholder="0" min="0" oninput="autoCalc()">
+    </div>
+    <div class="input-group">
+      <label>死亡前2年內贈與應加計金額<span class="label-hint">元，§15</span></label>
+      <input type="number" id="addBackGifts" placeholder="0" min="0" oninput="autoCalc()">
+    </div>
+  </div>
+
+  <!-- 免稅額（固定） -->
+  <div class="card">
+    <div class="section-title">B · 免稅額（§13）</div>
+    <div class="input-group">
+      <label>一般免稅額</label>
+      <input type="number" id="exemption" value="13330000" readonly>
+    </div>
+  </div>
+
+  <!-- 各項扣除額 -->
+  <div class="card">
+    <div class="section-title">C · 扣除額明細</div>
+
+    <div class="checkbox-row">
+      <input type="checkbox" id="hasSpouse" onchange="autoCalc()">
+      <label for="hasSpouse">配偶存活（配偶扣除額 5,530,000 元，§17①）</label>
+    </div>
+
+    <div class="input-group">
+      <label>直系血親卑親屬人數<span class="label-hint">子女、孫子女等，每人 560,000 元，§17②</span></label>
+      <input type="number" id="descendants" placeholder="0" min="0" max="20" oninput="autoCalc()">
+    </div>
+
+    <div class="input-group">
+      <label>父母存活人數<span class="label-hint">每人 1,380,000 元，§17③，最多 2 人</span></label>
+      <input type="number" id="parents" placeholder="0" min="0" max="2" oninput="autoCalc()">
+    </div>
+
+    <div class="input-group">
+      <label>喪葬費扣除額</label>
+      <input type="number" id="funeral" value="1230000" readonly>
+    </div>
+
+    <div class="input-group">
+      <label>重度以上身心障礙特別扣除額<span class="label-hint">每人 6,180,000 元，§17⑧</span></label>
+      <input type="number" id="disabled" placeholder="0" min="0" oninput="autoCalc()">
+    </div>
+
+    <div class="input-group">
+      <label>受撫養兄弟姊妹、祖父母人數<span class="label-hint">每人 560,000 元，§17④⑤</span></label>
+      <input type="number" id="siblings" placeholder="0" min="0" oninput="autoCalc()">
+    </div>
+
+    <div class="input-group">
+      <label>農業用地扣除<span class="label-hint">元，§17⑥，需繼續農用</span></label>
+      <input type="number" id="farmland" placeholder="0" min="0" oninput="autoCalc()">
+    </div>
+
+    <div class="input-group">
+      <label>公共設施保留地扣除<span class="label-hint">元，§17⑦</span></label>
+      <input type="number" id="publicLand" placeholder="0" min="0" oninput="autoCalc()">
+    </div>
+
+    <div class="input-group">
+      <label>其他扣除（未償債務、稅捐等）<span class="label-hint">元</span></label>
+      <input type="number" id="otherDeduct" placeholder="0" min="0" oninput="autoCalc()">
+    </div>
+  </div>
+
+  <button class="calc-btn" onclick="calculate()">計算應納遺產稅</button>
+
+  <!-- 結果 -->
+  <div id="results">
+    <div class="result-card" style="margin-top:20px">
+      <div class="result-title">計算結果</div>
+      <div class="result-row">
+        <span class="label">遺產總額（含加計）</span>
+        <span class="value" id="r-gross">—</span>
+      </div>
+      <div class="result-row">
+        <span class="label">減：免稅額</span>
+        <span class="value deduct" id="r-exemption">—</span>
+      </div>
+      <div class="result-row">
+        <span class="label">減：各項扣除額合計</span>
+        <span class="value deduct" id="r-deductions">—</span>
+      </div>
+      <div class="result-row" style="padding-top:12px;border-top:1px solid rgba(255,255,255,0.15)">
+        <span class="label" style="font-weight:500;color:#fff">課稅遺產淨額</span>
+        <span class="value highlight" id="r-taxable">—</span>
+      </div>
+      <div class="result-row" style="margin-top:8px">
+        <span class="label" style="font-weight:500;color:#fff">預估應納遺產稅</span>
+        <span class="value tax" id="r-tax">—</span>
+      </div>
+      <div class="result-row">
+        <span class="label">有效稅率</span>
+        <span class="value rate" id="r-rate">—</span>
+      </div>
+    </div>
+
+    <div class="result-card">
+      <div class="result-title">稅率級距說明（§13）</div>
+      <table class="bracket-table">
+        <thead>
+          <tr><th>課稅遺產淨額</th><th>稅率</th><th>累進差額</th></tr>
+        </thead>
+        <tbody>
+          <tr id="br1"><td>5,000 萬以下</td><td>10%</td><td>—</td></tr>
+          <tr id="br2"><td>5,001 萬～1 億</td><td>15%</td><td>250 萬</td></tr>
+          <tr id="br3"><td>1 億以上</td><td>20%</td><td>750 萬</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="result-card">
+      <div class="result-title">扣除額明細</div>
+      <div id="deductBreakdown"></div>
+    </div>
+
+    <button class="print-btn" onclick="window.print()">🖨 列印 / 儲存 PDF</button>
+
+    <div class="law-note">
+      <strong>注意事項：</strong>本試算依2024年適用標準。各扣除額金額依財政部每兩年調整。實際申報時請以國稅局核定為準。重度身心障礙特別扣除額需檢附殘障手冊。農業用地扣除需附農業用地作農業使用證明書。
+    </div>
+  </div>
+</main>
+
+<script>
+  const FMT = v => '$ ' + Math.round(v).toLocaleString('zh-TW');
+  const PCT = v => (v * 100).toFixed(2) + '%';
+
+  function getVal(id, fallback = 0) {
+    const v = parseFloat(document.getElementById(id).value);
+    return isNaN(v) ? fallback : v;
+  }
+
+  function computeAll() {
+    const gross = getVal('grossEstate') + getVal('addBackGifts');
+    const exemption = 13330000;
+
+    const spouseDeduct = document.getElementById('hasSpouse').checked ? 5530000 : 0;
+    const descendantsDeduct = Math.max(0, Math.floor(getVal('descendants'))) * 560000;
+    const parentsDeduct = Math.min(2, Math.max(0, Math.floor(getVal('parents')))) * 1380000;
+    const funeralDeduct = 1230000;
+    const disabledDeduct = Math.max(0, Math.floor(getVal('disabled'))) * 6180000;
+    const siblingsDeduct = Math.max(0, Math.floor(getVal('siblings'))) * 560000;
+    const farmDeduct = getVal('farmland');
+    const publicDeduct = getVal('publicLand');
+    const otherDeduct = getVal('otherDeduct');
+
+    const totalDeduct = spouseDeduct + descendantsDeduct + parentsDeduct + funeralDeduct +
+      disabledDeduct + siblingsDeduct + farmDeduct + publicDeduct + otherDeduct;
+
+    const taxableNet = Math.max(0, gross - exemption - totalDeduct);
+
+    // Progressive tax brackets
+    let tax = 0;
+    let activeBracket = 1;
+    if (taxableNet <= 50000000) {
+      tax = taxableNet * 0.10;
+      activeBracket = 1;
+    } else if (taxableNet <= 100000000) {
+      tax = taxableNet * 0.15 - 2500000;
+      activeBracket = 2;
+    } else {
+      tax = taxableNet * 0.20 - 7500000;
+      activeBracket = 3;
+    }
+
+    const effectiveRate = gross > 0 ? tax / gross : 0;
+
+    return { gross, exemption, totalDeduct, taxableNet, tax, effectiveRate, activeBracket,
+      spouseDeduct, descendantsDeduct, parentsDeduct, funeralDeduct,
+      disabledDeduct, siblingsDeduct, farmDeduct, publicDeduct, otherDeduct };
+  }
+
+  function autoCalc() {
+    // Silently update if results are showing
+    if (document.getElementById('results').style.display !== 'none') {
+      calculate(true);
+    }
+  }
+
+  function calculate(silent = false) {
+    const r = computeAll();
+
+    document.getElementById('results').style.display = 'block';
+
+    document.getElementById('r-gross').textContent = FMT(r.gross);
+    document.getElementById('r-exemption').textContent = '－ ' + FMT(r.exemption);
+    document.getElementById('r-deductions').textContent = '－ ' + FMT(r.totalDeduct);
+    document.getElementById('r-taxable').textContent = FMT(r.taxableNet);
+    document.getElementById('r-tax').textContent = FMT(r.tax);
+    document.getElementById('r-rate').textContent = PCT(r.effectiveRate);
+
+    // Bracket highlight
+    ['br1','br2','br3'].forEach((id, i) => {
+      document.getElementById(id).classList.toggle('active', i + 1 === r.activeBracket);
+    });
+
+    // Deduction breakdown
+    const items = [
+      { label: '配偶扣除額', value: r.spouseDeduct },
+      { label: '直系血親卑親屬扣除額', value: r.descendantsDeduct },
+      { label: '父母扣除額', value: r.parentsDeduct },
+      { label: '喪葬費扣除額', value: r.funeralDeduct },
+      { label: '重度身心障礙特別扣除額', value: r.disabledDeduct },
+      { label: '兄弟姊妹、祖父母扣除額', value: r.siblingsDeduct },
+      { label: '農業用地扣除', value: r.farmDeduct },
+      { label: '公共設施保留地扣除', value: r.publicDeduct },
+      { label: '其他扣除', value: r.otherDeduct },
+    ].filter(item => item.value > 0);
+
+    document.getElementById('deductBreakdown').innerHTML = items.length
+      ? items.map(item => `
+          <div class="result-row">
+            <span class="label">${item.label}</span>
+            <span class="value deduct">${FMT(item.value)}</span>
+          </div>`).join('')
+      : '<div class="result-row"><span class="label" style="color:rgba(255,255,255,0.4)">無扣除額項目</span></div>';
+
+    if (!silent) {
+      document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+</script>
+</body>
+</html>

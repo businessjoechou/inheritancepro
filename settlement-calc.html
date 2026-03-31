@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>和解金額試算｜InheritancePro</title>
+<meta name="description" content="繼承財產爭議和解金額試算工具，依訴訟強度、對造財力、時間成本計算合理和解範圍，提供最佳開價與底線建議。InheritancePro。">
+<meta name="keywords" content="和解金額,和解試算,繼承和解,財產爭議和解,訴訟和解,和解策略">
+<meta name="robots" content="index, follow">
+<meta name="author" content="InheritancePro">
+<meta property="og:title" content="和解金額試算｜InheritancePro">
+<meta property="og:description" content="依期望值模型計算繼承爭議合理和解範圍，提供開價策略。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://inheritancepro.app/settlement-calc.html">
+<meta property="og:site_name" content="InheritancePro">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="和解金額試算｜InheritancePro">
+<link rel="canonical" href="https://inheritancepro.app/settlement-calc.html">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="js/persona.js"></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"和解金額試算","url":"https://inheritancepro.app/settlement-calc.html","applicationCategory":"LegalService","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro"}}
+</script>
+<style>
+  :root {
+    --ink: #1a1410; --paper: #f5f0e8; --accent: #8b2020; --gold: #c4932a;
+    --soft: #e8e0d0; --muted: #7a6f62; --success: #2a6b4a; --danger: #8b2020;
+    --border: #c8bfb0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--paper); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; min-height: 100vh; font-size: 15px; }
+  header { background: var(--ink); color: var(--paper); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .logo { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 700; letter-spacing: 0.04em; }
+  .logo span { color: var(--gold); }
+  .page-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 3px; font-family: 'DM Mono', monospace; letter-spacing: 0.06em; }
+  .home-link { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; }
+  .home-link:hover { color: var(--gold); }
+  main { padding: 24px 20px 120px; max-width: 480px; margin: 0 auto; }
+  h1 { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
+  .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
+  .card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 14px; }
+  .section-title { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--soft); }
+  .input-group { margin-bottom: 16px; }
+  .input-group:last-child { margin-bottom: 0; }
+  label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+  .label-hint { font-size: 11px; color: var(--muted); font-weight: 400; margin-left: 6px; }
+  input[type="number"], select {
+    width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 8px;
+    background: var(--paper); font-size: 15px; font-family: 'DM Mono', monospace;
+    color: var(--ink); transition: border-color 0.2s; -webkit-appearance: none;
+  }
+  input:focus, select:focus { outline: none; border-color: var(--gold); background: #fff; }
+  .slider-wrap { margin-bottom: 6px; }
+  input[type="range"] { width: 100%; accent-color: var(--gold); }
+  .slider-label { display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); margin-top: 4px; }
+  .slider-value { text-align: center; font-family: 'DM Mono', monospace; font-size: 22px; font-weight: 600; color: var(--gold); margin: 6px 0; }
+  .calc-btn {
+    width: 100%; padding: 16px; background: var(--ink); color: var(--paper);
+    border: none; border-radius: 10px; font-size: 15px; font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 500; cursor: pointer; letter-spacing: 0.04em; margin-top: 8px; transition: background 0.2s;
+  }
+  .calc-btn:hover { background: #2a2420; }
+  #results { display: none; margin-top: 20px; }
+  .result-card { background: var(--ink); color: var(--paper); border-radius: 12px; padding: 24px; margin-bottom: 14px; }
+  .result-title { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 16px; }
+  .result-row { display: flex; justify-content: space-between; align-items: baseline; padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 13px; }
+  .result-row:last-child { border-bottom: none; }
+  .result-row .lbl { color: rgba(255,255,255,0.65); }
+  .result-row .val { font-family: 'DM Mono', monospace; }
+  .val.gold { color: var(--gold); font-weight: 700; font-size: 18px; }
+  .val.big { color: #fff; font-weight: 700; font-size: 20px; }
+  .val.green { color: #7ecba1; }
+  .val.red { color: #f28b6e; }
+  .val.muted { color: rgba(255,255,255,0.45); font-size: 12px; }
+  .range-display { background: rgba(196,147,42,0.12); border: 1px solid rgba(196,147,42,0.3); border-radius: 8px; padding: 18px; margin: 12px 0; text-align: center; }
+  .range-label { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: 0.12em; margin-bottom: 8px; }
+  .range-numbers { display: flex; align-items: center; justify-content: center; gap: 12px; }
+  .range-num { font-family: 'DM Mono', monospace; font-size: 20px; font-weight: 700; color: var(--gold); }
+  .range-sep { color: rgba(255,255,255,0.3); font-size: 18px; }
+  .opening-price { background: rgba(255,255,255,0.06); border-radius: 8px; padding: 14px; margin-top: 8px; text-align: center; }
+  .opening-label { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: 0.12em; margin-bottom: 6px; }
+  .opening-num { font-family: 'DM Mono', monospace; font-size: 26px; font-weight: 700; color: #fff; }
+  .compare-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 4px; }
+  .compare-table th { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: 0.08em; text-align: left; padding: 6px 4px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .compare-table td { padding: 9px 4px; border-bottom: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.7); font-family: 'DM Mono', monospace; font-size: 12px; }
+  .compare-table tr.recommended td { color: var(--gold); font-weight: 600; }
+  .verdict-box { border-radius: 8px; padding: 14px; margin-top: 12px; font-size: 13px; line-height: 1.7; }
+  .verdict-good { background: rgba(42,107,74,0.2); border: 1px solid rgba(42,107,74,0.35); }
+  .verdict-neutral { background: rgba(196,147,42,0.15); border: 1px solid rgba(196,147,42,0.35); }
+  .verdict-bad { background: rgba(139,32,32,0.15); border: 1px solid rgba(139,32,32,0.3); }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="logo">Inheritance<span>Pro</span></div>
+    <div class="page-sub">SETTLEMENT CALCULATOR</div>
+  </div>
+  <a class="home-link" href="index.html">← 返回</a>
+</header>
+
+<main>
+  <h1>和解金額試算</h1>
+  <p class="subtitle">以期望值模型計算合理和解範圍，提供最佳開價策略，讓客戶做出有根據的和解決定。</p>
+
+  <div class="card">
+    <div class="section-title">A · 爭議基本資料</div>
+    <div class="input-group">
+      <label>爭議金額<span class="label-hint">元，理論上可主張的最大金額</span></label>
+      <input type="number" id="disputeAmt" placeholder="例：5000000" min="0" oninput="autoCalc()">
+    </div>
+    <div class="input-group">
+      <label>訴訟強度（1–10）<span class="label-hint">可參考「訴訟強度評估」頁面結果</span></label>
+      <div class="slider-value" id="strengthDisplay">5</div>
+      <div class="slider-wrap">
+        <input type="range" id="strength" min="1" max="10" value="5" oninput="updateSlider();autoCalc()">
+        <div class="slider-label"><span>1 極弱</span><span>10 極強</span></div>
+      </div>
+    </div>
+    <div class="input-group">
+      <label>客戶可接受的最低金額<span class="label-hint">元</span></label>
+      <input type="number" id="minAccept" placeholder="0" min="0" oninput="autoCalc()">
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">B · 訴訟成本評估</div>
+    <div class="input-group">
+      <label>預估律師費（自方）<span class="label-hint">元，含一、二審</span></label>
+      <input type="number" id="legalFee" placeholder="例：300000" min="0" oninput="autoCalc()">
+    </div>
+    <div class="input-group">
+      <label>預估訴訟期間<span class="label-hint">年</span></label>
+      <select id="litigYears" onchange="autoCalc()">
+        <option value="1">約 1 年（簡易訴訟）</option>
+        <option value="2" selected>約 2 年（一般地院）</option>
+        <option value="3">約 3 年（含二審）</option>
+        <option value="5">約 5 年（含最高法院）</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label>精神與時間成本</label>
+      <select id="stressCost" onchange="autoCalc()">
+        <option value="0">低（案件單純）</option>
+        <option value="0.05" selected>中（需多次開庭）</option>
+        <option value="0.10">高（涉及家族糾紛）</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">C · 對造條件</div>
+    <div class="input-group">
+      <label>對造和解意願</label>
+      <select id="willingness" onchange="autoCalc()">
+        <option value="0">無意願（明確拒絕）</option>
+        <option value="0.5" selected>可能（尚未表態）</option>
+        <option value="1">有意願（主動詢問）</option>
+      </select>
+    </div>
+  </div>
+
+  <button class="calc-btn" onclick="calculate()">試算和解金額</button>
+
+  <div id="results">
+    <div class="result-card">
+      <div class="result-title">期望值分析</div>
+      <div class="result-row"><span class="lbl">爭議金額</span><span class="val" id="r-dispute">—</span></div>
+      <div class="result-row"><span class="lbl">訴訟勝訴期望值</span><span class="val" id="r-expected">—</span></div>
+      <div class="result-row"><span class="lbl">律師費</span><span class="val red" id="r-legal">—</span></div>
+      <div class="result-row"><span class="lbl">時間折現成本</span><span class="val red" id="r-timeDiscount">—</span></div>
+      <div class="result-row"><span class="lbl">精神時間成本</span><span class="val red" id="r-stress">—</span></div>
+      <div class="result-row" style="border-top:1px solid rgba(255,255,255,0.15);margin-top:4px;padding-top:12px">
+        <span class="lbl" style="color:#fff;font-weight:500">扣除成本後淨期望值</span>
+        <span class="val big" id="r-net">—</span>
+      </div>
+    </div>
+
+    <div class="result-card">
+      <div class="result-title">建議和解範圍</div>
+      <div class="range-display">
+        <div class="range-label">SETTLEMENT RANGE</div>
+        <div class="range-numbers">
+          <div class="range-num" id="r-floor">—</div>
+          <div class="range-sep">～</div>
+          <div class="range-num" id="r-ceiling">—</div>
+        </div>
+      </div>
+      <div class="opening-price">
+        <div class="opening-label">建議開價（含談判讓步空間）</div>
+        <div class="opening-num" id="r-opening">—</div>
+      </div>
+      <div class="result-row" style="margin-top:12px"><span class="lbl">客戶最低接受</span><span class="val" id="r-min">—</span></div>
+    </div>
+
+    <div class="result-card">
+      <div class="result-title">和解 vs 訴訟比較</div>
+      <table class="compare-table">
+        <thead><tr><th>方案</th><th>預期結果</th><th>時間</th></tr></thead>
+        <tbody id="compareBody"></tbody>
+      </table>
+      <div class="verdict-box" id="verdictBox"></div>
+    </div>
+  </div>
+</main>
+
+<script>
+  const FMT = v => '$ ' + Math.round(v).toLocaleString('zh-TW');
+
+  function updateSlider() {
+    document.getElementById('strengthDisplay').textContent = document.getElementById('strength').value;
+  }
+
+  function getVal(id, fallback = 0) {
+    const v = parseFloat(document.getElementById(id).value);
+    return isNaN(v) ? fallback : v;
+  }
+
+  function autoCalc() {
+    if (document.getElementById('results').style.display !== 'none') calculate(true);
+  }
+
+  function calculate(silent = false) {
+    const dispute = getVal('disputeAmt');
+    if (!dispute) { if (!silent) alert('請輸入爭議金額'); return; }
+
+    const strength = parseInt(document.getElementById('strength').value);
+    const minAccept = getVal('minAccept');
+    const legalFee = getVal('legalFee');
+    const years = parseInt(document.getElementById('litigYears').value);
+    const stressRate = parseFloat(document.getElementById('stressCost').value);
+    const willingness = parseFloat(document.getElementById('willingness').value);
+
+    // Expected value model
+    const winProb = strength / 10;
+    const expectedValue = dispute * winProb;
+    const timeDiscount = dispute * 0.03 * years; // 3% per year discount
+    const stressCost = dispute * stressRate;
+    const totalCost = legalFee + timeDiscount + stressCost;
+    const netExpected = Math.max(0, expectedValue - totalCost);
+
+    // Settlement range
+    const floor = Math.max(minAccept || 0, netExpected * 0.85);
+    const ceiling = dispute * Math.min(0.95, winProb + 0.15);
+    const opening = ceiling * 1.2 > dispute ? dispute * 0.95 : ceiling * 1.2;
+
+    document.getElementById('results').style.display = 'block';
+    document.getElementById('r-dispute').textContent = FMT(dispute);
+    document.getElementById('r-expected').textContent = FMT(expectedValue);
+    document.getElementById('r-legal').textContent = legalFee > 0 ? '－ ' + FMT(legalFee) : '—';
+    document.getElementById('r-timeDiscount').textContent = '－ ' + FMT(timeDiscount);
+    document.getElementById('r-stress').textContent = stressCost > 0 ? '－ ' + FMT(stressCost) : '—';
+    document.getElementById('r-net').textContent = FMT(netExpected);
+    document.getElementById('r-floor').textContent = FMT(floor);
+    document.getElementById('r-ceiling').textContent = FMT(ceiling);
+    document.getElementById('r-opening').textContent = FMT(opening);
+    document.getElementById('r-min').textContent = minAccept > 0 ? FMT(minAccept) : '未設定';
+
+    // Compare table
+    const settleMidpoint = (floor + ceiling) / 2;
+    document.getElementById('compareBody').innerHTML = `
+      <tr class="recommended">
+        <td>和解 ⭐</td>
+        <td>${FMT(settleMidpoint)}（預估）</td>
+        <td>數週～數月</td>
+      </tr>
+      <tr>
+        <td>訴訟</td>
+        <td>${FMT(netExpected)}（扣費後）</td>
+        <td>${years} 年</td>
+      </tr>`;
+
+    // Verdict
+    const settlingSaving = settleMidpoint - netExpected;
+    const verdictEl = document.getElementById('verdictBox');
+    if (willingness === 0) {
+      verdictEl.className = 'verdict-box verdict-bad';
+      verdictEl.innerHTML = '<strong>⚠ 對造無和解意願</strong><br>目前強行談判效果有限。建議先寄律師函施加壓力，或由第三方調解員介入，創造和解空間後再談。';
+    } else if (settlingSaving > 0 && strength < 7) {
+      verdictEl.className = 'verdict-box verdict-good';
+      verdictEl.innerHTML = `<strong>✓ 建議優先和解</strong><br>訴訟強度中等偏弱，和解可節省預期 ${FMT(Math.abs(settlingSaving))} 的成本與風險。建議以 ${FMT(opening)} 作為開價，底線設在 ${FMT(floor)}。`;
+    } else if (strength >= 7) {
+      verdictEl.className = 'verdict-box verdict-neutral';
+      verdictEl.innerHTML = `<strong>訴訟優勢明顯，和解需謹慎</strong><br>您的訴訟實力強，若和解應要求不低於 ${FMT(ceiling)}，否則訴訟可能更有利。`;
+    } else {
+      verdictEl.className = 'verdict-box verdict-neutral';
+      verdictEl.innerHTML = `<strong>視對造回應決定</strong><br>建議先以 ${FMT(opening)} 試探，若對造出價落在 ${FMT(floor)}～${FMT(ceiling)} 範圍內可考慮接受。`;
+    }
+
+    if (!silent) document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+</script>
+</body>
+</html>

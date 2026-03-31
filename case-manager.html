@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>客戶案件管理｜InheritancePro</title>
+  <meta name="description" content="遺產繼承案件管理工具，追蹤多案件關鍵期限，含六項法定期限倒數與案件備註。InheritancePro。">
+  <meta name="keywords" content="案件管理,遺產案件,繼承期限,期限管理,遺產稅申報期限">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="InheritancePro">
+  <meta property="og:title" content="客戶案件管理｜InheritancePro">
+  <meta property="og:description" content="遺產繼承案件管理工具，追蹤多案件關鍵期限，含六項法定期限倒數與案件備註。">
+  <meta property="og:url" content="https://inheritancepro.app/case-manager.html">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="js/persona.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "客戶案件管理",
+    "url": "https://inheritancepro.app/case-manager.html",
+    "description": "遺產繼承案件管理工具，追蹤多案件關鍵期限，含六項法定期限倒數與案件備註。",
+    "applicationCategory": "FinanceApplication",
+    "inLanguage": "zh-TW",
+    "publisher": {
+      "@type": "Organization",
+      "name": "InheritancePro"
+    }
+  }
+  </script>
+  <style>
+    :root {
+      --ink: #1a1410;
+      --paper: #f5f0e8;
+      --accent: #8b2020;
+      --gold: #c4932a;
+      --soft: #e8e0d0;
+      --muted: #7a6f62;
+      --success: #2a6b4a;
+      --danger: #8b2020;
+      --border: #c8bfb0;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #1a1410;
+      padding: 0 20px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    .logo {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #f5f0e8;
+      text-decoration: none;
+    }
+    .logo span { color: var(--gold); }
+    .back-link {
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      color: var(--gold);
+      text-decoration: none;
+      opacity: 0.85;
+      transition: opacity 0.2s;
+    }
+    .back-link:hover { opacity: 1; }
+    main {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 24px 16px 48px;
+    }
+    h1 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 24px;
+      font-family: 'DM Mono', monospace;
+    }
+    .card {
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .card-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-title::before {
+      content: '';
+      display: inline-block;
+      width: 3px;
+      height: 16px;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+    label {
+      display: block;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    input[type="text"],
+    input[type="date"],
+    textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+      margin-bottom: 12px;
+    }
+    input:focus, textarea:focus { border-color: var(--gold); }
+    textarea { resize: vertical; min-height: 64px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      width: 100%;
+    }
+    .btn-primary:hover { background: #6e1a1a; }
+    .btn-danger {
+      background: transparent;
+      color: var(--danger);
+      border: 1.5px solid var(--border);
+      padding: 6px 14px;
+      font-size: 13px;
+    }
+    .btn-danger:hover { background: #fff0f0; border-color: var(--danger); }
+    .case-list { margin-top: 8px; }
+    .case-card {
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+    .case-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      cursor: pointer;
+      user-select: none;
+      gap: 10px;
+    }
+    .case-header:hover { background: var(--soft); }
+    .case-header-left { flex: 1; min-width: 0; }
+    .case-name {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .case-meta {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .urgency-badge {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 20px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .urgency-overdue { background: #ffe5e5; color: var(--danger); }
+    .urgency-urgent { background: #fff3e0; color: #c46a00; }
+    .urgency-ok { background: #e8f5ed; color: var(--success); }
+    .case-toggle {
+      font-size: 18px;
+      color: var(--muted);
+      transition: transform 0.25s;
+      flex-shrink: 0;
+    }
+    .case-toggle.open { transform: rotate(180deg); }
+    .case-body {
+      display: none;
+      padding: 0 16px 16px;
+      border-top: 1px solid var(--soft);
+    }
+    .case-body.open { display: block; }
+    .deadlines-grid {
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .deadline-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 9px 12px;
+      background: var(--paper);
+      border-radius: 8px;
+      border: 1px solid var(--soft);
+      gap: 8px;
+    }
+    .deadline-name {
+      font-size: 13px;
+      color: var(--ink);
+      flex: 1;
+    }
+    .deadline-date {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .deadline-days {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      font-weight: 500;
+      white-space: nowrap;
+      text-align: right;
+      min-width: 56px;
+    }
+    .days-overdue { color: var(--danger); }
+    .days-urgent { color: #c46a00; }
+    .days-ok { color: var(--success); }
+    .case-notes {
+      margin-top: 12px;
+    }
+    .notes-display {
+      font-size: 13px;
+      color: var(--muted);
+      padding: 8px 12px;
+      background: var(--paper);
+      border-radius: 8px;
+      border: 1px solid var(--soft);
+      min-height: 36px;
+      white-space: pre-wrap;
+    }
+    .notes-edit-area {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1.5px solid var(--gold);
+      border-radius: 8px;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 13px;
+      resize: vertical;
+      min-height: 64px;
+      outline: none;
+      margin-bottom: 6px;
+    }
+    .case-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      justify-content: flex-end;
+    }
+    .btn-small {
+      padding: 6px 14px;
+      font-size: 13px;
+      border-radius: 7px;
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
+      border: 1.5px solid var(--border);
+      cursor: pointer;
+      font-family: 'Noto Sans TC', sans-serif;
+      transition: all 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-save {
+      background: var(--success);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-family: 'Noto Sans TC', sans-serif;
+    }
+    .btn-save:hover { background: #1f5238; }
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--muted);
+    }
+    .empty-icon { font-size: 40px; margin-bottom: 10px; }
+    .empty-text { font-size: 14px; }
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      margin-top: 14px;
+    }
+    .accountant-only {}
+    .sort-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .sort-bar-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .case-count {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+<header>
+  <a href="index.html" class="logo">Inheritance<span>Pro</span></a>
+  <a href="index.html" class="back-link">← 返回</a>
+</header>
+
+<main>
+  <h1>客戶案件管理</h1>
+  <p class="subtitle">CASE MANAGER — 法定期限倒數追蹤</p>
+
+  <div class="card accountant-only">
+    <div class="card-title">新增案件</div>
+    <label for="clientName">客戶姓名</label>
+    <input type="text" id="clientName" placeholder="例：王大明">
+    <label for="deathDate">死亡日期</label>
+    <input type="date" id="deathDate">
+    <label for="initNotes">備註（選填）</label>
+    <textarea id="initNotes" placeholder="例：不動產坐落地址、繼承人名單……"></textarea>
+    <button class="btn btn-primary" onclick="addCase()">＋ 新增案件</button>
+  </div>
+
+  <div class="accountant-only">
+    <div class="sort-bar">
+      <div class="sort-bar-title">案件列表</div>
+      <div class="case-count" id="caseCount">共 0 件</div>
+    </div>
+    <div class="case-list" id="caseList"></div>
+  </div>
+</main>
+
+<script>
+const STORAGE_KEY = 'ip_cases';
+
+const DEADLINES = [
+  { key: 'd7',   label: '死亡登記（戶籍）', days: 7,   note: '民法§1149 戶籍法§16' },
+  { key: 'd90',  label: '拋棄繼承', days: 90,  note: '民法§1174' },
+  { key: 'd180a',label: '辦理繼承登記', days: 180, note: '土地法§73' },
+  { key: 'd180b',label: '遺產稅申報', days: 180, note: '遺產及贈與稅法§23' },
+  { key: 'ext',  label: '遺產稅展延申請', days: 150, note: '應在申報期限前辦理（建議第150天前）' },
+  { key: 'd60tax',label: '遺產稅繳納（收到核定後）', days: null, note: '收到核定通知書後2個月內' },
+];
+
+function loadCases() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+  catch { return []; }
+}
+
+function saveCases(cases) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(cases));
+}
+
+function addCase() {
+  const name = document.getElementById('clientName').value.trim();
+  const death = document.getElementById('deathDate').value;
+  const notes = document.getElementById('initNotes').value.trim();
+
+  if (!name) { alert('請輸入客戶姓名'); return; }
+  if (!death) { alert('請輸入死亡日期'); return; }
+
+  const cases = loadCases();
+  const newCase = {
+    id: Date.now().toString(),
+    name,
+    deathDate: death,
+    notes,
+    createdAt: new Date().toISOString()
+  };
+  cases.push(newCase);
+  saveCases(cases);
+
+  document.getElementById('clientName').value = '';
+  document.getElementById('deathDate').value = '';
+  document.getElementById('initNotes').value = '';
+
+  renderCases();
+}
+
+function deleteCase(id) {
+  if (!confirm('確定要刪除此案件？')) return;
+  const cases = loadCases().filter(c => c.id !== id);
+  saveCases(cases);
+  renderCases();
+}
+
+function saveNotes(id, notes) {
+  const cases = loadCases();
+  const c = cases.find(x => x.id === id);
+  if (c) { c.notes = notes; saveCases(cases); }
+  renderCases();
+}
+
+function calcDeadlines(deathDateStr) {
+  const death = new Date(deathDateStr);
+  const today = new Date();
+  today.setHours(0,0,0,0);
+
+  return DEADLINES.map(d => {
+    if (d.days === null) {
+      return { ...d, date: null, daysLeft: null };
+    }
+    const due = new Date(death);
+    due.setDate(due.getDate() + d.days);
+    const diff = Math.ceil((due - today) / (1000 * 60 * 60 * 24));
+    return { ...d, date: due, daysLeft: diff };
+  });
+}
+
+function formatDate(d) {
+  if (!d) return '—';
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const day = String(d.getDate()).padStart(2,'0');
+  return `${y}/${m}/${day}`;
+}
+
+function urgencyLabel(deadlines) {
+  const relevant = deadlines.filter(d => d.daysLeft !== null);
+  const minDays = Math.min(...relevant.map(d => d.daysLeft));
+  if (minDays < 0) return { cls: 'urgency-overdue', text: '已逾期' };
+  if (minDays <= 14) return { cls: 'urgency-urgent', text: `${minDays}天` };
+  return { cls: 'urgency-ok', text: `${minDays}天` };
+}
+
+function renderCases() {
+  const cases = loadCases();
+  const list = document.getElementById('caseList');
+  document.getElementById('caseCount').textContent = `共 ${cases.length} 件`;
+
+  if (cases.length === 0) {
+    list.innerHTML = `<div class="empty-state"><div class="empty-icon">📂</div><div class="empty-text">尚無案件，請新增第一筆</div></div>`;
+    return;
+  }
+
+  // Sort by most urgent (min days remaining, overdue first)
+  const sorted = [...cases].map(c => {
+    const dl = calcDeadlines(c.deathDate);
+    const relevant = dl.filter(d => d.daysLeft !== null);
+    const minDays = relevant.length ? Math.min(...relevant.map(d => d.daysLeft)) : 9999;
+    return { ...c, deadlines: dl, minDays };
+  }).sort((a, b) => a.minDays - b.minDays);
+
+  list.innerHTML = sorted.map(c => {
+    const urg = urgencyLabel(c.deadlines);
+    const isOpen = document.querySelector(`[data-id="${c.id}"] .case-body`)?.classList.contains('open');
+
+    const dlRows = c.deadlines.map(d => {
+      let daysHtml = '';
+      let daysClass = 'days-ok';
+      if (d.daysLeft === null) {
+        daysHtml = '<span style="color:var(--muted);font-size:11px">依核定通知</span>';
+      } else if (d.daysLeft < 0) {
+        daysHtml = `<span class="days-overdue">逾期 ${Math.abs(d.daysLeft)} 天</span>`;
+      } else if (d.daysLeft === 0) {
+        daysHtml = `<span class="days-urgent">今天到期</span>`;
+      } else if (d.daysLeft <= 14) {
+        daysHtml = `<span class="days-urgent">剩 ${d.daysLeft} 天</span>`;
+      } else {
+        daysHtml = `<span class="days-ok">剩 ${d.daysLeft} 天</span>`;
+      }
+      return `
+        <div class="deadline-row">
+          <div class="deadline-name">${d.label}</div>
+          <div class="deadline-date">${formatDate(d.date)}</div>
+          <div class="deadline-days">${daysHtml}</div>
+        </div>`;
+    }).join('');
+
+    const notesEscaped = (c.notes || '').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+
+    return `
+    <div class="case-card" data-id="${c.id}">
+      <div class="case-header" onclick="toggleCase('${c.id}')">
+        <div class="case-header-left">
+          <div class="case-name">${escHtml(c.name)}</div>
+          <div class="case-meta">死亡日期：${c.deathDate.replace(/-/g,'/')}</div>
+        </div>
+        <span class="urgency-badge ${urg.cls}">${urg.text}</span>
+        <span class="case-toggle${isOpen ? ' open' : ''}">▾</span>
+      </div>
+      <div class="case-body${isOpen ? ' open' : ''}">
+        <div class="section-label">法定期限倒數</div>
+        <div class="deadlines-grid">${dlRows}</div>
+        <div class="case-notes">
+          <div class="section-label">案件備註</div>
+          <div class="notes-display" id="notes-display-${c.id}" style="${c.notes ? '' : 'color:var(--muted);font-style:italic'}">${c.notes ? escHtml(c.notes) : '尚無備註'}</div>
+          <div id="notes-edit-${c.id}" style="display:none;">
+            <textarea class="notes-edit-area" id="notes-ta-${c.id}">${notesEscaped}</textarea>
+          </div>
+        </div>
+        <div class="case-actions">
+          <button class="btn btn-small btn-ghost" id="edit-btn-${c.id}" onclick="toggleEditNotes('${c.id}')">編輯備註</button>
+          <button class="btn btn-small btn-save" id="save-btn-${c.id}" onclick="confirmSaveNotes('${c.id}')" style="display:none;">儲存</button>
+          <button class="btn btn-small btn-danger" onclick="deleteCase('${c.id}')">刪除案件</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function toggleCase(id) {
+  const card = document.querySelector(`[data-id="${id}"]`);
+  if (!card) return;
+  const body = card.querySelector('.case-body');
+  const toggle = card.querySelector('.case-toggle');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  toggle.classList.toggle('open', !isOpen);
+}
+
+function toggleEditNotes(id) {
+  const display = document.getElementById(`notes-display-${id}`);
+  const editDiv = document.getElementById(`notes-edit-${id}`);
+  const editBtn = document.getElementById(`edit-btn-${id}`);
+  const saveBtn = document.getElementById(`save-btn-${id}`);
+  if (display.style.display !== 'none') {
+    display.style.display = 'none';
+    editDiv.style.display = 'block';
+    editBtn.style.display = 'none';
+    saveBtn.style.display = 'inline-flex';
+  } else {
+    display.style.display = 'block';
+    editDiv.style.display = 'none';
+    editBtn.style.display = 'inline-flex';
+    saveBtn.style.display = 'none';
+  }
+}
+
+function confirmSaveNotes(id) {
+  const ta = document.getElementById(`notes-ta-${id}`);
+  if (!ta) return;
+  saveNotes(id, ta.value.trim());
+}
+
+renderCases();
+</script>
+</body>
+</html>

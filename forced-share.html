@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>特留分侵害試算｜InheritancePro</title>
+<meta name="description" content="民法§1223特留分侵害計算工具，依繼承人組成計算特留分比例，判斷遺囑或生前贈與是否侵害特留分，計算可追索金額。InheritancePro。">
+<meta name="keywords" content="特留分,特留分侵害,民法1223,遺囑侵害特留分,特留分計算,扣減權">
+<meta name="robots" content="index, follow">
+<meta name="author" content="InheritancePro">
+<meta property="og:title" content="特留分侵害試算｜InheritancePro">
+<meta property="og:description" content="依民法§1223逐人計算特留分，判斷遺囑或生前贈與是否構成侵害，估算可主張金額。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://inheritancepro.app/forced-share.html">
+<meta property="og:site_name" content="InheritancePro">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="特留分侵害試算｜InheritancePro">
+<link rel="canonical" href="https://inheritancepro.app/forced-share.html">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="js/persona.js"></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"特留分侵害試算","url":"https://inheritancepro.app/forced-share.html","applicationCategory":"LegalService","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro"}}
+</script>
+<style>
+  :root {
+    --ink: #1a1410; --paper: #f5f0e8; --accent: #8b2020; --gold: #c4932a;
+    --soft: #e8e0d0; --muted: #7a6f62; --success: #2a6b4a; --danger: #8b2020;
+    --border: #c8bfb0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--paper); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; min-height: 100vh; font-size: 15px; }
+  header { background: var(--ink); color: var(--paper); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .logo { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 700; letter-spacing: 0.04em; }
+  .logo span { color: var(--gold); }
+  .page-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 3px; font-family: 'DM Mono', monospace; letter-spacing: 0.06em; }
+  .home-link { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; }
+  .home-link:hover { color: var(--gold); }
+  main { padding: 24px 20px 120px; max-width: 480px; margin: 0 auto; }
+  h1 { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
+  .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
+  .card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 14px; }
+  .section-title { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--soft); }
+  .input-group { margin-bottom: 16px; }
+  .input-group:last-child { margin-bottom: 0; }
+  label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+  .label-hint { font-size: 11px; color: var(--muted); font-weight: 400; margin-left: 6px; }
+  input[type="number"] {
+    width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 8px;
+    background: var(--paper); font-size: 15px; font-family: 'DM Mono', monospace;
+    color: var(--ink); transition: border-color 0.2s; -webkit-appearance: none;
+  }
+  input:focus { outline: none; border-color: var(--gold); background: #fff; }
+  .checkbox-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .checkbox-row input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--gold); cursor: pointer; }
+  .checkbox-row label { margin: 0; cursor: pointer; font-size: 13px; }
+  .calc-btn {
+    width: 100%; padding: 16px; background: var(--ink); color: var(--paper);
+    border: none; border-radius: 10px; font-size: 15px; font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 500; cursor: pointer; letter-spacing: 0.04em; margin-top: 8px; transition: background 0.2s;
+  }
+  .calc-btn:hover { background: #2a2420; }
+  #results { display: none; margin-top: 20px; }
+  .result-card { background: var(--ink); color: var(--paper); border-radius: 12px; padding: 24px; margin-bottom: 14px; }
+  .result-title { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 16px; }
+  .heir-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .heir-table th { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: 0.08em; text-align: left; padding: 6px 4px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .heir-table td { padding: 9px 4px; border-bottom: 1px solid rgba(255,255,255,0.06); font-family: 'DM Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.75); vertical-align: top; }
+  .heir-table tr.infringed td { color: #f28b6e; }
+  .heir-table tr.infringed td:last-child { font-weight: 700; }
+  .summary-row { display: flex; justify-content: space-between; align-items: baseline; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 13px; }
+  .summary-row:last-child { border-bottom: none; }
+  .summary-row .lbl { color: rgba(255,255,255,0.65); }
+  .summary-row .val { font-family: 'DM Mono', monospace; }
+  .val.gold { color: var(--gold); font-size: 18px; font-weight: 700; }
+  .val.red { color: #f28b6e; font-size: 18px; font-weight: 700; }
+  .val.green { color: #7ecba1; }
+  .action-box { background: rgba(139,32,32,0.12); border: 1px solid rgba(139,32,32,0.3); border-radius: 8px; padding: 14px; margin-top: 12px; font-size: 12px; line-height: 1.8; }
+  .action-box strong { color: #f28b6e; }
+  .no-infringement { background: rgba(42,107,74,0.1); border: 1px solid rgba(42,107,74,0.25); border-radius: 8px; padding: 14px; margin-top: 12px; font-size: 13px; color: #7ecba1; text-align: center; }
+  .law-note { background: rgba(196,147,42,0.08); border: 1px solid rgba(196,147,42,0.25); border-radius: 8px; padding: 12px 14px; font-size: 12px; color: var(--muted); line-height: 1.7; margin-top: 14px; }
+  .law-note strong { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="logo">Inheritance<span>Pro</span></div>
+    <div class="page-sub">FORCED SHARE · §1223</div>
+  </div>
+  <a class="home-link" href="index.html">← 返回</a>
+</header>
+
+<main>
+  <h1>特留分侵害試算</h1>
+  <p class="subtitle">依民法§1223計算各繼承人特留分，判斷遺囑或生前贈與是否構成侵害，估算可主張之追索金額。</p>
+
+  <!-- A. 繼承人組成 -->
+  <div class="card">
+    <div class="section-title">A · 繼承人組成</div>
+    <div class="checkbox-row">
+      <input type="checkbox" id="hasSpouse" onchange="autoCalc()">
+      <label for="hasSpouse">配偶存活（配偶為當然繼承人）</label>
+    </div>
+    <div class="input-group">
+      <label>直系血親卑親屬人數<span class="label-hint">子女、已故子女之代位繼承人，§1138①</span></label>
+      <input type="number" id="children" placeholder="0" min="0" max="20" oninput="autoCalc()">
+    </div>
+    <div class="input-group">
+      <label>父母存活人數<span class="label-hint">無直系血親卑親屬時繼承，§1138②，最多 2</span></label>
+      <input type="number" id="parents" placeholder="0" min="0" max="2" oninput="autoCalc()">
+    </div>
+    <div class="input-group">
+      <label>兄弟姊妹人數<span class="label-hint">第三順位，§1138③</span></label>
+      <input type="number" id="siblings" placeholder="0" min="0" max="20" oninput="autoCalc()">
+    </div>
+    <div class="input-group">
+      <label>祖父母存活人數<span class="label-hint">第四順位，§1138④，最多 4</span></label>
+      <input type="number" id="grandparents" placeholder="0" min="0" max="4" oninput="autoCalc()">
+    </div>
+  </div>
+
+  <!-- B. 遺產資訊 -->
+  <div class="card">
+    <div class="section-title">B · 遺產與分配</div>
+    <div class="input-group">
+      <label>遺產總額（積極遺產）<span class="label-hint">元</span></label>
+      <input type="number" id="grossEstate" placeholder="0" min="0" oninput="autoCalc()">
+    </div>
+    <div class="input-group">
+      <label>死亡前贈與應加回金額<span class="label-hint">元，§1148-1，一年內特種贈與</span></label>
+      <input type="number" id="addBackGifts" placeholder="0" min="0" oninput="autoCalc()">
+    </div>
+    <div class="input-group">
+      <label>遺囑指定給特定繼承人之金額<span class="label-hint">元（超出應繼分的部分）</span></label>
+      <input type="number" id="willedToHeirs" placeholder="0" min="0" oninput="autoCalc()">
+    </div>
+    <div class="input-group">
+      <label>遺囑捐贈或贈予第三人之金額<span class="label-hint">元</span></label>
+      <input type="number" id="willedToThird" placeholder="0" min="0" oninput="autoCalc()">
+    </div>
+  </div>
+
+  <button class="calc-btn" onclick="calculate()">計算特留分侵害</button>
+
+  <div id="results">
+    <div class="result-card">
+      <div class="result-title">計算基礎</div>
+      <div class="summary-row"><span class="lbl">遺產總額</span><span class="val" id="r-gross">—</span></div>
+      <div class="summary-row"><span class="lbl">加計生前贈與</span><span class="val" id="r-addback">—</span></div>
+      <div class="summary-row"><span class="lbl" style="color:#fff;font-weight:500">計算基礎合計</span><span class="val gold" id="r-base">—</span></div>
+    </div>
+
+    <div class="result-card">
+      <div class="result-title">各繼承人特留分明細</div>
+      <table class="heir-table">
+        <thead>
+          <tr>
+            <th>繼承人</th>
+            <th>應繼分</th>
+            <th>特留分</th>
+            <th>特留分金額</th>
+            <th>實際可得</th>
+            <th>侵害金額</th>
+          </tr>
+        </thead>
+        <tbody id="heirTableBody"></tbody>
+      </table>
+    </div>
+
+    <div class="result-card">
+      <div class="result-title">侵害總結</div>
+      <div id="summaryContent"></div>
+    </div>
+
+    <div class="law-note">
+      <strong>法律依據：</strong>§1223 特留分比例、§1224 特留分之扣減。扣減權行使期限：知悉特留分受侵害後 <strong>2年</strong> 內，或繼承開始後 <strong>10年</strong> 內（§1130準用§125）。生前特種贈與加回依§1148-1（繼承開始前1年內之贈與）。本試算僅供參考，實際情形請諮詢律師。
+    </div>
+  </div>
+</main>
+
+<script>
+  const FMT = v => '$ ' + Math.round(v).toLocaleString('zh-TW');
+  const FMT_FRAC = (n, d) => d === 1 ? `1/${n}` : `${n}/${d}`;
+
+  function getVal(id, fallback = 0) {
+    const v = parseFloat(document.getElementById(id).value);
+    return isNaN(v) ? fallback : v;
+  }
+
+  // 特留分係數 (fraction of 應繼分)
+  const FORCED_RATIO = {
+    descendants: [1, 2], // 1/2
+    parents:     [1, 2],
+    siblings:    [1, 3],
+    grandparents:[1, 3],
+    spouse:      [1, 2],
+  };
+
+  function computeHeirs() {
+    const hasSpouse = document.getElementById('hasSpouse').checked;
+    const children = Math.max(0, Math.floor(getVal('children')));
+    const parents = Math.min(2, Math.max(0, Math.floor(getVal('parents'))));
+    const siblings = Math.max(0, Math.floor(getVal('siblings')));
+    const grandparents = Math.min(4, Math.max(0, Math.floor(getVal('grandparents'))));
+
+    // Determine active rank (§1138)
+    let rank = 0;
+    if (children > 0) rank = 1;
+    else if (parents > 0) rank = 2;
+    else if (siblings > 0) rank = 3;
+    else if (grandparents > 0) rank = 4;
+
+    const heirs = [];
+
+    // Spouse (always inherits with any rank, §1144)
+    if (hasSpouse) {
+      let spouseShare;
+      if (rank === 1) spouseShare = [1, children + 1]; // equal share with children
+      else if (rank === 2) spouseShare = [1, 2];
+      else if (rank === 3) spouseShare = [1, 2];
+      else if (rank === 4) spouseShare = [2, 3];
+      else spouseShare = [1, 1]; // sole heir
+
+      heirs.push({ name: '配偶', type: 'spouse', share: spouseShare, ratio: FORCED_RATIO.spouse });
+    }
+
+    // Rank 1: descendants
+    if (rank === 1) {
+      const childShare = hasSpouse ? [1, children + 1] : [1, children];
+      // If multiple children each get equal share of non-spouse portion
+      for (let i = 1; i <= children; i++) {
+        heirs.push({ name: `子女 ${i}`, type: 'descendants', share: childShare, ratio: FORCED_RATIO.descendants });
+      }
+    }
+    // Rank 2: parents
+    else if (rank === 2) {
+      const parentShare = hasSpouse ? [1, 2 * parents] : [1, parents];
+      for (let i = 1; i <= parents; i++) {
+        heirs.push({ name: `父/母 ${i}`, type: 'parents', share: hasSpouse ? [1, 2 * parents] : [1, parents], ratio: FORCED_RATIO.parents });
+      }
+    }
+    // Rank 3: siblings
+    else if (rank === 3) {
+      const sibShare = hasSpouse ? [1, 2 * siblings] : [1, siblings];
+      for (let i = 1; i <= siblings; i++) {
+        heirs.push({ name: `兄弟姊妹 ${i}`, type: 'siblings', share: sibShare, ratio: FORCED_RATIO.siblings });
+      }
+    }
+    // Rank 4: grandparents
+    else if (rank === 4) {
+      const gpShare = hasSpouse ? [1, 3 * grandparents] : [1, grandparents];
+      for (let i = 1; i <= grandparents; i++) {
+        heirs.push({ name: `祖父母 ${i}`, type: 'grandparents', share: gpShare, ratio: FORCED_RATIO.grandparents });
+      }
+    }
+
+    return heirs;
+  }
+
+  function autoCalc() {
+    if (document.getElementById('results').style.display !== 'none') calculate(true);
+  }
+
+  function calculate(silent = false) {
+    const gross = getVal('grossEstate');
+    const addBack = getVal('addBackGifts');
+    const willedToHeirs = getVal('willedToHeirs');
+    const willedToThird = getVal('willedToThird');
+    const base = gross + addBack;
+
+    const heirs = computeHeirs();
+    if (heirs.length === 0) { alert('請至少選擇一位繼承人'); return; }
+
+    document.getElementById('results').style.display = 'block';
+    document.getElementById('r-gross').textContent = FMT(gross);
+    document.getElementById('r-addback').textContent = addBack > 0 ? '+ ' + FMT(addBack) : '—';
+    document.getElementById('r-base').textContent = FMT(base);
+
+    // Total deviated from normal distribution (遺囑給第三人 + 特定繼承人過多)
+    const totalDeviated = willedToThird; // third-party wills reduce what heirs can get
+
+    // Each heir's actual share (simplified: estate minus what went to third parties, distributed by should-be-share)
+    // Then reduce by what was over-given to specific heirs
+    const distributable = Math.max(0, base - willedToThird);
+
+    let totalInfringement = 0;
+    const rows = heirs.map(heir => {
+      const [sn, sd] = heir.share;
+      const [rn, rd] = heir.ratio;
+
+      const shouldInherit = base * (sn / sd);
+      const forcedShare = shouldInherit * (rn / rd);
+      const actualGot = distributable * (sn / sd); // simplified
+      const infringed = Math.max(0, forcedShare - actualGot);
+      totalInfringement += infringed;
+
+      return {
+        name: heir.name,
+        shareStr: `${sn}/${sd}`,
+        ratioStr: `×${rn}/${rd}`,
+        forcedShare,
+        actualGot,
+        infringed,
+      };
+    });
+
+    document.getElementById('heirTableBody').innerHTML = rows.map(r => `
+      <tr class="${r.infringed > 0 ? 'infringed' : ''}">
+        <td>${r.name}</td>
+        <td>${r.shareStr}</td>
+        <td>${r.ratioStr}</td>
+        <td>${FMT(r.forcedShare)}</td>
+        <td>${FMT(r.actualGot)}</td>
+        <td>${r.infringed > 0 ? FMT(r.infringed) : '—'}</td>
+      </tr>`).join('');
+
+    const summaryEl = document.getElementById('summaryContent');
+    if (totalInfringement > 0) {
+      summaryEl.innerHTML = `
+        <div class="summary-row"><span class="lbl">特留分侵害總金額</span><span class="val red">${FMT(totalInfringement)}</span></div>
+        <div class="summary-row"><span class="lbl">遺囑贈予第三人</span><span class="val">${FMT(willedToThird)}</span></div>
+        <div class="action-box">
+          <strong>⚠ 建議行動</strong><br>
+          受侵害之繼承人可依§1224行使<strong>扣減權</strong>，向受遺贈人或特定繼承人請求返還侵害金額。<br>
+          期限：知悉後 <strong>2年</strong> 或繼承開始後 <strong>10年</strong>，擇一先到期者為準。<br>
+          可先向受遺贈人行使，不足再向特定繼承人請求。
+        </div>`;
+    } else {
+      summaryEl.innerHTML = `
+        <div class="no-infringement">✓ 未發現特留分侵害<br><span style="font-size:12px;opacity:0.8">各繼承人實際所得均達特留分標準</span></div>`;
+    }
+
+    if (!silent) document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+</script>
+</body>
+</html>
