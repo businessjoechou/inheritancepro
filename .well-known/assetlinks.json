@@ -3,6 +3,9 @@
   "target": {
     "namespace": "android_app",
     "package_name": "app.inheritancepro.twa",
-    "sha256_cert_fingerprints": ["15:A9:E4:0B:1F:08:DF:C2:72:CD:A5:A8:BC:1D:5C:34:07:1C:45:E2:83:6F:97:10:3D:1E:F9:D3:4E:D0:26:01"]
+    "sha256_cert_fingerprints": [
+      "15:A9:E4:0B:1F:08:DF:C2:72:CD:A5:A8:BC:1D:5C:34:07:1C:45:E2:83:6F:97:10:3D:1E:F9:D3:4E:D0:26:01",
+      "76:B0:0B:35:88:CC:90:FE:33:96:03:58:A6:72:97:8C:4A:9B:A7:F6:9D:2E:D8:53:44:5A:A3:71:0D:89:40:98"
+    ]
   }
 }]
