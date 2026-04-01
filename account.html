@@ -319,6 +319,72 @@
     background: rgba(139, 32, 32, 0.06);
     border-color: var(--accent);
   }
+  .btn-delete-account {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    color: var(--muted);
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 100%;
+    justify-content: center;
+    margin-top: 4px;
+  }
+  .btn-delete-account:hover { color: var(--accent); }
+  .delete-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(26,20,16,0.55);
+    z-index: 200;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .delete-overlay.hidden { display: none; }
+  .delete-sheet {
+    background: var(--paper);
+    border-radius: 16px 16px 0 0;
+    width: 100%;
+    max-width: 540px;
+    padding: 28px 24px 48px;
+  }
+  .delete-sheet h3 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--accent);
+  }
+  .delete-sheet p { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
+  .delete-sheet-actions { display: flex; flex-direction: column; gap: 10px; }
+  .btn-confirm-delete {
+    padding: 13px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .btn-confirm-delete:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-cancel-delete {
+    padding: 12px;
+    background: transparent;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 14px;
+    color: var(--muted);
+    cursor: pointer;
+  }
 
   /* Not-logged-in state */
   .not-logged-in-card {
@@ -577,11 +643,23 @@
         </svg>
         登出
       </button>
+      <button class="btn-delete-account" id="btn-delete-account">刪除帳號</button>
     </div>
 
   </div><!-- /logged-in-content -->
 
 </main>
+
+<div class="delete-overlay hidden" id="delete-overlay">
+  <div class="delete-sheet">
+    <h3>確認刪除帳號</h3>
+    <p>此操作無法復原。您的所有計算紀錄與帳號資料將被永久刪除。</p>
+    <div class="delete-sheet-actions">
+      <button class="btn-confirm-delete" id="btn-confirm-delete">確認刪除</button>
+      <button class="btn-cancel-delete" id="btn-cancel-delete">取消</button>
+    </div>
+  </div>
+</div>
 
 <script type="module">
   import { supabase, getProfile, redeemCode } from './js/auth.js';
@@ -679,6 +757,24 @@
       btn.textContent = '登出中…';
       btn.disabled = true;
       await supabase.auth.signOut();
+      window.location.href = '/';
+    });
+
+    // Delete account
+    document.getElementById('btn-delete-account').addEventListener('click', () => {
+      document.getElementById('delete-overlay').classList.remove('hidden');
+    });
+    document.getElementById('btn-cancel-delete').addEventListener('click', () => {
+      document.getElementById('delete-overlay').classList.add('hidden');
+    });
+    document.getElementById('btn-confirm-delete').addEventListener('click', async () => {
+      const btn = document.getElementById('btn-confirm-delete');
+      btn.disabled = true;
+      btn.textContent = '刪除中…';
+      await supabase.from('calculations').delete().eq('user_id', user.id);
+      await supabase.from('profiles').delete().eq('id', user.id);
+      await supabase.auth.signOut();
+      localStorage.removeItem('ip_persona');
       window.location.href = '/';
     });
   }
