@@ -1,2 +1,6 @@
 .DS_Store
 .vercel
+node_modules/
+ios/
+www/
+package-lock.json
