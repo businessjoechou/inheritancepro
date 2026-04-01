@@ -219,7 +219,9 @@
   <!-- 民眾 -->
   <div class="persona-card card-public" onclick="choose('public')">
     <div class="card-inner">
-      <div class="card-icon-bg">🏠</div>
+      <div class="card-icon-bg">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><polyline points="9 21 9 12 15 12 15 21"/></svg>
+      </div>
       <div class="card-role">Basic Mode</div>
       <div class="card-title">一般</div>
       <div class="card-desc">了解自己的繼承權益、離婚財產分配，或協助家人處理遺產事務。</div>
@@ -236,7 +238,9 @@
   <!-- 會計師 -->
   <div class="persona-card card-accountant" onclick="choose('accountant')">
     <div class="card-inner">
-      <div class="card-icon-bg">📊</div>
+      <div class="card-icon-bg">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      </div>
       <div class="card-role">Tax & Accounting</div>
       <div class="card-title">進階稅務功能</div>
       <div class="card-desc">遺產稅精算、節稅規劃、贈與策略試算，含多案件期限管理。</div>
@@ -253,7 +257,9 @@
   <!-- 律師 -->
   <div class="persona-card card-lawyer" onclick="choose('lawyer')">
     <div class="card-inner">
-      <div class="card-icon-bg">⚖️</div>
+      <div class="card-icon-bg">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M3 6l4 8H3m14-8l-4 8h4M5 20h14"/></svg>
+      </div>
       <div class="card-role">Legal Strategy</div>
       <div class="card-title">進階法律功能</div>
       <div class="card-desc">財產爭議分析、訴訟強度評估、脫產偵測與和解金額試算。</div>
@@ -269,7 +275,11 @@
 
 </div>
 
-<div class="footer-note">© 2026 InheritancePro · 本平台僅供參考，不構成法律意見</div>
+<div class="footer-note">
+  <a href="login.html" style="color:var(--muted);text-decoration:none;font-size:13px;border-bottom:1px solid rgba(122,111,98,0.4);padding-bottom:1px;">已有帳號？登入</a>
+  <span style="margin:0 10px;opacity:0.3">·</span>
+  © 2026 InheritancePro · 本平台僅供參考，不構成法律意見
+</div>
 
 <script>
   function choose(persona) {
