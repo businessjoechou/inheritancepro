@@ -1,0 +1,20 @@
+{
+  "appId": "app.inheritancepro",
+  "appName": "InheritancePro",
+  "webDir": "www",
+  "server": {
+    "url": "https://inheritancepro.app",
+    "cleartext": false
+  },
+  "ios": {
+    "scheme": "InheritancePro",
+    "backgroundColor": "#1a1410"
+  },
+  "plugins": {
+    "StatusBar": {
+      "overlaysWebView": false,
+      "style": "DARK",
+      "backgroundColor": "#1a1410"
+    }
+  }
+}
