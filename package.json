@@ -1,0 +1,12 @@
+{
+  "name": "inheritancepro",
+  "version": "1.0.0",
+  "description": "InheritancePro — 中華民國民法財產權計算機",
+  "private": true,
+  "dependencies": {
+    "@capacitor/cli": "^8.3.0",
+    "@capacitor/core": "^8.3.0",
+    "@capacitor/ios": "^8.3.0",
+    "@capacitor/status-bar": "^8.0.2"
+  }
+}

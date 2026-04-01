@@ -1,7 +1,7 @@
 {
-  "name": "InheritancePro — 台灣民法財產權計算機",
+  "name": "InheritancePro — 中華民國民法財產權計算機",
   "short_name": "InheritancePro",
-  "description": "台灣遺產繼承、贍養費、剩餘財產分配、脫產偵測計算平台",
+  "description": "中華民國遺產繼承、贍養費、剩餘財產分配、脫產偵測計算平台",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
