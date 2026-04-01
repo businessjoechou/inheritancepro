@@ -10,6 +10,17 @@
  * Include in <head> — uses style injection to prevent FOUC.
  */
 (function () {
+  // iOS Safe Area — inject once, covers all pages that load persona.js
+  const safeArea = document.createElement('style');
+  safeArea.textContent = `
+    :root {
+      --sat: env(safe-area-inset-top, 0px);
+      --sab: env(safe-area-inset-bottom, 0px);
+    }
+    body { padding-top: var(--sat); padding-bottom: var(--sab); }
+  `;
+  (document.head || document.documentElement).appendChild(safeArea);
+
   const p = localStorage.getItem('ip_persona') || 'public';
   window.IP_PERSONA = p;
 
