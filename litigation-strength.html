@@ -142,6 +142,9 @@
     </div>
 
     <button class="copy-btn" onclick="copyResults()">📋 複製評估結果</button>
+    <a id="toSettlementBtn" href="settlement-calc.html" style="display:none;margin-top:10px;width:100%;padding:15px;background:var(--gold);color:var(--ink);border:none;border-radius:10px;font-size:15px;font-family:'Noto Sans TC',sans-serif;font-weight:600;cursor:pointer;letter-spacing:0.04em;text-decoration:none;text-align:center;display:block">
+      → 帶入分數，試算和解金額
+    </a>
   </div>
 </main>
 
@@ -253,6 +256,12 @@
     } else {
       document.getElementById('weakSpots').innerHTML = '';
     }
+
+    // Show cross-tool link with score embedded in URL
+    const settleBtn = document.getElementById('toSettlementBtn');
+    const scoreOut = Math.round((total / 55) * 10);
+    settleBtn.href = `settlement-calc.html?strength=${scoreOut}`;
+    settleBtn.style.display = 'block';
 
     if (!silent) document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }

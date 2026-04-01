@@ -293,6 +293,22 @@
 
     if (!silent) document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
+
+  // Auto-fill strength from litigation-strength.html via URL ?strength=N
+  (function() {
+    const params = new URLSearchParams(window.location.search);
+    const s = params.get('strength');
+    if (s) {
+      const val = Math.min(10, Math.max(1, parseInt(s)));
+      document.getElementById('strength').value = val;
+      document.getElementById('strengthDisplay').textContent = val;
+      // Show a hint banner
+      const hint = document.createElement('div');
+      hint.style.cssText = 'background:rgba(196,147,42,0.12);border:1px solid rgba(196,147,42,0.3);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--muted);margin-bottom:14px;';
+      hint.innerHTML = `✓ 已自動帶入訴訟強度評估分數：<strong style="color:var(--gold)">${val} 分</strong>`;
+      document.querySelector('main').insertBefore(hint, document.querySelector('.card'));
+    }
+  })();
 </script>
 </body>
 </html>

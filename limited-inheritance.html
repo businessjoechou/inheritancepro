@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>限定繼承債務試算｜InheritancePro</title>
+<meta name="description" content="台灣限定繼承債務試算工具，依民法§1148自2009年起全面適用，計算遺產範圍內的債務清償順序與繼承人實際清償責任。InheritancePro。">
+<meta name="keywords" content="限定繼承,民法1148,繼承債務,遺產清償,繼承責任">
+<meta name="robots" content="index, follow">
+<meta name="author" content="InheritancePro">
+<meta property="og:title" content="限定繼承債務試算｜InheritancePro">
+<meta property="og:description" content="台灣限定繼承債務試算工具，依民法§1148自2009年起全面適用，計算遺產範圍內的債務清償順序與繼承人實際清償責任。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://inheritancepro.app/limited-inheritance.html">
+<meta property="og:site_name" content="InheritancePro">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="限定繼承債務試算｜InheritancePro">
+<link rel="canonical" href="https://inheritancepro.app/limited-inheritance.html">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="js/persona.js"></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"限定繼承債務試算","url":"https://inheritancepro.app/limited-inheritance.html","applicationCategory":"LegalService","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro","url":"https://inheritancepro.app"}}
+</script>
+<style>
+  :root {
+    --ink: #1a1410; --paper: #f5f0e8; --accent: #8b2020; --gold: #c4932a;
+    --soft: #e8e0d0; --muted: #7a6f62; --success: #2a6b4a; --danger: #8b2020;
+    --border: #c8bfb0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--paper); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; min-height: 100vh; font-size: 15px; }
+  header { background: var(--ink); color: var(--paper); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .logo { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 700; letter-spacing: 0.04em; }
+  .logo span { color: var(--gold); }
+  .page-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 3px; font-family: 'DM Mono', monospace; letter-spacing: 0.06em; }
+  .home-link { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; }
+  .home-link:hover { color: var(--gold); }
+  main { padding: 24px 20px 120px; max-width: 480px; margin: 0 auto; }
+  h1 { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
+  .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
+  .card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 14px; }
+  .section-title { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--soft); }
+  .input-group { margin-bottom: 16px; }
+  .input-group:last-child { margin-bottom: 0; }
+  label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+  .label-hint { font-size: 11px; color: var(--muted); font-weight: 400; margin-left: 6px; }
+  input[type="number"] {
+    width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 8px;
+    background: var(--paper); font-size: 15px; font-family: 'DM Mono', monospace;
+    color: var(--ink); transition: border-color 0.2s; -webkit-appearance: none;
+  }
+  input:focus { outline: none; border-color: var(--gold); background: #fff; }
+  .sub-total { display: flex; justify-content: space-between; align-items: center; padding: 10px 0 4px; border-top: 1px solid var(--soft); margin-top: 4px; font-size: 12px; }
+  .sub-total .lbl { color: var(--muted); font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .sub-total .val { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 600; color: var(--ink); }
+  .calc-btn {
+    width: 100%; padding: 16px; background: var(--ink); color: var(--paper);
+    border: none; border-radius: 10px; font-size: 15px; font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 500; cursor: pointer; letter-spacing: 0.04em; margin-top: 8px; transition: background 0.2s;
+  }
+  .calc-btn:hover { background: #2a2420; }
+  #results { display: none; margin-top: 20px; }
+  .result-card { background: var(--ink); color: var(--paper); border-radius: 12px; padding: 24px; margin-bottom: 14px; }
+  .result-title { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 16px; }
+  .summary-row { display: flex; justify-content: space-between; align-items: baseline; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 13px; }
+  .summary-row:last-child { border-bottom: none; }
+  .summary-row .lbl { color: rgba(255,255,255,0.65); }
+  .summary-row .val { font-family: 'DM Mono', monospace; }
+  .val.gold { color: var(--gold); font-size: 18px; font-weight: 700; }
+  .val.red { color: #f28b6e; font-size: 18px; font-weight: 700; }
+  .val.green { color: #7ecba1; font-size: 18px; font-weight: 700; }
+  .callout-box { background: rgba(196,147,42,0.1); border: 1.5px solid rgba(196,147,42,0.35); border-radius: 10px; padding: 16px 18px; font-size: 12px; color: var(--paper); line-height: 1.9; margin-top: 4px; }
+  .callout-box strong { color: var(--gold); }
+  .order-list { margin-top: 8px; padding-left: 0; list-style: none; }
+  .order-list li { font-size: 12px; color: rgba(255,255,255,0.7); padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; align-items: baseline; gap: 10px; line-height: 1.5; }
+  .order-list li:last-child { border-bottom: none; }
+  .order-num { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--gold); min-width: 20px; }
+  .action-row { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+  .action-btn { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 13px 16px; font-size: 12px; color: rgba(255,255,255,0.8); cursor: default; line-height: 1.6; }
+  .action-btn strong { color: #f28b6e; display: block; margin-bottom: 2px; }
+  .surplus-box { background: rgba(42,107,74,0.12); border: 1px solid rgba(42,107,74,0.3); border-radius: 8px; padding: 14px; margin-top: 4px; text-align: center; }
+  .surplus-box .big { font-family: 'DM Mono', monospace; font-size: 20px; font-weight: 700; color: #7ecba1; }
+  .surplus-box .note { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+  .zero-box { background: rgba(196,147,42,0.08); border: 1px solid rgba(196,147,42,0.25); border-radius: 8px; padding: 14px; margin-top: 4px; text-align: center; font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.7; }
+  .law-note { background: rgba(196,147,42,0.08); border: 1px solid rgba(196,147,42,0.25); border-radius: 8px; padding: 12px 14px; font-size: 12px; color: var(--muted); line-height: 1.7; margin-top: 14px; }
+  .law-note strong { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="logo">Inheritance<span>Pro</span></div>
+    <div class="page-sub">限定繼承 · §1148</div>
+  </div>
+  <a class="home-link" href="index.html">← 返回</a>
+</header>
+
+<main>
+  <h1>限定繼承債務試算</h1>
+  <p class="subtitle">依民法§1148，台灣自2009年起全面採限定繼承制度，繼承人無需辦理任何申請，清償債務上限即為遺產總額。本工具協助計算淨遺產及各繼承人實際責任。</p>
+
+  <!-- A. 遺產資產 -->
+  <div class="card">
+    <div class="section-title">A · 遺產資產</div>
+    <div class="input-group">
+      <label>不動產市值<span class="label-hint">元（土地＋房屋公告現值或市場價格）</span></label>
+      <input type="number" id="realEstate" placeholder="0" min="0" oninput="updateSubTotals(); autoCalc()">
+    </div>
+    <div class="input-group">
+      <label>存款（銀行帳戶）<span class="label-hint">元</span></label>
+      <input type="number" id="deposits" placeholder="0" min="0" oninput="updateSubTotals(); autoCalc()">
+    </div>
+    <div class="input-group">
+      <label>有價證券（股票、基金）<span class="label-hint">元</span></label>
+      <input type="number" id="securities" placeholder="0" min="0" oninput="updateSubTotals(); autoCalc()">
+    </div>
+    <div class="input-group">
+      <label>其他資產<span class="label-hint">元（車輛、珠寶、應收款等）</span></label>
+      <input type="number" id="otherAssets" placeholder="0" min="0" oninput="updateSubTotals(); autoCalc()">
+    </div>
+    <div class="sub-total">
+      <span class="lbl">遺產總額</span>
+      <span class="val" id="totalAssets">$ 0</span>
+    </div>
+  </div>
+
+  <!-- B. 遺產負債 -->
+  <div class="card">
+    <div class="section-title">B · 遺產負債（被繼承人的債務）</div>
+    <div class="input-group">
+      <label>銀行貸款（房貸、車貸等）<span class="label-hint">元</span></label>
+      <input type="number" id="bankLoans" placeholder="0" min="0" oninput="updateSubTotals(); autoCalc()">
+    </div>
+    <div class="input-group">
+      <label>信用卡債務<span class="label-hint">元</span></label>
+      <input type="number" id="creditCard" placeholder="0" min="0" oninput="updateSubTotals(); autoCalc()">
+    </div>
+    <div class="input-group">
+      <label>稅務欠款（遺產稅、所得稅）<span class="label-hint">元</span></label>
+      <input type="number" id="taxDebt" placeholder="0" min="0" oninput="updateSubTotals(); autoCalc()">
+    </div>
+    <div class="input-group">
+      <label>其他債務<span class="label-hint">元（借款、保證責任等）</span></label>
+      <input type="number" id="otherDebts" placeholder="0" min="0" oninput="updateSubTotals(); autoCalc()">
+    </div>
+    <div class="sub-total">
+      <span class="lbl">負債總額</span>
+      <span class="val" id="totalDebts">$ 0</span>
+    </div>
+  </div>
+
+  <!-- C. 繼承人人數 -->
+  <div class="card">
+    <div class="section-title">C · 繼承人人數</div>
+    <div class="input-group" style="margin-bottom:0">
+      <label>繼承人總人數<span class="label-hint">含配偶及各順位法定繼承人</span></label>
+      <input type="number" id="heirCount" placeholder="1" min="1" max="50" oninput="autoCalc()">
+    </div>
+  </div>
+
+  <button class="calc-btn" onclick="calculate()">計算限定繼承結果</button>
+
+  <div id="results">
+    <div class="result-card">
+      <div class="result-title">資產負債概覽</div>
+      <div class="summary-row">
+        <span class="lbl">遺產總額</span>
+        <span class="val" id="r-assets">—</span>
+      </div>
+      <div class="summary-row">
+        <span class="lbl">負債總額</span>
+        <span class="val" id="r-debts">—</span>
+      </div>
+      <div class="summary-row">
+        <span class="lbl" style="color:#fff;font-weight:500">淨遺產（資產 − 負債）</span>
+        <span class="val" id="r-net">—</span>
+      </div>
+    </div>
+
+    <div class="result-card">
+      <div class="result-title">繼承人責任分析</div>
+      <div id="r-heir-analysis"></div>
+    </div>
+
+    <div class="result-card">
+      <div class="result-title">債務清償順序 §1159</div>
+      <ul class="order-list">
+        <li><span class="order-num">①</span>遺產管理費用（聲請法院費用、管理人報酬等）</li>
+        <li><span class="order-num">②</span>喪葬費（合理喪葬支出）</li>
+        <li><span class="order-num">③</span>繼承債務（各類債務，依比例清償）</li>
+        <li><span class="order-num">④</span>遺贈（清償完債務後方可執行遺贈）</li>
+      </ul>
+      <div class="callout-box" style="margin-top:14px">
+        <strong>⚑ 2009年後限定繼承全面適用</strong><br>
+        台灣自2009年修法後，全面採限定繼承。<strong>繼承人不需辦理任何申請，債務清償上限即為遺產總額。</strong>繼承人不必以自有財產清償被繼承人債務。
+      </div>
+    </div>
+
+    <div class="result-card" id="r-actions-card">
+      <div class="result-title">建議行動</div>
+      <div class="action-row" id="r-actions"></div>
+    </div>
+
+    <!-- 律師備忘 -->
+    <div class="lawyer-only" style="background:#eef3fa;border:1.5px solid #3a5a80;border-radius:12px;padding:16px 20px;margin-top:16px">
+      <div style="font-size:12px;font-weight:700;color:#1a3a5c;margin-bottom:8px;letter-spacing:0.04em">⚖ 律師訴訟策略備忘</div>
+      <div style="font-size:12px;color:#1a2a3a;line-height:1.9">
+        <strong>詐害行為撤銷（§244）：</strong>若被繼承人生前有脫產行為，債權人得在2年內依§244請求法院撤銷，律師應評估是否有可追索之生前轉移。<br>
+        <strong>拋棄繼承時機：</strong>若遺產明顯資不抵債，建議在知悉繼承起3個月內（§1174）辦理拋棄，並注意是否有連帶保證責任無法拋棄。<br>
+        <strong>遺產清算（§1156）：</strong>債務不明確時，可向法院聲請清算，公示催告債權人申報，防止後續糾紛。<br>
+        <strong>潛在債務注意：</strong>稅務欠款（含滯納金）、票據責任、侵權損害賠償，常被繼承人忽略，應全面查核。
+      </div>
+    </div>
+
+    <div class="law-note">
+      <strong>法律依據：</strong>民法§1148（限定繼承）、§1154（共同繼承）、§1156（遺產清算）、§1159（清償順序）、§1174（拋棄繼承）。本試算僅供參考，實際情形請諮詢律師或會計師。
+    </div>
+  </div>
+</main>
+
+<script>
+  const FMT = v => '$ ' + Math.round(v).toLocaleString('zh-TW');
+
+  function getVal(id, fallback = 0) {
+    const v = parseFloat(document.getElementById(id).value);
+    return isNaN(v) ? fallback : v;
+  }
+
+  function updateSubTotals() {
+    const assets = getVal('realEstate') + getVal('deposits') + getVal('securities') + getVal('otherAssets');
+    const debts = getVal('bankLoans') + getVal('creditCard') + getVal('taxDebt') + getVal('otherDebts');
+    document.getElementById('totalAssets').textContent = FMT(assets);
+    document.getElementById('totalDebts').textContent = FMT(debts);
+  }
+
+  function autoCalc() {
+    if (document.getElementById('results').style.display === 'block') calculate(true);
+  }
+
+  function calculate(silent = false) {
+    const assets = getVal('realEstate') + getVal('deposits') + getVal('securities') + getVal('otherAssets');
+    const debts = getVal('bankLoans') + getVal('creditCard') + getVal('taxDebt') + getVal('otherDebts');
+    const net = assets - debts;
+    const heirs = Math.max(1, Math.floor(getVal('heirCount', 1)));
+
+    document.getElementById('results').style.display = 'block';
+    document.getElementById('r-assets').textContent = FMT(assets);
+    document.getElementById('r-debts').textContent = FMT(debts);
+
+    const netEl = document.getElementById('r-net');
+    netEl.textContent = FMT(net);
+    netEl.className = 'val ' + (net > 0 ? 'green' : net < 0 ? 'red' : 'gold');
+
+    // Heir analysis
+    const analysisEl = document.getElementById('r-heir-analysis');
+    if (net > 0) {
+      const perHeir = net / heirs;
+      analysisEl.innerHTML = `
+        <div class="summary-row"><span class="lbl">繼承人人數</span><span class="val">${heirs} 人</span></div>
+        <div class="summary-row"><span class="lbl">遺產債務清償後</span><span class="val green">${FMT(net)}</span></div>
+        <div class="summary-row"><span class="lbl" style="color:#fff;font-weight:500">每位繼承人可分得</span><span class="val gold">${FMT(perHeir)}</span></div>
+        <div class="surplus-box">
+          <div class="big">${FMT(perHeir)}</div>
+          <div class="note">每人應繼份（假設均等分配，實際依§1141比例）</div>
+        </div>`;
+    } else if (net === 0) {
+      analysisEl.innerHTML = `
+        <div class="zero-box">遺產恰好足以清償全部債務。<br>繼承人無餘額可繼承，但也無需以自有財產清償。</div>`;
+    } else {
+      const shortfall = Math.abs(net);
+      analysisEl.innerHTML = `
+        <div class="summary-row"><span class="lbl">資產不足清償之差額</span><span class="val red">${FMT(shortfall)}</span></div>
+        <div class="zero-box">
+          <strong style="color:#f28b6e">資不抵債：繼承人無需以自有財產清償</strong><br>
+          依§1148，繼承人清償責任以遺產為限。差額 ${FMT(shortfall)} 由債權人按比例受償後，未受清償部分視為消滅。
+        </div>`;
+    }
+
+    // Action buttons
+    const actionsEl = document.getElementById('r-actions');
+    const actions = [];
+
+    if (net <= 0) {
+      actions.push(`<div class="action-btn"><strong>⚑ 建議辦理拋棄繼承（§1174）</strong>債務超過遺產，雖限定繼承自動適用，若有連帶保證責任或不明債務，可於知悉繼承起 <strong>3個月</strong> 內向法院辦理拋棄繼承。</div>`);
+    }
+    if (debts > 0) {
+      actions.push(`<div class="action-btn"><strong>💡 有不確定債務，建議辦理遺產清算（§1156）</strong>向法院聲請清算遺產，公示催告所有債權人申報，清算完畢後繼承人不再負責任何遺留債務。</div>`);
+    }
+    if (actions.length === 0) {
+      actions.push(`<div class="action-btn">遺產大於負債，直接繼承即可。建議仍查核是否有隱性債務（票據、稅務、保證責任）。</div>`);
+    }
+    actionsEl.innerHTML = actions.join('');
+
+    if (!silent) document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Init subtotals
+  updateSubTotals();
+</script>
+</body>
+</html>

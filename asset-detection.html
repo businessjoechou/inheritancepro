@@ -26,30 +26,24 @@
 </script>
 <style>
   :root {
-    --ink: #0f1117;
-    --bg: #f4f4f0;
-    --card: #ffffff;
-    --border: #d8d5ce;
-    --muted: #7a7870;
-    --gold: #b8860b;
-    --danger: #c0392b;
-    --warn: #d4691e;
-    --ok: #2d6a4f;
-    --soft: #eaeae4;
-    --accent: #1a3a5c;
+    --ink: #1a1410; --paper: #f5f0e8; --accent: #8b2020; --gold: #c4932a;
+    --soft: #e8e0d0; --muted: #7a6f62; --success: #2a6b4a; --danger: #8b2020;
+    --border: #c8bfb0; --warn: #d4691e;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; font-size: 14px; min-height: 100vh; }
+  body { background: var(--paper); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; font-size: 15px; min-height: 100vh; }
 
   /* Header */
-  header { background: var(--ink); color: #f4f4f0; padding: 16px 28px; display: flex; align-items: center; justify-content: space-between; }
+  header { background: var(--ink); color: var(--paper); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
   .logo { font-family: 'Noto Serif TC', serif; font-size: 18px; font-weight: 700; }
   .logo span { color: var(--gold); }
   .page-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 3px; font-family: 'DM Mono', monospace; letter-spacing: 0.06em; }
 
   .module-badge { background: var(--danger); color: #fff; font-size: 10px; font-family: 'DM Mono', monospace; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.1em; }
-  .back-link { color: #7a7870; font-size: 12px; text-decoration: none; font-family: 'DM Mono', monospace; }
+  .back-link { color: var(--muted); font-size: 12px; text-decoration: none; font-family: 'DM Mono', monospace; }
   .back-link:hover { color: var(--gold); }
+  .home-link { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; }
+  .home-link:hover { color: var(--gold); }
 
   main { max-width: 860px; margin: 0 auto; padding: 32px 20px 120px; }
 
@@ -57,7 +51,7 @@
   .page-title { margin-bottom: 28px; }
   .page-title h1 { font-family: 'Noto Serif TC', serif; font-size: 26px; font-weight: 700; margin-bottom: 6px; }
   .page-title p { font-size: 13px; color: var(--muted); line-height: 1.6; }
-  .law-tag { display: inline-block; background: #e8f0f8; color: var(--accent); font-size: 11px; font-family: 'DM Mono', monospace; padding: 2px 8px; border-radius: 3px; margin-top: 8px; }
+  .law-tag { display: inline-block; background: rgba(196,147,42,0.1); color: var(--gold); font-size: 11px; font-family: 'DM Mono', monospace; padding: 2px 8px; border-radius: 3px; margin-top: 8px; }
 
   /* Tabs */
   .tabs { display: flex; gap: 0; border-bottom: 2px solid var(--border); margin-bottom: 24px; }
@@ -67,27 +61,27 @@
   .tab-panel.active { display: block; }
 
   /* Card */
-  .card { background: var(--card); border: 1.5px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+  .card { background: #fff; border: 1.5px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
   .card-title { font-size: 12px; font-family: 'DM Mono', monospace; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
 
   /* Manual input table */
   .tx-table { width: 100%; border-collapse: collapse; }
   .tx-table th { font-size: 11px; font-family: 'DM Mono', monospace; color: var(--muted); text-align: left; padding: 0 8px 10px; border-bottom: 1px solid var(--border); font-weight: 400; letter-spacing: 0.08em; }
-  .tx-table td { padding: 6px 8px; border-bottom: 1px solid #f0efea; vertical-align: middle; }
+  .tx-table td { padding: 6px 8px; border-bottom: 1px solid var(--soft); vertical-align: middle; }
   .tx-table tr:last-child td { border-bottom: none; }
-  .tx-table input, .tx-table select { width: 100%; padding: 7px 10px; border: 1.5px solid var(--border); border-radius: 6px; font-size: 13px; font-family: 'Noto Sans TC', sans-serif; background: var(--bg); color: var(--ink); }
-  .tx-table input:focus, .tx-table select:focus { outline: none; border-color: var(--accent); background: #fff; }
+  .tx-table input, .tx-table select { width: 100%; padding: 7px 10px; border: 1.5px solid var(--border); border-radius: 6px; font-size: 13px; font-family: 'Noto Sans TC', sans-serif; background: var(--paper); color: var(--ink); }
+  .tx-table input:focus, .tx-table select:focus { outline: none; border-color: var(--gold); background: #fff; }
   .tx-table input[type="number"] { font-family: 'DM Mono', monospace; }
 
   .add-row-btn { margin-top: 12px; padding: 8px 16px; border: 1.5px dashed var(--border); border-radius: 6px; background: transparent; cursor: pointer; font-size: 13px; color: var(--muted); font-family: 'Noto Sans TC', sans-serif; width: 100%; transition: all 0.2s; }
-  .add-row-btn:hover { border-color: var(--accent); color: var(--accent); background: #f0f4f8; }
+  .add-row-btn:hover { border-color: var(--gold); color: var(--gold); background: var(--paper); }
 
   .del-btn { width: 28px; height: 28px; border: none; background: none; cursor: pointer; color: var(--border); font-size: 16px; transition: color 0.2s; padding: 0; display: flex; align-items: center; justify-content: center; }
   .del-btn:hover { color: var(--danger); }
 
   /* Paste area */
-  .paste-area { width: 100%; min-height: 160px; padding: 14px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 13px; font-family: 'DM Mono', monospace; background: var(--bg); color: var(--ink); resize: vertical; line-height: 1.8; }
-  .paste-area:focus { outline: none; border-color: var(--accent); background: #fff; }
+  .paste-area { width: 100%; min-height: 160px; padding: 14px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 13px; font-family: 'DM Mono', monospace; background: var(--paper); color: var(--ink); resize: vertical; line-height: 1.8; }
+  .paste-area:focus { outline: none; border-color: var(--gold); background: #fff; }
   .paste-hint { font-size: 11px; color: var(--muted); margin-top: 8px; line-height: 1.7; }
   .parse-btn { margin-top: 12px; padding: 10px 20px; background: var(--accent); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-family: 'Noto Sans TC', sans-serif; }
 
@@ -97,10 +91,10 @@
   .upload-zone p { color: var(--muted); font-size: 13px; margin-top: 10px; }
   .upload-zone .icon { font-size: 32px; }
   .upload-zone input[type="file"] { display: none; }
-  .upload-zone .file-name { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--ok); margin-top: 8px; }
+  .upload-zone .file-name { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--success); margin-top: 8px; }
 
   /* Analyze btn */
-  .analyze-btn { width: 100%; padding: 14px; background: var(--ink); color: #f4f4f0; border: none; border-radius: 8px; font-size: 15px; font-weight: 500; cursor: pointer; font-family: 'Noto Sans TC', sans-serif; letter-spacing: 0.03em; transition: background 0.2s; margin-top: 8px; }
+  .analyze-btn { width: 100%; padding: 14px; background: var(--ink); color: var(--paper); border: none; border-radius: 8px; font-size: 15px; font-weight: 500; cursor: pointer; font-family: 'Noto Sans TC', sans-serif; letter-spacing: 0.03em; transition: background 0.2s; margin-top: 8px; }
   .analyze-btn:hover { background: #1e2530; }
 
   /* Results */
@@ -114,25 +108,25 @@
   .risk-box .num { font-family: 'DM Mono', monospace; font-size: 28px; font-weight: 500; }
   .risk-box.high .num { color: var(--danger); }
   .risk-box.med .num { color: var(--warn); }
-  .risk-box.low .num { color: var(--ok); }
+  .risk-box.low .num { color: var(--success); }
   .risk-box .lbl { font-size: 11px; color: var(--muted); margin-top: 4px; }
 
   .overall-risk { border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; }
   .overall-risk.CRITICAL { background: #fdf0ef; border: 2px solid var(--danger); }
   .overall-risk.HIGH { background: #fef0ea; border: 2px solid var(--warn); }
   .overall-risk.MEDIUM { background: #fefbea; border: 2px solid #c9a227; }
-  .overall-risk.LOW { background: #edf7f1; border: 2px solid var(--ok); }
+  .overall-risk.LOW { background: #edf7f1; border: 2px solid var(--success); }
   .overall-risk .risk-label { font-family: 'Noto Serif TC', serif; font-size: 18px; font-weight: 700; }
   .overall-risk.CRITICAL .risk-label { color: var(--danger); }
   .overall-risk.HIGH .risk-label { color: var(--warn); }
-  .overall-risk.MEDIUM .risk-label { color: #b8860b; }
-  .overall-risk.LOW .risk-label { color: var(--ok); }
+  .overall-risk.MEDIUM .risk-label { color: var(--gold); }
+  .overall-risk.LOW .risk-label { color: var(--success); }
   .overall-risk .risk-desc { font-size: 12px; color: var(--muted); margin-top: 3px; }
   .risk-score { font-family: 'DM Mono', monospace; font-size: 32px; font-weight: 500; }
   .overall-risk.CRITICAL .risk-score { color: var(--danger); }
   .overall-risk.HIGH .risk-score { color: var(--warn); }
-  .overall-risk.MEDIUM .risk-score { color: #b8860b; }
-  .overall-risk.LOW .risk-score { color: var(--ok); }
+  .overall-risk.MEDIUM .risk-score { color: var(--gold); }
+  .overall-risk.LOW .risk-score { color: var(--success); }
 
   /* Transaction result rows */
   .tx-result { border: 1.5px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 10px; }
@@ -166,11 +160,11 @@
   .gap-row:last-child { border-bottom: none; padding-bottom: 0; }
   .gap-label { color: var(--muted); }
   .gap-val { font-family: 'DM Mono', monospace; font-weight: 500; }
-  .gap-val.ok { color: var(--ok); }
+  .gap-val.ok { color: var(--success); }
   .gap-val.warn { color: var(--warn); }
   .gap-val.danger { color: var(--danger); }
   .gap-badge { font-size: 10px; font-family: 'DM Mono', monospace; padding: 2px 8px; border-radius: 3px; margin-left: 10px; }
-  .gap-badge.ok { background: #edf7f1; color: var(--ok); }
+  .gap-badge.ok { background: #edf7f1; color: var(--success); }
   .gap-badge.warn { background: #fef6ed; color: var(--warn); }
   .gap-badge.danger { background: #fdf0ef; color: var(--danger); }
 
@@ -210,13 +204,11 @@
 <body>
 
 <header>
-  <a href="index.html" style="text-decoration:none;color:inherit;display:flex;align-items:center;gap:14px">
-    <a href="index.html" style="text-decoration:none;color:inherit">
+  <div>
     <div class="logo">Inheritance<span>Pro</span></div>
     <div class="page-sub">脫產偵測分析</div>
-  </a>
-    <span class="module-badge">脫產偵測</span>
-  </a>
+  </div>
+  <a class="home-link" href="index.html">← 返回</a>
 </header>
 
 <main>
@@ -289,11 +281,11 @@
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
         <div>
           <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">被繼承人死亡日期</label>
-          <input type="date" id="deathDate" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;background:var(--bg);color:var(--ink)">
+          <input type="date" id="deathDate" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;background:var(--paper);color:var(--ink)">
         </div>
         <div>
           <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">遺產申報總額（萬元）</label>
-          <input type="number" id="declaredEstate" placeholder="0" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;font-family:'DM Mono',monospace;background:var(--bg);color:var(--ink)">
+          <input type="number" id="declaredEstate" placeholder="0" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;font-family:'DM Mono',monospace;background:var(--paper);color:var(--ink)">
         </div>
       </div>
     </div>
@@ -318,11 +310,11 @@
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
         <div>
           <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">被繼承人死亡日期</label>
-          <input type="date" id="deathDatePaste" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;background:var(--bg);color:var(--ink)">
+          <input type="date" id="deathDatePaste" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;background:var(--paper);color:var(--ink)">
         </div>
         <div>
           <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">遺產申報總額（萬元）</label>
-          <input type="number" id="declaredEstatePaste" placeholder="0" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;font-family:'DM Mono',monospace;background:var(--bg);color:var(--ink)">
+          <input type="number" id="declaredEstatePaste" placeholder="0" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;font-family:'DM Mono',monospace;background:var(--paper);color:var(--ink)">
         </div>
       </div>
     </div>
@@ -362,11 +354,11 @@
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
         <div>
           <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">被繼承人死亡日期</label>
-          <input type="date" id="deathDateCSV" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;background:var(--bg);color:var(--ink)">
+          <input type="date" id="deathDateCSV" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;background:var(--paper);color:var(--ink)">
         </div>
         <div>
           <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">遺產申報總額（萬元）</label>
-          <input type="number" id="declaredEstateCSV" placeholder="0" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;font-family:'DM Mono',monospace;background:var(--bg);color:var(--ink)">
+          <input type="number" id="declaredEstateCSV" placeholder="0" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;font-family:'DM Mono',monospace;background:var(--paper);color:var(--ink)">
         </div>
       </div>
     </div>
@@ -422,7 +414,7 @@
     <div id="save-btn-container"></div>
 
     <div class="lawyer-only" style="background:#eef3fa;border:1.5px solid #3a5a80;border-radius:12px;padding:16px 20px;margin-top:16px">
-      <div style="font-size:12px;font-weight:700;color:#1a3a5c;letter-spacing:0.04em;margin-bottom:10px">⚖ 律師訴訟策略備忘</div>
+      <div style="font-size:12px;font-weight:700;color:#2a4a6c;letter-spacing:0.04em;margin-bottom:10px">⚖ 律師訴訟策略備忘</div>
       <div style="font-size:12px;color:#1a2a3a;line-height:1.9">
         <strong>§1148-1 擬制遺產</strong>：繼承開始前 <strong>2 年內</strong>對繼承人以外第三人的贈與，視為遺產，可追加計入繼承財產。<br>
         <strong>遺贈稅法 §15</strong>：死亡前 <strong>6 年內</strong>贈與配偶、繼承人者，須併入遺產申報，稅務追溯期與民法不同，需分別計算。<br>
@@ -878,13 +870,13 @@
 
     let txHTML = '';
     results.sort((a, b) => b.score - a.score).forEach(r => {
-      const flagsHTML = r.flags.map(f => `<li style="color:${f.level === 'alert' ? '#c0392b' : '#d4691e'}">${f.text}</li>`).join('');
+      const flagsHTML = r.flags.map(f => `<li style="color:${f.level === 'alert' ? 'var(--danger)' : '#d4691e'}">${f.text}</li>`).join('');
       txHTML += `<tr>
         <td>${r.date || '—'}</td>
         <td style="font-family:monospace">NT$ ${(r.amount * 10000).toLocaleString('zh-TW')}</td>
         <td>${r.typeLabel}</td>
         <td>${r.recipientLabel || '—'}${r.note ? '・' + r.note : ''}</td>
-        <td style="color:${r.level === 'CRITICAL' || r.level === 'HIGH' ? '#c0392b' : r.level === 'MEDIUM' ? '#d4691e' : '#2d6a4f'};font-weight:600">${r.level === 'CRITICAL' ? '極高' : r.level === 'HIGH' ? '高' : r.level === 'MEDIUM' ? '中' : '低'}</td>
+        <td style="color:${r.level === 'CRITICAL' || r.level === 'HIGH' ? 'var(--danger)' : r.level === 'MEDIUM' ? '#d4691e' : 'var(--success)'};font-weight:600">${r.level === 'CRITICAL' ? '極高' : r.level === 'HIGH' ? '高' : r.level === 'MEDIUM' ? '中' : '低'}</td>
       </tr>
       ${r.flags.length > 0 ? `<tr><td colspan="5" style="padding:4px 12px 10px;background:#fafafa"><ul style="font-size:11px;margin-left:16px">${flagsHTML}</ul></td></tr>` : ''}`;
     });
@@ -892,30 +884,30 @@
     const html = `<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8">
 <title>InheritancePro 脫產風險分析報告</title>
 <style>
-  body { font-family: 'Noto Sans TC', sans-serif; padding: 40px; max-width: 750px; margin: 0 auto; font-size: 13px; color: #0f1117; }
+  body { font-family: 'Noto Sans TC', sans-serif; padding: 40px; max-width: 750px; margin: 0 auto; font-size: 13px; color: var(--ink); }
   @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500&display=swap');
-  .header { border-bottom: 3px solid #0f1117; padding-bottom: 18px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: flex-end; }
+  .header { border-bottom: 3px solid var(--ink); padding-bottom: 18px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: flex-end; }
   .logo { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; }
-  .logo span { color: #b8860b; }
-  .badge { background: #c0392b; color: #fff; font-size: 10px; padding: 2px 8px; border-radius: 3px; margin-left: 10px; }
-  .meta { font-size: 11px; color: #7a7870; text-align: right; line-height: 1.8; }
+  .logo span { color: var(--gold); }
+  .badge { background: var(--danger); color: #fff; font-size: 10px; padding: 2px 8px; border-radius: 3px; margin-left: 10px; }
+  .meta { font-size: 11px; color: var(--muted); text-align: right; line-height: 1.8; }
   .risk-banner { padding: 16px 20px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-  .risk-banner.CRITICAL { background: #fdf0ef; border: 2px solid #c0392b; }
+  .risk-banner.CRITICAL { background: #fdf0ef; border: 2px solid var(--danger); }
   .risk-banner.HIGH { background: #fef0ea; border: 2px solid #d4691e; }
   .risk-banner.MEDIUM { background: #fefbea; border: 2px solid #c9a227; }
-  .risk-banner.LOW { background: #edf7f1; border: 2px solid #2d6a4f; }
+  .risk-banner.LOW { background: #edf7f1; border: 2px solid var(--success); }
   h2 { font-family: 'Noto Serif TC', serif; font-size: 16px; margin: 20px 0 10px; }
   table { width: 100%; border-collapse: collapse; font-size: 12px; }
-  th { background: #f4f4f0; padding: 8px 10px; text-align: left; font-weight: 500; border-bottom: 2px solid #d8d5ce; }
-  td { padding: 8px 10px; border-bottom: 1px solid #eaeae4; vertical-align: top; }
-  .law-box { background: #f0f4f8; border-left: 3px solid #1a3a5c; padding: 12px 14px; font-size: 11px; line-height: 1.8; margin-top: 20px; border-radius: 0 6px 6px 0; }
-  .footer { margin-top: 40px; padding-top: 14px; border-top: 1px solid #d8d5ce; font-size: 11px; color: #7a7870; text-align: center; line-height: 1.8; }
+  th { background: var(--paper); padding: 8px 10px; text-align: left; font-weight: 500; border-bottom: 2px solid var(--border); }
+  td { padding: 8px 10px; border-bottom: 1px solid var(--soft); vertical-align: top; }
+  .law-box { background: #f0f4f8; border-left: 3px solid #2a4a6c; padding: 12px 14px; font-size: 11px; line-height: 1.8; margin-top: 20px; border-radius: 0 6px 6px 0; }
+  .footer { margin-top: 40px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 11px; color: var(--muted); text-align: center; line-height: 1.8; }
   @media print { body { padding: 20px; } }
 </style></head><body>
 <div class="header">
   <div>
     <div class="logo">Inheritance<span>Pro</span><span class="badge">脫產偵測</span></div>
-    <div style="font-size:12px;color:#7a7870;margin-top:4px">財產異動風險分析報告</div>
+    <div style="font-size:12px;color:var(--muted);margin-top:4px">財產異動風險分析報告</div>
   </div>
   <div class="meta">
     產出日期：${today}<br>
@@ -925,17 +917,17 @@
 </div>
 <div class="risk-banner ${overallLevel}">
   <div>
-    <div style="font-family:'Noto Serif TC',serif;font-size:20px;font-weight:700;color:${overallLevel === 'CRITICAL' || overallLevel === 'HIGH' ? '#c0392b' : overallLevel === 'MEDIUM' ? '#b8860b' : '#2d6a4f'}">${levelLabels[overallLevel]}</div>
-    <div style="font-size:12px;color:#7a7870;margin-top:3px">綜合風險評分</div>
+    <div style="font-family:'Noto Serif TC',serif;font-size:20px;font-weight:700;color:${overallLevel === 'CRITICAL' || overallLevel === 'HIGH' ? 'var(--danger)' : overallLevel === 'MEDIUM' ? 'var(--gold)' : 'var(--success)'}">${levelLabels[overallLevel]}</div>
+    <div style="font-size:12px;color:var(--muted);margin-top:3px">綜合風險評分</div>
   </div>
-  <div style="font-size:36px;font-weight:600;color:${overallLevel === 'CRITICAL' || overallLevel === 'HIGH' ? '#c0392b' : overallLevel === 'MEDIUM' ? '#b8860b' : '#2d6a4f'}">${totalScore}</div>
+  <div style="font-size:36px;font-weight:600;color:${overallLevel === 'CRITICAL' || overallLevel === 'HIGH' ? 'var(--danger)' : overallLevel === 'MEDIUM' ? 'var(--gold)' : 'var(--success)'}">${totalScore}</div>
 </div>
 ${declaredAmt > 0 ? `
 <h2>差距分析</h2>
 <table style="margin-bottom:16px"><thead><tr><th>項目</th><th>金額</th><th>備註</th></tr></thead><tbody>
 <tr><td>申報遺產總額</td><td style="font-family:monospace">${fmtWan(declaredAmt)}</td><td>—</td></tr>
-<tr><td>2年內可疑移轉（民法§1148-1）</td><td style="font-family:monospace;color:${sum2yr > declaredAmt ? '#c0392b':'#2d6a4f'}">${fmtWan(sum2yr)}</td><td>${tx2yr.length}筆・${sum2yr > declaredAmt ? '超出 '+fmtWan(sum2yr-declaredAmt) : '未超出申報額'}</td></tr>
-<tr><td>6年內累計移轉（含§15）</td><td style="font-family:monospace;color:${(sum2yr+sum6yr) > declaredAmt ? '#c0392b':'#2d6a4f'}">${fmtWan(sum2yr+sum6yr)}</td><td>${tx2yr.length+tx6yr.length}筆・${(sum2yr+sum6yr) > declaredAmt ? '超出 '+fmtWan(sum2yr+sum6yr-declaredAmt) : '未超出申報額'}</td></tr>
+<tr><td>2年內可疑移轉（民法§1148-1）</td><td style="font-family:monospace;color:${sum2yr > declaredAmt ? 'var(--danger)':'var(--success)'}">${fmtWan(sum2yr)}</td><td>${tx2yr.length}筆・${sum2yr > declaredAmt ? '超出 '+fmtWan(sum2yr-declaredAmt) : '未超出申報額'}</td></tr>
+<tr><td>6年內累計移轉（含§15）</td><td style="font-family:monospace;color:${(sum2yr+sum6yr) > declaredAmt ? 'var(--danger)':'var(--success)'}">${fmtWan(sum2yr+sum6yr)}</td><td>${tx2yr.length+tx6yr.length}筆・${(sum2yr+sum6yr) > declaredAmt ? '超出 '+fmtWan(sum2yr+sum6yr-declaredAmt) : '未超出申報額'}</td></tr>
 <tr><td>全部紀錄合計</td><td style="font-family:monospace">${fmtWan(sumAll)}</td><td>${results.length}筆</td></tr>
 </tbody></table>` : ''}
 <h2>各筆異動風險明細</h2>

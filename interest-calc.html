@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>法定利率利息計算器｜InheritancePro</title>
+<meta name="description" content="台灣法定利率利息計算工具，依民法§203年利率5%，計算損害賠償、借貸糾紛自請求日或起訴日起算之利息金額。InheritancePro。">
+<meta name="keywords" content="法定利率,利息計算,年利率5%,民法203,損害賠償利息,遲延利息">
+<meta name="robots" content="index, follow">
+<meta name="author" content="InheritancePro">
+<meta property="og:title" content="法定利率利息計算器｜InheritancePro">
+<meta property="og:description" content="依民法§203年利率5%計算損害賠償、借貸糾紛自請求日或起訴日起算之利息金額，含逐年明細。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://inheritancepro.app/interest-calc.html">
+<meta property="og:site_name" content="InheritancePro">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="法定利率利息計算器｜InheritancePro">
+<link rel="canonical" href="https://inheritancepro.app/interest-calc.html">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="js/persona.js"></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"法定利率利息計算器","url":"https://inheritancepro.app/interest-calc.html","applicationCategory":"LegalService","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro","url":"https://inheritancepro.app"}}
+</script>
+<style>
+  :root {
+    --ink: #1a1410; --paper: #f5f0e8; --accent: #8b2020; --gold: #c4932a;
+    --soft: #e8e0d0; --muted: #7a6f62; --success: #2a6b4a; --danger: #8b2020;
+    --border: #c8bfb0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--paper); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; min-height: 100vh; font-size: 15px; }
+  header { background: var(--ink); color: var(--paper); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .logo { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 700; letter-spacing: 0.04em; }
+  .logo span { color: var(--gold); }
+  .page-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 3px; font-family: 'DM Mono', monospace; letter-spacing: 0.06em; }
+  .home-link { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; }
+  .home-link:hover { color: var(--gold); }
+  main { padding: 24px 20px 120px; max-width: 480px; margin: 0 auto; }
+  h1 { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
+  .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
+  .card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 14px; }
+  .section-title { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--soft); }
+  .input-group { margin-bottom: 16px; }
+  .input-group:last-child { margin-bottom: 0; }
+  label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+  .label-hint { font-size: 11px; color: var(--muted); font-weight: 400; margin-left: 6px; }
+  input[type="number"], input[type="date"], select {
+    width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 8px;
+    background: var(--paper); font-size: 15px; font-family: 'Noto Sans TC', sans-serif;
+    color: var(--ink); transition: border-color 0.2s; -webkit-appearance: none; appearance: none;
+  }
+  input[type="number"] { font-family: 'DM Mono', monospace; }
+  input:focus, select:focus { outline: none; border-color: var(--gold); background: #fff; }
+  input[readonly] { background: var(--soft); color: var(--muted); cursor: default; }
+  /* Rate type selector */
+  .rate-toggle { display: flex; gap: 0; border: 1.5px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 0; }
+  .rate-toggle-btn { flex: 1; padding: 11px 8px; text-align: center; font-size: 13px; cursor: pointer; border: none; background: var(--paper); color: var(--muted); transition: all 0.15s; font-family: 'Noto Sans TC', sans-serif; }
+  .rate-toggle-btn:not(:last-child) { border-right: 1px solid var(--border); }
+  .rate-toggle-btn.active { background: var(--ink); color: var(--paper); font-weight: 500; }
+  /* Date presets */
+  .preset-btns { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+  .preset-btn { padding: 7px 12px; border: 1px solid var(--border); border-radius: 6px; background: var(--paper); font-size: 12px; cursor: pointer; font-family: 'Noto Sans TC', sans-serif; color: var(--ink); transition: all 0.15s; }
+  .preset-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .preset-btn.active { border-color: var(--ink); background: var(--ink); color: var(--paper); }
+  /* Interest method toggle */
+  .method-toggle { display: flex; gap: 0; border: 1.5px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .method-toggle-btn { flex: 1; padding: 11px 8px; text-align: center; font-size: 13px; cursor: pointer; border: none; background: var(--paper); color: var(--muted); transition: all 0.15s; font-family: 'Noto Sans TC', sans-serif; }
+  .method-toggle-btn:not(:last-child) { border-right: 1px solid var(--border); }
+  .method-toggle-btn.active { background: var(--ink); color: var(--paper); font-weight: 500; }
+  /* Date info row */
+  .date-info { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); margin-top: 8px; padding: 8px 12px; background: var(--soft); border-radius: 6px; }
+  /* Calc button */
+  .calc-btn {
+    width: 100%; padding: 16px; background: var(--ink); color: var(--paper);
+    border: none; border-radius: 10px; font-size: 15px; font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 500; cursor: pointer; letter-spacing: 0.04em; margin-top: 8px; transition: background 0.2s;
+  }
+  .calc-btn:hover { background: #2a2420; }
+  #results { display: none; margin-top: 20px; }
+  .result-card { background: var(--ink); color: var(--paper); border-radius: 12px; padding: 24px; margin-bottom: 14px; }
+  .result-title { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 16px; }
+  .summary-row { display: flex; justify-content: space-between; align-items: baseline; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 13px; }
+  .summary-row:last-child { border-bottom: none; }
+  .summary-row .lbl { color: rgba(255,255,255,0.65); }
+  .summary-row .val { font-family: 'DM Mono', monospace; }
+  .val.gold { color: var(--gold); font-size: 18px; font-weight: 700; }
+  .val.big { font-size: 22px; font-weight: 700; color: var(--gold); }
+  .val.green { color: #7ecba1; }
+  .val.sm { font-size: 12px; }
+  /* Year table */
+  .year-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 8px; }
+  .year-table th { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: 0.08em; text-align: right; padding: 6px 8px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .year-table th:first-child { text-align: left; }
+  .year-table td { padding: 9px 8px; border-bottom: 1px solid rgba(255,255,255,0.06); font-family: 'DM Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.75); text-align: right; }
+  .year-table td:first-child { text-align: left; color: rgba(255,255,255,0.5); }
+  .year-table tr:last-child td { border-bottom: none; }
+  .year-table tr.highlight td { color: var(--gold); }
+  .more-note { font-size: 11px; color: rgba(255,255,255,0.4); font-family: 'DM Mono', monospace; text-align: center; padding: 10px 0 0; }
+  .law-note { background: rgba(196,147,42,0.08); border: 1px solid rgba(196,147,42,0.25); border-radius: 8px; padding: 12px 14px; font-size: 12px; color: var(--muted); line-height: 1.7; margin-top: 14px; }
+  .law-note strong { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="logo">Inheritance<span>Pro</span></div>
+    <div class="page-sub">法定利率利息計算器</div>
+  </div>
+  <a class="home-link" href="index.html">← 返回</a>
+</header>
+
+<main>
+  <h1>法定利率利息計算器</h1>
+  <p class="subtitle">依民法§203年利率5%，計算損害賠償、借貸糾紛自請求日或起訴日起算之利息金額，支援單利與複利，含逐年明細。</p>
+
+  <!-- A. 本金與利率 -->
+  <div class="card">
+    <div class="section-title">A · 本金與利率</div>
+    <div class="input-group">
+      <label>本金金額<span class="label-hint">元</span></label>
+      <input type="number" id="principal" placeholder="0" min="0" oninput="autoCalc()">
+    </div>
+    <div class="input-group">
+      <label>利率類型</label>
+      <div class="rate-toggle">
+        <button class="rate-toggle-btn active" onclick="setRateType('statutory')" id="rt-statutory">法定利率 5%（§203）</button>
+        <button class="rate-toggle-btn" onclick="setRateType('custom')" id="rt-custom">自訂利率</button>
+      </div>
+    </div>
+    <div class="input-group" id="custom-rate-group" style="display:none">
+      <label>自訂年利率<span class="label-hint">%</span></label>
+      <input type="number" id="customRate" placeholder="5" min="0" max="200" step="0.01" oninput="autoCalc()">
+    </div>
+    <div class="input-group" id="display-rate-group">
+      <label>適用年利率</label>
+      <input type="number" id="displayRate" value="5" readonly>
+    </div>
+  </div>
+
+  <!-- B. 計算期間 -->
+  <div class="card">
+    <div class="section-title">B · 計算期間</div>
+    <div class="input-group">
+      <label>起算日</label>
+      <div class="preset-btns" id="start-presets">
+        <button class="preset-btn" onclick="setStartPreset('lawsuit')" id="sp-lawsuit">起訴日</button>
+        <button class="preset-btn" onclick="setStartPreset('demand')" id="sp-demand">請求日</button>
+        <button class="preset-btn" onclick="setStartPreset('accident')" id="sp-accident">事故發生日</button>
+        <button class="preset-btn active" onclick="setStartPreset('custom')" id="sp-custom">自訂</button>
+      </div>
+      <input type="date" id="startDate" oninput="onDateChange()">
+    </div>
+    <div class="input-group">
+      <label>終止日</label>
+      <div class="preset-btns">
+        <button class="preset-btn active" onclick="setEndToday()" id="ep-today">今日</button>
+      </div>
+      <input type="date" id="endDate" oninput="onDateChange()">
+    </div>
+    <div class="date-info" id="date-info">計算期間：— 天（— 年）</div>
+  </div>
+
+  <!-- C. 計算方式 -->
+  <div class="card">
+    <div class="section-title">C · 計算方式</div>
+    <div class="method-toggle">
+      <button class="method-toggle-btn active" onclick="setMethod('simple')" id="m-simple">
+        單利（法院標準）
+      </button>
+      <button class="method-toggle-btn" onclick="setMethod('compound')" id="m-compound">
+        複利
+      </button>
+    </div>
+    <p style="font-size:11px;color:var(--muted);margin-top:10px;line-height:1.6">單利為法院損害賠償計算之標準方式。複利僅供參考。</p>
+  </div>
+
+  <button class="calc-btn" onclick="calculate()">計算利息</button>
+
+  <div id="results">
+    <div class="result-card">
+      <div class="result-title">利息計算結果</div>
+      <div class="summary-row">
+        <span class="lbl">本金</span>
+        <span class="val" id="r-principal">—</span>
+      </div>
+      <div class="summary-row">
+        <span class="lbl">年利率</span>
+        <span class="val" id="r-rate">—</span>
+      </div>
+      <div class="summary-row">
+        <span class="lbl">計算期間</span>
+        <span class="val sm" id="r-period">—</span>
+      </div>
+      <div class="summary-row">
+        <span class="lbl">計算方式</span>
+        <span class="val sm" id="r-method">—</span>
+      </div>
+      <div class="summary-row">
+        <span class="lbl">利息金額</span>
+        <span class="val gold" id="r-interest">—</span>
+      </div>
+      <div class="summary-row">
+        <span class="lbl" style="color:#fff;font-weight:500">本利合計</span>
+        <span class="val big" id="r-total">—</span>
+      </div>
+    </div>
+
+    <div class="result-card">
+      <div class="result-title">逐年明細</div>
+      <table class="year-table">
+        <thead>
+          <tr>
+            <th>年度</th>
+            <th>當年利息</th>
+            <th>累計利息</th>
+            <th>本利合計</th>
+          </tr>
+        </thead>
+        <tbody id="year-table-body"></tbody>
+      </table>
+      <div class="more-note" id="more-note" style="display:none">（僅顯示前10年，以下類推）</div>
+    </div>
+
+    <!-- 律師備忘 -->
+    <div class="lawyer-only" style="background:#eef3fa;border:1.5px solid #3a5a80;border-radius:12px;padding:16px 20px;margin-top:16px">
+      <div style="font-size:12px;font-weight:700;color:#1a3a5c;margin-bottom:8px;letter-spacing:0.04em">⚖ 律師訴訟策略備忘</div>
+      <div style="font-size:12px;color:#1a2a3a;line-height:1.9">
+        <strong>損害賠償利息起算（§233）：</strong>侵權行為損害賠償，利息通常自<em>起訴狀繕本送達被告翌日</em>起算；或依判決內容以請求日或知悉損害日為準，應在訴之聲明中明確載明。<br>
+        <strong>§233遲延利息：</strong>債務人遲延給付時，債權人得請求遲延利息；若原約定利率低於法定利率，仍得請求法定利率之遲延利息。<br>
+        <strong>訴之聲明格式：</strong>「被告應給付原告新台幣○元，及自民國○年○月○日起至清償日止，按年息5%計算之利息。」<br>
+        <strong>注意：</strong>民事訴訟費用（裁判費、律師費）另計，不含於本試算結果。
+      </div>
+    </div>
+
+    <div class="law-note">
+      <strong>法律依據：</strong>民法§203（法定利率年息5%）、§233（遲延利息）。本工具採簡單日計算（天數÷365×本金×利率），法院實務或採不同計算基礎，僅供參考。
+    </div>
+  </div>
+</main>
+
+<script>
+  const FMT = v => '$ ' + Math.round(v).toLocaleString('zh-TW');
+  const FMT2 = v => '$ ' + v.toLocaleString('zh-TW', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+
+  let rateType = 'statutory';
+  let method = 'simple';
+  let startPreset = 'custom';
+
+  // Init dates
+  (function init() {
+    const today = new Date();
+    const todayStr = toDateStr(today);
+    document.getElementById('endDate').value = todayStr;
+    document.getElementById('startDate').value = todayStr;
+    updateDateInfo();
+  })();
+
+  function toDateStr(d) {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  }
+
+  function setRateType(type) {
+    rateType = type;
+    document.getElementById('rt-statutory').classList.toggle('active', type === 'statutory');
+    document.getElementById('rt-custom').classList.toggle('active', type === 'custom');
+    document.getElementById('custom-rate-group').style.display = type === 'custom' ? 'block' : 'none';
+    document.getElementById('display-rate-group').style.display = type === 'statutory' ? 'block' : 'none';
+    autoCalc();
+  }
+
+  function setMethod(m) {
+    method = m;
+    document.getElementById('m-simple').classList.toggle('active', m === 'simple');
+    document.getElementById('m-compound').classList.toggle('active', m === 'compound');
+    autoCalc();
+  }
+
+  function setStartPreset(preset) {
+    startPreset = preset;
+    ['lawsuit','demand','accident','custom'].forEach(p => {
+      document.getElementById('sp-' + p).classList.toggle('active', p === preset);
+    });
+    if (preset !== 'custom') {
+      const today = new Date();
+      document.getElementById('startDate').value = toDateStr(today);
+      document.getElementById('startDate').setAttribute('data-preset', preset);
+    }
+    updateDateInfo();
+    autoCalc();
+  }
+
+  function setEndToday() {
+    document.getElementById('endDate').value = toDateStr(new Date());
+    updateDateInfo();
+    autoCalc();
+  }
+
+  function onDateChange() {
+    startPreset = 'custom';
+    ['lawsuit','demand','accident'].forEach(p => document.getElementById('sp-' + p).classList.remove('active'));
+    document.getElementById('sp-custom').classList.add('active');
+    updateDateInfo();
+    autoCalc();
+  }
+
+  function getDays() {
+    const s = document.getElementById('startDate').value;
+    const e = document.getElementById('endDate').value;
+    if (!s || !e) return 0;
+    const sd = new Date(s), ed = new Date(e);
+    const diff = Math.round((ed - sd) / (1000 * 60 * 60 * 24));
+    return diff;
+  }
+
+  function updateDateInfo() {
+    const days = getDays();
+    const years = (days / 365).toFixed(2);
+    const el = document.getElementById('date-info');
+    if (days < 0) {
+      el.textContent = '⚠ 終止日早於起算日';
+    } else {
+      el.textContent = `計算期間：${days.toLocaleString()} 天（${years} 年）`;
+    }
+  }
+
+  function getRate() {
+    if (rateType === 'statutory') return 5;
+    const v = parseFloat(document.getElementById('customRate').value);
+    return isNaN(v) ? 5 : v;
+  }
+
+  function autoCalc() {
+    if (document.getElementById('results').style.display === 'block') calculate(true);
+  }
+
+  function calcInterest(principal, ratePct, days) {
+    const r = ratePct / 100;
+    if (method === 'simple') {
+      return principal * r * (days / 365);
+    } else {
+      // compound annual
+      const years = days / 365;
+      return principal * (Math.pow(1 + r, years) - 1);
+    }
+  }
+
+  function calculate(silent = false) {
+    const principal = parseFloat(document.getElementById('principal').value) || 0;
+    const rate = getRate();
+    const days = getDays();
+
+    if (principal <= 0) { if (!silent) alert('請輸入本金金額'); return; }
+    if (days < 0) { if (!silent) alert('終止日不得早於起算日'); return; }
+
+    const interest = calcInterest(principal, rate, days);
+    const total = principal + interest;
+    const years = days / 365;
+
+    const startVal = document.getElementById('startDate').value;
+    const endVal = document.getElementById('endDate').value;
+
+    const presetLabels = { lawsuit: '起訴日', demand: '請求日', accident: '事故發生日', custom: '' };
+    const startLabel = startPreset !== 'custom' ? `（${presetLabels[startPreset]}）` : '';
+
+    document.getElementById('results').style.display = 'block';
+    document.getElementById('r-principal').textContent = FMT(principal);
+    document.getElementById('r-rate').textContent = rate + '%';
+    document.getElementById('r-period').textContent = `${startVal}${startLabel} → ${endVal}　${days.toLocaleString()} 天 / ${years.toFixed(4)} 年`;
+    document.getElementById('r-method').textContent = method === 'simple' ? '單利（Simple Interest）' : '複利（Compound Interest）';
+    document.getElementById('r-interest').textContent = FMT(interest);
+    document.getElementById('r-total').textContent = FMT(total);
+
+    // Year table (up to 10 years)
+    const r = rate / 100;
+    const rows = [];
+    const maxYears = Math.min(10, Math.ceil(years) + 1);
+    const showMore = years > 10;
+
+    let cumInterest = 0;
+    for (let yr = 1; yr <= maxYears; yr++) {
+      const daysThisYear = Math.min(yr * 365, days);
+      const interestThisYear = calcInterest(principal, rate, daysThisYear);
+      const prevInterest = yr === 1 ? 0 : calcInterest(principal, rate, (yr - 1) * 365);
+      const yearlyInterest = interestThisYear - prevInterest;
+      const cumInt = interestThisYear;
+      const isLast = daysThisYear >= days;
+
+      rows.push({
+        year: yr,
+        yearlyInterest,
+        cumInt,
+        total: principal + cumInt,
+        partial: isLast && daysThisYear < yr * 365
+      });
+      if (isLast) break;
+    }
+
+    document.getElementById('year-table-body').innerHTML = rows.map((r, i) => `
+      <tr class="${i === rows.length - 1 ? 'highlight' : ''}">
+        <td>${r.partial ? '第' + r.year + '年（未滿）' : '第' + r.year + '年'}</td>
+        <td>${FMT(r.yearlyInterest)}</td>
+        <td>${FMT(r.cumInt)}</td>
+        <td>${FMT(r.total)}</td>
+      </tr>`).join('');
+
+    document.getElementById('more-note').style.display = showMore ? 'block' : 'none';
+
+    if (!silent) document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+</script>
+</body>
+</html>
