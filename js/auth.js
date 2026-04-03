@@ -29,7 +29,7 @@ export async function getProfile() {
 export async function signInWithGoogle() {
   await supabase.auth.signInWithOAuth({
     provider: 'google',
-    options: { redirectTo: window.location.origin + '/account.html' }
+    options: { redirectTo: window.location.origin + '/auth-callback.html' }
   });
 }
 

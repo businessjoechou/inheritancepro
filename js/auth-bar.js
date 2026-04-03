@@ -257,9 +257,41 @@ async function initAuthBar() {
   };
 }
 
+// Handle OAuth callback from custom URL scheme (Capacitor app)
+async function handleOAuthCallback() {
+  try {
+    const { App } = await import('https://cdn.jsdelivr.net/npm/@capacitor/app@6/+esm');
+    App.addListener('appUrlOpen', async (event) => {
+      const url = event.url;
+      if (!url || !url.includes('auth-callback')) return;
+
+      // Extract tokens from the URL hash
+      const hashPart = url.split('#')[1];
+      if (!hashPart) return;
+
+      const params = new URLSearchParams(hashPart);
+      const accessToken = params.get('access_token');
+      const refreshToken = params.get('refresh_token');
+
+      if (accessToken) {
+        const { supabase } = await import('./auth.js');
+        await supabase.auth.setSession({
+          access_token: accessToken,
+          refresh_token: refreshToken || ''
+        });
+        // Redirect to account page
+        window.location.href = '/account.html';
+      }
+    });
+  } catch (e) {
+    // Not in Capacitor or plugin not available — ignore
+  }
+}
+
 // Run when DOM is ready
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initAuthBar);
+  document.addEventListener('DOMContentLoaded', () => { initAuthBar(); handleOAuthCallback(); });
 } else {
   initAuthBar();
+  handleOAuthCallback();
 }

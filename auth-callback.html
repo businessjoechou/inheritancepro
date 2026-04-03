@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>登入中…｜InheritancePro</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #1a1410;
+    color: #f5f0e8;
+    font-family: -apple-system, 'Noto Sans TC', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+  }
+  .spinner {
+    width: 32px; height: 32px;
+    border: 3px solid rgba(196,147,42,0.2);
+    border-top-color: #c4932a;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 20px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  h1 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+  p { font-size: 13px; color: rgba(245,240,232,0.5); line-height: 1.6; }
+  .manual-link {
+    display: none;
+    margin-top: 24px;
+    padding: 12px 28px;
+    background: #c4932a;
+    color: #1a1410;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+  }
+  .manual-link.visible { display: inline-block; }
+</style>
+</head>
+<body>
+  <div class="spinner" id="spinner"></div>
+  <h1 id="title">登入成功，返回 App 中…</h1>
+  <p id="subtitle">正在將您導回 InheritancePro</p>
+  <a class="manual-link" id="manual-link" href="#">點擊此處返回 App</a>
+
+<script>
+(function() {
+  // Extract tokens from URL hash (implicit flow)
+  const hash = window.location.hash.substring(1);
+  const params = new URLSearchParams(hash);
+  const accessToken = params.get('access_token');
+  const refreshToken = params.get('refresh_token');
+  const expiresIn = params.get('expires_in');
+  const tokenType = params.get('token_type');
+
+  if (!accessToken) {
+    // No token — might be PKCE code flow, try query params
+    const query = new URLSearchParams(window.location.search);
+    const code = query.get('code');
+    if (code) {
+      // Can't exchange code here (no verifier), show error
+      document.getElementById('title').textContent = '請使用網頁版登入';
+      document.getElementById('subtitle').textContent = '在 App 中請使用 Email 登入方式';
+      document.getElementById('spinner').style.display = 'none';
+      return;
+    }
+    document.getElementById('title').textContent = '登入失敗';
+    document.getElementById('subtitle').textContent = '未收到登入憑證，請重試';
+    document.getElementById('spinner').style.display = 'none';
+    return;
+  }
+
+  // Build custom URL scheme to pass tokens back to the app
+  const appUrl = 'inheritancepro://auth-callback#' +
+    'access_token=' + encodeURIComponent(accessToken) +
+    '&refresh_token=' + encodeURIComponent(refreshToken || '') +
+    '&expires_in=' + encodeURIComponent(expiresIn || '3600') +
+    '&token_type=' + encodeURIComponent(tokenType || 'bearer');
+
+  // Try to open the app immediately
+  window.location.href = appUrl;
+
+  // Show manual button after 1.5s in case auto-redirect didn't work
+  setTimeout(function() {
+    var link = document.getElementById('manual-link');
+    link.href = appUrl;
+    link.classList.add('visible');
+    document.getElementById('subtitle').textContent = '如果沒有自動跳轉，請點擊下方按鈕';
+  }, 1500);
+
+  // If on desktop/web (no app installed), redirect to account page
+  setTimeout(function() {
+    // Check if still on this page (app didn't open)
+    if (document.visibilityState !== 'hidden') {
+      // Might be on desktop, redirect to regular account page with tokens
+      window.location.href = '/account.html#' + hash;
+    }
+  }, 3000);
+})();
+</script>
+</body>
+</html>
