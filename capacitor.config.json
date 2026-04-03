@@ -6,8 +6,6 @@
     "url": "https://inheritancepro.app",
     "cleartext": false,
     "allowNavigation": [
-      "accounts.google.com",
-      "*.google.com",
       "*.supabase.co",
       "*.supabase.com"
     ]

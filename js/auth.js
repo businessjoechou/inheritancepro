@@ -1,7 +1,11 @@
 // auth.js — Supabase Auth helper module
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-export const supabase = createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+export const supabase = createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY, {
+  auth: {
+    flowType: 'implicit'
+  }
+});
 
 // Get current user
 export async function getUser() {
