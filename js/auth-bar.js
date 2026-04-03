@@ -159,10 +159,11 @@ async function initAuthBar() {
   `;
   document.head.appendChild(style);
 
-  // Inject back button on non-index pages
+  // Inject back button on non-index pages (skip if page already has one)
   const path = window.location.pathname;
   const isIndex = path === '/' || path === '/index.html' || path.endsWith('/index.html');
-  if (!isIndex) {
+  const hasExistingBack = document.querySelector('.home-link, .back-link');
+  if (!isIndex && !hasExistingBack) {
     const backBtn = document.createElement('a');
     backBtn.className = 'auth-back-btn';
     backBtn.href = '/index.html';
