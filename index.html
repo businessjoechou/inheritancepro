@@ -336,7 +336,16 @@
 
   <div class="persona-bar">
     <div class="persona-badge" id="personaBadge"></div>
-    <button class="persona-switch" onclick="localStorage.removeItem('ip_persona');window.location.href='landing.html'">切換身份</button>
+    <button class="persona-switch" id="personaSwitchBtn">切換身份</button>
+  </div>
+  <div id="proGateModal" style="display:none;position:fixed;inset:0;z-index:10001;background:rgba(0,0,0,0.7);display:none;align-items:center;justify-content:center;padding:24px;">
+    <div style="background:#1a1410;border:1px solid rgba(196,147,42,0.3);border-radius:16px;padding:28px 24px;max-width:340px;width:100%;text-align:center;">
+      <div style="font-size:32px;margin-bottom:12px;">⚖️</div>
+      <div style="font-family:'Noto Serif TC',serif;font-size:18px;font-weight:700;color:#f5f0e8;margin-bottom:8px;">專業模式</div>
+      <div style="font-size:13px;color:rgba(245,240,232,0.55);line-height:1.7;margin-bottom:20px;">會計師模式與律師模式包含進階稅務精算、訴訟策略備忘、案件管理等專業功能，需升級 Pro 解鎖。</div>
+      <a href="/login.html" style="display:block;padding:12px;background:#c4932a;color:#1a1410;border-radius:8px;font-weight:600;font-size:14px;text-decoration:none;margin-bottom:10px;">升級 Pro 解鎖</a>
+      <button onclick="document.getElementById('proGateModal').style.display='none'" style="background:none;border:none;color:rgba(245,240,232,0.4);font-size:13px;cursor:pointer;">取消</button>
+    </div>
   </div>
 
   <div id="tabNav" class="tab-nav"></div>
@@ -600,18 +609,24 @@
     const currentTab = TABS.find(t => t.id === activeTab);
     const tools = currentTab?.tools || [];
 
+    const isPro = window.__inheritanceProIsPro || false;
+
     document.getElementById('toolsContainer').innerHTML = tools.map(tool => {
       const desc = getDesc(tool, persona);
       const featuredStyle = tool.featured
         ? 'background:linear-gradient(135deg,#1e1916 0%,#221e1a 100%);'
         : '';
-      return `<a class="tool-card ${tool.featured ? 'featured' : ''}" href="${tool.href}" style="${featuredStyle}">
+      const isLocked = tool.persona && !isPro;
+      const lockLabel = tool.persona === 'accountant' ? '會計師' : tool.persona === 'lawyer' ? '律師' : '';
+      const href = isLocked ? 'javascript:void(0)' : tool.href;
+      const lockClick = isLocked ? `onclick="document.getElementById('proGateModal').style.display='flex'"` : '';
+      return `<a class="tool-card ${tool.featured ? 'featured' : ''}" href="${href}" style="${featuredStyle}${isLocked ? 'opacity:0.6;' : ''}" ${lockClick}>
         <div class="tool-card-inner">
           <div class="tool-info">
-            <div class="tool-name">${tool.name}</div>
+            <div class="tool-name">${isLocked ? '🔒 ' : ''}${tool.name}${isLocked ? ' <span style="font-size:10px;color:#c4932a;font-family:DM Mono,monospace;margin-left:4px;">PRO・' + lockLabel + '</span>' : ''}</div>
             <div class="tool-desc" style="margin-top:5px">${desc}</div>
           </div>
-          <span class="tool-arrow" style="${tool.featured ? 'font-size:20px' : ''}">→</span>
+          <span class="tool-arrow" style="${tool.featured ? 'font-size:20px' : ''}">${isLocked ? '🔒' : '→'}</span>
         </div>
       </a>`;
     }).join('');
@@ -622,12 +637,34 @@
     renderTools();
   }
 
-  // Redirect to landing if no persona set
-  if (!localStorage.getItem('ip_persona')) {
-    window.location.href = 'landing.html';
-  } else {
-    renderTools();
-  }
+  // Check Pro status and set up persona switch
+  (async function() {
+    try {
+      const { supabase, getProfile } = await import('./js/auth.js');
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const profile = await getProfile();
+        window.__inheritanceProIsPro = profile?.is_pro || false;
+      }
+    } catch(e) {}
+
+    // Persona switch button
+    document.getElementById('personaSwitchBtn').addEventListener('click', () => {
+      if (window.__inheritanceProIsPro) {
+        localStorage.removeItem('ip_persona');
+        window.location.href = 'landing.html';
+      } else {
+        document.getElementById('proGateModal').style.display = 'flex';
+      }
+    });
+
+    // Redirect to landing if no persona set
+    if (!localStorage.getItem('ip_persona')) {
+      window.location.href = 'landing.html';
+    } else {
+      renderTools();
+    }
+  })();
 
   document.querySelectorAll('.faq-q').forEach(q => {
     q.addEventListener('click', () => {
