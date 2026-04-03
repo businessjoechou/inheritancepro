@@ -153,13 +153,29 @@
   </div>
 
   <div class="card">
-    <div class="section-title">C · 對造條件</div>
+    <div class="section-title">C · 對造條件分析</div>
     <div class="input-group">
       <label>對造和解意願</label>
       <select id="willingness" onchange="autoCalc()">
         <option value="0">無意願（明確拒絕）</option>
         <option value="0.5" selected>可能（尚未表態）</option>
         <option value="1">有意願（主動詢問）</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label>對造財務狀況</label>
+      <select id="opponentFinance" onchange="autoCalc()">
+        <option value="1.15">經濟壓力大（急需和解）</option>
+        <option value="1.0" selected>一般（無明顯壓力）</option>
+        <option value="0.85">財力雄厚（可長期抗訴）</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label>對造是否有律師</label>
+      <select id="opponentLawyer" onchange="autoCalc()">
+        <option value="0.9">有經驗豐富律師</option>
+        <option value="1.0" selected>有一般律師</option>
+        <option value="1.1">無律師（自行訴訟）</option>
       </select>
     </div>
   </div>
@@ -234,18 +250,21 @@
     const years = parseInt(document.getElementById('litigYears').value);
     const stressRate = parseFloat(document.getElementById('stressCost').value);
     const willingness = parseFloat(document.getElementById('willingness').value);
+    const opponentFinance = parseFloat(document.getElementById('opponentFinance').value);
+    const opponentLawyer = parseFloat(document.getElementById('opponentLawyer').value);
 
-    // Expected value model
+    // Expected value model with opponent adjustments
     const winProb = strength / 10;
     const expectedValue = dispute * winProb;
-    const timeDiscount = dispute * 0.03 * years; // 3% per year discount
+    const timeDiscount = dispute * 0.03 * years;
     const stressCost = dispute * stressRate;
     const totalCost = legalFee + timeDiscount + stressCost;
     const netExpected = Math.max(0, expectedValue - totalCost);
 
-    // Settlement range
-    const floor = Math.max(minAccept || 0, netExpected * 0.85);
-    const ceiling = dispute * Math.min(0.95, winProb + 0.15);
+    // Settlement range adjusted by opponent conditions
+    const opponentMultiplier = opponentFinance * opponentLawyer;
+    const floor = Math.max(minAccept || 0, netExpected * 0.85 * opponentMultiplier);
+    const ceiling = dispute * Math.min(0.95, winProb + 0.15) * opponentMultiplier;
     const opening = ceiling * 1.2 > dispute ? dispute * 0.95 : ceiling * 1.2;
 
     document.getElementById('results').style.display = 'block';
