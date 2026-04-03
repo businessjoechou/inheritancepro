@@ -128,8 +128,47 @@ async function initAuthBar() {
       from { opacity: 0; transform: translateY(6px); }
       to   { opacity: 1; transform: translateY(0); }
     }
+
+    /* Back button (top-right, non-index pages only) */
+    .auth-back-btn {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      top: calc(16px + env(safe-area-inset-top, 0px));
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(26, 20, 16, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(200, 191, 176, 0.2);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: rgba(245, 240, 232, 0.6);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .auth-back-btn:hover {
+      border-color: rgba(196, 147, 42, 0.5);
+      color: #f5f0e8;
+    }
   `;
   document.head.appendChild(style);
+
+  // Inject back button on non-index pages
+  const path = window.location.pathname;
+  const isIndex = path === '/' || path === '/index.html' || path.endsWith('/index.html');
+  if (!isIndex) {
+    const backBtn = document.createElement('a');
+    backBtn.className = 'auth-back-btn';
+    backBtn.href = '/index.html';
+    backBtn.textContent = '← 返回';
+    document.body.appendChild(backBtn);
+  }
 
   // Check auth state
   const { data: { user } } = await supabase.auth.getUser();
