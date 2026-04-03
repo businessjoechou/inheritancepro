@@ -257,65 +257,9 @@ async function initAuthBar() {
   };
 }
 
-// Extract tokens from URL and set Supabase session
-async function processAuthTokens(url) {
-  const hashPart = url.split('#')[1];
-  if (!hashPart) return false;
-
-  const params = new URLSearchParams(hashPart);
-  const accessToken = params.get('access_token');
-  const refreshToken = params.get('refresh_token');
-
-  if (accessToken) {
-    try {
-      const { supabase } = await import('./auth.js');
-      const { error } = await supabase.auth.setSession({
-        access_token: accessToken,
-        refresh_token: refreshToken || ''
-      });
-      if (!error) {
-        window.location.href = '/account.html';
-        return true;
-      }
-    } catch (e) {
-      console.error('Failed to set session:', e);
-    }
-  }
-  return false;
-}
-
-// Handle OAuth callback for Capacitor native app
-function handleOAuthCallback() {
-  // Only run in Capacitor native environment
-  if (!window.Capacitor?.isNativePlatform()) return;
-
-  try {
-    // Register the App plugin via Capacitor bridge (NOT CDN import)
-    const { registerPlugin } = await import('https://cdn.jsdelivr.net/npm/@capacitor/core@8/+esm');
-    const AppPlugin = registerPlugin('App');
-
-    // 1. Check if app was LAUNCHED via URL scheme (cold start)
-    AppPlugin.getLaunchUrl().then((result) => {
-      if (result?.url && result.url.includes('auth-callback')) {
-        processAuthTokens(result.url);
-      }
-    }).catch(() => {});
-
-    // 2. Listen for URL opens while app is running (warm start)
-    AppPlugin.addListener('appUrlOpen', (event) => {
-      if (event?.url && event.url.includes('auth-callback')) {
-        processAuthTokens(event.url);
-      }
-    });
-  } catch (e) {
-    // Capacitor plugin not available — ignore
-  }
-}
-
 // Run when DOM is ready
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => { initAuthBar(); handleOAuthCallback(); });
+  document.addEventListener('DOMContentLoaded', initAuthBar);
 } else {
   initAuthBar();
-  handleOAuthCallback();
 }
