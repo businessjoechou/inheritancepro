@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "HP27Q8KJW2.app.inheritancepro",
+        "paths": ["*"]
+      }
+    ]
+  }
+}
