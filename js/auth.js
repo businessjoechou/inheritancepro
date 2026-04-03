@@ -1,6 +1,6 @@
 // auth.js — Supabase Auth helper module
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-import { registerPlugin } from 'https://cdn.jsdelivr.net/npm/@capacitor/core@8/+esm';
+// registerPlugin loaded dynamically only when needed (Capacitor native)
 
 export const supabase = createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY, {
   auth: {
@@ -30,6 +30,7 @@ export async function getProfile() {
 export async function signInWithApple() {
   // In Capacitor native app: use native Apple Sign In
   if (window.Capacitor?.isNativePlatform()) {
+    const { registerPlugin } = await import('https://cdn.jsdelivr.net/npm/@capacitor/core@8/+esm');
     const AppleSignIn = registerPlugin('AppleSignIn');
     const result = await AppleSignIn.signIn();
 
