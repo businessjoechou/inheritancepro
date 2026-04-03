@@ -291,7 +291,8 @@ function handleOAuthCallback() {
 
   try {
     // Register the App plugin via Capacitor bridge (NOT CDN import)
-    const AppPlugin = window.Capacitor.registerPlugin('App');
+    const { registerPlugin } = await import('https://cdn.jsdelivr.net/npm/@capacitor/core@8/+esm');
+    const AppPlugin = registerPlugin('App');
 
     // 1. Check if app was LAUNCHED via URL scheme (cold start)
     AppPlugin.getLaunchUrl().then((result) => {
