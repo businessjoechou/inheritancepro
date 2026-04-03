@@ -25,56 +25,31 @@ export async function getProfile() {
   return data;
 }
 
-// Sign in with Google OAuth
-export async function signInWithGoogle() {
-  // In Capacitor native app: use ASWebAuthenticationSession
+// Sign in with Apple
+export async function signInWithApple() {
+  // In Capacitor native app: use native Apple Sign In
   if (window.Capacitor?.isNativePlatform()) {
-    try {
-      // Get OAuth URL without redirecting the page
-      const { data, error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: window.location.origin + '/auth-callback.html',
-          skipBrowserRedirect: true
-        }
-      });
+    const AppleSignIn = window.Capacitor.registerPlugin('AppleSignIn');
+    const result = await AppleSignIn.signIn();
 
-      if (error || !data?.url) throw new Error(error?.message || 'No OAuth URL');
+    const { error } = await supabase.auth.signInWithIdToken({
+      provider: 'apple',
+      token: result.identityToken,
+      nonce: result.nonce
+    });
 
-      // Open in ASWebAuthenticationSession (native iOS auth browser)
-      const AuthSession = window.Capacitor.registerPlugin('AuthSession');
-      const result = await AuthSession.start({
-        url: data.url,
-        callbackScheme: 'inheritancepro'
-      });
-
-      // Extract tokens from callback URL
-      if (result?.url) {
-        const hashPart = result.url.split('#')[1];
-        if (hashPart) {
-          const params = new URLSearchParams(hashPart);
-          const accessToken = params.get('access_token');
-          const refreshToken = params.get('refresh_token');
-          if (accessToken) {
-            await supabase.auth.setSession({
-              access_token: accessToken,
-              refresh_token: refreshToken || ''
-            });
-            window.location.href = '/account.html';
-            return;
-          }
-        }
-      }
-    } catch (e) {
-      console.error('Native auth failed:', e);
-      // Fall through to web OAuth as fallback
+    if (!error) {
+      window.location.href = '/account.html';
+    } else {
+      throw new Error(error.message);
     }
+    return;
   }
 
-  // Web: normal OAuth redirect
+  // Web: OAuth redirect
   await supabase.auth.signInWithOAuth({
-    provider: 'google',
-    options: { redirectTo: window.location.origin + '/auth-callback.html' }
+    provider: 'apple',
+    options: { redirectTo: window.location.origin + '/account.html' }
   });
 }
 
