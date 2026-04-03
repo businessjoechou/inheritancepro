@@ -257,34 +257,57 @@ async function initAuthBar() {
   };
 }
 
-// Handle OAuth callback from custom URL scheme (Capacitor app)
-async function handleOAuthCallback() {
-  try {
-    const { App } = await import('https://cdn.jsdelivr.net/npm/@capacitor/app@6/+esm');
-    App.addListener('appUrlOpen', async (event) => {
-      const url = event.url;
-      if (!url || !url.includes('auth-callback')) return;
+// Extract tokens from URL and set Supabase session
+async function processAuthTokens(url) {
+  const hashPart = url.split('#')[1];
+  if (!hashPart) return false;
 
-      // Extract tokens from the URL hash
-      const hashPart = url.split('#')[1];
-      if (!hashPart) return;
+  const params = new URLSearchParams(hashPart);
+  const accessToken = params.get('access_token');
+  const refreshToken = params.get('refresh_token');
 
-      const params = new URLSearchParams(hashPart);
-      const accessToken = params.get('access_token');
-      const refreshToken = params.get('refresh_token');
-
-      if (accessToken) {
-        const { supabase } = await import('./auth.js');
-        await supabase.auth.setSession({
-          access_token: accessToken,
-          refresh_token: refreshToken || ''
-        });
-        // Redirect to account page
+  if (accessToken) {
+    try {
+      const { supabase } = await import('./auth.js');
+      const { error } = await supabase.auth.setSession({
+        access_token: accessToken,
+        refresh_token: refreshToken || ''
+      });
+      if (!error) {
         window.location.href = '/account.html';
+        return true;
+      }
+    } catch (e) {
+      console.error('Failed to set session:', e);
+    }
+  }
+  return false;
+}
+
+// Handle OAuth callback for Capacitor native app
+function handleOAuthCallback() {
+  // Only run in Capacitor native environment
+  if (!window.Capacitor?.isNativePlatform()) return;
+
+  try {
+    // Register the App plugin via Capacitor bridge (NOT CDN import)
+    const AppPlugin = window.Capacitor.registerPlugin('App');
+
+    // 1. Check if app was LAUNCHED via URL scheme (cold start)
+    AppPlugin.getLaunchUrl().then((result) => {
+      if (result?.url && result.url.includes('auth-callback')) {
+        processAuthTokens(result.url);
+      }
+    }).catch(() => {});
+
+    // 2. Listen for URL opens while app is running (warm start)
+    AppPlugin.addListener('appUrlOpen', (event) => {
+      if (event?.url && event.url.includes('auth-callback')) {
+        processAuthTokens(event.url);
       }
     });
   } catch (e) {
-    // Not in Capacitor or plugin not available — ignore
+    // Capacitor plugin not available — ignore
   }
 }
 
