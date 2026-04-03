@@ -338,6 +338,19 @@
           </div>`).join('')
       : '<div class="result-row"><span class="label" style="color:rgba(255,255,255,0.4)">無扣除額項目</span></div>';
 
+    // Per-heir tax allocation
+    const numHeirs = Math.max(1, Math.floor(getVal('descendants')) + (document.getElementById('hasSpouse').checked ? 1 : 0));
+    const perHeirTax = Math.round(r.tax / numHeirs);
+    const netPerHeir = Math.round((r.gross - r.tax) / numHeirs);
+
+    let heirHtml = `<div style="margin-top:16px;background:rgba(196,147,42,0.06);border:1px solid rgba(196,147,42,0.15);border-radius:10px;padding:16px;">
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:0.1em;margin-bottom:10px">PER HEIR ALLOCATION（${numHeirs} 位繼承人）</div>
+      <div class="result-row"><span class="label">每人應分攤稅額</span><span class="value" style="color:#f28b6e">${FMT(perHeirTax)}</span></div>
+      <div class="result-row"><span class="label">每人淨繼承額（稅後）</span><span class="value" style="color:#7ecba1">${FMT(netPerHeir)}</span></div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:8px;line-height:1.6;">※ 以均分計算，實際依遺囑或協議分配比例為準。如有配偶，配偶應繼分為遺產之½（與子女共同繼承時）。</div>
+    </div>`;
+    document.getElementById('deductBreakdown').innerHTML += heirHtml;
+
     if (!silent) {
       document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
