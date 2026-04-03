@@ -159,11 +159,12 @@ async function initAuthBar() {
   `;
   document.head.appendChild(style);
 
-  // Inject back button on non-index pages (skip if page already has one)
+  // Inject back button on non-index pages (unified floating button)
   const path = window.location.pathname;
   const isIndex = path === '/' || path === '/index.html' || path.endsWith('/index.html');
-  const hasExistingBack = document.querySelector('.home-link, .back-link');
-  if (!isIndex && !hasExistingBack) {
+  // Remove any existing back links to avoid duplicates
+  document.querySelectorAll('.home-link').forEach(el => el.remove());
+  if (!isIndex) {
     const backBtn = document.createElement('a');
     backBtn.className = 'auth-back-btn';
     backBtn.href = '/index.html';
