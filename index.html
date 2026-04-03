@@ -338,12 +338,16 @@
     <div class="persona-badge" id="personaBadge"></div>
     <button class="persona-switch" id="personaSwitchBtn">切換身份</button>
   </div>
-  <div id="proGateModal" style="display:none;position:fixed;inset:0;z-index:10001;background:rgba(0,0,0,0.7);display:none;align-items:center;justify-content:center;padding:24px;">
-    <div style="background:#1a1410;border:1px solid rgba(196,147,42,0.3);border-radius:16px;padding:28px 24px;max-width:340px;width:100%;text-align:center;">
-      <div style="font-size:32px;margin-bottom:12px;">⚖️</div>
-      <div style="font-family:'Noto Serif TC',serif;font-size:18px;font-weight:700;color:#f5f0e8;margin-bottom:8px;">專業模式</div>
-      <div style="font-size:13px;color:rgba(245,240,232,0.55);line-height:1.7;margin-bottom:20px;">會計師模式與律師模式包含進階稅務精算、訴訟策略備忘、案件管理等專業功能，需升級 Pro 解鎖。</div>
-      <a href="/login.html" style="display:block;padding:12px;background:#c4932a;color:#1a1410;border-radius:8px;font-weight:600;font-size:14px;text-decoration:none;margin-bottom:10px;">升級 Pro 解鎖</a>
+  <div id="proGateModal" style="display:none;position:fixed;inset:0;z-index:10001;background:rgba(0,0,0,0.7);align-items:center;justify-content:center;padding:24px;">
+    <div style="background:#1a1410;border:1px solid rgba(196,147,42,0.3);border-radius:16px;padding:28px 24px;max-width:380px;width:100%;text-align:center;">
+      <div style="font-size:32px;margin-bottom:12px;" id="proGateIcon">⚖️</div>
+      <div style="font-family:'Noto Serif TC',serif;font-size:18px;font-weight:700;color:#f5f0e8;margin-bottom:8px;" id="proGateTitle">進階功能</div>
+      <div style="font-size:13px;color:rgba(245,240,232,0.55);line-height:1.7;margin-bottom:20px;" id="proGateDesc">此功能需升級 Pro 方案解鎖。</div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px;">
+        <a href="/login.html" style="display:block;padding:12px;background:rgba(30,58,92,0.4);border:1px solid rgba(122,170,208,0.3);color:#7aaad0;border-radius:8px;font-weight:600;font-size:13px;text-decoration:none;">📊 開通進階稅務功能</a>
+        <a href="/login.html" style="display:block;padding:12px;background:rgba(30,58,40,0.4);border:1px solid rgba(106,191,138,0.3);color:#6abf8a;border-radius:8px;font-weight:600;font-size:13px;text-decoration:none;">⚖️ 開通進階法律功能</a>
+        <a href="/login.html" style="display:block;padding:12px;background:#c4932a;color:#1a1410;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;">✦ 全部開通（最划算）</a>
+      </div>
       <button onclick="document.getElementById('proGateModal').style.display='none'" style="background:none;border:none;color:rgba(245,240,232,0.4);font-size:13px;cursor:pointer;">取消</button>
     </div>
   </div>
@@ -617,7 +621,7 @@
         ? 'background:linear-gradient(135deg,#1e1916 0%,#221e1a 100%);'
         : '';
       const isLocked = tool.persona && !isPro;
-      const lockLabel = tool.persona === 'accountant' ? '會計師' : tool.persona === 'lawyer' ? '律師' : '';
+      const lockLabel = tool.persona === 'accountant' ? '進階稅務' : tool.persona === 'lawyer' ? '進階法律' : '';
       const href = isLocked ? 'javascript:void(0)' : tool.href;
       const lockClick = isLocked ? `onclick="document.getElementById('proGateModal').style.display='flex'"` : '';
       return `<a class="tool-card ${tool.featured ? 'featured' : ''}" href="${href}" style="${featuredStyle}${isLocked ? 'opacity:0.6;' : ''}" ${lockClick}>
