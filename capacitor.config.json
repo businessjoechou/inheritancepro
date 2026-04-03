@@ -4,7 +4,13 @@
   "webDir": "www",
   "server": {
     "url": "https://inheritancepro.app",
-    "cleartext": false
+    "cleartext": false,
+    "allowNavigation": [
+      "accounts.google.com",
+      "*.google.com",
+      "*.supabase.co",
+      "*.supabase.com"
+    ]
   },
   "ios": {
     "scheme": "InheritancePro",

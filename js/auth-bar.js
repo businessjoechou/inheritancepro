@@ -7,8 +7,9 @@ async function initAuthBar() {
   style.textContent = `
     .auth-bar {
       position: fixed;
-      top: 16px;
+      bottom: 24px;
       right: 20px;
+      bottom: calc(24px + env(safe-area-inset-bottom, 0px));
       z-index: 9999;
       display: flex;
       align-items: center;
@@ -88,7 +89,7 @@ async function initAuthBar() {
     /* Auth dropdown */
     #auth-dropdown {
       position: fixed;
-      top: 52px;
+      bottom: calc(64px + env(safe-area-inset-bottom, 0px));
       right: 20px;
       background: #1a1410;
       border: 1px solid rgba(196, 147, 42, 0.25);
@@ -124,7 +125,7 @@ async function initAuthBar() {
       margin: 4px 0;
     }
     @keyframes authDropIn {
-      from { opacity: 0; transform: translateY(-6px); }
+      from { opacity: 0; transform: translateY(6px); }
       to   { opacity: 1; transform: translateY(0); }
     }
   `;
