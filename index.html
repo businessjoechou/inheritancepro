@@ -620,7 +620,7 @@
       const featuredStyle = tool.featured
         ? 'background:linear-gradient(135deg,#1e1916 0%,#221e1a 100%);'
         : '';
-      const isLocked = tool.persona && !isPro;
+      const isLocked = false; // TODO: restore to `tool.persona && !isPro` after testing
       const lockLabel = tool.persona === 'accountant' ? '進階稅務' : tool.persona === 'lawyer' ? '進階法律' : '';
       const href = isLocked ? 'javascript:void(0)' : tool.href;
       const lockClick = isLocked ? `onclick="document.getElementById('proGateModal').style.display='flex'"` : '';
