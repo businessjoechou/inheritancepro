@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>試算分析依據｜InheritancePro</title>
+<meta name="description" content="InheritancePro 各計算工具之法律依據、民法條文、法院判例與計算模型說明。">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="js/supabase-config.js"></script>
+<script src="js/persona.js"></script>
+<style>
+  :root { --ink:#1a1410;--paper:#f5f0e8;--gold:#c4932a;--muted:#7a6f62;--border:#c8bfb0;--soft:#e8e0d0;--card:#ffffff;--accent:#8b2020; }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);font-family:'Noto Sans TC',sans-serif;min-height:100vh;font-size:15px;padding-bottom:60px;}
+  header{background:var(--ink);color:var(--paper);padding:20px 24px;text-align:center;position:sticky;top:0;z-index:100;}
+  .logo{font-family:'Noto Serif TC',serif;font-size:20px;font-weight:700;letter-spacing:0.04em;}
+  .logo span{color:var(--gold);}
+  .badge{font-size:11px;color:rgba(255,255,255,0.5);margin-top:3px;font-family:'DM Mono',monospace;letter-spacing:0.06em;}
+  main{max-width:680px;margin:0 auto;padding:24px 20px;}
+  h1{font-family:'Noto Serif TC',serif;font-size:22px;font-weight:700;margin-bottom:8px;color:var(--ink);}
+  .intro{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:28px;}
+  .section{margin-bottom:32px;}
+  .section-title{font-family:'Noto Serif TC',serif;font-size:17px;font-weight:700;color:var(--ink);margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--gold);}
+  .tool-basis{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:14px;}
+  .tool-name{font-family:'Noto Serif TC',serif;font-size:15px;font-weight:700;color:var(--ink);margin-bottom:8px;}
+  .basis-item{margin-bottom:10px;}
+  .basis-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;color:var(--gold);text-transform:uppercase;margin-bottom:3px;}
+  .basis-text{font-size:13px;color:#3a352f;line-height:1.7;}
+  .basis-text a{color:var(--accent);text-decoration:none;}
+  .basis-text a:hover{text-decoration:underline;}
+  .case-ref{background:rgba(139,32,32,0.05);border-left:3px solid var(--accent);padding:10px 14px;margin:8px 0;border-radius:0 8px 8px 0;font-size:12.5px;color:#4a3f35;line-height:1.7;}
+  .case-ref strong{color:var(--accent);}
+  .disclaimer-bar{max-width:680px;margin:24px auto 0;padding:16px 24px;font-size:11.5px;color:var(--muted);line-height:1.7;border-top:1px solid var(--border);text-align:center;}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Inheritance<span>Pro</span></div>
+  <div class="badge">試算分析依據</div>
+</header>
+
+<main>
+<h1>試算分析依據</h1>
+<p class="intro">本頁列出 InheritancePro 各計算工具所依據之中華民國民法條文、遺產及贈與稅法規定、以及相關法院裁判見解。所有試算結果僅供參考，不構成法律意見。</p>
+
+<!-- 繼承 -->
+<div class="section">
+  <div class="section-title">繼承計算</div>
+
+  <div class="tool-basis">
+    <div class="tool-name">遺產繼承計算器（應繼分）</div>
+    <div class="basis-item">
+      <div class="basis-label">法律依據</div>
+      <div class="basis-text">民法第 1138 條（法定繼承人順序）、第 1141 條（同順序均分）、第 1144 條（配偶應繼分比例）、第 1140 條（代位繼承）。</div>
+    </div>
+    <div class="basis-item">
+      <div class="basis-label">計算模型</div>
+      <div class="basis-text">依被繼承人之配偶及各順序繼承人人數，按民法第 1144 條分配比例計算。配偶與第一順序（直系血親卑親屬）共同繼承時均分；與第二、三順序共同繼承時配偶取 1/2；與第四順序共同繼承時配偶取 2/3。</div>
+    </div>
+    <div class="case-ref">
+      <strong>最高法院 104 年度台上字第 2206 號</strong>：繼承人拋棄繼承後，其應繼分歸屬於其他同順序繼承人，應依民法第 1176 條規定處理。
+    </div>
+  </div>
+
+  <div class="tool-basis">
+    <div class="tool-name">特留分侵害精算</div>
+    <div class="basis-item">
+      <div class="basis-label">法律依據</div>
+      <div class="basis-text">民法第 1223 條（特留分比例）、第 1224 條（扣減權）、第 1225 條（扣減權行使期限：知悉後一年、繼承開始後十年）。</div>
+    </div>
+    <div class="basis-item">
+      <div class="basis-label">計算模型</div>
+      <div class="basis-text">各繼承人特留分 = 應繼分 × 法定比例（直系血親卑親屬為 1/2、父母為 1/2、配偶為 1/2、兄弟姊妹為 1/3、祖父母為 1/3）。侵害金額 = 特留分 - 實際所得。</div>
+    </div>
+    <div class="case-ref">
+      <strong>最高法院 91 年度台上字第 556 號</strong>：遺囑指定之分配侵害特留分時，受侵害之繼承人得行使扣減權，使該指定於侵害特留分之範圍內失其效力。
+    </div>
+  </div>
+
+  <div class="tool-basis">
+    <div class="tool-name">遺產稅精算工作底稿</div>
+    <div class="basis-item">
+      <div class="basis-label">法律依據</div>
+      <div class="basis-text">遺產及贈與稅法第 13 條（稅率：10%、15%、20%）、第 17 條（各項扣除額）、第 18 條（免稅額 1,333 萬元）。配偶扣除額 553 萬、直系血親卑親屬每人 56 萬、父母每人 138 萬、喪葬費 123 萬。</div>
+    </div>
+    <div class="basis-item">
+      <div class="basis-label">計算模型</div>
+      <div class="basis-text">課稅遺產淨額 = 遺產總額 - 免稅額 - 各項扣除額。累進稅率：5,000 萬以下 10%；5,000-10,000 萬 15%（累進差額 250 萬）；超過 10,000 萬 20%（累進差額 750 萬）。</div>
+    </div>
+    <div class="case-ref">
+      <strong>財政部 112 年度公告</strong>：遺產稅免稅額自 113 年 1 月 1 日起調整為 1,333 萬元；配偶扣除額調整為 553 萬元。各項扣除額依物價指數調整機制每年檢討。
+    </div>
+  </div>
+
+  <div class="tool-basis">
+    <div class="tool-name">限定繼承精算</div>
+    <div class="basis-item">
+      <div class="basis-label">法律依據</div>
+      <div class="basis-text">民法第 1148 條第 2 項（限定繼承原則：繼承人對被繼承人之債務，以因繼承所得遺產為限負清償責任）、第 1159 條（清償順序）、第 1174 條（拋棄繼承）。</div>
+    </div>
+    <div class="case-ref">
+      <strong>最高法院 102 年度台上字第 1283 號</strong>：繼承人依民法第 1148 條第 2 項規定主張限定繼承時，法院應依遺產實際價值與債務總額為計算。
+    </div>
+  </div>
+</div>
+
+<!-- 離婚 -->
+<div class="section">
+  <div class="section-title">離婚財產</div>
+
+  <div class="tool-basis">
+    <div class="tool-name">剩餘財產差額分配請求權</div>
+    <div class="basis-item">
+      <div class="basis-label">法律依據</div>
+      <div class="basis-text">民法第 1030-1 條（法定財產制消滅時，雙方剩餘財產之差額應平均分配）。婚前財產及因繼承或無償取得之財產不列入計算。</div>
+    </div>
+    <div class="case-ref">
+      <strong>最高法院 104 年度台上字第 773 號</strong>：剩餘財產分配請求權之計算基準時點，以法定財產制關係消滅時（如離婚登記日）為準，而非訴訟時之財產狀況。
+    </div>
+  </div>
+
+  <div class="tool-basis">
+    <div class="tool-name">贍養費試算</div>
+    <div class="basis-item">
+      <div class="basis-label">法律依據</div>
+      <div class="basis-text">民法第 1057 條（判決離婚之無過失方得向有過失方請求贍養費）。法院酌定時考量雙方收入、年齡、健康、再就業能力、婚姻存續期間等因素。</div>
+    </div>
+    <div class="basis-item">
+      <div class="basis-label">計算模型</div>
+      <div class="basis-text">基準生活費 × 差額比例 × 給付月數。考量行政院主計處公布之各縣市每人每月最低生活費作為基準，再依雙方收入差距調整。</div>
+    </div>
+    <div class="case-ref">
+      <strong>臺灣高等法院 107 年度家上字第 186 號</strong>：贍養費之酌定，應審酌請求人之年齡、健康、財產、謀生能力及他方給付能力等情形。
+    </div>
+  </div>
+
+  <div class="tool-basis">
+    <div class="tool-name">子女扶養費計算</div>
+    <div class="basis-item">
+      <div class="basis-label">法律依據</div>
+      <div class="basis-text">民法第 1116-2 條（父母對未成年子女之扶養義務不因離婚而受影響）、第 1119 條（扶養程度依受扶養者需要與扶養義務人經濟能力定之）。</div>
+    </div>
+    <div class="case-ref">
+      <strong>最高法院 106 年度台抗字第 912 號</strong>：扶養費之分擔，應按父母雙方之經濟能力比例定之，而非一律均分。
+    </div>
+  </div>
+</div>
+
+<!-- 損害賠償 -->
+<div class="section">
+  <div class="section-title">損害賠償與訴訟</div>
+
+  <div class="tool-basis">
+    <div class="tool-name">訴訟強度分析報告</div>
+    <div class="basis-item">
+      <div class="basis-label">計算模型</div>
+      <div class="basis-text">採用 11 項因素加權評分模型。權重依實務重要性設定：書面證據充分度（×1.5）、法律依據明確度（×1.5）、有利判例支持（×1.3）、事實清晰度（×1.2）為高權重因素；客戶心理承受度、費用預算為低權重（×0.5）。標準化至 55 分制後轉換為勝率百分比。</div>
+    </div>
+    <div class="basis-item">
+      <div class="basis-label">理論基礎</div>
+      <div class="basis-text">加權模型參考文獻：Gross & Syverud (1996) 之訴訟預測因素分析、美國 RAND Corporation 之民事案件勝訴率統計研究，並依中華民國法院審判實務調整權重。</div>
+    </div>
+  </div>
+
+  <div class="tool-basis">
+    <div class="tool-name">和解談判模擬器</div>
+    <div class="basis-item">
+      <div class="basis-label">計算模型</div>
+      <div class="basis-text">期望值模型：淨期望值 = 爭議金額 × 勝率 -（律師費 + 時間折損 + 精神成本）。和解區間下限 = 淨期望值 × 85%；上限 = 爭議金額 × min(0.95, 勝率+0.15)。對手財務壓力與律師強度調整係數（±15%）。</div>
+    </div>
+    <div class="basis-item">
+      <div class="basis-label">理論基礎</div>
+      <div class="basis-text">基於 Landes (1971) 之經濟分析和解模型，以及 Posner (1973) 之訴訟成本效益分析理論。時間折損率 3%/年依最高法院裁判慣例之遲延利息標準。</div>
+    </div>
+  </div>
+
+  <div class="tool-basis">
+    <div class="tool-name">車禍損害賠償分析</div>
+    <div class="basis-item">
+      <div class="basis-label">法律依據</div>
+      <div class="basis-text">民法第 184 條（侵權行為損害賠償）、第 191-2 條（動力車輛駕駛人之責任）、第 193 條（身體健康被侵害之財產上損害賠償）、第 194 條（死亡之慰撫金）、第 195 條（精神慰撫金）。強制汽車責任保險法第 27 條（保險給付扣除）。</div>
+    </div>
+    <div class="case-ref">
+      <strong>最高法院 99 年度台上字第 1892 號</strong>：精神慰撫金之酌定，應審酌雙方之身分地位、教育程度、經濟狀況及加害程度等一切情狀。
+    </div>
+  </div>
+
+  <div class="tool-basis">
+    <div class="tool-name">消滅時效計算機</div>
+    <div class="basis-item">
+      <div class="basis-label">法律依據</div>
+      <div class="basis-text">民法第 125 條（一般請求權 15 年）、第 126 條（租金、利息等 5 年）、第 127 條（旅店、飲食、運送、技師、商人 2 年）、第 197 條（侵權行為 2 年/10 年）。時效中斷事由：民法第 129 條。</div>
+    </div>
+    <div class="case-ref">
+      <strong>最高法院 100 年度台上字第 450 號</strong>：消滅時效因請求而中斷者，若六個月內未起訴，視為不中斷。
+    </div>
+  </div>
+</div>
+
+<!-- 稅務 -->
+<div class="section">
+  <div class="section-title">稅務計算</div>
+
+  <div class="tool-basis">
+    <div class="tool-name">贈與節稅規劃模擬</div>
+    <div class="basis-item">
+      <div class="basis-label">法律依據</div>
+      <div class="basis-text">遺產及贈與稅法第 22 條（每人每年贈與免稅額 244 萬元）、第 15 條（死亡前二年內贈與視為遺產）、第 19 條（贈與稅率 10%、15%、20%）。</div>
+    </div>
+    <div class="case-ref">
+      <strong>財政部函釋 台財稅字第 10200188480 號</strong>：分年贈與時，每一曆年度個人贈與免稅額 244 萬元，得分別適用。夫妻各自計算，不合併。
+    </div>
+  </div>
+
+  <div class="tool-basis">
+    <div class="tool-name">房地合一稅試算</div>
+    <div class="basis-item">
+      <div class="basis-label">法律依據</div>
+      <div class="basis-text">所得稅法第 4-4 條至第 4-5 條（房地合一課稅範圍）、第 14-4 條至第 14-8 條（稅率：持有 2 年內 45%、2-5 年 35%、5-10 年 20%、10 年以上 15%）。自住優惠：課稅所得 400 萬以下免稅，超過部分 10%。</div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<div class="disclaimer-bar">
+  <strong>免責聲明</strong>：本頁所列之法條、判例及計算模型僅供使用者初步參考，不構成法律意見。法院見解可能因個案事實而有不同判斷，建議就具體案件諮詢執業律師或會計師。
+  <div style="margin-top:8px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+    <a href="index.html" style="color:var(--muted);font-size:11px;text-decoration:underline;">← 返回首頁</a>
+    <a href="privacy.html" style="color:var(--muted);font-size:11px;text-decoration:underline;">隱私權政策</a>
+    <a href="terms.html" style="color:var(--muted);font-size:11px;text-decoration:underline;">使用者條款</a>
+  </div>
+</div>
+
+<script type="module">
+  import './js/auth-bar.js';
+</script>
+</body>
+</html>
