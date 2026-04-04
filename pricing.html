@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>升級 Pro｜InheritancePro</title>
+<meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="js/supabase-config.js"></script>
+<style>
+  :root{--ink:#1a1410;--paper:#f5f0e8;--gold:#c4932a;--muted:#7a6f62;--border:#c8bfb0;--soft:#e8e0d0;--card:#ffffff;--accent:#8b2020;--tax:#1e3a5c;--tax-light:#7aaad0;--legal:#1e3a28;--legal-light:#6abf8a;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--ink);color:var(--paper);font-family:'Noto Sans TC',sans-serif;min-height:100vh;font-size:15px;}
+  header{text-align:center;padding:40px 24px 20px;padding-top:calc(40px + env(safe-area-inset-top,0px));}
+  .logo{font-family:'Noto Serif TC',serif;font-size:20px;font-weight:700;letter-spacing:0.04em;}
+  .logo span{color:var(--gold);}
+  h1{font-family:'Noto Serif TC',serif;font-size:24px;font-weight:700;margin-top:12px;}
+  .subtitle{font-size:13px;color:rgba(245,240,232,0.5);margin-top:6px;}
+
+  main{max-width:440px;margin:0 auto;padding:0 20px 40px;}
+
+  /* Tier selector */
+  .tier-tabs{display:flex;gap:8px;margin-bottom:20px;}
+  .tier-tab{flex:1;padding:10px 8px;border-radius:10px;border:1.5px solid #2a2520;background:none;color:var(--muted);font-family:'Noto Sans TC',sans-serif;font-size:13px;font-weight:500;cursor:pointer;text-align:center;transition:all 0.2s;}
+  .tier-tab.active-tax{border-color:var(--tax-light);color:var(--tax-light);background:rgba(30,58,92,0.15);}
+  .tier-tab.active-legal{border-color:var(--legal-light);color:var(--legal-light);background:rgba(30,58,40,0.15);}
+  .tier-tab.active-all{border-color:var(--gold);color:var(--gold);background:rgba(196,147,42,0.1);}
+
+  /* Plan cards */
+  .plan-card{border:1.5px solid #2a2520;border-radius:14px;padding:20px;margin-bottom:12px;cursor:pointer;transition:all 0.2s;position:relative;}
+  .plan-card:hover{border-color:#3a3530;}
+  .plan-card.selected{border-color:var(--gold);background:rgba(196,147,42,0.06);}
+  .plan-card.best{border-color:var(--gold);}
+  .plan-badge{position:absolute;top:-10px;right:16px;background:var(--gold);color:var(--ink);font-size:10px;font-weight:700;padding:2px 10px;border-radius:10px;font-family:'DM Mono',monospace;letter-spacing:0.05em;}
+  .plan-name{font-family:'Noto Serif TC',serif;font-size:16px;font-weight:700;}
+  .plan-price{font-size:28px;font-weight:700;color:var(--gold);margin:8px 0 4px;font-family:'Noto Serif TC',serif;}
+  .plan-price small{font-size:14px;color:var(--muted);font-weight:400;}
+  .plan-detail{font-size:12px;color:var(--muted);line-height:1.6;}
+  .plan-save{color:#6abf8a;font-size:11px;font-weight:600;margin-top:4px;}
+
+  /* Features */
+  .features{margin:20px 0;padding:16px;background:rgba(255,255,255,0.03);border-radius:10px;border:1px solid #2a2520;}
+  .features-title{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;color:var(--muted);margin-bottom:10px;}
+  .feature-item{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:rgba(245,240,232,0.7);line-height:1.6;margin-bottom:6px;}
+  .feature-item::before{content:'✓';color:var(--gold);font-weight:700;flex-shrink:0;}
+
+  /* CTA */
+  .cta-btn{width:100%;padding:16px;border:none;border-radius:12px;font-family:'Noto Sans TC',sans-serif;font-size:16px;font-weight:700;cursor:pointer;transition:all 0.2s;letter-spacing:0.04em;}
+  .cta-btn.tax{background:var(--tax-light);color:#0a1929;}
+  .cta-btn.legal{background:var(--legal-light);color:#0a1912;}
+  .cta-btn.all{background:var(--gold);color:var(--ink);}
+  .cta-btn:hover{opacity:0.9;transform:translateY(-1px);}
+  .cta-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+
+  .restore-link{display:block;text-align:center;margin-top:14px;font-size:12px;color:var(--muted);text-decoration:none;cursor:pointer;}
+  .restore-link:hover{color:var(--paper);}
+
+  .redeem-section{margin-top:24px;padding-top:20px;border-top:1px solid #2a2520;text-align:center;}
+  .redeem-section p{font-size:12px;color:var(--muted);margin-bottom:10px;}
+  .redeem-link{color:var(--gold);text-decoration:none;font-size:13px;font-weight:500;}
+
+  .back-link{display:block;text-align:center;margin-top:20px;font-family:'DM Mono',monospace;font-size:11px;color:rgba(245,240,232,0.35);text-decoration:none;letter-spacing:0.08em;}
+  .back-link:hover{color:rgba(245,240,232,0.65);}
+
+  .error-msg{display:none;margin-top:12px;padding:10px 14px;background:rgba(139,32,32,0.12);border:1px solid rgba(139,32,32,0.3);border-radius:8px;font-size:13px;color:#e8a0a0;text-align:center;}
+  .error-msg.visible{display:block;}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" style="text-decoration:none;color:inherit">
+    <div class="logo">Inheritance<span>Pro</span></div>
+  </a>
+  <h1>升級進階功能</h1>
+  <p class="subtitle">解鎖專業稅務精算與法律分析工具</p>
+</header>
+
+<main>
+  <!-- Tier Tabs -->
+  <div class="tier-tabs">
+    <button class="tier-tab active-tax" id="tab-tax" onclick="switchTier('tax')">📊 進階稅務</button>
+    <button class="tier-tab" id="tab-legal" onclick="switchTier('legal')">⚖️ 進階法律</button>
+    <button class="tier-tab" id="tab-all" onclick="switchTier('all')">✦ 全部開通</button>
+  </div>
+
+  <!-- Plan Cards -->
+  <div id="plans-container"></div>
+
+  <!-- Features List -->
+  <div class="features" id="features-container"></div>
+
+  <!-- CTA -->
+  <button class="cta-btn tax" id="cta-btn" onclick="handlePurchase()">訂閱進階稅務</button>
+  <div class="error-msg" id="error-msg"></div>
+
+  <div class="restore-link" onclick="handleRestore()">恢復先前購買</div>
+
+  <div class="redeem-section">
+    <p>有兌換序號？</p>
+    <a href="account.html" class="redeem-link">前往兌換 →</a>
+  </div>
+
+  <a class="back-link" href="index.html">← 返回首頁</a>
+</main>
+
+<script type="module">
+  import { supabase, getUser, getProfile } from './js/auth.js';
+
+  const TIERS = {
+    tax: {
+      name: '進階稅務',
+      cls: 'tax',
+      features: [
+        '遺產稅精算工作底稿（17項扣除額）',
+        '每位繼承人分攤稅負計算',
+        '贈與節稅規劃模擬',
+        '多案件管理系統',
+        '期限自動倒數提醒',
+        '工作底稿列印匯出',
+      ],
+      plans: [
+        { id: 'pro.tax.monthly', name: '月訂閱', price: 60, unit: '/月', detail: '隨時取消' },
+        { id: 'pro.tax.yearly', name: '年訂閱', price: 590, unit: '/年', detail: '平均 NT$49/月', save: '省 18%', best: true },
+        { id: 'pro.tax.lifetime', name: '一次買斷', price: 690, unit: '', detail: '永久使用，不需續費' },
+      ]
+    },
+    legal: {
+      name: '進階法律',
+      cls: 'legal',
+      features: [
+        '訴訟強度加權分析報告（含勝率預估）',
+        '和解談判模擬器（含對手分析）',
+        '限定繼承精算',
+        '遺囑效力鑑定',
+        '特留分侵害精算',
+        '9 頁訴訟策略備忘',
+      ],
+      plans: [
+        { id: 'pro.legal.monthly', name: '月訂閱', price: 60, unit: '/月', detail: '隨時取消' },
+        { id: 'pro.legal.yearly', name: '年訂閱', price: 590, unit: '/年', detail: '平均 NT$49/月', save: '省 18%', best: true },
+        { id: 'pro.legal.lifetime', name: '一次買斷', price: 690, unit: '', detail: '永久使用，不需續費' },
+      ]
+    },
+    all: {
+      name: '全部開通',
+      cls: 'all',
+      features: [
+        '進階稅務所有功能',
+        '進階法律所有功能',
+        '會計師 + 律師雙模式',
+        '無廣告體驗',
+        'PDF 報告匯出',
+        '優先客服支援',
+      ],
+      plans: [
+        { id: 'pro.all.monthly', name: '月訂閱', price: 90, unit: '/月', detail: '隨時取消' },
+        { id: 'pro.all.yearly', name: '年訂閱', price: 900, unit: '/年', detail: '平均 NT$75/月', save: '省 17%', best: true },
+        { id: 'pro.all.lifetime', name: '一次買斷', price: 990, unit: '', detail: '永久使用，不需續費' },
+      ]
+    }
+  };
+
+  let currentTier = 'tax';
+  let selectedPlan = null;
+
+  window.switchTier = function(tier) {
+    currentTier = tier;
+    selectedPlan = null;
+
+    // Update tabs
+    document.querySelectorAll('.tier-tab').forEach(t => t.className = 'tier-tab');
+    document.getElementById('tab-' + tier).classList.add('active-' + tier);
+
+    render();
+  };
+
+  function render() {
+    const tier = TIERS[currentTier];
+
+    // Plans
+    document.getElementById('plans-container').innerHTML = tier.plans.map((plan, i) => `
+      <div class="plan-card ${plan.best ? 'best' : ''} ${selectedPlan === plan.id ? 'selected' : ''}"
+           onclick="selectPlan('${plan.id}')">
+        ${plan.best ? '<div class="plan-badge">推薦</div>' : ''}
+        <div class="plan-name">${plan.name}</div>
+        <div class="plan-price">NT$${plan.price.toLocaleString()}<small>${plan.unit}</small></div>
+        <div class="plan-detail">${plan.detail}</div>
+        ${plan.save ? '<div class="plan-save">' + plan.save + '</div>' : ''}
+      </div>
+    `).join('');
+
+    // Auto-select best plan
+    if (!selectedPlan) {
+      const best = tier.plans.find(p => p.best) || tier.plans[0];
+      selectedPlan = best.id;
+      render();
+      return;
+    }
+
+    // Features
+    document.getElementById('features-container').innerHTML =
+      `<div class="features-title">${tier.name}包含</div>` +
+      tier.features.map(f => `<div class="feature-item">${f}</div>`).join('');
+
+    // CTA
+    const btn = document.getElementById('cta-btn');
+    const plan = tier.plans.find(p => p.id === selectedPlan);
+    btn.className = 'cta-btn ' + tier.cls;
+    btn.textContent = plan.name === '一次買斷'
+      ? `買斷${tier.name} — NT$${plan.price}`
+      : `訂閱${tier.name} — NT$${plan.price}${plan.unit}`;
+  }
+
+  window.selectPlan = function(planId) {
+    selectedPlan = planId;
+    render();
+  };
+
+  window.handlePurchase = async function() {
+    const btn = document.getElementById('cta-btn');
+    const errorEl = document.getElementById('error-msg');
+    errorEl.classList.remove('visible');
+
+    // Check if logged in
+    const user = await getUser();
+    if (!user) {
+      window.location.href = '/login.html';
+      return;
+    }
+
+    // Check if already Pro
+    const profile = await getProfile();
+    if (profile?.is_pro) {
+      errorEl.textContent = '你已經是 Pro 會員！';
+      errorEl.classList.add('visible');
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = '處理中…';
+
+    try {
+      // Native iOS: use StoreKit
+      if (window.Capacitor?.isNativePlatform()) {
+        const { registerPlugin } = await import('https://cdn.jsdelivr.net/npm/@capacitor/core@8/+esm');
+        const StoreKit = registerPlugin('StoreKit');
+        const result = await StoreKit.purchase({ productId: selectedPlan });
+
+        if (result.success) {
+          // Update Supabase
+          await supabase.from('profiles').update({
+            is_pro: true,
+            pro_source: 'apple',
+            pro_product_id: selectedPlan,
+            pro_tier: currentTier === 'all' ? 'all' : currentTier,
+            activated_at: new Date().toISOString(),
+            pro_expires_at: result.expirationDate > 0
+              ? new Date(result.expirationDate * 1000).toISOString()
+              : null
+          }).eq('id', user.id);
+
+          alert('升級成功！');
+          window.location.href = '/account.html';
+          return;
+        }
+      } else {
+        // Web: redirect to Stripe (TODO)
+        errorEl.textContent = '網頁版付款功能即將推出，請使用 iOS App 內購買，或使用兌換碼升級。';
+        errorEl.classList.add('visible');
+      }
+    } catch (e) {
+      if (e.message !== 'User cancelled') {
+        errorEl.textContent = '購買失敗：' + e.message;
+        errorEl.classList.add('visible');
+      }
+    }
+
+    btn.disabled = false;
+    render();
+  };
+
+  window.handleRestore = async function() {
+    const user = await getUser();
+    if (!user) {
+      window.location.href = '/login.html';
+      return;
+    }
+
+    if (!window.Capacitor?.isNativePlatform()) {
+      alert('恢復購買僅適用於 iOS App');
+      return;
+    }
+
+    try {
+      const { registerPlugin } = await import('https://cdn.jsdelivr.net/npm/@capacitor/core@8/+esm');
+      const StoreKit = registerPlugin('StoreKit');
+      const result = await StoreKit.restorePurchases();
+
+      if (result.activeSubscriptions?.length > 0) {
+        const productId = result.activeSubscriptions[0];
+        const tier = productId.includes('all') ? 'all' : productId.includes('tax') ? 'tax' : 'legal';
+
+        await supabase.from('profiles').update({
+          is_pro: true,
+          pro_source: 'apple',
+          pro_product_id: productId,
+          pro_tier: tier,
+          activated_at: new Date().toISOString()
+        }).eq('id', user.id);
+
+        alert('已恢復購買！');
+        window.location.href = '/account.html';
+      } else {
+        alert('未找到先前的購買紀錄');
+      }
+    } catch (e) {
+      alert('恢復失敗：' + e.message);
+    }
+  };
+
+  // Check if already Pro on load
+  (async () => {
+    const user = await getUser();
+    if (user) {
+      const profile = await getProfile();
+      if (profile?.is_pro) {
+        document.getElementById('cta-btn').textContent = '✦ 已是 Pro 會員';
+        document.getElementById('cta-btn').disabled = true;
+      }
+    }
+  })();
+
+  // Init
+  render();
+</script>
+</body>
+</html>

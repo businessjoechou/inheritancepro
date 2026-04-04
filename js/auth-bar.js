@@ -203,7 +203,7 @@ async function initAuthBar() {
         .forEach(el => el.style.display = 'none');
     } else {
       // Free user
-      bar.innerHTML = `<a class="auth-pill" href="/account.html">
+      bar.innerHTML = `<a class="auth-pill" href="/pricing.html">
         <div class="auth-avatar">${initial}</div>升級 Pro
       </a>`;
       document.querySelectorAll('.pro-gate')
