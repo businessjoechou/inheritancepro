@@ -230,12 +230,20 @@
       return;
     }
 
-    // Check if already Pro
+    // Check if already Pro — block same-tier or full 'all' re-purchase
     const profile = await getProfile();
+    const existingTier = profile?.pro_tier || null;
     if (profile?.is_pro) {
-      errorEl.textContent = '你已經是 Pro 會員！';
-      errorEl.classList.add('visible');
-      return;
+      if (existingTier === 'all') {
+        errorEl.textContent = '你已訂閱全部方案，無需再次購買。';
+        errorEl.classList.add('visible');
+        return;
+      }
+      if (existingTier === currentTier) {
+        errorEl.textContent = `你已訂閱${TIERS[currentTier].name}方案。`;
+        errorEl.classList.add('visible');
+        return;
+      }
     }
 
     btn.disabled = true;
@@ -249,7 +257,11 @@
         const result = await StoreKit.purchase({ productId: selectedPlan });
 
         if (result.success) {
-          const tier = currentTier === 'all' ? 'all' : currentTier;
+          let tier = currentTier;
+          // Auto-upgrade: tax + legal = all
+          if ((existingTier === 'tax' && tier === 'legal') || (existingTier === 'legal' && tier === 'tax')) {
+            tier = 'all';
+          }
           // Update Supabase
           await supabase.from('profiles').update({
             is_pro: true,
@@ -262,11 +274,11 @@
               : null
           }).eq('id', user.id);
 
-          // Sync persona to purchased tier
+          // Sync persona to final tier
           const persona = tier === 'tax' ? 'accountant' : tier === 'legal' ? 'lawyer' : 'all';
           localStorage.setItem('ip_persona', persona);
 
-          alert('升級成功！');
+          alert(tier !== currentTier ? '你已同時持有稅務與法律方案，已自動升級為全部開通！' : '升級成功！');
           window.location.href = '/account.html';
           return;
         }
@@ -304,8 +316,13 @@
       const result = await StoreKit.restorePurchases();
 
       if (result.activeSubscriptions?.length > 0) {
-        const productId = result.activeSubscriptions[0];
-        const tier = productId.includes('all') ? 'all' : productId.includes('tax') ? 'tax' : 'legal';
+        const subs = result.activeSubscriptions;
+        const hasAll   = subs.some(id => id.includes('.all.'));
+        const hasTax   = subs.some(id => id.includes('.tax.'));
+        const hasLegal = subs.some(id => id.includes('.legal.'));
+        // tax + legal → auto-upgrade to all
+        const tier = (hasAll || (hasTax && hasLegal)) ? 'all' : hasTax ? 'tax' : 'legal';
+        const productId = subs[0];
 
         await supabase.from('profiles').update({
           is_pro: true,

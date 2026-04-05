@@ -33,6 +33,7 @@ export async function getProfile() {
       await supabase.from('profiles')
         .update({ is_pro: false })
         .eq('id', user.id);
+      localStorage.setItem('ip_persona', 'public');
       return { ...data, is_pro: false };
     }
   }
@@ -116,6 +117,7 @@ export async function redeemCode(code) {
     .update({
       is_pro: true,
       pro_tier: codeData.tier,
+      pro_expires_at: null,
       activated_at: new Date().toISOString()
     })
     .eq('id', user.id);

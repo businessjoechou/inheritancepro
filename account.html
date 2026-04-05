@@ -688,12 +688,14 @@
         const result = await StoreKit.getActiveSubscriptions();
         const activeSubs = result.activeSubscriptions || [];
         if (activeSubs.length > 0) {
-          const productId = activeSubs[0];
-          const tier = productId.includes('all') ? 'all' : productId.includes('tax') ? 'tax' : 'legal';
+          const hasAll   = activeSubs.some(id => id.includes('.all.'));
+          const hasTax   = activeSubs.some(id => id.includes('.tax.'));
+          const hasLegal = activeSubs.some(id => id.includes('.legal.'));
+          const tier = (hasAll || (hasTax && hasLegal)) ? 'all' : hasTax ? 'tax' : 'legal';
           const persona = tier === 'tax' ? 'accountant' : tier === 'legal' ? 'lawyer' : 'all';
           localStorage.setItem('ip_persona', persona);
           await supabase.from('profiles').update({
-            is_pro: true, pro_tier: tier, pro_product_id: productId,
+            is_pro: true, pro_tier: tier, pro_product_id: activeSubs[0],
             pro_expires_at: null  // StoreKit confirmed active — clear stale expiry date
           }).eq('id', user.id);
         } else {

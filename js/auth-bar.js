@@ -202,15 +202,15 @@ async function initAuthBar() {
       document.querySelectorAll('.pro-gate')
         .forEach(el => el.style.display = 'none');
     } else {
-      // Free user
-      bar.innerHTML = `<a class="auth-pill" href="/pricing.html">
+      // Free user — pill with dropdown
+      bar.innerHTML = `<div class="auth-pill" id="auth-menu-btn" role="button" tabindex="0" aria-label="帳號選單">
         <div class="auth-avatar">${initial}</div>升級 Pro
-      </a>`;
+      </div>`;
       document.querySelectorAll('.pro-gate')
         .forEach(el => el.style.display = 'block');
     }
 
-    // Dropdown for logged-in users (click on pill if Pro, or always reachable via account page)
+    // Dropdown for all logged-in users
     const menuBtn = bar.querySelector('#auth-menu-btn');
     if (menuBtn) {
       const toggleDropdown = (e) => {
@@ -220,8 +220,10 @@ async function initAuthBar() {
 
         const dropdown = document.createElement('div');
         dropdown.id = 'auth-dropdown';
+        const isPro = bar.querySelector('.auth-pro-badge') !== null;
         dropdown.innerHTML = `
           <a href="/account.html">我的帳號</a>
+          ${!isPro ? '<a href="/pricing.html" style="color:var(--gold,#c4932a)">✦ 升級 Pro</a>' : ''}
           <div class="dropdown-divider"></div>
           <div class="dropdown-item dropdown-signout" id="auth-signout-btn">登出</div>
         `;

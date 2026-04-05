@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "inheritancepro",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", "-p", "3456", "/Users/chouchunyeh/Desktop/台灣民法財產權計算機"],
+      "runtimeExecutable": "/opt/homebrew/Cellar/node/25.8.2/bin/node",
+      "runtimeArgs": ["/tmp/serve_inheritancepro.js"],
       "port": 3456
     },
     {
