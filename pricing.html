@@ -249,17 +249,22 @@
         const result = await StoreKit.purchase({ productId: selectedPlan });
 
         if (result.success) {
+          const tier = currentTier === 'all' ? 'all' : currentTier;
           // Update Supabase
           await supabase.from('profiles').update({
             is_pro: true,
             pro_source: 'apple',
             pro_product_id: selectedPlan,
-            pro_tier: currentTier === 'all' ? 'all' : currentTier,
+            pro_tier: tier,
             activated_at: new Date().toISOString(),
             pro_expires_at: result.expirationDate > 0
               ? new Date(result.expirationDate * 1000).toISOString()
               : null
           }).eq('id', user.id);
+
+          // Sync persona to purchased tier
+          const persona = tier === 'tax' ? 'accountant' : tier === 'legal' ? 'lawyer' : 'accountant';
+          localStorage.setItem('ip_persona', persona);
 
           alert('升級成功！');
           window.location.href = '/account.html';
@@ -309,6 +314,10 @@
           pro_tier: tier,
           activated_at: new Date().toISOString()
         }).eq('id', user.id);
+
+        // Sync persona to restored tier
+        const persona = tier === 'tax' ? 'accountant' : tier === 'legal' ? 'lawyer' : 'accountant';
+        localStorage.setItem('ip_persona', persona);
 
         alert('已恢復購買！');
         window.location.href = '/account.html';

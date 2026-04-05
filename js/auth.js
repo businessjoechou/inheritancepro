@@ -14,7 +14,7 @@ export async function getUser() {
   return user;
 }
 
-// Get user profile (includes is_pro)
+// Get user profile (includes is_pro), with expiration check
 export async function getProfile() {
   const user = await getUser();
   if (!user) return null;
@@ -23,6 +23,19 @@ export async function getProfile() {
     .select('*')
     .eq('id', user.id)
     .single();
+  if (!data) return null;
+
+  // Check if subscription has expired (lifetime = no expiry date)
+  if (data.is_pro && data.pro_expires_at) {
+    const expired = new Date(data.pro_expires_at) < new Date();
+    if (expired) {
+      // Revoke Pro in DB and return as free user
+      await supabase.from('profiles')
+        .update({ is_pro: false })
+        .eq('id', user.id);
+      return { ...data, is_pro: false };
+    }
+  }
   return data;
 }
 

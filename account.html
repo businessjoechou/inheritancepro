@@ -680,6 +680,33 @@
     // Load calculation history
     renderHistory();
 
+    // On native iOS: sync StoreKit subscription status before reading profile
+    if (window.Capacitor?.isNativePlatform()) {
+      try {
+        const { registerPlugin } = await import('https://cdn.jsdelivr.net/npm/@capacitor/core@8/+esm');
+        const StoreKit = registerPlugin('StoreKit');
+        const result = await StoreKit.getActiveSubscriptions();
+        const activeSubs = result.activeSubscriptions || [];
+        if (activeSubs.length > 0) {
+          const productId = activeSubs[0];
+          const tier = productId.includes('all') ? 'all' : productId.includes('tax') ? 'tax' : 'legal';
+          const persona = tier === 'tax' ? 'accountant' : tier === 'legal' ? 'lawyer' : 'accountant';
+          localStorage.setItem('ip_persona', persona);
+          await supabase.from('profiles').update({
+            is_pro: true, pro_tier: tier, pro_product_id: productId
+          }).eq('id', user.id);
+        } else {
+          // No active subscriptions — check if lifetime (pro_expires_at null = lifetime)
+          const { data: p } = await supabase.from('profiles').select('pro_expires_at, pro_source').eq('id', user.id).single();
+          if (p?.pro_expires_at !== null && p?.pro_source === 'apple') {
+            // Subscription lapsed
+            await supabase.from('profiles').update({ is_pro: false }).eq('id', user.id);
+            localStorage.setItem('ip_persona', 'public');
+          }
+        }
+      } catch (e) { /* StoreKit unavailable, skip */ }
+    }
+
     // Populate account info
     const profile = await getProfile();
     const isPro = profile?.is_pro || false;
