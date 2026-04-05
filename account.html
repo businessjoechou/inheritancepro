@@ -768,6 +768,9 @@
         successEl.classList.add('visible');
         document.getElementById('redeem-input').disabled = true;
         btn.disabled = true;
+        // Sync persona to redeemed tier
+        const redeemPersona = result.tier === 'tax' ? 'accountant' : result.tier === 'legal' ? 'lawyer' : 'all';
+        localStorage.setItem('ip_persona', redeemPersona);
         setTimeout(() => window.location.reload(), 2000);
       }
     });

@@ -317,7 +317,7 @@
         }).eq('id', user.id);
 
         // Sync persona to restored tier
-        const persona = tier === 'tax' ? 'accountant' : tier === 'legal' ? 'lawyer' : 'accountant';
+        const persona = tier === 'tax' ? 'accountant' : tier === 'legal' ? 'lawyer' : 'all';
         localStorage.setItem('ip_persona', persona);
 
         alert('已恢復購買！');
