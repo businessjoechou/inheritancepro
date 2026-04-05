@@ -55,7 +55,7 @@ export default async function handler(req, res) {
           body: JSON.stringify({
             from: 'InheritancePro <notify@inheritancepro.app>',
             to: sub.email,
-            reply_to: 'happyjoechou@gmail.com',
+            reply_to: 'businessjoechou@gmail.com',
             subject: subject,
             html: html.replace('{{name}}', sub.name || '用戶')
           })
