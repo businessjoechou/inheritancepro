@@ -586,39 +586,36 @@
       <div class="redeem-error" id="redeem-error"></div>
     </div>
 
-    <!-- 3. Pro features card (always visible) -->
+    <!-- 3. Upgrade CTA (free users only) -->
+    <div class="card" id="upgrade-card" style="display:none;text-align:center;padding:24px 20px;">
+      <div class="card-title" style="margin-bottom:8px;">解鎖進階功能</div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.7;">升級 Pro 解鎖專業稅務精算、訴訟分析工具與無廣告體驗。</p>
+      <a href="pricing.html" style="display:block;background:var(--ink);color:var(--paper);text-decoration:none;padding:14px;border-radius:10px;font-size:15px;font-weight:700;letter-spacing:0.04em;">✦ 升級 Pro</a>
+    </div>
+
+    <!-- 4. Pro features card (always visible) -->
     <div class="card">
       <div class="card-title">Pro 功能說明</div>
       <ul class="pro-feature-list">
         <li>
-          <div class="pro-check">
-            <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
-          </div>
-          <span>PDF 報告輸出（各計算機結果）</span>
+          <div class="pro-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <span><strong style="color:var(--ink)">📊 進階稅務</strong>　遺產稅精算工作底稿、贈與節稅規劃、多案件管理、工作底稿列印匯出</span>
         </li>
         <li>
-          <div class="pro-check">
-            <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
-          </div>
-          <span>
-            計算紀錄儲存
-            <span class="feature-coming">即將推出</span>
-          </span>
+          <div class="pro-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <span><strong style="color:var(--ink)">⚖️ 進階法律</strong>　訴訟強度加權分析、和解談判模擬、特留分侵害精算、訴訟策略備忘</span>
         </li>
         <li>
-          <div class="pro-check">
-            <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
-          </div>
-          <span>
-            法規更新通知
-            <span class="feature-coming">即將推出</span>
-          </span>
+          <div class="pro-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <span>PDF 報告匯出（各計算機結果）</span>
         </li>
         <li>
-          <div class="pro-check">
-            <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
-          </div>
+          <div class="pro-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
           <span>無廣告體驗</span>
+        </li>
+        <li>
+          <div class="pro-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <span>優先客服支援</span>
         </li>
       </ul>
     </div>
@@ -704,9 +701,11 @@
     document.getElementById('account-created').textContent =
       createdAt ? formatDate(createdAt) : '—';
 
-    // Hide redeem card if already Pro
+    // Hide redeem card if already Pro, show upgrade CTA if not
     if (isPro) {
       document.getElementById('redeem-card').style.display = 'none';
+    } else {
+      document.getElementById('upgrade-card').style.display = 'block';
     }
 
     // Redeem code handler
