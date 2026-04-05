@@ -28,6 +28,7 @@
   if (p === 'public')     hide.push('.pro-only', '.lawyer-only', '.accountant-only');
   if (p === 'accountant') hide.push('.lawyer-only', '.public-only');
   if (p === 'lawyer')     hide.push('.accountant-only', '.public-only');
+  if (p === 'all')        hide.push('.public-only'); // all tier: sees both accountant + lawyer content
 
   if (hide.length) {
     const style = document.createElement('style');

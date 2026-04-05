@@ -690,10 +690,11 @@
         if (activeSubs.length > 0) {
           const productId = activeSubs[0];
           const tier = productId.includes('all') ? 'all' : productId.includes('tax') ? 'tax' : 'legal';
-          const persona = tier === 'tax' ? 'accountant' : tier === 'legal' ? 'lawyer' : 'accountant';
+          const persona = tier === 'tax' ? 'accountant' : tier === 'legal' ? 'lawyer' : 'all';
           localStorage.setItem('ip_persona', persona);
           await supabase.from('profiles').update({
-            is_pro: true, pro_tier: tier, pro_product_id: productId
+            is_pro: true, pro_tier: tier, pro_product_id: productId,
+            pro_expires_at: null  // StoreKit confirmed active — clear stale expiry date
           }).eq('id', user.id);
         } else {
           // No active subscriptions — check if lifetime (pro_expires_at null = lifetime)

@@ -263,7 +263,7 @@
           }).eq('id', user.id);
 
           // Sync persona to purchased tier
-          const persona = tier === 'tax' ? 'accountant' : tier === 'legal' ? 'lawyer' : 'accountant';
+          const persona = tier === 'tax' ? 'accountant' : tier === 'legal' ? 'lawyer' : 'all';
           localStorage.setItem('ip_persona', persona);
 
           alert('升級成功！');
@@ -312,7 +312,8 @@
           pro_source: 'apple',
           pro_product_id: productId,
           pro_tier: tier,
-          activated_at: new Date().toISOString()
+          activated_at: new Date().toISOString(),
+          pro_expires_at: null  // StoreKit confirmed active — clear stale expiry date
         }).eq('id', user.id);
 
         // Sync persona to restored tier
