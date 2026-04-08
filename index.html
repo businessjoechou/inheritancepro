@@ -709,9 +709,8 @@ async function handleUnsubscribe() {
       const featuredStyle = tool.featured
         ? 'background:linear-gradient(135deg,#1e1916 0%,#221e1a 100%);'
         : '';
-      // Locked if tool requires a specific tier AND user doesn't have it
-      // isPro from DB prevents bypass even if localStorage is tampered
-      const isLocked = tool.persona && (!isPro || (persona !== 'all' && persona !== tool.persona));
+      // DEV: 開發階段全部解鎖
+      const isLocked = false;
       const lockLabel = tool.persona === 'accountant' ? '進階稅務' : tool.persona === 'lawyer' ? '進階法律' : '';
       const href = isLocked ? 'javascript:void(0)' : tool.href;
       const lockClick = isLocked ? `onclick="document.getElementById('proGateModal').style.display='flex'"` : '';
