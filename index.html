@@ -636,14 +636,17 @@ async function handleUnsubscribe() {
       tools: [
         { href: 'asset-detection.html', name: '脫產偵測分析',
           desc: { all: '財產異動風險評估，依法律規定自動標記，支援 CSV 上傳' } },
+        { href: 'interest-calc.html', name: '法定利率利息計算器',
+          desc: {
+            lawyer:  '§203年息5%，計算起訴日/請求日起算遲延利息，含訴之聲明格式提醒',
+            all: '依民法§203年利率5%計算損害賠償或借貸糾紛利息，含逐年明細',
+          } },
         { href: 'minor-damages.html', name: '未成年損害賠償試算',
           desc: { all: '霸凌、傷害事件，含父母連帶責任、精神慰撫金' } },
         { href: 'accident.html', name: '車禍損害賠償分析',
           desc: { all: '傷害／死亡賠償明細，自動扣除強制責任險給付' } },
         { href: 'prescription.html', name: '消滅時效計算機',
           desc: { all: '§125–127、§197 各類請求權時效，含時效中斷提醒' } },
-        { href: 'interest-calc.html', name: '法定利息試算',
-          desc: { all: '§203-§207法定利率5%，含遲延利息、墊付款利息與複利計算' } },
         { href: 'forced-share.html', name: '特留分侵害精算',
           persona: 'lawyer',
           desc: {
@@ -661,11 +664,6 @@ async function handleUnsubscribe() {
           desc: {
             lawyer:  '期望值模型計算合理和解範圍，提供最佳開價與底線策略',
             all: '期望值模型・最佳開價策略・底線計算・對方可能出價分析・談判區間圖表',
-          } },
-        { href: 'interest-calc.html', name: '法定利率利息計算器',
-          desc: {
-            lawyer:  '§203年息5%，計算起訴日/請求日起算遲延利息，含訴之聲明格式提醒',
-            all: '依民法§203年利率5%計算損害賠償或借貸糾紛利息，含逐年明細',
           } },
       ]
     },
