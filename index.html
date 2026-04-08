@@ -547,13 +547,13 @@ async function handleUnsubscribe() {
       sub: '遺產稅精算、節稅規劃、贈與策略試算，含多案件期限管理儀表板。' },
     lawyer:     { name: '進階法律', emoji: '⚖️', cls: 'lawyer',
       sub: '財產爭議分析、訴訟強度評估、脫產偵測與和解金額試算。' },
-    all:        { name: '全功能 Pro', emoji: '✦', cls: 'public',
-      sub: '已解鎖全部進階功能：稅務精算、法律分析、節稅規劃一站搞定。' },
+    all:        { name: '一般模式', emoji: '🏠', cls: 'public',
+      sub: '依中華民國民法設計，協助您快速了解繼承權益與財產分配。' },
   };
 
   const TABS = [
     {
-      id: 'inheritance', label: { public: '繼承', accountant: '繼承申報', lawyer: '繼承' },
+      id: 'inheritance', label: { public: '繼承', accountant: '繼承申報', lawyer: '繼承', all: '繼承' },
       tools: [
         { href: 'calculator.html', name: '遺產繼承計算器', featured: true,
           desc: {
@@ -692,7 +692,7 @@ async function handleUnsubscribe() {
 
     // Tab nav
     document.getElementById('tabNav').innerHTML = TABS.map(tab => {
-      const label = tab.label[persona] || tab.label.all;
+      const label = tab.label[persona] || tab.label.all || tab.label.public;
       return `<button class="tab-btn ${tab.id === activeTab ? 'active' : ''}"
         onclick="setTab('${tab.id}')">${label}</button>`;
     }).join('');
@@ -743,14 +743,10 @@ async function handleUnsubscribe() {
       }
     } catch(e) {}
 
-    // Persona switch button
+    // DEV: 切換身份直接跳 landing 選擇頁，不擋 Pro gate
     document.getElementById('personaSwitchBtn').addEventListener('click', () => {
-      if (window.__inheritanceProIsPro) {
-        localStorage.removeItem('ip_persona');
-        window.location.href = 'landing.html';
-      } else {
-        document.getElementById('proGateModal').style.display = 'flex';
-      }
+      localStorage.removeItem('ip_persona');
+      window.location.href = 'landing.html';
     });
 
     // DEV: 沒設 persona 就預設 all，不跳轉 landing
