@@ -19,6 +19,8 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="車禍損害賠償試算｜InheritancePro">
 <link rel="canonical" href="https://inheritancepro.app/accident.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="js/persona.js"></script>
 <script type="application/ld+json">
@@ -29,6 +31,10 @@
     --ink: #1a1410; --paper: #f5f0e8; --accent: #8b2020; --gold: #c4932a;
     --soft: #e8e0d0; --muted: #7a6f62; --success: #2a6b4a; --danger: #8b2020;
     --border: #c8bfb0;
+  }
+  *:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--paper); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; min-height: 100vh; font-size: 15px; }
@@ -41,7 +47,7 @@
   .home-link:hover { color: var(--gold); }
   .progress-bar { height: 3px; background: var(--soft); }
   .progress-fill { height: 100%; background: var(--gold); transition: width 0.4s ease; }
-  main { padding: 24px 20px 120px; max-width: 480px; margin: 0 auto; }
+  main { padding: 24px 20px calc(120px + env(safe-area-inset-bottom, 0px)); max-width: 480px; margin: 0 auto; }
   .step-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
   h2 { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
   .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
@@ -108,6 +114,7 @@
     <div class="logo">Inheritance<span>Pro</span></div>
     <div class="page-sub">車禍損害賠償分析</div>
   </a>
+  <a class="home-link" href="index.html">← 首頁</a>
 </header>
 <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:50%"></div></div>
 

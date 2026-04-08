@@ -5,6 +5,8 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>繼承期限管理儀表板｜InheritancePro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -12,6 +14,10 @@
     --muted: #7a6f62; --border: #c8bfb0; --soft: #e8e0d0;
     --accent: #8b2020; --success: #2a6b4a;
     --warn: #c47a1a; --danger: #b02020;
+  }
+  *:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--paper); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; font-size: 14px; min-height: 100vh; }
@@ -95,7 +101,7 @@
 
 <div class="top-bar">
   <div class="top-bar-logo">Inheritance<span>Pro</span></div>
-  <a href="index.html">← 返回主頁</a>
+  <a href="index.html">← 首頁</a>
 </div>
 
 <div class="container">

@@ -19,6 +19,8 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="消滅時效計算器｜InheritancePro">
 <link rel="canonical" href="https://inheritancepro.app/prescription.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="js/persona.js"></script>
 <script type="application/ld+json">
@@ -29,6 +31,10 @@
     --ink: #1a1410; --paper: #f5f0e8; --accent: #8b2020; --gold: #c4932a;
     --soft: #e8e0d0; --muted: #7a6f62; --success: #2a6b4a; --danger: #8b2020;
     --border: #c8bfb0;
+  }
+  *:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--paper); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; min-height: 100vh; font-size: 15px; }
@@ -41,7 +47,7 @@
   .home-link:hover { color: var(--gold); }
   .progress-bar { height: 3px; background: var(--soft); }
   .progress-fill { height: 100%; background: var(--gold); transition: width 0.4s ease; }
-  main { padding: 24px 20px 120px; max-width: 480px; margin: 0 auto; }
+  main { padding: 24px 20px calc(120px + env(safe-area-inset-bottom, 0px)); max-width: 480px; margin: 0 auto; }
   .step-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
   h2 { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
   .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
@@ -129,6 +135,7 @@
     <div class="logo">Inheritance<span>Pro</span></div>
     <div class="page-sub">消滅時效計算機</div>
   </a>
+  <a class="home-link" href="index.html">← 首頁</a>
 </header>
 <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:50%"></div></div>
 
@@ -232,6 +239,26 @@
             <div class="type-badge">2 年</div>
           </div>
 
+          <div class="cat-label">繼承相關時效</div>
+
+          <div class="type-item" onclick="selectType(this,'inheritance_recovery')">
+            <div class="type-dot"></div>
+            <div class="type-text">
+              <div class="type-name">繼承回復請求權</div>
+              <div class="type-desc">繼承權被侵害時，真正繼承人向表見繼承人主張回復<br>雙重時效：知悉起2年 / 繼承開始時起10年</div>
+            </div>
+            <div class="type-badge">2 年 / 10 年</div>
+          </div>
+
+          <div class="type-item" onclick="selectType(this,'forced_share')">
+            <div class="type-dot"></div>
+            <div class="type-text">
+              <div class="type-name">特留分扣減權</div>
+              <div class="type-desc">遺囑侵害特留分時，繼承人得行使扣減權，自知悉起算</div>
+            </div>
+            <div class="type-badge">1 年</div>
+          </div>
+
           <div class="cat-label">特殊時效規定</div>
 
           <div class="type-item" onclick="selectType(this,'tort')">
@@ -316,6 +343,8 @@
     contractor: { years: 2,  label: '技師、承攬人報酬', law: '民法第127條第7款', note: '承攬工作之報酬及墊款，自工作完成或應付款日起算。' },
     merchant:   { years: 2,  label: '商品、製造物代價', law: '民法第127條第8款', note: '商人、製造人、手工業人所供給商品及產物之代價，自交付商品時起算。' },
     tort:       { years: 2,  label: '侵權行為損害賠償', law: '民法第197條', note: '雙重時效：①知悉損害及賠償義務人起2年；②侵權行為發生起10年。以先屆至者為準。', isTort: true },
+    inheritance_recovery: { years: 2, label: '繼承回復請求權', law: '民法第1146條', note: '雙重時效：①知悉繼承權被侵害起2年；②自繼承開始時起10年。以先屆至者為準。', isTort: true, tortLabel: '繼承開始日（被繼承人死亡日，10年客觀時效起算）', startLabel: '知悉繼承權被侵害日（2年主觀時效起算）' },
+    forced_share: { years: 1, label: '特留分扣減權', law: '民法第1225條', note: '繼承人得知特留分被遺囑侵害時起1年內行使扣減權。自繼承開始時起逾10年者亦同。' },
     labor:      { years: 5,  label: '勞工薪資請求權', law: '民法第126條（勞基法準用）', note: '工資、加班費各期各自起算，自原應給付日起5年。特休未休工資亦同。' },
   };
 
@@ -333,8 +362,13 @@
 
     if (cfg.isTort) {
       tortGroup.style.display = 'block';
-      startLabel.textContent = '知悉損害及賠償義務人日期（2年主觀時效起算）';
-      startNote.innerHTML = '民法第197條第1項：自知有損害及賠償義務人時起2年不行使而消滅。';
+      // 使用自訂標籤（繼承回復請求權）或預設侵權行為標籤
+      startLabel.textContent = cfg.startLabel || '知悉損害及賠償義務人日期（2年主觀時效起算）';
+      const tortDateLabel = document.querySelector('#tortDateGroup label');
+      if (tortDateLabel) tortDateLabel.textContent = cfg.tortLabel || '侵權行為發生日（10年客觀時效起算）';
+      startNote.innerHTML = type === 'inheritance_recovery'
+        ? '民法第1146條第2項：自知悉被侵害之時起2年不行使而消滅。'
+        : '民法第197條第1項：自知有損害及賠償義務人時起2年不行使而消滅。';
     } else {
       tortGroup.style.display = 'none';
       startLabel.textContent = cfg.label.includes('薪資') ? '薪資應給付日（各期各自起算）' : '請求權可行使日（起算日）';

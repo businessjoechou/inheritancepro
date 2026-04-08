@@ -19,6 +19,8 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="限定繼承債務試算｜InheritancePro">
 <link rel="canonical" href="https://inheritancepro.app/limited-inheritance.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="js/persona.js"></script>
 <script type="application/ld+json">
@@ -30,6 +32,10 @@
     --soft: #e8e0d0; --muted: #7a6f62; --success: #2a6b4a; --danger: #8b2020;
     --border: #c8bfb0;
   }
+  *:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+  }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--paper); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; min-height: 100vh; font-size: 15px; }
   header { background: var(--ink); color: var(--paper); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
@@ -38,7 +44,7 @@
   .page-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 3px; font-family: 'DM Mono', monospace; letter-spacing: 0.06em; }
   .home-link { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; }
   .home-link:hover { color: var(--gold); }
-  main { padding: 24px 20px 120px; max-width: 480px; margin: 0 auto; }
+  main { padding: 24px 20px calc(120px + env(safe-area-inset-bottom, 0px)); max-width: 480px; margin: 0 auto; }
   h1 { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
   .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
   .card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 14px; }
@@ -96,7 +102,7 @@
     <div class="logo">Inheritance<span>Pro</span></div>
     <div class="page-sub">限定繼承 · §1148</div>
   </a>
-  <a class="home-link" href="index.html">← 返回</a>
+  <a class="home-link" href="index.html">← 首頁</a>
 </header>
 
 <main>

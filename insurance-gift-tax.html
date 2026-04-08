@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>保單要保人變更贈與稅計算器｜InheritancePro</title>
+<meta name="description" content="保單要保人變更視為贈與稅計算器，依遺贈稅法§5-1計算保單價值準備金之贈與稅額，含配偶免稅、分年規劃節稅建議。InheritancePro。">
+<meta name="keywords" content="要保人變更,保單贈與稅,保價金,遺贈稅法§5-1,244萬免稅額,保險節稅,要保人變更贈與">
+<meta name="robots" content="index, follow">
+<meta name="author" content="InheritancePro">
+<meta property="og:title" content="保單要保人變更贈與稅計算器｜InheritancePro">
+<meta property="og:description" content="保單要保人變更視為贈與，依遺贈稅法§5-1計算保價金贈與稅額，含配偶免稅、多筆保單試算、分年規劃。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://inheritancepro.app/insurance-gift-tax.html">
+<meta property="og:site_name" content="InheritancePro">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="保單要保人變更贈與稅計算器｜InheritancePro">
+<link rel="canonical" href="https://inheritancepro.app/insurance-gift-tax.html">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="js/persona.js"></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"保單要保人變更贈與稅計算器","url":"https://inheritancepro.app/insurance-gift-tax.html","applicationCategory":"FinanceApplication","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro","url":"https://inheritancepro.app"}}
+</script>
+<style>
+  :root {
+    --ink: #1a1410; --paper: #f5f0e8; --accent: #8b2020; --gold: #c4932a;
+    --soft: #e8e0d0; --muted: #7a6f62; --success: #2a6b4a; --danger: #8b2020;
+    --border: #c8bfb0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--paper); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; min-height: 100vh; font-size: 15px; }
+  header { background: var(--ink); color: var(--paper); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .logo { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 700; letter-spacing: 0.04em; }
+  .logo span { color: var(--gold); }
+  .page-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 3px; font-family: 'DM Mono', monospace; letter-spacing: 0.06em; }
+  .home-link { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; }
+  .home-link:hover { color: var(--gold); }
+  .progress-bar { height: 3px; background: var(--soft); }
+  .progress-fill { height: 100%; background: var(--gold); transition: width 0.4s ease; }
+  main { padding: 24px 20px 120px; max-width: 480px; margin: 0 auto; }
+  .step-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
+  h1 { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
+  .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
+  .card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 14px; }
+  .section-title { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--soft); }
+  .input-group { margin-bottom: 18px; }
+  .input-group:last-child { margin-bottom: 0; }
+  label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 8px; }
+  input[type="number"], input[type="text"], select {
+    width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 8px;
+    background: var(--paper); font-size: 15px; font-family: 'DM Mono', monospace;
+    color: var(--ink); transition: border-color 0.2s; -webkit-appearance: none;
+  }
+  select { font-family: 'Noto Sans TC', sans-serif; cursor: pointer; }
+  input:focus, select:focus { outline: none; border-color: var(--gold); background: #fff; }
+  .info-box { background: #fffbf0; border: 1px solid #e8d48a; border-left: 3px solid var(--gold); border-radius: 6px; padding: 12px 14px; font-size: 12px; color: #7a6020; line-height: 1.7; margin-bottom: 14px; }
+  .info-box strong { color: #5a4010; }
+  .law-note { border-left: 3px solid var(--gold); padding-left: 12px; font-size: 12px; color: var(--muted); line-height: 1.7; margin-top: 10px; }
+  /* Policy list */
+  .policy-item { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .policy-item input { flex: 1; }
+  .policy-remove { width: 36px; height: 36px; border: 1.5px solid var(--border); border-radius: 8px; background: var(--paper); color: var(--muted); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; }
+  .policy-remove:hover { border-color: var(--accent); color: var(--accent); background: #fff5f5; }
+  .add-policy-btn { display: block; width: 100%; padding: 10px; border: 1.5px dashed var(--border); border-radius: 8px; background: transparent; color: var(--muted); font-size: 13px; font-family: 'Noto Sans TC', sans-serif; cursor: pointer; transition: all 0.2s; margin-top: 4px; }
+  .add-policy-btn:hover { border-color: var(--gold); color: var(--gold); }
+  /* Results */
+  .result-hero { background: var(--ink); color: var(--paper); border-radius: 16px; padding: 28px 24px; margin-bottom: 14px; text-align: center; }
+  .result-hero .label { font-size: 12px; color: var(--muted); letter-spacing: 0.12em; font-family: 'DM Mono', monospace; text-transform: uppercase; margin-bottom: 10px; }
+  .result-total { font-family: 'Noto Serif TC', serif; font-size: 28px; font-weight: 700; color: var(--gold); margin-bottom: 6px; }
+  .result-sub { font-size: 13px; color: var(--muted); }
+  .spouse-exempt-banner { background: #e8f5e9; border: 2px solid var(--success); border-radius: 16px; padding: 28px 24px; margin-bottom: 14px; text-align: center; }
+  .spouse-exempt-text { font-family: 'Noto Serif TC', serif; font-size: 26px; font-weight: 700; color: var(--success); margin-bottom: 6px; }
+  .spouse-exempt-sub { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .heir-card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 10px; }
+  .heir-header { background: var(--soft); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; }
+  .heir-name { font-weight: 600; font-size: 14px; color: var(--ink); }
+  .heir-fraction { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent); font-weight: 500; }
+  .heir-body { padding: 14px 16px; }
+  .heir-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .heir-row:last-child { margin-bottom: 0; }
+  .heir-row-label { font-size: 13px; color: var(--muted); }
+  .heir-row-val { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; color: var(--success); }
+  .tip-card { background: #f0f7f3; border: 1.5px solid #b8d8c8; border-radius: 12px; padding: 16px 20px; margin-bottom: 14px; }
+  .tip-title { font-size: 13px; font-weight: 600; color: var(--success); margin-bottom: 8px; }
+  .tip-body { font-size: 12px; color: #2a4a3a; line-height: 1.8; }
+  /* Nav */
+  .nav-bar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); background: #fff; border-top: 1px solid var(--border); padding: 16px 20px 28px; display: flex; gap: 10px; width: 100%; max-width: 480px; }
+  .btn { flex: 1; padding: 14px; border-radius: 10px; border: none; font-size: 15px; font-family: 'Noto Sans TC', sans-serif; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+  .btn-primary { background: var(--ink); color: var(--paper); }
+  .btn-primary:hover { background: #2a1a10; }
+  .btn-print { background: var(--accent); color: #fff; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  @media print { header, .nav-bar, #navBar, .progress-bar { display: none !important; } main { padding: 20px; } }
+  .disclaimer-bar { max-width: 560px; margin: 0 auto; padding: 16px 24px 40px; font-size: 11.5px; color: rgba(0,0,0,0.62); line-height: 1.7; border-top: 1px solid rgba(0,0,0,0.12); }
+  .disclaimer-bar strong { color: rgba(0,0,0,0.80); }
+  .save-btn { display: block; width: 100%; padding: 12px; background: var(--accent); color: white; border: none; border-radius: 10px; font-size: 14px; font-family: 'Noto Sans TC', sans-serif; font-weight: 500; cursor: pointer; margin-top: 16px; transition: opacity 0.2s; }
+  .save-btn:hover { opacity: 0.85; }
+  .save-btn:disabled { opacity: 0.6; cursor: default; }
+  #resultSection { display: none; animation: fadeUp 0.3s ease both; }
+  .cross-links { margin-top: 20px; border-top: 1px solid var(--border); padding-top: 16px; }
+  .cross-links-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+  .cross-link-btn { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 10px; text-decoration: none; color: var(--ink); background: #fff; margin-bottom: 8px; font-size: 13px; transition: border-color 0.2s; }
+  .cross-link-btn:hover { border-color: var(--gold); }
+  .cross-link-btn span { color: var(--muted); font-size: 18px; }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" style="text-decoration:none;color:inherit">
+    <div class="logo">Inheritance<span>Pro</span></div>
+    <div class="page-sub">保單要保人變更贈與稅</div>
+  </a>
+  <a href="index.html" class="home-link">&larr; 首頁</a>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:100%"></div></div>
+
+<main>
+
+  <div class="step-label">保單贈與稅 &middot; 遺贈稅法&sect;5-1</div>
+  <h1>保單要保人變更贈與稅計算器</h1>
+  <p class="subtitle">自2006年起，保單要保人變更時，以變更日保單價值準備金視為贈與，依遺贈稅法計算贈與稅。年度免稅額 244 萬元。</p>
+
+  <!-- Section 1: 變更對象 -->
+  <div class="card">
+    <div class="section-title">1 &middot; 變更對象</div>
+
+    <div class="input-group" style="margin-bottom:0">
+      <label>新要保人與原要保人之關係</label>
+      <select id="recipient" onchange="onRecipientChange()">
+        <option value="spouse">配偶</option>
+        <option value="child" selected>子女</option>
+        <option value="parent">父母</option>
+        <option value="sibling">兄弟姊妹</option>
+        <option value="other">其他</option>
+      </select>
+      <div id="spouse_note" style="display:none;font-size:11px;color:var(--success);margin-top:8px;line-height:1.6">
+        配偶間贈與依遺贈稅法&sect;20第1項第6款，<strong>不計入贈與總額</strong>，無論保價金金額大小均免課贈與稅，且不佔用年度244萬免稅額。
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: 保單明細 -->
+  <div class="card">
+    <div class="section-title">2 &middot; 保單價值準備金（變更日）</div>
+
+    <div id="policyList">
+      <div class="policy-item" data-idx="0">
+        <input type="number" placeholder="保單 1 保價金（元）" min="0" inputmode="numeric" oninput="liveCalc()">
+      </div>
+    </div>
+    <button class="add-policy-btn" onclick="addPolicy()">+ 新增保單</button>
+
+    <div style="font-size:11px;color:var(--muted);margin-top:10px;line-height:1.6">
+      保價金數據可向保險公司申請「保單價值準備金證明」取得。每筆保單分別填入變更日之保價金。
+    </div>
+  </div>
+
+  <!-- Section 3: 當年度其他贈與 -->
+  <div class="card">
+    <div class="section-title">3 &middot; 當年度已贈與金額</div>
+
+    <div class="input-group" style="margin-bottom:0">
+      <label>當年度已贈與金額（不含本次，元）<span style="font-weight:400;color:var(--muted);font-size:12px">預設 0</span></label>
+      <input type="number" id="prior_gifts" placeholder="0" min="0" value="0" inputmode="numeric" oninput="liveCalc()">
+    </div>
+  </div>
+
+  <div class="info-box">
+    <strong>法律依據</strong>：遺贈稅法&sect;5-1（自2006年起，要保人變更時以變更日保單價值準備金視為贈與）、&sect;20第1項第6款（配偶間贈與不計入贈與總額）、&sect;22（年度免稅額244萬）、&sect;19（稅率10%/15%/20%三級累進）。
+  </div>
+
+  <!-- Results -->
+  <div id="resultSection">
+
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">試算結果</div>
+
+    <!-- 配偶免稅大橫幅 -->
+    <div id="spouseExemptBanner" class="spouse-exempt-banner" style="display:none">
+      <div class="spouse-exempt-text">全額免稅</div>
+      <div class="spouse-exempt-sub">配偶間保單要保人變更，依遺贈稅法&sect;20第1項第6款<br>不計入贈與總額，免課贈與稅</div>
+    </div>
+
+    <!-- 稅額英雄區 -->
+    <div id="taxHero" class="result-hero" style="display:none">
+      <div class="label">應納贈與稅額</div>
+      <div class="result-total" id="r_tax_hero">NT$ 0</div>
+      <div class="result-sub" id="r_tax_rate_label">適用稅率 10%</div>
+    </div>
+
+    <!-- 明細卡 -->
+    <div class="heir-card">
+      <div class="heir-header" id="resultHeader">
+        <span class="heir-name">贈與稅試算明細</span>
+        <span class="heir-fraction" id="resultBadge">&mdash;</span>
+      </div>
+      <div class="heir-body">
+        <div class="heir-row">
+          <span class="heir-row-label">變更對象</span>
+          <span class="heir-row-val" style="color:var(--ink)" id="r_recipient">&mdash;</span>
+        </div>
+        <div class="heir-row">
+          <span class="heir-row-label">保單筆數</span>
+          <span class="heir-row-val" style="color:var(--muted)" id="r_policy_count">&mdash;</span>
+        </div>
+        <div class="heir-row" style="border-top:1px solid var(--soft);padding-top:8px;margin-top:4px">
+          <span class="heir-row-label">本次贈與金額（保價金合計）</span>
+          <span class="heir-row-val" style="color:var(--ink)" id="r_gift_amount">&mdash;</span>
+        </div>
+        <div class="heir-row">
+          <span class="heir-row-label">當年度已贈與金額</span>
+          <span class="heir-row-val" style="color:var(--muted)" id="r_prior">&mdash;</span>
+        </div>
+        <div class="heir-row">
+          <span class="heir-row-label">當年累計贈與總額</span>
+          <span class="heir-row-val" style="color:var(--ink)" id="r_total">&mdash;</span>
+        </div>
+        <div class="heir-row" style="border-top:1px solid var(--soft);padding-top:8px;margin-top:4px">
+          <span class="heir-row-label">年度免稅額</span>
+          <span class="heir-row-val" style="color:var(--muted)" id="r_exemption">&mdash;</span>
+        </div>
+        <div class="heir-row">
+          <span class="heir-row-label">免稅額使用情況</span>
+          <span class="heir-row-val" id="r_exempt_usage">&mdash;</span>
+        </div>
+        <div class="heir-row">
+          <span class="heir-row-label">剩餘免稅空間</span>
+          <span class="heir-row-val" id="r_exempt_remaining">&mdash;</span>
+        </div>
+        <div class="heir-row" style="border-top:1px solid var(--soft);padding-top:8px;margin-top:4px">
+          <span class="heir-row-label">贈與淨額</span>
+          <span class="heir-row-val" style="color:var(--muted)" id="r_net">&mdash;</span>
+        </div>
+        <div class="heir-row" style="border-top:1px solid var(--soft);padding-top:10px;margin-top:4px">
+          <span class="heir-row-label" style="font-weight:600;color:var(--ink)">應納贈與稅額</span>
+          <span class="heir-row-val" style="font-size:17px" id="r_tax">&mdash;</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 節稅建議 -->
+    <div class="tip-card" id="tipCard" style="display:none">
+      <div class="tip-title">分年變更規劃建議</div>
+      <div class="tip-body" id="tipBody"></div>
+    </div>
+
+    <!-- 會計師備忘卡 -->
+    <div class="accountant-only" style="background:#eef8f2;border:1.5px solid #2a6b4a;border-radius:12px;padding:16px 20px;margin-top:16px">
+      <div style="font-size:12px;font-weight:700;color:#2a6b4a;margin-bottom:8px;font-family:'DM Mono',monospace;letter-spacing:0.06em">MEMO &middot; 會計師備忘</div>
+      <div style="font-size:12px;color:#1a3a28;line-height:1.9">
+        <strong>申報期限</strong>：要保人變更日起 30 日內向戶籍所在地國稅局申報贈與稅。<br>
+        <strong>保價金查詢</strong>：向保險公司申請「變更日保單價值準備金證明」，需載明變更基準日、保價金金額。部分保險公司可線上查詢或電話申請。<br>
+        <strong>申報書填寫重點</strong>：贈與稅申報書第二聯「贈與財產明細」，財產種類勾選「其他」，說明欄填「保單要保人變更（保單號碼：XXX）」，金額填保價金。<br>
+        <strong>多筆保單</strong>：同一年度內多次變更需合併申報，累計計算是否超過免稅額。<br>
+        <strong>附件</strong>：保險契約影本、變更申請書影本、保價金證明。
+      </div>
+    </div>
+
+    <!-- 律師備忘卡 -->
+    <div class="lawyer-only" style="background:#eef3fa;border:1.5px solid #3a5a80;border-radius:12px;padding:16px 20px;margin-top:16px">
+      <div style="font-size:12px;font-weight:700;color:#1a3a5c;margin-bottom:8px;font-family:'DM Mono',monospace;letter-spacing:0.06em">MEMO &middot; 律師備忘</div>
+      <div style="font-size:12px;color:#1a2a3a;line-height:1.9">
+        <strong>&sect;5-1 適用爭議</strong>：2006年以前之要保人變更不適用本條。實務上曾有納稅義務人主張變更日在施行前而免課贈與稅之案例。<br>
+        <strong>保價金認定爭議</strong>：國稅局以「變更日」之保價金為課稅基礎，非保單面額或解約金。若保險公司出具之保價金有異議，可申請重新鑑價。<br>
+        <strong>生前變更 vs 遺囑指定</strong>：生前變更要保人屬贈與行為，適用贈與稅；若要保人死亡後由遺囑指定新要保人，則該保單價值計入遺產課徵遺產稅（&sect;16）。<br>
+        <strong>實質課稅原則</strong>：若短期內反覆變更要保人，國稅局可能援引實質課稅原則認定為規避稅負行為。<br>
+        <strong>撤銷贈與</strong>：要保人變更後若欲撤銷，需於贈與稅核定前向國稅局舉證並申請撤回申報。
+      </div>
+    </div>
+
+    <div class="law-note">
+      依《遺產及贈與稅法》第5條之1（要保人變更視為贈與）、第19條（稅率）、第20條（配偶免稅）、第22條（年度免稅額244萬）。本試算僅供參考，實際稅額以國稅局核定為準。
+    </div>
+
+    <button class="btn btn-print" style="width:100%;margin-top:14px;padding:13px;border-radius:10px;font-size:14px;" onclick="window.print()">列印 / 儲存 PDF</button>
+    <div id="save-btn-container"></div>
+
+    <div class="cross-links">
+      <div class="cross-links-label">相關工具</div>
+      <a class="cross-link-btn" href="gift-tax.html">贈與稅試算　年度贈與稅完整計算 <span>&rarr;</span></a>
+      <a class="cross-link-btn" href="calculator.html">遺產繼承計算器　比較繼承方案 <span>&rarr;</span></a>
+      <a class="cross-link-btn" href="asset-detection.html">脫產偵測分析　2年內贈與可能計入遺產 <span>&rarr;</span></a>
+    </div>
+  </div>
+
+</main>
+
+<div id="navBar" class="nav-bar">
+  <button class="btn btn-primary" onclick="calculate()" style="flex:2">計算贈與稅</button>
+</div>
+
+<script>
+  let policyCount = 1;
+
+  function onRecipientChange() {
+    const val = document.getElementById('recipient').value;
+    document.getElementById('spouse_note').style.display = val === 'spouse' ? 'block' : 'none';
+    liveCalc();
+  }
+
+  function addPolicy() {
+    policyCount++;
+    const list = document.getElementById('policyList');
+    const div = document.createElement('div');
+    div.className = 'policy-item';
+    div.dataset.idx = policyCount - 1;
+    div.innerHTML = `<input type="number" placeholder="保單 ${policyCount} 保價金（元）" min="0" inputmode="numeric" oninput="liveCalc()"><button class="policy-remove" onclick="removePolicy(this)" title="移除">&times;</button>`;
+    list.appendChild(div);
+  }
+
+  function removePolicy(btn) {
+    const item = btn.closest('.policy-item');
+    item.remove();
+    renumberPolicies();
+    liveCalc();
+  }
+
+  function renumberPolicies() {
+    const items = document.querySelectorAll('#policyList .policy-item');
+    items.forEach((item, i) => {
+      item.querySelector('input').placeholder = `保單 ${i + 1} 保價金（元）`;
+    });
+    policyCount = items.length;
+  }
+
+  function getPolicyValues() {
+    const inputs = document.querySelectorAll('#policyList .policy-item input');
+    const values = [];
+    inputs.forEach(input => {
+      const v = parseFloat(input.value) || 0;
+      if (v > 0) values.push(v);
+    });
+    return values;
+  }
+
+  function fmt(n) { return 'NT$ ' + Math.round(n).toLocaleString('zh-TW'); }
+
+  const GIFT_ANNUAL_EXEMPT = 2440000; // 244萬
+
+  const RECIPIENT_LABELS = {
+    spouse: '配偶', child: '子女', parent: '父母',
+    sibling: '兄弟姊妹', other: '其他'
+  };
+
+  function calcGiftTax(netAmount) {
+    if (netAmount <= 0) return 0;
+    const t1 = 25000000, t2 = 50000000;
+    if (netAmount <= t1) return Math.round(netAmount * 0.10);
+    if (netAmount <= t2) return Math.round(netAmount * 0.15 - 1250000);
+    return Math.round(netAmount * 0.20 - 3750000);
+  }
+
+  function getTaxRate(netAmount) {
+    if (netAmount <= 0) return '0%';
+    if (netAmount <= 25000000) return '10%';
+    if (netAmount <= 50000000) return '15%';
+    return '20%';
+  }
+
+  function liveCalc() {
+    const policies = getPolicyValues();
+    const prior = parseFloat(document.getElementById('prior_gifts').value) || 0;
+    if (policies.length > 0 || prior > 0) {
+      calculate(true);
+    }
+  }
+
+  function calculate(silent) {
+    const recipient = document.getElementById('recipient').value;
+    const isSpouse = recipient === 'spouse';
+    const policies = getPolicyValues();
+    const policyTotal = policies.reduce((a, b) => a + b, 0);
+    const priorGifts = parseFloat(document.getElementById('prior_gifts').value) || 0;
+
+    // 配偶：全額免稅，不計入贈與總額，不佔用免稅額
+    let netGift, giftTax, totalGifts, exemptUsed, exemptRemaining;
+
+    if (isSpouse) {
+      netGift = 0;
+      giftTax = 0;
+      totalGifts = priorGifts; // 配偶保單贈與不計入
+      exemptUsed = Math.min(priorGifts, GIFT_ANNUAL_EXEMPT);
+      exemptRemaining = Math.max(0, GIFT_ANNUAL_EXEMPT - priorGifts);
+    } else {
+      totalGifts = priorGifts + policyTotal;
+      netGift = Math.max(0, totalGifts - GIFT_ANNUAL_EXEMPT);
+      giftTax = calcGiftTax(netGift);
+      exemptUsed = Math.min(totalGifts, GIFT_ANNUAL_EXEMPT);
+      exemptRemaining = Math.max(0, GIFT_ANNUAL_EXEMPT - totalGifts);
+    }
+
+    // 顯示/隱藏英雄區
+    const spouseBanner = document.getElementById('spouseExemptBanner');
+    const taxHero = document.getElementById('taxHero');
+
+    if (isSpouse) {
+      spouseBanner.style.display = 'block';
+      taxHero.style.display = 'none';
+    } else {
+      spouseBanner.style.display = 'none';
+      taxHero.style.display = 'block';
+      document.getElementById('r_tax_hero').textContent = giftTax === 0 ? '免稅' : fmt(giftTax);
+      document.getElementById('r_tax_hero').style.color = giftTax === 0 ? 'var(--success)' : 'var(--gold)';
+      document.getElementById('r_tax_rate_label').textContent = giftTax === 0 ? '未超過免稅額' : '適用稅率 ' + getTaxRate(netGift);
+    }
+
+    // 明細
+    document.getElementById('r_recipient').textContent = RECIPIENT_LABELS[recipient];
+    document.getElementById('r_policy_count').textContent = policies.length + ' 筆';
+    document.getElementById('r_gift_amount').textContent = fmt(policyTotal);
+    document.getElementById('r_prior').textContent = fmt(priorGifts);
+    document.getElementById('r_total').textContent = isSpouse ? fmt(priorGifts) + '（配偶贈與不計入）' : fmt(totalGifts);
+    document.getElementById('r_exemption').textContent = isSpouse ? '配偶贈與免稅（§20）' : fmt(GIFT_ANNUAL_EXEMPT);
+    document.getElementById('r_exempt_usage').textContent = fmt(exemptUsed);
+    document.getElementById('r_exempt_usage').style.color = exemptRemaining > 0 ? 'var(--success)' : 'var(--accent)';
+    document.getElementById('r_exempt_remaining').textContent = isSpouse ? fmt(exemptRemaining) + '（不受影響）' : fmt(exemptRemaining);
+    document.getElementById('r_exempt_remaining').style.color = exemptRemaining > 0 ? 'var(--success)' : 'var(--accent)';
+    document.getElementById('r_net').textContent = fmt(netGift);
+    document.getElementById('r_tax').textContent = giftTax === 0 ? '免稅' : fmt(giftTax);
+    document.getElementById('r_tax').style.color = giftTax === 0 ? 'var(--success)' : 'var(--accent)';
+
+    // Header 狀態
+    const headerBg = giftTax === 0 ? '#e8f5e9' : '#fff5f0';
+    document.getElementById('resultHeader').style.background = headerBg;
+    document.getElementById('resultBadge').textContent = isSpouse ? '配偶免稅' : (giftTax === 0 ? '免稅' : getTaxRate(netGift));
+    document.getElementById('resultBadge').style.color = giftTax === 0 || isSpouse ? 'var(--success)' : 'var(--accent)';
+
+    // 節稅建議
+    const tipCard = document.getElementById('tipCard');
+    const tipBody = document.getElementById('tipBody');
+
+    if (!isSpouse && policyTotal > GIFT_ANNUAL_EXEMPT - priorGifts && policyTotal > 0) {
+      tipCard.style.display = 'block';
+      const availableThisYear = Math.max(0, GIFT_ANNUAL_EXEMPT - priorGifts);
+      const excessAmount = policyTotal - availableThisYear;
+      const yearsNeeded = Math.ceil(policyTotal / GIFT_ANNUAL_EXEMPT);
+      const taxIfNow = giftTax;
+      const taxIfSplit = 0; // 分年在免稅額內可完全免稅
+
+      let tips = '';
+      tips += `本次保價金合計 ${fmt(policyTotal)}，超過剩餘免稅空間 ${fmt(availableThisYear)}。<br>`;
+      tips += `若分 <strong>${yearsNeeded} 年</strong>變更（每年不超過 244 萬），可<strong>完全免課贈與稅</strong>，節省 ${fmt(taxIfNow)}。<br>`;
+      tips += `建議：今年先變更保價金 ${fmt(availableThisYear)} 以內之保單，其餘保單於次年度再行變更。<br>`;
+      if (policies.length > 1) {
+        tips += `您有 ${policies.length} 筆保單，可依保價金大小排列，優先變更金額較小且合計不超過免稅額之保單。`;
+      }
+      tipBody.innerHTML = tips;
+    } else if (!isSpouse && policyTotal > 0 && giftTax === 0) {
+      tipCard.style.display = 'block';
+      tipBody.innerHTML = `本次變更在年度免稅額內，無須繳納贈與稅。<br>提醒：仍需於變更日起 30 日內向國稅局申報，即使免稅亦須申報。`;
+    } else if (isSpouse && policyTotal > 0) {
+      tipCard.style.display = 'block';
+      tipBody.innerHTML = `配偶間要保人變更全額免稅，不佔用年度 244 萬免稅額。<br>提醒：配偶間贈與雖免稅，但仍建議保留變更紀錄備查。`;
+    } else {
+      tipCard.style.display = 'none';
+    }
+
+    // 顯示結果區
+    document.getElementById('resultSection').style.display = 'block';
+
+    if (!silent) {
+      initSaveButton(
+        'insurance_gift_tax',
+        `保單要保人變更贈與稅 ${new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit'})}`,
+        `保價金合計 ${fmt(policyTotal)}，變更對象：${RECIPIENT_LABELS[recipient]}，應繳稅額 ${giftTax === 0 ? '免稅' : fmt(giftTax)}`,
+        { recipient, policies, policyTotal, priorGifts, totalGifts, netGift, giftTax }
+      );
+    }
+  }
+
+  async function initSaveButton(tool, title, summary, data) {
+    const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+    const sb = createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+    const { data: { user } } = await sb.auth.getUser();
+    const container = document.getElementById('save-btn-container');
+    if (!container) return;
+    if (!user) {
+      container.innerHTML = `<p style="text-align:center;font-size:12px;color:var(--muted);margin-top:8px;"><a href="/login.html" style="color:var(--accent)">登入</a>後可儲存此次結果</p>`;
+      return;
+    }
+    container.innerHTML = `<button onclick="doSave()" class="save-btn" id="save-btn">儲存此次結果</button>`;
+    window.doSave = async () => {
+      const btn = document.getElementById('save-btn');
+      btn.textContent = '儲存中...';
+      btn.disabled = true;
+      const { saveCalculation } = await import('./js/save.js');
+      const result = await saveCalculation({ tool, title, summary, data });
+      if (result.success) { btn.textContent = '\u2713 已儲存'; btn.style.background = '#6b1a1a'; }
+      else { btn.textContent = '儲存失敗'; btn.disabled = false; }
+    };
+  }
+</script>
+<div class="disclaimer-bar">本工具僅供參考，實際稅務認定以國稅局核定為準。</div>
+<script src="js/supabase-config.js"></script>
+<script type="module" src="js/auth-bar.js"></script>
+</body>
+</html>

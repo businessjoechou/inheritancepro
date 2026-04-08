@@ -19,6 +19,8 @@
 <meta name="twitter:title" content="繼承流程時間軸｜InheritancePro">
 <meta name="twitter:description" content="輸入死亡日期，自動產生繼承期限倒數清單。">
 <link rel="canonical" href="https://inheritancepro.app/inheritance-timeline.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="js/persona.js"></script>
 <script type="application/ld+json">
@@ -26,6 +28,7 @@
 </script>
 <style>
   :root{--ink:#1a1410;--paper:#f5f0e8;--gold:#c4932a;--muted:#7a6f62;--border:#c8bfb0;--soft:#e8e0d0;--success:#2a6b4a;--accent:#1a3a5c;--danger:#8b2020;--warn:#b8600a;}
+  *:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
   *{box-sizing:border-box;margin:0;padding:0;}
   body{background:var(--paper);color:var(--ink);font-family:'Noto Sans TC',sans-serif;min-height:100vh;font-size:15px;}
   header{background:var(--ink);color:var(--paper);padding:18px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
@@ -34,7 +37,7 @@
   .page-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 3px; font-family: 'DM Mono', monospace; letter-spacing: 0.06em; }
 
   .back-link{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:0.06em;}
-  main{max-width:480px;margin:0 auto;padding:28px 20px 120px;}
+  main{max-width:480px;margin:0 auto;padding:28px 20px calc(120px + env(safe-area-inset-bottom, 0px));}
   h2{font-family:'Noto Serif TC',serif;font-size:22px;font-weight:700;margin-bottom:6px;}
   .subtitle{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:24px;}
   .card{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:20px;margin-bottom:14px;}
@@ -139,6 +142,7 @@
     <div class="logo">Inheritance<span>Pro</span></div>
     <div class="page-sub">繼承流程時間軸</div>
   </a>
+  <a class="home-link" href="index.html" style="font-family:'DM Mono',monospace;font-size:11px;color:#7a6f62;text-decoration:none;letter-spacing:0.08em;">← 首頁</a>
 </header>
 <main>
   <h1>繼承流程時間軸</h1>

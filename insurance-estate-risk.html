@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>壽險保單遺產稅風險評估｜InheritancePro</title>
+<meta name="description" content="依國稅局實質課稅原則八大態樣，評估壽險保單被追課遺產稅的風險。計算風險分數、預估補稅金額、提供降低風險建議。InheritancePro。">
+<meta name="keywords" content="壽險遺產稅,實質課稅,八大態樣,保單遺產稅風險,躉繳投保,高齡投保,巨額投保,舉債投保">
+<meta name="robots" content="index, follow">
+<meta name="author" content="InheritancePro">
+<meta property="og:title" content="壽險保單遺產稅風險評估｜InheritancePro">
+<meta property="og:description" content="依國稅局實質課稅原則八大態樣，評估壽險保單被追課遺產稅的風險，預估補稅金額。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://inheritancepro.app/insurance-estate-risk.html">
+<meta property="og:site_name" content="InheritancePro">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="壽險保單遺產稅風險評估｜InheritancePro">
+<link rel="canonical" href="https://inheritancepro.app/insurance-estate-risk.html">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="js/persona.js"></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"壽險保單遺產稅風險評估","url":"https://inheritancepro.app/insurance-estate-risk.html","applicationCategory":"FinanceApplication","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro"}}
+</script>
+<style>
+  :root {
+    --ink: #1a1410; --paper: #f5f0e8; --accent: #8b2020; --gold: #c4932a;
+    --soft: #e8e0d0; --muted: #7a6f62; --success: #2a6b4a; --danger: #8b2020;
+    --border: #c8bfb0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--paper); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; min-height: 100vh; font-size: 15px; }
+  header { background: var(--ink); color: var(--paper); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .logo { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 700; letter-spacing: 0.04em; }
+  .logo span { color: var(--gold); }
+  .page-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 3px; font-family: 'DM Mono', monospace; letter-spacing: 0.06em; }
+  .home-link { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; }
+  .home-link:hover { color: var(--gold); }
+  .progress-bar { height: 3px; background: var(--soft); }
+  .progress-fill { height: 100%; background: var(--gold); transition: width 0.4s ease; }
+  main { padding: 24px 20px 120px; max-width: 480px; margin: 0 auto; }
+  .step-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
+  h1 { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
+  .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
+  .card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 14px; }
+  .section-title { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--soft); }
+  .input-group { margin-bottom: 18px; }
+  .input-group:last-child { margin-bottom: 0; }
+  label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 8px; }
+  input[type="number"], select {
+    width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 8px;
+    background: var(--paper); font-size: 15px; font-family: 'DM Mono', monospace;
+    color: var(--ink); transition: border-color 0.2s; -webkit-appearance: none;
+  }
+  select { font-family: 'Noto Sans TC', sans-serif; cursor: pointer; }
+  input:focus, select:focus { outline: none; border-color: var(--gold); background: #fff; }
+  .checkbox-group { display: flex; align-items: center; gap: 10px; margin-top: 4px; }
+  .checkbox-group input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--accent); cursor: pointer; }
+  .checkbox-group label { margin-bottom: 0; font-size: 14px; cursor: pointer; }
+  .info-box { background: #fffbf0; border: 1px solid #e8d48a; border-left: 3px solid var(--gold); border-radius: 6px; padding: 12px 14px; font-size: 12px; color: #7a6020; line-height: 1.7; margin-bottom: 14px; }
+  .info-box strong { color: #5a4010; }
+  .law-note { border-left: 3px solid var(--gold); padding-left: 12px; font-size: 12px; color: var(--muted); line-height: 1.7; margin-top: 10px; }
+
+  /* Risk score circle */
+  .risk-circle-wrap { text-align: center; padding: 32px 20px 24px; }
+  .risk-circle {
+    width: 140px; height: 140px; border-radius: 50%; display: inline-flex;
+    flex-direction: column; align-items: center; justify-content: center;
+    border: 6px solid var(--border); transition: border-color 0.4s;
+  }
+  .risk-score { font-family: 'Noto Serif TC', serif; font-size: 48px; font-weight: 700; line-height: 1; }
+  .risk-max { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .risk-level { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 700; margin-top: 14px; }
+  .risk-desc { font-size: 13px; color: var(--muted); margin-top: 6px; line-height: 1.6; }
+
+  /* Indicator table */
+  .indicator-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .indicator-table th { background: var(--soft); padding: 8px 12px; text-align: left; font-size: 11px; font-family: 'DM Mono', monospace; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+  .indicator-table td { padding: 10px 12px; border-bottom: 1px solid var(--soft); vertical-align: middle; }
+  .indicator-table tr:last-child td { border-bottom: none; }
+  .indicator-name { font-weight: 500; }
+  .indicator-detail { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .light { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+  .light-red { background: #d32f2f; }
+  .light-yellow { background: #f9a825; }
+  .light-green { background: #43a047; }
+  .indicator-score { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; text-align: right; white-space: nowrap; }
+
+  /* Results */
+  .result-hero { background: var(--ink); color: var(--paper); border-radius: 16px; padding: 28px 24px; margin-bottom: 14px; text-align: center; }
+  .result-hero .label { font-size: 12px; color: var(--muted); letter-spacing: 0.12em; font-family: 'DM Mono', monospace; text-transform: uppercase; margin-bottom: 10px; }
+  .heir-card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 10px; }
+  .heir-header { background: var(--soft); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; }
+  .heir-name { font-weight: 600; font-size: 14px; color: var(--ink); }
+  .heir-fraction { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent); font-weight: 500; }
+  .heir-body { padding: 14px 16px; }
+  .heir-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .heir-row:last-child { margin-bottom: 0; }
+  .heir-row-label { font-size: 13px; color: var(--muted); }
+  .heir-row-val { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; color: var(--success); }
+
+  /* Suggestions */
+  .suggestion-item { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--soft); font-size: 13px; line-height: 1.6; }
+  .suggestion-item:last-child { border-bottom: none; }
+  .suggestion-icon { flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; margin-top: 2px; }
+
+  /* Nav */
+  .nav-bar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); background: #fff; border-top: 1px solid var(--border); padding: 16px 20px 28px; display: flex; gap: 10px; width: 100%; max-width: 480px; }
+  .btn { flex: 1; padding: 14px; border-radius: 10px; border: none; font-size: 15px; font-family: 'Noto Sans TC', sans-serif; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+  .btn-primary { background: var(--ink); color: var(--paper); }
+  .btn-primary:hover { background: #2a1a10; }
+  .btn-print { background: var(--accent); color: #fff; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  @media print { header, .nav-bar, #navBar, .progress-bar { display: none !important; } main { padding: 20px; } }
+  .disclaimer-bar { max-width: 560px; margin: 0 auto; padding: 16px 24px 40px; font-size: 11.5px; color: rgba(0,0,0,0.62); line-height: 1.7; border-top: 1px solid rgba(0,0,0,0.12); }
+  .disclaimer-bar strong { color: rgba(0,0,0,0.80); }
+  #resultSection { display: none; animation: fadeUp 0.3s ease both; }
+  .cross-links { margin-top: 20px; border-top: 1px solid var(--border); padding-top: 16px; }
+  .cross-links-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+  .cross-link-btn { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 10px; text-decoration: none; color: var(--ink); background: #fff; margin-bottom: 8px; font-size: 13px; transition: border-color 0.2s; }
+  .cross-link-btn:hover { border-color: var(--gold); }
+  .cross-link-btn span { color: var(--muted); font-size: 18px; }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" style="text-decoration:none;color:inherit">
+    <div class="logo">Inheritance<span>Pro</span></div>
+    <div class="page-sub">壽險保單遺產稅風險評估</div>
+  </a>
+  <a href="index.html" class="home-link">&larr; 首頁</a>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:100%"></div></div>
+
+<main>
+
+  <div class="step-label">實質課稅原則 · 八大態樣評估</div>
+  <h1>壽險保單遺產稅風險評估器</h1>
+  <p class="subtitle">依國稅局「實質課稅原則」八大態樣，評估壽險保單被追課遺產稅的風險，預估補稅金額並提供降風險建議。</p>
+
+  <!-- Section 1: 基本資訊 -->
+  <div class="card">
+    <div class="section-title">1 · 投保基本資訊</div>
+
+    <div class="input-group">
+      <label>投保年齡（歲）</label>
+      <input type="number" id="insureAge" placeholder="例：72" min="0" max="120" inputmode="numeric">
+    </div>
+
+    <div class="input-group">
+      <label>投保時健康狀況</label>
+      <select id="healthStatus">
+        <option value="healthy">健康</option>
+        <option value="chronic">慢性病（如糖尿病、高血壓等）</option>
+        <option value="critical">重病（如癌症末期、重大傷病等）</option>
+      </select>
+    </div>
+
+    <div class="input-group">
+      <label>繳費方式</label>
+      <select id="paymentMethod">
+        <option value="monthly">月繳</option>
+        <option value="annual">年繳</option>
+        <option value="lump">躉繳（一次繳清）</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Section 2: 金額資訊 -->
+  <div class="card">
+    <div class="section-title">2 · 保費與保額資訊</div>
+
+    <div class="input-group">
+      <label>保費總額（萬元）</label>
+      <input type="number" id="totalPremium" placeholder="例：3000" min="0" inputmode="numeric">
+    </div>
+
+    <div class="input-group">
+      <label>保額（萬元）<span style="font-weight:400;color:var(--muted);font-size:12px"> 保險給付金額</span></label>
+      <input type="number" id="insuredAmount" placeholder="例：3200" min="0" inputmode="numeric">
+    </div>
+
+    <div class="input-group">
+      <label>遺產總額（萬元）<span style="font-weight:400;color:var(--muted);font-size:12px"> 含保險給付</span></label>
+      <input type="number" id="totalEstate" placeholder="例：8000" min="0" inputmode="numeric">
+    </div>
+  </div>
+
+  <!-- Section 3: 投保行為 -->
+  <div class="card">
+    <div class="section-title">3 · 投保行為態樣</div>
+
+    <div class="input-group">
+      <label>投保至身故年數</label>
+      <input type="number" id="yearsToDecease" placeholder="例：1.5" min="0" step="0.1" inputmode="decimal">
+    </div>
+
+    <div class="input-group">
+      <label>2年內購買保單數量（張）</label>
+      <input type="number" id="policyCount" placeholder="例：3" min="0" inputmode="numeric">
+    </div>
+
+    <div class="input-group" style="margin-bottom:0">
+      <div class="checkbox-group">
+        <input type="checkbox" id="debtInsure">
+        <label for="debtInsure">是否舉債投保（借錢買保險）</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <strong>法律依據</strong>：依所得稅法§12-1實質課稅原則、保險法§112、遺產及贈與稅法§16第9款。國稅局依財政部函釋及實務判決，針對具有「規避遺產稅」目的之壽險保單，得將保險給付計入遺產總額課稅。
+  </div>
+
+  <!-- Results -->
+  <div id="resultSection">
+
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">風險評估結果</div>
+
+    <!-- Risk Score Circle -->
+    <div class="result-hero">
+      <div class="label">風險評分</div>
+      <div class="risk-circle-wrap">
+        <div class="risk-circle" id="riskCircle">
+          <div class="risk-score" id="riskScore">0</div>
+          <div class="risk-max">/ 120</div>
+        </div>
+        <div class="risk-level" id="riskLevel">--</div>
+        <div class="risk-desc" id="riskDesc"></div>
+      </div>
+    </div>
+
+    <!-- 八大態樣表 -->
+    <div class="heir-card">
+      <div class="heir-header">
+        <span class="heir-name">八大態樣逐項分析</span>
+        <span class="heir-fraction" id="hitCount">--</span>
+      </div>
+      <div class="heir-body" style="padding:0">
+        <table class="indicator-table">
+          <thead>
+            <tr>
+              <th>態樣</th>
+              <th style="text-align:right">評分</th>
+            </tr>
+          </thead>
+          <tbody id="indicatorBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 預估補稅 -->
+    <div class="heir-card" id="taxCard">
+      <div class="heir-header" style="background:#fff5f0">
+        <span class="heir-name">預估補稅金額</span>
+        <span class="heir-fraction" id="taxRateLabel">--</span>
+      </div>
+      <div class="heir-body">
+        <div class="heir-row">
+          <span class="heir-row-label">保險給付（保額）</span>
+          <span class="heir-row-val" style="color:var(--muted)" id="r_insured">--</span>
+        </div>
+        <div class="heir-row">
+          <span class="heir-row-label">遺產稅邊際稅率</span>
+          <span class="heir-row-val" style="color:var(--muted)" id="r_marginal">--</span>
+        </div>
+        <div class="heir-row" style="border-top:1px solid var(--soft);padding-top:10px;margin-top:4px">
+          <span class="heir-row-label" style="font-weight:600;color:var(--ink)">預估補繳遺產稅</span>
+          <span class="heir-row-val" style="font-size:17px;color:var(--accent)" id="r_extraTax">--</span>
+        </div>
+        <div style="font-size:11px;color:var(--muted);margin-top:8px;line-height:1.6">若國稅局認定保單為規避遺產稅，保險給付將計入遺產總額，依邊際稅率補課遺產稅。</div>
+      </div>
+    </div>
+
+    <!-- 降低風險建議 -->
+    <div class="heir-card" id="suggestCard">
+      <div class="heir-header" style="background:#e8f5e9">
+        <span class="heir-name">降低風險建議</span>
+        <span class="heir-fraction" style="color:var(--success)">建議</span>
+      </div>
+      <div class="heir-body" id="suggestBody">
+      </div>
+    </div>
+
+    <!-- Pro: Lawyer -->
+    <div class="lawyer-only" style="background:#eef3fa;border:1.5px solid #3a5a80;border-radius:12px;padding:16px 20px;margin-top:16px">
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:#3a5a80;letter-spacing:0.12em;margin-bottom:10px">LAWYER MEMO</div>
+      <div style="font-family:'Noto Serif TC',serif;font-size:15px;font-weight:700;color:#1a3a5c;margin-bottom:10px">訴訟策略備忘</div>
+      <div style="font-size:13px;color:#2a4a6c;line-height:1.8">
+        <strong>行政救濟要點：</strong><br>
+        1. 確認國稅局是否已踐行「實質課稅」之舉證義務（稅捐稽徵法§12-1第3項）<br>
+        2. 爭點：投保目的是否確有保障需求，非僅為規避遺產稅<br>
+        3. 審酌保單投保時點與被繼承人健康狀態之關聯性<br>
+        4. 復查 → 訴願 → 行政訴訟之期限管控（復查30日、訴願30日）<br><br>
+        <strong>舉證責任分配：</strong><br>
+        1. 國稅局應就「規避稅捐之主觀意圖」負舉證責任<br>
+        2. 納稅義務人可提出：投保動機說明、家庭保障需求、財務規劃紀錄<br>
+        3. 參考判決：最高行政法院107年度判字第XXX號（實質課稅應嚴格認定）<br>
+        4. 若僅符合1-2項態樣且有合理說明，爭訟成功機率較高
+      </div>
+    </div>
+
+    <!-- Pro: Accountant -->
+    <div class="accountant-only" style="background:#eef8f2;border:1.5px solid #2a6b4a;border-radius:12px;padding:16px 20px;margin-top:16px">
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:#2a6b4a;letter-spacing:0.12em;margin-bottom:10px">ACCOUNTANT MEMO</div>
+      <div style="font-family:'Noto Serif TC',serif;font-size:15px;font-weight:700;color:#1a4a3c;margin-bottom:10px">申報實務備忘</div>
+      <div style="font-size:13px;color:#2a5a4c;line-height:1.8">
+        <strong>遺產稅申報注意事項：</strong><br>
+        1. 死亡前投保之壽險保單，若符合實質課稅態樣，建議主動申報並附說明<br>
+        2. 保費列舉扣除額：每人每年2.4萬（所得稅），與遺產稅不同體系<br>
+        3. 保險給付若被計入遺產，應確認是否已從保險公司取得完整給付明細<br>
+        4. 多張保單應逐張評估，個別判斷是否符合態樣<br><br>
+        <strong>保費列舉扣除額提醒：</strong><br>
+        1. 人身保險費每人每年最高2.4萬（綜所稅列舉扣除）<br>
+        2. 全民健保費不受2.4萬上限限制，可全額扣除<br>
+        3. 要保人與被保險人須在同一申報戶<br>
+        4. 躉繳保費可分年攤提列報（依保單年限平均分攤）
+      </div>
+    </div>
+
+    <div class="law-note" style="margin-top:16px">
+      依所得稅法第12條之1「實質課稅原則」及財政部相關函釋，國稅局得將具有規避遺產稅意圖之壽險保單給付計入遺產總額課稅。本評估僅供參考，實際認定以國稅局核定為準。
+    </div>
+
+    <button class="btn btn-print" style="width:100%;margin-top:14px;padding:13px;border-radius:10px;font-size:14px;" onclick="window.print()">列印 / 儲存 PDF</button>
+
+    <div class="cross-links">
+      <div class="cross-links-label">相關工具</div>
+      <a class="cross-link-btn" href="calculator.html">遺產繼承計算器　完整遺產稅試算 <span>&rarr;</span></a>
+      <a class="cross-link-btn" href="gift-tax.html">贈與稅試算　生前贈與節稅規劃 <span>&rarr;</span></a>
+      <a class="cross-link-btn" href="asset-detection.html">脫產偵測分析　2年內贈與追回 <span>&rarr;</span></a>
+    </div>
+  </div>
+
+</main>
+
+<div id="navBar" class="nav-bar">
+  <button class="btn btn-primary" onclick="evaluate()" style="flex:2">評估風險</button>
+</div>
+
+<div class="disclaimer-bar">本工具僅供參考，實際稅務認定以國稅局核定為準。</div>
+<script src="js/supabase-config.js"></script>
+<script type="module" src="js/auth-bar.js"></script>
+
+<script>
+  function fmt(n) { return 'NT$ ' + Math.round(n).toLocaleString('zh-TW'); }
+  function fmtWan(n) { return n.toLocaleString('zh-TW') + ' 萬'; }
+
+  // 遺產稅邊際稅率（2026年）
+  // 遺產淨額 5,000萬以下 10%、5,000萬-1億 15%、1億以上 20%
+  // 免稅額 1,333萬
+  function getMarginalRate(estateWan) {
+    const exempt = 1333; // 萬
+    const net = Math.max(0, estateWan - exempt);
+    if (net <= 5000) return 0.10;
+    if (net <= 10000) return 0.15;
+    return 0.20;
+  }
+
+  function evaluate() {
+    const age = parseFloat(document.getElementById('insureAge').value) || 0;
+    const health = document.getElementById('healthStatus').value;
+    const payment = document.getElementById('paymentMethod').value;
+    const premium = parseFloat(document.getElementById('totalPremium').value) || 0;
+    const insured = parseFloat(document.getElementById('insuredAmount').value) || 0;
+    const estate = parseFloat(document.getElementById('totalEstate').value) || 0;
+    const years = parseFloat(document.getElementById('yearsToDecease').value) || 0;
+    const policyCount = parseInt(document.getElementById('policyCount').value) || 0;
+    const debtInsure = document.getElementById('debtInsure').checked;
+
+    // 八大態樣評分
+    const indicators = [];
+    let totalScore = 0;
+
+    // 1. 躉繳投保
+    let s1 = 0, d1 = '';
+    if (payment === 'lump') { s1 = 15; d1 = '一次繳清全部保費，符合態樣'; }
+    else { d1 = payment === 'annual' ? '年繳' : '月繳'; }
+    indicators.push({ name: '躉繳投保', score: s1, detail: d1 });
+    totalScore += s1;
+
+    // 2. 高齡投保
+    let s2 = 0, d2 = '';
+    if (age >= 70) { s2 = 15; d2 = '投保年齡 ' + age + ' 歲（≥70）'; }
+    else if (age >= 65) { s2 = 7; d2 = '投保年齡 ' + age + ' 歲（65-69，部分風險）'; }
+    else { d2 = '投保年齡 ' + age + ' 歲'; }
+    indicators.push({ name: '高齡投保', score: s2, detail: d2 });
+    totalScore += s2;
+
+    // 3. 短期投保
+    let s3 = 0, d3 = '';
+    if (years > 0 && years <= 2) { s3 = 15; d3 = '投保至身故僅 ' + years + ' 年（≤2年）'; }
+    else if (years > 2 && years <= 5) { s3 = 7; d3 = '投保至身故 ' + years + ' 年（2-5年，部分風險）'; }
+    else { d3 = '投保至身故 ' + years + ' 年'; }
+    indicators.push({ name: '短期投保', score: s3, detail: d3 });
+    totalScore += s3;
+
+    // 4. 重病投保
+    let s4 = 0, d4 = '';
+    if (health === 'critical') { s4 = 15; d4 = '投保時為重病狀態'; }
+    else if (health === 'chronic') { s4 = 7; d4 = '投保時有慢性病，部分風險'; }
+    else { d4 = '投保時健康狀況良好'; }
+    indicators.push({ name: '重病投保', score: s4, detail: d4 });
+    totalScore += s4;
+
+    // 5. 巨額投保
+    let s5 = 0, d5 = '';
+    if (estate > 0) {
+      const ratio = premium / estate;
+      if (ratio >= 0.5) { s5 = 15; d5 = '保費佔遺產 ' + (ratio * 100).toFixed(1) + '%（≥50%）'; }
+      else if (ratio >= 0.3) { s5 = 7; d5 = '保費佔遺產 ' + (ratio * 100).toFixed(1) + '%（30-50%，部分風險）'; }
+      else { d5 = '保費佔遺產 ' + (ratio * 100).toFixed(1) + '%'; }
+    } else {
+      d5 = '未填寫遺產總額，無法計算';
+    }
+    indicators.push({ name: '巨額投保', score: s5, detail: d5 });
+    totalScore += s5;
+
+    // 6. 密集投保
+    let s6 = 0, d6 = '';
+    if (policyCount >= 3) { s6 = 15; d6 = '2年內購買 ' + policyCount + ' 張保單（≥3張）'; }
+    else if (policyCount === 2) { s6 = 7; d6 = '2年內購買 2 張保單（部分風險）'; }
+    else { d6 = '2年內購買 ' + policyCount + ' 張保單'; }
+    indicators.push({ name: '密集投保', score: s6, detail: d6 });
+    totalScore += s6;
+
+    // 7. 舉債投保
+    let s7 = 0, d7 = '';
+    if (debtInsure) { s7 = 15; d7 = '借款投保，明顯規避意圖'; }
+    else { d7 = '無舉債投保'; }
+    indicators.push({ name: '舉債投保', score: s7, detail: d7 });
+    totalScore += s7;
+
+    // 8. 保費高於保額
+    let s8 = 0, d8 = '';
+    if (premium > 0 && insured > 0) {
+      if (premium > insured) { s8 = 15; d8 = '保費 ' + fmtWan(premium) + ' > 保額 ' + fmtWan(insured); }
+      else if (premium > insured * 0.8) { s8 = 7; d8 = '保費接近保額（> 80%），部分風險'; }
+      else { d8 = '保費 ' + fmtWan(premium) + '，保額 ' + fmtWan(insured); }
+    } else {
+      d8 = '未填寫完整，無法比較';
+    }
+    indicators.push({ name: '保費高於保額', score: s8, detail: d8 });
+    totalScore += s8;
+
+    // Risk level
+    let level, levelColor, desc;
+    if (totalScore <= 15) {
+      level = '低風險'; levelColor = '#43a047';
+      desc = '目前保單態樣尚屬正常，被追課遺產稅機率較低。';
+    } else if (totalScore <= 35) {
+      level = '中低風險'; levelColor = '#1565c0';
+      desc = '有少數態樣命中，建議留意但風險尚可控。';
+    } else if (totalScore <= 55) {
+      level = '中風險'; levelColor = '#f9a825';
+      desc = '多項態樣命中，國稅局可能會關注此保單，建議提前準備說明。';
+    } else if (totalScore <= 80) {
+      level = '高風險'; levelColor = '#e65100';
+      desc = '多項態樣高度命中，被追課遺產稅機率相當高，強烈建議諮詢專業人士。';
+    } else {
+      level = '極高風險'; levelColor = '#c62828';
+      desc = '幾乎全部態樣命中，國稅局極可能將保險給付計入遺產課稅。';
+    }
+
+    // Render score circle
+    document.getElementById('riskScore').textContent = totalScore;
+    document.getElementById('riskScore').style.color = levelColor;
+    document.getElementById('riskCircle').style.borderColor = levelColor;
+    document.getElementById('riskLevel').textContent = level;
+    document.getElementById('riskLevel').style.color = levelColor;
+    document.getElementById('riskDesc').textContent = desc;
+
+    // Render indicator table
+    let hitFull = 0, hitPartial = 0;
+    let tbody = '';
+    indicators.forEach(ind => {
+      let lightClass, statusText;
+      if (ind.score === 15) { lightClass = 'light-red'; statusText = '命中'; hitFull++; }
+      else if (ind.score === 7) { lightClass = 'light-yellow'; statusText = '部分'; hitPartial++; }
+      else { lightClass = 'light-green'; statusText = '未命中'; }
+      tbody += '<tr>' +
+        '<td><div class="indicator-name"><span class="light ' + lightClass + '"></span>' + ind.name + '</div>' +
+        '<div class="indicator-detail">' + ind.detail + '</div></td>' +
+        '<td class="indicator-score" style="color:' + (ind.score === 15 ? '#d32f2f' : ind.score === 7 ? '#f9a825' : '#43a047') + '">' +
+        statusText + ' +' + ind.score + '</td></tr>';
+    });
+    document.getElementById('indicatorBody').innerHTML = tbody;
+    document.getElementById('hitCount').textContent = '命中 ' + hitFull + ' / 部分 ' + hitPartial;
+    document.getElementById('hitCount').style.color = hitFull >= 3 ? 'var(--accent)' : 'var(--gold)';
+
+    // 預估補稅金額
+    if (insured > 0 && estate > 0) {
+      const marginalRate = getMarginalRate(estate);
+      const extraTax = Math.round(insured * 10000 * marginalRate);
+      document.getElementById('r_insured').textContent = fmtWan(insured);
+      document.getElementById('r_marginal').textContent = (marginalRate * 100) + '%';
+      document.getElementById('r_extraTax').textContent = fmt(extraTax);
+      document.getElementById('taxRateLabel').textContent = '邊際稅率 ' + (marginalRate * 100) + '%';
+      document.getElementById('taxCard').style.display = 'block';
+    } else {
+      document.getElementById('taxCard').style.display = 'block';
+      document.getElementById('r_insured').textContent = insured > 0 ? fmtWan(insured) : '未填寫';
+      document.getElementById('r_marginal').textContent = estate > 0 ? (getMarginalRate(estate) * 100) + '%' : '未填寫';
+      document.getElementById('r_extraTax').textContent = '需填寫保額與遺產總額';
+      document.getElementById('r_extraTax').style.fontSize = '13px';
+      document.getElementById('taxRateLabel').textContent = '--';
+    }
+
+    // 降低風險建議（動態）
+    const suggestions = [];
+    if (s1 === 15) suggestions.push({ icon: '💰', text: '避免躉繳：改以分期繳費（年繳或月繳），拉長繳費期間，降低一次性大額投保的態樣認定。' });
+    if (s2 >= 7) suggestions.push({ icon: '👤', text: '高齡投保風險高：年齡越大投保，被認定為規避遺產稅的可能性越高。若有保障需求，建議儘早規劃。' });
+    if (s3 >= 7) suggestions.push({ icon: '📅', text: '短期投保風險：投保後短期內身故容易被認定為規避稅捐。建議投保時間至少維持5年以上。' });
+    if (s4 >= 7) suggestions.push({ icon: '🏥', text: '帶病投保風險高：投保時健康狀況不佳，國稅局可能認定預見死亡而投保。建議保留健康檢查報告作為佐證。' });
+    if (s5 >= 7) suggestions.push({ icon: '📊', text: '保費佔比過高：保費佔遺產總額比例過高，建議控制單筆保費金額，或增加其他類型資產配置。' });
+    if (s6 >= 7) suggestions.push({ icon: '📋', text: '密集投保風險：短期內大量購買保單，建議分散投保時間，避免集中在同一時期。' });
+    if (s7 === 15) suggestions.push({ icon: '🏦', text: '舉債投保為最明顯的規避態樣：借錢投保幾乎必定被認定為規避遺產稅，強烈建議避免。' });
+    if (s8 >= 7) suggestions.push({ icon: '⚖️', text: '保費高於或接近保額：表示保單不具有實質保障功能，僅為資產移轉工具。建議選擇保額明顯高於保費之保單。' });
+
+    if (suggestions.length === 0) {
+      suggestions.push({ icon: '✅', text: '目前未發現明顯風險態樣。建議定期檢視保單內容，確保符合保障需求。' });
+    }
+
+    let suggestHtml = '';
+    suggestions.forEach(s => {
+      suggestHtml += '<div class="suggestion-item">' +
+        '<div class="suggestion-icon">' + s.icon + '</div>' +
+        '<div>' + s.text + '</div></div>';
+    });
+    document.getElementById('suggestBody').innerHTML = suggestHtml;
+
+    // Show result
+    document.getElementById('resultSection').style.display = 'block';
+    document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+</script>
+
+</body>
+</html>

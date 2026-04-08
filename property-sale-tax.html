@@ -19,6 +19,8 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="房地合一稅試算（繼承後出售）｜InheritancePro">
 <link rel="canonical" href="https://inheritancepro.app/property-sale-tax.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="js/persona.js"></script>
 <script type="application/ld+json">
@@ -30,6 +32,10 @@
     --soft: #e8e0d0; --muted: #7a6f62; --success: #2a6b4a; --danger: #8b2020;
     --border: #c8bfb0;
   }
+  *:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+  }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--paper); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; min-height: 100vh; font-size: 15px; }
   header { background: var(--ink); color: var(--paper); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
@@ -40,7 +46,7 @@
   .home-link:hover { color: var(--gold); }
   .progress-bar { height: 3px; background: var(--soft); }
   .progress-fill { height: 100%; background: var(--gold); transition: width 0.4s ease; }
-  main { padding: 24px 20px 120px; max-width: 480px; margin: 0 auto; }
+  main { padding: 24px 20px calc(120px + env(safe-area-inset-bottom, 0px)); max-width: 480px; margin: 0 auto; }
   .step-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
   h2 { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
   .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
@@ -200,19 +206,20 @@
 
   <!-- 稅率參照表 -->
   <div class="card">
-    <div class="section-title">房地合一稅率參照表（2021/7/1起）</div>
+    <div class="section-title">繼承取得房地合一稅率（非自願因素，2021/7/1起）</div>
     <table class="rate-table" id="rateTable">
       <thead>
         <tr><th>持有年數</th><th>稅率</th><th>說明</th></tr>
       </thead>
       <tbody>
-        <tr id="rate_row_45"><td>未滿 2 年</td><td>45%</td><td>短期交易</td></tr>
-        <tr id="rate_row_35"><td>2 年以上未滿 5 年</td><td>35%</td><td>短期持有</td></tr>
+        <tr id="rate_row_45"><td>未滿 2 年</td><td>20%</td><td>繼承屬非自願因素，適用優惠稅率</td></tr>
+        <tr id="rate_row_35"><td>2 年以上未滿 5 年</td><td>20%</td><td>繼承屬非自願因素，適用優惠稅率</td></tr>
         <tr id="rate_row_20"><td>5 年以上未滿 10 年</td><td>20%</td><td>一般持有</td></tr>
         <tr id="rate_row_15"><td>10 年以上</td><td>15%</td><td>長期持有</td></tr>
         <tr id="rate_row_self"><td>自住滿 6 年</td><td>10%</td><td>自住優惠（課稅所得400萬免稅）</td></tr>
       </tbody>
     </table>
+    <div style="font-size:11px;color:var(--muted);margin-top:8px;line-height:1.6">依所得稅法§14-4第3項第1款第5目，繼承取得屬「非自願因素」，持有未滿5年者稅率為20%（一般交易為45%/35%）。持有期間自被繼承人原始取得日起算。</div>
   </div>
 
   <!-- Results -->
@@ -357,8 +364,10 @@
     if (isSelfOccupied && selfOccupiedYears >= 6) {
       return { rate: 0.10, label: '自住優惠稅率（持有且設籍6年以上）' };
     }
-    if (holdYears < 2) return { rate: 0.45, label: '持有未滿2年（45%）' };
-    if (holdYears < 5) return { rate: 0.35, label: '持有2年以上未滿5年（35%）' };
+    // 繼承取得屬「非自願因素」，依所得稅法§14-4第3項第1款第5目
+    // 持有未滿5年一律適用20%（非一般的45%/35%）
+    if (holdYears < 2) return { rate: 0.20, label: '繼承取得，持有未滿2年（20%，非自願因素）' };
+    if (holdYears < 5) return { rate: 0.20, label: '繼承取得，持有2年以上未滿5年（20%，非自願因素）' };
     if (holdYears < 10) return { rate: 0.20, label: '持有5年以上未滿10年（20%）' };
     return { rate: 0.15, label: '持有10年以上（15%）' };
   }
@@ -437,14 +446,10 @@
     // 稅率換檔建議
     const suggBox = document.getElementById('r_suggestion_box');
     let suggestion = '';
-    if (holdYears < 2) {
-      const daysTo2yr = Math.ceil((2 * 365.25) - holdYears * 365.25);
-      suggestion = `目前持有未滿2年，適用45%高稅率。若再持有約 <strong>${daysTo2yr} 天</strong>，稅率可降至35%，可節省大量稅金。`;
-    } else if (holdYears < 5) {
-      const daysTo5yr = Math.ceil((5 * 365.25) - holdYears * 365.25);
-      const taxAt35 = Math.round(taxableGain * 0.35);
-      const taxAt20 = Math.round(taxableGain * 0.20);
-      suggestion = `目前持有滿2年，適用35%稅率。若再持有約 <strong>${daysTo5yr} 天</strong>，稅率可降至20%，預計可節省稅額 <strong>${fmt(taxAt35 - taxAt20)}</strong>。`;
+    if (holdYears < 5) {
+      // 繼承取得未滿5年均為20%，無稅率換檔空間
+      const daysTo10yr = Math.ceil((10 * 365.25) - holdYears * 365.25);
+      suggestion = `繼承取得屬非自願因素，持有未滿5年一律適用20%優惠稅率（非一般的45%/35%）。若再持有約 <strong>${daysTo10yr} 天</strong> 至滿10年，稅率可降至15%。`;
     } else if (holdYears < 10) {
       const daysTo10yr = Math.ceil((10 * 365.25) - holdYears * 365.25);
       const taxAt20 = Math.round(taxableGain * 0.20);

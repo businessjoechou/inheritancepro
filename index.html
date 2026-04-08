@@ -26,8 +26,14 @@
 <meta name="twitter:title" content="InheritancePro｜中華民國民法財產權益計算平台">
 <meta name="twitter:description" content="免費計算遺產繼承、贍養費、剩餘財產分配。依中華民國民法設計。">
 <link rel="canonical" href="https://inheritancepro.app/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
+  *:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+  }
   :root {
     --ink: #1a1410;
     --paper: #f5f0e8;
@@ -596,6 +602,18 @@ async function handleUnsubscribe() {
             accountant: '完整扣除額逐項精算：免稅1333萬、配偶553萬、子女56萬/人，含列印工作底稿',
             all: '17項扣除額逐筆精算・自動產出工作底稿・可列印存檔・符合國稅局申報格式',
           } },
+        { href: 'insurance-estate-risk.html', name: '壽險保單遺產稅風險評估',
+          desc: {
+            public:     '依國稅局八大態樣評估保單被課遺產稅風險，含補稅金額試算',
+            accountant: '八大態樣逐項評分，實質課稅風險分析，含申報實務備忘',
+            lawyer:     '八大態樣風險評估，行政救濟要點與舉證責任分配備忘',
+          } },
+        { href: 'insurance-gift-tax.html', name: '保單要保人變更贈與稅',
+          desc: {
+            public:     '變更要保人時保價金視為贈與，計算應繳贈與稅額',
+            accountant: '§5-1要保人變更贈與稅精算，含申報期限與保價金查詢指引',
+            lawyer:     '要保人變更贈與稅計算，含§5-1適用爭議與實質課稅分析',
+          } },
         { href: 'gift-planner.html', name: '贈與節稅規劃模擬',
           persona: 'accountant',
           desc: {
@@ -617,6 +635,12 @@ async function handleUnsubscribe() {
           desc: { all: '民法§1030-1，法定財產制下配偶可請求之差額計算' } },
         { href: 'alimony.html', name: '贍養費試算',
           desc: { all: '民法§1057，雙方收入、婚姻年數、給付期間估算' } },
+        { href: 'insurance-divorce.html', name: '保價金離婚財產分配',
+          desc: {
+            public:     '壽險保價金納入婚後財產計算，含婚前/婚後拆分',
+            accountant: '保價金查詢管道、婚前/婚後拆分計算、解約所得稅務影響',
+            lawyer:     '保價金舉證要點、§1030-1酌減抗辯、保全措施備忘',
+          } },
         { href: 'child-support.html', name: '子女扶養費計算',
           desc: { all: '依雙方收入比例分擔，支援多名子女，含親權歸屬情境' } },
         { href: 'divorce-damages.html', name: '離婚損害賠償精算',
@@ -667,6 +691,8 @@ async function handleUnsubscribe() {
             lawyer:  '期望值模型計算合理和解範圍，提供最佳開價與底線策略',
             all: '期望值模型・最佳開價策略・底線計算・對方可能出價分析・談判區間圖表',
           } },
+        { href: 'legal-basis.html', name: '試算分析依據',
+          desc: { all: '各工具法律依據、民法條文、法院判例與計算模型完整說明' } },
       ]
     },
   ];

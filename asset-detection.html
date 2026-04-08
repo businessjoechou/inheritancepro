@@ -19,6 +19,8 @@
 <meta name="twitter:title" content="脫產偵測分析｜InheritancePro">
 <meta name="twitter:description" content="分析被繼承人生前財產異動風險，依中華民國法律自動標記可疑移轉。">
 <link rel="canonical" href="https://inheritancepro.app/asset-detection.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="js/persona.js"></script>
 <script type="application/ld+json">
@@ -29,6 +31,10 @@
     --ink: #1a1410; --paper: #f5f0e8; --accent: #8b2020; --gold: #c4932a;
     --soft: #e8e0d0; --muted: #7a6f62; --success: #2a6b4a; --danger: #8b2020;
     --border: #c8bfb0; --warn: #d4691e;
+  }
+  *:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--paper); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; font-size: 15px; min-height: 100vh; }
@@ -45,7 +51,7 @@
   .home-link { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; }
   .home-link:hover { color: var(--gold); }
 
-  main { max-width: 860px; margin: 0 auto; padding: 32px 20px 120px; }
+  main { max-width: 860px; margin: 0 auto; padding: 32px 20px calc(120px + env(safe-area-inset-bottom, 0px)); }
 
   /* Page title */
   .page-title { margin-bottom: 28px; }
@@ -208,7 +214,7 @@
     <div class="logo">Inheritance<span>Pro</span></div>
     <div class="page-sub">脫產偵測分析</div>
   </a>
-  <a class="home-link" href="index.html">← 返回</a>
+  <a class="home-link" href="index.html">← 首頁</a>
 </header>
 
 <main>

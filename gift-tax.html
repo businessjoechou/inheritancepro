@@ -19,6 +19,8 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="贈與稅試算｜InheritancePro">
 <link rel="canonical" href="https://inheritancepro.app/gift-tax.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="js/persona.js"></script>
 <script type="application/ld+json">
@@ -30,6 +32,10 @@
     --soft: #e8e0d0; --muted: #7a6f62; --success: #2a6b4a; --danger: #8b2020;
     --border: #c8bfb0;
   }
+  *:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+  }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--paper); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; min-height: 100vh; font-size: 15px; }
   header { background: var(--ink); color: var(--paper); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
@@ -40,7 +46,7 @@
   .home-link:hover { color: var(--gold); }
   .progress-bar { height: 3px; background: var(--soft); }
   .progress-fill { height: 100%; background: var(--gold); transition: width 0.4s ease; }
-  main { padding: 24px 20px 120px; max-width: 480px; margin: 0 auto; }
+  main { padding: 24px 20px calc(120px + env(safe-area-inset-bottom, 0px)); max-width: 480px; margin: 0 auto; }
   .step-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
   h2 { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
   .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
@@ -155,7 +161,7 @@
         <button class="toggle-btn" id="btn_spouse" onclick="setRecipient('spouse')">配偶</button>
         <button class="toggle-btn" id="btn_child" onclick="setRecipient('child')">子女</button>
       </div>
-      <div id="spouse_note" style="display:none;font-size:11px;color:var(--muted);margin-top:6px;">配偶贈與另享 222 萬免稅額，合計可免稅轉移 466 萬/年。</div>
+      <div id="spouse_note" style="display:none;font-size:11px;color:var(--success);margin-top:6px;line-height:1.6">配偶間贈與依遺贈稅法§20第1項第6款，<strong>不計入贈與總額</strong>，無論金額大小均免課贈與稅。</div>
     </div>
   </div>
 
@@ -185,7 +191,7 @@
   </div>
 
   <div class="info-box">
-    <strong>法律依據</strong>：遺贈稅法§22（年度免稅額）、§19（稅率：2,500萬以下10%、2,500萬～5,000萬15%、5,000萬以上20%）、§5（視為贈與）。配偶之間的贈與依§20另享222萬免稅額。
+    <strong>法律依據</strong>：遺贈稅法§22（年度免稅額244萬）、§19（稅率：2,500萬以下10%、2,500萬～5,000萬15%、5,000萬以上20%）、§5（視為贈與）。配偶間贈與依§20第1項第6款不計入贈與總額，全額免稅。
   </div>
 
   <!-- Results -->
@@ -318,7 +324,7 @@
 
   // 2026年贈與稅
   const GIFT_ANNUAL_EXEMPT = 2440000; // 244萬
-  const GIFT_SPOUSE_EXEMPT = 2220000; // 配偶222萬（另計，合計466萬）
+  // 配偶間贈與：依遺贈稅法§20(1)(6)不計入贈與總額，全額免稅
 
   function calcGiftTax(netGiftAmount) {
     if (netGiftAmount <= 0) return 0;
@@ -358,21 +364,32 @@
     const planYears = Math.max(1, Math.min(20, parseInt(document.getElementById('plan_years').value) || 5));
     const estateValue = parseFloat(document.getElementById('estate_value').value) || 0;
 
-    const annualExempt = GIFT_ANNUAL_EXEMPT + (recipientType === 'spouse' ? GIFT_SPOUSE_EXEMPT : 0);
+    const isSpouseGift = recipientType === 'spouse';
+    const annualExempt = GIFT_ANNUAL_EXEMPT;
     const totalThisYear = priorGifts + currentGift;
-    const usedExempt = Math.min(priorGifts, annualExempt);
+
+    // 配偶間贈與不計入贈與總額（遺贈稅法§20），本次贈與全額免稅
+    // 但先前累計贈與（給非配偶）仍佔用免稅額
+    let netGift, giftTax;
+    if (isSpouseGift) {
+      // 配偶贈與全額免稅，不佔用年度免稅額
+      netGift = 0;
+      giftTax = 0;
+    } else {
+      netGift = Math.max(0, totalThisYear - annualExempt);
+      giftTax = calcGiftTax(netGift);
+    }
+    const usedExempt = isSpouseGift ? Math.min(priorGifts, annualExempt) : Math.min(totalThisYear, annualExempt);
     const remainingExempt = Math.max(0, annualExempt - priorGifts);
-    const netGift = Math.max(0, totalThisYear - annualExempt);
-    const giftTax = calcGiftTax(netGift);
 
     // Update year result
-    document.getElementById('r_exemption').textContent = fmt(annualExempt) + (recipientType === 'spouse' ? '（含配偶額外222萬）' : '');
+    document.getElementById('r_exemption').textContent = isSpouseGift ? '配偶贈與免稅（§20）' : fmt(annualExempt);
     document.getElementById('r_prior').textContent = fmt(priorGifts);
     document.getElementById('r_current').textContent = fmt(currentGift);
     document.getElementById('r_total_gifts').textContent = fmt(totalThisYear);
     document.getElementById('r_used').textContent = fmt(Math.min(totalThisYear, annualExempt));
-    document.getElementById('r_remaining').textContent = fmt(Math.max(0, annualExempt - totalThisYear));
-    document.getElementById('r_remaining').style.color = remainingExempt > 0 ? 'var(--success)' : 'var(--danger)';
+    document.getElementById('r_remaining').textContent = isSpouseGift ? fmt(remainingExempt) + '（配偶贈與不佔用）' : fmt(Math.max(0, annualExempt - totalThisYear));
+    document.getElementById('r_remaining').style.color = isSpouseGift ? 'var(--success)' : (remainingExempt > 0 ? 'var(--success)' : 'var(--danger)');
     document.getElementById('r_net_gift').textContent = fmt(netGift);
     document.getElementById('r_tax').textContent = giftTax === 0 ? '免稅' : fmt(giftTax);
     document.getElementById('r_tax').style.color = giftTax === 0 ? 'var(--success)' : 'var(--accent)';
@@ -404,7 +421,7 @@
         const saved = thisYear <= annualExempt ? calcGiftTax(Math.max(0, thisYear - annualExempt + annualExempt)) : 0;
         // 實際節省的是：若此金額走繼承，遺產淨額多出這筆 → 節省對應遺產稅
         const inheritTaxOnThis = calcEstateTax(thisYear) - calcEstateTax(0); // approximate
-        tbody += `<tr><td>第 ${y} 年</td><td>${(cumulative/10000).toFixed(0)} 萬</td><td>${fmt(thisYear <= annualExempt ? 0 : calcGiftTax(thisYear - annualExempt))}</td></tr>`;
+        tbody += `<tr><td>第 ${y} 年</td><td>${(cumulative/10000).toFixed(0)} 萬</td><td>${fmt(Math.max(0, inheritTaxOnThis))}</td></tr>`;
       }
       document.getElementById('planTableBody').innerHTML = tbody;
     } else {
