@@ -262,17 +262,15 @@
           if ((existingTier === 'tax' && tier === 'legal') || (existingTier === 'legal' && tier === 'tax')) {
             tier = 'all';
           }
-          // Update Supabase
-          await supabase.from('profiles').update({
-            is_pro: true,
-            pro_source: 'apple',
-            pro_product_id: selectedPlan,
-            pro_tier: tier,
-            activated_at: new Date().toISOString(),
-            pro_expires_at: result.expirationDate > 0
+          // Update Supabase via security definer RPC (direct UPDATE blocked by RLS)
+          await supabase.rpc('activate_pro', {
+            p_tier:       tier,
+            p_source:     'apple',
+            p_product_id: selectedPlan,
+            p_expires_at: result.expirationDate > 0
               ? new Date(result.expirationDate * 1000).toISOString()
               : null
-          }).eq('id', user.id);
+          });
 
           // Sync persona to final tier
           const persona = tier === 'tax' ? 'accountant' : tier === 'legal' ? 'lawyer' : 'all';
@@ -324,14 +322,13 @@
         const tier = (hasAll || (hasTax && hasLegal)) ? 'all' : hasTax ? 'tax' : 'legal';
         const productId = subs[0];
 
-        await supabase.from('profiles').update({
-          is_pro: true,
-          pro_source: 'apple',
-          pro_product_id: productId,
-          pro_tier: tier,
-          activated_at: new Date().toISOString(),
-          pro_expires_at: null  // StoreKit confirmed active — clear stale expiry date
-        }).eq('id', user.id);
+        // Update Supabase via security definer RPC
+        await supabase.rpc('activate_pro', {
+          p_tier:       tier,
+          p_source:     'apple',
+          p_product_id: productId,
+          p_expires_at: null  // StoreKit confirmed active — clear stale expiry date
+        });
 
         // Sync persona to restored tier
         const persona = tier === 'tax' ? 'accountant' : tier === 'legal' ? 'lawyer' : 'all';

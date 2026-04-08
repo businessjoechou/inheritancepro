@@ -29,14 +29,25 @@ export async function getProfile() {
   if (data.is_pro && data.pro_expires_at) {
     const expired = new Date(data.pro_expires_at) < new Date();
     if (expired) {
-      // Revoke Pro in DB and return as free user
-      await supabase.from('profiles')
-        .update({ is_pro: false })
-        .eq('id', user.id);
+      // Revoke Pro via security definer RPC (direct update blocked by RLS)
+      await supabase.rpc('revoke_pro');
       localStorage.setItem('ip_persona', 'public');
       return { ...data, is_pro: false };
     }
   }
+
+  // Cross-device persona sync: keep localStorage in sync with DB pro_tier
+  if (data.is_pro) {
+    const tierMap = { tax: 'accountant', legal: 'lawyer', all: 'all' };
+    const synced = tierMap[data.pro_tier];
+    if (synced) localStorage.setItem('ip_persona', synced);
+  } else {
+    const proPersonas = ['accountant', 'lawyer', 'all'];
+    if (proPersonas.includes(localStorage.getItem('ip_persona'))) {
+      localStorage.setItem('ip_persona', 'public');
+    }
+  }
+
   return data;
 }
 
@@ -85,42 +96,16 @@ export async function signOut() {
 }
 
 // Redeem a Pro activation code
+// Uses security definer RPC to prevent direct table access and race conditions
 export async function redeemCode(code) {
   const user = await getUser();
   if (!user) return { error: '請先登入' };
 
-  // Check code exists and is unused
-  const { data: codeData, error: fetchError } = await supabase
-    .from('redemption_codes')
-    .select('*')
-    .eq('code', code.toUpperCase().trim())
-    .eq('is_used', false)
-    .single();
+  const { data, error } = await supabase.rpc('redeem_code', {
+    p_code: code.toUpperCase().trim()
+  });
 
-  if (fetchError || !codeData) return { error: '序號無效或已使用' };
-
-  // Mark code as used
-  const { error: updateError } = await supabase
-    .from('redemption_codes')
-    .update({
-      is_used: true,
-      used_by: user.id,
-      used_at: new Date().toISOString()
-    })
-    .eq('id', codeData.id);
-
-  if (updateError) return { error: '兌換失敗，請稍後再試' };
-
-  // Upgrade user to Pro
-  await supabase
-    .from('profiles')
-    .update({
-      is_pro: true,
-      pro_tier: codeData.tier,
-      pro_expires_at: null,
-      activated_at: new Date().toISOString()
-    })
-    .eq('id', user.id);
-
-  return { success: true, tier: codeData.tier };
+  if (error) return { error: '兌換失敗，請稍後再試' };
+  if (data?.error) return { error: data.error };
+  return { success: true, tier: data.tier };
 }

@@ -102,10 +102,10 @@
 </head>
 <body>
 <header>
-  <div>
+  <a href="index.html" style="text-decoration:none;color:inherit">
     <div class="logo">Inheritance<span>Pro</span></div>
     <div class="page-sub">未成年損害賠償試算</div>
-  </div>
+  </a>
   <a class="home-link" href="index.html">← 返回</a>
 </header>
 <main>
@@ -245,6 +245,9 @@
       <a class="cross-link-btn" href="accident.html">🚗 車禍損害賠償　涉及交通事故時適用 <span>→</span></a>
     </div>
   </div>
+  <div class="disclaimer" style="font-size:11px;color:#aaa;text-align:center;padding:16px 0;line-height:1.6">
+    本工具計算結果僅供參考，不構成法律意見。實際個案請諮詢執業律師或法律顧問。
+  </div>
 </main>
 
 <script>
@@ -343,7 +346,8 @@
     const incidentVal = document.getElementById('incident_date').value;
     let deadlineInfo = null;
     if(incidentVal){
-      const incidentDate = new Date(incidentVal);
+      const [_y,_m,_d] = incidentVal.split('-').map(Number);
+      const incidentDate = new Date(_y, _m-1, _d);
       const deadline = new Date(incidentDate);
       deadline.setFullYear(deadline.getFullYear() + 2);
       const today = new Date(); today.setHours(0,0,0,0);

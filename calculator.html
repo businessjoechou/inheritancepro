@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="favicon.svg">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>中華民國遺產計算器｜InheritancePro</title>
 <meta name="description" content="中華民國專業遺產繼承計算工具，依民法快速計算應繼分與特留分。InheritancePro — 專為中華民國法律設計。">
 <meta name="keywords" content="遺產計算器,應繼分計算,特留分計算,遺產稅試算,代位繼承,拋棄繼承,中華民國繼承法,民法繼承">
@@ -150,10 +150,10 @@
 <body>
 
 <header>
-  <div>
+  <a href="index.html" style="text-decoration:none;color:inherit">
     <div class="logo">Inheritance<span>Pro</span></div>
     <div class="badge">遺產繼承計算器</div>
-  </div>
+  </a>
   <a class="home-link" href="index.html">← 返回</a>
 </header>
 <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
@@ -760,7 +760,8 @@
     const resultEl = document.getElementById(`ps_result_${i}`);
     if (!resultEl) return;
     if (!acquireDate || !saleDate) { resultEl.innerHTML = '<div style="color:var(--accent);font-size:12px">請填入取得日期與出售日期</div>'; return; }
-    const holdMs = new Date(saleDate) - new Date(acquireDate);
+    const _pld = s => { const [y,m,d]=s.split('-').map(Number); return new Date(y,m-1,d); };
+    const holdMs = _pld(saleDate) - _pld(acquireDate);
     if (holdMs < 0) { resultEl.innerHTML = '<div style="color:var(--accent);font-size:12px">出售日期不可早於取得日期</div>'; return; }
     const holdYears = holdMs / (365.25 * 24 * 3600 * 1000);
     let rate, rateLabel;

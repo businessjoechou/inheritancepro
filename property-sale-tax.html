@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="favicon.svg">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>房地合一稅試算（繼承後出售）｜InheritancePro</title>
 <meta name="description" content="繼承不動產後出售的房地合一稅2.0試算，持有年數從被繼承人取得日起算，自住優惠、累進稅率、節稅建議。InheritancePro。">
 <meta name="keywords" content="房地合一稅,繼承出售,房地合一2.0,自住優惠,不動產稅,繼承不動產,持有年數,所得稅法§4-4">
@@ -324,8 +324,9 @@
       document.getElementById('hold_years_preview').style.display = 'none';
       return;
     }
-    const ad = new Date(acquireDate);
-    const sd = new Date(saleDate);
+    const _pld = s => { const [y,m,d]=s.split('-').map(Number); return new Date(y,m-1,d); };
+    const ad = _pld(acquireDate);
+    const sd = _pld(saleDate);
     const years = (sd - ad) / (365.25 * 24 * 3600 * 1000);
     if (years < 0) {
       document.getElementById('hold_years_text').textContent = '出售日不能早於取得日';
@@ -381,8 +382,9 @@
       return;
     }
 
-    const acquireDate = new Date(acquireDateVal);
-    const saleDate = new Date(saleDateVal);
+    const parseLocalDate = s => { const [y,m,d]=s.split('-').map(Number); return new Date(y,m-1,d); };
+    const acquireDate = parseLocalDate(acquireDateVal);
+    const saleDate = parseLocalDate(saleDateVal);
     const holdYears = (saleDate - acquireDate) / (365.25 * 24 * 3600 * 1000);
 
     if (holdYears < 0) {

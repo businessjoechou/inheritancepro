@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="favicon.svg">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>消滅時效計算器｜InheritancePro</title>
 <meta name="description" content="依中華民國民法計算各類請求權消滅時效，涵蓋一般15年、定期給付5年、侵權2+10年等，自動計算截止日與剩餘天數。">
 <meta name="keywords" content="消滅時效,時效計算,民法第125條,民法第126條,民法第127條,侵權行為時效,請求權時效,中華民國民法">
@@ -347,12 +347,12 @@
     if (!startDateVal) { alert('請輸入起算日期'); return; }
 
     const cfg = typeConfig[selectedType];
-    const startDate = new Date(startDateVal);
+    const startDate = parseLocalDate(startDateVal);
 
     if (cfg.isTort) {
       const tortDateVal = document.getElementById('tortDate').value;
       if (!tortDateVal) { alert('請輸入侵權行為發生日期'); return; }
-      renderTortResults(startDate, new Date(tortDateVal));
+      renderTortResults(startDate, parseLocalDate(tortDateVal));
     } else {
       renderNormalResults(startDate, cfg);
     }
@@ -367,6 +367,7 @@
     window.scrollTo(0, 0);
   }
 
+  function parseLocalDate(s) { const [y,m,d]=s.split('-').map(Number); return new Date(y, m-1, d); }
   function addYears(date, y) { const d = new Date(date); d.setFullYear(d.getFullYear() + y); return d; }
   function addMonths(date, m) { const d = new Date(date); d.setMonth(d.getMonth() + m); return d; }
   function fmtDate(d) { return `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`; }
@@ -595,7 +596,7 @@
     const resultDiv = document.getElementById('interruptResult');
     if (!type || !dateVal || !resultDiv) return;
 
-    const interruptDate = new Date(dateVal);
+    const interruptDate = parseLocalDate(dateVal);
     // 中斷後新起算日：中斷事由終了後翌日
     // 簡化：起訴/承認 中斷日翌日即重新起算；催告後6個月內須起訴
     const newStart = new Date(interruptDate);

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="favicon.svg">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>子女扶養費計算｜InheritancePro</title>
 <meta name="description" content="中華民國子女扶養費計算工具，依民法§1084、§1116-2，按雙方收入比例分擔，支援多名子女試算。InheritancePro。">
 <meta name="keywords" content="子女扶養費,扶養費計算,離婚扶養費,民法1084,親權,監護費用">
@@ -113,10 +113,10 @@
 <body>
 
 <header>
-  <div>
+  <a href="index.html" style="text-decoration:none;color:inherit">
     <div class="logo">Inheritance<span>Pro</span></div>
     <div class="page-sub">子女扶養費計算</div>
-  </div>
+  </a>
   <a class="home-link" href="index.html">← 返回</a>
 </header>
 
@@ -131,12 +131,12 @@
       <div class="input-group" style="margin-bottom:0">
         <div class="person-label label-a">甲方（請求人）</div>
         <label>每月稅後收入<span class="label-hint">元</span></label>
-        <input type="number" id="incomeA" placeholder="0" min="0">
+        <input type="number" id="incomeA" placeholder="0" min="0" max="9999999999">
       </div>
       <div class="input-group" style="margin-bottom:0">
         <div class="person-label label-b">乙方（義務人）</div>
         <label>每月稅後收入<span class="label-hint">元</span></label>
-        <input type="number" id="incomeB" placeholder="0" min="0">
+        <input type="number" id="incomeB" placeholder="0" min="0" max="9999999999">
       </div>
     </div>
     <div class="input-group" style="margin-top:16px; margin-bottom:0">
@@ -193,6 +193,11 @@
     <div class="law-note">
       <strong>說明：</strong>本試算以雙方稅後收入比例為基礎，依§1116-2計算各方應分擔比例。法院實際裁定時亦會考量子女實際需求、雙方生活水準及其他特殊狀況。扶養費標準可參考各縣市政府公告之每人每月最低生活費。
     </div>
+
+    <button class="calc-btn" onclick="downloadPDF()" style="margin-top:16px">↓ 匯出 PDF 報告</button>
+  </div>
+  <div class="disclaimer" style="font-size:11px;color:#aaa;text-align:center;padding:16px 0;line-height:1.6">
+    本工具計算結果僅供參考，不構成法律意見。實際個案請諮詢執業律師或法律顧問。
   </div>
 </main>
 
@@ -200,29 +205,84 @@
   const FMT = v => '$ ' + Math.round(v).toLocaleString('zh-TW');
   const PCT = v => (v * 100).toFixed(1) + '%';
 
+  function sanitizeNum(val, max = 9999999999) {
+    const n = parseFloat(val);
+    if (isNaN(n) || !isFinite(n)) return 0;
+    return Math.max(0, Math.min(max, n));
+  }
+
   let childCount = 0;
 
   function addChild() {
     childCount++;
-    const id = childCount;
+    const id = parseInt(childCount); // ensure integer, safe for onclick attribute
     const div = document.createElement('div');
     div.className = 'child-row';
     div.id = 'child-' + id;
-    div.innerHTML = `
-      <div class="child-row-title">
-        <span>子女 ${id}</span>
-        <button class="remove-btn" onclick="removeChild(${id})" title="移除">✕</button>
-      </div>
-      <div class="two-col">
-        <div class="input-group" style="margin-bottom:0">
-          <label>年齡<span class="label-hint">歲</span></label>
-          <input type="number" id="age-${id}" placeholder="0" min="0" max="25">
-        </div>
-        <div class="input-group" style="margin-bottom:0">
-          <label>每月基本需求<span class="label-hint">元</span></label>
-          <input type="number" id="need-${id}" placeholder="例：15000" min="0">
-        </div>
-      </div>`;
+
+    // Build DOM manually so user-controlled values never touch innerHTML
+    const titleDiv = document.createElement('div');
+    titleDiv.className = 'child-row-title';
+
+    const titleSpan = document.createElement('span');
+    titleSpan.textContent = '子女 ' + id; // static numeric label, safe
+
+    const removeBtn = document.createElement('button');
+    removeBtn.className = 'remove-btn';
+    removeBtn.title = '移除';
+    removeBtn.textContent = '✕';
+    removeBtn.addEventListener('click', function() { removeChild(id); });
+
+    titleDiv.appendChild(titleSpan);
+    titleDiv.appendChild(removeBtn);
+
+    const twoCol = document.createElement('div');
+    twoCol.className = 'two-col';
+
+    // Age input group
+    const ageGroup = document.createElement('div');
+    ageGroup.className = 'input-group';
+    ageGroup.style.marginBottom = '0';
+    const ageLabel = document.createElement('label');
+    ageLabel.appendChild(document.createTextNode('年齡'));
+    const ageHint = document.createElement('span');
+    ageHint.className = 'label-hint';
+    ageHint.textContent = '歲';
+    ageLabel.appendChild(ageHint);
+    const ageInput = document.createElement('input');
+    ageInput.type = 'number';
+    ageInput.id = 'age-' + id;
+    ageInput.placeholder = '0';
+    ageInput.min = '0';
+    ageInput.max = '25';
+    ageGroup.appendChild(ageLabel);
+    ageGroup.appendChild(ageInput);
+
+    // Need input group
+    const needGroup = document.createElement('div');
+    needGroup.className = 'input-group';
+    needGroup.style.marginBottom = '0';
+    const needLabel = document.createElement('label');
+    needLabel.appendChild(document.createTextNode('每月基本需求'));
+    const needHint = document.createElement('span');
+    needHint.className = 'label-hint';
+    needHint.textContent = '元';
+    needLabel.appendChild(needHint);
+    const needInput = document.createElement('input');
+    needInput.type = 'number';
+    needInput.id = 'need-' + id;
+    needInput.placeholder = '例：15000';
+    needInput.min = '0';
+    needInput.max = '9999999999';
+    needGroup.appendChild(needLabel);
+    needGroup.appendChild(needInput);
+
+    twoCol.appendChild(ageGroup);
+    twoCol.appendChild(needGroup);
+
+    div.appendChild(titleDiv);
+    div.appendChild(twoCol);
+
     document.getElementById('childrenList').appendChild(div);
   }
 
@@ -244,8 +304,8 @@
   }
 
   function calculate() {
-    const incA = parseFloat(document.getElementById('incomeA').value) || 0;
-    const incB = parseFloat(document.getElementById('incomeB').value) || 0;
+    const incA = sanitizeNum(parseFloat(document.getElementById('incomeA').value) || 0);
+    const incB = sanitizeNum(parseFloat(document.getElementById('incomeB').value) || 0);
     const custody = document.getElementById('custody').value;
     const children = getChildren();
 
@@ -264,7 +324,11 @@
 
     let totalPayByB = 0;
 
-    const childHtml = children.map(c => {
+    // Build child result rows using DOM (all values are computed numbers, not user strings)
+    const childResultsEl = document.getElementById('childResults');
+    childResultsEl.innerHTML = ''; // clear previous
+
+    children.forEach(c => {
       const needAmt = c.need || 0;
       const shareA = needAmt * ratioA;
       const shareB = needAmt * ratioB;
@@ -280,21 +344,24 @@
         payNote = `各自負擔 50%：${FMT(needAmt * 0.5)}`;
       }
 
-      return `<div class="child-result">
-        <div class="child-result-name">子女 ${c.index}（${c.age ? c.age + ' 歲' : '年齡未填'}）</div>
+      // All values here are numbers formatted by FMT() or static strings — safe innerHTML
+      // c.index and c.age are parseFloat() results, payNote contains only FMT() output
+      const resultDiv = document.createElement('div');
+      resultDiv.className = 'child-result';
+      resultDiv.innerHTML = `
+        <div class="child-result-name">子女 ${Number(c.index)}（${c.age ? Number(c.age) + ' 歲' : '年齡未填'}）</div>
         <div class="child-result-row"><span class="lbl">每月需求金額</span><span class="val">${FMT(needAmt)}</span></div>
         <div class="child-result-row"><span class="lbl">甲方應分擔（${PCT(ratioA)}）</span><span class="val">${FMT(shareA)}</span></div>
         <div class="child-result-row"><span class="lbl">乙方應分擔（${PCT(ratioB)}）</span><span class="val">${FMT(shareB)}</span></div>
         <div class="child-result-row" style="margin-top:4px"><span class="lbl" style="color:rgba(255,255,255,0.8)">結論</span><span class="val" style="color:var(--gold)">${payNote}</span></div>
-      </div>`;
-    }).join('');
+      `; // static content + Number()-validated values, safe
+      childResultsEl.appendChild(resultDiv);
+    });
 
-    document.getElementById('childResults').innerHTML = childHtml;
-
-    // Summary
-    let summaryHtml = '';
+    // Summary — values are all computed numbers, safe innerHTML
     const totalNeed = children.reduce((s, c) => s + (c.need || 0), 0);
-    summaryHtml += `<div class="result-row"><span class="lbl">子女每月需求合計</span><span class="val">${FMT(totalNeed)}</span></div>`;
+    const summaryEl = document.getElementById('summaryContent');
+    summaryEl.innerHTML = `<div class="result-row"><span class="lbl">子女每月需求合計</span><span class="val">${FMT(totalNeed)}</span></div>`; // FMT() output only, safe
 
     let payerLabelText = '';
     let displayPay = 0;
@@ -308,8 +375,6 @@
       payerLabelText = '各方每月自行負擔';
       displayPay = totalNeed * 0.5;
     }
-
-    document.getElementById('summaryContent').innerHTML = summaryHtml;
     document.getElementById('payerLabel').textContent = payerLabelText;
     document.getElementById('r-totalPay').textContent = FMT(displayPay);
 
@@ -318,6 +383,17 @@
 
   // Add one child by default
   addChild();
+
+  function downloadPDF() {
+    const today = new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' });
+    const resultsHTML = document.getElementById('results').innerHTML;
+    const html = `<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>InheritancePro 計算報告</title><style>@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap');*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans TC',sans-serif;background:#fff;color:#1a1410;font-size:13px;padding:40px;max-width:700px;margin:0 auto;}.pdf-header{border-bottom:3px solid #1a1410;padding-bottom:20px;margin-bottom:28px;display:flex;justify-content:space-between;align-items:flex-end;}.pdf-logo{font-family:'Noto Serif TC',serif;font-size:24px;font-weight:700;}.pdf-logo span{color:#c4932a;}.pdf-meta{font-size:11px;color:#7a6f62;text-align:right;line-height:1.8;font-family:'DM Mono',monospace;}.result-card{background:#1a1410;color:#f5f0e8;border-radius:12px;padding:24px;margin-bottom:14px;break-inside:avoid;}.result-title{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:16px;}.result-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.07);}.result-row:last-child{border-bottom:none;}.lbl{font-size:13px;color:rgba(245,240,232,0.65);}.val{font-family:'DM Mono',monospace;font-size:14px;font-weight:500;color:#f5f0e8;}.val.red{color:#e8a0a0;}.val.green{color:#a8d8bc;}.val.big{font-size:18px;color:#c4932a;}.total-band{background:rgba(196,147,42,0.15);border-radius:8px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;margin-top:8px;}.law-note{background:#f8f8f8;border-left:3px solid #c4932a;border-radius:0 8px 8px 0;padding:10px 14px;font-size:11px;color:#7a6f62;line-height:1.7;margin:14px 0;}.pdf-footer{margin-top:40px;padding-top:16px;border-top:1px solid #c8bfb0;font-size:11px;color:#7a6f62;line-height:1.8;text-align:center;}.pdf-disc{font-size:10px;color:#aaa;margin-top:8px;}button{display:none!important;}@media print{body{padding:20px;}}</style></head><body><div class="pdf-header"><div><div class="pdf-logo">Inheritance<span>Pro</span></div><div style="font-size:12px;color:#7a6f62;margin-top:4px">子女扶養費試算</div></div><div class="pdf-meta">產出日期：${today}</div></div>${resultsHTML}<div class="pdf-footer">© ${new Date().getFullYear()} InheritancePro · inheritancepro.app<div class="pdf-disc">本報告僅供參考，不構成法律意見。實際個案請諮詢執業律師或法律顧問。</div></div></body></html>`;
+    const w = window.open('', '_blank');
+    if (!w) { alert('請允許本網站開啟彈出視窗以下載 PDF'); return; }
+    w.document.write(html);
+    w.document.close();
+    setTimeout(() => w.print(), 600);
+  }
 </script>
 </body>
 </html>

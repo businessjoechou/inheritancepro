@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="favicon.svg">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>離婚協議書草稿產生器｜InheritancePro</title>
 <meta name="description" content="中華民國離婚協議書草稿產生工具，填寫雙方資料、子女監護、財產分配、贍養費等條款，自動生成可列印的協議書草稿。InheritancePro。">
 <meta name="keywords" content="離婚協議書,離婚協議,兩願離婚,子女監護協議,離婚財產分配">
@@ -103,10 +103,10 @@
 <body>
 
 <header>
-  <div>
+  <a href="index.html" style="text-decoration:none;color:inherit">
     <div class="logo">Inheritance<span>Pro</span></div>
     <div class="page-sub">離婚協議書草稿產生器</div>
-  </div>
+  </a>
   <a class="home-link" href="index.html">← 返回</a>
 </header>
 
@@ -250,6 +250,17 @@
   function blank(text) { return text || '＿＿＿＿'; }
   const FMT = n => parseInt(n || 0).toLocaleString('zh-TW');
 
+  // Safely set text content on an element selected by id
+  function setText(id, text) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+  }
+
+  // Create a text node safely (escapes all user input)
+  function esc(str) {
+    return document.createTextNode(str);
+  }
+
   function generate() {
     const aName = blank(v('aName'));
     const aId = blank(v('aId'));
@@ -258,7 +269,6 @@
     const bId = blank(v('bId'));
     const bAddr = blank(v('bAddr'));
 
-    const today = v('agreeDate') || new Date().toLocaleDateString('zh-TW', {year:'numeric',month:'2-digit',day:'2-digit'}).replace(/\//g,'年').replace(/(\d+)年(\d+)年/, '$1年$2月') + '日';
     const dateStr = v('agreeDate') ? formatROCDate(v('agreeDate')) : '　　年　月　日';
 
     const hasChild = document.getElementById('hasChild').checked;
@@ -267,7 +277,7 @@
     let articles = [];
     let artNum = 1;
 
-    // Art 1: Divorce
+    // Art 1: Divorce (aName/bName are user input, composed into plain text articles)
     articles.push(`第${artNum++}條（離婚合意）\n　甲方${aName}與乙方${bName}雙方同意自願離婚，並依中華民國民法第一千零四十九條規定，共同至戶政機關辦理離婚登記。`);
 
     // Art: Children
@@ -324,46 +334,92 @@
     // Final article
     articles.push(`第${artNum++}條（協議效力）\n　本協議書一式二份，甲乙雙方各執一份，均具同等法律效力。本協議書經雙方及證人簽名蓋章後生效。`);
 
-    const body = articles.join('\n\n');
+    // Build DOM safely — all user input inserted via textContent / createTextNode
+    const paper = document.getElementById('agreePaper');
+    paper.innerHTML = ''; // clear previous output
 
-    const html = `
-      <h2>兩　願　離　婚　協　議　書</h2>
-      <div class="preamble">
-        立協議書人：<br>
-        甲方：${aName}，身分證字號：${aId}<br>
-        　　　戶籍地址：${aAddr}<br><br>
-        乙方：${bName}，身分證字號：${bId}<br>
-        　　　戶籍地址：${bAddr}<br><br>
-        茲因雙方感情不睦，無法繼續共同生活，雙方同意依中華民國民法第一千零四十九條規定辦理兩願離婚，並就相關事項協議如下：
-      </div>
-      ${articles.map(a => `<div class="article"><pre style="white-space:pre-wrap;font-family:inherit;font-size:14px;line-height:2">${a}</pre></div>`).join('')}
-      <div class="sig-section">
-        <div class="sig-block">
-          甲方簽名：<span class="blank"></span><br>
-          身分證字號：${aId}<br>
-          日期：${dateStr}
-        </div>
-        <div class="sig-block">
-          乙方簽名：<span class="blank"></span><br>
-          身分證字號：${bId}<br>
-          日期：${dateStr}
-        </div>
-      </div>
-      <div style="margin-top:32px">
-        <div style="font-size:13px;margin-bottom:8px">證人（至少2人）：</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
-          <div style="border-top:1px solid #ccc;padding-top:10px;font-size:13px;line-height:2">
-            證人一 姓名：<span class="blank"></span><br>
-            身分證字號：<span class="blank"></span>
-          </div>
-          <div style="border-top:1px solid #ccc;padding-top:10px;font-size:13px;line-height:2">
-            證人二 姓名：<span class="blank"></span><br>
-            身分證字號：<span class="blank"></span>
-          </div>
-        </div>
-      </div>`;
+    // Title
+    const h2 = document.createElement('h2');
+    h2.textContent = '兩　願　離　婚　協　議　書'; // static content, safe
+    paper.appendChild(h2);
 
-    document.getElementById('agreePaper').innerHTML = html;
+    // Preamble (user data composed line by line)
+    const preamble = document.createElement('div');
+    preamble.className = 'preamble';
+    const preambleLines = [
+      '立協議書人：',
+      null, // <br>
+      '甲方：', aName, '，身分證字號：', aId,
+      null,
+      '　　　戶籍地址：', aAddr,
+      null, null,
+      '乙方：', bName, '，身分證字號：', bId,
+      null,
+      '　　　戶籍地址：', bAddr,
+      null, null,
+      '茲因雙方感情不睦，無法繼續共同生活，雙方同意依中華民國民法第一千零四十九條規定辦理兩願離婚，並就相關事項協議如下：'
+    ];
+    preambleLines.forEach(item => {
+      if (item === null) {
+        preamble.appendChild(document.createElement('br'));
+      } else {
+        preamble.appendChild(document.createTextNode(item));
+      }
+    });
+    paper.appendChild(preamble);
+
+    // Articles — article text is composed from user input as plain text strings,
+    // then inserted via textContent inside a <pre> element (no HTML parsing occurs)
+    articles.forEach(a => {
+      const articleDiv = document.createElement('div');
+      articleDiv.className = 'article';
+      const pre = document.createElement('pre');
+      pre.style.cssText = 'white-space:pre-wrap;font-family:inherit;font-size:14px;line-height:2';
+      pre.textContent = a; // textContent prevents any embedded HTML from executing
+      articleDiv.appendChild(pre);
+      paper.appendChild(articleDiv);
+    });
+
+    // Signature section (aId, bId, dateStr are user inputs — inserted via textContent)
+    const sigSection = document.createElement('div');
+    sigSection.className = 'sig-section';
+
+    function makeSigBlock(role, idVal, date) {
+      const block = document.createElement('div');
+      block.className = 'sig-block';
+      const blankSpan = document.createElement('span');
+      blankSpan.className = 'blank';
+      block.appendChild(document.createTextNode(role + '簽名：'));
+      block.appendChild(blankSpan);
+      block.appendChild(document.createElement('br'));
+      block.appendChild(document.createTextNode('身分證字號：'));
+      block.appendChild(document.createTextNode(idVal));
+      block.appendChild(document.createElement('br'));
+      block.appendChild(document.createTextNode('日期：'));
+      block.appendChild(document.createTextNode(date));
+      return block;
+    }
+    sigSection.appendChild(makeSigBlock('甲方', aId, dateStr));
+    sigSection.appendChild(makeSigBlock('乙方', bId, dateStr));
+    paper.appendChild(sigSection);
+
+    // Witness section (static content, safe)
+    const witnessWrap = document.createElement('div');
+    witnessWrap.style.marginTop = '32px';
+    witnessWrap.innerHTML = `
+      <div style="font-size:13px;margin-bottom:8px">證人（至少2人）：</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+        <div style="border-top:1px solid #ccc;padding-top:10px;font-size:13px;line-height:2">
+          證人一 姓名：<span class="blank"></span><br>
+          身分證字號：<span class="blank"></span>
+        </div>
+        <div style="border-top:1px solid #ccc;padding-top:10px;font-size:13px;line-height:2">
+          證人二 姓名：<span class="blank"></span><br>
+          身分證字號：<span class="blank"></span>
+        </div>
+      </div>`; // static content, safe
+    paper.appendChild(witnessWrap);
+
     document.getElementById('agreeOutput').style.display = 'block';
     document.getElementById('agreeOutput').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }

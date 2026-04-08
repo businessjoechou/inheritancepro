@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="favicon.svg">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>特留分侵害試算｜InheritancePro</title>
 <meta name="description" content="民法§1223特留分侵害計算工具，依繼承人組成計算特留分比例，判斷遺囑或生前贈與是否侵害特留分，計算可追索金額。InheritancePro。">
 <meta name="keywords" content="特留分,特留分侵害,民法1223,遺囑侵害特留分,特留分計算,扣減權">
@@ -87,10 +87,10 @@
 <body>
 
 <header>
-  <div>
+  <a href="index.html" style="text-decoration:none;color:inherit">
     <div class="logo">Inheritance<span>Pro</span></div>
     <div class="page-sub">特留分侵害試算 · §1223</div>
-  </div>
+  </a>
   <a class="home-link" href="index.html">← 返回</a>
 </header>
 
@@ -128,19 +128,19 @@
     <div class="section-title">B · 遺產與分配</div>
     <div class="input-group">
       <label>遺產總額（積極遺產）<span class="label-hint">元</span></label>
-      <input type="number" id="grossEstate" placeholder="0" min="0" oninput="autoCalc()">
+      <input type="number" id="grossEstate" placeholder="0" min="0" max="9999999999" oninput="autoCalc()">
     </div>
     <div class="input-group">
       <label>死亡前贈與應加回金額<span class="label-hint">元，§1148-1，一年內特種贈與</span></label>
-      <input type="number" id="addBackGifts" placeholder="0" min="0" oninput="autoCalc()">
+      <input type="number" id="addBackGifts" placeholder="0" min="0" max="9999999999" oninput="autoCalc()">
     </div>
     <div class="input-group">
       <label>遺囑指定給特定繼承人之金額<span class="label-hint">元（超出應繼分的部分）</span></label>
-      <input type="number" id="willedToHeirs" placeholder="0" min="0" oninput="autoCalc()">
+      <input type="number" id="willedToHeirs" placeholder="0" min="0" max="9999999999" oninput="autoCalc()">
     </div>
     <div class="input-group">
       <label>遺囑捐贈或贈予第三人之金額<span class="label-hint">元</span></label>
-      <input type="number" id="willedToThird" placeholder="0" min="0" oninput="autoCalc()">
+      <input type="number" id="willedToThird" placeholder="0" min="0" max="9999999999" oninput="autoCalc()">
     </div>
   </div>
 
@@ -179,12 +179,23 @@
     <div class="law-note">
       <strong>法律依據：</strong>§1223 特留分比例、§1224 特留分之扣減。扣減權行使期限：知悉特留分受侵害後 <strong>2年</strong> 內，或繼承開始後 <strong>10年</strong> 內（§1130準用§125）。生前特種贈與加回依§1148-1（繼承開始前1年內之贈與）。本試算僅供參考，實際情形請諮詢律師。
     </div>
+    <div class="law-note" style="margin-top:6px;font-size:12px;color:#888;line-height:1.6">
+      📌 扣減順序：應先扣減遺贈，若仍不足，再按比例扣減指定應繼分（最高法院104年台上字第521號方向）
+    </div>
+
+    <button class="calc-btn" onclick="downloadPDF()" style="margin-top:16px">↓ 匯出 PDF 報告</button>
   </div>
 </main>
 
 <script>
   const FMT = v => '$ ' + Math.round(v).toLocaleString('zh-TW');
   const FMT_FRAC = (n, d) => d === 1 ? `1/${n}` : `${n}/${d}`;
+
+  function sanitizeNum(val, max = 9999999999) {
+    const n = parseFloat(val);
+    if (isNaN(n) || !isFinite(n)) return 0;
+    return Math.max(0, Math.min(max, n));
+  }
 
   function getVal(id, fallback = 0) {
     const v = parseFloat(document.getElementById(id).value);
@@ -266,10 +277,10 @@
   }
 
   function calculate(silent = false) {
-    const gross = getVal('grossEstate');
-    const addBack = getVal('addBackGifts');
-    const willedToHeirs = getVal('willedToHeirs');
-    const willedToThird = getVal('willedToThird');
+    const gross = sanitizeNum(getVal('grossEstate'));
+    const addBack = sanitizeNum(getVal('addBackGifts'));
+    const willedToHeirs = sanitizeNum(getVal('willedToHeirs'));
+    const willedToThird = sanitizeNum(getVal('willedToThird'));
     const base = gross + addBack;
 
     const heirs = computeHeirs();
@@ -335,6 +346,17 @@
     }
 
     if (!silent) document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function downloadPDF() {
+    const today = new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' });
+    const resultsHTML = document.getElementById('results').innerHTML;
+    const html = `<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>InheritancePro 計算報告</title><style>@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap');*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans TC',sans-serif;background:#fff;color:#1a1410;font-size:13px;padding:40px;max-width:700px;margin:0 auto;}.pdf-header{border-bottom:3px solid #1a1410;padding-bottom:20px;margin-bottom:28px;display:flex;justify-content:space-between;align-items:flex-end;}.pdf-logo{font-family:'Noto Serif TC',serif;font-size:24px;font-weight:700;}.pdf-logo span{color:#c4932a;}.pdf-meta{font-size:11px;color:#7a6f62;text-align:right;line-height:1.8;font-family:'DM Mono',monospace;}.result-card{background:#1a1410;color:#f5f0e8;border-radius:12px;padding:24px;margin-bottom:14px;break-inside:avoid;}.result-title{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:16px;}.result-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.07);}.result-row:last-child{border-bottom:none;}.lbl{font-size:13px;color:rgba(245,240,232,0.65);}.val{font-family:'DM Mono',monospace;font-size:14px;font-weight:500;color:#f5f0e8;}.val.red{color:#e8a0a0;}.val.green{color:#a8d8bc;}.val.big{font-size:18px;color:#c4932a;}.total-band{background:rgba(196,147,42,0.15);border-radius:8px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;margin-top:8px;}.law-note{background:#f8f8f8;border-left:3px solid #c4932a;border-radius:0 8px 8px 0;padding:10px 14px;font-size:11px;color:#7a6f62;line-height:1.7;margin:14px 0;}.pdf-footer{margin-top:40px;padding-top:16px;border-top:1px solid #c8bfb0;font-size:11px;color:#7a6f62;line-height:1.8;text-align:center;}.pdf-disc{font-size:10px;color:#aaa;margin-top:8px;}button{display:none!important;}@media print{body{padding:20px;}}</style></head><body><div class="pdf-header"><div><div class="pdf-logo">Inheritance<span>Pro</span></div><div style="font-size:12px;color:#7a6f62;margin-top:4px">特留分侵害計算</div></div><div class="pdf-meta">產出日期：${today}</div></div>${resultsHTML}<div class="pdf-footer">© ${new Date().getFullYear()} InheritancePro · inheritancepro.app<div class="pdf-disc">本報告僅供參考，不構成法律意見。實際個案請諮詢執業律師或法律顧問。</div></div></body></html>`;
+    const w = window.open('', '_blank');
+    if (!w) { alert('請允許本網站開啟彈出視窗以下載 PDF'); return; }
+    w.document.write(html);
+    w.document.close();
+    setTimeout(() => w.print(), 600);
   }
 </script>
 </body>

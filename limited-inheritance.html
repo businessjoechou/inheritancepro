@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="favicon.svg">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>限定繼承債務試算｜InheritancePro</title>
 <meta name="description" content="中華民國限定繼承債務試算工具，依民法§1148自2009年起全面適用，計算遺產範圍內的債務清償順序與繼承人實際清償責任。InheritancePro。">
 <meta name="keywords" content="限定繼承,民法1148,繼承債務,遺產清償,繼承責任">
@@ -92,10 +92,10 @@
 <body>
 
 <header>
-  <div>
+  <a href="index.html" style="text-decoration:none;color:inherit">
     <div class="logo">Inheritance<span>Pro</span></div>
     <div class="page-sub">限定繼承 · §1148</div>
-  </div>
+  </a>
   <a class="home-link" href="index.html">← 返回</a>
 </header>
 
@@ -108,19 +108,19 @@
     <div class="section-title">A · 遺產資產</div>
     <div class="input-group">
       <label>不動產市值<span class="label-hint">元（土地＋房屋公告現值或市場價格）</span></label>
-      <input type="number" id="realEstate" placeholder="0" min="0" oninput="updateSubTotals(); autoCalc()">
+      <input type="number" id="realEstate" placeholder="0" min="0" max="9999999999" oninput="updateSubTotals(); autoCalc()">
     </div>
     <div class="input-group">
       <label>存款（銀行帳戶）<span class="label-hint">元</span></label>
-      <input type="number" id="deposits" placeholder="0" min="0" oninput="updateSubTotals(); autoCalc()">
+      <input type="number" id="deposits" placeholder="0" min="0" max="9999999999" oninput="updateSubTotals(); autoCalc()">
     </div>
     <div class="input-group">
       <label>有價證券（股票、基金）<span class="label-hint">元</span></label>
-      <input type="number" id="securities" placeholder="0" min="0" oninput="updateSubTotals(); autoCalc()">
+      <input type="number" id="securities" placeholder="0" min="0" max="9999999999" oninput="updateSubTotals(); autoCalc()">
     </div>
     <div class="input-group">
       <label>其他資產<span class="label-hint">元（車輛、珠寶、應收款等）</span></label>
-      <input type="number" id="otherAssets" placeholder="0" min="0" oninput="updateSubTotals(); autoCalc()">
+      <input type="number" id="otherAssets" placeholder="0" min="0" max="9999999999" oninput="updateSubTotals(); autoCalc()">
     </div>
     <div class="sub-total">
       <span class="lbl">遺產總額</span>
@@ -133,19 +133,19 @@
     <div class="section-title">B · 遺產負債（被繼承人的債務）</div>
     <div class="input-group">
       <label>銀行貸款（房貸、車貸等）<span class="label-hint">元</span></label>
-      <input type="number" id="bankLoans" placeholder="0" min="0" oninput="updateSubTotals(); autoCalc()">
+      <input type="number" id="bankLoans" placeholder="0" min="0" max="9999999999" oninput="updateSubTotals(); autoCalc()">
     </div>
     <div class="input-group">
       <label>信用卡債務<span class="label-hint">元</span></label>
-      <input type="number" id="creditCard" placeholder="0" min="0" oninput="updateSubTotals(); autoCalc()">
+      <input type="number" id="creditCard" placeholder="0" min="0" max="9999999999" oninput="updateSubTotals(); autoCalc()">
     </div>
     <div class="input-group">
       <label>稅務欠款（遺產稅、所得稅）<span class="label-hint">元</span></label>
-      <input type="number" id="taxDebt" placeholder="0" min="0" oninput="updateSubTotals(); autoCalc()">
+      <input type="number" id="taxDebt" placeholder="0" min="0" max="9999999999" oninput="updateSubTotals(); autoCalc()">
     </div>
     <div class="input-group">
       <label>其他債務<span class="label-hint">元（借款、保證責任等）</span></label>
-      <input type="number" id="otherDebts" placeholder="0" min="0" oninput="updateSubTotals(); autoCalc()">
+      <input type="number" id="otherDebts" placeholder="0" min="0" max="9999999999" oninput="updateSubTotals(); autoCalc()">
     </div>
     <div class="sub-total">
       <span class="lbl">負債總額</span>
@@ -219,11 +219,19 @@
     <div class="law-note">
       <strong>法律依據：</strong>民法§1148（限定繼承）、§1154（共同繼承）、§1156（遺產清算）、§1159（清償順序）、§1174（拋棄繼承）。本試算僅供參考，實際情形請諮詢律師或會計師。
     </div>
+
+    <button class="calc-btn" onclick="downloadPDF()" style="margin-top:16px">↓ 匯出 PDF 報告</button>
   </div>
 </main>
 
 <script>
   const FMT = v => '$ ' + Math.round(v).toLocaleString('zh-TW');
+
+  function sanitizeNum(val, max = 9999999999) {
+    const n = parseFloat(val);
+    if (isNaN(n) || !isFinite(n)) return 0;
+    return Math.max(0, Math.min(max, n));
+  }
 
   function getVal(id, fallback = 0) {
     const v = parseFloat(document.getElementById(id).value);
@@ -231,8 +239,8 @@
   }
 
   function updateSubTotals() {
-    const assets = getVal('realEstate') + getVal('deposits') + getVal('securities') + getVal('otherAssets');
-    const debts = getVal('bankLoans') + getVal('creditCard') + getVal('taxDebt') + getVal('otherDebts');
+    const assets = sanitizeNum(getVal('realEstate')) + sanitizeNum(getVal('deposits')) + sanitizeNum(getVal('securities')) + sanitizeNum(getVal('otherAssets'));
+    const debts = sanitizeNum(getVal('bankLoans')) + sanitizeNum(getVal('creditCard')) + sanitizeNum(getVal('taxDebt')) + sanitizeNum(getVal('otherDebts'));
     document.getElementById('totalAssets').textContent = FMT(assets);
     document.getElementById('totalDebts').textContent = FMT(debts);
   }
@@ -242,8 +250,8 @@
   }
 
   function calculate(silent = false) {
-    const assets = getVal('realEstate') + getVal('deposits') + getVal('securities') + getVal('otherAssets');
-    const debts = getVal('bankLoans') + getVal('creditCard') + getVal('taxDebt') + getVal('otherDebts');
+    const assets = sanitizeNum(getVal('realEstate')) + sanitizeNum(getVal('deposits')) + sanitizeNum(getVal('securities')) + sanitizeNum(getVal('otherAssets'));
+    const debts = sanitizeNum(getVal('bankLoans')) + sanitizeNum(getVal('creditCard')) + sanitizeNum(getVal('taxDebt')) + sanitizeNum(getVal('otherDebts'));
     const net = assets - debts;
     const heirs = Math.max(1, Math.floor(getVal('heirCount', 1)));
 
@@ -255,21 +263,21 @@
     netEl.textContent = FMT(net);
     netEl.className = 'val ' + (net > 0 ? 'green' : net < 0 ? 'red' : 'gold');
 
-    // Heir analysis
+    // Heir analysis — FMT() numeric output + Number()-validated heirs + static strings, safe innerHTML
     const analysisEl = document.getElementById('r-heir-analysis');
     if (net > 0) {
       const perHeir = net / heirs;
       analysisEl.innerHTML = `
-        <div class="summary-row"><span class="lbl">繼承人人數</span><span class="val">${heirs} 人</span></div>
+        <div class="summary-row"><span class="lbl">繼承人人數</span><span class="val">${Number(heirs)} 人</span></div>
         <div class="summary-row"><span class="lbl">遺產債務清償後</span><span class="val green">${FMT(net)}</span></div>
         <div class="summary-row"><span class="lbl" style="color:#fff;font-weight:500">每位繼承人可分得</span><span class="val gold">${FMT(perHeir)}</span></div>
         <div class="surplus-box">
           <div class="big">${FMT(perHeir)}</div>
           <div class="note">每人應繼份（假設均等分配，實際依§1141比例）</div>
-        </div>`;
+        </div>`; // FMT() + Number() validated values + static strings, safe
     } else if (net === 0) {
       analysisEl.innerHTML = `
-        <div class="zero-box">遺產恰好足以清償全部債務。<br>繼承人無餘額可繼承，但也無需以自有財產清償。</div>`;
+        <div class="zero-box">遺產恰好足以清償全部債務。<br>繼承人無餘額可繼承，但也無需以自有財產清償。</div>`; // static content, safe
     } else {
       const shortfall = Math.abs(net);
       analysisEl.innerHTML = `
@@ -277,29 +285,40 @@
         <div class="zero-box">
           <strong style="color:#f28b6e">資不抵債：繼承人無需以自有財產清償</strong><br>
           依§1148，繼承人清償責任以遺產為限。差額 ${FMT(shortfall)} 由債權人按比例受償後，未受清償部分視為消滅。
-        </div>`;
+        </div>`; // FMT() numeric output + static legal strings, safe
     }
 
-    // Action buttons
+    // Action buttons — static legal advisory strings only, safe innerHTML
     const actionsEl = document.getElementById('r-actions');
     const actions = [];
 
     if (net <= 0) {
-      actions.push(`<div class="action-btn"><strong>⚑ 建議辦理拋棄繼承（§1174）</strong>債務超過遺產，雖限定繼承自動適用，若有連帶保證責任或不明債務，可於知悉繼承起 <strong>3個月</strong> 內向法院辦理拋棄繼承。</div>`);
+      actions.push(`<div class="action-btn"><strong>⚑ 建議辦理拋棄繼承（§1174）</strong>債務超過遺產，雖限定繼承自動適用，若有連帶保證責任或不明債務，可於知悉繼承起 <strong>3個月</strong> 內向法院辦理拋棄繼承。</div>`); // static content, safe
     }
     if (debts > 0) {
-      actions.push(`<div class="action-btn"><strong>💡 有不確定債務，建議辦理遺產清算（§1156）</strong>向法院聲請清算遺產，公示催告所有債權人申報，清算完畢後繼承人不再負責任何遺留債務。</div>`);
+      actions.push(`<div class="action-btn"><strong>💡 有不確定債務，建議辦理遺產清算（§1156）</strong>向法院聲請清算遺產，公示催告所有債權人申報，清算完畢後繼承人不再負責任何遺留債務。</div>`); // static content, safe
     }
     if (actions.length === 0) {
-      actions.push(`<div class="action-btn">遺產大於負債，直接繼承即可。建議仍查核是否有隱性債務（票據、稅務、保證責任）。</div>`);
+      actions.push(`<div class="action-btn">遺產大於負債，直接繼承即可。建議仍查核是否有隱性債務（票據、稅務、保證責任）。</div>`); // static content, safe
     }
-    actionsEl.innerHTML = actions.join('');
+    actionsEl.innerHTML = actions.join(''); // static content, safe
 
     if (!silent) document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   // Init subtotals
   updateSubTotals();
+
+  function downloadPDF() {
+    const today = new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' });
+    const resultsHTML = document.getElementById('results').innerHTML;
+    const html = `<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>InheritancePro 計算報告</title><style>@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap');*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans TC',sans-serif;background:#fff;color:#1a1410;font-size:13px;padding:40px;max-width:700px;margin:0 auto;}.pdf-header{border-bottom:3px solid #1a1410;padding-bottom:20px;margin-bottom:28px;display:flex;justify-content:space-between;align-items:flex-end;}.pdf-logo{font-family:'Noto Serif TC',serif;font-size:24px;font-weight:700;}.pdf-logo span{color:#c4932a;}.pdf-meta{font-size:11px;color:#7a6f62;text-align:right;line-height:1.8;font-family:'DM Mono',monospace;}.result-card{background:#1a1410;color:#f5f0e8;border-radius:12px;padding:24px;margin-bottom:14px;break-inside:avoid;}.result-title{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:16px;}.result-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.07);}.result-row:last-child{border-bottom:none;}.lbl{font-size:13px;color:rgba(245,240,232,0.65);}.val{font-family:'DM Mono',monospace;font-size:14px;font-weight:500;color:#f5f0e8;}.val.red{color:#e8a0a0;}.val.green{color:#a8d8bc;}.val.big{font-size:18px;color:#c4932a;}.total-band{background:rgba(196,147,42,0.15);border-radius:8px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;margin-top:8px;}.law-note{background:#f8f8f8;border-left:3px solid #c4932a;border-radius:0 8px 8px 0;padding:10px 14px;font-size:11px;color:#7a6f62;line-height:1.7;margin:14px 0;}.pdf-footer{margin-top:40px;padding-top:16px;border-top:1px solid #c8bfb0;font-size:11px;color:#7a6f62;line-height:1.8;text-align:center;}.pdf-disc{font-size:10px;color:#aaa;margin-top:8px;}button{display:none!important;}@media print{body{padding:20px;}}</style></head><body><div class="pdf-header"><div><div class="pdf-logo">Inheritance<span>Pro</span></div><div style="font-size:12px;color:#7a6f62;margin-top:4px">限定繼承試算</div></div><div class="pdf-meta">產出日期：${today}</div></div>${resultsHTML}<div class="pdf-footer">© ${new Date().getFullYear()} InheritancePro · inheritancepro.app<div class="pdf-disc">本報告僅供參考，不構成法律意見。實際個案請諮詢執業律師或法律顧問。</div></div></body></html>`;
+    const w = window.open('', '_blank');
+    if (!w) { alert('請允許本網站開啟彈出視窗以下載 PDF'); return; }
+    w.document.write(html);
+    w.document.close();
+    setTimeout(() => w.print(), 600);
+  }
 </script>
 </body>
 </html>

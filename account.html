@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="favicon.svg">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>我的帳號｜InheritancePro</title>
 <meta name="robots" content="noindex, nofollow">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
@@ -589,7 +589,7 @@
     <!-- 3. Upgrade CTA (free users only) -->
     <div class="card" id="upgrade-card" style="display:none;text-align:center;padding:24px 20px;">
       <div class="card-title" style="margin-bottom:8px;">解鎖進階功能</div>
-      <p style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.7;">升級 Pro 解鎖專業稅務精算、訴訟分析工具與無廣告體驗。</p>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.7;">升級 Pro 解鎖遺產稅申報工作底稿、訴訟強度分析、脫產偵測等專業工具。</p>
       <a href="pricing.html" style="display:block;background:var(--ink);color:var(--paper);text-decoration:none;padding:14px;border-radius:10px;font-size:15px;font-weight:700;letter-spacing:0.04em;">✦ 升級 Pro</a>
     </div>
 
@@ -599,15 +599,15 @@
       <ul class="pro-feature-list">
         <li>
           <div class="pro-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
-          <span><strong style="color:var(--ink)">📊 進階稅務</strong>　遺產稅精算工作底稿、贈與節稅規劃、多案件管理、工作底稿列印匯出</span>
+          <span><strong style="color:var(--ink)">📊 進階稅務</strong>　遺產稅申報工作底稿、生前贈與 vs 繼承節稅比較、未上市股票資產淨值法、多案件期限管理儀表板</span>
         </li>
         <li>
           <div class="pro-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
-          <span><strong style="color:var(--ink)">⚖️ 進階法律</strong>　訴訟強度加權分析、和解談判模擬、特留分侵害精算、訴訟策略備忘</span>
+          <span><strong style="color:var(--ink)">⚖️ 進階法律</strong>　脫產偵測與財產異動分析、訴訟強度評估、和解金額試算、損害賠償試算（車禍、未成年）</span>
         </li>
         <li>
           <div class="pro-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
-          <span>PDF 報告匯出（各計算機結果）</span>
+          <span>所有計算機 PDF 報告匯出（免費開放）</span>
         </li>
         <li>
           <div class="pro-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
@@ -694,16 +694,18 @@
           const tier = (hasAll || (hasTax && hasLegal)) ? 'all' : hasTax ? 'tax' : 'legal';
           const persona = tier === 'tax' ? 'accountant' : tier === 'legal' ? 'lawyer' : 'all';
           localStorage.setItem('ip_persona', persona);
-          await supabase.from('profiles').update({
-            is_pro: true, pro_tier: tier, pro_product_id: activeSubs[0],
-            pro_expires_at: null  // StoreKit confirmed active — clear stale expiry date
-          }).eq('id', user.id);
+          // Update Supabase via security definer RPC
+          await supabase.rpc('activate_pro', {
+            p_tier:       tier,
+            p_product_id: activeSubs[0],
+            p_expires_at: null  // StoreKit confirmed active — clear stale expiry date
+          });
         } else {
           // No active subscriptions — check if lifetime (pro_expires_at null = lifetime)
           const { data: p } = await supabase.from('profiles').select('pro_expires_at, pro_source').eq('id', user.id).single();
           if (p?.pro_expires_at !== null && p?.pro_source === 'apple') {
             // Subscription lapsed
-            await supabase.from('profiles').update({ is_pro: false }).eq('id', user.id);
+            await supabase.rpc('revoke_pro');
             localStorage.setItem('ip_persona', 'public');
           }
         }

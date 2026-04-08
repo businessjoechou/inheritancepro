@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="favicon.svg">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>遺囑效力評估｜InheritancePro</title>
 <meta name="description" content="中華民國遺囑效力評估工具，依民法§1189逐條檢核自書遺囑、公證遺囑、代筆遺囑三種形式的法定要件，判斷遺囑是否有效。InheritancePro。">
 <meta name="keywords" content="遺囑效力,遺囑有效,自書遺囑,公證遺囑,代筆遺囑,民法1189">
@@ -117,10 +117,10 @@
 <body>
 
 <header>
-  <div>
+  <a href="index.html" style="text-decoration:none;color:inherit">
     <div class="logo">Inheritance<span>Pro</span></div>
     <div class="page-sub">遺囑效力評估 · §1189</div>
-  </div>
+  </a>
   <a class="home-link" href="index.html">← 返回</a>
 </header>
 
@@ -357,6 +357,8 @@
     <div class="law-note">
       <strong>法律依據：</strong>§1186（遺囑能力）、§1189（遺囑方式種類）、§1190-1195（各種遺囑方式要件）、§1198（見證人限制）、§1219（撤回）、§1223（特留分）。本工具僅就形式要件檢核，不涉及意思表示真意及其他實質爭議，實際情形請諮詢律師。
     </div>
+
+    <button class="calc-btn" onclick="downloadPDF()" style="margin-top:16px">↓ 匯出 PDF 報告</button>
   </div>
 </main>
 
@@ -463,6 +465,17 @@
     }
 
     if (!silent) document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function downloadPDF() {
+    const today = new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' });
+    const resultsHTML = document.getElementById('results').innerHTML;
+    const html = `<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>InheritancePro 計算報告</title><style>@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap');*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans TC',sans-serif;background:#fff;color:#1a1410;font-size:13px;padding:40px;max-width:700px;margin:0 auto;}.pdf-header{border-bottom:3px solid #1a1410;padding-bottom:20px;margin-bottom:28px;display:flex;justify-content:space-between;align-items:flex-end;}.pdf-logo{font-family:'Noto Serif TC',serif;font-size:24px;font-weight:700;}.pdf-logo span{color:#c4932a;}.pdf-meta{font-size:11px;color:#7a6f62;text-align:right;line-height:1.8;font-family:'DM Mono',monospace;}.result-card{background:#1a1410;color:#f5f0e8;border-radius:12px;padding:24px;margin-bottom:14px;break-inside:avoid;}.result-title{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:16px;}.result-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.07);}.result-row:last-child{border-bottom:none;}.lbl{font-size:13px;color:rgba(245,240,232,0.65);}.val{font-family:'DM Mono',monospace;font-size:14px;font-weight:500;color:#f5f0e8;}.check-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.07);font-size:13px;}.check-icon{font-size:16px;flex-shrink:0;margin-top:1px;}.law-note{background:#f8f8f8;border-left:3px solid #c4932a;border-radius:0 8px 8px 0;padding:10px 14px;font-size:11px;color:#7a6f62;line-height:1.7;margin:14px 0;}.pdf-footer{margin-top:40px;padding-top:16px;border-top:1px solid #c8bfb0;font-size:11px;color:#7a6f62;line-height:1.8;text-align:center;}.pdf-disc{font-size:10px;color:#aaa;margin-top:8px;}button{display:none!important;}@media print{body{padding:20px;}}</style></head><body><div class="pdf-header"><div><div class="pdf-logo">Inheritance<span>Pro</span></div><div style="font-size:12px;color:#7a6f62;margin-top:4px">遺囑效力評估</div></div><div class="pdf-meta">產出日期：${today}</div></div>${resultsHTML}<div class="pdf-footer">© ${new Date().getFullYear()} InheritancePro · inheritancepro.app<div class="pdf-disc">本報告僅供參考，不構成法律意見。實際個案請諮詢執業律師或法律顧問。</div></div></body></html>`;
+    const w = window.open('', '_blank');
+    if (!w) { alert('請允許本網站開啟彈出視窗以下載 PDF'); return; }
+    w.document.write(html);
+    w.document.close();
+    setTimeout(() => w.print(), 600);
   }
 </script>
 </body>
