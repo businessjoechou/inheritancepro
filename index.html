@@ -262,6 +262,48 @@
     letter-spacing: 0.08em;
   }
 
+  /* Search bar */
+  .search-bar {
+    position: relative;
+    margin-bottom: 16px;
+  }
+  .search-bar input {
+    width: 100%;
+    padding: 10px 14px 10px 36px;
+    background: rgba(255,255,255,0.04);
+    border: 1.5px solid #2a2520;
+    border-radius: 10px;
+    color: var(--paper);
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 13px;
+    -webkit-appearance: none;
+    transition: border-color 0.18s;
+  }
+  .search-bar input::placeholder { color: #4a4540; }
+  .search-bar input:focus { border-color: var(--gold); outline: none; }
+  .search-bar .search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #4a4540;
+    font-size: 14px;
+    pointer-events: none;
+  }
+  .search-bar .search-clear {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 16px;
+    cursor: pointer;
+    display: none;
+    padding: 2px 6px;
+  }
+
   /* Tab nav */
   .tab-nav {
     display: flex;
@@ -288,6 +330,47 @@
 
   .tab-panel { display: none; flex-direction: column; gap: 12px; }
   .tab-panel.active { display: flex; }
+
+  /* Category subtitle for scenario tabs */
+  .category-sub {
+    font-size: 12px;
+    color: #4a4540;
+    line-height: 1.6;
+    margin-bottom: 12px;
+    margin-top: -4px;
+  }
+
+  /* Collapsible pro section */
+  .pro-collapse-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 14px 0;
+    background: none;
+    border: none;
+    border-top: 1px solid #2a2520;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: color 0.18s;
+  }
+  .pro-collapse-toggle:hover { color: var(--paper); }
+  .pro-collapse-toggle .chevron {
+    transition: transform 0.25s ease;
+    font-size: 12px;
+  }
+  .pro-collapse-toggle.open .chevron { transform: rotate(180deg); }
+  .pro-collapse-tools {
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+    padding-bottom: 8px;
+  }
+  .pro-collapse-tools.open { display: flex; }
 
   /* Featured tool variant */
   .tool-card.featured {
@@ -356,6 +439,12 @@
       </div>
       <button onclick="document.getElementById('proGateModal').style.display='none'" style="background:none;border:none;color:rgba(245,240,232,0.4);font-size:13px;cursor:pointer;">取消</button>
     </div>
+  </div>
+
+  <div class="search-bar">
+    <span class="search-icon">&#x1F50D;</span>
+    <input type="text" id="toolSearch" placeholder="搜尋工具（例：車禍、贍養費、遺囑）" autocomplete="off">
+    <button class="search-clear" id="searchClear" onclick="clearSearch()">&times;</button>
   </div>
 
   <div id="tabNav" class="tab-nav"></div>
@@ -545,7 +634,7 @@ async function handleUnsubscribe() {
 <script src="js/supabase-config.js"></script>
 <script type="module" src="js/auth-bar.js"></script>
 <script>
-  // ── Persona + tool data ──────────────────────────────────────────
+  // ── Persona config ──────────────────────────────────────────────
   const PERSONAS = {
     public:     { name: '一般模式', emoji: '🏠', cls: 'public',
       sub: '依中華民國民法設計，協助您快速了解繼承權益與財產分配。' },
@@ -557,155 +646,208 @@ async function handleUnsubscribe() {
       sub: '依中華民國民法設計，協助您快速了解繼承權益與財產分配。' },
   };
 
-  const TABS = [
-    {
-      id: 'inheritance', label: { public: '繼承', accountant: '繼承申報', lawyer: '繼承', all: '繼承' },
-      tools: [
-        { href: 'calculator.html', name: '遺產繼承計算器', featured: true,
-          desc: {
-            public:     '應繼分、特留分、遺產稅一次計算，支援代位繼承與拋棄繼承',
-            accountant: '含工作底稿匯出、節稅比較試算、未上市股票資產淨值法',
-            lawyer:     '應繼分、特留分侵害分析，支援代位繼承與拋棄繼承',
-          } },
-        { href: 'inheritance-timeline.html', name: '繼承流程時間軸',
-          desc: { all: '死亡登記、拋棄繼承、遺產稅申報各項期限倒數' } },
-        { href: 'deadline-dashboard.html', name: '期限管理儀表板',
-          desc: {
-            all:        '多案件並排追蹤，六項法定期限自動倒數，可勾選完成',
-            accountant: '多案件並排管理，一眼掌握哪個案子快到期',
-          } },
-        { href: 'caregiver.html', name: '照顧者特別貢獻',
-          desc: { all: '民法§1149，照顧貢獻估值、主張策略、酌給遺產請求' } },
-        { href: 'gift-tax.html', name: '贈與稅試算',
-          desc: { all: '244萬年度免稅額、分年規劃節稅、vs 繼承稅負比較' } },
-        { href: 'property-sale-tax.html', name: '房地合一稅試算',
-          desc: { all: '繼承後出售稅率、自住優惠、持有年數計算' } },
-        { href: 'real-estate.html', name: '不動產繼承試算',
-          desc: { all: '地價稅、房屋稅、土地增值稅免徵（獨立版）' } },
-        { href: 'stock-inheritance.html', name: '股票繼承估算',
-          desc: { all: '上市收盤價、未上市資產淨值法（獨立版）' } },
-        { href: 'limited-inheritance.html', name: '限定繼承精算',
-          persona: 'lawyer',
-          desc: {
-            lawyer: '§1148限定繼承：遺產資不抵債時各繼承人責任範圍，含§1159清償順序與拋棄時機建議',
-            all: '§1148 資不抵債分析・清償順序模擬・拋棄繼承時機建議・含裁判書引用條文',
-          } },
-        { href: 'will-validity.html', name: '遺囑效力鑑定',
-          persona: 'lawyer',
-          desc: {
-            lawyer: '依§1189逐條檢核五種遺囑形式法定要件，判斷效力並提供訴訟策略備忘',
-            all: '五種遺囑逐條檢核・法定要件比對・效力瑕疵分析・附訴訟攻防策略備忘',
-          } },
-        { href: 'estate-tax-detail.html', name: '遺產稅精算工作底稿',
-          persona: 'accountant',
-          desc: {
-            accountant: '完整扣除額逐項精算：免稅1333萬、配偶553萬、子女56萬/人，含列印工作底稿',
-            all: '17項扣除額逐筆精算・自動產出工作底稿・可列印存檔・符合國稅局申報格式',
-          } },
-        { href: 'insurance-estate-risk.html', name: '壽險保單遺產稅風險評估',
-          desc: {
-            public:     '依國稅局八大態樣評估保單被課遺產稅風險，含補稅金額試算',
-            accountant: '八大態樣逐項評分，實質課稅風險分析，含申報實務備忘',
-            lawyer:     '八大態樣風險評估，行政救濟要點與舉證責任分配備忘',
-          } },
-        { href: 'insurance-gift-tax.html', name: '保單要保人變更贈與稅',
-          desc: {
-            public:     '變更要保人時保價金視為贈與，計算應繳贈與稅額',
-            accountant: '§5-1要保人變更贈與稅精算，含申報期限與保價金查詢指引',
-            lawyer:     '要保人變更贈與稅計算，含§5-1適用爭議與實質課稅分析',
-          } },
-        { href: 'gift-planner.html', name: '贈與節稅規劃模擬',
-          persona: 'accountant',
-          desc: {
-            accountant: '分年贈與 vs 繼承稅負比較，自動推算最優節稅年數與方案',
-            all: '分年贈與 vs 一次繼承稅負比較・自動推算最省稅年數・含不動產實價移轉分析',
-          } },
-        { href: 'case-manager.html', name: '多案件管理系統',
-          persona: 'accountant',
-          desc: {
-            accountant: '多案件六項法定期限倒數，依緊急程度排序，附案件備註',
-            all: '六項法定期限自動倒數・案件緊急度排序・備註紀錄・不漏掉任何申報截止日',
-          } },
-      ]
+  // ── All tools (shared pool) ────────────────────────────────────
+  const ALL_TOOLS = {
+    calculator:           { href: 'calculator.html', featured: true,
+      name: { public: '遺產分配計算', accountant: '遺產繼承計算器', lawyer: '遺產繼承計算器' },
+      desc: { public: '應繼分、特留分、遺產稅一次計算，支援代位繼承與拋棄繼承', accountant: '含工作底稿匯出、節稅比較試算、未上市股票資產淨值法', lawyer: '應繼分、特留分侵害分析，支援代位繼承與拋棄繼承' } },
+    'inheritance-timeline': { href: 'inheritance-timeline.html',
+      name: { all: '繼承流程時間軸' },
+      desc: { all: '死亡登記、拋棄繼承、遺產稅申報各項期限倒數' } },
+    'deadline-dashboard': { href: 'deadline-dashboard.html',
+      name: { all: '期限管理儀表板' },
+      desc: { all: '多案件並排追蹤，六項法定期限自動倒數，可勾選完成', accountant: '多案件並排管理，一眼掌握哪個案子快到期' } },
+    caregiver:            { href: 'caregiver.html',
+      name: { all: '照顧者特別貢獻' },
+      desc: { all: '民法§1149，照顧貢獻估值、主張策略、酌給遺產請求' } },
+    'gift-tax':           { href: 'gift-tax.html',
+      name: { all: '贈與稅試算' },
+      desc: { all: '244萬年度免稅額、分年規劃節稅、vs 繼承稅負比較' } },
+    'property-sale-tax':  { href: 'property-sale-tax.html',
+      name: { all: '房地合一稅試算' },
+      desc: { all: '繼承後出售稅率、自住優惠、持有年數計算' } },
+    'real-estate':        { href: 'real-estate.html',
+      name: { all: '不動產繼承試算' },
+      desc: { all: '地價稅、房屋稅、土地增值稅免徵（獨立版）' } },
+    'stock-inheritance':  { href: 'stock-inheritance.html',
+      name: { all: '股票繼承估算' },
+      desc: { all: '上市收盤價、未上市資產淨值法（獨立版）' } },
+    'limited-inheritance': { href: 'limited-inheritance.html', persona: 'lawyer',
+      name: { public: '繼承債務超過遺產？', accountant: '限定繼承精算', lawyer: '限定繼承精算' },
+      desc: { lawyer: '§1148限定繼承：遺產資不抵債時各繼承人責任範圍，含§1159清償順序與拋棄時機建議', all: '§1148 資不抵債分析・清償順序模擬・拋棄繼承時機建議・含裁判書引用條文' } },
+    'will-validity':      { href: 'will-validity.html', persona: 'lawyer',
+      name: { public: '遺囑是否有效？', accountant: '遺囑效力鑑定', lawyer: '遺囑效力鑑定' },
+      desc: { lawyer: '依§1189逐條檢核五種遺囑形式法定要件，判斷效力並提供訴訟策略備忘', all: '五種遺囑逐條檢核・法定要件比對・效力瑕疵分析・附訴訟攻防策略備忘' } },
+    'estate-tax-detail':  { href: 'estate-tax-detail.html', persona: 'accountant',
+      name: { all: '遺產稅精算工作底稿' },
+      desc: { accountant: '完整扣除額逐項精算：免稅1333萬、配偶553萬、子女56萬/人，含列印工作底稿', all: '17項扣除額逐筆精算・自動產出工作底稿・可列印存檔・符合國稅局申報格式' } },
+    'insurance-estate-risk': { href: 'insurance-estate-risk.html',
+      name: { public: '保單會被課遺產稅嗎？', accountant: '壽險保單遺產稅風險評估', lawyer: '壽險保單遺產稅風險評估' },
+      desc: { public: '依國稅局八大態樣評估保單被課遺產稅風險，含補稅金額試算', accountant: '八大態樣逐項評分，實質課稅風險分析，含申報實務備忘', lawyer: '八大態樣風險評估，行政救濟要點與舉證責任分配備忘' } },
+    'insurance-gift-tax': { href: 'insurance-gift-tax.html',
+      name: { public: '保單變更要繳稅嗎？', accountant: '保單要保人變更贈與稅', lawyer: '保單要保人變更贈與稅' },
+      desc: { public: '變更要保人時保價金視為贈與，計算應繳贈與稅額', accountant: '§5-1要保人變更贈與稅精算，含申報期限與保價金查詢指引', lawyer: '要保人變更贈與稅計算，含§5-1適用爭議與實質課稅分析' } },
+    'gift-planner':       { href: 'gift-planner.html', persona: 'accountant',
+      name: { all: '贈與節稅規劃模擬' },
+      desc: { accountant: '分年贈與 vs 繼承稅負比較，自動推算最優節稅年數與方案', all: '分年贈與 vs 一次繼承稅負比較・自動推算最省稅年數・含不動產實價移轉分析' } },
+    'case-manager':       { href: 'case-manager.html', persona: 'accountant',
+      name: { all: '多案件管理系統' },
+      desc: { accountant: '多案件六項法定期限倒數，依緊急程度排序，附案件備註', all: '六項法定期限自動倒數・案件緊急度排序・備註紀錄・不漏掉任何申報截止日' } },
+    'property-split':     { href: 'property-split.html',
+      name: { public: '夫妻財產分配', accountant: '剩餘財產差額分配請求權', lawyer: '剩餘財產差額分配請求權' },
+      desc: { all: '民法§1030-1，法定財產制下配偶可請求之差額計算' } },
+    alimony:              { href: 'alimony.html',
+      name: { public: '離婚後生活費', accountant: '贍養費試算', lawyer: '贍養費試算' },
+      desc: { all: '民法§1057，雙方收入、婚姻年數、給付期間估算' } },
+    'insurance-divorce':  { href: 'insurance-divorce.html',
+      name: { public: '保單現金價值分配', accountant: '保價金離婚財產分配', lawyer: '保價金離婚財產分配' },
+      desc: { public: '壽險保價金納入婚後財產計算，含婚前/婚後拆分', accountant: '保價金查詢管道、婚前/婚後拆分計算、解約所得稅務影響', lawyer: '保價金舉證要點、§1030-1酌減抗辯、保全措施備忘' } },
+    'child-support':      { href: 'child-support.html',
+      name: { all: '子女扶養費計算' },
+      desc: { all: '依雙方收入比例分擔，支援多名子女，含親權歸屬情境' } },
+    'divorce-damages':    { href: 'divorce-damages.html', persona: 'lawyer',
+      name: { all: '離婚損害賠償精算' },
+      desc: { lawyer: '§1056、§195逐項估算，含被告對象分析與時效提醒', all: '§1056 非財產損害精算・§195 侵害配偶權慰撫金・被告對象策略・時效管理・判例區間參照' } },
+    'asset-detection':    { href: 'asset-detection.html',
+      name: { public: '財產轉移偵測', accountant: '脫產偵測分析', lawyer: '脫產偵測分析' },
+      desc: { all: '財產異動風險評估，依法律規定自動標記，支援 CSV 上傳' } },
+    'interest-calc':      { href: 'interest-calc.html',
+      name: { all: '法定利率利息計算器' },
+      desc: { lawyer: '§203年息5%，計算起訴日/請求日起算遲延利息，含訴之聲明格式提醒', all: '依民法§203年利率5%計算損害賠償或借貸糾紛利息，含逐年明細' } },
+    'minor-damages':      { href: 'minor-damages.html',
+      name: { all: '未成年損害賠償試算' },
+      desc: { all: '霸凌、傷害事件，含父母連帶責任、精神慰撫金' } },
+    accident:             { href: 'accident.html',
+      name: { all: '車禍損害賠償分析' },
+      desc: { all: '傷害／死亡賠償明細，自動扣除強制責任險給付' } },
+    prescription:         { href: 'prescription.html',
+      name: { public: '權利時效查詢', accountant: '消滅時效計算機', lawyer: '消滅時效計算機' },
+      desc: { all: '§125–127、§197 各類請求權時效，含時效中斷提醒' } },
+    'forced-share':       { href: 'forced-share.html', persona: 'lawyer',
+      name: { public: '遺囑侵害你的權利？', accountant: '特留分侵害精算', lawyer: '特留分侵害精算' },
+      desc: { lawyer: '依§1223逐人計算特留分與侵害金額，含扣減權行使期限提醒', all: '§1223 逐人精算特留分・侵害金額計算・扣減權時效提醒・含裁判實務見解' } },
+    'litigation-strength': { href: 'litigation-strength.html', persona: 'lawyer',
+      name: { public: '案件勝率評估', accountant: '訴訟強度分析報告', lawyer: '訴訟強度分析報告' },
+      desc: { lawyer: '11項因素系統評分，輸出訴訟強度、弱點分析與策略建議', all: '11項因素系統評分・勝訴率預估・弱點分析・策略建議・可匯出評估報告' } },
+    'settlement-calc':    { href: 'settlement-calc.html', persona: 'lawyer',
+      name: { public: '和解金額建議', accountant: '和解談判模擬器', lawyer: '和解談判模擬器' },
+      desc: { lawyer: '期望值模型計算合理和解範圍，提供最佳開價與底線策略', all: '期望值模型・最佳開價策略・底線計算・對方可能出價分析・談判區間圖表' } },
+    'legal-basis':        { href: 'legal-basis.html',
+      name: { all: '試算分析依據' },
+      desc: { all: '各工具法律依據、民法條文、法院判例與計算模型完整說明' } },
+  };
+
+  // ── Helper: resolve persona-aware fields ───────────────────────
+  function getName(tool, persona) {
+    if (typeof tool.name === 'string') return tool.name;
+    return tool.name[persona] || tool.name.public || tool.name.all || '';
+  }
+  function getDesc(tool, persona) {
+    return tool.desc[persona] || tool.desc.all || '';
+  }
+  function ref(id) { return { ...ALL_TOOLS[id], _id: id }; }
+
+  // ── TABS: Public / All (情境導向 5 分類) ──────────────────────
+  const TABS_PUBLIC = [
+    { id: 'death', label: '有人過世了',
+      subtitle: '處理遺產繼承的所有步驟',
+      tools: ['calculator','inheritance-timeline','deadline-dashboard','caregiver',
+              'real-estate','stock-inheritance','insurance-estate-risk'].map(ref)
     },
-    {
-      id: 'divorce', label: { all: '離婚' },
-      tools: [
-        { href: 'property-split.html', name: '剩餘財產差額分配請求權',
-          desc: { all: '民法§1030-1，法定財產制下配偶可請求之差額計算' } },
-        { href: 'alimony.html', name: '贍養費試算',
-          desc: { all: '民法§1057，雙方收入、婚姻年數、給付期間估算' } },
-        { href: 'insurance-divorce.html', name: '保價金離婚財產分配',
-          desc: {
-            public:     '壽險保價金納入婚後財產計算，含婚前/婚後拆分',
-            accountant: '保價金查詢管道、婚前/婚後拆分計算、解約所得稅務影響',
-            lawyer:     '保價金舉證要點、§1030-1酌減抗辯、保全措施備忘',
-          } },
-        { href: 'child-support.html', name: '子女扶養費計算',
-          desc: { all: '依雙方收入比例分擔，支援多名子女，含親權歸屬情境' } },
-        { href: 'divorce-damages.html', name: '離婚損害賠償精算',
-          persona: 'lawyer',
-          desc: {
-            lawyer: '§1056、§195逐項估算，含被告對象分析與時效提醒',
-            all: '§1056 非財產損害精算・§195 侵害配偶權慰撫金・被告對象策略・時效管理・判例區間參照',
-          } },
-        { href: 'divorce-agreement.html', name: '離婚協議書產生器',
-          persona: 'lawyer',
-          desc: {
-            lawyer: '填寫資料自動生成完整協議書，含監護、財產、贍養費條款',
-            all: '自動產出離婚協議書・監護權條款・財產分配明細・贍養費約定・可列印存檔',
-          } },
-      ]
+    { id: 'divorce', label: '要離婚了',
+      subtitle: '財產分配、扶養費、保單一次搞定',
+      tools: ['property-split','alimony','child-support','insurance-divorce'].map(ref)
     },
-    {
-      id: 'litigation', label: { all: '調查．賠償．時效' },
-      tools: [
-        { href: 'asset-detection.html', name: '脫產偵測分析',
-          desc: { all: '財產異動風險評估，依法律規定自動標記，支援 CSV 上傳' } },
-        { href: 'interest-calc.html', name: '法定利率利息計算器',
-          desc: {
-            lawyer:  '§203年息5%，計算起訴日/請求日起算遲延利息，含訴之聲明格式提醒',
-            all: '依民法§203年利率5%計算損害賠償或借貸糾紛利息，含逐年明細',
-          } },
-        { href: 'minor-damages.html', name: '未成年損害賠償試算',
-          desc: { all: '霸凌、傷害事件，含父母連帶責任、精神慰撫金' } },
-        { href: 'accident.html', name: '車禍損害賠償分析',
-          desc: { all: '傷害／死亡賠償明細，自動扣除強制責任險給付' } },
-        { href: 'prescription.html', name: '消滅時效計算機',
-          desc: { all: '§125–127、§197 各類請求權時效，含時效中斷提醒' } },
-        { href: 'forced-share.html', name: '特留分侵害精算',
-          persona: 'lawyer',
-          desc: {
-            lawyer:  '依§1223逐人計算特留分與侵害金額，含扣減權行使期限提醒',
-            all: '§1223 逐人精算特留分・侵害金額計算・扣減權時效提醒・含裁判實務見解',
-          } },
-        { href: 'litigation-strength.html', name: '訴訟強度分析報告',
-          persona: 'lawyer',
-          desc: {
-            lawyer:  '11項因素系統評分，輸出訴訟強度、弱點分析與策略建議',
-            all: '11項因素系統評分・勝訴率預估・弱點分析・策略建議・可匯出評估報告',
-          } },
-        { href: 'settlement-calc.html', name: '和解談判模擬器',
-          persona: 'lawyer',
-          desc: {
-            lawyer:  '期望值模型計算合理和解範圍，提供最佳開價與底線策略',
-            all: '期望值模型・最佳開價策略・底線計算・對方可能出價分析・談判區間圖表',
-          } },
-        { href: 'legal-basis.html', name: '試算分析依據',
-          desc: { all: '各工具法律依據、民法條文、法院判例與計算模型完整說明' } },
-      ]
+    { id: 'gift', label: '送財產給家人',
+      subtitle: '贈與節稅、保單規劃',
+      tools: ['gift-tax','gift-planner','insurance-gift-tax','property-sale-tax'].map(ref)
+    },
+    { id: 'dispute', label: '有糾紛',
+      subtitle: '車禍、霸凌、債務追討、時效查詢',
+      tools: ['accident','minor-damages','interest-calc','prescription','asset-detection'].map(ref)
+    },
+  ];
+
+  // Pro tools shown in collapsible section for public persona
+  const PRO_TOOLS_PUBLIC = [
+    'limited-inheritance','will-validity','estate-tax-detail','forced-share',
+    'litigation-strength','settlement-calc','divorce-damages',
+    'case-manager','legal-basis'
+  ].map(ref);
+
+  // ── TABS: Accountant / Lawyer (原 3 tab 結構不動) ─────────────
+  const TABS_PRO = [
+    { id: 'inheritance', label: { accountant: '繼承申報', lawyer: '繼承' },
+      tools: ['calculator','inheritance-timeline','deadline-dashboard','caregiver',
+              'gift-tax','property-sale-tax','real-estate','stock-inheritance',
+              'limited-inheritance','will-validity','estate-tax-detail',
+              'insurance-estate-risk','insurance-gift-tax','gift-planner','case-manager'].map(ref)
+    },
+    { id: 'divorce', label: { all: '離婚' },
+      tools: ['property-split','alimony','insurance-divorce','child-support',
+              'divorce-damages'].map(ref)
+    },
+    { id: 'litigation', label: { all: '調查．賠償．時效' },
+      tools: ['asset-detection','interest-calc','minor-damages','accident',
+              'prescription','forced-share','litigation-strength','settlement-calc',
+              'legal-basis'].map(ref)
     },
   ];
 
   // ── Render ────────────────────────────────────────────────────────
   let activeTab = null;
+  let searchQuery = '';
 
-  function getDesc(tool, persona) {
-    return tool.desc[persona] || tool.desc.all || '';
+  function isPublicPersona(p) { return p === 'public' || p === 'all'; }
+
+  function renderToolCard(tool, persona) {
+    const name = getName(tool, persona);
+    const desc = getDesc(tool, persona);
+    const featuredStyle = tool.featured ? 'background:linear-gradient(135deg,#1e1916 0%,#221e1a 100%);' : '';
+    // DEV: 開發階段全部解鎖
+    const isLocked = false;
+    const lockLabel = tool.persona === 'accountant' ? '進階稅務' : tool.persona === 'lawyer' ? '進階法律' : '';
+    const href = isLocked ? 'javascript:void(0)' : tool.href;
+    const lockClick = isLocked ? `onclick="document.getElementById('proGateModal').style.display='flex'"` : '';
+    return `<a class="tool-card ${tool.featured ? 'featured' : ''}" href="${href}" style="${featuredStyle}${isLocked ? 'opacity:0.6;' : ''}" ${lockClick}>
+      <div class="tool-card-inner">
+        <div class="tool-info">
+          <div class="tool-name">${isLocked ? '🔒 ' : ''}${name}${isLocked ? ' <span style="font-size:10px;color:#c4932a;font-family:DM Mono,monospace;margin-left:4px;">PRO・' + lockLabel + '</span>' : ''}</div>
+          <div class="tool-desc" style="margin-top:5px">${desc}</div>
+        </div>
+        <span class="tool-arrow" style="${tool.featured ? 'font-size:20px' : ''}">${isLocked ? '🔒' : '→'}</span>
+      </div>
+    </a>`;
+  }
+
+  function renderSearch(persona) {
+    // Flatten all tools from current TABS + pro tools
+    const tabs = isPublicPersona(persona) ? TABS_PUBLIC : TABS_PRO;
+    let allTools = [];
+    tabs.forEach(tab => { allTools = allTools.concat(tab.tools); });
+    if (isPublicPersona(persona)) allTools = allTools.concat(PRO_TOOLS_PUBLIC);
+
+    // Deduplicate
+    const seen = new Set();
+    allTools = allTools.filter(t => { if (seen.has(t._id)) return false; seen.add(t._id); return true; });
+
+    const q = searchQuery.toLowerCase();
+    const matches = allTools.filter(tool => {
+      const name = getName(tool, persona).toLowerCase();
+      const desc = getDesc(tool, persona).toLowerCase();
+      return name.includes(q) || desc.includes(q);
+    });
+
+    const container = document.getElementById('toolsContainer');
+    if (matches.length === 0) {
+      container.innerHTML = `<div style="text-align:center;padding:32px 0;color:var(--muted);font-size:13px;">找不到「${searchQuery}」相關工具</div>`;
+    } else {
+      container.innerHTML = matches.map(t => renderToolCard(t, persona)).join('');
+    }
+    document.getElementById('tabNav').style.display = 'none';
   }
 
   function renderTools() {
-    // DEV: 預設 all（全功能開放）
     const persona = localStorage.getItem('ip_persona') || 'all';
     const p = PERSONAS[persona];
 
@@ -714,42 +856,52 @@ async function handleUnsubscribe() {
     document.getElementById('personaBadge').className = 'persona-badge ' + p.cls;
     document.getElementById('heroSub').textContent = p.sub;
 
-    if (!activeTab) activeTab = TABS[0].id;
+    // If searching, render search results instead
+    if (searchQuery) { renderSearch(persona); return; }
 
-    // Tab nav
-    document.getElementById('tabNav').innerHTML = TABS.map(tab => {
-      const label = tab.label[persona] || tab.label.all || tab.label.public;
-      return `<button class="tab-btn ${tab.id === activeTab ? 'active' : ''}"
-        onclick="setTab('${tab.id}')">${label}</button>`;
-    }).join('');
+    document.getElementById('tabNav').style.display = 'flex';
 
-    // Tool cards
-    const currentTab = TABS.find(t => t.id === activeTab);
-    const tools = currentTab?.tools || [];
+    if (isPublicPersona(persona)) {
+      // ── Public: 情境導向 5 分類 ─────────────────────
+      const tabs = TABS_PUBLIC;
+      if (!activeTab || !tabs.find(t => t.id === activeTab)) activeTab = tabs[0].id;
 
-    // DEV: 開發階段全部免費開放
-    const isPro = true;
+      document.getElementById('tabNav').innerHTML = tabs.map(tab =>
+        `<button class="tab-btn ${tab.id === activeTab ? 'active' : ''}"
+          onclick="setTab('${tab.id}')">${tab.label}</button>`
+      ).join('');
 
-    document.getElementById('toolsContainer').innerHTML = tools.map(tool => {
-      const desc = getDesc(tool, persona);
-      const featuredStyle = tool.featured
-        ? 'background:linear-gradient(135deg,#1e1916 0%,#221e1a 100%);'
-        : '';
-      // DEV: 開發階段全部解鎖
-      const isLocked = false;
-      const lockLabel = tool.persona === 'accountant' ? '進階稅務' : tool.persona === 'lawyer' ? '進階法律' : '';
-      const href = isLocked ? 'javascript:void(0)' : tool.href;
-      const lockClick = isLocked ? `onclick="document.getElementById('proGateModal').style.display='flex'"` : '';
-      return `<a class="tool-card ${tool.featured ? 'featured' : ''}" href="${href}" style="${featuredStyle}${isLocked ? 'opacity:0.6;' : ''}" ${lockClick}>
-        <div class="tool-card-inner">
-          <div class="tool-info">
-            <div class="tool-name">${isLocked ? '🔒 ' : ''}${tool.name}${isLocked ? ' <span style="font-size:10px;color:#c4932a;font-family:DM Mono,monospace;margin-left:4px;">PRO・' + lockLabel + '</span>' : ''}</div>
-            <div class="tool-desc" style="margin-top:5px">${desc}</div>
-          </div>
-          <span class="tool-arrow" style="${tool.featured ? 'font-size:20px' : ''}">${isLocked ? '🔒' : '→'}</span>
-        </div>
-      </a>`;
-    }).join('');
+      const currentTab = tabs.find(t => t.id === activeTab);
+      const toolCards = (currentTab?.tools || []).map(t => renderToolCard(t, persona)).join('');
+      const subtitle = currentTab?.subtitle
+        ? `<div class="category-sub">${currentTab.subtitle}</div>` : '';
+
+      // Collapsible pro tools section
+      const proCards = PRO_TOOLS_PUBLIC.map(t => renderToolCard(t, persona)).join('');
+      const proSection = `
+        <button class="pro-collapse-toggle" id="proToggle" onclick="togglePro()">
+          <span>進階專業工具（律師・會計師）</span>
+          <span class="chevron">▼</span>
+        </button>
+        <div class="pro-collapse-tools" id="proTools">${proCards}</div>`;
+
+      document.getElementById('toolsContainer').innerHTML = subtitle + toolCards + proSection;
+
+    } else {
+      // ── Accountant / Lawyer: 原 3 tab 結構 ─────────
+      const tabs = TABS_PRO;
+      if (!activeTab || !tabs.find(t => t.id === activeTab)) activeTab = tabs[0].id;
+
+      document.getElementById('tabNav').innerHTML = tabs.map(tab => {
+        const label = tab.label[persona] || tab.label.all || tab.label.public || '';
+        return `<button class="tab-btn ${tab.id === activeTab ? 'active' : ''}"
+          onclick="setTab('${tab.id}')">${label}</button>`;
+      }).join('');
+
+      const currentTab = tabs.find(t => t.id === activeTab);
+      document.getElementById('toolsContainer').innerHTML =
+        (currentTab?.tools || []).map(t => renderToolCard(t, persona)).join('');
+    }
   }
 
   function setTab(id) {
@@ -757,7 +909,28 @@ async function handleUnsubscribe() {
     renderTools();
   }
 
-  // Check Pro status and set up persona switch
+  function togglePro() {
+    const btn = document.getElementById('proToggle');
+    const tools = document.getElementById('proTools');
+    btn.classList.toggle('open');
+    tools.classList.toggle('open');
+  }
+
+  // ── Search ────────────────────────────────────────────────────
+  function clearSearch() {
+    document.getElementById('toolSearch').value = '';
+    searchQuery = '';
+    document.getElementById('searchClear').style.display = 'none';
+    renderTools();
+  }
+
+  document.getElementById('toolSearch').addEventListener('input', function(e) {
+    searchQuery = e.target.value.trim();
+    document.getElementById('searchClear').style.display = searchQuery ? 'block' : 'none';
+    renderTools();
+  });
+
+  // ── Init ──────────────────────────────────────────────────────
   (async function() {
     try {
       const { supabase, getProfile } = await import('./js/auth.js');
@@ -768,7 +941,6 @@ async function handleUnsubscribe() {
       }
     } catch(e) {}
 
-    // DEV: 切換身份直接跳 landing 選擇頁，不擋 Pro gate
     document.getElementById('personaSwitchBtn').addEventListener('click', () => {
       localStorage.removeItem('ip_persona');
       window.location.href = 'landing.html';
