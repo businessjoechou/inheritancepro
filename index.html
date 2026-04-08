@@ -547,6 +547,8 @@ async function handleUnsubscribe() {
       sub: '遺產稅精算、節稅規劃、贈與策略試算，含多案件期限管理儀表板。' },
     lawyer:     { name: '進階法律', emoji: '⚖️', cls: 'lawyer',
       sub: '財產爭議分析、訴訟強度評估、脫產偵測與和解金額試算。' },
+    all:        { name: '全功能 Pro', emoji: '✦', cls: 'public',
+      sub: '已解鎖全部進階功能：稅務精算、法律分析、節稅規劃一站搞定。' },
   };
 
   const TABS = [
@@ -677,7 +679,8 @@ async function handleUnsubscribe() {
   }
 
   function renderTools() {
-    const persona = localStorage.getItem('ip_persona') || 'public';
+    // DEV: 預設 all（全功能開放）
+    const persona = localStorage.getItem('ip_persona') || 'all';
     const p = PERSONAS[persona];
 
     // Persona badge
@@ -698,7 +701,8 @@ async function handleUnsubscribe() {
     const currentTab = TABS.find(t => t.id === activeTab);
     const tools = currentTab?.tools || [];
 
-    const isPro = window.__inheritanceProIsPro || false;
+    // DEV: 開發階段全部免費開放
+    const isPro = true;
 
     document.getElementById('toolsContainer').innerHTML = tools.map(tool => {
       const desc = getDesc(tool, persona);
@@ -749,12 +753,11 @@ async function handleUnsubscribe() {
       }
     });
 
-    // Redirect to landing if no persona set
+    // DEV: 沒設 persona 就預設 all，不跳轉 landing
     if (!localStorage.getItem('ip_persona')) {
-      window.location.href = 'landing.html';
-    } else {
-      renderTools();
+      localStorage.setItem('ip_persona', 'all');
     }
+    renderTools();
   })();
 
   document.querySelectorAll('.faq-q').forEach(q => {
