@@ -768,8 +768,24 @@ async function handleUnsubscribe() {
     },
   ];
 
-  // Pro tools shown in collapsible section for public persona
-  const PRO_TOOLS_PUBLIC = [
+  // Pro tools per tab for public persona (categorized)
+  const PRO_BY_TAB = {
+    death: [
+      { label: '繼承進階', tools: ['limited-inheritance','will-validity','estate-tax-detail','forced-share','case-manager'].map(ref) },
+    ],
+    divorce: [
+      { label: '離婚進階', tools: ['divorce-damages'].map(ref) },
+    ],
+    gift: [
+      { label: '稅務進階', tools: ['estate-tax-detail','case-manager'].map(ref) },
+    ],
+    dispute: [
+      { label: '訴訟進階', tools: ['forced-share','litigation-strength','settlement-calc'].map(ref) },
+    ],
+  };
+
+  // All pro tools flat (for search)
+  const ALL_PRO_TOOLS = [
     'limited-inheritance','will-validity','estate-tax-detail','forced-share',
     'litigation-strength','settlement-calc','divorce-damages',
     'case-manager','legal-basis'
@@ -825,7 +841,7 @@ async function handleUnsubscribe() {
     const tabs = isPublicPersona(persona) ? TABS_PUBLIC : TABS_PRO;
     let allTools = [];
     tabs.forEach(tab => { allTools = allTools.concat(tab.tools); });
-    if (isPublicPersona(persona)) allTools = allTools.concat(PRO_TOOLS_PUBLIC);
+    if (isPublicPersona(persona)) allTools = allTools.concat(ALL_PRO_TOOLS);
 
     // Deduplicate
     const seen = new Set();
@@ -876,14 +892,18 @@ async function handleUnsubscribe() {
       const subtitle = currentTab?.subtitle
         ? `<div class="category-sub">${currentTab.subtitle}</div>` : '';
 
-      // Collapsible pro tools section
-      const proCards = PRO_TOOLS_PUBLIC.map(t => renderToolCard(t, persona)).join('');
-      const proSection = `
-        <button class="pro-collapse-toggle" id="proToggle" onclick="togglePro()">
-          <span>進階專業工具（律師・會計師）</span>
-          <span class="chevron">▼</span>
-        </button>
-        <div class="pro-collapse-tools" id="proTools">${proCards}</div>`;
+      // Collapsible pro tools section (per-tab)
+      const proGroups = PRO_BY_TAB[activeTab] || [];
+      let proSection = '';
+      if (proGroups.length > 0) {
+        const proCards = proGroups.map(g => g.tools.map(t => renderToolCard(t, persona)).join('')).join('');
+        proSection = `
+          <button class="pro-collapse-toggle" id="proToggle" onclick="togglePro()">
+            <span>進階專業工具</span>
+            <span class="chevron">▼</span>
+          </button>
+          <div class="pro-collapse-tools" id="proTools">${proCards}</div>`;
+      }
 
       document.getElementById('toolsContainer').innerHTML = subtitle + toolCards + proSection;
 
