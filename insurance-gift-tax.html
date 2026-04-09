@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
+<!-- Google Analytics GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9P35VNFL1V"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9P35VNFL1V');
+</script>
 <meta charset="UTF-8">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="favicon.svg">
@@ -20,6 +28,7 @@
 <meta name="twitter:title" content="保單要保人變更贈與稅計算器｜InheritancePro">
 <link rel="canonical" href="https://inheritancepro.app/insurance-gift-tax.html">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="js/pdf-export.js"></script>
 <script src="js/persona.js"></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"保單要保人變更贈與稅計算器","url":"https://inheritancepro.app/insurance-gift-tax.html","applicationCategory":"FinanceApplication","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro","url":"https://inheritancepro.app"}}
@@ -275,7 +284,7 @@
       依《遺產及贈與稅法》第5條之1（要保人變更視為贈與）、第19條（稅率）、第20條（配偶免稅）、第22條（年度免稅額244萬）。本試算僅供參考，實際稅額以國稅局核定為準。
     </div>
 
-    <button class="btn btn-print" style="width:100%;margin-top:14px;padding:13px;border-radius:10px;font-size:14px;" onclick="window.print()">列印 / 儲存 PDF</button>
+    <button class="btn btn-print" style="width:100%;margin-top:14px;padding:13px;border-radius:10px;font-size:14px;" onclick="printOrExport('InheritancePro-保單贈與稅')">列印 / 儲存 PDF</button>
     <div id="save-btn-container"></div>
 
     <div class="cross-links">

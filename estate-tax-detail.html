@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
+<!-- Google Analytics GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9P35VNFL1V"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9P35VNFL1V');
+</script>
 <meta charset="UTF-8">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="favicon.svg">
@@ -22,6 +30,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="js/pdf-export.js"></script>
 <script src="js/persona.js"></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"遺產稅精算模組","url":"https://inheritancepro.app/estate-tax-detail.html","applicationCategory":"FinanceApplication","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro"}}
@@ -242,7 +251,7 @@
       <div id="deductBreakdown"></div>
     </div>
 
-    <button class="print-btn" onclick="window.print()">🖨 列印 / 儲存 PDF</button>
+    <button class="print-btn" onclick="printOrExport('InheritancePro-遺產稅明細')">🖨 列印 / 儲存 PDF</button>
 
     <div class="law-note">
       <strong>注意事項：</strong>本試算依2024年適用標準。各扣除額金額依財政部每兩年調整。實際申報時請以國稅局核定為準。重度身心障礙特別扣除額需檢附殘障手冊。農業用地扣除需附農業用地作農業使用證明書。

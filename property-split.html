@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
+<!-- Google Analytics GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9P35VNFL1V"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9P35VNFL1V');
+</script>
 <meta charset="UTF-8">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="favicon.svg">
@@ -22,6 +30,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="js/pdf-export.js"></script>
 <script src="js/persona.js"></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"剩餘財產差額分配請求權計算","description":"依民法第1030-1條計算離婚後配偶可請求之剩餘財產差額，含慰撫金排除與時效計算。","url":"https://inheritancepro.app/property-split.html","applicationCategory":"FinanceApplication","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro","url":"https://inheritancepro.app"}}
@@ -601,14 +610,10 @@ ${claim > 0
 </body></html>`;
   }
 
-  function downloadPDF() {
+  async function downloadPDF() {
     const html = buildPrintHtml();
     if (!html) return;
-    const w = window.open('', '_blank');
-    if (!w) { alert('請允許本網站開啟彈出視窗以下載 PDF'); return; }
-    w.document.write(html);
-    w.document.close();
-    setTimeout(() => w.print(), 600);
+    exportPDF(html, 'InheritancePro-剩餘財產分配');
   }
 </script>
 <div class="disclaimer-bar"><strong>免責聲明</strong>：本平台之計算結果僅供初步參考，不構成法律意見或法律諮詢服務。</div>

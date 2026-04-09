@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
+<!-- Google Analytics GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9P35VNFL1V"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9P35VNFL1V');
+</script>
 <meta charset="UTF-8">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="favicon.svg">
@@ -22,6 +30,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="js/pdf-export.js"></script>
 <script src="js/persona.js"></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"房地合一稅試算（繼承後出售）","url":"https://inheritancepro.app/property-sale-tax.html","applicationCategory":"FinanceApplication","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro"}}
@@ -197,29 +206,39 @@
       </div>
     </div>
 
-    <div class="input-group" id="selfResideGroup" style="margin-bottom:0">
+    <div class="input-group" id="selfResideGroup">
       <label>連續設籍居住年數 <span style="font-weight:400;color:var(--muted);font-size:12px">達6年可適用10%自住優惠稅率</span></label>
       <input type="number" id="self_reside_years" placeholder="0" min="0" max="99" inputmode="numeric">
       <div style="font-size:11px;color:var(--muted);margin-top:4px;">自住優惠條件：本人、配偶或未成年子女設籍，且無出租、無供營業，連續居住滿6年，課稅所得前400萬免稅，稅率10%。</div>
+    </div>
+    
+    <div class="input-group" style="margin-bottom:0; margin-top: 18px; border-top: 1px dashed var(--soft); padding-top: 18px;">
+      <div class="checkbox-row" style="margin-bottom:0">
+        <input type="checkbox" id="chk_forced" onchange="calcHoldYears()" style="width:18px;height:18px;accent-color:var(--gold);cursor:pointer;flex-shrink:0;">
+        <label for="chk_forced" style="margin-bottom:0; cursor:pointer;">
+          符合「非自願因素」<br>
+          <span style="font-weight:400;color:var(--muted);font-size:11px">因無力清償該房地擔保之繼承債務，被迫出售（持有未滿5年得獲20%稅率）</span>
+        </label>
+      </div>
     </div>
   </div>
 
   <!-- 稅率參照表 -->
   <div class="card">
-    <div class="section-title">繼承取得房地合一稅率（非自願因素，2021/7/1起）</div>
+    <div class="section-title">房地合一稅率（新制 2.0，2021/7/1起）</div>
     <table class="rate-table" id="rateTable">
       <thead>
         <tr><th>持有年數</th><th>稅率</th><th>說明</th></tr>
       </thead>
       <tbody>
-        <tr id="rate_row_45"><td>未滿 2 年</td><td>20%</td><td>繼承屬非自願因素，適用優惠稅率</td></tr>
-        <tr id="rate_row_35"><td>2 年以上未滿 5 年</td><td>20%</td><td>繼承屬非自願因素，適用優惠稅率</td></tr>
-        <tr id="rate_row_20"><td>5 年以上未滿 10 年</td><td>20%</td><td>一般持有</td></tr>
+        <tr id="rate_row_45"><td>未滿 2 年</td><td>45%</td><td>短期持有</td></tr>
+        <tr id="rate_row_35"><td>2 年以上未滿 5 年</td><td>35%</td><td>一般持有</td></tr>
+        <tr id="rate_row_20"><td>5 年以上未滿 10 年</td><td>20%</td><td>中長期持有</td></tr>
         <tr id="rate_row_15"><td>10 年以上</td><td>15%</td><td>長期持有</td></tr>
         <tr id="rate_row_self"><td>自住滿 6 年</td><td>10%</td><td>自住優惠（課稅所得400萬免稅）</td></tr>
       </tbody>
     </table>
-    <div style="font-size:11px;color:var(--muted);margin-top:8px;line-height:1.6">依所得稅法§14-4第3項第1款第5目，繼承取得屬「非自願因素」，持有未滿5年者稅率為20%（一般交易為45%/35%）。持有期間自被繼承人原始取得日起算。</div>
+    <div style="font-size:11px;color:var(--muted);margin-top:8px;line-height:1.6">繼承取得者，持有期間可併計被繼承人持有年數。若符合「非自願因素」（因無力償還遺留下來擔保該房地之貸款，致被迫出售），且持有未滿 5 年，得例外適用 20% 稅率。</div>
   </div>
 
   <!-- Results -->
@@ -291,7 +310,7 @@
       ⚖️ 依《所得稅法》§4-4、§4-5、§14-4（房地合一稅2.0，2021/7/1起）。繼承取得者持有期間合併計算被繼承人持有年數（§4-5第1項第5款）。本試算僅供參考，實際稅額以國稅局核定為準，建議諮詢稅務專業人員。
     </div>
 
-    <button class="btn btn-print" style="width:100%;margin-top:14px;padding:13px;border-radius:10px;font-size:14px;" onclick="window.print()">列印 / 儲存 PDF</button>
+    <button class="btn btn-print" style="width:100%;margin-top:14px;padding:13px;border-radius:10px;font-size:14px;" onclick="printOrExport('InheritancePro-房地合一稅')">列印 / 儲存 PDF</button>
     <div id="save-btn-container"></div>
     <div class="cross-links">
       <div class="cross-links-label">相關工具</div>
@@ -349,27 +368,32 @@
 
   function highlightRateRow(years) {
     const selfResideYears = parseInt(document.getElementById('self_reside_years').value) || 0;
+    const isForcedSale = document.getElementById('chk_forced').checked;
     ['45','35','20','15','self'].forEach(id => {
       document.getElementById('rate_row_' + id).classList.remove('active-rate');
     });
-    const rateInfo = getPropertyTaxRate(years, isSelfOccupied, selfResideYears);
+    const rateInfo = getPropertyTaxRate(years, isSelfOccupied, selfResideYears, isForcedSale);
     if (isSelfOccupied && selfResideYears >= 6) document.getElementById('rate_row_self').classList.add('active-rate');
+    else if (isForcedSale && years < 5) document.getElementById('rate_row_20').classList.add('active-rate');
     else if (years < 2) document.getElementById('rate_row_45').classList.add('active-rate');
     else if (years < 5) document.getElementById('rate_row_35').classList.add('active-rate');
     else if (years < 10) document.getElementById('rate_row_20').classList.add('active-rate');
     else document.getElementById('rate_row_15').classList.add('active-rate');
   }
 
-  function getPropertyTaxRate(holdYears, isSelfOccupied, selfOccupiedYears) {
+  function getPropertyTaxRate(holdYears, isSelfOccupied, selfOccupiedYears, isForcedSale) {
     if (isSelfOccupied && selfOccupiedYears >= 6) {
       return { rate: 0.10, label: '自住優惠稅率（持有且設籍6年以上）' };
     }
-    // 繼承取得屬「非自願因素」，依所得稅法§14-4第3項第1款第5目
-    // 持有未滿5年一律適用20%（非一般的45%/35%）
-    if (holdYears < 2) return { rate: 0.20, label: '繼承取得，持有未滿2年（20%，非自願因素）' };
-    if (holdYears < 5) return { rate: 0.20, label: '繼承取得，持有2年以上未滿5年（20%，非自願因素）' };
-    if (holdYears < 10) return { rate: 0.20, label: '持有5年以上未滿10年（20%）' };
-    return { rate: 0.15, label: '持有10年以上（15%）' };
+    
+    if (isForcedSale && holdYears < 5) {
+      return { rate: 0.20, label: '符合非自願因素（持有未滿5年，20%）' };
+    }
+    
+    if (holdYears < 2) return { rate: 0.45, label: '持有未滿 2 年（45%）' };
+    if (holdYears < 5) return { rate: 0.35, label: '持有 2 年以上未滿 5 年（35%）' };
+    if (holdYears < 10) return { rate: 0.20, label: '持有 5 年以上未滿 10 年（20%）' };
+    return { rate: 0.15, label: '持有 10 年以上（15%）' };
   }
 
   function fmt(n) { return 'NT$ ' + Math.round(n).toLocaleString('zh-TW'); }
@@ -401,7 +425,8 @@
       return;
     }
 
-    const rateInfo = getPropertyTaxRate(holdYears, isSelfOccupied, selfResideYears);
+    const isForcedSale = document.getElementById('chk_forced').checked;
+    const rateInfo = getPropertyTaxRate(holdYears, isSelfOccupied, selfResideYears, isForcedSale);
     const { rate, label } = rateInfo;
 
     // 課稅所得 = 售價 - 取得成本 - 費用
@@ -446,17 +471,23 @@
     // 稅率換檔建議
     const suggBox = document.getElementById('r_suggestion_box');
     let suggestion = '';
-    if (holdYears < 5) {
-      // 繼承取得未滿5年均為20%，無稅率換檔空間
-      const daysTo10yr = Math.ceil((10 * 365.25) - holdYears * 365.25);
-      suggestion = `繼承取得屬非自願因素，持有未滿5年一律適用20%優惠稅率（非一般的45%/35%）。若再持有約 <strong>${daysTo10yr} 天</strong> 至滿10年，稅率可降至15%。`;
+    
+    if (isForcedSale && holdYears < 5) {
+       suggestion = `您已勾選「非自願因素被迫出售」，適用 20% 稅率。請務必保留金融機構債務清償證明與財力證明等相關文件備查。`;
+    } else if (holdYears < 2) {
+      const daysTo2yr = Math.ceil((2 * 365.25) - holdYears * 365.25);
+      const taxAt35 = Math.round(taxableGain * 0.35);
+      suggestion = `目前持有未滿 2 年，適用最高 45% 稅率。若再持有約 <strong>${daysTo2yr} 天</strong> 至滿 2 年，稅率可降至 35%，預計可節稅 <strong>${fmt(tax - taxAt35)}</strong>。`;
+    } else if (holdYears < 5) {
+      const daysTo5yr = Math.ceil((5 * 365.25) - holdYears * 365.25);
+      const taxAt20 = Math.round(taxableGain * 0.20);
+      suggestion = `目前持有未滿 5 年，適用 35% 稅率。若再持有約 <strong>${daysTo5yr} 天</strong> 至滿 5 年，稅率可大降至 20%，預計可節稅 <strong>${fmt(tax - taxAt20)}</strong>。`;
     } else if (holdYears < 10) {
       const daysTo10yr = Math.ceil((10 * 365.25) - holdYears * 365.25);
-      const taxAt20 = Math.round(taxableGain * 0.20);
       const taxAt15 = Math.round(taxableGain * 0.15);
-      suggestion = `目前持有滿5年，適用20%稅率。若再持有約 <strong>${daysTo10yr} 天</strong>，稅率可降至15%，預計可節省稅額 <strong>${fmt(taxAt20 - taxAt15)}</strong>。`;
+      suggestion = `目前適用 20% 稅率。若再持有約 <strong>${daysTo10yr} 天</strong> 至滿 10 年，稅率可降至 15%，預計可節稅 <strong>${fmt(tax - taxAt15)}</strong>。`;
     } else if (!isSelfOccupied || selfResideYears < 6) {
-      suggestion = `目前持有10年以上，適用15%最低一般稅率。若符合自住條件（設籍居住滿6年），可申請10%優惠稅率，且前400萬課稅所得免稅，可進一步降低稅負。`;
+      suggestion = `目前持有10年以上，適用15%最低一般稅率。若符合「自住條件」（設籍居住滿6年且無營業出租），可申請 10% 優惠稅率，且享 400 萬免稅額。`;
     }
 
     if (suggestion) {
@@ -473,7 +504,7 @@
       'property_sale_tax',
       `房地合一稅試算 ${new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit'})}`,
       `持有 ${holdStr}，稅率 ${(rate*100).toFixed(0)}%，應納稅額 ${fmt(tax)}`,
-      { acquireDate: acquireDateVal, saleDate: saleDateVal, salePrice, acquisitionCost, expenses, propertyType, isSelfOccupied, selfResideYears }
+      { acquireDate: acquireDateVal, saleDate: saleDateVal, salePrice, acquisitionCost, expenses, propertyType, isSelfOccupied, selfResideYears, isForcedSale }
     );
   }
 

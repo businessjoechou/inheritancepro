@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
+<!-- Google Analytics GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9P35VNFL1V"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9P35VNFL1V');
+</script>
 <meta charset="UTF-8">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="favicon.svg">
@@ -22,6 +30,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="js/pdf-export.js"></script>
 <script src="js/persona.js"></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"繼承流程時間軸","description":"輸入被繼承人死亡日期，自動計算中華民國繼承法各項法定期限，產生個人化待辦清單。","url":"https://inheritancepro.app/inheritance-timeline.html","applicationCategory":"LegalService","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro","url":"https://inheritancepro.app"}}
@@ -598,14 +607,10 @@ td{padding:9px 12px;border-bottom:1px solid #e8e0d0;vertical-align:top;}
 </body></html>`;
   }
 
-  function downloadPDF(){
+  async function downloadPDF(){
     const html = buildPrintHtml();
     if(!html){return;}
-    const w = window.open('','_blank');
-    if(!w){alert('請允許本網站開啟彈出視窗以下載 PDF');return;}
-    w.document.write(html);
-    w.document.close();
-    setTimeout(() => w.print(), 600);
+    exportPDF(html, 'InheritancePro-繼承時間軸');
   }
 
   // Set max date to today

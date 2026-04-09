@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
+<!-- Google Analytics GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9P35VNFL1V"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9P35VNFL1V');
+</script>
 <meta charset="UTF-8">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="favicon.svg">
@@ -22,6 +30,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="js/pdf-export.js"></script>
 <script src="js/persona.js"></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"贍養費試算","description":"依民法第1057條及司法院公告最低生活費標準，試算中華民國離婚贍養費參考範圍。","url":"https://inheritancepro.app/alimony.html","applicationCategory":"FinanceApplication","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro","url":"https://inheritancepro.app"}}
@@ -292,9 +301,10 @@
       rejectedReason = '請求方有完整工作能力，依實務見解法院通常不予贍養費，除非有特殊情形（如長期照顧子女導致職涯中斷、健康因素等）。';
     }
 
-    // 2. 雙方均有過失，但仍可能獲判（酌減）
+    // 2. 雙方均有過失（現行法規：直接喪失請求權）
     if(state.fault === 'mutual'){
-      factors.push({label:'雙方均有過失', tag:'neg', score:30, desc:'法院得酌減贍養費（民法第1057條第2項）'});
+      eligible = false;
+      rejectedReason = '現行民法第1057條嚴格規定，請求贍養費之一方必須絕對「無過失」。若雙方均有過失，依法無法請求贍養費。（註：行政院修法草案雖擬放寬此限制為「酌減」，但尚未正式完成三讀生效）';
     } else {
       factors.push({label:'他方單方有過失', tag:'pos', score:85, desc:'請求方無過失，符合基本請求要件'});
     }
@@ -349,7 +359,7 @@
     if(state.work === 'none'){ adjLow += 0.2; adjHigh += 0.1; }
     if(state.caregiver){ adjLow += 0.1; adjHigh += 0.1; }
     if(years >= 20){ adjLow += 0.15; adjHigh += 0.1; }
-    if(state.fault === 'mutual'){ adjLow *= 0.6; adjHigh *= 0.7; }
+
 
     let low = Math.round(base * adjLow / 500) * 500;
     let high = Math.round(base * adjHigh / 500) * 500;
@@ -362,7 +372,7 @@
     else if(years >= 10){ durLow = 2; durHigh = 5; }
     if(state.work === 'none'){ durHigh = Math.min(durHigh + 2, 10); }
     if(state.caregiver){ durHigh = Math.min(durHigh + 1, 10); }
-    if(state.fault === 'mutual'){ durHigh = Math.max(1, durHigh - 1); }
+
     // 年齡影響給付期間
     if(state.age === 'elder'){ durLow = Math.max(durLow, 3); durHigh = Math.min(durHigh + 3, 15); }
     else if(state.age === 'senior'){ durHigh = Math.min(durHigh + 1, 12); }
@@ -515,11 +525,9 @@ ${eligible
 <div class="footer">© ${new Date().getFullYear()} InheritancePro &nbsp;·&nbsp; inheritancepro.app<br>本報告僅供參考，不構成法律意見。</div>
 </body></html>`;
   }
-  function downloadPDF(){
+  async function downloadPDF(){
     const html=buildPrintHtml(); if(!html)return;
-    const w=window.open('','_blank');
-    if(!w){alert('請允許本網站開啟彈出視窗以下載 PDF');return;}
-    w.document.write(html); w.document.close(); setTimeout(()=>w.print(),600);
+    exportPDF(html, 'InheritancePro-贍養費');
   }
 </script>
 <div class="faq-wrap">

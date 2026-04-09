@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
+<!-- Google Analytics GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9P35VNFL1V"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9P35VNFL1V');
+</script>
 <meta charset="UTF-8">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="favicon.svg">
@@ -23,6 +31,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="js/pdf-export.js"></script>
 <script src="js/persona.js"></script>
 <style>
   *:focus-visible {
@@ -1557,13 +1566,9 @@ ${stockHTML ? `<div class="section-title">股票估值明細</div>${stockHTML}` 
 </body></html>`;
   }
 
-  function downloadPDF() {
+  async function downloadPDF() {
     const html = buildPrintHtml();
-    const printWin = window.open('', '_blank');
-    if (!printWin) { alert('請允許本網站開啟彈出視窗以下載 PDF'); return; }
-    printWin.document.write(html);
-    printWin.document.close();
-    setTimeout(() => printWin.print(), 600);
+    exportPDF(html, 'InheritancePro-遺產稅');
   }
 
   function buildWorkpaperHtml() {
@@ -1684,13 +1689,9 @@ td{padding:5px 10px;border:1px solid #ddd;font-size:12px;vertical-align:top;}
 </body></html>`;
   }
 
-  function downloadWorkpaper() {
+  async function downloadWorkpaper() {
     const html = buildWorkpaperHtml();
-    const printWin = window.open('', '_blank');
-    if (!printWin) { alert('請允許本網站開啟彈出視窗'); return; }
-    printWin.document.write(html);
-    printWin.document.close();
-    setTimeout(() => printWin.print(), 600);
+    exportPDF(html, 'InheritancePro-工作底稿');
   }
 
   function restart() {
