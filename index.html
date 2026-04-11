@@ -38,45 +38,44 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  *:focus-visible {
-    outline: 2px solid var(--gold);
-    outline-offset: 2px;
-  }
+  *:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
   :root {
     --ink: #1a1410;
+    --ink-2: #221d18;
     --paper: #f5f0e8;
     --gold: #c4932a;
+    --gold-soft: #d4a742;
     --muted: #7a6f62;
-    --border: #c8bfb0;
-    --soft: #e8e0d0;
-    --card: #ffffff;
+    --muted-2: #4a4540;
+    --border: #2a2520;
+    --border-2: #3a3530;
+    --card: #1e1916;
     --accent: #8b2020;
+    --badge-new: #2a6b4a;
+    --badge-case: #8b2020;
+    --badge-hot: #c4932a;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
+  html { scroll-behavior: smooth; }
   body {
     background: var(--ink);
     color: var(--paper);
     font-family: 'Noto Sans TC', sans-serif;
     min-height: 100vh;
     font-size: 15px;
+    line-height: 1.6;
   }
 
-  /* Hero */
+  /* ─────────── HERO ─────────── */
   .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    padding: 0 24px;
-    max-width: 560px;
+    padding: 48px 24px 16px;
+    max-width: 620px;
     margin: 0 auto;
-    justify-content: center;
   }
 
   .hero-top {
-    padding-top: 48px;
-    margin-bottom: 64px;
+    margin-bottom: 56px;
   }
 
   .logo {
@@ -84,8 +83,9 @@
     font-size: 17px;
     font-weight: 700;
     letter-spacing: 0.04em;
+    color: var(--paper);
+    text-decoration: none;
   }
-
   .logo span { color: var(--gold); }
 
   .tag {
@@ -102,15 +102,24 @@
     vertical-align: middle;
   }
 
-  .hero-title {
-    font-family: 'Noto Serif TC', serif;
-    font-size: clamp(32px, 8vw, 48px);
-    font-weight: 700;
-    line-height: 1.25;
-    margin-bottom: 16px;
-    letter-spacing: 0.02em;
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    display: block;
   }
 
+  .hero-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(34px, 8vw, 52px);
+    font-weight: 700;
+    line-height: 1.22;
+    margin-bottom: 20px;
+    letter-spacing: 0.01em;
+  }
   .hero-title em {
     font-style: normal;
     color: var(--gold);
@@ -119,17 +128,290 @@
   .hero-sub {
     font-size: 14px;
     color: var(--muted);
-    line-height: 1.8;
-    margin-bottom: 48px;
+    line-height: 1.85;
+    margin-bottom: 40px;
+    max-width: 440px;
   }
 
-  /* Tool cards */
-  .tools { display: flex; flex-direction: column; gap: 12px; margin-bottom: 48px; }
+  /* ─────────── 免費承諾 Banner ─────────── */
+  .free-banner {
+    border: 1.5px solid rgba(196, 147, 42, 0.35);
+    background:
+      linear-gradient(135deg, rgba(196, 147, 42, 0.12) 0%, rgba(196, 147, 42, 0.04) 100%);
+    border-radius: 16px;
+    padding: 26px 24px;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .free-banner::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -30%;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(196, 147, 42, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .free-banner-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  .free-banner-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--paper);
+    line-height: 1.35;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  .free-banner-title em {
+    font-style: normal;
+    color: var(--gold);
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 2px;
+  }
+  .free-banner-desc {
+    font-size: 13px;
+    color: rgba(245, 240, 232, 0.72);
+    line-height: 1.75;
+    position: relative;
+  }
+  .free-banner-desc strong {
+    color: var(--paper);
+    font-weight: 600;
+  }
+
+  /* ─────────── 搜尋 ─────────── */
+  .search-bar {
+    position: relative;
+    margin-bottom: 40px;
+  }
+  .search-bar input {
+    width: 100%;
+    padding: 14px 16px 14px 44px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    color: var(--paper);
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 14px;
+    -webkit-appearance: none;
+    transition: border-color 0.18s, background 0.18s;
+  }
+  .search-bar input::placeholder { color: var(--muted-2); }
+  .search-bar input:focus {
+    border-color: var(--gold);
+    background: rgba(196, 147, 42, 0.04);
+    outline: none;
+  }
+  .search-bar .search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted-2);
+    font-size: 15px;
+    pointer-events: none;
+  }
+  .search-bar .search-clear {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 18px;
+    cursor: pointer;
+    display: none;
+    padding: 4px 8px;
+    line-height: 1;
+  }
+
+  /* ─────────── 精選最新 橫向滑動 ─────────── */
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--paper);
+    letter-spacing: 0.02em;
+  }
+  .section-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .featured-strip {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 24px;
+    -webkit-overflow-scrolling: touch;
+    margin: 0 -24px 48px;
+    padding: 4px 24px 24px;
+  }
+  .featured-strip::-webkit-scrollbar { display: none; }
+  .featured-strip { scrollbar-width: none; }
+
+  .featured-card {
+    flex: 0 0 280px;
+    scroll-snap-align: start;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 22px 20px;
+    text-decoration: none;
+    position: relative;
+    transition: border-color 0.2s, transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 196px;
+  }
+  .featured-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-2px);
+  }
+  .featured-card.case {
+    background: linear-gradient(145deg, rgba(139, 32, 32, 0.12) 0%, var(--card) 60%);
+    border-color: rgba(139, 32, 32, 0.45);
+  }
+  .featured-card.case:hover {
+    border-color: #d4484a;
+  }
+  .featured-card.new {
+    background: linear-gradient(145deg, rgba(42, 107, 74, 0.12) 0%, var(--card) 60%);
+    border-color: rgba(42, 107, 74, 0.45);
+  }
+  .featured-card.new:hover {
+    border-color: #6abf8a;
+  }
+
+  .featured-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 4px;
+    width: fit-content;
+  }
+  .featured-badge.case { background: rgba(139, 32, 32, 0.2); color: #f28b6e; }
+  .featured-badge.new { background: rgba(42, 107, 74, 0.2); color: #7cd4a3; }
+  .featured-badge.hot { background: rgba(196, 147, 42, 0.2); color: var(--gold); }
+
+  .featured-card-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--paper);
+    line-height: 1.4;
+    margin-top: 4px;
+  }
+  .featured-card-desc {
+    font-size: 12px;
+    color: rgba(245, 240, 232, 0.55);
+    line-height: 1.65;
+    flex: 1;
+  }
+  .featured-card-arrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  .featured-card-arrow span:last-child {
+    font-size: 14px;
+    color: var(--gold);
+    transition: transform 0.2s;
+  }
+  .featured-card:hover .featured-card-arrow span:last-child { transform: translateX(4px); }
+
+  /* ─────────── Tab Nav ─────────── */
+  .tab-scroll-wrap {
+    margin: 0 -24px 12px;
+    padding: 0 24px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tab-scroll-wrap::-webkit-scrollbar { display: none; }
+  .tab-scroll-wrap { scrollbar-width: none; }
+
+  .tab-nav {
+    display: flex;
+    gap: 8px;
+    white-space: nowrap;
+  }
+  .tab-btn {
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--muted);
+    background: none;
+    border: 1.5px solid var(--border);
+    border-radius: 22px;
+    padding: 9px 18px;
+    cursor: pointer;
+    transition: all 0.18s;
+    flex-shrink: 0;
+  }
+  .tab-btn:hover {
+    color: var(--paper);
+    border-color: var(--border-2);
+  }
+  .tab-btn.active {
+    color: var(--ink);
+    background: var(--paper);
+    border-color: var(--paper);
+    font-weight: 600;
+  }
+
+  .tab-subtitle {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 22px;
+    padding-left: 2px;
+    font-style: italic;
+  }
+
+  /* ─────────── Tool Cards ─────────── */
+  .tools {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 56px;
+  }
 
   .tool-card {
     display: block;
     text-decoration: none;
-    border: 1.5px solid #2a2520;
+    background: transparent;
+    border: 1.5px solid var(--border);
     border-radius: 12px;
     padding: 20px 22px;
     transition: all 0.2s;
@@ -137,31 +419,16 @@
     overflow: hidden;
     cursor: pointer;
   }
-
-  .tool-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: var(--gold);
-    opacity: 0;
-    transition: opacity 0.2s;
+  .tool-card:hover {
+    border-color: var(--gold);
+    background: rgba(196, 147, 42, 0.04);
   }
-
-  .tool-card:hover { border-color: var(--gold); transform: translateX(4px); }
-  .tool-card:hover::before { opacity: 0.04; }
-
-  .tool-card-inner { position: relative; z-index: 1; display: flex; align-items: center; gap: 18px; }
-
-  .tool-num {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-    min-width: 24px;
+  .tool-card-inner {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
   }
-
-  .tool-info { flex: 1; }
-
+  .tool-info { flex: 1; min-width: 0; }
   .tool-name {
     font-family: 'Noto Serif TC', serif;
     font-size: 17px;
@@ -169,297 +436,255 @@
     color: var(--paper);
     margin-bottom: 6px;
     line-height: 1.4;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
   }
-
   .tool-desc {
-    font-size: 13px;
+    font-size: 12.5px;
     color: var(--muted);
-    line-height: 1.65;
+    line-height: 1.7;
   }
-
-  .tool-badge {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    padding: 3px 8px;
-    border-radius: 3px;
-    letter-spacing: 0.08em;
-    white-space: nowrap;
-  }
-
-  .tool-badge.free { background: #1a2e1a; color: #6abf6a; border: 1px solid #2a4a2a; }
-  .tool-badge.new { background: #2e1a1a; color: var(--gold); border: 1px solid #4a2a2a; }
-  .tool-badge.pro { background: #1a1e2e; color: #6a8abf; border: 1px solid #2a3a4a; }
-
   .tool-arrow {
     color: var(--muted);
-    font-size: 16px;
+    font-size: 18px;
     transition: transform 0.2s, color 0.2s;
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+  .tool-card:hover .tool-arrow {
+    transform: translateX(4px);
+    color: var(--gold);
   }
 
-  .tool-card:hover .tool-arrow { transform: translateX(4px); color: var(--gold); }
+  /* Featured variant */
+  .tool-card.featured {
+    background: linear-gradient(135deg, #1e1916 0%, #221e1a 100%);
+    border-color: rgba(196, 147, 42, 0.3);
+    padding: 24px 24px;
+  }
+  .tool-card.featured .tool-name { font-size: 19px; }
+  .tool-card.featured:hover { border-color: var(--gold); }
 
-  /* Persona bar */
-  .persona-bar {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 28px; gap: 10px;
+  /* Tool badge (右上角 inline 旁邊) */
+  .tool-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    padding: 3px 7px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-weight: 500;
+    white-space: nowrap;
+    vertical-align: middle;
   }
-  .persona-badge {
-    font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em;
-    padding: 5px 12px; border-radius: 20px; border: 1.5px solid #2a2520;
-    color: var(--paper); display: flex; align-items: center; gap: 6px;
+  .tool-badge.new {
+    background: rgba(42, 107, 74, 0.2);
+    color: #7cd4a3;
+    border: 1px solid rgba(42, 107, 74, 0.4);
   }
-  .persona-badge.public  { border-color: #4a3820; color: var(--gold); }
-  .persona-badge.accountant { border-color: #1e3a5c; color: #7aaad0; }
-  .persona-badge.lawyer { border-color: #1e3a28; color: #6abf8a; }
-  .persona-switch {
-    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em;
-    color: var(--muted); background: none; border: 1px solid #2a2520;
-    border-radius: 20px; padding: 4px 12px; cursor: pointer;
-    transition: color 0.15s, border-color 0.15s;
+  .tool-badge.case {
+    background: rgba(139, 32, 32, 0.2);
+    color: #f28b6e;
+    border: 1px solid rgba(139, 32, 32, 0.4);
   }
-  .persona-switch:hover { color: var(--paper); border-color: #3a3530; }
+  .tool-badge.hot {
+    background: rgba(196, 147, 42, 0.2);
+    color: var(--gold);
+    border: 1px solid rgba(196, 147, 42, 0.4);
+  }
 
-  .category-label {
+  /* ─────────── Search Fallback ─────────── */
+  .search-fallback {
+    text-align: center;
+    padding: 40px 20px;
+    border: 1px dashed var(--border);
+    border-radius: 12px;
+  }
+  .search-fallback-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 16px;
+    color: var(--paper);
+    margin-bottom: 8px;
+  }
+  .search-fallback-title strong {
+    color: var(--gold);
+  }
+  .search-fallback-hint {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+  .search-fallback-chips {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .search-chip {
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 12px;
+    color: var(--paper);
+    background: rgba(196, 147, 42, 0.08);
+    border: 1px solid rgba(196, 147, 42, 0.3);
+    border-radius: 20px;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .search-chip:hover {
+    background: rgba(196, 147, 42, 0.16);
+    border-color: var(--gold);
+  }
+  .search-fallback-contact {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 12px;
+  }
+  .search-fallback-contact a {
+    color: var(--gold);
+    text-decoration: underline;
+  }
+
+  /* ─────────── Section Divider ─────────── */
+  .section-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0 auto 36px;
+    max-width: 60px;
+  }
+
+  /* ─────────── Footer ─────────── */
+  .hero-footer {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: rgba(245, 240, 232, 0.35);
+    letter-spacing: 0.08em;
+    padding-bottom: 24px;
+    line-height: 2;
+  }
+  .hero-footer a { color: rgba(245, 240, 232, 0.35); text-decoration: none; }
+
+  /* ─────────── FAQ ─────────── */
+  .faq-section { padding: 0 24px 64px; max-width: 620px; margin: 0 auto; }
+  .faq-heading {
     font-family: 'DM Mono', monospace;
     font-size: 10px;
     color: var(--muted);
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    padding: 6px 4px 4px;
-    border-bottom: 1px solid #2a2520;
-    margin-bottom: 6px;
-    margin-top: 8px;
+    margin-bottom: 20px;
   }
-
-  .category-label:first-child { margin-top: 0; }
-
-  /* Divider line */
-  .divider {
-    height: 1px;
-    background: #2a2520;
-    margin: 0 0 16px;
-  }
-
-  /* Footer */
-  .hero-footer {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: rgba(245,240,232,0.45);
-    letter-spacing: 0.08em;
-    padding-bottom: 48px;
-    line-height: 2;
-  }
-
-  .hero-footer a { color: rgba(245,240,232,0.45); text-decoration: none; }
-
-  /* Law strip */
-  .law-strip {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-bottom: 40px;
-  }
-
-  .law-pill {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: #4a4540;
-    border: 1px solid #2a2520;
-    padding: 4px 10px;
-    border-radius: 20px;
-    letter-spacing: 0.08em;
-  }
-
-  /* Search bar */
-  .search-bar {
-    position: relative;
-    margin-bottom: 16px;
-  }
-  .search-bar input {
-    width: 100%;
-    padding: 10px 14px 10px 36px;
-    background: rgba(255,255,255,0.04);
-    border: 1.5px solid #2a2520;
-    border-radius: 10px;
-    color: var(--paper);
-    font-family: 'Noto Sans TC', sans-serif;
-    font-size: 13px;
-    -webkit-appearance: none;
-    transition: border-color 0.18s;
-  }
-  .search-bar input::placeholder { color: #4a4540; }
-  .search-bar input:focus { border-color: var(--gold); outline: none; }
-  .search-bar .search-icon {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #4a4540;
-    font-size: 14px;
-    pointer-events: none;
-  }
-  .search-bar .search-clear {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: var(--muted);
-    font-size: 16px;
-    cursor: pointer;
-    display: none;
-    padding: 2px 6px;
-  }
-
-  /* Tab nav */
-  .tab-nav {
-    display: flex;
-    gap: 6px;
-    margin-bottom: 16px;
-    flex-wrap: wrap;
-  }
-  .tab-btn {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    background: none;
-    border: 1.5px solid #2a2520;
-    border-radius: 20px;
-    padding: 6px 16px;
-    cursor: pointer;
-    transition: all 0.18s;
-    white-space: nowrap;
-  }
-  .tab-btn:hover { color: var(--paper); border-color: #3a3530; }
-  .tab-btn.active { color: var(--ink); background: var(--paper); border-color: var(--paper); }
-
-  .tab-panel { display: none; flex-direction: column; gap: 12px; }
-  .tab-panel.active { display: flex; }
-
-  /* Category subtitle for scenario tabs */
-  .category-sub {
-    font-size: 12px;
-    color: #4a4540;
-    line-height: 1.6;
-    margin-bottom: 12px;
-    margin-top: -4px;
-  }
-
-  /* Collapsible pro section */
-  .pro-collapse-toggle {
+  .faq-item { border-top: 1px solid var(--border); }
+  .faq-q {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
-    padding: 14px 0;
-    background: none;
-    border: none;
-    border-top: 1px solid #2a2520;
-    color: var(--muted);
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    cursor: pointer;
-    margin-top: 8px;
-    transition: color 0.18s;
-  }
-  .pro-collapse-toggle:hover { color: var(--paper); }
-  .pro-collapse-toggle .chevron {
-    transition: transform 0.25s ease;
-    font-size: 12px;
-  }
-  .pro-collapse-toggle.open .chevron { transform: rotate(180deg); }
-  .pro-collapse-tools {
-    display: none;
-    flex-direction: column;
     gap: 12px;
-    padding-bottom: 8px;
+    font-family: 'Noto Serif TC', serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--paper);
+    line-height: 1.5;
+    padding: 18px 0;
+    cursor: pointer;
+    user-select: none;
   }
-  .pro-collapse-tools.open { display: flex; }
-
-  /* Featured tool variant */
-  .tool-card.featured {
-    border-color: #2a2520;
-    background: linear-gradient(135deg, #1e1916 0%, #221e1a 100%);
+  .faq-q:hover { color: var(--gold); }
+  .faq-chevron {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    opacity: 0.5;
+    transition: transform 0.25s ease;
   }
-  .tool-card.featured:hover { border-color: var(--gold); }
-  .tool-card.featured .tool-name { font-size: 18px; }
+  .faq-item.open .faq-chevron { transform: rotate(180deg); }
+  .faq-a {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.85;
+    display: none;
+    padding-bottom: 18px;
+  }
+  .faq-item.open .faq-a { display: block; }
+  .faq-a a { color: var(--gold); text-decoration: none; }
 
+  .disclaimer-bar {
+    max-width: 620px;
+    margin: 0 auto;
+    padding: 16px 24px 40px;
+    font-size: 11.5px;
+    color: rgba(255, 255, 255, 0.55);
+    line-height: 1.75;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .disclaimer-bar strong { color: rgba(255, 255, 255, 0.8); }
+
+  /* ─────────── 動畫 ─────────── */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(16px); }
     to { opacity: 1; transform: translateY(0); }
   }
-
   .hero-title { animation: fadeUp 0.5s ease both; }
-  .hero-sub { animation: fadeUp 0.5s 0.1s ease both; }
-  .law-strip { animation: fadeUp 0.5s 0.15s ease both; }
-  .tools { animation: fadeUp 0.5s 0.2s ease both; }
+  .hero-sub { animation: fadeUp 0.5s 0.08s ease both; }
+  .free-banner { animation: fadeUp 0.5s 0.14s ease both; }
+  .search-bar { animation: fadeUp 0.5s 0.2s ease both; }
 
-  /* FAQ SEO Section */
-  .faq-section { padding: 0 24px 64px; max-width: 560px; margin: 0 auto; }
-  .faq-heading { font-family: 'DM Mono', monospace; font-size: 10px; color: #3a3530; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 20px; }
-  .faq-item { border-top: 1px solid #2a2520; }
-  .faq-q {
-    display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    font-family: 'Noto Serif TC', serif; font-size: 14px; font-weight: 600; color: var(--paper);
-    line-height: 1.5; padding: 18px 0; cursor: pointer; user-select: none;
+  /* ─────────── 桌機放大 ─────────── */
+  @media (min-width: 720px) {
+    .hero { padding: 64px 32px 24px; max-width: 780px; }
+    .featured-card { flex: 0 0 320px; }
+    .featured-strip { margin: 0 -32px 56px; padding: 4px 32px 28px; }
+    .tab-scroll-wrap { margin: 0 -32px 16px; padding: 0 32px; }
+    .faq-section { max-width: 780px; padding: 0 32px 80px; }
+    .disclaimer-bar { max-width: 780px; padding: 16px 32px 48px; }
   }
-  .faq-q:hover { color: var(--gold); }
-  .faq-chevron { flex-shrink: 0; width: 16px; height: 16px; opacity: 0.5; transition: transform 0.25s ease; }
-  .faq-item.open .faq-chevron { transform: rotate(180deg); }
-  .faq-a {
-    font-size: 13px; color: var(--muted); line-height: 1.8;
-    display: none; padding-bottom: 18px;
-  }
-  .faq-item.open .faq-a { display: block; }
-  .faq-a a { color: var(--gold); text-decoration: none; }
-  .disclaimer-bar{max-width:560px;margin:0 auto;padding:16px 24px 40px;font-size:11.5px;color:rgba(255,255,255,0.72);line-height:1.7;border-top:1px solid rgba(255,255,255,0.18);}
-  .disclaimer-bar strong{color:rgba(255,255,255,0.88);}
 </style>
 </head>
 <body>
 
 <div class="hero">
   <div class="hero-top">
-    <div class="logo">Inheritance<span>Pro</span><span class="tag">Beta</span></div>
+    <a href="/" class="logo">Inheritance<span>Pro</span><span class="tag">Beta</span></a>
   </div>
 
-  <h1 class="hero-title">中華民國民法<br><em>財產權益</em>計算平台</h1>
+  <span class="eyebrow">中華民國民法 · 財產權益</span>
+  <h1 class="hero-title">讓每個權益<br>都被<em>精準計算</em></h1>
+  <p class="hero-sub">繼承、離婚、保險、損害賠償——30+ 個專業計算工具，依最新實務判例設計，讓律師、會計師、地政士、保險員都能直接拿去用。</p>
 
-  <p class="hero-sub" id="heroSub"></p>
-
-  <div class="persona-bar">
-    <div class="persona-badge" id="personaBadge"></div>
-    <button class="persona-switch" id="personaSwitchBtn">切換身份</button>
-  </div>
-  <div id="proGateModal" style="display:none;position:fixed;inset:0;z-index:10001;background:rgba(0,0,0,0.7);align-items:center;justify-content:center;padding:24px;">
-    <div style="background:#1a1410;border:1px solid rgba(196,147,42,0.3);border-radius:16px;padding:28px 24px;max-width:380px;width:100%;text-align:center;">
-      <div style="font-size:32px;margin-bottom:12px;" id="proGateIcon">⚖️</div>
-      <div style="font-family:'Noto Serif TC',serif;font-size:18px;font-weight:700;color:#f5f0e8;margin-bottom:8px;" id="proGateTitle">進階功能</div>
-      <div style="font-size:13px;color:rgba(245,240,232,0.55);line-height:1.7;margin-bottom:20px;" id="proGateDesc">此功能需升級 Pro 方案解鎖。</div>
-      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px;">
-        <a href="/pricing.html?tier=tax" style="display:block;padding:12px;background:rgba(30,58,92,0.4);border:1px solid rgba(122,170,208,0.3);color:#7aaad0;border-radius:8px;font-weight:600;font-size:13px;text-decoration:none;">📊 開通進階稅務功能</a>
-        <a href="/pricing.html?tier=legal" style="display:block;padding:12px;background:rgba(30,58,40,0.4);border:1px solid rgba(106,191,138,0.3);color:#6abf8a;border-radius:8px;font-weight:600;font-size:13px;text-decoration:none;">⚖️ 開通進階法律功能</a>
-        <a href="/pricing.html?tier=all" style="display:block;padding:12px;background:#c4932a;color:#1a1410;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;">✦ 全部開通（最划算）</a>
-      </div>
-      <button onclick="document.getElementById('proGateModal').style.display='none'" style="background:none;border:none;color:rgba(245,240,232,0.4);font-size:13px;cursor:pointer;">取消</button>
-    </div>
-  </div>
-
+  <!-- 搜尋 -->
   <div class="search-bar">
     <span class="search-icon">&#x1F50D;</span>
-    <input type="text" id="toolSearch" placeholder="搜尋工具（例：車禍、贍養費、遺囑）" autocomplete="off">
+    <input type="text" id="toolSearch" placeholder="搜尋工具（例：車禍、贍養費、遺囑、出軌）" autocomplete="off">
     <button class="search-clear" id="searchClear" onclick="clearSearch()">&times;</button>
   </div>
 
-  <div id="tabNav" class="tab-nav"></div>
+  <!-- 精選最新 橫向滑動 -->
+  <div id="featuredSection">
+    <div class="section-header">
+      <span class="section-title">最新上線</span>
+      <span class="section-eyebrow">← 左右滑動 →</span>
+    </div>
+    <div class="featured-strip" id="featuredStrip"></div>
+  </div>
 
+  <!-- Tab 導覽 -->
+  <div class="section-header" id="browseHeader">
+    <span class="section-title">分類瀏覽</span>
+    <span class="section-eyebrow">30+ 個工具</span>
+  </div>
+  <div class="tab-scroll-wrap" id="tabScrollWrap">
+    <div id="tabNav" class="tab-nav"></div>
+  </div>
+  <div class="tab-subtitle" id="tabSubtitle"></div>
+
+  <!-- 工具卡片 -->
   <div class="tools" id="toolsContainer"></div>
 
-  <div class="divider"></div>
+  <div class="section-divider"></div>
 
   <div class="hero-footer">
     © 2026 InheritancePro. All rights reserved.<br>
@@ -501,17 +726,15 @@
   </div>
 </section>
 
-<section style="max-width:560px;margin:0 auto;padding:28px 24px 0;">
+<section style="max-width:620px;margin:0 auto;padding:28px 24px 0;">
   <div style="background:rgba(196,147,42,0.06);border:1px solid rgba(196,147,42,0.15);border-radius:14px;padding:24px 20px;text-align:center;">
     <div style="font-family:'Noto Serif TC',serif;font-size:16px;font-weight:700;color:var(--paper);margin-bottom:6px;">更新推播通知</div>
     <div style="font-size:12px;color:rgba(245,240,232,0.45);margin-bottom:16px;line-height:1.6;">訂閱後，當法規修正、新功能上線或工具重大更新時，我們會寄信通知您。</div>
-    <!-- 訂閱表單 -->
     <div id="subscribe-form" style="display:flex;gap:8px;flex-wrap:wrap;">
       <input type="email" id="subscribe-email" placeholder="your@email.com" style="flex:1;min-width:180px;padding:10px 14px;background:rgba(255,255,255,0.05);border:1.5px solid rgba(200,191,176,0.2);border-radius:8px;color:var(--paper);font-family:'Noto Sans TC',sans-serif;font-size:13px;-webkit-appearance:none;">
       <button id="subscribe-btn" onclick="handleSubscribe()" style="padding:10px 20px;background:var(--gold);border:none;border-radius:8px;color:var(--ink);font-family:'Noto Sans TC',sans-serif;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;">訂閱</button>
     </div>
     <div id="subscribe-msg" style="display:none;margin-top:10px;font-size:12px;line-height:1.6;"></div>
-    <!-- 已訂閱狀態 -->
     <div id="subscribed-state" style="display:none;">
       <div style="font-size:14px;color:#a8d8bc;font-weight:600;margin-bottom:8px;">✓ 已訂閱更新推播</div>
       <button onclick="handleUnsubscribe()" style="background:none;border:none;color:rgba(245,240,232,0.35);font-size:11px;font-family:'Noto Sans TC',sans-serif;cursor:pointer;text-decoration:underline;padding:0;">要取消訂閱嗎？</button>
@@ -642,110 +865,82 @@ async function handleUnsubscribe() {
 <script src="js/supabase-config.js"></script>
 <script type="module" src="js/auth-bar.js"></script>
 <script>
-  // ── Persona config ──────────────────────────────────────────────
-  const PERSONAS = {
-    public:     { name: '一般模式', emoji: '🏠', cls: 'public',
-      sub: '依中華民國民法設計，協助您快速了解繼承權益與財產分配。' },
-    accountant: { name: '進階稅務', emoji: '📊', cls: 'accountant',
-      sub: '遺產稅精算、節稅規劃、贈與策略試算，含多案件期限管理儀表板。' },
-    lawyer:     { name: '進階法律', emoji: '⚖️', cls: 'lawyer',
-      sub: '財產爭議分析、訴訟強度評估、脫產偵測與和解金額試算。' },
-    all:        { name: '一般模式', emoji: '🏠', cls: 'public',
-      sub: '依中華民國民法設計，協助您快速了解繼承權益與財產分配。' },
-  };
-
-  // ── All tools (shared pool) ────────────────────────────────────
+  // ═════════════════════════════════════════════════════════════
+  // ALL TOOLS — 工具資料庫（v2：使用 'all' persona 統一讀取）
+  // ═════════════════════════════════════════════════════════════
   const ALL_TOOLS = {
     calculator:           { href: 'calculator.html', featured: true,
-      name: { public: '遺產分配計算', accountant: '遺產繼承計算器', lawyer: '遺產繼承計算器' },
-      desc: { public: '應繼分、特留分、遺產稅一次計算，支援代位繼承與拋棄繼承', accountant: '含工作底稿匯出、節稅比較試算、未上市股票資產淨值法', lawyer: '應繼分、特留分侵害分析，支援代位繼承與拋棄繼承' } },
+      name: { all: '遺產繼承計算器' },
+      desc: { all: '應繼分、特留分、遺產稅一次計算，支援代位繼承與拋棄繼承' } },
     'inheritance-timeline': { href: 'inheritance-timeline.html',
       name: { all: '繼承流程時間軸' },
       desc: { all: '死亡登記、拋棄繼承、遺產稅申報各項期限倒數' } },
     'deadline-dashboard': { href: 'deadline-dashboard.html',
       name: { all: '期限管理儀表板' },
-      desc: { all: '多案件並排追蹤，六項法定期限自動倒數，可勾選完成', accountant: '多案件並排管理，一眼掌握哪個案子快到期' } },
+      desc: { all: '多案件並排追蹤，六項法定期限自動倒數，可勾選完成' } },
     caregiver:            { href: 'caregiver.html',
       name: { all: '照顧者特別貢獻' },
       desc: { all: '民法§1149，照顧貢獻估值、主張策略、酌給遺產請求' } },
     'gift-tax':           { href: 'gift-tax.html',
       name: { all: '贈與稅試算' },
-      desc: { all: '244萬年度免稅額、分年規劃節稅、vs 繼承稅負比較' } },
+      desc: { all: '244 萬年度免稅額、分年規劃節稅、vs 繼承稅負比較' } },
     'property-sale-tax':  { href: 'property-sale-tax.html',
       name: { all: '房地合一稅試算' },
       desc: { all: '繼承後出售稅率、自住優惠、持有年數計算' } },
-    'inherited-property-trap': { href: 'inherited-property-trap.html', featured: true,
-      name: { public: '繼承房子賣掉會賠錢嗎？', accountant: '繼承房貸陷阱試算', lawyer: '繼承房貸陷阱試算' },
-      desc: { public: '真實案例：不懂規則被課 175 萬，懂規則只要 28.6 萬，差 146 萬', accountant: '「憑直覺 vs 套用優惠」對比試算・額外負擔扣除・非自願出售 20% 稅率・陷阱警示', lawyer: '對比試算含額外負擔扣除（財110台財稅字第11004561660號函）與非自願出售優惠，含申報策略提醒' } },
+    'inherited-property-trap': { href: 'inherited-property-trap.html', featured: true, badge: 'case',
+      name: { all: '繼承房貸陷阱試算' },
+      desc: { all: '真實案例：不懂規則被課 175 萬，懂規則只要 28.6 萬，差 146 萬' } },
     'real-estate':        { href: 'real-estate.html',
       name: { all: '不動產繼承試算' },
       desc: { all: '地價稅、房屋稅、土地增值稅免徵（獨立版）' } },
     'stock-inheritance':  { href: 'stock-inheritance.html',
       name: { all: '股票繼承估算' },
       desc: { all: '上市收盤價、未上市資產淨值法（獨立版）' } },
-    'limited-inheritance': { href: 'limited-inheritance.html', persona: 'lawyer',
-      name: { public: '繼承債務超過遺產？', accountant: '限定繼承精算', lawyer: '限定繼承精算' },
-      desc: { lawyer: '§1148限定繼承：遺產資不抵債時各繼承人責任範圍，含§1159清償順序與拋棄時機建議', all: '§1148 資不抵債分析・清償順序模擬・拋棄繼承時機建議・含裁判書引用條文' } },
-    'will-validity':      { href: 'will-validity.html', persona: 'lawyer',
-      name: { public: '遺囑是否有效？', accountant: '遺囑效力鑑定', lawyer: '遺囑效力鑑定' },
-      desc: { lawyer: '依§1189逐條檢核五種遺囑形式法定要件，判斷效力並提供訴訟策略備忘', all: '五種遺囑逐條檢核・法定要件比對・效力瑕疵分析・附訴訟攻防策略備忘' } },
-    'estate-tax-detail':  { href: 'estate-tax-detail.html', persona: 'accountant',
+    'limited-inheritance': { href: 'limited-inheritance.html',
+      name: { all: '限定繼承精算' },
+      desc: { all: '§1148 資不抵債分析・清償順序模擬・拋棄繼承時機建議' } },
+    'will-validity':      { href: 'will-validity.html',
+      name: { all: '遺囑效力鑑定' },
+      desc: { all: '五種遺囑逐條檢核・法定要件比對・效力瑕疵分析' } },
+    'estate-tax-detail':  { href: 'estate-tax-detail.html',
       name: { all: '遺產稅精算工作底稿' },
-      desc: { accountant: '完整扣除額逐項精算：免稅1333萬、配偶553萬、子女56萬/人，含列印工作底稿', all: '17項扣除額逐筆精算・自動產出工作底稿・可列印存檔・符合國稅局申報格式' } },
+      desc: { all: '17 項扣除額逐筆精算・自動產出工作底稿・可列印存檔' } },
     'insurance-estate-risk': { href: 'insurance-estate-risk.html',
-      name: { public: '保單會被課遺產稅嗎？', accountant: '壽險保單遺產稅風險評估', lawyer: '壽險保單遺產稅風險評估' },
-      desc: { public: '依國稅局八大態樣評估保單被課遺產稅風險，含補稅金額試算', accountant: '八大態樣逐項評分，實質課稅風險分析，含申報實務備忘', lawyer: '八大態樣風險評估，行政救濟要點與舉證責任分配備忘' } },
+      name: { all: '壽險保單遺產稅風險評估' },
+      desc: { all: '依國稅局八大態樣評估保單被課遺產稅風險，含補稅金額試算' } },
     'insurance-gift-tax': { href: 'insurance-gift-tax.html',
-      name: { public: '保單變更要繳稅嗎？', accountant: '保單要保人變更贈與稅', lawyer: '保單要保人變更贈與稅' },
-      desc: { public: '變更要保人時保價金視為贈與，計算應繳贈與稅額', accountant: '§5-1要保人變更贈與稅精算，含申報期限與保價金查詢指引', lawyer: '要保人變更贈與稅計算，含§5-1適用爭議與實質課稅分析' } },
-    'gift-planner':       { href: 'gift-planner.html', persona: 'accountant',
+      name: { all: '保單要保人變更贈與稅' },
+      desc: { all: '§5-1 要保人變更贈與稅精算，含保價金查詢指引' } },
+    'gift-planner':       { href: 'gift-planner.html',
       name: { all: '贈與節稅規劃模擬' },
-      desc: { accountant: '分年贈與 vs 繼承稅負比較，自動推算最優節稅年數與方案', all: '分年贈與 vs 一次繼承稅負比較・自動推算最省稅年數・含不動產實價移轉分析' } },
-    'case-manager':       { href: 'case-manager.html', persona: 'accountant',
+      desc: { all: '分年贈與 vs 一次繼承稅負比較・自動推算最省稅年數' } },
+    'case-manager':       { href: 'case-manager.html',
       name: { all: '多案件管理系統' },
-      desc: { accountant: '多案件六項法定期限倒數，依緊急程度排序，附案件備註', all: '六項法定期限自動倒數・案件緊急度排序・備註紀錄・不漏掉任何申報截止日' } },
+      desc: { all: '六項法定期限自動倒數・案件緊急度排序・備註紀錄' } },
     'property-split':     { href: 'property-split.html',
-      name: { public: '夫妻財產分配', accountant: '剩餘財產差額分配請求權', lawyer: '剩餘財產差額分配請求權' },
+      name: { all: '剩餘財產差額分配' },
       desc: { all: '民法§1030-1，法定財產制下配偶可請求之差額計算' } },
     alimony:              { href: 'alimony.html',
-      name: { public: '離婚後生活費', accountant: '贍養費試算', lawyer: '贍養費試算' },
+      name: { all: '贍養費試算' },
       desc: { all: '民法§1057，雙方收入、婚姻年數、給付期間估算' } },
     'insurance-divorce':  { href: 'insurance-divorce.html',
-      name: { public: '保單現金價值分配', accountant: '保價金離婚財產分配', lawyer: '保價金離婚財產分配' },
-      desc: { public: '壽險保價金納入婚後財產計算，含婚前/婚後拆分', accountant: '保價金查詢管道、婚前/婚後拆分計算、解約所得稅務影響', lawyer: '保價金舉證要點、§1030-1酌減抗辯、保全措施備忘' } },
-    'insurance-forced-share': { href: 'insurance-forced-share.html',
-      name: { public: '指定受益人會侵害特留分嗎？', accountant: '保單特留分侵害分析', lawyer: '保單受益人 vs 特留分侵害' },
-      desc: { public: '保費過高、臨終投保，其他繼承人可主張扣減嗎？', accountant: '顯失公平判定與扣減金額試算', lawyer: '107 台上 1395 號見解應用・保費顯失公平五項風險指標・扣減金額試算' } },
-    'insurance-policyholder-death': { href: 'insurance-policyholder-death.html',
-      name: { public: '要保人過世保單怎麼辦？', accountant: '要保人過世保單處理決策', lawyer: '要保人過世保單處理決策' },
-      desc: { public: '續繳/解約/變更/借款四方案比較', accountant: '保價金列入遺產、四方案稅務比較、5 日通知期限', lawyer: '§§3/4/108、§1148 繼承效力、變更要保人之贈與稅爭議' } },
-    'insurance-amt': { href: 'insurance-amt.html',
-      name: { public: '保險金要繳最低稅負嗎？', accountant: '最低稅負制保單試算 (AMT)', lawyer: '最低稅負制保單試算' },
-      desc: { public: '高額壽險給付可能要繳 20% AMT，一鍵判斷', accountant: '3,740 萬免稅門檻・多保單合計・基本所得額精算・含海外所得整合', lawyer: '所得基本稅額條例 §12/§13 適用判斷' } },
-    'insurance-loan-vs-surrender': { href: 'insurance-loan-vs-surrender.html',
-      name: { public: '保單借款還是解約划算？', accountant: '保單借款 vs 解約決策', lawyer: '保單借款 vs 解約決策' },
-      desc: { public: '急需用錢時該借還該解？淨現金流對比', accountant: '借款利息成本 vs 解約所得稅・保單失效臨界年數計算', lawyer: '保險法§119/§120、所§14 解約所得稅分析' } },
-    'insurance-accident-combined': { href: 'insurance-accident-combined.html',
-      name: { public: '車禍可以領幾張保險金？', accountant: '意外事故保險金合計', lawyer: '意外事故保險金合計試算' },
-      desc: { public: '強制險+壽險+團保+信用卡險...多項保險可同時請領', accountant: '12 項險種盤點・申請順序・所需文件清單', lawyer: '保險法§35 不重複原則例外・強責法§25/§27/§32 給付項目' } },
-    'insurance-beneficiary-order': { href: 'insurance-beneficiary-order.html',
-      name: { public: '保險金該給誰？', accountant: '保單受益人順位分配', lawyer: '保單受益人順位分配試算' },
-      desc: { public: '第一順位受益人已過世，保險金歸誰？自動判定', accountant: '保險法§113 + 民法§1138 繼承順位整合分配', lawyer: '§112/§113 適用 + §1144 應繼分自動計算・含「法定繼承人」條款爭議' } },
+      name: { all: '保價金離婚財產分配' },
+      desc: { all: '壽險保價金納入婚後財產計算，含婚前/婚後拆分' } },
     'child-support':      { href: 'child-support.html',
       name: { all: '子女扶養費計算' },
       desc: { all: '依雙方收入比例分擔，支援多名子女，含親權歸屬情境' } },
-    'divorce-damages':    { href: 'divorce-damages.html', persona: 'lawyer',
+    'divorce-damages':    { href: 'divorce-damages.html',
       name: { all: '離婚損害賠償精算' },
-      desc: { lawyer: '§1056、§195逐項估算，含被告對象分析與時效提醒', all: '§1056 非財產損害精算・§195 侵害配偶權慰撫金・被告對象策略・時效管理・判例區間參照' } },
-    'infidelity-damages': { href: 'infidelity-damages.html',
-      name: { public: '出軌可以告多少？', accountant: '侵害配偶權損害賠償', lawyer: '侵害配偶權損害賠償精算' },
-      desc: { public: '不用離婚也能告！外遇、小三求償金額試算，含被告策略', lawyer: '§184+§195 侵害配偶權精算・可對配偶及第三人分別求償・加重情節評估・含時效與連帶責任備忘', all: '§184+§195 侵害配偶權精算・可對配偶及第三人分別求償・加重情節評估・含時效與連帶責任備忘' } },
+      desc: { all: '§1056、§195 逐項估算，含被告對象分析與時效提醒' } },
+    'infidelity-damages': { href: 'infidelity-damages.html', badge: 'new',
+      name: { all: '侵害配偶權損害賠償（出軌）' },
+      desc: { all: '不用離婚也能告！外遇、小三求償金額試算，含被告策略' } },
     'asset-detection':    { href: 'asset-detection.html',
-      name: { public: '財產轉移偵測', accountant: '脫產偵測分析', lawyer: '脫產偵測分析' },
+      name: { all: '脫產偵測分析' },
       desc: { all: '財產異動風險評估，依法律規定自動標記，支援 CSV 上傳' } },
     'interest-calc':      { href: 'interest-calc.html',
       name: { all: '法定利率利息計算器' },
-      desc: { lawyer: '§203年息5%，計算起訴日/請求日起算遲延利息，含訴之聲明格式提醒', all: '依民法§203年利率5%計算損害賠償或借貸糾紛利息，含逐年明細' } },
+      desc: { all: '依民法§203 年利率 5% 計算損害賠償或借貸糾紛利息' } },
     'minor-damages':      { href: 'minor-damages.html',
       name: { all: '未成年損害賠償試算' },
       desc: { all: '霸凌、傷害事件，含父母連帶責任、精神慰撫金' } },
@@ -753,245 +948,225 @@ async function handleUnsubscribe() {
       name: { all: '車禍損害賠償分析' },
       desc: { all: '傷害／死亡賠償明細，自動扣除強制責任險給付' } },
     prescription:         { href: 'prescription.html',
-      name: { public: '權利時效查詢', accountant: '消滅時效計算機', lawyer: '消滅時效計算機' },
+      name: { all: '消滅時效計算機' },
       desc: { all: '§125–127、§197 各類請求權時效，含時效中斷提醒' } },
-    'forced-share':       { href: 'forced-share.html', persona: 'lawyer',
-      name: { public: '遺囑侵害你的權利？', accountant: '特留分侵害精算', lawyer: '特留分侵害精算' },
-      desc: { lawyer: '依§1223逐人計算特留分與侵害金額，含扣減權行使期限提醒', all: '§1223 逐人精算特留分・侵害金額計算・扣減權時效提醒・含裁判實務見解' } },
-    'litigation-strength': { href: 'litigation-strength.html', persona: 'lawyer',
-      name: { public: '案件勝率評估', accountant: '訴訟強度分析報告', lawyer: '訴訟強度分析報告' },
-      desc: { lawyer: '11項因素系統評分，輸出訴訟強度、弱點分析與策略建議', all: '11項因素系統評分・勝訴率預估・弱點分析・策略建議・可匯出評估報告' } },
-    'settlement-calc':    { href: 'settlement-calc.html', persona: 'lawyer',
-      name: { public: '和解金額建議', accountant: '和解談判模擬器', lawyer: '和解談判模擬器' },
-      desc: { lawyer: '期望值模型計算合理和解範圍，提供最佳開價與底線策略', all: '期望值模型・最佳開價策略・底線計算・對方可能出價分析・談判區間圖表' } },
+    'forced-share':       { href: 'forced-share.html',
+      name: { all: '特留分侵害精算' },
+      desc: { all: '§1223 逐人精算特留分・侵害金額計算・扣減權時效提醒' } },
+    'litigation-strength': { href: 'litigation-strength.html',
+      name: { all: '訴訟強度分析報告' },
+      desc: { all: '11 項因素系統評分・勝訴率預估・弱點分析・策略建議' } },
+    'settlement-calc':    { href: 'settlement-calc.html',
+      name: { all: '和解談判模擬器' },
+      desc: { all: '期望值模型・最佳開價策略・底線計算・談判區間圖表' } },
     'legal-basis':        { href: 'legal-basis.html',
       name: { all: '試算分析依據' },
       desc: { all: '各工具法律依據、民法條文、法院判例與計算模型完整說明' } },
+    // 保險專區
+    'insurance-forced-share': { href: 'insurance-forced-share.html', badge: 'new',
+      name: { all: '保單 vs 特留分侵害' },
+      desc: { all: '107 台上 1395 號・保費顯失公平五項風險指標・扣減金額試算' } },
+    'insurance-policyholder-death': { href: 'insurance-policyholder-death.html', badge: 'new',
+      name: { all: '要保人過世保單處理' },
+      desc: { all: '續繳／解約／變更／借款四方案稅務與現金流對比' } },
+    'insurance-amt': { href: 'insurance-amt.html', badge: 'new',
+      name: { all: '最低稅負制保單 (AMT)' },
+      desc: { all: '3,740 萬免稅門檻・多保單合計・基本所得額精算' } },
+    'insurance-loan-vs-surrender': { href: 'insurance-loan-vs-surrender.html', badge: 'new',
+      name: { all: '保單借款 vs 解約' },
+      desc: { all: '淨現金對比・保單失效臨界年數計算・實務判決' } },
+    'insurance-accident-combined': { href: 'insurance-accident-combined.html', badge: 'new',
+      name: { all: '意外事故保險金合計' },
+      desc: { all: '12 項險種盤點・申請順序・所需文件清單（常被遺漏數十萬）' } },
+    'insurance-beneficiary-order': { href: 'insurance-beneficiary-order.html', badge: 'new',
+      name: { all: '受益人順位分配' },
+      desc: { all: '§113 + 民法§1138/§1144 自動判定保險金歸屬' } },
   };
 
-  // ── Helper: resolve persona-aware fields ───────────────────────
-  function getName(tool, persona) {
-    if (typeof tool.name === 'string') return tool.name;
-    return tool.name[persona] || tool.name.public || tool.name.all || '';
-  }
-  function getDesc(tool, persona) {
-    return tool.desc[persona] || tool.desc.all || '';
-  }
+  function getName(tool) { return tool.name.all; }
+  function getDesc(tool) { return tool.desc.all; }
   function ref(id) { return { ...ALL_TOOLS[id], _id: id }; }
 
-  // ── TABS: Public / All (情境導向 6 分類) ──────────────────────
-  const TABS_PUBLIC = [
+  // ═════════════════════════════════════════════════════════════
+  // FEATURED_LATEST — 置頂精選橫向滑動區（7 張）
+  // ═════════════════════════════════════════════════════════════
+  const FEATURED_LATEST = [
+    { id: 'inherited-property-trap', label: '真實案例', cls: 'case',
+      title: '繼承房貸陷阱試算',
+      desc: '不懂規則被課 175 萬，懂規則只要 28.6 萬，差 146 萬。真實新聞案例。' },
+    { id: 'infidelity-damages', label: '新上線', cls: 'new',
+      title: '侵害配偶權損害賠償',
+      desc: '不用離婚也能告！對配偶與第三人同時求償，含訴訟策略。' },
+    { id: 'insurance-accident-combined', label: '新上線', cls: 'new',
+      title: '意外事故保險金合計',
+      desc: '12 項險種一次盤點，常被遺漏數十萬理賠金。' },
+    { id: 'insurance-forced-share', label: '新上線', cls: 'new',
+      title: '保單 vs 特留分侵害',
+      desc: '107 台上 1395 號實務見解，計算可扣減金額。' },
+    { id: 'insurance-amt', label: '新上線', cls: 'new',
+      title: '最低稅負制保單 (AMT)',
+      desc: '3,740 萬免稅門檻自動判定，多保單合計精算。' },
+    { id: 'insurance-beneficiary-order', label: '新上線', cls: 'new',
+      title: '受益人順位分配',
+      desc: '§113 + §1138/§1144 自動判定保險金歸屬。' },
+    { id: 'insurance-policyholder-death', label: '新上線', cls: 'new',
+      title: '要保人過世保單處理',
+      desc: '四方案決策比較，繼承人必看。' },
+  ];
+
+  // ═════════════════════════════════════════════════════════════
+  // TABS — 6 個情境分類（合併 v1 TABS_PUBLIC 與 TABS_PRO）
+  // ═════════════════════════════════════════════════════════════
+  const TABS = [
     { id: 'death', label: '有人過世了',
-      subtitle: '處理遺產繼承的所有步驟',
+      subtitle: '繼承流程、遺產分配、稅務申報一次搞定。',
       tools: ['calculator','inheritance-timeline','deadline-dashboard','caregiver',
-              'real-estate','stock-inheritance','inherited-property-trap'].map(ref)
-    },
+              'real-estate','stock-inheritance','inherited-property-trap',
+              'limited-inheritance','will-validity','estate-tax-detail',
+              'forced-share','case-manager'] },
     { id: 'insurance', label: '保險規劃',
-      subtitle: '保單遺產、受益人、理賠一次搞懂',
+      subtitle: '保單遺產、受益人、理賠、最低稅負一次搞懂。',
       tools: ['insurance-estate-risk','insurance-gift-tax','insurance-policyholder-death',
               'insurance-amt','insurance-forced-share','insurance-beneficiary-order',
-              'insurance-loan-vs-surrender','insurance-accident-combined'].map(ref)
-    },
+              'insurance-loan-vs-surrender','insurance-accident-combined','insurance-divorce'] },
     { id: 'divorce', label: '要離婚了',
-      subtitle: '財產分配、扶養費、出軌賠償',
-      tools: ['property-split','alimony','child-support','insurance-divorce','infidelity-damages'].map(ref)
-    },
+      subtitle: '財產分配、扶養費、出軌求償一起算。',
+      tools: ['property-split','alimony','child-support','infidelity-damages',
+              'divorce-damages','insurance-divorce'] },
     { id: 'gift', label: '送財產給家人',
-      subtitle: '贈與節稅、保單規劃',
-      tools: ['gift-tax','gift-planner','insurance-gift-tax','property-sale-tax'].map(ref)
-    },
+      subtitle: '贈與節稅、保單規劃、房產移轉。',
+      tools: ['gift-tax','gift-planner','insurance-gift-tax','property-sale-tax'] },
     { id: 'accident', label: '發生事故了',
-      subtitle: '車禍、霸凌、意外賠償',
-      tools: ['accident','insurance-accident-combined','minor-damages'].map(ref)
-    },
+      subtitle: '車禍、霸凌、意外賠償一次盤點。',
+      tools: ['accident','insurance-accident-combined','minor-damages'] },
     { id: 'debt', label: '有債權糾紛',
-      subtitle: '欠款追討、時效查詢、脫產偵測',
-      tools: ['interest-calc','prescription','asset-detection'].map(ref)
-    },
+      subtitle: '欠款追討、時效查詢、脫產偵測。',
+      tools: ['interest-calc','prescription','asset-detection','litigation-strength','settlement-calc','legal-basis'] },
   ];
 
-  // Pro tools per tab for public persona (categorized)
-  const PRO_BY_TAB = {
-    death: [
-      { label: '繼承進階', tools: ['limited-inheritance','will-validity','estate-tax-detail','forced-share','case-manager'].map(ref) },
-    ],
-    insurance: [],
-    divorce: [
-      { label: '離婚進階', tools: ['divorce-damages'].map(ref) },
-    ],
-    gift: [
-      { label: '稅務進階', tools: ['estate-tax-detail','case-manager'].map(ref) },
-    ],
-    accident: [
-      { label: '訴訟進階', tools: ['litigation-strength','settlement-calc'].map(ref) },
-    ],
-    debt: [
-      { label: '訴訟進階', tools: ['litigation-strength','settlement-calc','forced-share'].map(ref) },
-    ],
-  };
-
-  // All pro tools flat (for search)
-  const ALL_PRO_TOOLS = [
-    'limited-inheritance','will-validity','estate-tax-detail','forced-share',
-    'litigation-strength','settlement-calc','divorce-damages',
-    'case-manager','legal-basis'
-  ].map(ref);
-
-  // ── TABS: Accountant / Lawyer (6 tab 專業分類) ─────────────
-  const TABS_PRO = [
-    { id: 'inheritance', label: { accountant: '繼承', lawyer: '繼承' },
-      tools: ['calculator','inheritance-timeline','deadline-dashboard','caregiver',
-              'real-estate','stock-inheritance','limited-inheritance','will-validity',
-              'forced-share','inherited-property-trap'].map(ref)
-    },
-    { id: 'tax', label: { accountant: '稅務', lawyer: '稅務' },
-      tools: ['gift-tax','gift-planner','estate-tax-detail','property-sale-tax',
-              'inherited-property-trap','insurance-estate-risk','insurance-gift-tax',
-              'insurance-amt'].map(ref)
-    },
-    { id: 'insurance', label: { accountant: '保險', lawyer: '保險' },
-      tools: ['insurance-estate-risk','insurance-gift-tax','insurance-divorce',
-              'insurance-policyholder-death','insurance-amt','insurance-forced-share',
-              'insurance-beneficiary-order','insurance-loan-vs-surrender',
-              'insurance-accident-combined'].map(ref)
-    },
-    { id: 'divorce', label: { all: '離婚' },
-      tools: ['property-split','alimony','insurance-divorce','child-support',
-              'divorce-damages','infidelity-damages'].map(ref)
-    },
-    { id: 'damages', label: { all: '損害賠償' },
-      tools: ['accident','insurance-accident-combined','minor-damages',
-              'interest-calc','prescription','asset-detection'].map(ref)
-    },
-    { id: 'litigation', label: { all: '訴訟工具' },
-      tools: ['litigation-strength','settlement-calc','case-manager','legal-basis'].map(ref)
-    },
-  ];
-
-  // ── Render ────────────────────────────────────────────────────────
-  let activeTab = null;
+  // ═════════════════════════════════════════════════════════════
+  // Render
+  // ═════════════════════════════════════════════════════════════
+  let activeTab = 'death';
   let searchQuery = '';
 
-  function isPublicPersona(p) { return p === 'public' || p === 'all'; }
-
-  function renderToolCard(tool, persona) {
-    const name = getName(tool, persona);
-    const desc = getDesc(tool, persona);
-    const featuredStyle = tool.featured ? 'background:linear-gradient(135deg,#1e1916 0%,#221e1a 100%);' : '';
-    // DEV: 開發階段全部解鎖
-    const isLocked = false;
-    const lockLabel = tool.persona === 'accountant' ? '進階稅務' : tool.persona === 'lawyer' ? '進階法律' : '';
-    const href = isLocked ? 'javascript:void(0)' : tool.href;
-    const lockClick = isLocked ? `onclick="document.getElementById('proGateModal').style.display='flex'"` : '';
-    return `<a class="tool-card ${tool.featured ? 'featured' : ''}" href="${href}" style="${featuredStyle}${isLocked ? 'opacity:0.6;' : ''}" ${lockClick}>
+  function renderToolCard(tool) {
+    const name = getName(tool);
+    const desc = getDesc(tool);
+    const badge = tool.badge ? `<span class="tool-badge ${tool.badge}">${tool.badge}</span>` : '';
+    return `<a class="tool-card ${tool.featured ? 'featured' : ''}" href="${tool.href}">
       <div class="tool-card-inner">
         <div class="tool-info">
-          <div class="tool-name">${isLocked ? '🔒 ' : ''}${name}${isLocked ? ' <span style="font-size:10px;color:#c4932a;font-family:DM Mono,monospace;margin-left:4px;">PRO・' + lockLabel + '</span>' : ''}</div>
-          <div class="tool-desc" style="margin-top:5px">${desc}</div>
+          <div class="tool-name">${name}${badge}</div>
+          <div class="tool-desc">${desc}</div>
         </div>
-        <span class="tool-arrow" style="${tool.featured ? 'font-size:20px' : ''}">${isLocked ? '🔒' : '→'}</span>
+        <span class="tool-arrow">→</span>
       </div>
     </a>`;
   }
 
-  function renderSearch(persona) {
-    // Flatten all tools from current TABS + pro tools
-    const tabs = isPublicPersona(persona) ? TABS_PUBLIC : TABS_PRO;
-    let allTools = [];
-    tabs.forEach(tab => { allTools = allTools.concat(tab.tools); });
-    if (isPublicPersona(persona)) allTools = allTools.concat(ALL_PRO_TOOLS);
-
-    // Deduplicate
-    const seen = new Set();
-    allTools = allTools.filter(t => { if (seen.has(t._id)) return false; seen.add(t._id); return true; });
-
-    const q = searchQuery.toLowerCase();
-    const matches = allTools.filter(tool => {
-      const name = getName(tool, persona).toLowerCase();
-      const desc = getDesc(tool, persona).toLowerCase();
-      return name.includes(q) || desc.includes(q);
-    });
-
-    const container = document.getElementById('toolsContainer');
-    if (matches.length === 0) {
-      container.innerHTML = `<div style="text-align:center;padding:32px 0;color:var(--muted);font-size:13px;">找不到「${searchQuery}」相關工具</div>`;
-    } else {
-      container.innerHTML = matches.map(t => renderToolCard(t, persona)).join('');
-    }
-    document.getElementById('tabNav').style.display = 'none';
+  function renderFeatured() {
+    const html = FEATURED_LATEST.map(item => {
+      const tool = ALL_TOOLS[item.id];
+      if (!tool) return '';
+      return `<a class="featured-card ${item.cls}" href="${tool.href}">
+        <span class="featured-badge ${item.cls}">${item.label}</span>
+        <div class="featured-card-title">${item.title}</div>
+        <div class="featured-card-desc">${item.desc}</div>
+        <div class="featured-card-arrow">
+          <span>開始試算</span>
+          <span>→</span>
+        </div>
+      </a>`;
+    }).join('');
+    document.getElementById('featuredStrip').innerHTML = html;
   }
 
-  function renderTools() {
-    const persona = localStorage.getItem('ip_persona') || 'all';
-    const p = PERSONAS[persona];
+  function renderSearch() {
+    const q = searchQuery.toLowerCase();
+    const allToolIds = Object.keys(ALL_TOOLS);
+    const matches = allToolIds
+      .map(id => ref(id))
+      .filter(tool => {
+        const name = getName(tool).toLowerCase();
+        const desc = getDesc(tool).toLowerCase();
+        return name.includes(q) || desc.includes(q);
+      });
 
-    // Persona badge
-    document.getElementById('personaBadge').textContent = p.name;
-    document.getElementById('personaBadge').className = 'persona-badge ' + p.cls;
-    document.getElementById('heroSub').textContent = p.sub;
+    const container = document.getElementById('toolsContainer');
+    document.getElementById('featuredSection').style.display = 'none';
+    document.getElementById('browseHeader').style.display = 'none';
+    document.getElementById('tabScrollWrap').style.display = 'none';
+    document.getElementById('tabSubtitle').style.display = 'none';
 
-    // If searching, render search results instead
-    if (searchQuery) { renderSearch(persona); return; }
-
-    document.getElementById('tabNav').style.display = 'flex';
-
-    if (isPublicPersona(persona)) {
-      // ── Public: 情境導向 5 分類 ─────────────────────
-      const tabs = TABS_PUBLIC;
-      if (!activeTab || !tabs.find(t => t.id === activeTab)) activeTab = tabs[0].id;
-
-      document.getElementById('tabNav').innerHTML = tabs.map(tab =>
-        `<button class="tab-btn ${tab.id === activeTab ? 'active' : ''}"
-          onclick="setTab('${tab.id}')">${tab.label}</button>`
-      ).join('');
-
-      const currentTab = tabs.find(t => t.id === activeTab);
-      const toolCards = (currentTab?.tools || []).map(t => renderToolCard(t, persona)).join('');
-      const subtitle = currentTab?.subtitle
-        ? `<div class="category-sub">${currentTab.subtitle}</div>` : '';
-
-      // Collapsible pro tools section (per-tab)
-      const proGroups = PRO_BY_TAB[activeTab] || [];
-      let proSection = '';
-      if (proGroups.length > 0) {
-        const proCards = proGroups.map(g => g.tools.map(t => renderToolCard(t, persona)).join('')).join('');
-        proSection = `
-          <button class="pro-collapse-toggle" id="proToggle" onclick="togglePro()">
-            <span>進階專業工具</span>
-            <span class="chevron">▼</span>
-          </button>
-          <div class="pro-collapse-tools" id="proTools">${proCards}</div>`;
-      }
-
-      document.getElementById('toolsContainer').innerHTML = subtitle + toolCards + proSection;
-
+    if (matches.length === 0) {
+      container.innerHTML = `
+        <div class="search-fallback">
+          <div class="search-fallback-title">找不到「<strong>${searchQuery}</strong>」相關工具</div>
+          <div class="search-fallback-hint">你可能想找：</div>
+          <div class="search-fallback-chips">
+            <button class="search-chip" onclick="searchFor('遺產')">遺產</button>
+            <button class="search-chip" onclick="searchFor('贍養費')">贍養費</button>
+            <button class="search-chip" onclick="searchFor('車禍')">車禍</button>
+            <button class="search-chip" onclick="searchFor('保單')">保單</button>
+            <button class="search-chip" onclick="searchFor('出軌')">出軌</button>
+          </div>
+          <div class="search-fallback-contact">
+            還是找不到？<a href="mailto:hello@inheritancepro.app">告訴我們你需要什麼</a>
+          </div>
+        </div>`;
     } else {
-      // ── Accountant / Lawyer: 原 3 tab 結構 ─────────
-      const tabs = TABS_PRO;
-      if (!activeTab || !tabs.find(t => t.id === activeTab)) activeTab = tabs[0].id;
-
-      document.getElementById('tabNav').innerHTML = tabs.map(tab => {
-        const label = tab.label[persona] || tab.label.all || tab.label.public || '';
-        return `<button class="tab-btn ${tab.id === activeTab ? 'active' : ''}"
-          onclick="setTab('${tab.id}')">${label}</button>`;
-      }).join('');
-
-      const currentTab = tabs.find(t => t.id === activeTab);
-      document.getElementById('toolsContainer').innerHTML =
-        (currentTab?.tools || []).map(t => renderToolCard(t, persona)).join('');
+      container.innerHTML = matches.map(t => renderToolCard(t)).join('');
     }
+  }
+
+  function renderTabs() {
+    // Restore sections
+    document.getElementById('featuredSection').style.display = '';
+    document.getElementById('browseHeader').style.display = '';
+    document.getElementById('tabScrollWrap').style.display = '';
+    document.getElementById('tabSubtitle').style.display = '';
+
+    // Tab buttons
+    document.getElementById('tabNav').innerHTML = TABS.map(tab =>
+      `<button class="tab-btn ${tab.id === activeTab ? 'active' : ''}" onclick="setTab('${tab.id}')">${tab.label}</button>`
+    ).join('');
+
+    // Subtitle
+    const current = TABS.find(t => t.id === activeTab) || TABS[0];
+    document.getElementById('tabSubtitle').textContent = current.subtitle;
+
+    // Tools
+    const toolsHtml = current.tools
+      .map(id => ALL_TOOLS[id] ? ref(id) : null)
+      .filter(Boolean)
+      .map(t => renderToolCard(t))
+      .join('');
+    document.getElementById('toolsContainer').innerHTML = toolsHtml;
+  }
+
+  function render() {
+    if (searchQuery) { renderSearch(); return; }
+    renderTabs();
   }
 
   function setTab(id) {
     activeTab = id;
-    renderTools();
+    render();
+    // Scroll active tab into view
+    setTimeout(() => {
+      const activeBtn = document.querySelector('.tab-btn.active');
+      if (activeBtn && activeBtn.scrollIntoView) {
+        activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    }, 0);
   }
 
-  function togglePro() {
-    const btn = document.getElementById('proToggle');
-    const tools = document.getElementById('proTools');
-    btn.classList.toggle('open');
-    tools.classList.toggle('open');
+  function searchFor(q) {
+    document.getElementById('toolSearch').value = q;
+    searchQuery = q;
+    document.getElementById('searchClear').style.display = 'block';
+    render();
   }
 
   // ── Search ────────────────────────────────────────────────────
@@ -999,16 +1174,18 @@ async function handleUnsubscribe() {
     document.getElementById('toolSearch').value = '';
     searchQuery = '';
     document.getElementById('searchClear').style.display = 'none';
-    renderTools();
+    render();
   }
 
   document.getElementById('toolSearch').addEventListener('input', function(e) {
     searchQuery = e.target.value.trim();
     document.getElementById('searchClear').style.display = searchQuery ? 'block' : 'none';
-    renderTools();
+    render();
   });
 
-  // ── Init ──────────────────────────────────────────────────────
+  // ═════════════════════════════════════════════════════════════
+  // Init
+  // ═════════════════════════════════════════════════════════════
   (async function() {
     try {
       const { supabase, getProfile } = await import('./js/auth.js');
@@ -1019,16 +1196,14 @@ async function handleUnsubscribe() {
       }
     } catch(e) {}
 
-    document.getElementById('personaSwitchBtn').addEventListener('click', () => {
-      localStorage.removeItem('ip_persona');
-      window.location.href = 'landing.html';
-    });
-
-    // DEV: 沒設 persona 就預設 all，不跳轉 landing
+    // v2: 不跳轉 landing, 不渲染 persona switcher
+    // 保留 localStorage 讀取邏輯以便未來復活付費方案
     if (!localStorage.getItem('ip_persona')) {
       localStorage.setItem('ip_persona', 'all');
     }
-    renderTools();
+
+    renderFeatured();
+    render();
   })();
 
   document.querySelectorAll('.faq-q').forEach(q => {
