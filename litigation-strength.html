@@ -166,20 +166,7 @@
 </main>
 
 <script>
-  // Pro page access guard
-  (async function() {
-    try {
-      const { getProfile } = await import('./js/auth.js');
-      const profile = await getProfile();
-      if (!profile?.is_pro) {
-        sessionStorage.setItem('proGateRedirect', '1');
-        window.location.href = 'index.html';
-      }
-    } catch(e) {
-      // 若 auth 模組載入失敗，允許繼續（避免封鎖合法用戶）
-    }
-  })();
-
+  // 2026-04: 全面免費，移除 Pro 閘門
   const FACTORS = [
     { id: 'clarity', cat: '事實面', label: '事實清晰度', weight: 1.2, hint: '1 = 雙方事實主張高度衝突；5 = 事實明確無爭議', low: '高度爭議', high: '事實明確' },
     { id: 'evidence', cat: '事實面', label: '書面證據充分度', weight: 1.5, hint: '1 = 無任何書面；5 = 完整文件（合約、公證書、銀行紀錄）', low: '無書面', high: '完整文件' },

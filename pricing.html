@@ -12,111 +12,121 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>升級 Pro｜InheritancePro</title>
+<title>所有用戶免費｜InheritancePro</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
-<script src="js/supabase-config.js"></script>
 <style>
-  :root{--ink:#1a1410;--paper:#f5f0e8;--gold:#c4932a;--muted:#7a6f62;--border:#c8bfb0;--soft:#e8e0d0;--card:#ffffff;--accent:#8b2020;--tax:#1e3a5c;--tax-light:#7aaad0;--legal:#1e3a28;--legal-light:#6abf8a;}
+  :root{
+    --ink:#1a1410;--paper:#f5f0e8;--gold:#c4932a;--muted:#7a6f62;
+    --border:#c8bfb0;--soft:#e8e0d0;--accent:#8b2020;--success:#6abf8a;
+  }
   *:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
   *{box-sizing:border-box;margin:0;padding:0;}
-  body{background:var(--ink);color:var(--paper);font-family:'Noto Sans TC',sans-serif;min-height:100vh;font-size:15px;}
-  header{text-align:center;padding:40px 24px 20px;padding-top:calc(40px + env(safe-area-inset-top,0px));}
+  body{
+    background:var(--ink);color:var(--paper);
+    font-family:'Noto Sans TC',sans-serif;min-height:100vh;font-size:15px;
+  }
+  header{
+    text-align:center;padding:40px 24px 20px;
+    padding-top:calc(40px + env(safe-area-inset-top,0px));
+  }
   .logo{font-family:'Noto Serif TC',serif;font-size:20px;font-weight:700;letter-spacing:0.04em;}
   .logo span{color:var(--gold);}
-  h1{font-family:'Noto Serif TC',serif;font-size:24px;font-weight:700;margin-top:12px;}
-  .subtitle{font-size:13px;color:rgba(245,240,232,0.5);margin-top:6px;}
-
-  main{max-width:440px;margin:0 auto;padding:0 20px 40px;}
-
-  /* Tier selector */
-  .tier-tabs{display:flex;gap:8px;margin-bottom:20px;}
-  .tier-tab{flex:1;padding:10px 8px;border-radius:10px;border:1.5px solid #2a2520;background:none;color:var(--muted);font-family:'Noto Sans TC',sans-serif;font-size:13px;font-weight:500;cursor:pointer;text-align:center;transition:all 0.2s;}
-  .tier-tab.active-tax{border-color:var(--tax-light);color:var(--tax-light);background:rgba(30,58,92,0.15);}
-  .tier-tab.active-legal{border-color:var(--legal-light);color:var(--legal-light);background:rgba(30,58,40,0.15);}
-  .tier-tab.active-all{border-color:var(--gold);color:var(--gold);background:rgba(196,147,42,0.1);}
-
-  /* Plan cards */
-  .plan-card{border:1.5px solid #2a2520;border-radius:14px;padding:20px;margin-bottom:12px;cursor:pointer;transition:all 0.2s;position:relative;}
-  .plan-card:hover{border-color:#3a3530;}
-  .plan-card.selected{border-color:var(--gold);background:rgba(196,147,42,0.06);}
-  .plan-card.best{border-color:var(--gold);}
-  .plan-badge{position:absolute;top:-10px;right:16px;background:var(--gold);color:var(--ink);font-size:10px;font-weight:700;padding:2px 10px;border-radius:10px;font-family:'DM Mono',monospace;letter-spacing:0.05em;}
-  .plan-name{font-family:'Noto Serif TC',serif;font-size:16px;font-weight:700;}
-  .plan-price{font-size:28px;font-weight:700;color:var(--gold);margin:8px 0 4px;font-family:'Noto Serif TC',serif;}
-  .plan-price small{font-size:14px;color:var(--muted);font-weight:400;}
-  .plan-detail{font-size:12px;color:var(--muted);line-height:1.6;}
-  .plan-save{color:#6abf8a;font-size:11px;font-weight:600;margin-top:4px;}
-
-  /* Features */
-  .features{margin:20px 0;padding:16px;background:rgba(255,255,255,0.03);border-radius:10px;border:1px solid #2a2520;}
-  .features-title{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;color:var(--muted);margin-bottom:10px;}
-  .feature-item{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:rgba(245,240,232,0.7);line-height:1.6;margin-bottom:6px;}
-  .feature-item::before{content:'✓';color:var(--gold);font-weight:700;flex-shrink:0;}
-
-  /* CTA */
-  .cta-btn{width:100%;padding:16px;border:none;border-radius:12px;font-family:'Noto Sans TC',sans-serif;font-size:16px;font-weight:700;cursor:pointer;transition:all 0.2s;letter-spacing:0.04em;}
-  .cta-btn.tax{background:var(--tax-light);color:#0a1929;}
-  .cta-btn.legal{background:var(--legal-light);color:#0a1912;}
-  .cta-btn.all{background:var(--gold);color:var(--ink);}
-  .cta-btn:hover{opacity:0.9;transform:translateY(-1px);}
-  .cta-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
-
-  .restore-link{display:block;text-align:center;margin-top:14px;font-size:12px;color:var(--muted);text-decoration:none;cursor:pointer;}
-  .restore-link:hover{color:var(--paper);}
-
-  .redeem-section{margin-top:24px;padding-top:20px;border-top:1px solid #2a2520;text-align:center;}
-  .redeem-section p{font-size:12px;color:var(--muted);margin-bottom:10px;}
-  .redeem-link{color:var(--gold);text-decoration:none;font-size:13px;font-weight:500;}
-
-  .back-link{display:block;text-align:center;margin-top:20px;font-family:'DM Mono',monospace;font-size:11px;color:rgba(245,240,232,0.35);text-decoration:none;letter-spacing:0.08em;}
-  .back-link:hover{color:rgba(245,240,232,0.65);}
-
-  .error-msg{display:none;margin-top:12px;padding:10px 14px;background:rgba(139,32,32,0.12);border:1px solid rgba(139,32,32,0.3);border-radius:8px;font-size:13px;color:#e8a0a0;text-align:center;}
-  .error-msg.visible{display:block;}
-
-  /* ─── 免費承諾 Banner ─── */
-  .free-promise{
-    max-width:440px;margin:0 auto 24px;padding:0 20px;
+  .eyebrow{
+    font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.3em;
+    color:var(--gold);text-transform:uppercase;margin-top:20px;
   }
-  .free-promise-inner{
+
+  main{max-width:440px;margin:0 auto;padding:0 20px 60px;}
+
+  /* ─── 驚喜 Banner ─── */
+  .free-hero{
     border:1.5px solid rgba(106,191,138,0.45);
-    background:linear-gradient(135deg,rgba(42,107,74,0.18) 0%,rgba(42,107,74,0.06) 100%);
-    border-radius:16px;padding:24px 22px;position:relative;overflow:hidden;
+    background:linear-gradient(135deg,rgba(42,107,74,0.22) 0%,rgba(42,107,74,0.06) 100%);
+    border-radius:20px;padding:36px 28px;margin-top:24px;position:relative;overflow:hidden;
   }
-  .free-promise-inner::before{
-    content:'';position:absolute;top:-40%;right:-20%;width:260px;height:260px;
-    background:radial-gradient(circle,rgba(106,191,138,0.18) 0%,transparent 70%);pointer-events:none;
+  .free-hero::before{
+    content:'';position:absolute;top:-30%;right:-20%;width:320px;height:320px;
+    background:radial-gradient(circle,rgba(106,191,138,0.22) 0%,transparent 70%);
+    pointer-events:none;
   }
-  .free-promise-label{
-    font-family:'DM Mono',monospace;font-size:10px;color:#7cd4a3;
-    letter-spacing:0.2em;text-transform:uppercase;margin-bottom:10px;
-    position:relative;display:flex;align-items:center;gap:6px;
+  .free-hero-icon{
+    font-size:42px;line-height:1;margin-bottom:16px;position:relative;
   }
-  .free-promise-title{
-    font-family:'Noto Serif TC',serif;font-size:22px;font-weight:700;
-    color:var(--paper);line-height:1.4;margin-bottom:10px;position:relative;
+  .free-hero-title{
+    font-family:'Noto Serif TC',serif;font-size:32px;font-weight:700;
+    line-height:1.3;margin-bottom:14px;position:relative;
+    color:var(--paper);
   }
-  .free-promise-title em{
-    font-style:normal;color:#7cd4a3;border-bottom:2px solid #7cd4a3;padding-bottom:1px;
+  .free-hero-title em{
+    font-style:normal;color:var(--success);
+    border-bottom:3px solid var(--success);padding-bottom:2px;
   }
-  .free-promise-desc{
-    font-size:13px;color:rgba(245,240,232,0.78);line-height:1.8;position:relative;
+  .free-hero-sub{
+    font-size:14px;color:rgba(245,240,232,0.82);line-height:1.8;
+    position:relative;margin-bottom:18px;
   }
-  .free-promise-desc strong{color:var(--paper);font-weight:600;}
-  .free-promise-checklist{
-    margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.08);
-    display:flex;flex-direction:column;gap:8px;position:relative;
+  .free-hero-sub strong{color:var(--paper);font-weight:600;}
+  .free-hero-promise{
+    margin-top:18px;padding-top:18px;
+    border-top:1px solid rgba(255,255,255,0.1);
+    font-size:13px;color:rgba(245,240,232,0.78);line-height:1.75;
+    position:relative;
   }
-  .free-promise-check{
-    font-size:12.5px;color:rgba(245,240,232,0.85);line-height:1.6;
-    display:flex;align-items:flex-start;gap:10px;
+  .free-hero-promise-item{
+    display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;
   }
-  .free-promise-check::before{
-    content:'✓';color:#7cd4a3;font-weight:700;flex-shrink:0;font-size:14px;
+  .free-hero-promise-item:last-child{margin-bottom:0;}
+  .free-hero-promise-item::before{
+    content:'✓';color:var(--success);font-weight:700;flex-shrink:0;
+    font-size:15px;line-height:1.5;
   }
+
+  /* ─── Existing Pro 用戶說明 ─── */
+  .existing-pro{
+    margin-top:20px;padding:18px 20px;
+    background:rgba(196,147,42,0.08);
+    border:1px solid rgba(196,147,42,0.25);
+    border-radius:12px;
+    font-size:13px;color:rgba(245,240,232,0.75);
+    line-height:1.8;
+  }
+  .existing-pro strong{color:var(--gold);}
+
+  /* ─── 商業合作 ─── */
+  .business-card{
+    margin-top:24px;padding:22px 20px;
+    background:#fff;color:var(--ink);border-radius:14px;
+    border:1.5px solid var(--border);
+  }
+  .business-label{
+    font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.2em;
+    color:var(--muted);text-transform:uppercase;margin-bottom:8px;
+  }
+  .business-title{
+    font-family:'Noto Serif TC',serif;font-size:17px;font-weight:700;
+    margin-bottom:6px;
+  }
+  .business-desc{
+    font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:14px;
+  }
+  .business-email{
+    display:inline-block;padding:10px 18px;
+    background:var(--ink);color:var(--paper);
+    border-radius:10px;text-decoration:none;
+    font-family:'DM Mono',monospace;font-size:13px;
+    letter-spacing:0.05em;transition:all 0.2s;
+  }
+  .business-email:hover{background:#2a2420;}
+
+  .back-link{
+    display:block;text-align:center;margin-top:30px;
+    font-family:'DM Mono',monospace;font-size:11px;
+    color:rgba(245,240,232,0.4);text-decoration:none;letter-spacing:0.08em;
+  }
+  .back-link:hover{color:rgba(245,240,232,0.7);}
 </style>
 </head>
 <body>
@@ -125,306 +135,42 @@
   <a href="index.html" style="text-decoration:none;color:inherit">
     <div class="logo">Inheritance<span>Pro</span></div>
   </a>
-  <h1>升級進階功能</h1>
-  <p class="subtitle">解鎖專業稅務精算與法律分析工具</p>
+  <div class="eyebrow">★ Surprise</div>
 </header>
 
-<!-- 免費承諾 Banner -->
-<div class="free-promise">
-  <div class="free-promise-inner">
-    <div class="free-promise-label">★ 免費承諾</div>
-    <div class="free-promise-title">目前 <em>全部功能免費</em></div>
-    <div class="free-promise-desc">
-      我們承諾：<strong>重要的計算功能永久免費</strong>。<br>
-      升級方案只解鎖「更專業、更進階」的工作流與深度分析工具，不會把既有工具鎖起來收費。
-    </div>
-    <div class="free-promise-checklist">
-      <div class="free-promise-check">現在使用的 30+ 個計算工具，未來也會<strong>永久免費</strong></div>
-      <div class="free-promise-check">只有未來新增的「超進階專業工具」會採訂閱制</div>
-      <div class="free-promise-check">所有使用者先試用、覺得值得再決定是否升級</div>
-    </div>
-  </div>
-</div>
-
 <main>
-  <!-- Tier Tabs -->
-  <div class="tier-tabs">
-    <button class="tier-tab active-tax" id="tab-tax" onclick="switchTier('tax')">📊 進階稅務</button>
-    <button class="tier-tab" id="tab-legal" onclick="switchTier('legal')">⚖️ 進階法律</button>
-    <button class="tier-tab" id="tab-all" onclick="switchTier('all')">✦ 全部開通</button>
+  <!-- ═════════ 驚喜 Banner ═════════ -->
+  <div class="free-hero">
+    <div class="free-hero-icon">🎉</div>
+    <div class="free-hero-title">所有功能<br><em>全部用戶免費</em></div>
+    <div class="free-hero-sub">
+      本來這裡有月訂閱、年訂閱、一次買斷的方案。<br><br>
+      但我們決定：<strong>把全部功能、全部進階分析、全部 PDF 匯出，永久免費開放給每一位使用者</strong>。不分身分、不分方案、不用付費。
+    </div>
+    <div class="free-hero-promise">
+      <div class="free-hero-promise-item">所有現有與未來新增的計算工具，<strong style="color:var(--paper)">永久免費</strong></div>
+      <div class="free-hero-promise-item">PDF 匯出、專業分析、多案件管理 — 全部不鎖</div>
+      <div class="free-hero-promise-item">沒有月費、沒有年費、沒有買斷費用，關閉的事就關閉了</div>
+    </div>
   </div>
 
-  <!-- Plan Cards -->
-  <div id="plans-container"></div>
-
-  <!-- Features List -->
-  <div class="features" id="features-container"></div>
-
-  <!-- CTA -->
-  <button class="cta-btn tax" id="cta-btn" onclick="handlePurchase()">訂閱進階稅務</button>
-  <div class="error-msg" id="error-msg"></div>
-
-  <div class="restore-link" onclick="handleRestore()">恢復先前購買</div>
-
-  <div class="redeem-section">
-    <p>有兌換序號？</p>
-    <a href="account.html" class="redeem-link">前往兌換 →</a>
+  <!-- ═════════ Existing Pro 用戶 ═════════ -->
+  <div class="existing-pro">
+    <strong>先前已購買過 Pro 的用戶</strong>：你的權益不受影響，不會退費也不會被取消。感謝你在早期信任這個專案。
   </div>
 
-  <a class="back-link" href="account.html">← 返回帳號頁</a>
+  <!-- ═════════ 商業合作 ═════════ -->
+  <div class="business-card">
+    <div class="business-label">✦ Business</div>
+    <div class="business-title">商業合作？</div>
+    <div class="business-desc">
+      事務所白標、法律科技導入、工具客製、教育合作、媒體合作，歡迎來信討論。
+    </div>
+    <a class="business-email" href="mailto:businessjoechou@gmail.com">businessjoechou@gmail.com</a>
+  </div>
+
+  <a class="back-link" href="index.html">← 返回首頁</a>
 </main>
 
-<script type="module">
-  import { supabase, getUser, getProfile } from './js/auth.js';
-
-  const TIERS = {
-    tax: {
-      name: '進階稅務',
-      cls: 'tax',
-      features: [
-        '遺產稅精算工作底稿（17項扣除額）',
-        '每位繼承人分攤稅負計算',
-        '贈與節稅規劃模擬',
-        '多案件管理系統',
-        '期限自動倒數提醒',
-        '工作底稿列印匯出',
-      ],
-      plans: [
-        { id: 'pro.tax.monthly', name: '月訂閱', price: 60, unit: '/月', detail: '隨時取消' },
-        { id: 'pro.tax.yearly', name: '年訂閱', price: 590, unit: '/年', detail: '平均 NT$49/月', save: '省 18%', best: true },
-        { id: 'pro.tax.lifetime', name: '一次買斷', price: 690, unit: '', detail: '永久使用，不需續費' },
-      ]
-    },
-    legal: {
-      name: '進階法律',
-      cls: 'legal',
-      features: [
-        '訴訟強度加權分析報告（含勝率預估）',
-        '和解談判模擬器（含對手分析）',
-        '限定繼承精算',
-        '遺囑效力鑑定',
-        '特留分侵害精算',
-        '9 頁訴訟策略備忘',
-      ],
-      plans: [
-        { id: 'pro.legal.monthly', name: '月訂閱', price: 60, unit: '/月', detail: '隨時取消' },
-        { id: 'pro.legal.yearly', name: '年訂閱', price: 590, unit: '/年', detail: '平均 NT$49/月', save: '省 18%', best: true },
-        { id: 'pro.legal.lifetime', name: '一次買斷', price: 690, unit: '', detail: '永久使用，不需續費' },
-      ]
-    },
-    all: {
-      name: '全部開通',
-      cls: 'all',
-      features: [
-        '進階稅務所有功能',
-        '進階法律所有功能',
-        '無廣告體驗',
-        '優先客服支援',
-      ],
-      plans: [
-        { id: 'pro.all.monthly', name: '月訂閱', price: 90, unit: '/月', detail: '隨時取消' },
-        { id: 'pro.all.yearly', name: '年訂閱', price: 900, unit: '/年', detail: '平均 NT$75/月', save: '省 17%', best: true },
-        { id: 'pro.all.lifetime', name: '一次買斷', price: 990, unit: '', detail: '永久使用，不需續費' },
-      ]
-    }
-  };
-
-  let currentTier = 'tax';
-  let selectedPlan = null;
-
-  window.switchTier = function(tier) {
-    currentTier = tier;
-    selectedPlan = null;
-
-    // Update tabs
-    document.querySelectorAll('.tier-tab').forEach(t => t.className = 'tier-tab');
-    document.getElementById('tab-' + tier).classList.add('active-' + tier);
-
-    render();
-  };
-
-  function render() {
-    const tier = TIERS[currentTier];
-
-    // Plans
-    document.getElementById('plans-container').innerHTML = tier.plans.map((plan, i) => `
-      <div class="plan-card ${plan.best ? 'best' : ''} ${selectedPlan === plan.id ? 'selected' : ''}"
-           onclick="selectPlan('${plan.id}')">
-        ${plan.best ? '<div class="plan-badge">推薦</div>' : ''}
-        <div class="plan-name">${plan.name}</div>
-        <div class="plan-price">NT$${plan.price.toLocaleString()}<small>${plan.unit}</small></div>
-        <div class="plan-detail">${plan.detail}</div>
-        ${plan.save ? '<div class="plan-save">' + plan.save + '</div>' : ''}
-      </div>
-    `).join('');
-
-    // Auto-select best plan
-    if (!selectedPlan) {
-      const best = tier.plans.find(p => p.best) || tier.plans[0];
-      selectedPlan = best.id;
-      render();
-      return;
-    }
-
-    // Features
-    document.getElementById('features-container').innerHTML =
-      `<div class="features-title">${tier.name}包含</div>` +
-      tier.features.map(f => `<div class="feature-item">${f}</div>`).join('');
-
-    // CTA
-    const btn = document.getElementById('cta-btn');
-    const plan = tier.plans.find(p => p.id === selectedPlan);
-    btn.className = 'cta-btn ' + tier.cls;
-    btn.textContent = plan.name === '一次買斷'
-      ? `買斷${tier.name} — NT$${plan.price}`
-      : `訂閱${tier.name} — NT$${plan.price}${plan.unit}`;
-  }
-
-  window.selectPlan = function(planId) {
-    selectedPlan = planId;
-    render();
-  };
-
-  window.handlePurchase = async function() {
-    const btn = document.getElementById('cta-btn');
-    const errorEl = document.getElementById('error-msg');
-    errorEl.classList.remove('visible');
-
-    // Check if logged in
-    const user = await getUser();
-    if (!user) {
-      window.location.href = '/login.html';
-      return;
-    }
-
-    // Check if already Pro — block same-tier or full 'all' re-purchase
-    const profile = await getProfile();
-    const existingTier = profile?.pro_tier || null;
-    if (profile?.is_pro) {
-      if (existingTier === 'all') {
-        errorEl.textContent = '你已訂閱全部方案，無需再次購買。';
-        errorEl.classList.add('visible');
-        return;
-      }
-      if (existingTier === currentTier) {
-        errorEl.textContent = `你已訂閱${TIERS[currentTier].name}方案。`;
-        errorEl.classList.add('visible');
-        return;
-      }
-    }
-
-    btn.disabled = true;
-    btn.textContent = '處理中…';
-
-    try {
-      // Native iOS: use StoreKit
-      if (window.Capacitor?.isNativePlatform()) {
-        const { registerPlugin } = await import('https://cdn.jsdelivr.net/npm/@capacitor/core@8/+esm');
-        const StoreKit = registerPlugin('StoreKit');
-        const result = await StoreKit.purchase({ productId: selectedPlan });
-
-        if (result.success) {
-          let tier = currentTier;
-          // Auto-upgrade: tax + legal = all
-          if ((existingTier === 'tax' && tier === 'legal') || (existingTier === 'legal' && tier === 'tax')) {
-            tier = 'all';
-          }
-          // Update Supabase via security definer RPC (direct UPDATE blocked by RLS)
-          await supabase.rpc('activate_pro', {
-            p_tier:       tier,
-            p_source:     'apple',
-            p_product_id: selectedPlan,
-            p_expires_at: result.expirationDate > 0
-              ? new Date(result.expirationDate * 1000).toISOString()
-              : null
-          });
-
-          // Sync persona to final tier
-          const persona = tier === 'tax' ? 'accountant' : tier === 'legal' ? 'lawyer' : 'all';
-          localStorage.setItem('ip_persona', persona);
-
-          alert(tier !== currentTier ? '你已同時持有稅務與法律方案，已自動升級為全部開通！' : '升級成功！');
-          window.location.href = '/account.html';
-          return;
-        }
-      } else {
-        // Web: redirect to Stripe (TODO)
-        errorEl.textContent = '網頁版付款功能即將推出，請使用 iOS App 內購買，或使用兌換碼升級。';
-        errorEl.classList.add('visible');
-      }
-    } catch (e) {
-      if (e.message !== 'User cancelled') {
-        errorEl.textContent = '購買失敗：' + e.message;
-        errorEl.classList.add('visible');
-      }
-    }
-
-    btn.disabled = false;
-    render();
-  };
-
-  window.handleRestore = async function() {
-    const user = await getUser();
-    if (!user) {
-      window.location.href = '/login.html';
-      return;
-    }
-
-    if (!window.Capacitor?.isNativePlatform()) {
-      alert('恢復購買僅適用於 iOS App');
-      return;
-    }
-
-    try {
-      const { registerPlugin } = await import('https://cdn.jsdelivr.net/npm/@capacitor/core@8/+esm');
-      const StoreKit = registerPlugin('StoreKit');
-      const result = await StoreKit.restorePurchases();
-
-      if (result.activeSubscriptions?.length > 0) {
-        const subs = result.activeSubscriptions;
-        const hasAll   = subs.some(id => id.includes('.all.'));
-        const hasTax   = subs.some(id => id.includes('.tax.'));
-        const hasLegal = subs.some(id => id.includes('.legal.'));
-        // tax + legal → auto-upgrade to all
-        const tier = (hasAll || (hasTax && hasLegal)) ? 'all' : hasTax ? 'tax' : 'legal';
-        const productId = subs[0];
-
-        // Update Supabase via security definer RPC
-        await supabase.rpc('activate_pro', {
-          p_tier:       tier,
-          p_source:     'apple',
-          p_product_id: productId,
-          p_expires_at: null  // StoreKit confirmed active — clear stale expiry date
-        });
-
-        // Sync persona to restored tier
-        const persona = tier === 'tax' ? 'accountant' : tier === 'legal' ? 'lawyer' : 'all';
-        localStorage.setItem('ip_persona', persona);
-
-        alert('已恢復購買！');
-        window.location.href = '/account.html';
-      } else {
-        alert('未找到先前的購買紀錄');
-      }
-    } catch (e) {
-      alert('恢復失敗：' + e.message);
-    }
-  };
-
-  // Check if already Pro on load
-  (async () => {
-    const user = await getUser();
-    if (user) {
-      const profile = await getProfile();
-      if (profile?.is_pro) {
-        document.getElementById('cta-btn').textContent = '✦ 已是 Pro 會員';
-        document.getElementById('cta-btn').disabled = true;
-      }
-    }
-  })();
-
-  // Init
-  render();
-</script>
 </body>
 </html>

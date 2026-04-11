@@ -260,20 +260,7 @@
 </main>
 
 <script>
-  // Pro page access guard
-  (async function() {
-    try {
-      const { getProfile } = await import('./js/auth.js');
-      const profile = await getProfile();
-      if (!profile?.is_pro) {
-        sessionStorage.setItem('proGateRedirect', '1');
-        window.location.href = 'index.html';
-      }
-    } catch(e) {
-      // 若 auth 模組載入失敗，允許繼續（避免封鎖合法用戶）
-    }
-  })();
-
+  // 2026-04: 全面免費，移除 Pro 閘門
   const FMT = v => '$ ' + Math.round(v).toLocaleString('zh-TW');
   const PCT = v => (v * 100).toFixed(2) + '%';
 
