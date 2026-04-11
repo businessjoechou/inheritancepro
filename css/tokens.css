@@ -1,0 +1,58 @@
+/**
+ * tokens.css — InheritancePro 設計令牌（顏色、字體、尺寸）
+ *
+ * 這是整個設計系統的底層。所有其他 CSS 檔案都應該透過 CSS 變數引用這裡的值，
+ * 而不是寫死數值。未來做 B2B 白標時，只需 override --brand-* 變數即可。
+ */
+
+:root {
+  /* === 品牌色 === */
+  --ink:       #1a1410;   /* 主文字、深色背景 */
+  --paper:     #f5f0e8;   /* 頁面底色 */
+  --accent:    #8b2020;   /* 強調紅（警示、負面數字） */
+  --gold:      #c4932a;   /* 金色（logo、重要數字） */
+  --soft:      #e8e0d0;   /* 淡底色、分隔線 */
+  --muted:     #7a6f62;   /* 輔助文字 */
+  --success:   #2a6b4a;   /* 成功綠（正面數字、節省金額） */
+  --danger:    #8b2020;   /* 危險紅（同 accent） */
+  --border:    #c8bfb0;   /* 邊框 */
+  --danger-bg: #fff3f0;   /* 危險背景 */
+  --success-bg:#f0f8f3;   /* 成功背景 */
+
+  /* === B2B 白標預留變數（預設為品牌值，白標客戶可 override） === */
+  --brand-logo-text: 'Inheritance';
+  --brand-logo-accent: 'Pro';
+  --brand-name: 'InheritancePro';
+  --brand-url: 'inheritancepro.app';
+
+  /* === 字體 === */
+  --font-serif: 'Noto Serif TC', serif;
+  --font-sans:  'Noto Sans TC', sans-serif;
+  --font-mono:  'DM Mono', monospace;
+
+  /* === 字體尺寸 === */
+  --fs-xs:   10px;
+  --fs-sm:   11px;
+  --fs-base: 12px;
+  --fs-md:   13px;
+  --fs-lg:   15px;
+  --fs-xl:   18px;
+  --fs-2xl:  22px;
+  --fs-3xl:  28px;
+
+  /* === 間距 === */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+
+  /* === 圓角 === */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  /* === 版面 === */
+  --content-max-w: 480px;
+}

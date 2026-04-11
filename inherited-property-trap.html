@@ -30,110 +30,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<!-- Plan A 共用樣式 -->
+<link rel="stylesheet" href="css/tool-page.css">
 <script src="js/pdf-export.js"></script>
 <script src="js/persona.js"></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"繼承房貸陷阱試算","url":"https://inheritancepro.app/inherited-property-trap.html","applicationCategory":"FinanceApplication","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro","url":"https://inheritancepro.app"}}
 </script>
-<style>
-  :root {
-    --ink: #1a1410; --paper: #f5f0e8; --accent: #8b2020; --gold: #c4932a;
-    --soft: #e8e0d0; --muted: #7a6f62; --success: #2a6b4a; --danger: #8b2020;
-    --border: #c8bfb0; --danger-bg: #fff3f0; --success-bg: #f0f8f3;
-  }
-  *:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--paper); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; min-height: 100vh; font-size: 15px; }
-  header { background: var(--ink); color: var(--paper); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
-  .logo { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 700; letter-spacing: 0.04em; }
-  .logo span { color: var(--gold); }
-  .page-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 3px; font-family: 'DM Mono', monospace; letter-spacing: 0.06em; }
-  .home-link { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; }
-  .home-link:hover { color: var(--gold); }
-  main { padding: 24px 20px calc(120px + env(safe-area-inset-bottom, 0px)); max-width: 480px; margin: 0 auto; }
-  h1 { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
-  .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 16px; line-height: 1.7; }
-
-  /* 真實案例引言 */
-  .case-box { background: var(--ink); color: var(--paper); border-radius: 12px; padding: 18px 20px; margin-bottom: 18px; border: 2px solid var(--accent); }
-  .case-title { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: var(--gold); margin-bottom: 10px; }
-  .case-text { font-size: 13px; line-height: 1.75; color: rgba(255,255,255,0.88); }
-  .case-text strong { color: var(--gold); font-weight: 600; }
-  .case-hl { background: rgba(139,32,32,0.4); padding: 1px 6px; border-radius: 4px; color: #ffd6cc; font-weight: 600; }
-
-  .card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 14px; }
-  .section-title { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--soft); }
-  .input-group { margin-bottom: 16px; }
-  .input-group:last-child { margin-bottom: 0; }
-  label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; }
-  .label-hint { font-size: 11px; color: var(--muted); font-weight: 400; margin-left: 6px; }
-  input[type="number"] {
-    width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 8px;
-    background: var(--paper); font-size: 15px; font-family: 'DM Mono', monospace;
-    color: var(--ink); transition: border-color 0.2s; -webkit-appearance: none;
-  }
-  input:focus { outline: none; border-color: var(--gold); background: #fff; }
-  .checkbox-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 0; }
-  .checkbox-row input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--gold); cursor: pointer; margin-top: 1px; flex-shrink: 0; }
-  .checkbox-row label { margin: 0; cursor: pointer; font-size: 13px; line-height: 1.5; }
-  .checkbox-row .hint { font-size: 11px; color: var(--muted); margin-top: 2px; }
-  .hint-box { background: rgba(196,147,42,0.08); border-left: 3px solid var(--gold); border-radius: 0 6px 6px 0; padding: 8px 12px; font-size: 11px; color: var(--muted); line-height: 1.65; margin-top: 10px; }
-
-  .calc-btn {
-    width: 100%; padding: 16px; background: var(--ink); color: var(--paper);
-    border: none; border-radius: 10px; font-size: 15px; font-family: 'Noto Sans TC', sans-serif;
-    font-weight: 500; cursor: pointer; letter-spacing: 0.04em; margin-top: 8px; transition: background 0.2s;
-  }
-  .calc-btn:hover { background: #2a2420; }
-
-  #results { display: none; margin-top: 24px; }
-
-  /* 對比卡片 */
-  .compare-card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 14px; }
-  .compare-header { display: grid; grid-template-columns: 1.2fr 1fr 1fr; background: var(--ink); color: #fff; }
-  .compare-header > div { padding: 12px 10px; font-size: 11px; text-align: center; border-right: 1px solid rgba(255,255,255,0.1); font-family: 'DM Mono', monospace; letter-spacing: 0.08em; }
-  .compare-header > div:last-child { border-right: none; }
-  .col-naive { background: #5a1f1f !important; }
-  .col-smart { background: #1d4a31 !important; }
-  .compare-row { display: grid; grid-template-columns: 1.2fr 1fr 1fr; border-bottom: 1px solid var(--soft); font-size: 12px; }
-  .compare-row:last-child { border-bottom: none; }
-  .compare-row > div { padding: 11px 8px; display: flex; align-items: center; }
-  .compare-row .label-cell { color: var(--muted); font-size: 11px; border-right: 1px solid var(--soft); }
-  .compare-row .val-cell { font-family: 'DM Mono', monospace; justify-content: flex-end; text-align: right; border-right: 1px solid var(--soft); font-size: 12px; }
-  .compare-row .val-cell:last-child { border-right: none; }
-  .compare-row.tax-row { background: var(--soft); font-weight: 700; }
-  .compare-row.tax-row .label-cell { color: var(--ink); font-size: 12px; font-weight: 600; }
-  .compare-row.tax-row .val-cell { font-size: 14px; }
-  .naive-val { color: var(--accent); }
-  .smart-val { color: var(--success); }
-  .diff-row { background: rgba(196,147,42,0.12); display: flex; justify-content: space-between; align-items: center; padding: 16px 14px; }
-  .diff-row .lbl { font-size: 12px; color: var(--muted); font-family: 'DM Mono', monospace; letter-spacing: 0.08em; }
-  .diff-row .val { font-family: 'DM Mono', monospace; font-size: 22px; font-weight: 700; color: var(--gold); }
-
-  /* 結論卡 */
-  .summary-card { background: var(--ink); color: #fff; border-radius: 12px; padding: 22px; margin-bottom: 14px; }
-  .sum-lbl { font-size: 11px; color: rgba(255,255,255,0.5); font-family: 'DM Mono', monospace; letter-spacing: 0.12em; margin-bottom: 6px; }
-  .sum-val { font-family: 'DM Mono', monospace; font-size: 28px; font-weight: 700; color: var(--gold); margin-bottom: 4px; }
-  .sum-desc { font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.65; margin-top: 10px; }
-
-  /* 陷阱警示 */
-  .trap-alert { background: #8b1a1a; color: #fff; border-radius: 12px; padding: 18px 20px; margin-bottom: 14px; border: 2px solid #ff6b4a; }
-  .trap-alert-title { font-size: 13px; font-weight: 700; color: #ffd6cc; margin-bottom: 6px; letter-spacing: 0.04em; }
-  .trap-alert-body { font-size: 12px; line-height: 1.75; color: rgba(255,255,255,0.9); }
-  .trap-alert-body strong { color: #ffd6cc; }
-
-  /* 優惠項目 */
-  .advantage { background: var(--success-bg); border-left: 3px solid var(--success); border-radius: 0 8px 8px 0; padding: 12px 14px; font-size: 12px; color: var(--ink); line-height: 1.7; margin-bottom: 10px; }
-  .advantage .adv-title { font-weight: 600; color: var(--success); font-size: 12px; margin-bottom: 4px; }
-  .advantage .adv-amt { font-family: 'DM Mono', monospace; color: var(--success); font-weight: 700; }
-
-  .law-note { background: rgba(196,147,42,0.08); border: 1px solid rgba(196,147,42,0.25); border-radius: 8px; padding: 12px 14px; font-size: 12px; color: var(--muted); line-height: 1.75; margin-top: 14px; }
-  .law-note strong { color: var(--gold); }
-
-  .cross-link { display: block; padding: 12px 16px; background: #fff; border: 1.5px solid var(--border); border-radius: 8px; text-decoration: none; color: var(--ink); font-size: 13px; margin-top: 8px; transition: all 0.2s; }
-  .cross-link:hover { border-color: var(--gold); background: var(--paper); }
-  .cross-link .arr { float: right; color: var(--gold); }
-</style>
 </head>
 <body>
 
@@ -212,7 +115,7 @@
     </div>
   </div>
 
-  <button class="calc-btn" onclick="calculate()">開始對比試算</button>
+  <button class="calc-btn" id="btnCalc">開始對比試算</button>
 
   <div id="results">
     <!-- 結論：一行大字講差額 -->
@@ -281,95 +184,69 @@
       ⚖️ 遺產繼承計算器（先算整體遺產）<span class="arr">→</span>
     </a>
 
-    <button class="calc-btn" onclick="downloadPDF()" style="margin-top:16px">↓ 匯出 PDF 報告</button>
+    <button class="calc-btn" id="btnPdf" style="margin-top:16px">↓ 匯出 PDF 報告</button>
   </div>
-  <div class="disclaimer" style="font-size:11px;color:#aaa;text-align:center;padding:16px 0;line-height:1.6">
+  <div class="disclaimer">
     本工具計算結果僅供參考，不構成稅務或法律意見。實際個案請諮詢地政士、會計師或稅務專業人員。
   </div>
 </main>
 
-<script>
-  const FMT = v => 'NT$ ' + Math.round(v).toLocaleString('zh-TW');
-  const FMT_WAN = v => Math.round(v / 10000).toLocaleString('zh-TW') + ' 萬';
+<script type="module">
+  // Plan A 架構：core 計算、pdf 模板、utils 格式化
+  import { calcInheritedPropertyTrap } from './js/core/property-tax.js';
+  import { FMT, FMT_WAN, getInputNum } from './js/utils/format.js';
+  import { exportPdfDocument } from './js/pdf/template.js';
+  import {
+    pdfSummaryCard, pdfCompareCard, pdfAdvantage, pdfLawNote, pdfTrapAlert
+  } from './js/pdf/sections.js';
 
-  function getVal(id, fallback = 0) {
-    const v = parseFloat(document.getElementById(id).value);
-    return isNaN(v) ? fallback : v;
-  }
+  // 最近一次計算結果（供 PDF 使用）
+  let lastResult = null;
 
   function calculate() {
-    const salePrice = getVal('salePrice');
-    const mortgage  = getVal('mortgageBalance');
-    const inheritedValue = getVal('inheritedValue');
-    const holdYears = getVal('holdYears');
-    const cpiMult = getVal('cpiMult', 1.08);
-    const expenseRate = getVal('expenseRate', 3) / 100;
-    const isForced = document.getElementById('chkForced').checked;
+    const salePrice      = getInputNum('salePrice');
+    const mortgage       = getInputNum('mortgageBalance');
+    const inheritedValue = getInputNum('inheritedValue');
+    const holdYears      = getInputNum('holdYears');
+    const cpiMult        = getInputNum('cpiMult', 1.08);
+    const expenseRate    = getInputNum('expenseRate', 3) / 100;
+    const isForced       = document.getElementById('chkForced').checked;
 
-    if (salePrice <= 0) { alert('請輸入出售價格'); return; }
+    if (salePrice <= 0)      { alert('請輸入出售價格'); return; }
     if (inheritedValue <= 0) { alert('請輸入繼承時公告現值'); return; }
 
-    // 決定「套用優惠」的稅率
-    let smartRate;
-    if (holdYears >= 10) smartRate = 0.15;
-    else if (holdYears >= 5) smartRate = 0.20;
-    else if (isForced) smartRate = 0.20;  // 非自願出售 20%
-    else if (holdYears >= 2) smartRate = 0.35;
-    else smartRate = 0.45;
+    const r = calcInheritedPropertyTrap({
+      salePrice, mortgage, inheritedValue, holdYears, cpiMult, expenseRate, isForced,
+    });
+    lastResult = { input: { salePrice, mortgage, inheritedValue, holdYears, cpiMult, expenseRate, isForced }, result: r };
 
-    // 「憑直覺申報」的稅率：即使符合非自願也沒勾選，所以用一般稅率
-    let naiveRate;
-    if (holdYears >= 10) naiveRate = 0.15;
-    else if (holdYears >= 5) naiveRate = 0.20;
-    else if (holdYears >= 2) naiveRate = 0.35;
-    else naiveRate = 0.45;
+    renderResults(r);
+  }
 
-    // === 憑直覺申報 ===
-    // 一般人：取得成本 = 公告現值（未物價調整）、無費用、無額外負擔
-    const naiveCost = inheritedValue;
-    const naiveExp = 0;
-    const naiveExtBurden = 0;
-    const naiveGain = Math.max(0, salePrice - naiveCost - naiveExp - naiveExtBurden);
-    const naiveTax = Math.round(naiveGain * naiveRate);
-
-    // === 套用優惠 ===
-    // 1. 取得成本物價調整
-    const smartCost = inheritedValue * cpiMult;
-    // 2. 可列舉費用
-    const smartExp = salePrice * expenseRate;
-    // 3. 額外負擔扣除 = max(0, 房貸餘額 - 公告現值)
-    const extBurden = Math.max(0, mortgage - inheritedValue);
-    const smartGain = Math.max(0, salePrice - smartCost - smartExp - extBurden);
-    const smartTax = Math.round(smartGain * smartRate);
-
-    // 差額
-    const savings = naiveTax - smartTax;
-
-    // === 組成對比表 ===
+  function renderResults(r) {
+    // === 組成對比表（同舊版視覺） ===
     const rows = [
-      { label: '售價', naive: salePrice, smart: salePrice },
-      { label: '取得成本', naive: naiveCost, smart: smartCost, note: smartCost > naiveCost ? '(物價調整)' : '' },
-      { label: '可列舉費用', naive: naiveExp, smart: smartExp, negative: true },
-      { label: '額外負擔扣除', naive: naiveExtBurden, smart: extBurden, negative: true, highlight: extBurden > 0 },
-      { label: '課稅所得', naive: naiveGain, smart: smartGain, divider: true },
-      { label: '適用稅率', naive: (naiveRate * 100) + '%', smart: (smartRate * 100) + '%', isRate: true },
+      { label: '售價',        naive: r.naive.cost === r.smart.cost ? 0 : 0, naiveVal: r.input ? 0 : 0 }, // placeholder
     ];
 
-    const rowsHtml = rows.map(r => {
+    // 用純 render 邏輯重建舊對比表
+    const tableRows = buildCompareRows(r);
+
+    const rowsHtml = tableRows.map(row => {
       let naiveCell, smartCell;
-      if (r.isRate) {
-        naiveCell = r.naive;
-        smartCell = r.smart;
+      if (row.isRate) {
+        naiveCell = row.naive;
+        smartCell = row.smart;
       } else {
-        const prefix = r.negative ? '－ ' : '';
-        naiveCell = r.naive === 0 ? '<span style="color:var(--muted)">—</span>' : prefix + FMT_WAN(r.naive);
-        smartCell = r.smart === 0 ? '<span style="color:var(--muted)">—</span>' : prefix + FMT_WAN(r.smart);
+        const prefix = row.negative ? '－ ' : '';
+        naiveCell = row.naive === 0 ? '<span style="color:var(--muted)">—</span>' : prefix + FMT_WAN(row.naive);
+        smartCell = row.smart === 0 ? '<span style="color:var(--muted)">—</span>' : prefix + FMT_WAN(row.smart);
       }
-      const borderStyle = r.divider ? 'border-top:2px solid var(--ink);' : '';
-      const hlStyle = r.highlight ? 'background:rgba(196,147,42,0.1);' : '';
+      const borderStyle = row.divider ? 'border-top:2px solid var(--ink);' : '';
+      const hlStyle = row.highlight ? 'background:rgba(196,147,42,0.1);' : '';
       return `
         <div class="compare-row" style="${borderStyle}${hlStyle}">
-          <div class="label-cell">${r.label}${r.note ? ` <span style="font-size:10px;color:var(--gold)">${r.note}</span>` : ''}</div>
+          <div class="label-cell">${row.label}${row.note ? ` <span style="font-size:10px;color:var(--gold)">${row.note}</span>` : ''}</div>
           <div class="val-cell naive-val">${naiveCell}</div>
           <div class="val-cell smart-val">${smartCell}</div>
         </div>
@@ -379,70 +256,150 @@
     const taxRow = `
       <div class="compare-row tax-row">
         <div class="label-cell">應納稅額</div>
-        <div class="val-cell naive-val">${FMT_WAN(naiveTax)}</div>
-        <div class="val-cell smart-val">${FMT_WAN(smartTax)}</div>
+        <div class="val-cell naive-val">${FMT_WAN(r.naive.tax)}</div>
+        <div class="val-cell smart-val">${FMT_WAN(r.smart.tax)}</div>
       </div>
     `;
 
     document.getElementById('compareRows').innerHTML = rowsHtml + taxRow;
-    document.getElementById('r-diff').textContent = '－ ' + FMT(savings);
+    document.getElementById('r-diff').textContent = '－ ' + FMT(r.savings);
 
     // Summary card
-    document.getElementById('r-savings').textContent = FMT(savings);
-    const savingsPct = naiveTax > 0 ? Math.round((savings / naiveTax) * 100) : 0;
+    document.getElementById('r-savings').textContent = FMT(r.savings);
     document.getElementById('r-savingsDesc').innerHTML =
-      `憑直覺申報 <strong style="color:#f28b6e">${FMT(naiveTax)}</strong> → 套用所有優惠後 <strong style="color:#b8e8ca">${FMT(smartTax)}</strong>，省下 <strong style="color:var(--gold)">${savingsPct}%</strong> 的稅金。`;
+      `憑直覺申報 <strong style="color:#f28b6e">${FMT(r.naive.tax)}</strong> → 套用所有優惠後 <strong style="color:#b8e8ca">${FMT(r.smart.tax)}</strong>，省下 <strong style="color:var(--gold)">${r.savingsPct}%</strong> 的稅金。`;
 
     // 拆解各優惠貢獻
-    // ① 物價調整貢獻 = (smartCost - naiveCost) × smartRate
-    const cpiSaving = Math.round((smartCost - naiveCost) * smartRate);
-    // ② 費用貢獻 = smartExp × smartRate
-    const expSaving = Math.round(smartExp * smartRate);
-    // ③ 額外負擔貢獻 = extBurden × smartRate
-    const extSaving = Math.round(extBurden * smartRate);
-    // ④ 稅率降低貢獻 = naiveGain × (naiveRate - smartRate)，只在稅率不同時計算
-    const rateSaving = naiveRate !== smartRate ? Math.round(naiveGain * (naiveRate - smartRate)) : 0;
-
+    const { cpiSaving, expSaving, extSaving, rateSaving } = r.breakdown;
     document.getElementById('r-cpiSaving').textContent = cpiSaving > 0 ? `省 ${FMT(cpiSaving)}` : '無影響';
     document.getElementById('r-expSaving').textContent = expSaving > 0 ? `省 ${FMT(expSaving)}` : '無影響';
     document.getElementById('r-extSaving').textContent = extSaving > 0 ? `省 ${FMT(extSaving)}` : '本案無額外負擔（房貸未超過現值）';
     document.getElementById('r-rateSaving').textContent = rateSaving > 0 ? `省 ${FMT(rateSaving)}` : '本案稅率無差異';
 
     // 隱藏不適用的「非自願」block
-    document.getElementById('forcedAdv').style.display = (naiveRate !== smartRate || isForced) ? 'block' : 'none';
+    document.getElementById('forcedAdv').style.display =
+      (r.naive.rate !== r.smart.rate || document.getElementById('chkForced').checked) ? 'block' : 'none';
 
-    // 陷阱警示：若應納稅額 > (售價 - 房貸)，就是救命錢會被稅金吃掉
-    const cashOnHand = salePrice - mortgage;
+    // 陷阱警示
     const trapAlert = document.getElementById('trapAlert');
     const trapBody = document.getElementById('trapAlertBody');
-    if (cashOnHand > 0 && naiveTax > cashOnHand * 0.5) {
+    if (r.trap.isTrap) {
       trapAlert.style.display = 'block';
-      if (naiveTax >= cashOnHand) {
+      if (r.trap.isExtremeTrap) {
         trapBody.innerHTML = `
           <strong>賣屋求生恐變賣屋求死。</strong>若不套用任何優惠，
-          應納稅額 <strong>${FMT(naiveTax)}</strong> 已經超過你賣屋後現金餘額 <strong>${FMT(cashOnHand)}</strong>。
+          應納稅額 <strong>${FMT(r.naive.tax)}</strong> 已經超過你賣屋後現金餘額 <strong>${FMT(r.trap.cashOnHand)}</strong>。
           請務必主張額外負擔扣除與非自願出售優惠，並於申報前諮詢專業人員。
         `;
       } else {
         trapBody.innerHTML = `
-          賣屋後現金餘額 <strong>${FMT(cashOnHand)}</strong>，若不套用優惠直接申報 <strong>${FMT(naiveTax)}</strong> 稅金，
-          將耗掉超過 <strong>${Math.round(naiveTax / cashOnHand * 100)}%</strong> 的救命錢。強烈建議諮詢地政士/會計師後再申報。
+          賣屋後現金餘額 <strong>${FMT(r.trap.cashOnHand)}</strong>，若不套用優惠直接申報 <strong>${FMT(r.naive.tax)}</strong> 稅金，
+          將耗掉超過 <strong>${Math.round(r.naive.tax / r.trap.cashOnHand * 100)}%</strong> 的救命錢。強烈建議諮詢地政士/會計師後再申報。
         `;
       }
     } else {
       trapAlert.style.display = 'none';
     }
 
-    document.getElementById('results').style.display = 'block';
-    document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const resultsEl = document.getElementById('results');
+    resultsEl.style.display = 'block';
+    resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  /**
+   * 把 core 結果轉成舊版對比表所需的 row 結構
+   */
+  function buildCompareRows(r) {
+    const salePrice = r.naive.cost > 0 ? (r.naive.taxableGain + r.naive.cost + r.naive.expense + r.naive.extraBurden) : 0;
+    // 從結果反推售價（或我們可以在 core 回傳時帶原始 input，但為了不改 core 回傳結構，用還原法）
+    // 實際上 naive.taxableGain = max(0, salePrice - cost - exp - ext)
+    // 若 taxableGain > 0，salePrice = gain + cost + exp + ext；但若 gain = 0 則無法還原
+    // 改用另一種方式：把 input 存進 lastResult，再從 lastResult.input 讀
+    const input = lastResult.input;
+    return [
+      { label: '售價',        naive: input.salePrice, smart: input.salePrice },
+      { label: '取得成本',     naive: r.naive.cost,    smart: r.smart.cost,
+        note: r.smart.cost > r.naive.cost ? '(物價調整)' : '' },
+      { label: '可列舉費用',   naive: r.naive.expense, smart: r.smart.expense, negative: true },
+      { label: '額外負擔扣除', naive: r.naive.extraBurden, smart: r.smart.extraBurden,
+        negative: true, highlight: r.smart.extraBurden > 0 },
+      { label: '課稅所得',     naive: r.naive.taxableGain, smart: r.smart.taxableGain, divider: true },
+      { label: '適用稅率',
+        naive: (r.naive.rate * 100) + '%',
+        smart: (r.smart.rate * 100) + '%',
+        isRate: true },
+    ];
   }
 
   async function downloadPDF() {
-    const today = new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' });
-    const resultsHTML = document.getElementById('results').innerHTML;
-    const html = `<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>InheritancePro 計算報告</title><style>@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap');*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans TC',sans-serif;background:#fff;color:#1a1410;font-size:13px;padding:40px;max-width:700px;margin:0 auto;}.pdf-header{border-bottom:3px solid #1a1410;padding-bottom:20px;margin-bottom:28px;display:flex;justify-content:space-between;align-items:flex-end;}.pdf-logo{font-family:'Noto Serif TC',serif;font-size:24px;font-weight:700;}.pdf-logo span{color:#c4932a;}.pdf-meta{font-size:11px;color:#7a6f62;text-align:right;line-height:1.8;font-family:'DM Mono',monospace;}.summary-card{background:#1a1410;color:#f5f0e8;border-radius:12px;padding:22px;margin-bottom:14px;break-inside:avoid;}.sum-lbl{font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:0.12em;margin-bottom:6px;}.sum-val{font-size:28px;font-weight:700;color:#c4932a;}.sum-desc{font-size:12px;color:rgba(255,255,255,0.7);line-height:1.65;margin-top:10px;}.compare-card{background:#fff;border:1.5px solid #c8bfb0;border-radius:12px;overflow:hidden;margin-bottom:14px;break-inside:avoid;}.compare-header{display:grid;grid-template-columns:1.2fr 1fr 1fr;background:#1a1410;color:#fff;}.compare-header>div{padding:10px;font-size:11px;text-align:center;}.col-naive{background:#5a1f1f!important;}.col-smart{background:#1d4a31!important;}.compare-row{display:grid;grid-template-columns:1.2fr 1fr 1fr;border-bottom:1px solid #e8e0d0;font-size:12px;}.compare-row>div{padding:10px 8px;}.label-cell{color:#7a6f62;font-size:11px;}.val-cell{font-family:'DM Mono',monospace;text-align:right;font-size:12px;}.naive-val{color:#8b2020;}.smart-val{color:#2a6b4a;}.tax-row{background:#e8e0d0;font-weight:700;}.tax-row .val-cell{font-size:14px;}.diff-row{background:rgba(196,147,42,0.12);display:flex;justify-content:space-between;padding:16px 14px;}.diff-row .val{font-family:'DM Mono',monospace;font-size:22px;font-weight:700;color:#c4932a;}.advantage{background:#f0f8f3;border-left:3px solid #2a6b4a;padding:10px 14px;font-size:11px;line-height:1.7;margin-bottom:8px;}.adv-title{font-weight:600;color:#2a6b4a;margin-bottom:4px;}.adv-amt{color:#2a6b4a;font-weight:700;font-family:'DM Mono',monospace;}.trap-alert{background:#8b1a1a;color:#fff;border-radius:12px;padding:16px 20px;margin-bottom:14px;}.trap-alert-title{font-size:13px;font-weight:700;color:#ffd6cc;margin-bottom:6px;}.trap-alert-body{font-size:12px;line-height:1.7;}.law-note{background:#f8f5e8;border-left:3px solid #c4932a;padding:12px 14px;font-size:11px;color:#7a6f62;line-height:1.75;margin:14px 0;}.pdf-footer{margin-top:40px;padding-top:16px;border-top:1px solid #c8bfb0;font-size:11px;color:#7a6f62;line-height:1.8;text-align:center;}.pdf-disc{font-size:10px;color:#aaa;margin-top:8px;}button,.cross-link{display:none!important;}@media print{body{padding:20px;}}</style></head><body><div class="pdf-header"><div><div class="pdf-logo">Inheritance<span>Pro</span></div><div style="font-size:12px;color:#7a6f62;margin-top:4px">繼承房貸陷阱試算</div></div><div class="pdf-meta">產出日期：${today}</div></div>${resultsHTML}<div class="pdf-footer">© ${new Date().getFullYear()} InheritancePro · inheritancepro.app<div class="pdf-disc">本報告僅供參考，不構成法律意見。實際個案請諮詢地政士、會計師或稅務專業人員。</div></div></body></html>`;
-    exportPDF(html, 'InheritancePro-繼承房貸陷阱');
+    if (!lastResult) return;
+    const { result: r, input } = lastResult;
+
+    // 對比表 rows
+    const compareRows = [
+      { label: '售價',        left: FMT_WAN(input.salePrice),     right: FMT_WAN(input.salePrice) },
+      { label: '取得成本',     left: FMT_WAN(r.naive.cost),        right: FMT_WAN(r.smart.cost) },
+      { label: '可列舉費用',   left: r.naive.expense === 0 ? '—' : FMT_WAN(r.naive.expense),
+                              right: r.smart.expense === 0 ? '—' : '－ ' + FMT_WAN(r.smart.expense) },
+      { label: '額外負擔扣除', left: r.naive.extraBurden === 0 ? '—' : FMT_WAN(r.naive.extraBurden),
+                              right: r.smart.extraBurden === 0 ? '—' : '－ ' + FMT_WAN(r.smart.extraBurden),
+                              highlight: r.smart.extraBurden > 0 },
+      { label: '課稅所得',     left: FMT_WAN(r.naive.taxableGain), right: FMT_WAN(r.smart.taxableGain), divider: true },
+      { label: '適用稅率',     left: (r.naive.rate * 100) + '%',   right: (r.smart.rate * 100) + '%' },
+    ];
+
+    const trapHtml = r.trap.isTrap ? pdfTrapAlert({
+      title: '⚠ 陷阱警示',
+      body: r.trap.isExtremeTrap
+        ? `應納稅額 <strong>${FMT(r.naive.tax)}</strong> 已超過賣屋後現金餘額 <strong>${FMT(r.trap.cashOnHand)}</strong>。`
+        : `賣屋後現金餘額 <strong>${FMT(r.trap.cashOnHand)}</strong>，直接申報將耗掉超過 <strong>${Math.round(r.naive.tax / r.trap.cashOnHand * 100)}%</strong> 救命錢。`,
+    }) : '';
+
+    const bodyHtml = `
+      ${pdfSummaryCard({
+        label: '懂規則可幫你省下',
+        value: FMT(r.savings),
+        desc: `憑直覺申報 ${FMT(r.naive.tax)} → 套用優惠後 ${FMT(r.smart.tax)}，省下 ${r.savingsPct}%。`,
+      })}
+      ${trapHtml}
+      ${pdfCompareCard({
+        leftLabel: '憑直覺申報',
+        rightLabel: '套用優惠',
+        rows: compareRows,
+        taxRow: {
+          label: '應納稅額',
+          left: FMT_WAN(r.naive.tax),
+          right: FMT_WAN(r.smart.tax),
+        },
+        diffLabel: '差額',
+        diffValue: '－ ' + FMT(r.savings),
+      })}
+      <div style="background:#fff;border:1.5px solid #c8bfb0;border-radius:12px;padding:18px;margin-bottom:14px;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:#7a6f62;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;border-bottom:1px solid #e8e0d0;padding-bottom:6px;">優惠項目拆解</div>
+        ${pdfAdvantage({ title: '① 物價調整', body: r.breakdown.cpiSaving > 0 ? `省 ${FMT(r.breakdown.cpiSaving)}` : '無影響' })}
+        ${pdfAdvantage({ title: '② 可列舉費用', body: r.breakdown.expSaving > 0 ? `省 ${FMT(r.breakdown.expSaving)}` : '無影響' })}
+        ${pdfAdvantage({ title: '③ 額外負擔扣除（最關鍵）', body: r.breakdown.extSaving > 0 ? `省 ${FMT(r.breakdown.extSaving)}` : '本案無額外負擔' })}
+        ${r.naive.rate !== r.smart.rate ? pdfAdvantage({ title: '④ 非自願出售 20% 稅率', body: `省 ${FMT(r.breakdown.rateSaving)}` }) : ''}
+      </div>
+      ${pdfLawNote(`
+        <strong>法律依據：</strong><br>
+        · 所得稅法§4-4、§4-5、§14-4（房地合一稅 2.0）<br>
+        · 財政部 110.6.11 台財稅字第 11004561660 號函<br>
+        · 所得稅法施行細則§17-4：非自願性因素出售，持有未滿 5 年適用 20% 稅率
+      `)}
+    `;
+
+    await exportPdfDocument({
+      title: 'InheritancePro 計算報告',
+      pageSubtitle: '繼承房貸陷阱試算',
+      bodyHtml,
+      filename: 'InheritancePro-繼承房貸陷阱',
+    });
   }
+
+  // 綁定事件
+  document.getElementById('btnCalc').addEventListener('click', calculate);
+  document.getElementById('btnPdf').addEventListener('click', downloadPDF);
 </script>
 
 <script src="js/supabase-config.js"></script>

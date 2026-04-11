@@ -1,0 +1,81 @@
+/**
+ * layout.css — 所有工具頁共用的版面骨架
+ *
+ * 內容：sticky header、main 容器、標題樣式、頁尾免責聲明列。
+ */
+
+/* === Header === */
+header {
+  background: var(--ink);
+  color: var(--paper);
+  padding: var(--sp-5) var(--sp-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.logo span {
+  color: var(--gold);
+}
+
+.page-sub {
+  font-size: var(--fs-sm);
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 3px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.06em;
+}
+
+.home-link {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  color: var(--muted);
+  text-decoration: none;
+  letter-spacing: 0.08em;
+}
+
+.home-link:hover {
+  color: var(--gold);
+}
+
+/* === Main container === */
+main {
+  padding: var(--sp-6) var(--sp-5) calc(120px + env(safe-area-inset-bottom, 0px));
+  max-width: var(--content-max-w);
+  margin: 0 auto;
+}
+
+/* === 標題 === */
+h1 {
+  font-family: var(--font-serif);
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+.subtitle {
+  font-size: var(--fs-md);
+  color: var(--muted);
+  margin-bottom: var(--sp-4);
+  line-height: 1.7;
+}
+
+/* === 頁尾免責 === */
+.disclaimer {
+  font-size: var(--fs-sm);
+  color: #aaa;
+  text-align: center;
+  padding: var(--sp-4) 0;
+  line-height: 1.6;
+}

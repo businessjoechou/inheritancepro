@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Core 模組測試（開發用）</title>
+<link rel="stylesheet" href="css/tool-page.css">
+<style>
+  main { max-width: 720px; }
+  .test-case { display: flex; justify-content: space-between; padding: 8px 12px;
+               border-bottom: 1px solid var(--soft); font-family: var(--font-mono); font-size: 12px; }
+  .test-case.pass { background: var(--success-bg); }
+  .test-case.fail { background: var(--danger-bg); color: var(--accent); font-weight: 700; }
+  .test-case .name { flex: 1; }
+  .test-case .val { font-weight: 600; margin-left: 12px; }
+  .test-section { margin-bottom: 20px; }
+  .test-section h3 { font-family: var(--font-serif); font-size: 16px;
+                     margin-bottom: 8px; padding: 8px 12px; background: var(--ink); color: var(--gold); }
+  .summary { padding: 16px; background: var(--ink); color: #fff; border-radius: 8px;
+             margin-bottom: 20px; text-align: center; }
+  .summary .big { font-size: 28px; font-weight: 700; color: var(--gold); }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Inheritance<span>Pro</span><div class="page-sub">CORE TESTS</div></div>
+  <a class="home-link" href="index.html">← 首頁</a>
+</header>
+<main>
+  <h1>Core 模組測試</h1>
+  <p class="subtitle">Phase 2 驗收：確認 core/* 純函式與舊頁面算出同樣結果。</p>
+  <div id="summary" class="summary"></div>
+  <div id="output"></div>
+</main>
+
+<script type="module">
+import { calcInheritedPropertyTrap, getPropertyTaxRate } from './js/core/property-tax.js';
+import { calcStatutoryShare, getHeirTier, getSpouseShare, getForcedShareRate } from './js/core/inheritance.js';
+import { calcEstateTax, calcEstateTaxFull } from './js/core/estate-tax.js';
+import { calcGiftTax, calcGiftTaxFull, planGiftYears } from './js/core/gift-tax.js';
+import { calcInterest } from './js/core/interest.js';
+import { calcStatuteOfLimitations, yearsBetween } from './js/core/dates.js';
+
+const results = [];
+function assert(name, actual, expected, tolerance = 0) {
+  const pass = typeof expected === 'number'
+    ? Math.abs(actual - expected) <= tolerance
+    : JSON.stringify(actual) === JSON.stringify(expected);
+  results.push({ name, actual, expected, pass });
+}
+
+// === property-tax.js ===
+const section1 = 'property-tax.js';
+
+// 新聞案例：售價 900 萬、房貸 700 萬、現值 400 萬、持有 2 年、非自願
+const trap = calcInheritedPropertyTrap({
+  salePrice: 9_000_000,
+  mortgage: 7_000_000,
+  inheritedValue: 4_000_000,
+  holdYears: 2,
+  cpiMult: 1.08,
+  expenseRate: 0.03,
+  isForced: true,
+});
+// 憑直覺：gain = 900 - 400 = 500 萬，稅率 35%（持有 2 年以上）= 175 萬
+assert('[pt] 憑直覺應納稅額 = 175 萬', trap.naive.tax, 1_750_000);
+// 懂規則：cost = 432 萬, exp = 27 萬, extBurden = 300 萬 → gain = 141 萬 × 20% = 28.2 萬
+assert('[pt] 懂規則應納稅額 ≈ 28.2 萬', trap.smart.tax, 282_000, 10_000);
+assert('[pt] 套用優惠稅率 = 20%', trap.smart.rate, 0.20);
+assert('[pt] 差額 ≈ 146.8 萬', trap.savings, 1_468_000, 10_000);
+assert('[pt] 持有 10 年稅率 = 15%', getPropertyTaxRate(10, false), 0.15);
+assert('[pt] 持有 2 年一般稅率 = 35%', getPropertyTaxRate(2, false), 0.35);
+assert('[pt] 持有 1 年非自願 = 20%', getPropertyTaxRate(1, true), 0.20);
+
+// === inheritance.js ===
+const section2 = 'inheritance.js';
+// 配偶 + 2 子女，遺產 1200 萬：配偶 400、子女各 400
+const inh1 = calcStatutoryShare({
+  totalEstate: 12_000_000,
+  hasSpouse: true,
+  children: 2,
+  parents: 0, siblings: 0, grandparents: 0,
+});
+assert('[inh] 配偶+2子女 配偶得 400 萬', inh1.heirs[0].amount, 4_000_000);
+assert('[inh] 配偶+2子女 第1子得 400 萬', inh1.heirs[1].amount, 4_000_000);
+assert('[inh] 配偶+2子女 第2子得 400 萬', inh1.heirs[2].amount, 4_000_000);
+
+// 配偶 + 父母 2 人，遺產 1000 萬：配偶 500、父母各 250
+const inh2 = calcStatutoryShare({
+  totalEstate: 10_000_000,
+  hasSpouse: true,
+  children: 0, parents: 2, siblings: 0, grandparents: 0,
+});
+assert('[inh] 配偶+父母 配偶得 500 萬', inh2.heirs[0].amount, 5_000_000);
+assert('[inh] 配偶+父母 父1得 250 萬', inh2.heirs[1].amount, 2_500_000);
+
+// 只有配偶：配偶全拿
+const inh3 = calcStatutoryShare({
+  totalEstate: 10_000_000, hasSpouse: true,
+  children: 0, parents: 0, siblings: 0, grandparents: 0,
+});
+assert('[inh] 只有配偶 配偶全拿', inh3.heirs[0].amount, 10_000_000);
+
+// 特留分：子女 1/2
+assert('[inh] 子女特留分比例 = 1/2', getForcedShareRate(1, 'blood'), 0.5);
+// 特留分：兄弟姊妹 1/3
+assert('[inh] 兄弟姊妹特留分比例 = 1/3', getForcedShareRate(3, 'blood'), 1/3, 0.0001);
+
+// === estate-tax.js ===
+const section3 = 'estate-tax.js';
+// 5000 萬 × 10% = 500 萬
+assert('[et] 5000萬淨額稅 = 500萬', calcEstateTax(50_000_000), 5_000_000);
+// 1 億: 500 萬 + 5000 萬 × 15% = 500 + 750 = 1250 萬
+assert('[et] 1億淨額稅 = 1250萬', calcEstateTax(100_000_000), 12_500_000);
+// 2 億: 500 + 750 + 1 億 × 20% = 3250 萬
+assert('[et] 2億淨額稅 = 3250萬', calcEstateTax(200_000_000), 32_500_000);
+assert('[et] 免稅額以下 = 0', calcEstateTax(10_000_000), 1_000_000); // 10% of 1000 萬 = 100萬 (not 0, netEstate already after deductions)
+
+// 一站式：2000 萬遺產、配偶 + 2 子女 → 淨額 = 2000 - 1333 - 553 - 138 - 112 = −136 → 0
+const etFull = calcEstateTaxFull({
+  totalAssets: 20_000_000,
+  hasSpouse: true,
+  childrenCount: 2,
+});
+assert('[et] 2000萬配偶+2子女 應納 = 0', etFull.tax, 0);
+
+// === gift-tax.js ===
+const section4 = 'gift-tax.js';
+// 244 萬免稅額以下免稅
+assert('[gt] 244萬贈與免稅', calcGiftTaxFull({ priorGifts: 0, currentGift: 2_440_000 }).tax, 0);
+// 500 萬贈與：淨額 256 萬 × 10% = 25.6 萬
+assert('[gt] 500萬贈與淨額 = 256萬', calcGiftTaxFull({ priorGifts: 0, currentGift: 5_000_000 }).netGift, 2_560_000);
+assert('[gt] 500萬贈與稅 = 25.6萬', calcGiftTaxFull({ priorGifts: 0, currentGift: 5_000_000 }).tax, 256_000);
+// 配偶間贈與全免稅
+assert('[gt] 配偶贈與全免稅', calcGiftTaxFull({ priorGifts: 0, currentGift: 10_000_000, isSpouseGift: true }).tax, 0);
+// 分年規劃 1000 萬：4 年免稅 + 餘 24 萬
+const plan = planGiftYears(10_000_000);
+assert('[gt] 1000萬可免稅 4 年', plan.freeYears, 4);
+
+// === interest.js ===
+const section5 = 'interest.js';
+// 100 萬 × 5% × 1 年 = 5 萬（單利）
+const int1 = calcInterest({ principal: 1_000_000, ratePct: 5, days: 365 });
+assert('[int] 100萬 5% 1年單利 = 5萬', int1.interest, 50_000);
+
+// === dates.js ===
+const section6 = 'dates.js';
+assert('[date] 2024→2026 = 2 年', yearsBetween('2024-01-01', '2026-01-01'), 2);
+assert('[date] 2024-06→2025-05 = 0 年', yearsBetween('2024-06-15', '2025-05-15'), 0);
+
+// === Render ===
+const sections = {};
+results.forEach(r => {
+  const key = r.name.match(/^\[(\w+)\]/)[1];
+  sections[key] ??= [];
+  sections[key].push(r);
+});
+
+const sectionTitles = {
+  pt: 'property-tax.js',
+  inh: 'inheritance.js',
+  et: 'estate-tax.js',
+  gt: 'gift-tax.js',
+  int: 'interest.js',
+  date: 'dates.js',
+};
+
+const out = document.getElementById('output');
+Object.entries(sections).forEach(([key, list]) => {
+  const wrap = document.createElement('div');
+  wrap.className = 'test-section';
+  wrap.innerHTML = `<h3>${sectionTitles[key] || key}</h3>`;
+  list.forEach(r => {
+    const row = document.createElement('div');
+    row.className = 'test-case ' + (r.pass ? 'pass' : 'fail');
+    row.innerHTML = `<span class="name">${r.pass ? '✓' : '✗'} ${r.name.replace(/^\[\w+\]\s*/, '')}</span>
+                     <span class="val">${r.pass ? '' : `got ${r.actual} ≠ ${r.expected}`}</span>`;
+    wrap.appendChild(row);
+  });
+  out.appendChild(wrap);
+});
+
+const total = results.length;
+const passed = results.filter(r => r.pass).length;
+const summary = document.getElementById('summary');
+summary.innerHTML = `
+  <div class="big">${passed} / ${total}</div>
+  <div>${passed === total ? '全部通過 ✓' : `${total - passed} 項失敗`}</div>
+`;
+if (passed === total) summary.style.background = '#1d4a31';
+else summary.style.background = '#5a1f1f';
+</script>
+</body>
+</html>

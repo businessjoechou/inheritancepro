@@ -1,0 +1,32 @@
+/**
+ * reset.css — 全域 reset 與 body 預設
+ *
+ * 刻意極簡：只做 box-sizing、清 margin/padding、focus-visible。
+ * 不包含 normalize.css 那種激進的 reset，因為很多舊頁面依賴 HTML 預設行為。
+ */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  font-size: var(--fs-lg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}

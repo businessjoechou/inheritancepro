@@ -1,0 +1,22 @@
+/**
+ * tool-page.css — 工具頁統一 skeleton
+ *
+ * 每個工具頁只需 link 這個檔案（它會自動 import 其他底層檔案），
+ * 就能得到完整的 InheritancePro 樣式。
+ */
+
+@import url('tokens.css');
+@import url('reset.css');
+@import url('layout.css');
+@import url('components.css');
+@import url('utilities.css');
+
+/* === 工具頁結果區（預設隱藏） === */
+#results {
+  display: none;
+  margin-top: var(--sp-6);
+}
+
+#results.visible {
+  display: block;
+}
