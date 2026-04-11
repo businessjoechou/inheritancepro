@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9P35VNFL1V"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9P35VNFL1V');</script>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>保單借款 vs 解約決策器｜InheritancePro</title>
+<meta name="description" content="急需用錢該保單借款還是解約？試算借款總成本 vs 解約淨值，含保單失效臨界點與所得稅影響。">
+<meta name="keywords" content="保單借款,保單解約,保單質押,保單失效,解約金,保價金借款,保險法120">
+<meta name="robots" content="index, follow">
+<meta name="author" content="InheritancePro">
+<meta property="og:title" content="保單借款 vs 解約決策器｜InheritancePro">
+<meta property="og:description" content="急需現金時，借款與解約何者划算？一鍵試算對比。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://inheritancepro.app/insurance-loan-vs-surrender.html">
+<meta property="og:site_name" content="InheritancePro">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="保單借款 vs 解約決策器｜InheritancePro">
+<link rel="canonical" href="https://inheritancepro.app/insurance-loan-vs-surrender.html">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="js/pdf-export.js"></script>
+<script src="js/persona.js"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"保單借款 vs 解約決策器","url":"https://inheritancepro.app/insurance-loan-vs-surrender.html","applicationCategory":"FinanceApplication","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro","url":"https://inheritancepro.app"}}</script>
+<style>
+  :root{--ink:#1a1410;--paper:#f5f0e8;--accent:#8b2020;--gold:#c4932a;--soft:#e8e0d0;--muted:#7a6f62;--success:#2a6b4a;--danger:#8b2020;--border:#c8bfb0;}
+  *:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);font-family:'Noto Sans TC',sans-serif;min-height:100vh;font-size:15px;}
+  header{background:var(--ink);color:var(--paper);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+  .logo{font-family:'Noto Serif TC',serif;font-size:20px;font-weight:700;letter-spacing:0.04em;}
+  .logo span{color:var(--gold);}
+  .page-sub{font-size:11px;color:rgba(255,255,255,0.5);margin-top:3px;font-family:'DM Mono',monospace;letter-spacing:0.06em;}
+  .home-link{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:0.08em;}
+  main{padding:24px 20px calc(120px + env(safe-area-inset-bottom,0px));max-width:480px;margin:0 auto;}
+  h1{font-family:'Noto Serif TC',serif;font-size:22px;font-weight:700;margin-bottom:6px;line-height:1.4;}
+  .subtitle{font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.7;}
+  .card{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:20px;margin-bottom:14px;}
+  .section-title{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--soft);}
+  .input-group{margin-bottom:16px;}
+  .input-group:last-child{margin-bottom:0;}
+  label{display:block;font-size:13px;font-weight:500;margin-bottom:6px;}
+  .label-hint{font-size:11px;color:var(--muted);font-weight:400;margin-left:6px;}
+  input[type="number"]{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:8px;background:var(--paper);font-size:15px;font-family:'DM Mono',monospace;color:var(--ink);-webkit-appearance:none;}
+  input:focus{outline:none;border-color:var(--gold);background:#fff;}
+  .calc-btn{width:100%;padding:16px;background:var(--ink);color:var(--paper);border:none;border-radius:10px;font-size:15px;font-weight:500;cursor:pointer;letter-spacing:0.04em;margin-top:8px;}
+  .calc-btn:hover{background:#2a2420;}
+  #results{display:none;margin-top:24px;}
+  .winner-card{background:var(--ink);color:#fff;border-radius:12px;padding:22px;margin-bottom:14px;text-align:center;}
+  .winner-lbl{font-size:11px;color:rgba(255,255,255,0.5);font-family:'DM Mono',monospace;letter-spacing:0.12em;}
+  .winner-name{font-size:22px;font-weight:700;margin:8px 0;color:var(--gold);font-family:'Noto Serif TC',serif;}
+  .winner-desc{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.7;}
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+  .opt-box{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:18px;}
+  .opt-box.winner{border:2px solid var(--success);background:#f0f8f3;}
+  .opt-box.lose{opacity:0.7;}
+  .opt-title{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:10px;text-align:center;}
+  .opt-amount{font-family:'DM Mono',monospace;font-size:20px;font-weight:700;color:var(--success);text-align:center;padding:10px 0;border-top:1px dashed var(--soft);border-bottom:1px dashed var(--soft);margin-bottom:10px;}
+  .opt-amount.negative{color:var(--accent);}
+  .opt-row{display:flex;justify-content:space-between;font-size:11px;padding:4px 0;color:var(--muted);}
+  .opt-row .val{font-family:'DM Mono',monospace;color:var(--ink);}
+  .result-card{background:var(--ink);color:var(--paper);border-radius:12px;padding:24px;margin-bottom:14px;}
+  .result-title{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:16px;}
+  .result-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.08);font-size:13px;}
+  .result-row:last-child{border-bottom:none;}
+  .result-row .lbl{color:rgba(255,255,255,0.65);}
+  .result-row .val{font-family:'DM Mono',monospace;}
+  .critical-box{background:#8b1a1a;color:#fff;border-radius:10px;padding:14px 18px;margin-top:14px;font-size:12px;line-height:1.7;}
+  .critical-box strong{color:#ffd6cc;}
+  .law-note{background:rgba(196,147,42,0.08);border:1px solid rgba(196,147,42,0.25);border-radius:8px;padding:12px 14px;font-size:12px;color:var(--muted);line-height:1.75;margin-top:14px;}
+  .law-note strong{color:var(--gold);}
+</style>
+</head>
+<body>
+<header>
+  <a href="index.html" style="text-decoration:none;color:inherit">
+    <div class="logo">Inheritance<span>Pro</span></div>
+    <div class="page-sub">保單借款 vs 解約</div>
+  </a>
+  <a class="home-link" href="index.html">← 首頁</a>
+</header>
+<main>
+  <h1>保單借款 vs 解約決策器</h1>
+  <p class="subtitle">急需用錢時，「保單借款」還是「直接解約」比較划算？兩者稅務與成本完全不同，本工具為你算出最佳選擇。</p>
+
+  <div class="card">
+    <div class="section-title">A · 保單現況</div>
+    <div class="input-group">
+      <label>保單價值準備金（保價金）<span class="label-hint">元，向保險公司查詢</span></label>
+      <input type="number" id="cashValue" placeholder="例：2000000" min="0" inputmode="numeric">
+    </div>
+    <div class="input-group">
+      <label>解約金<span class="label-hint">元，通常低於保價金（解約違約金）</span></label>
+      <input type="number" id="surrender" placeholder="例：1800000" min="0" inputmode="numeric">
+    </div>
+    <div class="input-group">
+      <label>累計已繳保費<span class="label-hint">元，用於計算解約所得稅</span></label>
+      <input type="number" id="totalPremium" placeholder="例：1500000" min="0" inputmode="numeric">
+    </div>
+    <div class="input-group" style="margin-bottom:0">
+      <label>預計保留保障<span class="label-hint">仍需壽險保障則選擇借款為宜</span></label>
+      <select id="needProtection" style="width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:8px;background:var(--paper);font-size:15px;font-family:'Noto Sans TC',sans-serif;color:var(--ink);">
+        <option value="yes">是，仍需保障</option>
+        <option value="no">否，保障不重要</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">B · 資金需求</div>
+    <div class="input-group">
+      <label>需要資金金額<span class="label-hint">元</span></label>
+      <input type="number" id="needAmount" placeholder="例：1000000" min="0" inputmode="numeric">
+    </div>
+    <div class="input-group">
+      <label>預計還款時間<span class="label-hint">年數，若解約則無此概念</span></label>
+      <input type="number" id="repayYears" placeholder="例：3" min="0" max="30" step="0.5" inputmode="decimal">
+    </div>
+    <div class="input-group" style="margin-bottom:0">
+      <label>保單借款利率 (%)<span class="label-hint">查保單條款，通常 4.5% ~ 6.5%</span></label>
+      <input type="number" id="loanRate" placeholder="5.5" min="0" max="20" step="0.1" value="5.5" inputmode="decimal">
+    </div>
+  </div>
+
+  <button class="calc-btn" onclick="calculate()">試算比較</button>
+
+  <div id="results">
+    <div class="winner-card" id="winnerCard">
+      <div class="winner-lbl">建議方案</div>
+      <div class="winner-name" id="r-winner">—</div>
+      <div class="winner-desc" id="r-reason">—</div>
+    </div>
+
+    <div class="compare">
+      <div class="opt-box" id="loanBox">
+        <div class="opt-title">方案 ① 保單借款</div>
+        <div class="opt-amount" id="r-loanNet">—</div>
+        <div class="opt-row"><span>可借金額</span><span class="val" id="r-loanable">—</span></div>
+        <div class="opt-row"><span>年利率</span><span class="val" id="r-loanRate">—</span></div>
+        <div class="opt-row"><span>總利息</span><span class="val" id="r-totalInterest">—</span></div>
+        <div class="opt-row"><span>保障狀態</span><span class="val" style="color:var(--success)">維持</span></div>
+      </div>
+      <div class="opt-box" id="surrenderBox">
+        <div class="opt-title">方案 ② 解約</div>
+        <div class="opt-amount" id="r-surrenderNet">—</div>
+        <div class="opt-row"><span>解約金</span><span class="val" id="r-surrenderAmt">—</span></div>
+        <div class="opt-row"><span>解約所得</span><span class="val" id="r-gain">—</span></div>
+        <div class="opt-row"><span>所得稅 (估)</span><span class="val" id="r-incomeTax">—</span></div>
+        <div class="opt-row"><span>保障狀態</span><span class="val" style="color:var(--accent)">失效</span></div>
+      </div>
+    </div>
+
+    <div class="result-card">
+      <div class="result-title">詳細對比</div>
+      <div class="result-row"><span class="lbl">借款成本（總利息）</span><span class="val" id="r-dtl-interest">—</span></div>
+      <div class="result-row"><span class="lbl">解約損失（保價金 − 解約金）</span><span class="val" id="r-dtl-loss">—</span></div>
+      <div class="result-row"><span class="lbl">解約所得稅</span><span class="val" id="r-dtl-tax">—</span></div>
+      <div class="result-row"><span class="lbl">借款方案淨現金</span><span class="val" id="r-dtl-loanNet">—</span></div>
+      <div class="result-row"><span class="lbl">解約方案淨現金</span><span class="val" id="r-dtl-surNet">—</span></div>
+      <div class="result-row" style="padding-top:12px;border-top:2px solid rgba(255,255,255,0.2)"><span class="lbl">差額</span><span class="val" style="color:var(--gold);font-size:17px;font-weight:700" id="r-dtl-diff">—</span></div>
+    </div>
+
+    <div class="critical-box" id="criticalBox" style="display:none">
+      <strong>⚠ 保單失效臨界警示：</strong><br>
+      <span id="criticalText"></span>
+    </div>
+
+    <div class="law-note">
+      <strong>法律依據：</strong>保險法§120（保單借款）、§119（解約金）；所得稅法§14（其他所得）。<br>
+      <strong>重要提醒：</strong>① 保單借款積欠本息超過保價金時，保單將失效 ② 解約金超過已繳保費部分可能課所得稅，實際稅率依個人綜所稅級距 ③ 投資型保單與傳統型保單規則不同，請向保險公司確認 ④ 高額借款建議先與理財顧問討論。
+    </div>
+
+    <button class="calc-btn" onclick="downloadPDF()" style="margin-top:16px">↓ 匯出 PDF 報告</button>
+  </div>
+  <div class="disclaimer" style="font-size:11px;color:#aaa;text-align:center;padding:16px 0;line-height:1.6">本工具計算結果僅供參考，不構成稅務或理財意見。</div>
+</main>
+<script>
+  const FMT=v=>'NT$ '+Math.round(v).toLocaleString('zh-TW');
+
+  function calculate(){
+    const cashValue=parseFloat(document.getElementById('cashValue').value)||0;
+    const surrender=parseFloat(document.getElementById('surrender').value)||cashValue;
+    const totalPremium=parseFloat(document.getElementById('totalPremium').value)||0;
+    const needAmount=parseFloat(document.getElementById('needAmount').value)||0;
+    const repayYears=parseFloat(document.getElementById('repayYears').value)||1;
+    const loanRate=parseFloat(document.getElementById('loanRate').value)/100||0.055;
+    const needProtection=document.getElementById('needProtection').value==='yes';
+
+    if(!cashValue||!needAmount){alert('請填入保價金與資金需求');return;}
+
+    // 方案 1：借款
+    const maxLoanable=cashValue*0.9; // 一般上限 90%
+    const actualLoan=Math.min(needAmount,maxLoanable);
+    // 年利息 × 年數 × 平均餘額（簡化為半額）
+    const totalInterest=actualLoan*loanRate*repayYears;
+    // 借款方案淨現金流：取得 actualLoan − 支付 totalInterest，保單繼續持有
+    // 若需求 > 可借，差額以 0 計
+    const loanShortfall=Math.max(0,needAmount-maxLoanable);
+    const loanNet=actualLoan-totalInterest-loanShortfall; // 實際能用到手的現金，扣掉利息成本
+
+    // 方案 2：解約
+    // 解約所得稅：超過已繳保費部分
+    const gain=Math.max(0,surrender-totalPremium);
+    // 估算所得稅：簡化為 12% 級距
+    const incomeTax=Math.round(gain*0.12);
+    const surrenderNet=surrender-incomeTax;
+    // 解約損失（保價金 - 解約金）記錄但不計入淨現金
+    const surrenderLoss=cashValue-surrender;
+
+    // 判斷勝者
+    // 若需要保障：借款通常優先
+    // 若不需要保障：比淨現金
+    let winner,reason;
+    const diff=loanNet-surrenderNet;
+
+    if(needAmount>surrender && needAmount>maxLoanable){
+      winner='兩方案皆不足';
+      reason='資金需求超過兩方案可取得上限，建議考慮其他資金來源或調降需求';
+    }else if(needProtection && maxLoanable>=needAmount){
+      winner='保單借款';
+      reason=`您仍需保障，借款方案可維持壽險保障，總成本僅利息 ${FMT(totalInterest)}，比解約損失 ${FMT(surrenderLoss+incomeTax)} 更划算`;
+    }else if(diff>0){
+      winner='保單借款';
+      reason=`借款方案淨現金高出 ${FMT(diff)}，且保單保障持續有效`;
+    }else if(diff<0){
+      winner='解約';
+      reason=`解約方案淨現金高出 ${FMT(-diff)}，但您將失去壽險保障。若無保障需求可考慮`;
+    }else{
+      winner='相近';
+      reason='兩方案淨現金相近，建議依保障需求決定';
+    }
+
+    document.getElementById('r-winner').textContent=winner;
+    document.getElementById('r-reason').textContent=reason;
+
+    // Winner highlight
+    document.getElementById('loanBox').className='opt-box'+(winner==='保單借款'?' winner':(winner==='解約'?' lose':''));
+    document.getElementById('surrenderBox').className='opt-box'+(winner==='解約'?' winner':(winner==='保單借款'?' lose':''));
+
+    // 方案 1 明細
+    document.getElementById('r-loanable').textContent=FMT(actualLoan);
+    document.getElementById('r-loanRate').textContent=(loanRate*100).toFixed(2)+'%';
+    document.getElementById('r-totalInterest').textContent=FMT(totalInterest);
+    document.getElementById('r-loanNet').textContent=FMT(actualLoan-totalInterest);
+    document.getElementById('r-loanNet').className='opt-amount';
+
+    // 方案 2 明細
+    document.getElementById('r-surrenderAmt').textContent=FMT(surrender);
+    document.getElementById('r-gain').textContent=FMT(gain);
+    document.getElementById('r-incomeTax').textContent=FMT(incomeTax);
+    document.getElementById('r-surrenderNet').textContent=FMT(surrenderNet);
+    document.getElementById('r-surrenderNet').className='opt-amount';
+
+    // 詳細對比
+    document.getElementById('r-dtl-interest').textContent='－ '+FMT(totalInterest);
+    document.getElementById('r-dtl-loss').textContent='－ '+FMT(surrenderLoss);
+    document.getElementById('r-dtl-tax').textContent='－ '+FMT(incomeTax);
+    document.getElementById('r-dtl-loanNet').textContent=FMT(actualLoan-totalInterest);
+    document.getElementById('r-dtl-surNet').textContent=FMT(surrenderNet);
+    const diffAbs=Math.abs(diff);
+    document.getElementById('r-dtl-diff').textContent=(diff>=0?'借款優 +':'解約優 +')+FMT(diffAbs);
+
+    // 保單失效警示
+    // 借款本息達保價金時失效；計算幾年失效
+    const yearsToFail=actualLoan>0 && loanRate>0?Math.log(cashValue/actualLoan)/Math.log(1+loanRate):999;
+    const criticalBox=document.getElementById('criticalBox');
+    const criticalText=document.getElementById('criticalText');
+    if(yearsToFail<20 && actualLoan>0){
+      criticalBox.style.display='block';
+      criticalText.innerHTML=`若借款 <strong>${FMT(actualLoan)}</strong> 不還本息，約 <strong>${yearsToFail.toFixed(1)} 年</strong>後借款本息將達保價金，<strong>保單即刻失效</strong>。務必按期還息或增繳本金。`;
+    }else{
+      criticalBox.style.display='none';
+    }
+
+    document.getElementById('results').style.display='block';
+    document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  async function downloadPDF(){
+    const today=new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'long',day:'numeric'});
+    const resultsHTML=document.getElementById('results').innerHTML;
+    const html=`<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>InheritancePro</title><style>@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap');*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans TC',sans-serif;color:#1a1410;font-size:13px;padding:40px;max-width:700px;margin:0 auto;}.pdf-header{border-bottom:3px solid #1a1410;padding-bottom:20px;margin-bottom:28px;display:flex;justify-content:space-between;}.pdf-logo{font-family:'Noto Serif TC',serif;font-size:24px;font-weight:700;}.pdf-logo span{color:#c4932a;}.winner-card{background:#1a1410;color:#fff;border-radius:12px;padding:22px;text-align:center;margin-bottom:14px;}.winner-name{font-size:22px;font-weight:700;color:#c4932a;}.compare{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}.opt-box{border:1.5px solid #c8bfb0;border-radius:12px;padding:16px;}.opt-box.winner{border:2px solid #2a6b4a;background:#f0f8f3;}.opt-title{font-size:13px;font-weight:700;text-align:center;margin-bottom:10px;}.opt-amount{font-family:'DM Mono',monospace;font-size:18px;font-weight:700;color:#2a6b4a;text-align:center;padding:10px 0;}.opt-row{display:flex;justify-content:space-between;font-size:11px;padding:4px 0;color:#7a6f62;}.opt-row .val{font-family:'DM Mono',monospace;color:#1a1410;}.result-card{background:#1a1410;color:#f5f0e8;border-radius:12px;padding:20px;margin-bottom:14px;}.result-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.08);font-size:12px;}.lbl{color:rgba(255,255,255,0.65);}.val{font-family:'DM Mono',monospace;}.critical-box{background:#8b1a1a;color:#fff;border-radius:10px;padding:12px 16px;font-size:12px;margin-top:14px;}.law-note{background:#f8f5e8;border-left:3px solid #c4932a;padding:12px 14px;font-size:11px;color:#7a6f62;line-height:1.7;margin:14px 0;}button{display:none!important;}@media print{body{padding:20px;}}</style></head><body><div class="pdf-header"><div><div class="pdf-logo">Inheritance<span>Pro</span></div><div style="font-size:12px;color:#7a6f62">保單借款 vs 解約決策器</div></div><div style="font-size:11px;color:#7a6f62">產出日期：${today}</div></div>${resultsHTML}<div style="margin-top:40px;padding-top:16px;border-top:1px solid #c8bfb0;font-size:11px;color:#7a6f62;text-align:center">© ${new Date().getFullYear()} InheritancePro · inheritancepro.app</div></body></html>`;
+    exportPDF(html,'InheritancePro-保單借款vs解約');
+  }
+</script>
+<script src="js/supabase-config.js"></script>
+<script type="module" src="js/auth-bar.js"></script>
+</body>
+</html>

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9P35VNFL1V"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9P35VNFL1V');</script>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>保單受益人順位分配試算｜InheritancePro</title>
+<meta name="description" content="第一順位受益人已過世或第一順位身故時，保險金如何分配？依保險法§113 與民法繼承順位判定，特別處理「法定繼承人」條款。">
+<meta name="keywords" content="受益人順位,保險金分配,保險法113,法定繼承人,受益人指定,順位受益人">
+<meta name="robots" content="index, follow">
+<meta name="author" content="InheritancePro">
+<meta property="og:title" content="保單受益人順位分配試算｜InheritancePro">
+<meta property="og:description" content="受益人順位爭議一鍵釐清。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://inheritancepro.app/insurance-beneficiary-order.html">
+<meta property="og:site_name" content="InheritancePro">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="保單受益人順位分配試算｜InheritancePro">
+<link rel="canonical" href="https://inheritancepro.app/insurance-beneficiary-order.html">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="js/pdf-export.js"></script>
+<script src="js/persona.js"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"保單受益人順位分配試算","url":"https://inheritancepro.app/insurance-beneficiary-order.html","applicationCategory":"LegalService","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro","url":"https://inheritancepro.app"}}</script>
+<style>
+  :root{--ink:#1a1410;--paper:#f5f0e8;--accent:#8b2020;--gold:#c4932a;--soft:#e8e0d0;--muted:#7a6f62;--success:#2a6b4a;--danger:#8b2020;--border:#c8bfb0;}
+  *:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);font-family:'Noto Sans TC',sans-serif;min-height:100vh;font-size:15px;}
+  header{background:var(--ink);color:var(--paper);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+  .logo{font-family:'Noto Serif TC',serif;font-size:20px;font-weight:700;letter-spacing:0.04em;}
+  .logo span{color:var(--gold);}
+  .page-sub{font-size:11px;color:rgba(255,255,255,0.5);margin-top:3px;font-family:'DM Mono',monospace;letter-spacing:0.06em;}
+  .home-link{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:0.08em;}
+  main{padding:24px 20px calc(120px + env(safe-area-inset-bottom,0px));max-width:480px;margin:0 auto;}
+  h1{font-family:'Noto Serif TC',serif;font-size:22px;font-weight:700;margin-bottom:6px;line-height:1.4;}
+  .subtitle{font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.7;}
+  .card{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:20px;margin-bottom:14px;}
+  .section-title{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--soft);}
+  .input-group{margin-bottom:16px;}
+  .input-group:last-child{margin-bottom:0;}
+  label{display:block;font-size:13px;font-weight:500;margin-bottom:6px;}
+  .label-hint{font-size:11px;color:var(--muted);font-weight:400;margin-left:6px;}
+  input[type="number"],input[type="text"],select{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:8px;background:var(--paper);font-size:15px;color:var(--ink);-webkit-appearance:none;}
+  input[type="number"]{font-family:'DM Mono',monospace;}
+  input:focus,select:focus{outline:none;border-color:var(--gold);background:#fff;}
+  .tier{background:var(--paper);border-radius:10px;padding:14px;margin-bottom:10px;border-left:3px solid var(--border);}
+  .tier.active{border-left-color:var(--gold);}
+  .tier-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+  .tier-title{font-size:13px;font-weight:700;color:var(--ink);}
+  .tier-hint{font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;}
+  .person-row{display:grid;grid-template-columns:1fr 80px 70px 32px;gap:8px;align-items:center;margin-bottom:8px;}
+  .person-row input[type="text"]{padding:8px 10px;font-size:13px;font-family:'Noto Sans TC',sans-serif;}
+  .person-row select{padding:8px 10px;font-size:12px;font-family:'Noto Sans TC',sans-serif;}
+  .person-row .del-btn{background:none;border:1.5px solid var(--border);border-radius:6px;color:var(--muted);cursor:pointer;font-size:14px;padding:0;height:34px;}
+  .alive-chk{display:flex;align-items:center;justify-content:center;gap:4px;font-size:11px;color:var(--muted);}
+  .alive-chk input{width:16px;height:16px;accent-color:var(--success);cursor:pointer;}
+  .add-btn{width:100%;padding:8px;border:1.5px dashed var(--border);border-radius:6px;background:none;color:var(--muted);font-size:12px;cursor:pointer;}
+  .add-btn:hover{border-color:var(--gold);color:var(--gold);}
+  .calc-btn{width:100%;padding:16px;background:var(--ink);color:var(--paper);border:none;border-radius:10px;font-size:15px;font-weight:500;cursor:pointer;letter-spacing:0.04em;margin-top:8px;}
+  .calc-btn:hover{background:#2a2420;}
+  #results{display:none;margin-top:24px;}
+  .result-card{background:var(--ink);color:var(--paper);border-radius:12px;padding:24px;margin-bottom:14px;}
+  .result-title{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:16px;}
+  .beneficiary-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.08);}
+  .beneficiary-row:last-child{border-bottom:none;}
+  .bene-name{font-size:14px;font-weight:600;color:#fff;}
+  .bene-rel{font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;}
+  .bene-amount{font-family:'DM Mono',monospace;font-size:17px;font-weight:700;color:var(--gold);}
+  .bene-share{font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;text-align:right;}
+  .verdict-box{background:rgba(196,147,42,0.12);border:1px solid rgba(196,147,42,0.3);border-radius:10px;padding:14px 16px;margin-top:14px;font-size:12px;color:rgba(255,255,255,0.8);line-height:1.7;}
+  .verdict-box strong{color:var(--gold);}
+  .law-note{background:rgba(196,147,42,0.08);border:1px solid rgba(196,147,42,0.25);border-radius:8px;padding:12px 14px;font-size:12px;color:var(--muted);line-height:1.75;margin-top:14px;}
+  .law-note strong{color:var(--gold);}
+  .lawyer-only .panel-title{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.12em;margin-bottom:10px;}
+  .tip-item{font-size:12px;color:var(--muted);padding:7px 0;border-bottom:1px solid var(--soft);line-height:1.6;}
+  .tip-item:last-child{border-bottom:none;}
+  .tip-tag{display:inline-block;background:rgba(139,32,32,0.1);color:var(--danger);border-radius:4px;padding:1px 7px;font-size:10px;font-family:'DM Mono',monospace;margin-right:6px;}
+</style>
+</head>
+<body>
+<header>
+  <a href="index.html" style="text-decoration:none;color:inherit">
+    <div class="logo">Inheritance<span>Pro</span></div>
+    <div class="page-sub">受益人順位分配</div>
+  </a>
+  <a class="home-link" href="index.html">← 首頁</a>
+</header>
+<main>
+  <h1>保單受益人順位分配試算</h1>
+  <p class="subtitle">第一順位受益人已先過世？指定為「法定繼承人」？保險金該給誰？本工具依<strong>保險法§113</strong>與民法繼承順位自動計算。</p>
+
+  <div class="card">
+    <div class="section-title">A · 保單資訊</div>
+    <div class="input-group">
+      <label>身故保險金總額<span class="label-hint">元</span></label>
+      <input type="number" id="totalAmount" placeholder="例：5000000" min="0" inputmode="numeric">
+    </div>
+    <div class="input-group" style="margin-bottom:0">
+      <label>受益人指定方式</label>
+      <select id="designType" onchange="toggleSections()">
+        <option value="specific">具名指定（第一、第二順位）</option>
+        <option value="legal">指定為「法定繼承人」</option>
+        <option value="none">未指定受益人</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="card" id="specificSection">
+    <div class="section-title">B · 受益人順位（具名指定）</div>
+
+    <div class="tier active" id="tier1">
+      <div class="tier-header">
+        <div class="tier-title">第一順位</div>
+        <div class="tier-hint">通常 100% 分配（若有多人均分）</div>
+      </div>
+      <div id="tier1-list">
+        <div class="person-row">
+          <input type="text" placeholder="姓名" class="p-name">
+          <select class="p-rel"><option>配偶</option><option>子女</option><option>父母</option><option>兄弟姊妹</option><option>其他</option></select>
+          <div class="alive-chk"><input type="checkbox" class="p-alive" checked><span>在世</span></div>
+          <button class="del-btn" onclick="removePerson(this)">×</button>
+        </div>
+      </div>
+      <button class="add-btn" onclick="addPerson('tier1-list')">+ 新增第一順位受益人</button>
+    </div>
+
+    <div class="tier" id="tier2">
+      <div class="tier-header">
+        <div class="tier-title">第二順位</div>
+        <div class="tier-hint">第一順位全部身故時才啟動</div>
+      </div>
+      <div id="tier2-list">
+        <div class="person-row">
+          <input type="text" placeholder="姓名（可留空）" class="p-name">
+          <select class="p-rel"><option>配偶</option><option>子女</option><option>父母</option><option>兄弟姊妹</option><option>其他</option></select>
+          <div class="alive-chk"><input type="checkbox" class="p-alive" checked><span>在世</span></div>
+          <button class="del-btn" onclick="removePerson(this)">×</button>
+        </div>
+      </div>
+      <button class="add-btn" onclick="addPerson('tier2-list')">+ 新增第二順位受益人</button>
+    </div>
+
+    <div class="tier" id="tier3">
+      <div class="tier-header">
+        <div class="tier-title">第三順位</div>
+        <div class="tier-hint">前兩順位全部身故時才啟動</div>
+      </div>
+      <div id="tier3-list">
+        <div class="person-row">
+          <input type="text" placeholder="姓名（可留空）" class="p-name">
+          <select class="p-rel"><option>配偶</option><option>子女</option><option>父母</option><option>兄弟姊妹</option><option>其他</option></select>
+          <div class="alive-chk"><input type="checkbox" class="p-alive" checked><span>在世</span></div>
+          <button class="del-btn" onclick="removePerson(this)">×</button>
+        </div>
+      </div>
+      <button class="add-btn" onclick="addPerson('tier3-list')">+ 新增第三順位受益人</button>
+    </div>
+  </div>
+
+  <div class="card" id="legalSection" style="display:none">
+    <div class="section-title">B · 法定繼承人清單</div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.7">
+      當受益人指定為「法定繼承人」或未指定時，依民法§1138 順位分配保險金。請填入被保險人（被繼承人）的法定繼承人資訊。
+    </div>
+    <div class="input-group">
+      <label>配偶人數<span class="label-hint">0 或 1</span></label>
+      <input type="number" id="legalSpouse" value="1" min="0" max="1">
+    </div>
+    <div class="input-group">
+      <label>直系血親卑親屬人數（子女等，第一順位）</label>
+      <input type="number" id="legalChild" placeholder="例：2" min="0" max="20">
+    </div>
+    <div class="input-group">
+      <label>父母人數（第二順位，若無子女才啟動）</label>
+      <input type="number" id="legalParent" placeholder="0" min="0" max="2">
+    </div>
+    <div class="input-group">
+      <label>兄弟姊妹人數（第三順位）</label>
+      <input type="number" id="legalSibling" placeholder="0" min="0" max="20">
+    </div>
+    <div class="input-group" style="margin-bottom:0">
+      <label>祖父母人數（第四順位）</label>
+      <input type="number" id="legalGrand" placeholder="0" min="0" max="4">
+    </div>
+  </div>
+
+  <div class="card lawyer-only">
+    <div class="panel-title">⚖ 實務爭議要點</div>
+    <div class="tip-item"><span class="tip-tag">§113</span>保險法：受益人全部於被保險人前死亡，未指定受益人者，保險金作為被保險人遺產。</div>
+    <div class="tip-item"><span class="tip-tag">§112</span>受益人於被保險人後死亡，該受益人已取得受益權，保險金列入該受益人遺產由其繼承人繼承。</div>
+    <div class="tip-item"><span class="tip-tag">爭議</span>「法定繼承人」條款之爭點：依被保險人死亡時判斷或保險事故發生時判斷？實務多數見解採「事故發生時」。</div>
+    <div class="tip-item"><span class="tip-tag">扣減</span>若分配結果侵害特留分，他繼承人仍得依 107 台上 1395 號見解主張扣減。</div>
+    <div class="tip-item"><span class="tip-tag">注意</span>受益人為「法定繼承人」時，分配比例為民法§1138 順位 + §1144 應繼分，非均分。</div>
+  </div>
+
+  <button class="calc-btn" onclick="calculate()">計算保險金分配</button>
+
+  <div id="results">
+    <div class="result-card">
+      <div class="result-title">保險金分配結果</div>
+      <div id="distributionRows"></div>
+      <div class="verdict-box" id="verdictBox"></div>
+    </div>
+
+    <div class="law-note">
+      <strong>法律依據：</strong>保險法§110、§112、§113；民法§1138（繼承順位）、§1144（應繼分）。<br>
+      <strong>重要提醒：</strong>① 若保單明確寫「身故保險金給付予○○○，身故時如受益人先亡，由其直系卑親屬代位領取」則依保單條款優先 ② 法院對「法定繼承人」條款採事故發生時判斷屬多數見解 ③ 若分配結果涉及特留分爭議，建議諮詢律師。
+    </div>
+
+    <button class="calc-btn" onclick="downloadPDF()" style="margin-top:16px">↓ 匯出 PDF 報告</button>
+  </div>
+  <div class="disclaimer" style="font-size:11px;color:#aaa;text-align:center;padding:16px 0;line-height:1.6">本工具計算結果僅供參考，不構成法律意見。</div>
+</main>
+<script>
+  const FMT=v=>'NT$ '+Math.round(v).toLocaleString('zh-TW');
+
+  function toggleSections(){
+    const type=document.getElementById('designType').value;
+    document.getElementById('specificSection').style.display=type==='specific'?'block':'none';
+    document.getElementById('legalSection').style.display=type!=='specific'?'block':'none';
+  }
+
+  function addPerson(listId){
+    const list=document.getElementById(listId);
+    const row=document.createElement('div');
+    row.className='person-row';
+    row.innerHTML=`
+      <input type="text" placeholder="姓名" class="p-name">
+      <select class="p-rel"><option>配偶</option><option>子女</option><option>父母</option><option>兄弟姊妹</option><option>其他</option></select>
+      <div class="alive-chk"><input type="checkbox" class="p-alive" checked><span>在世</span></div>
+      <button class="del-btn" onclick="removePerson(this)">×</button>`;
+    list.appendChild(row);
+  }
+
+  function removePerson(btn){
+    const list=btn.closest('.tier').querySelector('div[id$="-list"]');
+    if(list.children.length>1)btn.parentElement.remove();
+  }
+
+  function collectTier(listId){
+    return [...document.getElementById(listId).querySelectorAll('.person-row')].map(row=>({
+      name:row.querySelector('.p-name').value.trim(),
+      relation:row.querySelector('.p-rel').value,
+      alive:row.querySelector('.p-alive').checked,
+    })).filter(p=>p.name);
+  }
+
+  function calculate(){
+    const total=parseFloat(document.getElementById('totalAmount').value)||0;
+    const type=document.getElementById('designType').value;
+
+    if(!total){alert('請填入保險金總額');return;}
+
+    let result=[],verdict='';
+
+    if(type==='specific'){
+      // 依順位檢查，第一順位有在世者則由其分配，否則降到第二順位
+      const t1=collectTier('tier1-list');
+      const t2=collectTier('tier2-list');
+      const t3=collectTier('tier3-list');
+
+      const alive1=t1.filter(p=>p.alive);
+      const alive2=t2.filter(p=>p.alive);
+      const alive3=t3.filter(p=>p.alive);
+
+      // Update visual
+      document.querySelectorAll('.tier').forEach(t=>t.classList.remove('active'));
+
+      if(alive1.length>0){
+        document.getElementById('tier1').classList.add('active');
+        const share=Math.round(total/alive1.length);
+        result=alive1.map(p=>({...p,amount:share,share:'1/'+alive1.length,tier:'第一順位'}));
+        verdict=`<strong>第一順位有 ${alive1.length} 位受益人在世</strong>，保險金由第一順位均分。`;
+      }else if(alive2.length>0){
+        document.getElementById('tier2').classList.add('active');
+        const share=Math.round(total/alive2.length);
+        result=alive2.map(p=>({...p,amount:share,share:'1/'+alive2.length,tier:'第二順位'}));
+        verdict=`<strong>第一順位已全部身故</strong>，由第二順位 ${alive2.length} 位受益人均分。注意：若第一順位有直系卑親屬代位領取條款，請依保單約定。`;
+      }else if(alive3.length>0){
+        document.getElementById('tier3').classList.add('active');
+        const share=Math.round(total/alive3.length);
+        result=alive3.map(p=>({...p,amount:share,share:'1/'+alive3.length,tier:'第三順位'}));
+        verdict=`<strong>第一、二順位全部身故</strong>，由第三順位 ${alive3.length} 位受益人均分。`;
+      }else{
+        // 皆無在世受益人 → 保險金列入被保險人遺產
+        verdict=`<strong>所有順位受益人皆先於被保險人過世</strong>，依保險法§113，保險金作為被保險人遺產，由其法定繼承人依民法繼承順位繼承。建議改用「法定繼承人」模式計算。`;
+        result=[{name:'被保險人遺產',relation:'保險金轉列遺產',amount:total,share:'全額',tier:'§113'}];
+      }
+    }else{
+      // 法定繼承人模式
+      const spouse=parseInt(document.getElementById('legalSpouse').value)||0;
+      const child=parseInt(document.getElementById('legalChild').value)||0;
+      const parent=parseInt(document.getElementById('legalParent').value)||0;
+      const sibling=parseInt(document.getElementById('legalSibling').value)||0;
+      const grand=parseInt(document.getElementById('legalGrand').value)||0;
+
+      // 民法§1138順位：
+      // 第一順位：直系卑親屬（§1141：按人數平均，配偶與卑親屬同為繼承人則§1144I1 平均分配）
+      // 第二順位：父母（§1144 I-2：配偶得 1/2，父母平均分 1/2）
+      // 第三順位：兄弟姊妹（§1144 I-2：配偶得 1/2，兄弟姊妹平均分 1/2）
+      // 第四順位：祖父母（§1144 I-3：配偶得 2/3，祖父母平均分 1/3）
+
+      if(child>0){
+        const heirs=spouse+child;
+        const share=total/heirs;
+        if(spouse){result.push({name:'配偶',relation:'§1144 I-1',amount:Math.round(share),share:`1/${heirs}`});}
+        for(let i=0;i<child;i++)result.push({name:`子女 #${i+1}`,relation:'§1144 I-1',amount:Math.round(share),share:`1/${heirs}`});
+        verdict=`適用民法§1138 第一順位。配偶與直系卑親屬同為繼承人，依§1144 I-1 <strong>平均分配</strong>，共 ${heirs} 人各得 1/${heirs}。`;
+      }else if(parent>0){
+        const spouseShare=spouse>0?total*0.5:0;
+        const rest=total-spouseShare;
+        const parentShare=rest/parent;
+        if(spouse)result.push({name:'配偶',relation:'§1144 I-2',amount:Math.round(spouseShare),share:'1/2'});
+        for(let i=0;i<parent;i++)result.push({name:`父母 #${i+1}`,relation:'§1144 I-2',amount:Math.round(parentShare),share:spouse?`1/${parent*2}`:`1/${parent}`});
+        verdict=`第一順位（子女）全無。適用§1138 第二順位（父母）：配偶得 <strong>1/2</strong>，父母均分剩餘 <strong>1/2</strong>。`;
+      }else if(sibling>0){
+        const spouseShare=spouse>0?total*0.5:0;
+        const rest=total-spouseShare;
+        const sibShare=rest/sibling;
+        if(spouse)result.push({name:'配偶',relation:'§1144 I-2',amount:Math.round(spouseShare),share:'1/2'});
+        for(let i=0;i<sibling;i++)result.push({name:`兄弟姊妹 #${i+1}`,relation:'§1144 I-2',amount:Math.round(sibShare),share:spouse?`1/${sibling*2}`:`1/${sibling}`});
+        verdict=`第一、二順位無。適用§1138 第三順位（兄弟姊妹）：配偶得 <strong>1/2</strong>，兄弟姊妹均分剩餘 <strong>1/2</strong>。`;
+      }else if(grand>0){
+        const spouseShare=spouse>0?total*(2/3):0;
+        const rest=total-spouseShare;
+        const gShare=rest/grand;
+        if(spouse)result.push({name:'配偶',relation:'§1144 I-3',amount:Math.round(spouseShare),share:'2/3'});
+        for(let i=0;i<grand;i++)result.push({name:`祖父母 #${i+1}`,relation:'§1144 I-3',amount:Math.round(gShare),share:spouse?`1/${grand*3}`:`1/${grand}`});
+        verdict=`前三順位無。適用§1138 第四順位（祖父母）：配偶得 <strong>2/3</strong>，祖父母均分剩餘 <strong>1/3</strong>。`;
+      }else if(spouse){
+        result.push({name:'配偶',relation:'§1144 I-4',amount:total,share:'全額'});
+        verdict=`無任何順位繼承人，由配偶<strong>獨得全部</strong>保險金。`;
+      }else{
+        verdict=`無任何法定繼承人。保險金歸<strong>國庫</strong>（民法§1185）。`;
+        result=[{name:'國庫',relation:'§1185',amount:total,share:'全額'}];
+      }
+    }
+
+    const html=result.map(r=>`
+      <div class="beneficiary-row">
+        <div>
+          <div class="bene-name">${r.name}</div>
+          <div class="bene-rel">${r.relation}${r.tier?' ｜ '+r.tier:''}</div>
+        </div>
+        <div style="text-align:right">
+          <div class="bene-amount">${FMT(r.amount)}</div>
+          <div class="bene-share">${r.share}</div>
+        </div>
+      </div>
+    `).join('');
+
+    document.getElementById('distributionRows').innerHTML=html;
+    document.getElementById('verdictBox').innerHTML=verdict;
+
+    document.getElementById('results').style.display='block';
+    document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  async function downloadPDF(){
+    const today=new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'long',day:'numeric'});
+    const resultsHTML=document.getElementById('results').innerHTML;
+    const html=`<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>InheritancePro</title><style>@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap');*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans TC',sans-serif;color:#1a1410;font-size:13px;padding:40px;max-width:700px;margin:0 auto;}.pdf-header{border-bottom:3px solid #1a1410;padding-bottom:20px;margin-bottom:28px;display:flex;justify-content:space-between;}.pdf-logo{font-family:'Noto Serif TC',serif;font-size:24px;font-weight:700;}.pdf-logo span{color:#c4932a;}.result-card{background:#1a1410;color:#f5f0e8;border-radius:12px;padding:24px;margin-bottom:14px;}.result-title{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:0.14em;margin-bottom:16px;}.beneficiary-row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.08);}.bene-name{font-weight:600;color:#fff;}.bene-rel{font-size:11px;color:rgba(255,255,255,0.5);}.bene-amount{font-family:'DM Mono',monospace;font-size:16px;font-weight:700;color:#c4932a;}.verdict-box{background:rgba(196,147,42,0.12);border-radius:8px;padding:12px 16px;margin-top:14px;font-size:12px;color:rgba(255,255,255,0.8);line-height:1.7;}.law-note{background:#f8f5e8;border-left:3px solid #c4932a;padding:12px 14px;font-size:11px;color:#7a6f62;line-height:1.7;margin:14px 0;}button{display:none!important;}@media print{body{padding:20px;}}</style></head><body><div class="pdf-header"><div><div class="pdf-logo">Inheritance<span>Pro</span></div><div style="font-size:12px;color:#7a6f62">保單受益人順位分配試算</div></div><div style="font-size:11px;color:#7a6f62">產出日期：${today}</div></div>${resultsHTML}<div style="margin-top:40px;padding-top:16px;border-top:1px solid #c8bfb0;font-size:11px;color:#7a6f62;text-align:center">© ${new Date().getFullYear()} InheritancePro · inheritancepro.app</div></body></html>`;
+    exportPDF(html,'InheritancePro-受益人順位');
+  }
+</script>
+<script src="js/supabase-config.js"></script>
+<script type="module" src="js/auth-bar.js"></script>
+</body>
+</html>

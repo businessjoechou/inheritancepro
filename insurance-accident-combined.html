@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9P35VNFL1V"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9P35VNFL1V');</script>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>意外事故保險金合計試算｜InheritancePro</title>
+<meta name="description" content="車禍、意外發生時，強制險、第三人責任險、乘客險、壽險意外附約、團保可同時請領。本工具幫你盤點可領總額與申請順序。">
+<meta name="keywords" content="意外保險,車禍保險金,強制險,第三人責任險,壽險意外附約,團體保險,保險理賠,死亡給付">
+<meta name="robots" content="index, follow">
+<meta name="author" content="InheritancePro">
+<meta property="og:title" content="意外事故保險金合計試算｜InheritancePro">
+<meta property="og:description" content="意外發生時各險種可請領金額一次盤點。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://inheritancepro.app/insurance-accident-combined.html">
+<meta property="og:site_name" content="InheritancePro">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="意外事故保險金合計試算｜InheritancePro">
+<link rel="canonical" href="https://inheritancepro.app/insurance-accident-combined.html">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="js/pdf-export.js"></script>
+<script src="js/persona.js"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"意外事故保險金合計試算","url":"https://inheritancepro.app/insurance-accident-combined.html","applicationCategory":"FinanceApplication","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro","url":"https://inheritancepro.app"}}</script>
+<style>
+  :root{--ink:#1a1410;--paper:#f5f0e8;--accent:#8b2020;--gold:#c4932a;--soft:#e8e0d0;--muted:#7a6f62;--success:#2a6b4a;--danger:#8b2020;--border:#c8bfb0;}
+  *:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);font-family:'Noto Sans TC',sans-serif;min-height:100vh;font-size:15px;}
+  header{background:var(--ink);color:var(--paper);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+  .logo{font-family:'Noto Serif TC',serif;font-size:20px;font-weight:700;letter-spacing:0.04em;}
+  .logo span{color:var(--gold);}
+  .page-sub{font-size:11px;color:rgba(255,255,255,0.5);margin-top:3px;font-family:'DM Mono',monospace;letter-spacing:0.06em;}
+  .home-link{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:0.08em;}
+  main{padding:24px 20px calc(120px + env(safe-area-inset-bottom,0px));max-width:480px;margin:0 auto;}
+  h1{font-family:'Noto Serif TC',serif;font-size:22px;font-weight:700;margin-bottom:6px;line-height:1.4;}
+  .subtitle{font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.7;}
+  .intro{background:rgba(196,147,42,0.08);border-left:3px solid var(--gold);padding:12px 14px;border-radius:0 8px 8px 0;font-size:12px;color:#666;line-height:1.75;margin-bottom:20px;}
+  .intro strong{color:var(--ink);}
+  .card{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:20px;margin-bottom:14px;}
+  .section-title{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--soft);}
+  .input-group{margin-bottom:16px;}
+  .input-group:last-child{margin-bottom:0;}
+  label{display:block;font-size:13px;font-weight:500;margin-bottom:6px;}
+  .label-hint{font-size:11px;color:var(--muted);font-weight:400;margin-left:6px;}
+  input[type="number"],select{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:8px;background:var(--paper);font-size:15px;font-family:'DM Mono',monospace;color:var(--ink);-webkit-appearance:none;}
+  input:focus,select:focus{outline:none;border-color:var(--gold);background:#fff;}
+  select{font-family:'Noto Sans TC',sans-serif;}
+  .insurance-item{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;padding:14px;background:var(--paper);border-radius:10px;margin-bottom:10px;border:1.5px solid transparent;transition:all 0.2s;}
+  .insurance-item.checked{border-color:var(--gold);background:#fff;}
+  .insurance-item input[type="checkbox"]{width:20px;height:20px;accent-color:var(--gold);cursor:pointer;margin-top:2px;}
+  .insurance-item .ins-info{flex:1;min-width:0;}
+  .insurance-item .ins-name{font-size:13px;font-weight:600;color:var(--ink);display:block;margin-bottom:2px;cursor:pointer;}
+  .insurance-item .ins-desc{font-size:11px;color:var(--muted);line-height:1.5;margin-bottom:8px;}
+  .insurance-item .amount-input{width:100%;padding:8px 10px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;font-family:'DM Mono',monospace;background:#fff;}
+  .calc-btn{width:100%;padding:16px;background:var(--ink);color:var(--paper);border:none;border-radius:10px;font-size:15px;font-weight:500;cursor:pointer;letter-spacing:0.04em;margin-top:8px;}
+  .calc-btn:hover{background:#2a2420;}
+  #results{display:none;margin-top:24px;}
+  .total-card{background:var(--ink);color:#fff;border-radius:12px;padding:24px;margin-bottom:14px;text-align:center;}
+  .total-lbl{font-size:11px;color:rgba(255,255,255,0.5);font-family:'DM Mono',monospace;letter-spacing:0.12em;}
+  .total-val{font-family:'DM Mono',monospace;font-size:34px;font-weight:700;color:var(--gold);margin:10px 0;}
+  .total-sub{font-size:12px;color:rgba(255,255,255,0.7);}
+  .result-card{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:20px;margin-bottom:14px;}
+  .result-title{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.14em;margin-bottom:14px;}
+  .result-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--soft);font-size:13px;}
+  .result-row:last-child{border-bottom:none;}
+  .result-row .lbl{color:var(--ink);}
+  .result-row .val{font-family:'DM Mono',monospace;color:var(--success);font-weight:600;}
+  .process-step{display:flex;gap:12px;padding:12px 0;border-bottom:1px dashed var(--soft);}
+  .process-step:last-child{border-bottom:none;}
+  .step-num{width:28px;height:28px;border-radius:50%;background:var(--gold);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;}
+  .step-body{flex:1;}
+  .step-title{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:3px;}
+  .step-desc{font-size:11px;color:var(--muted);line-height:1.6;}
+  .law-note{background:rgba(196,147,42,0.08);border:1px solid rgba(196,147,42,0.25);border-radius:8px;padding:12px 14px;font-size:12px;color:var(--muted);line-height:1.75;margin-top:14px;}
+  .law-note strong{color:var(--gold);}
+</style>
+</head>
+<body>
+<header>
+  <a href="index.html" style="text-decoration:none;color:inherit">
+    <div class="logo">Inheritance<span>Pro</span></div>
+    <div class="page-sub">意外保險金合計</div>
+  </a>
+  <a class="home-link" href="index.html">← 首頁</a>
+</header>
+<main>
+  <h1>意外事故保險金合計試算</h1>
+  <p class="subtitle">車禍、意外時，多項保單<strong>可同時請領不互斥</strong>。多數人只申請一兩項就錯失數十萬甚至數百萬理賠。本工具幫你盤點全部可領金額。</p>
+  <div class="intro">
+    📌 <strong>保險法§35</strong>：人身保險之金額由當事人約定，各保險契約互不影響，得同時請領。最常被遺漏的是 <strong>公司團保、信用卡附贈意外險、汽機車乘客險</strong>。
+  </div>
+
+  <div class="card">
+    <div class="section-title">A · 事故類型</div>
+    <div class="input-group" style="margin-bottom:0">
+      <label>事故性質</label>
+      <select id="accidentType">
+        <option value="death">死亡</option>
+        <option value="disability">失能（殘廢）</option>
+        <option value="injury">傷害（門診或住院）</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">B · 汽機車相關保險</div>
+    <div class="insurance-item" data-cat="auto">
+      <input type="checkbox" id="ins-mandatory">
+      <div class="ins-info">
+        <label for="ins-mandatory" class="ins-name">強制汽車責任險</label>
+        <div class="ins-desc">事故中任何乘員受害皆可請領，死亡最高 200 萬、失能最高 200 萬、傷害最高 20 萬</div>
+        <input type="number" class="amount-input" placeholder="預估金額（如不確定，死亡填 2000000）" min="0">
+      </div>
+    </div>
+    <div class="insurance-item" data-cat="auto">
+      <input type="checkbox" id="ins-thirdparty">
+      <div class="ins-info">
+        <label for="ins-thirdparty" class="ins-name">第三人責任險（任意險）</label>
+        <div class="ins-desc">對方的任意險可給付超過強制險的部分，上限依保單</div>
+        <input type="number" class="amount-input" placeholder="預估金額" min="0">
+      </div>
+    </div>
+    <div class="insurance-item" data-cat="auto">
+      <input type="checkbox" id="ins-passenger">
+      <div class="ins-info">
+        <label for="ins-passenger" class="ins-name">駕駛人/乘客傷害險</label>
+        <div class="ins-desc">自身保單的附加險，常見死亡 100~500 萬</div>
+        <input type="number" class="amount-input" placeholder="預估金額" min="0">
+      </div>
+    </div>
+    <div class="insurance-item" data-cat="auto" style="margin-bottom:0">
+      <input type="checkbox" id="ins-uninsured">
+      <div class="ins-info">
+        <label for="ins-uninsured" class="ins-name">未保險汽車險（UM）</label>
+        <div class="ins-desc">對方無保險時由自己保單給付，常見 200 萬</div>
+        <input type="number" class="amount-input" placeholder="預估金額" min="0">
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">C · 個人壽險與附約</div>
+    <div class="insurance-item">
+      <input type="checkbox" id="ins-life">
+      <div class="ins-info">
+        <label for="ins-life" class="ins-name">終身壽險（身故保險金）</label>
+        <div class="ins-desc">意外身故適用全額保險金額</div>
+        <input type="number" class="amount-input" placeholder="保險金額" min="0">
+      </div>
+    </div>
+    <div class="insurance-item">
+      <input type="checkbox" id="ins-accident">
+      <div class="ins-info">
+        <label for="ins-accident" class="ins-name">意外險附約</label>
+        <div class="ins-desc">死亡/失能雙倍給付，常見 300~1000 萬</div>
+        <input type="number" class="amount-input" placeholder="保險金額" min="0">
+      </div>
+    </div>
+    <div class="insurance-item">
+      <input type="checkbox" id="ins-disability">
+      <div class="ins-info">
+        <label for="ins-disability" class="ins-name">失能險</label>
+        <div class="ins-desc">依失能等級給付，1~11 級共 11 等</div>
+        <input type="number" class="amount-input" placeholder="保險金額" min="0">
+      </div>
+    </div>
+    <div class="insurance-item" style="margin-bottom:0">
+      <input type="checkbox" id="ins-medical">
+      <div class="ins-info">
+        <label for="ins-medical" class="ins-name">醫療險/住院日額</label>
+        <div class="ins-desc">實支實付或住院日額，可與其他險種重複請領</div>
+        <input type="number" class="amount-input" placeholder="預估金額" min="0">
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">D · 常被遺漏的保險</div>
+    <div class="insurance-item">
+      <input type="checkbox" id="ins-group">
+      <div class="ins-info">
+        <label for="ins-group" class="ins-name">公司團體保險</label>
+        <div class="ins-desc">員工福利常含意外險，平均 50~300 萬，向 HR 詢問</div>
+        <input type="number" class="amount-input" placeholder="預估金額" min="0">
+      </div>
+    </div>
+    <div class="insurance-item">
+      <input type="checkbox" id="ins-credit">
+      <div class="ins-info">
+        <label for="ins-credit" class="ins-name">信用卡附贈旅平險/意外險</label>
+        <div class="ins-desc">刷卡購票搭乘大眾運輸意外，常見 500~3000 萬</div>
+        <input type="number" class="amount-input" placeholder="預估金額" min="0">
+      </div>
+    </div>
+    <div class="insurance-item">
+      <input type="checkbox" id="ins-travel">
+      <div class="ins-info">
+        <label for="ins-travel" class="ins-name">旅遊平安險</label>
+        <div class="ins-desc">出國或跨縣市旅遊時購買</div>
+        <input type="number" class="amount-input" placeholder="預估金額" min="0">
+      </div>
+    </div>
+    <div class="insurance-item" style="margin-bottom:0">
+      <input type="checkbox" id="ins-union">
+      <div class="ins-info">
+        <label for="ins-union" class="ins-name">職業工會/公會保險</label>
+        <div class="ins-desc">職業團體常為會員投保意外險</div>
+        <input type="number" class="amount-input" placeholder="預估金額" min="0">
+      </div>
+    </div>
+  </div>
+
+  <button class="calc-btn" onclick="calculate()">計算可領總額</button>
+
+  <div id="results">
+    <div class="total-card">
+      <div class="total-lbl">預估可請領總額</div>
+      <div class="total-val" id="r-total">—</div>
+      <div class="total-sub" id="r-totalDesc">—</div>
+    </div>
+
+    <div class="result-card">
+      <div class="result-title">各項可領金額</div>
+      <div id="detailRows"></div>
+    </div>
+
+    <div class="result-card">
+      <div class="result-title">申請順序建議</div>
+      <div id="processSteps"></div>
+    </div>
+
+    <div class="law-note">
+      <strong>法律依據：</strong>保險法§35、§64、§65；強制汽車責任保險法§25、§27、§32。<br>
+      <strong>注意事項：</strong>① 實支實付醫療險若有「副本理賠」條款才能重複請領 ② 強制險須先向對方車主保險公司申請 ③ 刑事和解書中不可拋棄第三人責任險給付權 ④ 失能等級認定需由醫院診斷證明。
+    </div>
+
+    <button class="calc-btn" onclick="downloadPDF()" style="margin-top:16px">↓ 匯出 PDF 報告</button>
+  </div>
+  <div class="disclaimer" style="font-size:11px;color:#aaa;text-align:center;padding:16px 0;line-height:1.6">本工具計算結果僅供參考，實際理賠金額以保險公司核定為準。</div>
+</main>
+<script>
+  const FMT=v=>'NT$ '+Math.round(v).toLocaleString('zh-TW');
+
+  // Update checkbox visual when clicked
+  document.querySelectorAll('.insurance-item input[type="checkbox"]').forEach(cb=>{
+    cb.addEventListener('change',()=>{
+      cb.closest('.insurance-item').classList.toggle('checked',cb.checked);
+    });
+  });
+
+  const INSURANCES=[
+    {id:'ins-mandatory',name:'強制汽車責任險',cat:'汽機車',priority:1,doc:'交通事故登記聯單、死亡診斷書/醫療證明、受益人身分證、印章、存摺'},
+    {id:'ins-thirdparty',name:'第三人責任險',cat:'汽機車',priority:2,doc:'同上，向對方保險公司申請'},
+    {id:'ins-passenger',name:'駕駛人/乘客傷害險',cat:'汽機車',priority:3,doc:'向自身汽車保險公司申請'},
+    {id:'ins-uninsured',name:'未保險汽車險',cat:'汽機車',priority:3,doc:'對方無保險時向自身保險公司申請'},
+    {id:'ins-life',name:'終身壽險',cat:'個人壽險',priority:4,doc:'死亡證明書、戶籍謄本、保單、受益人資料'},
+    {id:'ins-accident',name:'意外險附約',cat:'個人壽險',priority:4,doc:'同壽險'},
+    {id:'ins-disability',name:'失能險',cat:'個人壽險',priority:5,doc:'醫院失能等級診斷證明書'},
+    {id:'ins-medical',name:'醫療險/住院日額',cat:'個人壽險',priority:6,doc:'住院診斷書、醫療費用收據'},
+    {id:'ins-group',name:'公司團體保險',cat:'常遺漏',priority:4,doc:'向 HR 取得團保單號與申請書'},
+    {id:'ins-credit',name:'信用卡意外險',cat:'常遺漏',priority:5,doc:'向發卡銀行申請，需刷卡證明'},
+    {id:'ins-travel',name:'旅遊平安險',cat:'常遺漏',priority:5,doc:'旅遊保單'},
+    {id:'ins-union',name:'職業工會保險',cat:'常遺漏',priority:5,doc:'向工會取得投保證明'},
+  ];
+
+  function calculate(){
+    let total=0;
+    const claimed=[];
+    INSURANCES.forEach(ins=>{
+      const cb=document.getElementById(ins.id);
+      if(cb.checked){
+        const input=cb.closest('.insurance-item').querySelector('.amount-input');
+        const amt=parseFloat(input.value)||0;
+        if(amt>0){
+          total+=amt;
+          claimed.push({...ins,amount:amt});
+        }
+      }
+    });
+
+    if(claimed.length===0){alert('請至少勾選一項並填入金額');return;}
+
+    const accidentType=document.getElementById('accidentType').value;
+    const typeLabel={death:'死亡',disability:'失能',injury:'傷害'}[accidentType];
+
+    document.getElementById('r-total').textContent=FMT(total);
+    document.getElementById('r-totalDesc').textContent=`勾選 ${claimed.length} 項｜事故類型：${typeLabel}`;
+
+    // 明細
+    const detailHtml=claimed.map(c=>`
+      <div class="result-row">
+        <span class="lbl">${c.name}<span style="font-size:10px;color:var(--muted);margin-left:6px">[${c.cat}]</span></span>
+        <span class="val">${FMT(c.amount)}</span>
+      </div>
+    `).join('');
+    document.getElementById('detailRows').innerHTML=detailHtml;
+
+    // 申請順序 — 依 priority 分組
+    const sorted=[...claimed].sort((a,b)=>a.priority-b.priority);
+    const steps=[];
+    let currentP=-1,stepNum=0;
+    sorted.forEach(c=>{
+      if(c.priority!==currentP){
+        stepNum++;
+        currentP=c.priority;
+        steps.push({num:stepNum,items:[]});
+      }
+      steps[steps.length-1].items.push(c);
+    });
+
+    const stepsHtml=steps.map(s=>{
+      const itemList=s.items.map(i=>i.name).join('、');
+      const docs=[...new Set(s.items.map(i=>i.doc))].join('；');
+      return `
+        <div class="process-step">
+          <div class="step-num">${s.num}</div>
+          <div class="step-body">
+            <div class="step-title">${itemList}</div>
+            <div class="step-desc">所需文件：${docs}</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+    document.getElementById('processSteps').innerHTML=stepsHtml;
+
+    document.getElementById('results').style.display='block';
+    document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  async function downloadPDF(){
+    const today=new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'long',day:'numeric'});
+    const resultsHTML=document.getElementById('results').innerHTML;
+    const html=`<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>InheritancePro</title><style>@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap');*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans TC',sans-serif;color:#1a1410;font-size:13px;padding:40px;max-width:700px;margin:0 auto;}.pdf-header{border-bottom:3px solid #1a1410;padding-bottom:20px;margin-bottom:28px;display:flex;justify-content:space-between;}.pdf-logo{font-family:'Noto Serif TC',serif;font-size:24px;font-weight:700;}.pdf-logo span{color:#c4932a;}.total-card{background:#1a1410;color:#fff;border-radius:12px;padding:22px;text-align:center;margin-bottom:14px;}.total-val{font-family:'DM Mono',monospace;font-size:28px;font-weight:700;color:#c4932a;margin:10px 0;}.result-card{border:1.5px solid #c8bfb0;border-radius:12px;padding:20px;margin-bottom:14px;}.result-title{font-family:'DM Mono',monospace;font-size:10px;color:#7a6f62;letter-spacing:0.12em;margin-bottom:14px;}.result-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #e8e0d0;font-size:12px;}.val{font-family:'DM Mono',monospace;color:#2a6b4a;font-weight:600;}.process-step{display:flex;gap:12px;padding:10px 0;border-bottom:1px dashed #e8e0d0;}.step-num{width:26px;height:26px;border-radius:50%;background:#c4932a;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0;}.step-title{font-size:12px;font-weight:600;}.step-desc{font-size:10px;color:#7a6f62;}.law-note{background:#f8f5e8;border-left:3px solid #c4932a;padding:12px 14px;font-size:11px;color:#7a6f62;line-height:1.7;margin:14px 0;}button{display:none!important;}@media print{body{padding:20px;}}</style></head><body><div class="pdf-header"><div><div class="pdf-logo">Inheritance<span>Pro</span></div><div style="font-size:12px;color:#7a6f62">意外事故保險金合計試算</div></div><div style="font-size:11px;color:#7a6f62">產出日期：${today}</div></div>${resultsHTML}<div style="margin-top:40px;padding-top:16px;border-top:1px solid #c8bfb0;font-size:11px;color:#7a6f62;text-align:center">© ${new Date().getFullYear()} InheritancePro · inheritancepro.app</div></body></html>`;
+    exportPDF(html,'InheritancePro-意外保險合計');
+  }
+</script>
+<script src="js/supabase-config.js"></script>
+<script type="module" src="js/auth-bar.js"></script>
+</body>
+</html>

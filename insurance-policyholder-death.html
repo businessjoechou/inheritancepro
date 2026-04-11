@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9P35VNFL1V"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9P35VNFL1V');</script>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>要保人過世保單處理決策器｜InheritancePro</title>
+<meta name="description" content="要保人過世時，保單本身就是遺產！四種處理方式（續繳/解約/變更要保人/保單借款）的稅務與現金流比較試算。">
+<meta name="keywords" content="要保人過世,保單繼承,要保人變更,保單解約,保單借款,保價金繼承,遺產稅">
+<meta name="robots" content="index, follow">
+<meta name="author" content="InheritancePro">
+<meta property="og:title" content="要保人過世保單處理決策器｜InheritancePro">
+<meta property="og:description" content="四種保單處理方式的稅務與現金流對比試算。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://inheritancepro.app/insurance-policyholder-death.html">
+<meta property="og:site_name" content="InheritancePro">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="要保人過世保單處理決策器｜InheritancePro">
+<link rel="canonical" href="https://inheritancepro.app/insurance-policyholder-death.html">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="js/pdf-export.js"></script>
+<script src="js/persona.js"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"要保人過世保單處理決策器","url":"https://inheritancepro.app/insurance-policyholder-death.html","applicationCategory":"FinanceApplication","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro","url":"https://inheritancepro.app"}}</script>
+<style>
+  :root{--ink:#1a1410;--paper:#f5f0e8;--accent:#8b2020;--gold:#c4932a;--soft:#e8e0d0;--muted:#7a6f62;--success:#2a6b4a;--danger:#8b2020;--border:#c8bfb0;}
+  *:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);font-family:'Noto Sans TC',sans-serif;min-height:100vh;font-size:15px;}
+  header{background:var(--ink);color:var(--paper);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+  .logo{font-family:'Noto Serif TC',serif;font-size:20px;font-weight:700;letter-spacing:0.04em;}
+  .logo span{color:var(--gold);}
+  .page-sub{font-size:11px;color:rgba(255,255,255,0.5);margin-top:3px;font-family:'DM Mono',monospace;letter-spacing:0.06em;}
+  .home-link{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:0.08em;}
+  main{padding:24px 20px calc(120px + env(safe-area-inset-bottom,0px));max-width:480px;margin:0 auto;}
+  h1{font-family:'Noto Serif TC',serif;font-size:22px;font-weight:700;margin-bottom:6px;line-height:1.4;}
+  .subtitle{font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.7;}
+  .alert{background:#8b1a1a;color:#fff;border-radius:12px;padding:14px 18px;margin-bottom:20px;border:2px solid #ff6b4a;font-size:12px;line-height:1.7;}
+  .alert strong{color:#ffd6cc;}
+  .card{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:20px;margin-bottom:14px;}
+  .section-title{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--soft);}
+  .input-group{margin-bottom:16px;}
+  .input-group:last-child{margin-bottom:0;}
+  label{display:block;font-size:13px;font-weight:500;margin-bottom:6px;}
+  .label-hint{font-size:11px;color:var(--muted);font-weight:400;margin-left:6px;}
+  input[type="number"],select{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:8px;background:var(--paper);font-size:15px;font-family:'DM Mono',monospace;color:var(--ink);-webkit-appearance:none;}
+  input:focus,select:focus{outline:none;border-color:var(--gold);background:#fff;}
+  .calc-btn{width:100%;padding:16px;background:var(--ink);color:var(--paper);border:none;border-radius:10px;font-size:15px;font-weight:500;cursor:pointer;letter-spacing:0.04em;margin-top:8px;}
+  .calc-btn:hover{background:#2a2420;}
+  #results{display:none;margin-top:24px;}
+  .option-card{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:12px;transition:all 0.2s;}
+  .option-card.recommended{border:2px solid var(--success);background:#f0f8f3;position:relative;}
+  .option-card.recommended::before{content:'推薦';position:absolute;top:-10px;right:16px;background:var(--success);color:#fff;font-size:10px;padding:3px 10px;border-radius:10px;letter-spacing:0.1em;}
+  .opt-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px;}
+  .opt-row{display:flex;justify-content:space-between;font-size:12px;padding:5px 0;color:var(--muted);}
+  .opt-row .val{font-family:'DM Mono',monospace;color:var(--ink);}
+  .opt-row .val.success{color:var(--success);}
+  .opt-row .val.danger{color:var(--accent);}
+  .opt-net{background:var(--soft);border-radius:6px;padding:10px 12px;margin-top:8px;display:flex;justify-content:space-between;align-items:center;}
+  .opt-net .lbl{font-size:11px;color:var(--muted);}
+  .opt-net .val{font-family:'DM Mono',monospace;font-weight:700;font-size:15px;color:var(--ink);}
+  .opt-desc{font-size:11px;color:var(--muted);line-height:1.6;margin-top:8px;padding-top:8px;border-top:1px dashed var(--soft);}
+  .deadline-box{background:rgba(196,147,42,0.1);border-left:3px solid var(--gold);padding:12px 14px;border-radius:0 8px 8px 0;margin-top:14px;font-size:12px;color:var(--muted);line-height:1.75;}
+  .deadline-box strong{color:var(--ink);}
+  .law-note{background:rgba(196,147,42,0.08);border:1px solid rgba(196,147,42,0.25);border-radius:8px;padding:12px 14px;font-size:12px;color:var(--muted);line-height:1.75;margin-top:14px;}
+  .law-note strong{color:var(--gold);}
+</style>
+</head>
+<body>
+<header>
+  <a href="index.html" style="text-decoration:none;color:inherit">
+    <div class="logo">Inheritance<span>Pro</span></div>
+    <div class="page-sub">要保人過世保單處理</div>
+  </a>
+  <a class="home-link" href="index.html">← 首頁</a>
+</header>
+<main>
+  <h1>要保人過世保單處理決策器</h1>
+  <p class="subtitle">要保人過世時，保單本身是遺產，繼承人可選擇四種處理方式。本工具比較各方案稅務與現金流。</p>
+  <div class="alert">
+    ⚠️ <strong>重要：</strong>要保人死亡後 5 日內應通知保險公司，並在遺產申報中列入保單「保單價值準備金」為遺產。不處理會被國稅局補稅加罰。
+  </div>
+
+  <div class="card">
+    <div class="section-title">A · 保單資訊</div>
+    <div class="input-group">
+      <label>保單類型</label>
+      <select id="policyType">
+        <option value="life">終身壽險</option>
+        <option value="annuity">年金險</option>
+        <option value="investment">投資型保單</option>
+        <option value="endowment">儲蓄型養老險</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label>保單價值準備金（保價金）<span class="label-hint">元，向保險公司查詢</span></label>
+      <input type="number" id="cashValue" placeholder="例：2000000" min="0" inputmode="numeric">
+    </div>
+    <div class="input-group">
+      <label>解約金<span class="label-hint">元，通常略低於保價金</span></label>
+      <input type="number" id="surrender" placeholder="例：1800000" min="0" inputmode="numeric">
+    </div>
+    <div class="input-group">
+      <label>累計已繳保費<span class="label-hint">元，用於計算解約所得</span></label>
+      <input type="number" id="totalPremium" placeholder="例：1500000" min="0" inputmode="numeric">
+    </div>
+    <div class="input-group" style="margin-bottom:0">
+      <label>續繳年限與每年保費<span class="label-hint">剩餘年數 × 每年保費</span></label>
+      <div style="display:flex;gap:8px">
+        <input type="number" id="remainYears" placeholder="剩餘年數" min="0" max="50" style="flex:1">
+        <input type="number" id="annualPremium" placeholder="每年保費" min="0" style="flex:1.3">
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">B · 繼承人資訊</div>
+    <div class="input-group">
+      <label>遺產總額（含保價金）<span class="label-hint">元，用於判斷是否課稅</span></label>
+      <input type="number" id="totalEstate" placeholder="例：20000000" min="0" inputmode="numeric">
+    </div>
+    <div class="input-group" style="margin-bottom:0">
+      <label>繼承人人數<span class="label-hint">影響遺產稅扣除額</span></label>
+      <input type="number" id="heirCount" placeholder="例：3" min="1" max="20" inputmode="numeric">
+    </div>
+  </div>
+
+  <button class="calc-btn" onclick="calculate()">四方案對比試算</button>
+
+  <div id="results">
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.12em;margin-bottom:12px;text-align:center">四方案比較（以 1 年後現金流為基準）</div>
+    <div id="optionsContainer"></div>
+
+    <div class="deadline-box">
+      <strong>⏰ 法定期限：</strong><br>
+      · 死亡後 <strong>5 日內</strong>通知保險公司<br>
+      · 死亡後 <strong>6 個月內</strong>申報遺產稅<br>
+      · 死亡後 <strong>3 個月內</strong>辦理拋棄繼承（若選擇）<br>
+      · 變更要保人：可併同遺產稅申報後辦理
+    </div>
+
+    <div class="law-note">
+      <strong>法律依據：</strong>保險法§3、§4、§108；遺產及贈與稅法§1、§17；民法§1148 繼承效力。<br>
+      <strong>稅務要點：</strong>保價金須列入遺產稅申報；解約金超過已繳保費部分可能課徵所得稅；續繳保費若由繼承人支付，未來保險金可能觸發贈與稅爭議。本試算為參考值，建議諮詢稅務專業人員。
+    </div>
+
+    <button class="calc-btn" onclick="downloadPDF()" style="margin-top:16px">↓ 匯出 PDF 報告</button>
+  </div>
+  <div class="disclaimer" style="font-size:11px;color:#aaa;text-align:center;padding:16px 0;line-height:1.6">本工具計算結果僅供參考，不構成稅務或法律意見。</div>
+</main>
+<script>
+  const FMT=v=>'NT$ '+Math.round(v).toLocaleString('zh-TW');
+
+  function calculate(){
+    const cashValue=parseFloat(document.getElementById('cashValue').value)||0;
+    const surrender=parseFloat(document.getElementById('surrender').value)||cashValue;
+    const totalPremium=parseFloat(document.getElementById('totalPremium').value)||0;
+    const remainYears=parseFloat(document.getElementById('remainYears').value)||0;
+    const annualPremium=parseFloat(document.getElementById('annualPremium').value)||0;
+    const totalEstate=parseFloat(document.getElementById('totalEstate').value)||0;
+    const heirCount=parseInt(document.getElementById('heirCount').value)||1;
+    const policyType=document.getElementById('policyType').value;
+
+    if(!cashValue||!totalEstate){alert('請填入保價金與遺產總額');return;}
+
+    // 遺產稅估算：免稅額 1333萬 + 配偶扣除 553萬（若繼承人含配偶，簡化為有配偶）+ 直系卑親屬每人 56 萬
+    const baseExempt=13330000;
+    const heirDeduction=heirCount*560000;
+    const taxableEstate=Math.max(0,totalEstate-baseExempt-heirDeduction);
+    let estateTaxRate=0.1;
+    if(taxableEstate>50000000)estateTaxRate=0.2;
+    if(taxableEstate>100000000)estateTaxRate=0.15; // simplified
+    const estateTax=Math.round(taxableEstate*0.1); // 簡化為 10% 級距
+    // 保價金佔遺產比例對應分擔的稅
+    const policyTaxShare=totalEstate>0?Math.round(estateTax*(cashValue/totalEstate)):0;
+
+    // 方案 1：續繳
+    // 繼續支付未來年保費，死亡保險金未來才到（此方案現值為負保費支出）
+    const opt1_premium=remainYears*annualPremium;
+    const opt1_tax=policyTaxShare; // 遺產稅仍須繳
+    const opt1_net=cashValue-opt1_tax-opt1_premium; // 長期視角簡化
+    const opt1_desc='保單不中斷，未來身故時受益人領全額保險金。適合：繼承人有能力繳費、被繼承人已高齡、預期報酬高於成本。';
+
+    // 方案 2：解約
+    const opt2_gain=Math.max(0,surrender-totalPremium);
+    const opt2_income_tax=Math.round(opt2_gain*0.05); // 保守估 5%
+    const opt2_tax=policyTaxShare;
+    const opt2_net=surrender-opt2_tax-opt2_income_tax;
+    const opt2_desc='立即取得解約金，失去未來保險保障。解約金超過已繳保費部分可能課所得稅。適合：急需現金、保單年限長已具高累積價值。';
+
+    // 方案 3：變更要保人
+    // 保價金仍列入遺產（已課遺產稅）、新要保人繼續繳費。未來若再變更或解約，可能產生贈與稅
+    const opt3_tax=policyTaxShare;
+    const opt3_premium=remainYears*annualPremium;
+    const opt3_net=cashValue-opt3_tax-opt3_premium;
+    const opt3_desc='將要保人變更為繼承人之一，保單延續。注意：日後若再變更要保人或解約，可能涉及贈與稅。適合：保障延續需求、繼承人願意承接。';
+
+    // 方案 4：保單借款
+    // 可借金額約保價金 70-90%，利息年約 4-6%
+    const loanable=cashValue*0.8;
+    const loanInterest=loanable*0.05; // 一年利息
+    const opt4_tax=policyTaxShare;
+    const opt4_net=loanable-opt4_tax-loanInterest;
+    const opt4_desc='以保單為擔保借款，保單繼續有效。仍須繳保費且積欠利息會吃進保價金。適合：短期資金需求、不想失去保障。';
+
+    // 找最大淨現金
+    const options=[
+      {id:1,title:'方案 ① 續繳保費',key:'續繳',premium:opt1_premium,tax:opt1_tax,net:opt1_net,desc:opt1_desc,extra:{'續繳總保費':opt1_premium,'遺產稅分擔':opt1_tax}},
+      {id:2,title:'方案 ② 解約',key:'解約',premium:0,tax:opt2_tax+opt2_income_tax,net:opt2_net,desc:opt2_desc,extra:{'可領解約金':surrender,'遺產稅分擔':opt2_tax,'所得稅（解約所得）':opt2_income_tax}},
+      {id:3,title:'方案 ③ 變更要保人',key:'變更',premium:opt3_premium,tax:opt3_tax,net:opt3_net,desc:opt3_desc,extra:{'續繳總保費':opt3_premium,'遺產稅分擔':opt3_tax}},
+      {id:4,title:'方案 ④ 保單借款',key:'借款',premium:0,tax:opt4_tax,net:opt4_net,desc:opt4_desc,extra:{'可借金額（保價金80%）':loanable,'年利息（5%）':loanInterest,'遺產稅分擔':opt4_tax}},
+    ];
+
+    const maxNet=Math.max(...options.map(o=>o.net));
+
+    const html=options.map(o=>{
+      const extraRows=Object.entries(o.extra).map(([k,v])=>
+        `<div class="opt-row"><span>${k}</span><span class="val ${k.includes('稅')||k.includes('利息')||k.includes('保費')?'danger':'success'}">${FMT(v)}</span></div>`
+      ).join('');
+      const recClass=o.net===maxNet?' recommended':'';
+      const netClass=o.net>0?'success':'danger';
+      return `
+        <div class="option-card${recClass}">
+          <div class="opt-title">${o.title}</div>
+          ${extraRows}
+          <div class="opt-net">
+            <span class="lbl">淨現金流估算</span>
+            <span class="val" style="color:var(--${netClass==='success'?'success':'accent'})">${FMT(o.net)}</span>
+          </div>
+          <div class="opt-desc">${o.desc}</div>
+        </div>
+      `;
+    }).join('');
+
+    document.getElementById('optionsContainer').innerHTML=html;
+    document.getElementById('results').style.display='block';
+    document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  async function downloadPDF(){
+    const today=new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'long',day:'numeric'});
+    const resultsHTML=document.getElementById('results').innerHTML;
+    const html=`<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>InheritancePro 計算報告</title><style>@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap');*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans TC',sans-serif;color:#1a1410;font-size:13px;padding:40px;max-width:700px;margin:0 auto;}.pdf-header{border-bottom:3px solid #1a1410;padding-bottom:20px;margin-bottom:28px;display:flex;justify-content:space-between;}.pdf-logo{font-family:'Noto Serif TC',serif;font-size:24px;font-weight:700;}.pdf-logo span{color:#c4932a;}.option-card{border:1.5px solid #c8bfb0;border-radius:12px;padding:16px;margin-bottom:12px;break-inside:avoid;}.option-card.recommended{border:2px solid #2a6b4a;background:#f0f8f3;}.opt-title{font-size:14px;font-weight:600;margin-bottom:8px;}.opt-row{display:flex;justify-content:space-between;font-size:12px;padding:4px 0;color:#7a6f62;}.opt-row .val{font-family:'DM Mono',monospace;color:#1a1410;}.opt-net{background:#e8e0d0;border-radius:6px;padding:8px 12px;margin-top:8px;display:flex;justify-content:space-between;}.opt-net .val{font-family:'DM Mono',monospace;font-weight:700;font-size:14px;}.opt-desc{font-size:11px;color:#7a6f62;line-height:1.6;margin-top:8px;padding-top:8px;border-top:1px dashed #e8e0d0;}.deadline-box{background:#f8f5e8;border-left:3px solid #c4932a;padding:10px 14px;font-size:11px;margin:14px 0;line-height:1.7;}.law-note{background:#f8f5e8;border-left:3px solid #c4932a;padding:10px 14px;font-size:11px;color:#7a6f62;line-height:1.7;margin:14px 0;}button{display:none!important;}@media print{body{padding:20px;}}</style></head><body><div class="pdf-header"><div><div class="pdf-logo">Inheritance<span>Pro</span></div><div style="font-size:12px;color:#7a6f62">要保人過世保單處理決策器</div></div><div style="font-size:11px;color:#7a6f62">產出日期：${today}</div></div>${resultsHTML}<div style="margin-top:40px;padding-top:16px;border-top:1px solid #c8bfb0;font-size:11px;color:#7a6f62;text-align:center">© ${new Date().getFullYear()} InheritancePro · inheritancepro.app</div></body></html>`;
+    exportPDF(html,'InheritancePro-保單處理');
+  }
+</script>
+<script src="js/supabase-config.js"></script>
+<script type="module" src="js/auth-bar.js"></script>
+</body>
+</html>

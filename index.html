@@ -713,6 +713,24 @@ async function handleUnsubscribe() {
     'insurance-divorce':  { href: 'insurance-divorce.html',
       name: { public: '保單現金價值分配', accountant: '保價金離婚財產分配', lawyer: '保價金離婚財產分配' },
       desc: { public: '壽險保價金納入婚後財產計算，含婚前/婚後拆分', accountant: '保價金查詢管道、婚前/婚後拆分計算、解約所得稅務影響', lawyer: '保價金舉證要點、§1030-1酌減抗辯、保全措施備忘' } },
+    'insurance-forced-share': { href: 'insurance-forced-share.html',
+      name: { public: '指定受益人會侵害特留分嗎？', accountant: '保單特留分侵害分析', lawyer: '保單受益人 vs 特留分侵害' },
+      desc: { public: '保費過高、臨終投保，其他繼承人可主張扣減嗎？', accountant: '顯失公平判定與扣減金額試算', lawyer: '107 台上 1395 號見解應用・保費顯失公平五項風險指標・扣減金額試算' } },
+    'insurance-policyholder-death': { href: 'insurance-policyholder-death.html',
+      name: { public: '要保人過世保單怎麼辦？', accountant: '要保人過世保單處理決策', lawyer: '要保人過世保單處理決策' },
+      desc: { public: '續繳/解約/變更/借款四方案比較', accountant: '保價金列入遺產、四方案稅務比較、5 日通知期限', lawyer: '§§3/4/108、§1148 繼承效力、變更要保人之贈與稅爭議' } },
+    'insurance-amt': { href: 'insurance-amt.html',
+      name: { public: '保險金要繳最低稅負嗎？', accountant: '最低稅負制保單試算 (AMT)', lawyer: '最低稅負制保單試算' },
+      desc: { public: '高額壽險給付可能要繳 20% AMT，一鍵判斷', accountant: '3,740 萬免稅門檻・多保單合計・基本所得額精算・含海外所得整合', lawyer: '所得基本稅額條例 §12/§13 適用判斷' } },
+    'insurance-loan-vs-surrender': { href: 'insurance-loan-vs-surrender.html',
+      name: { public: '保單借款還是解約划算？', accountant: '保單借款 vs 解約決策', lawyer: '保單借款 vs 解約決策' },
+      desc: { public: '急需用錢時該借還該解？淨現金流對比', accountant: '借款利息成本 vs 解約所得稅・保單失效臨界年數計算', lawyer: '保險法§119/§120、所§14 解約所得稅分析' } },
+    'insurance-accident-combined': { href: 'insurance-accident-combined.html',
+      name: { public: '車禍可以領幾張保險金？', accountant: '意外事故保險金合計', lawyer: '意外事故保險金合計試算' },
+      desc: { public: '強制險+壽險+團保+信用卡險...多項保險可同時請領', accountant: '12 項險種盤點・申請順序・所需文件清單', lawyer: '保險法§35 不重複原則例外・強責法§25/§27/§32 給付項目' } },
+    'insurance-beneficiary-order': { href: 'insurance-beneficiary-order.html',
+      name: { public: '保險金該給誰？', accountant: '保單受益人順位分配', lawyer: '保單受益人順位分配試算' },
+      desc: { public: '第一順位受益人已過世，保險金歸誰？自動判定', accountant: '保險法§113 + 民法§1138 繼承順位整合分配', lawyer: '§112/§113 適用 + §1144 應繼分自動計算・含「法定繼承人」條款爭議' } },
     'child-support':      { href: 'child-support.html',
       name: { all: '子女扶養費計算' },
       desc: { all: '依雙方收入比例分擔，支援多名子女，含親權歸屬情境' } },
@@ -761,25 +779,34 @@ async function handleUnsubscribe() {
   }
   function ref(id) { return { ...ALL_TOOLS[id], _id: id }; }
 
-  // ── TABS: Public / All (情境導向 5 分類) ──────────────────────
+  // ── TABS: Public / All (情境導向 6 分類) ──────────────────────
   const TABS_PUBLIC = [
     { id: 'death', label: '有人過世了',
       subtitle: '處理遺產繼承的所有步驟',
       tools: ['calculator','inheritance-timeline','deadline-dashboard','caregiver',
-              'real-estate','stock-inheritance','insurance-estate-risk',
-              'inherited-property-trap'].map(ref)
+              'real-estate','stock-inheritance','inherited-property-trap'].map(ref)
+    },
+    { id: 'insurance', label: '保險規劃',
+      subtitle: '保單遺產、受益人、理賠一次搞懂',
+      tools: ['insurance-estate-risk','insurance-gift-tax','insurance-policyholder-death',
+              'insurance-amt','insurance-forced-share','insurance-beneficiary-order',
+              'insurance-loan-vs-surrender','insurance-accident-combined'].map(ref)
     },
     { id: 'divorce', label: '要離婚了',
-      subtitle: '財產分配、扶養費、保單一次搞定',
+      subtitle: '財產分配、扶養費、出軌賠償',
       tools: ['property-split','alimony','child-support','insurance-divorce','infidelity-damages'].map(ref)
     },
     { id: 'gift', label: '送財產給家人',
       subtitle: '贈與節稅、保單規劃',
       tools: ['gift-tax','gift-planner','insurance-gift-tax','property-sale-tax'].map(ref)
     },
-    { id: 'dispute', label: '有糾紛',
-      subtitle: '車禍、霸凌、債務追討、時效查詢',
-      tools: ['accident','minor-damages','interest-calc','prescription','asset-detection'].map(ref)
+    { id: 'accident', label: '發生事故了',
+      subtitle: '車禍、霸凌、意外賠償',
+      tools: ['accident','insurance-accident-combined','minor-damages'].map(ref)
+    },
+    { id: 'debt', label: '有債權糾紛',
+      subtitle: '欠款追討、時效查詢、脫產偵測',
+      tools: ['interest-calc','prescription','asset-detection'].map(ref)
     },
   ];
 
@@ -788,14 +815,18 @@ async function handleUnsubscribe() {
     death: [
       { label: '繼承進階', tools: ['limited-inheritance','will-validity','estate-tax-detail','forced-share','case-manager'].map(ref) },
     ],
+    insurance: [],
     divorce: [
       { label: '離婚進階', tools: ['divorce-damages'].map(ref) },
     ],
     gift: [
       { label: '稅務進階', tools: ['estate-tax-detail','case-manager'].map(ref) },
     ],
-    dispute: [
-      { label: '訴訟進階', tools: ['forced-share','litigation-strength','settlement-calc'].map(ref) },
+    accident: [
+      { label: '訴訟進階', tools: ['litigation-strength','settlement-calc'].map(ref) },
+    ],
+    debt: [
+      { label: '訴訟進階', tools: ['litigation-strength','settlement-calc','forced-share'].map(ref) },
     ],
   };
 
@@ -806,23 +837,34 @@ async function handleUnsubscribe() {
     'case-manager','legal-basis'
   ].map(ref);
 
-  // ── TABS: Accountant / Lawyer (原 3 tab 結構不動) ─────────────
+  // ── TABS: Accountant / Lawyer (6 tab 專業分類) ─────────────
   const TABS_PRO = [
-    { id: 'inheritance', label: { accountant: '繼承申報', lawyer: '繼承' },
+    { id: 'inheritance', label: { accountant: '繼承', lawyer: '繼承' },
       tools: ['calculator','inheritance-timeline','deadline-dashboard','caregiver',
-              'gift-tax','property-sale-tax','inherited-property-trap',
-              'real-estate','stock-inheritance',
-              'limited-inheritance','will-validity','estate-tax-detail',
-              'insurance-estate-risk','insurance-gift-tax','gift-planner','case-manager'].map(ref)
+              'real-estate','stock-inheritance','limited-inheritance','will-validity',
+              'forced-share','inherited-property-trap'].map(ref)
+    },
+    { id: 'tax', label: { accountant: '稅務', lawyer: '稅務' },
+      tools: ['gift-tax','gift-planner','estate-tax-detail','property-sale-tax',
+              'inherited-property-trap','insurance-estate-risk','insurance-gift-tax',
+              'insurance-amt'].map(ref)
+    },
+    { id: 'insurance', label: { accountant: '保險', lawyer: '保險' },
+      tools: ['insurance-estate-risk','insurance-gift-tax','insurance-divorce',
+              'insurance-policyholder-death','insurance-amt','insurance-forced-share',
+              'insurance-beneficiary-order','insurance-loan-vs-surrender',
+              'insurance-accident-combined'].map(ref)
     },
     { id: 'divorce', label: { all: '離婚' },
       tools: ['property-split','alimony','insurance-divorce','child-support',
               'divorce-damages','infidelity-damages'].map(ref)
     },
-    { id: 'litigation', label: { all: '調查．賠償．時效' },
-      tools: ['asset-detection','interest-calc','minor-damages','accident',
-              'prescription','forced-share','litigation-strength','settlement-calc',
-              'legal-basis'].map(ref)
+    { id: 'damages', label: { all: '損害賠償' },
+      tools: ['accident','insurance-accident-combined','minor-damages',
+              'interest-calc','prescription','asset-detection'].map(ref)
+    },
+    { id: 'litigation', label: { all: '訴訟工具' },
+      tools: ['litigation-strength','settlement-calc','case-manager','legal-basis'].map(ref)
     },
   ];
 
