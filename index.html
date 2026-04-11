@@ -674,6 +674,9 @@ async function handleUnsubscribe() {
     'property-sale-tax':  { href: 'property-sale-tax.html',
       name: { all: '房地合一稅試算' },
       desc: { all: '繼承後出售稅率、自住優惠、持有年數計算' } },
+    'inherited-property-trap': { href: 'inherited-property-trap.html', featured: true,
+      name: { public: '繼承房子賣掉會賠錢嗎？', accountant: '繼承房貸陷阱試算', lawyer: '繼承房貸陷阱試算' },
+      desc: { public: '真實案例：不懂規則被課 175 萬，懂規則只要 28.6 萬，差 146 萬', accountant: '「憑直覺 vs 套用優惠」對比試算・額外負擔扣除・非自願出售 20% 稅率・陷阱警示', lawyer: '對比試算含額外負擔扣除（財110台財稅字第11004561660號函）與非自願出售優惠，含申報策略提醒' } },
     'real-estate':        { href: 'real-estate.html',
       name: { all: '不動產繼承試算' },
       desc: { all: '地價稅、房屋稅、土地增值稅免徵（獨立版）' } },
@@ -716,6 +719,9 @@ async function handleUnsubscribe() {
     'divorce-damages':    { href: 'divorce-damages.html', persona: 'lawyer',
       name: { all: '離婚損害賠償精算' },
       desc: { lawyer: '§1056、§195逐項估算，含被告對象分析與時效提醒', all: '§1056 非財產損害精算・§195 侵害配偶權慰撫金・被告對象策略・時效管理・判例區間參照' } },
+    'infidelity-damages': { href: 'infidelity-damages.html',
+      name: { public: '出軌可以告多少？', accountant: '侵害配偶權損害賠償', lawyer: '侵害配偶權損害賠償精算' },
+      desc: { public: '不用離婚也能告！外遇、小三求償金額試算，含被告策略', lawyer: '§184+§195 侵害配偶權精算・可對配偶及第三人分別求償・加重情節評估・含時效與連帶責任備忘', all: '§184+§195 侵害配偶權精算・可對配偶及第三人分別求償・加重情節評估・含時效與連帶責任備忘' } },
     'asset-detection':    { href: 'asset-detection.html',
       name: { public: '財產轉移偵測', accountant: '脫產偵測分析', lawyer: '脫產偵測分析' },
       desc: { all: '財產異動風險評估，依法律規定自動標記，支援 CSV 上傳' } },
@@ -760,11 +766,12 @@ async function handleUnsubscribe() {
     { id: 'death', label: '有人過世了',
       subtitle: '處理遺產繼承的所有步驟',
       tools: ['calculator','inheritance-timeline','deadline-dashboard','caregiver',
-              'real-estate','stock-inheritance','insurance-estate-risk'].map(ref)
+              'real-estate','stock-inheritance','insurance-estate-risk',
+              'inherited-property-trap'].map(ref)
     },
     { id: 'divorce', label: '要離婚了',
       subtitle: '財產分配、扶養費、保單一次搞定',
-      tools: ['property-split','alimony','child-support','insurance-divorce'].map(ref)
+      tools: ['property-split','alimony','child-support','insurance-divorce','infidelity-damages'].map(ref)
     },
     { id: 'gift', label: '送財產給家人',
       subtitle: '贈與節稅、保單規劃',
@@ -803,13 +810,14 @@ async function handleUnsubscribe() {
   const TABS_PRO = [
     { id: 'inheritance', label: { accountant: '繼承申報', lawyer: '繼承' },
       tools: ['calculator','inheritance-timeline','deadline-dashboard','caregiver',
-              'gift-tax','property-sale-tax','real-estate','stock-inheritance',
+              'gift-tax','property-sale-tax','inherited-property-trap',
+              'real-estate','stock-inheritance',
               'limited-inheritance','will-validity','estate-tax-detail',
               'insurance-estate-risk','insurance-gift-tax','gift-planner','case-manager'].map(ref)
     },
     { id: 'divorce', label: { all: '離婚' },
       tools: ['property-split','alimony','insurance-divorce','child-support',
-              'divorce-damages'].map(ref)
+              'divorce-damages','infidelity-damages'].map(ref)
     },
     { id: 'litigation', label: { all: '調查．賠償．時效' },
       tools: ['asset-detection','interest-calc','minor-damages','accident',
