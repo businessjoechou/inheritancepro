@@ -1,14 +1,17 @@
 /**
- * components.css — 所有工具頁共用的 UI 元件樣式
+ * components.css — 所有工具頁共用 UI 元件樣式
  *
- * 所有 class 使用 `ip-` 前綴，避免與未來遷移中的舊工具 inline CSS 衝突。
- * 新增 component 時優先放這裡，除非它真的只用在一個工具。
+ * 雙選擇器策略：每個元件同時支援 `.xxx` 與 `.ip-xxx` 兩種 class，
+ * 讓 36 個舊工具在遷移過程中：
+ *   · 只需 `<link rel="stylesheet" href="css/tool-page.css">` 然後刪掉 inline 重複
+ *   · 不必改 HTML class 或 JS `classList` 操作
+ * 未來 Phase 6 完成後可再考慮把舊別名刪掉。
  */
 
 /* ============================================================
- * Card 卡片容器（白底、圓角、細邊框）
+ * Card 卡片容器
  * ============================================================ */
-.ip-card {
+.card, .ip-card {
   background: #fff;
   border: 1.5px solid var(--ip-border);
   border-radius: var(--ip-radius-lg);
@@ -16,7 +19,7 @@
   margin-bottom: 14px;
 }
 
-.ip-section-title {
+.section-title, .ip-section-title {
   font-family: var(--ip-font-mono);
   font-size: var(--ip-fs-xs);
   color: var(--ip-muted);
@@ -30,14 +33,16 @@
 /* ============================================================
  * 輸入欄位
  * ============================================================ */
-.ip-input-group {
+.input-group, .ip-input-group {
   margin-bottom: var(--ip-sp-4);
 }
 
+.input-group:last-child,
 .ip-input-group:last-child {
   margin-bottom: 0;
 }
 
+.input-group label,
 .ip-input-group label {
   display: block;
   font-size: var(--ip-fs-md);
@@ -45,16 +50,21 @@
   margin-bottom: 6px;
 }
 
-.ip-label-hint {
+.label-hint, .ip-label-hint {
   font-size: var(--ip-fs-sm);
   color: var(--ip-muted);
   font-weight: 400;
   margin-left: 6px;
 }
 
+.input-group input[type="number"],
+.input-group input[type="text"],
+.input-group input[type="email"],
+.input-group input[type="date"],
 .ip-input-group input[type="number"],
 .ip-input-group input[type="text"],
-.ip-input-group input[type="email"] {
+.ip-input-group input[type="email"],
+.ip-input-group input[type="date"] {
   width: 100%;
   padding: var(--ip-sp-3) 14px;
   border: 1.5px solid var(--ip-border);
@@ -67,19 +77,21 @@
   -webkit-appearance: none;
 }
 
+.input-group input:focus,
 .ip-input-group input:focus {
   outline: none;
   border-color: var(--ip-gold);
   background: #fff;
 }
 
-.ip-checkbox-row {
+.checkbox-row, .ip-checkbox-row {
   display: flex;
   align-items: flex-start;
   gap: 10px;
   margin-bottom: 0;
 }
 
+.checkbox-row input[type="checkbox"],
 .ip-checkbox-row input[type="checkbox"] {
   width: 18px;
   height: 18px;
@@ -89,6 +101,7 @@
   flex-shrink: 0;
 }
 
+.checkbox-row label,
 .ip-checkbox-row label {
   margin: 0;
   cursor: pointer;
@@ -96,6 +109,7 @@
   line-height: 1.5;
 }
 
+.checkbox-row .hint,
 .ip-checkbox-row .ip-hint {
   font-size: var(--ip-fs-sm);
   color: var(--ip-muted);
@@ -105,7 +119,7 @@
 /* ============================================================
  * 提示框（小字、金色左邊條）
  * ============================================================ */
-.ip-hint-box {
+.hint-box, .ip-hint-box {
   background: rgba(196, 147, 42, 0.08);
   border-left: 3px solid var(--ip-gold);
   border-radius: 0 6px 6px 0;
@@ -119,7 +133,7 @@
 /* ============================================================
  * 按鈕
  * ============================================================ */
-.ip-btn-calc {
+.calc-btn, .ip-btn-calc {
   width: 100%;
   padding: var(--ip-sp-4);
   background: var(--ip-ink);
@@ -135,30 +149,98 @@
   transition: background 0.2s;
 }
 
+.calc-btn:hover,
 .ip-btn-calc:hover {
   background: var(--ip-ink-hover);
 }
 
-/* ============================================================
- * Summary card — 深色結論卡，顯示核心數字
- * ============================================================ */
-.ip-summary-card {
-  background: var(--ip-ink);
-  color: #fff;
-  border-radius: var(--ip-radius-lg);
-  padding: 22px;
-  margin-bottom: 14px;
+/* 通用按鈕保留 .ip-btn 前綴版（避免 .btn 在各工具有不同 padding 造成衝突）
+   舊工具的 .btn / .btn-primary / .btn-secondary 維持 inline 定義 */
+.ip-btn {
+  display: inline-block;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  font-family: var(--ip-font-sans);
+  font-size: var(--ip-fs-md);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+  text-decoration: none;
 }
 
-.ip-sum-lbl {
+.ip-btn-primary {
+  background: var(--ip-ink);
+  color: var(--ip-paper);
+}
+
+.ip-btn-primary:hover {
+  background: var(--ip-ink-hover);
+}
+
+.ip-btn-secondary {
+  background: var(--ip-paper);
+  color: var(--ip-ink);
+  border: 1.5px solid var(--ip-border);
+}
+
+.ip-btn-secondary:hover {
+  border-color: var(--ip-gold);
+}
+
+/* 儲存到雲端按鈕 */
+.save-btn, .ip-save-btn {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background: var(--ip-accent);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: var(--ip-font-sans);
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 16px;
+  transition: opacity 0.2s;
+}
+
+.save-btn:hover,
+.ip-save-btn:hover {
+  opacity: 0.9;
+}
+
+.save-btn:disabled,
+.ip-save-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ============================================================
+ * Result hero — 深色 hero 結果展示（簡單版）
+ * ============================================================ */
+.result-hero, .ip-result-hero {
+  background: var(--ip-ink);
+  color: var(--ip-paper);
+  border-radius: var(--ip-radius-lg);
+  padding: 24px var(--ip-sp-5);
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+.result-hero-label,
+.ip-result-hero-label {
+  font-family: var(--ip-font-mono);
   font-size: var(--ip-fs-sm);
   color: rgba(255, 255, 255, 0.5);
-  font-family: var(--ip-font-mono);
   letter-spacing: 0.12em;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
 }
 
-.ip-sum-val {
+.result-hero-amount,
+.ip-result-hero-amount {
   font-family: var(--ip-font-mono);
   font-size: var(--ip-fs-3xl);
   font-weight: 700;
@@ -166,7 +248,8 @@
   margin-bottom: 4px;
 }
 
-.ip-sum-desc {
+.result-hero-sub,
+.ip-result-hero-sub {
   font-size: var(--ip-fs-base);
   color: rgba(255, 255, 255, 0.7);
   line-height: 1.65;
@@ -174,9 +257,84 @@
 }
 
 /* ============================================================
- * Case box — 真實案例引言框（深底紅邊）
+ * Summary card — 深色結論卡（同 result-hero 風格但左對齊）
  * ============================================================ */
-.ip-case-box {
+.summary-card, .ip-summary-card {
+  background: var(--ip-ink);
+  color: #fff;
+  border-radius: var(--ip-radius-lg);
+  padding: 22px;
+  margin-bottom: 14px;
+}
+
+.sum-lbl, .ip-sum-lbl {
+  font-size: var(--ip-fs-sm);
+  color: rgba(255, 255, 255, 0.5);
+  font-family: var(--ip-font-mono);
+  letter-spacing: 0.12em;
+  margin-bottom: 6px;
+}
+
+.sum-val, .ip-sum-val {
+  font-family: var(--ip-font-mono);
+  font-size: var(--ip-fs-3xl);
+  font-weight: 700;
+  color: var(--ip-gold);
+  margin-bottom: 4px;
+}
+
+.sum-desc, .ip-sum-desc {
+  font-size: var(--ip-fs-base);
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.65;
+  margin-top: 10px;
+}
+
+/* ============================================================
+ * Result row / title — 結果列與區塊標題
+ * ============================================================ */
+.result-title, .ip-result-title {
+  font-family: var(--ip-font-mono);
+  font-size: var(--ip-fs-xs);
+  color: var(--ip-muted);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  padding-bottom: var(--ip-sp-2);
+  border-bottom: 1px solid var(--ip-soft);
+}
+
+.result-row, .ip-result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--ip-soft);
+  gap: 8px;
+}
+
+.result-row:last-child,
+.ip-result-row:last-child {
+  border-bottom: none;
+}
+
+.result-label, .ip-result-label {
+  font-size: var(--ip-fs-md);
+  color: var(--ip-muted);
+}
+
+.result-value, .ip-result-value {
+  font-family: var(--ip-font-mono);
+  font-size: var(--ip-fs-md);
+  color: var(--ip-ink);
+  font-weight: 500;
+  text-align: right;
+}
+
+/* ============================================================
+ * Case box — 真實案例引言框
+ * ============================================================ */
+.case-box, .ip-case-box {
   background: var(--ip-ink);
   color: var(--ip-paper);
   border-radius: var(--ip-radius-lg);
@@ -185,7 +343,7 @@
   border: 2px solid var(--ip-accent);
 }
 
-.ip-case-title {
+.case-title, .ip-case-title {
   font-family: var(--ip-font-mono);
   font-size: var(--ip-fs-xs);
   letter-spacing: 0.12em;
@@ -193,18 +351,19 @@
   margin-bottom: 10px;
 }
 
-.ip-case-text {
+.case-text, .ip-case-text {
   font-size: var(--ip-fs-md);
   line-height: 1.75;
   color: rgba(255, 255, 255, 0.88);
 }
 
+.case-text strong,
 .ip-case-text strong {
   color: var(--ip-gold);
   font-weight: 600;
 }
 
-.ip-case-hl {
+.case-hl, .ip-case-hl {
   background: rgba(139, 32, 32, 0.4);
   padding: 1px 6px;
   border-radius: 4px;
@@ -218,10 +377,9 @@
 }
 
 /* ============================================================
- * Compare card — A/B 對比表格
- * （很多工具需要「直覺版 vs 懂規則版」類型的對比）
+ * Compare card — A/B 對比表
  * ============================================================ */
-.ip-compare-card {
+.compare-card, .ip-compare-card {
   background: #fff;
   border: 1.5px solid var(--ip-border);
   border-radius: var(--ip-radius-lg);
@@ -229,13 +387,14 @@
   margin-bottom: 14px;
 }
 
-.ip-compare-header {
+.compare-header, .ip-compare-header {
   display: grid;
   grid-template-columns: 1.2fr 1fr 1fr;
   background: var(--ip-ink);
   color: #fff;
 }
 
+.compare-header > div,
 .ip-compare-header > div {
   padding: var(--ip-sp-3) 10px;
   font-size: var(--ip-fs-sm);
@@ -245,36 +404,41 @@
   letter-spacing: 0.08em;
 }
 
+.compare-header > div:last-child,
 .ip-compare-header > div:last-child {
   border-right: none;
 }
 
-.ip-col-naive { background: var(--ip-naive-bg) !important; }
-.ip-col-smart { background: var(--ip-smart-bg) !important; }
+.col-naive, .ip-col-naive { background: var(--ip-naive-bg) !important; }
+.col-smart, .ip-col-smart { background: var(--ip-smart-bg) !important; }
 
-.ip-compare-row {
+.compare-row, .ip-compare-row {
   display: grid;
   grid-template-columns: 1.2fr 1fr 1fr;
   border-bottom: 1px solid var(--ip-soft);
   font-size: var(--ip-fs-base);
 }
 
+.compare-row:last-child,
 .ip-compare-row:last-child {
   border-bottom: none;
 }
 
+.compare-row > div,
 .ip-compare-row > div {
   padding: 11px var(--ip-sp-2);
   display: flex;
   align-items: center;
 }
 
+.compare-row .label-cell,
 .ip-compare-row .ip-label-cell {
   color: var(--ip-muted);
   font-size: var(--ip-fs-sm);
   border-right: 1px solid var(--ip-soft);
 }
 
+.compare-row .val-cell,
 .ip-compare-row .ip-val-cell {
   font-family: var(--ip-font-mono);
   justify-content: flex-end;
@@ -283,29 +447,33 @@
   font-size: var(--ip-fs-base);
 }
 
+.compare-row .val-cell:last-child,
 .ip-compare-row .ip-val-cell:last-child {
   border-right: none;
 }
 
+.compare-row.tax-row,
 .ip-compare-row.ip-tax-row {
   background: var(--ip-soft);
   font-weight: 700;
 }
 
+.compare-row.tax-row .label-cell,
 .ip-compare-row.ip-tax-row .ip-label-cell {
   color: var(--ip-ink);
   font-size: var(--ip-fs-base);
   font-weight: 600;
 }
 
+.compare-row.tax-row .val-cell,
 .ip-compare-row.ip-tax-row .ip-val-cell {
   font-size: 14px;
 }
 
-.ip-naive-val { color: var(--ip-accent); }
-.ip-smart-val { color: var(--ip-success); }
+.naive-val, .ip-naive-val { color: var(--ip-accent); }
+.smart-val, .ip-smart-val { color: var(--ip-success); }
 
-.ip-diff-row {
+.diff-row, .ip-diff-row {
   background: rgba(196, 147, 42, 0.12);
   display: flex;
   justify-content: space-between;
@@ -313,6 +481,7 @@
   padding: var(--ip-sp-4) 14px;
 }
 
+.diff-row .lbl,
 .ip-diff-row .ip-lbl {
   font-size: var(--ip-fs-base);
   color: var(--ip-muted);
@@ -320,6 +489,7 @@
   letter-spacing: 0.08em;
 }
 
+.diff-row .val,
 .ip-diff-row .ip-val {
   font-family: var(--ip-font-mono);
   font-size: var(--ip-fs-2xl);
@@ -328,9 +498,9 @@
 }
 
 /* ============================================================
- * Trap alert — 紅底警示框
+ * Trap alert — 深紅底嚴重警示
  * ============================================================ */
-.ip-trap-alert {
+.trap-alert, .ip-trap-alert {
   background: var(--ip-alert-red-bg);
   color: #fff;
   border-radius: var(--ip-radius-lg);
@@ -339,6 +509,7 @@
   border: 2px solid var(--ip-alert-red-border);
 }
 
+.trap-alert-title,
 .ip-trap-alert-title {
   font-size: var(--ip-fs-md);
   font-weight: 700;
@@ -347,20 +518,77 @@
   letter-spacing: 0.04em;
 }
 
+.trap-alert-body,
 .ip-trap-alert-body {
   font-size: var(--ip-fs-base);
   line-height: 1.75;
   color: rgba(255, 255, 255, 0.9);
 }
 
+.trap-alert-body strong,
 .ip-trap-alert-body strong {
   color: var(--ip-alert-red-text);
 }
 
 /* ============================================================
+ * Warn / info / success / danger 通用提示框
+ * ============================================================ */
+.warn-box, .ip-warn-box {
+  background: #fdf3e7;
+  border: 1px solid #e8c882;
+  border-left: 3px solid var(--ip-gold);
+  border-radius: 6px;
+  padding: var(--ip-sp-3) 14px;
+  font-size: var(--ip-fs-base);
+  color: #7a5a10;
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+
+.warn-box strong,
+.ip-warn-box strong {
+  color: var(--ip-ink);
+}
+
+.info-box, .ip-info-box {
+  background: #fffbf0;
+  border: 1px solid #e8d48a;
+  border-radius: var(--ip-radius-md);
+  padding: var(--ip-sp-3) 14px;
+  font-size: var(--ip-fs-base);
+  color: #7a6020;
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+
+.success-box, .ip-success-box {
+  background: var(--ip-success-bg);
+  border: 1px solid #a8d8bc;
+  border-left: 3px solid var(--ip-success);
+  border-radius: 6px;
+  padding: var(--ip-sp-3) 14px;
+  font-size: var(--ip-fs-base);
+  color: #1d4a31;
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+
+.danger-box, .ip-danger-box {
+  background: var(--ip-danger-bg);
+  border: 1px solid #e8c0b8;
+  border-left: 3px solid var(--ip-accent);
+  border-radius: 6px;
+  padding: var(--ip-sp-3) 14px;
+  font-size: var(--ip-fs-base);
+  color: var(--ip-accent);
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+
+/* ============================================================
  * Advantage — 優惠項目（綠色左邊條）
  * ============================================================ */
-.ip-advantage {
+.advantage, .ip-advantage {
   background: var(--ip-success-bg);
   border-left: 3px solid var(--ip-success);
   border-radius: 0 var(--ip-radius-md) var(--ip-radius-md) 0;
@@ -371,6 +599,7 @@
   margin-bottom: 10px;
 }
 
+.advantage .adv-title,
 .ip-advantage .ip-adv-title {
   font-weight: 600;
   color: var(--ip-success);
@@ -378,6 +607,7 @@
   margin-bottom: 4px;
 }
 
+.advantage .adv-amt,
 .ip-advantage .ip-adv-amt {
   font-family: var(--ip-font-mono);
   color: var(--ip-success);
@@ -385,9 +615,9 @@
 }
 
 /* ============================================================
- * Law note — 法條備註（金色邊框）
+ * Law note / law pill — 法條備註與標籤
  * ============================================================ */
-.ip-law-note {
+.law-note, .ip-law-note {
   background: rgba(196, 147, 42, 0.08);
   border: 1px solid rgba(196, 147, 42, 0.25);
   border-radius: var(--ip-radius-md);
@@ -398,14 +628,29 @@
   margin-top: 14px;
 }
 
+.law-note strong,
 .ip-law-note strong {
   color: var(--ip-gold);
+}
+
+.law-pill, .ip-law-pill {
+  display: inline-block;
+  padding: 3px 10px;
+  background: rgba(196, 147, 42, 0.12);
+  border: 1px solid rgba(196, 147, 42, 0.35);
+  border-radius: 20px;
+  font-size: var(--ip-fs-sm);
+  color: var(--ip-gold);
+  font-family: var(--ip-font-mono);
+  letter-spacing: 0.04em;
+  margin-right: 4px;
 }
 
 /* ============================================================
  * Cross link — 工具交叉連結卡片
  * ============================================================ */
-.ip-cross-link {
+.cross-link, .ip-cross-link,
+.cross-link-btn, .ip-cross-link-btn {
   display: block;
   padding: var(--ip-sp-3) var(--ip-sp-4);
   background: #fff;
@@ -418,26 +663,64 @@
   transition: all 0.2s;
 }
 
-.ip-cross-link:hover {
+.cross-link:hover,
+.ip-cross-link:hover,
+.cross-link-btn:hover,
+.ip-cross-link-btn:hover {
   border-color: var(--ip-gold);
   background: var(--ip-paper);
 }
 
-.ip-cross-link .ip-arr {
+.cross-link .arr,
+.ip-cross-link .ip-arr,
+.cross-link-btn .arr,
+.ip-cross-link-btn .arr {
   float: right;
   color: var(--ip-gold);
 }
 
+.cross-links-label,
+.ip-cross-links-label {
+  font-family: var(--ip-font-mono);
+  font-size: var(--ip-fs-xs);
+  color: var(--ip-muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 18px 0 8px;
+}
+
+.cross-links, .ip-cross-links {
+  margin-bottom: 16px;
+}
+
 /* ============================================================
- * Score group — 評分按鈕群組（輕微/中等/嚴重/極嚴重）
+ * Progress bar — 細線進度條（僅 ip- 前綴版，避免與舊工具衝突）
+ * .step / .step-label / .nav-bar 不放入共用層（語意太多變）
  * ============================================================ */
-.ip-score-group {
+.ip-progress-bar {
+  width: 100%;
+  height: 4px;
+  background: var(--ip-soft);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.ip-progress-fill {
+  height: 100%;
+  background: var(--ip-gold);
+  transition: width 0.3s ease;
+}
+
+/* ============================================================
+ * Score group — 評分按鈕群組
+ * ============================================================ */
+.score-group, .ip-score-group {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: var(--ip-sp-2);
 }
 
-.ip-score-btn {
+.score-btn, .ip-score-btn {
   padding: var(--ip-sp-3) var(--ip-sp-2);
   background: var(--ip-paper);
   border: 1.5px solid var(--ip-border);
@@ -450,13 +733,69 @@
   text-align: center;
 }
 
+.score-btn:hover,
 .ip-score-btn:hover {
   border-color: var(--ip-gold);
 }
 
+.score-btn.active,
+.score-btn.is-active,
+.ip-score-btn.active,
 .ip-score-btn.is-active {
   background: var(--ip-ink);
   color: var(--ip-gold);
   border-color: var(--ip-ink);
   font-weight: 600;
+}
+
+/* ============================================================
+ * Toggle group — 類型切換按鈕
+ * ============================================================ */
+.toggle-group, .ip-toggle-group {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.toggle-btn, .ip-toggle-btn {
+  flex: 1;
+  padding: 10px;
+  background: var(--ip-paper);
+  border: 1.5px solid var(--ip-border);
+  border-radius: var(--ip-radius-md);
+  font-size: var(--ip-fs-md);
+  color: var(--ip-ink);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: var(--ip-font-sans);
+  text-align: center;
+}
+
+.toggle-btn:hover,
+.ip-toggle-btn:hover {
+  border-color: var(--ip-gold);
+}
+
+.toggle-btn.active,
+.ip-toggle-btn.active {
+  background: var(--ip-ink);
+  color: var(--ip-gold);
+  border-color: var(--ip-ink);
+  font-weight: 600;
+}
+
+/* .nav-bar / .back-link 不放入共用層（語意在不同工具差異太大，
+   有的是 fixed 底部導覽，有的是 inline 上下一步按鈕） */
+
+/* ============================================================
+ * Disclaimer bar — 頁尾免責聲明（邊框版）
+ * ============================================================ */
+.disclaimer-bar, .ip-disclaimer-bar {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 16px 24px 40px;
+  font-size: 11.5px;
+  color: rgba(0, 0, 0, 0.62);
+  line-height: 1.7;
+  border-top: 1px solid var(--ip-border);
 }

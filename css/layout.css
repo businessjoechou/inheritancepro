@@ -1,11 +1,12 @@
 /**
  * layout.css — 所有工具頁共用的版面骨架
  *
- * 所有 class 使用 `ip-` 前綴避免未來碰撞。
- * 同時保留 <header>、<main>、<h1> 作為元素層樣式（由 tool-page.css 載入的頁面才適用）。
+ * 雙選擇器策略：`.logo, .ip-logo` 兼容舊工具與新工具。
+ * 元素級選擇器（header / main / h1）維持通用，遷移時不需改動。
  */
 
 /* === Header === */
+header,
 .ip-header,
 header.ip-header {
   background: var(--ip-ink);
@@ -19,18 +20,19 @@ header.ip-header {
   z-index: 100;
 }
 
-.ip-logo {
+.logo, .ip-logo {
   font-family: var(--ip-font-serif);
   font-size: 20px;
   font-weight: 700;
   letter-spacing: 0.04em;
 }
 
+.logo span,
 .ip-logo span {
   color: var(--ip-gold);
 }
 
-.ip-page-sub {
+.page-sub, .ip-page-sub {
   font-size: var(--ip-fs-sm);
   color: rgba(255, 255, 255, 0.5);
   margin-top: 3px;
@@ -38,7 +40,7 @@ header.ip-header {
   letter-spacing: 0.06em;
 }
 
-.ip-home-link {
+.home-link, .ip-home-link {
   font-family: var(--ip-font-mono);
   font-size: var(--ip-fs-sm);
   color: var(--ip-muted);
@@ -46,11 +48,13 @@ header.ip-header {
   letter-spacing: 0.08em;
 }
 
+.home-link:hover,
 .ip-home-link:hover {
   color: var(--ip-gold);
 }
 
 /* === Main container === */
+main,
 .ip-main,
 main.ip-main {
   padding: var(--ip-sp-6) var(--ip-sp-5) calc(120px + env(safe-area-inset-bottom, 0px));
@@ -59,8 +63,9 @@ main.ip-main {
 }
 
 /* === 標題 === */
-.ip-h1,
-.ip-main h1 {
+main h1,
+.ip-main h1,
+.ip-h1 {
   font-family: var(--ip-font-serif);
   font-size: var(--ip-fs-2xl);
   font-weight: 700;
@@ -68,7 +73,7 @@ main.ip-main {
   line-height: 1.4;
 }
 
-.ip-subtitle {
+.subtitle, .ip-subtitle {
   font-size: var(--ip-fs-md);
   color: var(--ip-muted);
   margin-bottom: var(--ip-sp-4);
@@ -76,7 +81,7 @@ main.ip-main {
 }
 
 /* === 頁尾免責 === */
-.ip-disclaimer {
+.disclaimer, .ip-disclaimer {
   font-size: var(--ip-fs-sm);
   color: #aaa;
   text-align: center;
