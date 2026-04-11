@@ -6,16 +6,16 @@
 
 /**
  * @param {object} p
- * @param {string} p.label   小字 label（例如「懂規則可幫你省下」）
+ * @param {string} p.label   小字 label
  * @param {string} p.value   大字數值（已格式化的字串）
  * @param {string} [p.desc]  支援 HTML 的描述行
  */
 export function renderResultCard({ label, value, desc }) {
   return `
-    <div class="summary-card">
-      <div class="sum-lbl">${label}</div>
-      <div class="sum-val">${value}</div>
-      ${desc ? `<div class="sum-desc">${desc}</div>` : ''}
+    <div class="ip-summary-card">
+      <div class="ip-sum-lbl">${label}</div>
+      <div class="ip-sum-val">${value}</div>
+      ${desc ? `<div class="ip-sum-desc">${desc}</div>` : ''}
     </div>
   `;
 }

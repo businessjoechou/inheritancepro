@@ -12,11 +12,11 @@
 @import url('utilities.css');
 
 /* === 工具頁結果區（預設隱藏） === */
-#results {
+.ip-results {
   display: none;
-  margin-top: var(--sp-6);
+  margin-top: var(--ip-sp-6);
 }
 
-#results.visible {
+.ip-results.is-visible {
   display: block;
 }

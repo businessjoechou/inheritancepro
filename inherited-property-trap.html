@@ -40,133 +40,133 @@
 </head>
 <body>
 
-<header>
+<header class="ip-header">
   <a href="index.html" style="text-decoration:none;color:inherit">
-    <div class="logo">Inheritance<span>Pro</span></div>
-    <div class="page-sub">繼承房貸陷阱試算</div>
+    <div class="ip-logo">Inheritance<span>Pro</span></div>
+    <div class="ip-page-sub">繼承房貸陷阱試算</div>
   </a>
-  <a class="home-link" href="index.html">← 首頁</a>
+  <a class="ip-home-link" href="index.html">← 首頁</a>
 </header>
 
-<main>
+<main class="ip-main">
   <h1>繼承房貸陷阱試算</h1>
-  <p class="subtitle">繼承有房貸的房子打算賣掉？<strong>不懂規則，可能被課掉所有救命錢</strong>。這個工具用「憑直覺申報 vs 套用所有優惠」雙欄對比，告訴你差額有多大。</p>
+  <p class="ip-subtitle">繼承有房貸的房子打算賣掉？<strong>不懂規則，可能被課掉所有救命錢</strong>。這個工具用「憑直覺申報 vs 套用所有優惠」雙欄對比，告訴你差額有多大。</p>
 
   <!-- 真實案例 -->
-  <div class="case-box">
-    <div class="case-title">⚠ 真實案例</div>
-    <div class="case-text">
-      繼承市值 <strong>900 萬</strong>的房子、背 <strong>700 萬</strong>房貸。賣掉還完貸款，手上只剩不到 200 萬。結果收到國稅局稅單——要繳 <span class="case-hl">175 萬</span> 房地合一稅。<br><br>
-      但懂規則的人可以把稅從 175 萬降到 <span class="case-hl" style="background:rgba(42,107,74,0.5);color:#b8e8ca">28.6 萬</span>，差<strong>將近 150 萬</strong>。差別就在兩個字：<strong>「額外負擔扣除」</strong>與 <strong>「非自願出售」</strong>。
+  <div class="ip-case-box">
+    <div class="ip-case-title">⚠ 真實案例</div>
+    <div class="ip-case-text">
+      繼承市值 <strong>900 萬</strong>的房子、背 <strong>700 萬</strong>房貸。賣掉還完貸款，手上只剩不到 200 萬。結果收到國稅局稅單——要繳 <span class="ip-case-hl">175 萬</span> 房地合一稅。<br><br>
+      但懂規則的人可以把稅從 175 萬降到 <span class="ip-case-hl ip-case-hl--success">28.6 萬</span>，差<strong>將近 150 萬</strong>。差別就在兩個字：<strong>「額外負擔扣除」</strong>與 <strong>「非自願出售」</strong>。
     </div>
   </div>
 
   <!-- A. 房屋與房貸 -->
-  <div class="card">
-    <div class="section-title">A · 房屋與房貸資訊</div>
-    <div class="input-group">
-      <label>預計出售價格<span class="label-hint">元</span></label>
+  <div class="ip-card">
+    <div class="ip-section-title">A · 房屋與房貸資訊</div>
+    <div class="ip-input-group">
+      <label>預計出售價格<span class="ip-label-hint">元</span></label>
       <input type="number" id="salePrice" placeholder="例：9000000" min="0" inputmode="numeric">
     </div>
-    <div class="input-group">
-      <label>繼承時房貸餘額<span class="label-hint">元，被繼承人死亡時的貸款餘額</span></label>
+    <div class="ip-input-group">
+      <label>繼承時房貸餘額<span class="ip-label-hint">元，被繼承人死亡時的貸款餘額</span></label>
       <input type="number" id="mortgageBalance" placeholder="例：7000000" min="0" inputmode="numeric">
     </div>
-    <div class="input-group" style="margin-bottom:0">
-      <label>繼承時房屋公告現值<span class="label-hint">元，國稅局認定的「取得成本」</span></label>
+    <div class="ip-input-group" style="margin-bottom:0">
+      <label>繼承時房屋公告現值<span class="ip-label-hint">元，國稅局認定的「取得成本」</span></label>
       <input type="number" id="inheritedValue" placeholder="例：4000000" min="0" inputmode="numeric">
-      <div class="hint-box">
+      <div class="ip-hint-box">
         📌 公告現值 = 土地公告現值 + 房屋評定現值。可在地政事務所或財政部「地方稅網路申報」查詢。通常遠低於市價。
       </div>
     </div>
   </div>
 
   <!-- B. 持有期間 -->
-  <div class="card">
-    <div class="section-title">B · 持有期間</div>
-    <div class="input-group" style="margin-bottom:0">
-      <label>繼承後持有年數<span class="label-hint">年，從繼承日到預計出售日</span></label>
+  <div class="ip-card">
+    <div class="ip-section-title">B · 持有期間</div>
+    <div class="ip-input-group" style="margin-bottom:0">
+      <label>繼承後持有年數<span class="ip-label-hint">年，從繼承日到預計出售日</span></label>
       <input type="number" id="holdYears" placeholder="例：2" min="0" max="50" inputmode="numeric">
-      <div class="hint-box">
+      <div class="ip-hint-box">
         📌 依所§4-5，繼承取得不動產者，持有期間<strong>可併計被繼承人持有年數</strong>。若被繼承人已持有 10 年以上，你繼承後立刻賣也適用 15% 長期持有稅率。此工具為保守估算，預設從繼承日起算。
       </div>
     </div>
   </div>
 
   <!-- C. 其他條件 -->
-  <div class="card">
-    <div class="section-title">C · 其他條件</div>
-    <div class="input-group">
-      <label>物價調整係數<span class="label-hint">預設 1.08，實際請查消費者物價指數</span></label>
+  <div class="ip-card">
+    <div class="ip-section-title">C · 其他條件</div>
+    <div class="ip-input-group">
+      <label>物價調整係數<span class="ip-label-hint">預設 1.08，實際請查消費者物價指數</span></label>
       <input type="number" id="cpiMult" placeholder="1.08" min="1" max="3" step="0.01" value="1.08" inputmode="decimal">
     </div>
-    <div class="input-group">
-      <label>可列舉費用率 (%)<span class="label-hint">預設 3%（法定必要費用）</span></label>
+    <div class="ip-input-group">
+      <label>可列舉費用率 (%)<span class="ip-label-hint">預設 3%（法定必要費用）</span></label>
       <input type="number" id="expenseRate" placeholder="3" min="0" max="30" step="0.5" value="3" inputmode="decimal">
     </div>
-    <div class="input-group" style="margin-bottom:0">
-      <div class="checkbox-row">
+    <div class="ip-input-group" style="margin-bottom:0">
+      <div class="ip-checkbox-row">
         <input type="checkbox" id="chkForced" checked>
         <div>
           <label for="chkForced">符合「非自願因素」被迫出售</label>
-          <div class="hint">因無力負擔繼承的房貸而出售（適用 20% 稅率，否則 35%）</div>
+          <div class="ip-hint">因無力負擔繼承的房貸而出售（適用 20% 稅率，否則 35%）</div>
         </div>
       </div>
     </div>
   </div>
 
-  <button class="calc-btn" id="btnCalc">開始對比試算</button>
+  <button class="ip-btn-calc" id="btnCalc">開始對比試算</button>
 
-  <div id="results">
+  <div id="results" class="ip-results">
     <!-- 結論：一行大字講差額 -->
-    <div class="summary-card" id="summaryCard">
-      <div class="sum-lbl">懂規則可幫你省下</div>
-      <div class="sum-val" id="r-savings">—</div>
-      <div class="sum-desc" id="r-savingsDesc"></div>
+    <div class="ip-summary-card" id="summaryCard">
+      <div class="ip-sum-lbl">懂規則可幫你省下</div>
+      <div class="ip-sum-val" id="r-savings">—</div>
+      <div class="ip-sum-desc" id="r-savingsDesc"></div>
     </div>
 
     <!-- 陷阱警示 (if applicable) -->
-    <div class="trap-alert" id="trapAlert" style="display:none">
-      <div class="trap-alert-title">⚠ 陷阱警示</div>
-      <div class="trap-alert-body" id="trapAlertBody"></div>
+    <div class="ip-trap-alert" id="trapAlert" style="display:none">
+      <div class="ip-trap-alert-title">⚠ 陷阱警示</div>
+      <div class="ip-trap-alert-body" id="trapAlertBody"></div>
     </div>
 
     <!-- 對比表 -->
-    <div class="compare-card">
-      <div class="compare-header">
+    <div class="ip-compare-card">
+      <div class="ip-compare-header">
         <div>項目</div>
-        <div class="col-naive">憑直覺申報</div>
-        <div class="col-smart">套用優惠</div>
+        <div class="ip-col-naive">憑直覺申報</div>
+        <div class="ip-col-smart">套用優惠</div>
       </div>
       <div id="compareRows"></div>
-      <div class="diff-row">
-        <span class="lbl">差額</span>
-        <span class="val" id="r-diff">—</span>
+      <div class="ip-diff-row">
+        <span class="ip-lbl">差額</span>
+        <span class="ip-val" id="r-diff">—</span>
       </div>
     </div>
 
     <!-- 優惠項目詳解 -->
-    <div class="card">
-      <div class="section-title">優惠項目拆解</div>
-      <div class="advantage">
-        <div class="adv-title">① 物價調整</div>
-        取得成本依行政院公告之消費者物價指數調整，<span class="adv-amt" id="r-cpiSaving">—</span>
+    <div class="ip-card">
+      <div class="ip-section-title">優惠項目拆解</div>
+      <div class="ip-advantage">
+        <div class="ip-adv-title">① 物價調整</div>
+        取得成本依行政院公告之消費者物價指數調整，<span class="ip-adv-amt" id="r-cpiSaving">—</span>
       </div>
-      <div class="advantage">
-        <div class="adv-title">② 可列舉費用</div>
-        依所§14-4 可扣除法定必要費用（預設 3%），<span class="adv-amt" id="r-expSaving">—</span>
+      <div class="ip-advantage">
+        <div class="ip-adv-title">② 可列舉費用</div>
+        依所§14-4 可扣除法定必要費用（預設 3%），<span class="ip-adv-amt" id="r-expSaving">—</span>
       </div>
-      <div class="advantage">
-        <div class="adv-title">③ 額外負擔扣除（最關鍵）</div>
-        繼承時「房貸餘額 超過 房屋現值」的差額可扣除，<span class="adv-amt" id="r-extSaving">—</span>
+      <div class="ip-advantage">
+        <div class="ip-adv-title">③ 額外負擔扣除（最關鍵）</div>
+        繼承時「房貸餘額 超過 房屋現值」的差額可扣除，<span class="ip-adv-amt" id="r-extSaving">—</span>
       </div>
-      <div class="advantage" id="forcedAdv">
-        <div class="adv-title">④ 非自願出售 20% 稅率</div>
-        持有未滿 5 年因無力清償繼承債務被迫出售者，稅率從 35% 降至 20%，<span class="adv-amt" id="r-rateSaving">—</span>
+      <div class="ip-advantage" id="forcedAdv">
+        <div class="ip-adv-title">④ 非自願出售 20% 稅率</div>
+        持有未滿 5 年因無力清償繼承債務被迫出售者，稅率從 35% 降至 20%，<span class="ip-adv-amt" id="r-rateSaving">—</span>
       </div>
     </div>
 
-    <div class="law-note">
+    <div class="ip-law-note">
       <strong>法律依據：</strong><br>
       · 所得稅法§4-4、§4-5、§14-4（房地合一稅 2.0）<br>
       · 財政部 110 年 6 月 11 日台財稅字第 11004561660 號函：繼承之房地，若有繼承時房屋貸款餘額超過房地繼承現值部分，得自房地交易所得中減除。<br>
@@ -174,19 +174,19 @@
       <strong>重要提醒：</strong>主張「非自願出售」須檢附金融機構債務清償證明、財力不足證明等文件，申報前建議諮詢地政士或會計師。本試算為參考值，實際稅額以國稅局核定為準。
     </div>
 
-    <a class="cross-link" href="property-sale-tax.html">
-      🏠 進階：房地合一稅完整試算（含自住優惠、物價指數）<span class="arr">→</span>
+    <a class="ip-cross-link" href="property-sale-tax.html">
+      🏠 進階：房地合一稅完整試算（含自住優惠、物價指數）<span class="ip-arr">→</span>
     </a>
-    <a class="cross-link" href="inheritance-timeline.html">
-      📅 繼承流程時間軸（確認各項期限）<span class="arr">→</span>
+    <a class="ip-cross-link" href="inheritance-timeline.html">
+      📅 繼承流程時間軸（確認各項期限）<span class="ip-arr">→</span>
     </a>
-    <a class="cross-link" href="calculator.html">
-      ⚖️ 遺產繼承計算器（先算整體遺產）<span class="arr">→</span>
+    <a class="ip-cross-link" href="calculator.html">
+      ⚖️ 遺產繼承計算器（先算整體遺產）<span class="ip-arr">→</span>
     </a>
 
-    <button class="calc-btn" id="btnPdf" style="margin-top:16px">↓ 匯出 PDF 報告</button>
+    <button class="ip-btn-calc" id="btnPdf" style="margin-top:16px">↓ 匯出 PDF 報告</button>
   </div>
-  <div class="disclaimer">
+  <div class="ip-disclaimer">
     本工具計算結果僅供參考，不構成稅務或法律意見。實際個案請諮詢地政士、會計師或稅務專業人員。
   </div>
 </main>
@@ -199,9 +199,14 @@
   import {
     pdfSummaryCard, pdfCompareCard, pdfAdvantage, pdfLawNote, pdfTrapAlert
   } from './js/pdf/sections.js';
+  import { createCalcRecord } from './js/core/record.js';
 
   // 最近一次計算結果（供 PDF 使用）
-  let lastResult = null;
+  let lastRecord = null;
+
+  function getPersona() {
+    return (window.IP_PERSONA || localStorage.getItem('ip_persona') || 'public');
+  }
 
   function calculate() {
     const salePrice      = getInputNum('salePrice');
@@ -215,22 +220,36 @@
     if (salePrice <= 0)      { alert('請輸入出售價格'); return; }
     if (inheritedValue <= 0) { alert('請輸入繼承時公告現值'); return; }
 
-    const r = calcInheritedPropertyTrap({
-      salePrice, mortgage, inheritedValue, holdYears, cpiMult, expenseRate, isForced,
-    });
-    lastResult = { input: { salePrice, mortgage, inheritedValue, holdYears, cpiMult, expenseRate, isForced }, result: r };
+    const input = { salePrice, mortgage, inheritedValue, holdYears, cpiMult, expenseRate, isForced };
+    const r = calcInheritedPropertyTrap({ ...input, persona: getPersona() });
 
-    renderResults(r);
+    lastRecord = createCalcRecord({
+      toolId: 'inherited-property-trap',
+      persona: getPersona(),
+      input,
+      result: r,
+      taxYear: r.taxYear || 2026,
+      lawVersion: r.lawVersion || '2026-Q1',
+    });
+
+    renderResults(r, input);
   }
 
-  function renderResults(r) {
-    // === 組成對比表（同舊版視覺） ===
-    const rows = [
-      { label: '售價',        naive: r.naive.cost === r.smart.cost ? 0 : 0, naiveVal: r.input ? 0 : 0 }, // placeholder
+  function renderResults(r, input) {
+    // === 組成對比表 ===
+    const tableRows = [
+      { label: '售價',        naive: input.salePrice, smart: input.salePrice },
+      { label: '取得成本',     naive: r.naive.cost,    smart: r.smart.cost,
+        note: r.smart.cost > r.naive.cost ? '(物價調整)' : '' },
+      { label: '可列舉費用',   naive: r.naive.expense, smart: r.smart.expense, negative: true },
+      { label: '額外負擔扣除', naive: r.naive.extraBurden, smart: r.smart.extraBurden,
+        negative: true, highlight: r.smart.extraBurden > 0 },
+      { label: '課稅所得',     naive: r.naive.taxableGain, smart: r.smart.taxableGain, divider: true },
+      { label: '適用稅率',
+        naive: (r.naive.rate * 100) + '%',
+        smart: (r.smart.rate * 100) + '%',
+        isRate: true },
     ];
-
-    // 用純 render 邏輯重建舊對比表
-    const tableRows = buildCompareRows(r);
 
     const rowsHtml = tableRows.map(row => {
       let naiveCell, smartCell;
@@ -239,25 +258,25 @@
         smartCell = row.smart;
       } else {
         const prefix = row.negative ? '－ ' : '';
-        naiveCell = row.naive === 0 ? '<span style="color:var(--muted)">—</span>' : prefix + FMT_WAN(row.naive);
-        smartCell = row.smart === 0 ? '<span style="color:var(--muted)">—</span>' : prefix + FMT_WAN(row.smart);
+        naiveCell = row.naive === 0 ? '<span style="color:var(--ip-muted)">—</span>' : prefix + FMT_WAN(row.naive);
+        smartCell = row.smart === 0 ? '<span style="color:var(--ip-muted)">—</span>' : prefix + FMT_WAN(row.smart);
       }
-      const borderStyle = row.divider ? 'border-top:2px solid var(--ink);' : '';
+      const borderStyle = row.divider ? 'border-top:2px solid var(--ip-ink);' : '';
       const hlStyle = row.highlight ? 'background:rgba(196,147,42,0.1);' : '';
       return `
-        <div class="compare-row" style="${borderStyle}${hlStyle}">
-          <div class="label-cell">${row.label}${row.note ? ` <span style="font-size:10px;color:var(--gold)">${row.note}</span>` : ''}</div>
-          <div class="val-cell naive-val">${naiveCell}</div>
-          <div class="val-cell smart-val">${smartCell}</div>
+        <div class="ip-compare-row" style="${borderStyle}${hlStyle}">
+          <div class="ip-label-cell">${row.label}${row.note ? ` <span style="font-size:10px;color:var(--ip-gold)">${row.note}</span>` : ''}</div>
+          <div class="ip-val-cell ip-naive-val">${naiveCell}</div>
+          <div class="ip-val-cell ip-smart-val">${smartCell}</div>
         </div>
       `;
     }).join('');
 
     const taxRow = `
-      <div class="compare-row tax-row">
-        <div class="label-cell">應納稅額</div>
-        <div class="val-cell naive-val">${FMT_WAN(r.naive.tax)}</div>
-        <div class="val-cell smart-val">${FMT_WAN(r.smart.tax)}</div>
+      <div class="ip-compare-row ip-tax-row">
+        <div class="ip-label-cell">應納稅額</div>
+        <div class="ip-val-cell ip-naive-val">${FMT_WAN(r.naive.tax)}</div>
+        <div class="ip-val-cell ip-smart-val">${FMT_WAN(r.smart.tax)}</div>
       </div>
     `;
 
@@ -267,7 +286,7 @@
     // Summary card
     document.getElementById('r-savings').textContent = FMT(r.savings);
     document.getElementById('r-savingsDesc').innerHTML =
-      `憑直覺申報 <strong style="color:#f28b6e">${FMT(r.naive.tax)}</strong> → 套用所有優惠後 <strong style="color:#b8e8ca">${FMT(r.smart.tax)}</strong>，省下 <strong style="color:var(--gold)">${r.savingsPct}%</strong> 的稅金。`;
+      `憑直覺申報 <strong style="color:var(--ip-accent-light)">${FMT(r.naive.tax)}</strong> → 套用所有優惠後 <strong style="color:var(--ip-success-light)">${FMT(r.smart.tax)}</strong>，省下 <strong style="color:var(--ip-gold)">${r.savingsPct}%</strong> 的稅金。`;
 
     // 拆解各優惠貢獻
     const { cpiSaving, expSaving, extSaving, rateSaving } = r.breakdown;
@@ -302,38 +321,14 @@
     }
 
     const resultsEl = document.getElementById('results');
-    resultsEl.style.display = 'block';
+    resultsEl.classList.add('is-visible');
     resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  /**
-   * 把 core 結果轉成舊版對比表所需的 row 結構
-   */
-  function buildCompareRows(r) {
-    const salePrice = r.naive.cost > 0 ? (r.naive.taxableGain + r.naive.cost + r.naive.expense + r.naive.extraBurden) : 0;
-    // 從結果反推售價（或我們可以在 core 回傳時帶原始 input，但為了不改 core 回傳結構，用還原法）
-    // 實際上 naive.taxableGain = max(0, salePrice - cost - exp - ext)
-    // 若 taxableGain > 0，salePrice = gain + cost + exp + ext；但若 gain = 0 則無法還原
-    // 改用另一種方式：把 input 存進 lastResult，再從 lastResult.input 讀
-    const input = lastResult.input;
-    return [
-      { label: '售價',        naive: input.salePrice, smart: input.salePrice },
-      { label: '取得成本',     naive: r.naive.cost,    smart: r.smart.cost,
-        note: r.smart.cost > r.naive.cost ? '(物價調整)' : '' },
-      { label: '可列舉費用',   naive: r.naive.expense, smart: r.smart.expense, negative: true },
-      { label: '額外負擔扣除', naive: r.naive.extraBurden, smart: r.smart.extraBurden,
-        negative: true, highlight: r.smart.extraBurden > 0 },
-      { label: '課稅所得',     naive: r.naive.taxableGain, smart: r.smart.taxableGain, divider: true },
-      { label: '適用稅率',
-        naive: (r.naive.rate * 100) + '%',
-        smart: (r.smart.rate * 100) + '%',
-        isRate: true },
-    ];
-  }
-
   async function downloadPDF() {
-    if (!lastResult) return;
-    const { result: r, input } = lastResult;
+    if (!lastRecord) return;
+    const r = lastRecord.result;
+    const input = lastRecord.input;
 
     // 對比表 rows
     const compareRows = [
@@ -394,6 +389,10 @@
       pageSubtitle: '繼承房貸陷阱試算',
       bodyHtml,
       filename: 'InheritancePro-繼承房貸陷阱',
+      meta: {
+        taxYear: lastRecord.taxYear,
+        lawVersion: lastRecord.lawVersion,
+      },
     });
   }
 

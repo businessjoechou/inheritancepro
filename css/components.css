@@ -1,117 +1,117 @@
 /**
  * components.css — 所有工具頁共用的 UI 元件樣式
  *
- * 為了與現有 vanilla HTML 相容，class 命名維持既有習慣（.card, .calc-btn 等）。
+ * 所有 class 使用 `ip-` 前綴，避免與未來遷移中的舊工具 inline CSS 衝突。
  * 新增 component 時優先放這裡，除非它真的只用在一個工具。
  */
 
 /* ============================================================
  * Card 卡片容器（白底、圓角、細邊框）
  * ============================================================ */
-.card {
+.ip-card {
   background: #fff;
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: var(--sp-5);
+  border: 1.5px solid var(--ip-border);
+  border-radius: var(--ip-radius-lg);
+  padding: var(--ip-sp-5);
   margin-bottom: 14px;
 }
 
-.section-title {
-  font-family: var(--font-mono);
-  font-size: var(--fs-xs);
-  color: var(--muted);
+.ip-section-title {
+  font-family: var(--ip-font-mono);
+  font-size: var(--ip-fs-xs);
+  color: var(--ip-muted);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   margin-bottom: 14px;
-  padding-bottom: var(--sp-2);
-  border-bottom: 1px solid var(--soft);
+  padding-bottom: var(--ip-sp-2);
+  border-bottom: 1px solid var(--ip-soft);
 }
 
 /* ============================================================
  * 輸入欄位
  * ============================================================ */
-.input-group {
-  margin-bottom: var(--sp-4);
+.ip-input-group {
+  margin-bottom: var(--ip-sp-4);
 }
 
-.input-group:last-child {
+.ip-input-group:last-child {
   margin-bottom: 0;
 }
 
-label {
+.ip-input-group label {
   display: block;
-  font-size: var(--fs-md);
+  font-size: var(--ip-fs-md);
   font-weight: 500;
   margin-bottom: 6px;
 }
 
-.label-hint {
-  font-size: var(--fs-sm);
-  color: var(--muted);
+.ip-label-hint {
+  font-size: var(--ip-fs-sm);
+  color: var(--ip-muted);
   font-weight: 400;
   margin-left: 6px;
 }
 
-input[type="number"],
-input[type="text"],
-input[type="email"] {
+.ip-input-group input[type="number"],
+.ip-input-group input[type="text"],
+.ip-input-group input[type="email"] {
   width: 100%;
-  padding: var(--sp-3) 14px;
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius-md);
-  background: var(--paper);
-  font-size: var(--fs-lg);
-  font-family: var(--font-mono);
-  color: var(--ink);
+  padding: var(--ip-sp-3) 14px;
+  border: 1.5px solid var(--ip-border);
+  border-radius: var(--ip-radius-md);
+  background: var(--ip-paper);
+  font-size: var(--ip-fs-lg);
+  font-family: var(--ip-font-mono);
+  color: var(--ip-ink);
   transition: border-color 0.2s;
   -webkit-appearance: none;
 }
 
-input:focus {
+.ip-input-group input:focus {
   outline: none;
-  border-color: var(--gold);
+  border-color: var(--ip-gold);
   background: #fff;
 }
 
-.checkbox-row {
+.ip-checkbox-row {
   display: flex;
   align-items: flex-start;
   gap: 10px;
   margin-bottom: 0;
 }
 
-.checkbox-row input[type="checkbox"] {
+.ip-checkbox-row input[type="checkbox"] {
   width: 18px;
   height: 18px;
-  accent-color: var(--gold);
+  accent-color: var(--ip-gold);
   cursor: pointer;
   margin-top: 1px;
   flex-shrink: 0;
 }
 
-.checkbox-row label {
+.ip-checkbox-row label {
   margin: 0;
   cursor: pointer;
-  font-size: var(--fs-md);
+  font-size: var(--ip-fs-md);
   line-height: 1.5;
 }
 
-.checkbox-row .hint {
-  font-size: var(--fs-sm);
-  color: var(--muted);
+.ip-checkbox-row .ip-hint {
+  font-size: var(--ip-fs-sm);
+  color: var(--ip-muted);
   margin-top: 2px;
 }
 
 /* ============================================================
  * 提示框（小字、金色左邊條）
  * ============================================================ */
-.hint-box {
+.ip-hint-box {
   background: rgba(196, 147, 42, 0.08);
-  border-left: 3px solid var(--gold);
+  border-left: 3px solid var(--ip-gold);
   border-radius: 0 6px 6px 0;
-  padding: var(--sp-2) var(--sp-3);
-  font-size: var(--fs-sm);
-  color: var(--muted);
+  padding: var(--ip-sp-2) var(--ip-sp-3);
+  font-size: var(--ip-fs-sm);
+  color: var(--ip-muted);
   line-height: 1.65;
   margin-top: 10px;
 }
@@ -119,55 +119,55 @@ input:focus {
 /* ============================================================
  * 按鈕
  * ============================================================ */
-.calc-btn {
+.ip-btn-calc {
   width: 100%;
-  padding: var(--sp-4);
-  background: var(--ink);
-  color: var(--paper);
+  padding: var(--ip-sp-4);
+  background: var(--ip-ink);
+  color: var(--ip-paper);
   border: none;
   border-radius: 10px;
-  font-size: var(--fs-lg);
-  font-family: var(--font-sans);
+  font-size: var(--ip-fs-lg);
+  font-family: var(--ip-font-sans);
   font-weight: 500;
   cursor: pointer;
   letter-spacing: 0.04em;
-  margin-top: var(--sp-2);
+  margin-top: var(--ip-sp-2);
   transition: background 0.2s;
 }
 
-.calc-btn:hover {
-  background: #2a2420;
+.ip-btn-calc:hover {
+  background: var(--ip-ink-hover);
 }
 
 /* ============================================================
  * Summary card — 深色結論卡，顯示核心數字
  * ============================================================ */
-.summary-card {
-  background: var(--ink);
+.ip-summary-card {
+  background: var(--ip-ink);
   color: #fff;
-  border-radius: var(--radius-lg);
+  border-radius: var(--ip-radius-lg);
   padding: 22px;
   margin-bottom: 14px;
 }
 
-.sum-lbl {
-  font-size: var(--fs-sm);
+.ip-sum-lbl {
+  font-size: var(--ip-fs-sm);
   color: rgba(255, 255, 255, 0.5);
-  font-family: var(--font-mono);
+  font-family: var(--ip-font-mono);
   letter-spacing: 0.12em;
   margin-bottom: 6px;
 }
 
-.sum-val {
-  font-family: var(--font-mono);
-  font-size: var(--fs-3xl);
+.ip-sum-val {
+  font-family: var(--ip-font-mono);
+  font-size: var(--ip-fs-3xl);
   font-weight: 700;
-  color: var(--gold);
+  color: var(--ip-gold);
   margin-bottom: 4px;
 }
 
-.sum-desc {
-  font-size: var(--fs-base);
+.ip-sum-desc {
+  font-size: var(--ip-fs-base);
   color: rgba(255, 255, 255, 0.7);
   line-height: 1.65;
   margin-top: 10px;
@@ -176,283 +176,287 @@ input:focus {
 /* ============================================================
  * Case box — 真實案例引言框（深底紅邊）
  * ============================================================ */
-.case-box {
-  background: var(--ink);
-  color: var(--paper);
-  border-radius: var(--radius-lg);
-  padding: 18px var(--sp-5);
+.ip-case-box {
+  background: var(--ip-ink);
+  color: var(--ip-paper);
+  border-radius: var(--ip-radius-lg);
+  padding: 18px var(--ip-sp-5);
   margin-bottom: 18px;
-  border: 2px solid var(--accent);
+  border: 2px solid var(--ip-accent);
 }
 
-.case-title {
-  font-family: var(--font-mono);
-  font-size: var(--fs-xs);
+.ip-case-title {
+  font-family: var(--ip-font-mono);
+  font-size: var(--ip-fs-xs);
   letter-spacing: 0.12em;
-  color: var(--gold);
+  color: var(--ip-gold);
   margin-bottom: 10px;
 }
 
-.case-text {
-  font-size: var(--fs-md);
+.ip-case-text {
+  font-size: var(--ip-fs-md);
   line-height: 1.75;
   color: rgba(255, 255, 255, 0.88);
 }
 
-.case-text strong {
-  color: var(--gold);
+.ip-case-text strong {
+  color: var(--ip-gold);
   font-weight: 600;
 }
 
-.case-hl {
+.ip-case-hl {
   background: rgba(139, 32, 32, 0.4);
   padding: 1px 6px;
   border-radius: 4px;
-  color: #ffd6cc;
+  color: var(--ip-alert-red-text);
   font-weight: 600;
+}
+
+.ip-case-hl--success {
+  background: rgba(42, 107, 74, 0.5);
+  color: var(--ip-success-light);
 }
 
 /* ============================================================
  * Compare card — A/B 對比表格
  * （很多工具需要「直覺版 vs 懂規則版」類型的對比）
  * ============================================================ */
-.compare-card {
+.ip-compare-card {
   background: #fff;
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius-lg);
+  border: 1.5px solid var(--ip-border);
+  border-radius: var(--ip-radius-lg);
   overflow: hidden;
   margin-bottom: 14px;
 }
 
-.compare-header {
+.ip-compare-header {
   display: grid;
   grid-template-columns: 1.2fr 1fr 1fr;
-  background: var(--ink);
+  background: var(--ip-ink);
   color: #fff;
 }
 
-.compare-header > div {
-  padding: var(--sp-3) 10px;
-  font-size: var(--fs-sm);
+.ip-compare-header > div {
+  padding: var(--ip-sp-3) 10px;
+  font-size: var(--ip-fs-sm);
   text-align: center;
   border-right: 1px solid rgba(255, 255, 255, 0.1);
-  font-family: var(--font-mono);
+  font-family: var(--ip-font-mono);
   letter-spacing: 0.08em;
 }
 
-.compare-header > div:last-child {
+.ip-compare-header > div:last-child {
   border-right: none;
 }
 
-.col-naive { background: #5a1f1f !important; }
-.col-smart { background: #1d4a31 !important; }
+.ip-col-naive { background: var(--ip-naive-bg) !important; }
+.ip-col-smart { background: var(--ip-smart-bg) !important; }
 
-.compare-row {
+.ip-compare-row {
   display: grid;
   grid-template-columns: 1.2fr 1fr 1fr;
-  border-bottom: 1px solid var(--soft);
-  font-size: var(--fs-base);
+  border-bottom: 1px solid var(--ip-soft);
+  font-size: var(--ip-fs-base);
 }
 
-.compare-row:last-child {
+.ip-compare-row:last-child {
   border-bottom: none;
 }
 
-.compare-row > div {
-  padding: 11px var(--sp-2);
+.ip-compare-row > div {
+  padding: 11px var(--ip-sp-2);
   display: flex;
   align-items: center;
 }
 
-.compare-row .label-cell {
-  color: var(--muted);
-  font-size: var(--fs-sm);
-  border-right: 1px solid var(--soft);
+.ip-compare-row .ip-label-cell {
+  color: var(--ip-muted);
+  font-size: var(--ip-fs-sm);
+  border-right: 1px solid var(--ip-soft);
 }
 
-.compare-row .val-cell {
-  font-family: var(--font-mono);
+.ip-compare-row .ip-val-cell {
+  font-family: var(--ip-font-mono);
   justify-content: flex-end;
   text-align: right;
-  border-right: 1px solid var(--soft);
-  font-size: var(--fs-base);
+  border-right: 1px solid var(--ip-soft);
+  font-size: var(--ip-fs-base);
 }
 
-.compare-row .val-cell:last-child {
+.ip-compare-row .ip-val-cell:last-child {
   border-right: none;
 }
 
-.compare-row.tax-row {
-  background: var(--soft);
+.ip-compare-row.ip-tax-row {
+  background: var(--ip-soft);
   font-weight: 700;
 }
 
-.compare-row.tax-row .label-cell {
-  color: var(--ink);
-  font-size: var(--fs-base);
+.ip-compare-row.ip-tax-row .ip-label-cell {
+  color: var(--ip-ink);
+  font-size: var(--ip-fs-base);
   font-weight: 600;
 }
 
-.compare-row.tax-row .val-cell {
+.ip-compare-row.ip-tax-row .ip-val-cell {
   font-size: 14px;
 }
 
-.naive-val { color: var(--accent); }
-.smart-val { color: var(--success); }
+.ip-naive-val { color: var(--ip-accent); }
+.ip-smart-val { color: var(--ip-success); }
 
-.diff-row {
+.ip-diff-row {
   background: rgba(196, 147, 42, 0.12);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--sp-4) 14px;
+  padding: var(--ip-sp-4) 14px;
 }
 
-.diff-row .lbl {
-  font-size: var(--fs-base);
-  color: var(--muted);
-  font-family: var(--font-mono);
+.ip-diff-row .ip-lbl {
+  font-size: var(--ip-fs-base);
+  color: var(--ip-muted);
+  font-family: var(--ip-font-mono);
   letter-spacing: 0.08em;
 }
 
-.diff-row .val {
-  font-family: var(--font-mono);
-  font-size: var(--fs-2xl);
+.ip-diff-row .ip-val {
+  font-family: var(--ip-font-mono);
+  font-size: var(--ip-fs-2xl);
   font-weight: 700;
-  color: var(--gold);
+  color: var(--ip-gold);
 }
 
 /* ============================================================
  * Trap alert — 紅底警示框
  * ============================================================ */
-.trap-alert {
-  background: #8b1a1a;
+.ip-trap-alert {
+  background: var(--ip-alert-red-bg);
   color: #fff;
-  border-radius: var(--radius-lg);
-  padding: 18px var(--sp-5);
+  border-radius: var(--ip-radius-lg);
+  padding: 18px var(--ip-sp-5);
   margin-bottom: 14px;
-  border: 2px solid #ff6b4a;
+  border: 2px solid var(--ip-alert-red-border);
 }
 
-.trap-alert-title {
-  font-size: var(--fs-md);
+.ip-trap-alert-title {
+  font-size: var(--ip-fs-md);
   font-weight: 700;
-  color: #ffd6cc;
+  color: var(--ip-alert-red-text);
   margin-bottom: 6px;
   letter-spacing: 0.04em;
 }
 
-.trap-alert-body {
-  font-size: var(--fs-base);
+.ip-trap-alert-body {
+  font-size: var(--ip-fs-base);
   line-height: 1.75;
   color: rgba(255, 255, 255, 0.9);
 }
 
-.trap-alert-body strong {
-  color: #ffd6cc;
+.ip-trap-alert-body strong {
+  color: var(--ip-alert-red-text);
 }
 
 /* ============================================================
  * Advantage — 優惠項目（綠色左邊條）
  * ============================================================ */
-.advantage {
-  background: var(--success-bg);
-  border-left: 3px solid var(--success);
-  border-radius: 0 var(--radius-md) var(--radius-md) 0;
-  padding: var(--sp-3) 14px;
-  font-size: var(--fs-base);
-  color: var(--ink);
+.ip-advantage {
+  background: var(--ip-success-bg);
+  border-left: 3px solid var(--ip-success);
+  border-radius: 0 var(--ip-radius-md) var(--ip-radius-md) 0;
+  padding: var(--ip-sp-3) 14px;
+  font-size: var(--ip-fs-base);
+  color: var(--ip-ink);
   line-height: 1.7;
   margin-bottom: 10px;
 }
 
-.advantage .adv-title {
+.ip-advantage .ip-adv-title {
   font-weight: 600;
-  color: var(--success);
-  font-size: var(--fs-base);
+  color: var(--ip-success);
+  font-size: var(--ip-fs-base);
   margin-bottom: 4px;
 }
 
-.advantage .adv-amt {
-  font-family: var(--font-mono);
-  color: var(--success);
+.ip-advantage .ip-adv-amt {
+  font-family: var(--ip-font-mono);
+  color: var(--ip-success);
   font-weight: 700;
 }
 
 /* ============================================================
  * Law note — 法條備註（金色邊框）
  * ============================================================ */
-.law-note {
+.ip-law-note {
   background: rgba(196, 147, 42, 0.08);
   border: 1px solid rgba(196, 147, 42, 0.25);
-  border-radius: var(--radius-md);
-  padding: var(--sp-3) 14px;
-  font-size: var(--fs-base);
-  color: var(--muted);
+  border-radius: var(--ip-radius-md);
+  padding: var(--ip-sp-3) 14px;
+  font-size: var(--ip-fs-base);
+  color: var(--ip-muted);
   line-height: 1.75;
   margin-top: 14px;
 }
 
-.law-note strong {
-  color: var(--gold);
+.ip-law-note strong {
+  color: var(--ip-gold);
 }
 
 /* ============================================================
  * Cross link — 工具交叉連結卡片
  * ============================================================ */
-.cross-link {
+.ip-cross-link {
   display: block;
-  padding: var(--sp-3) var(--sp-4);
+  padding: var(--ip-sp-3) var(--ip-sp-4);
   background: #fff;
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius-md);
+  border: 1.5px solid var(--ip-border);
+  border-radius: var(--ip-radius-md);
   text-decoration: none;
-  color: var(--ink);
-  font-size: var(--fs-md);
-  margin-top: var(--sp-2);
+  color: var(--ip-ink);
+  font-size: var(--ip-fs-md);
+  margin-top: var(--ip-sp-2);
   transition: all 0.2s;
 }
 
-.cross-link:hover {
-  border-color: var(--gold);
-  background: var(--paper);
+.ip-cross-link:hover {
+  border-color: var(--ip-gold);
+  background: var(--ip-paper);
 }
 
-.cross-link .arr {
+.ip-cross-link .ip-arr {
   float: right;
-  color: var(--gold);
+  color: var(--ip-gold);
 }
 
 /* ============================================================
  * Score group — 評分按鈕群組（輕微/中等/嚴重/極嚴重）
- * 許多損賠類工具共用
  * ============================================================ */
-.score-group {
+.ip-score-group {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: var(--sp-2);
+  gap: var(--ip-sp-2);
 }
 
-.score-btn {
-  padding: var(--sp-3) var(--sp-2);
-  background: var(--paper);
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius-md);
-  font-size: var(--fs-base);
-  color: var(--ink);
+.ip-score-btn {
+  padding: var(--ip-sp-3) var(--ip-sp-2);
+  background: var(--ip-paper);
+  border: 1.5px solid var(--ip-border);
+  border-radius: var(--ip-radius-md);
+  font-size: var(--ip-fs-base);
+  color: var(--ip-ink);
   cursor: pointer;
   transition: all 0.15s;
-  font-family: var(--font-sans);
+  font-family: var(--ip-font-sans);
   text-align: center;
 }
 
-.score-btn:hover {
-  border-color: var(--gold);
+.ip-score-btn:hover {
+  border-color: var(--ip-gold);
 }
 
-.score-btn.active {
-  background: var(--ink);
-  color: var(--gold);
-  border-color: var(--ink);
+.ip-score-btn.is-active {
+  background: var(--ip-ink);
+  color: var(--ip-gold);
+  border-color: var(--ip-ink);
   font-weight: 600;
 }

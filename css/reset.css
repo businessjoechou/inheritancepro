@@ -12,16 +12,16 @@
 }
 
 *:focus-visible {
-  outline: 2px solid var(--gold);
+  outline: 2px solid var(--ip-gold);
   outline-offset: 2px;
 }
 
 body {
-  background: var(--paper);
-  color: var(--ink);
-  font-family: var(--font-sans);
+  background: var(--ip-paper);
+  color: var(--ip-ink);
+  font-family: var(--ip-font-sans);
   min-height: 100vh;
-  font-size: var(--fs-lg);
+  font-size: var(--ip-fs-lg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

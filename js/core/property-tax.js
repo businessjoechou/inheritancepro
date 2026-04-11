@@ -11,18 +11,31 @@
  * 參數與回傳皆使用 TWD 的元為單位。
  */
 
+export const PROPERTY_TAX_VERSIONS = {
+  2026: {
+    lawVersion: '2026-Q1',
+    // 房地合一稅 2.0 稅率在可預見期間內穩定。變動時請在此新增年度。
+    rates: { long10: 0.15, long5: 0.20, short2: 0.35, short1: 0.45, forced: 0.20 },
+  },
+};
+export const LATEST_PROPERTY_YEAR = 2026;
+
 /**
  * 依持有年數與是否非自願出售決定房地合一稅率
  * @param {number} holdYears  持有年數（可依所§4-5 併計被繼承人持有期間）
  * @param {boolean} isForced  是否符合「非自願出售」
+ * @param {object} [opts]
+ * @param {number} [opts.year]
  * @returns {number} 稅率（小數，例如 0.20）
  */
-export function getPropertyTaxRate(holdYears, isForced = false) {
-  if (holdYears >= 10) return 0.15;
-  if (holdYears >= 5)  return 0.20;
-  if (isForced)        return 0.20; // 非自願出售短持有也適用 20%
-  if (holdYears >= 2)  return 0.35;
-  return 0.45;
+export function getPropertyTaxRate(holdYears, isForced = false, opts = {}) {
+  const v = PROPERTY_TAX_VERSIONS[opts.year || LATEST_PROPERTY_YEAR] || PROPERTY_TAX_VERSIONS[LATEST_PROPERTY_YEAR];
+  const r = v.rates;
+  if (holdYears >= 10) return r.long10;
+  if (holdYears >= 5)  return r.long5;
+  if (isForced)        return r.forced;
+  if (holdYears >= 2)  return r.short2;
+  return r.short1;
 }
 
 /**
@@ -63,11 +76,12 @@ export function calcInheritedPropertyTrap(p) {
     cpiMult = 1.08,
     expenseRate = 0.03,
     isForced = false,
+    year,
   } = p;
 
   // 決定稅率
-  const smartRate = getPropertyTaxRate(holdYears, isForced);
-  const naiveRate = getPropertyTaxRate(holdYears, false);
+  const smartRate = getPropertyTaxRate(holdYears, isForced, { year });
+  const naiveRate = getPropertyTaxRate(holdYears, false, { year });
 
   // === 憑直覺申報 ===
   // 一般人：取得成本 = 公告現值（未物價調整）、無費用、無額外負擔
@@ -114,6 +128,8 @@ export function calcInheritedPropertyTrap(p) {
   const isTrap = cashOnHand > 0 && naive.tax > cashOnHand * 0.5;
   const isExtremeTrap = naive.tax >= cashOnHand;
 
+  const v = PROPERTY_TAX_VERSIONS[year || LATEST_PROPERTY_YEAR] || PROPERTY_TAX_VERSIONS[LATEST_PROPERTY_YEAR];
+
   return {
     naive: {
       cost: naiveCost,
@@ -144,6 +160,8 @@ export function calcInheritedPropertyTrap(p) {
       isTrap,
       isExtremeTrap,
     },
+    taxYear: year || LATEST_PROPERTY_YEAR,
+    lawVersion: v.lawVersion,
     law: '所§4-4, §4-5, §14-4；財部台財稅字第 11004561660 號函；所細§17-4',
   };
 }
