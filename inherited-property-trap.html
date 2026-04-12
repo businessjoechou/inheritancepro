@@ -192,14 +192,11 @@
 </main>
 
 <script type="module">
-  // Plan A 架構：core 計算、pdf 模板、utils 格式化
+  // Plan A 架構：core 計算、utils 格式化、record schema
   import { calcInheritedPropertyTrap } from './js/core/property-tax.js';
   import { FMT, FMT_WAN, getInputNum } from './js/utils/format.js';
-  import { exportPdfDocument } from './js/pdf/template.js';
-  import {
-    pdfSummaryCard, pdfCompareCard, pdfAdvantage, pdfLawNote, pdfTrapAlert
-  } from './js/pdf/sections.js';
   import { createCalcRecord } from './js/core/record.js';
+  // PDF 由 js/pdf-export.js (non-module) 提供 exportPdfFromData() 全域函式
 
   // 最近一次計算結果（供 PDF 使用）
   let lastRecord = null;
@@ -330,69 +327,68 @@
     const r = lastRecord.result;
     const input = lastRecord.input;
 
-    // 對比表 rows
-    const compareRows = [
-      { label: '售價',        left: FMT_WAN(input.salePrice),     right: FMT_WAN(input.salePrice) },
-      { label: '取得成本',     left: FMT_WAN(r.naive.cost),        right: FMT_WAN(r.smart.cost) },
-      { label: '可列舉費用',   left: r.naive.expense === 0 ? '—' : FMT_WAN(r.naive.expense),
-                              right: r.smart.expense === 0 ? '—' : '－ ' + FMT_WAN(r.smart.expense) },
-      { label: '額外負擔扣除', left: r.naive.extraBurden === 0 ? '—' : FMT_WAN(r.naive.extraBurden),
-                              right: r.smart.extraBurden === 0 ? '—' : '－ ' + FMT_WAN(r.smart.extraBurden),
-                              highlight: r.smart.extraBurden > 0 },
-      { label: '課稅所得',     left: FMT_WAN(r.naive.taxableGain), right: FMT_WAN(r.smart.taxableGain), divider: true },
-      { label: '適用稅率',     left: (r.naive.rate * 100) + '%',   right: (r.smart.rate * 100) + '%' },
-    ];
-
-    const trapHtml = r.trap.isTrap ? pdfTrapAlert({
-      title: '⚠ 陷阱警示',
-      body: r.trap.isExtremeTrap
-        ? `應納稅額 <strong>${FMT(r.naive.tax)}</strong> 已超過賣屋後現金餘額 <strong>${FMT(r.trap.cashOnHand)}</strong>。`
-        : `賣屋後現金餘額 <strong>${FMT(r.trap.cashOnHand)}</strong>，直接申報將耗掉超過 <strong>${Math.round(r.naive.tax / r.trap.cashOnHand * 100)}%</strong> 救命錢。`,
-    }) : '';
-
-    const bodyHtml = `
-      ${pdfSummaryCard({
-        label: '懂規則可幫你省下',
-        value: FMT(r.savings),
-        desc: `憑直覺申報 ${FMT(r.naive.tax)} → 套用優惠後 ${FMT(r.smart.tax)}，省下 ${r.savingsPct}%。`,
-      })}
-      ${trapHtml}
-      ${pdfCompareCard({
-        leftLabel: '憑直覺申報',
-        rightLabel: '套用優惠',
-        rows: compareRows,
-        taxRow: {
-          label: '應納稅額',
-          left: FMT_WAN(r.naive.tax),
-          right: FMT_WAN(r.smart.tax),
-        },
-        diffLabel: '差額',
-        diffValue: '－ ' + FMT(r.savings),
-      })}
-      <div style="background:#fff;border:1.5px solid #c8bfb0;border-radius:12px;padding:18px;margin-bottom:14px;">
-        <div style="font-family:'DM Mono',monospace;font-size:10px;color:#7a6f62;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;border-bottom:1px solid #e8e0d0;padding-bottom:6px;">優惠項目拆解</div>
-        ${pdfAdvantage({ title: '① 物價調整', body: r.breakdown.cpiSaving > 0 ? `省 ${FMT(r.breakdown.cpiSaving)}` : '無影響' })}
-        ${pdfAdvantage({ title: '② 可列舉費用', body: r.breakdown.expSaving > 0 ? `省 ${FMT(r.breakdown.expSaving)}` : '無影響' })}
-        ${pdfAdvantage({ title: '③ 額外負擔扣除（最關鍵）', body: r.breakdown.extSaving > 0 ? `省 ${FMT(r.breakdown.extSaving)}` : '本案無額外負擔' })}
-        ${r.naive.rate !== r.smart.rate ? pdfAdvantage({ title: '④ 非自願出售 20% 稅率', body: `省 ${FMT(r.breakdown.rateSaving)}` }) : ''}
-      </div>
-      ${pdfLawNote(`
-        <strong>法律依據：</strong><br>
-        · 所得稅法§4-4、§4-5、§14-4（房地合一稅 2.0）<br>
-        · 財政部 110.6.11 台財稅字第 11004561660 號函<br>
-        · 所得稅法施行細則§17-4：非自願性因素出售，持有未滿 5 年適用 20% 稅率
-      `)}
-    `;
-
-    await exportPdfDocument({
-      title: 'InheritancePro 計算報告',
-      pageSubtitle: '繼承房貸陷阱試算',
-      bodyHtml,
-      filename: 'InheritancePro-繼承房貸陷阱',
+    // 直接用結構化資料 → 伺服器產 PDF（三平台一致）
+    await exportPdfFromData({
+      title: '繼承房貸陷阱試算',
+      subtitle: 'InheritancePro 計算報告',
       meta: {
         taxYear: lastRecord.taxYear,
         lawVersion: lastRecord.lawVersion,
       },
+      filename: 'InheritancePro-繼承房貸陷阱',
+      sections: [
+        // 結論 hero
+        {
+          type: 'hero',
+          label: '懂規則可幫你省下',
+          value: FMT(r.savings),
+          desc: `憑直覺 ${FMT(r.naive.tax)} → 套用優惠 ${FMT(r.smart.tax)}，省 ${r.savingsPct}%`,
+        },
+        // 陷阱警示
+        ...(r.trap.isTrap ? [{
+          type: 'alert',
+          title: '⚠ 陷阱警示',
+          body: r.trap.isExtremeTrap
+            ? `應納稅額 ${FMT(r.naive.tax)} 已超過賣屋後現金餘額 ${FMT(r.trap.cashOnHand)}。`
+            : `賣屋後現金 ${FMT(r.trap.cashOnHand)}，直接申報 ${FMT(r.naive.tax)} 將耗掉 ${Math.round(r.naive.tax / r.trap.cashOnHand * 100)}% 救命錢。`,
+        }] : []),
+        // 對比表
+        {
+          type: 'compare',
+          leftLabel: '憑直覺申報',
+          rightLabel: '套用優惠',
+          rows: [
+            { label: '售價',        left: FMT_WAN(input.salePrice),     right: FMT_WAN(input.salePrice) },
+            { label: '取得成本',     left: FMT_WAN(r.naive.cost),        right: FMT_WAN(r.smart.cost) },
+            { label: '可列舉費用',   left: r.naive.expense === 0 ? '—' : FMT_WAN(r.naive.expense),
+                                    right: r.smart.expense === 0 ? '—' : '－ ' + FMT_WAN(r.smart.expense) },
+            { label: '額外負擔扣除', left: r.naive.extraBurden === 0 ? '—' : FMT_WAN(r.naive.extraBurden),
+                                    right: r.smart.extraBurden === 0 ? '—' : '－ ' + FMT_WAN(r.smart.extraBurden) },
+            { label: '課稅所得',     left: FMT_WAN(r.naive.taxableGain), right: FMT_WAN(r.smart.taxableGain) },
+            { label: '適用稅率',     left: (r.naive.rate * 100) + '%',   right: (r.smart.rate * 100) + '%' },
+            { label: '應納稅額',     left: FMT_WAN(r.naive.tax),         right: FMT_WAN(r.smart.tax) },
+          ],
+          diff: { label: '差額', value: '－ ' + FMT(r.savings) },
+        },
+        // 優惠拆解
+        {
+          type: 'detail',
+          title: '優惠項目拆解',
+          items: [
+            { label: '① 物價調整', value: r.breakdown.cpiSaving > 0 ? `省 ${FMT(r.breakdown.cpiSaving)}` : '無影響' },
+            { label: '② 可列舉費用', value: r.breakdown.expSaving > 0 ? `省 ${FMT(r.breakdown.expSaving)}` : '無影響' },
+            { label: '③ 額外負擔扣除', value: r.breakdown.extSaving > 0 ? `省 ${FMT(r.breakdown.extSaving)}` : '無額外負擔' },
+            ...(r.naive.rate !== r.smart.rate
+              ? [{ label: '④ 非自願出售 20%', value: `省 ${FMT(r.breakdown.rateSaving)}` }]
+              : []),
+          ],
+        },
+        // 法律依據
+        {
+          type: 'law',
+          text: '法律依據：所得稅法§4-4、§4-5、§14-4（房地合一稅 2.0）、財政部台財稅字第11004561660號函、所得稅法施行細則§17-4',
+        },
+      ],
     });
   }
 
