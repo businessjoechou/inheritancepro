@@ -1194,8 +1194,17 @@ async function handleUnsubscribe() {
   });
 
   // ═════════════════════════════════════════════════════════════
-  // Init
+  // Init — 先渲染 UI，再背景載入 auth（不阻塞畫面）
   // ═════════════════════════════════════════════════════════════
+  if (!localStorage.getItem('ip_persona')) {
+    localStorage.setItem('ip_persona', 'all');
+  }
+
+  // 立刻渲染卡片（不等 Supabase）
+  renderFeatured();
+  render();
+
+  // Auth 狀態背景載入（不阻塞 UI）
   (async function() {
     try {
       const { supabase, getProfile } = await import('./js/auth.js');
@@ -1205,15 +1214,6 @@ async function handleUnsubscribe() {
         window.__inheritanceProIsPro = profile?.is_pro || false;
       }
     } catch(e) {}
-
-    // v2: 不跳轉 landing, 不渲染 persona switcher
-    // 保留 localStorage 讀取邏輯以便未來復活付費方案
-    if (!localStorage.getItem('ip_persona')) {
-      localStorage.setItem('ip_persona', 'all');
-    }
-
-    renderFeatured();
-    render();
   })();
 
   document.querySelectorAll('.faq-q').forEach(q => {
