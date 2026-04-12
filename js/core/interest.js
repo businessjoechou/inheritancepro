@@ -11,6 +11,7 @@ export const LEGAL_RATE_ANNUAL = 0.05; // 民法§203 法定週年利率 5%
  * @param {number} principal  本金
  * @param {number} ratePct    年利率（百分比，例如 5 代表 5%）
  * @param {number} days       天數
+ * @returns {number}
  */
 export function simpleInterest(principal, ratePct, days) {
   const r = ratePct / 100;
@@ -19,6 +20,10 @@ export function simpleInterest(principal, ratePct, days) {
 
 /**
  * 複利計算（逐年複利）
+ * @param {number} principal  本金
+ * @param {number} ratePct    年利率（百分比）
+ * @param {number} days       天數
+ * @returns {number}
  */
 export function compoundInterest(principal, ratePct, days) {
   const r = ratePct / 100;

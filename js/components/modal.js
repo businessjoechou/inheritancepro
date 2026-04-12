@@ -4,6 +4,7 @@
  * 不用第三方庫，純粹 DOM。需搭配 CSS（可於 components.css 未來擴充）。
  */
 
+/** @type {HTMLDivElement|null} */
 let currentModal = null;
 
 /**
@@ -11,6 +12,7 @@ let currentModal = null;
  * @param {string} p.title
  * @param {string} p.body  支援 HTML
  * @param {Array<{label:string, onClick?:()=>void, primary?:boolean}>} [p.buttons]
+ * @returns {void}
  */
 export function openModal({ title, body, buttons = [{ label: '關閉' }] }) {
   closeModal();
@@ -25,7 +27,7 @@ export function openModal({ title, body, buttons = [{ label: '關閉' }] }) {
     <div style="font-size:13px;color:var(--ip-ink);line-height:1.7;margin-bottom:20px">${body}</div>
     <div style="display:flex;gap:8px;justify-content:flex-end"></div>
   `;
-  const btnRow = dialog.lastElementChild;
+  const btnRow = /** @type {Element} */ (dialog.lastElementChild);
   buttons.forEach(b => {
     const btn = document.createElement('button');
     btn.textContent = b.label;
@@ -45,6 +47,7 @@ export function openModal({ title, body, buttons = [{ label: '關閉' }] }) {
   currentModal = backdrop;
 }
 
+/** @returns {void} */
 export function closeModal() {
   if (currentModal) {
     currentModal.remove();

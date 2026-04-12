@@ -16,19 +16,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tool-page.css">
 <style>
-  :root {
-    --ink: #1a1410; --paper: #f5f0e8; --gold: #c4932a;
-    --muted: #7a6f62; --border: #c8bfb0; --soft: #e8e0d0;
-    --accent: #8b2020; --success: #2a6b4a;
-    --warn: #c47a1a; --danger: #b02020;
-  }
-  *:focus-visible {
-    outline: 2px solid var(--gold);
-    outline-offset: 2px;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--paper); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; font-size: 14px; min-height: 100vh; }
+  body { font-size: 14px; }
+  :root { --warn: #c47a1a; --danger: #b02020; }
 
   .top-bar { background: var(--ink); color: var(--paper); padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; }
   .top-bar-logo { font-family: 'Noto Serif TC', serif; font-size: 15px; font-weight: 700; }
@@ -37,9 +28,6 @@
   .top-bar a:hover { color: var(--paper); }
 
   .container { max-width: 720px; margin: 0 auto; padding: 24px 20px 80px; }
-
-  h1 { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; }
-  .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
 
   /* Add case form */
   .add-form { background: #fff; border: 1.5px solid var(--border); border-radius: 14px; padding: 20px; margin-bottom: 28px; }

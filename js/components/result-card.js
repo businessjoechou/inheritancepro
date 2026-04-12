@@ -9,6 +9,7 @@
  * @param {string} p.label   小字 label
  * @param {string} p.value   大字數值（已格式化的字串）
  * @param {string} [p.desc]  支援 HTML 的描述行
+ * @returns {string}
  */
 export function renderResultCard({ label, value, desc }) {
   return `

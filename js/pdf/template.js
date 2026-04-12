@@ -107,6 +107,13 @@ button, .cross-link, .ip-cross-link, .ip-btn-calc { display: none !important; }
 
 /**
  * 產生並觸發 PDF 下載（iOS Capacitor 會走 Share sheet）
+ * @param {object} p
+ * @param {string} p.title
+ * @param {string} p.pageSubtitle
+ * @param {string} p.bodyHtml
+ * @param {string} p.filename
+ * @param {object} [p.meta]
+ * @returns {Promise<void>}
  */
 export async function exportPdfDocument({ title, pageSubtitle, bodyHtml, filename, meta }) {
   const html = buildPdfHtml({ title, pageSubtitle, bodyHtml, meta });

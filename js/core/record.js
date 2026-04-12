@@ -43,8 +43,8 @@ export function createCalcRecord({
     schemaVersion: SCHEMA_VERSION,
     toolId,
     persona,
-    input: structuredClone ? structuredClone(input) : JSON.parse(JSON.stringify(input)),
-    result: structuredClone ? structuredClone(result) : JSON.parse(JSON.stringify(result)),
+    input: typeof structuredClone === 'function' ? structuredClone(input) : JSON.parse(JSON.stringify(input)),
+    result: typeof structuredClone === 'function' ? structuredClone(result) : JSON.parse(JSON.stringify(result)),
     taxYear: taxYear ?? new Date().getFullYear(),
     lawVersion: lawVersion || `${new Date().getFullYear()}-Q1`,
     meta: meta || null,
@@ -55,30 +55,37 @@ export function createCalcRecord({
 /**
  * 從 localStorage 讀取暫存記錄
  * @param {string} key
+ * @returns {*}
  */
 export function loadDraft(key) {
   try {
     const raw = localStorage.getItem(`ip_draft_${key}`);
     return raw ? JSON.parse(raw) : null;
-  } catch {
+  } catch (_e) {
     return null;
   }
 }
 
 /**
  * 暫存記錄到 localStorage（供工具頁重新整理後還原）
+ * @param {string} key
+ * @param {object} record
+ * @returns {boolean}
  */
 export function saveDraft(key, record) {
   try {
     localStorage.setItem(`ip_draft_${key}`, JSON.stringify(record));
     return true;
-  } catch {
+  } catch (_e) {
     return false;
   }
 }
 
 /**
  * 更新案件 metadata（事務所案件管理用）
+ * @param {object} record
+ * @param {object} meta
+ * @returns {object}
  */
 export function attachCaseMeta(record, meta) {
   return { ...record, meta: { ...record.meta, ...meta } };

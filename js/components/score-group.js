@@ -9,6 +9,7 @@
  * @param {{value:string, label:string}[]} p.options
  * @param {string} [p.name='score']
  * @param {string} [p.activeValue]
+ * @returns {string}
  */
 export function renderScoreGroup({ options, name = 'score', activeValue }) {
   const buttons = options.map(o => {
@@ -22,17 +23,19 @@ export function renderScoreGroup({ options, name = 'score', activeValue }) {
  * 啟用 score-group 的點擊行為（獨立選一）
  * @param {string} containerSelector
  * @param {(value:string, name:string) => void} [onChange]
+ * @returns {void}
  */
 export function initScoreGroups(containerSelector, onChange) {
   const container = document.querySelector(containerSelector);
   if (!container) return;
   container.addEventListener('click', e => {
-    const btn = e.target.closest('.ip-score-btn');
+    const target = /** @type {Element} */ (e.target);
+    const btn = /** @type {HTMLElement|null} */ (target.closest('.ip-score-btn'));
     if (!btn) return;
-    const group = btn.dataset.group;
+    const group = btn.dataset.group || '';
     container.querySelectorAll(`.ip-score-btn[data-group="${group}"]`)
              .forEach(b => b.classList.remove('is-active'));
     btn.classList.add('is-active');
-    onChange && onChange(btn.dataset.value, group);
+    if (onChange) onChange(btn.dataset.value || '', group);
   });
 }

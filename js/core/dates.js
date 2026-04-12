@@ -6,13 +6,23 @@
 
 const MS_PER_DAY = 86_400_000;
 
-/** 兩日期之間的天數差（無條件捨去） */
+/**
+ * 兩日期之間的天數差（無條件捨去）
+ * @param {Date|string} a
+ * @param {Date|string} b
+ * @returns {number}
+ */
 export function daysBetween(a, b) {
   const d1 = new Date(a), d2 = new Date(b);
-  return Math.floor((d2 - d1) / MS_PER_DAY);
+  return Math.floor((d2.getTime() - d1.getTime()) / MS_PER_DAY);
 }
 
-/** 兩日期之間的完整年數（如 2024-03-15 到 2026-03-14 = 1 年） */
+/**
+ * 兩日期之間的完整年數（如 2024-03-15 到 2026-03-14 = 1 年）
+ * @param {Date|string} a
+ * @param {Date|string} b
+ * @returns {number}
+ */
 export function yearsBetween(a, b) {
   const d1 = new Date(a), d2 = new Date(b);
   let years = d2.getFullYear() - d1.getFullYear();
@@ -21,14 +31,24 @@ export function yearsBetween(a, b) {
   return years;
 }
 
-/** 加上年數後的日期 */
+/**
+ * 加上年數後的日期
+ * @param {Date|string} date
+ * @param {number} years
+ * @returns {Date}
+ */
 export function addYears(date, years) {
   const d = new Date(date);
   d.setFullYear(d.getFullYear() + years);
   return d;
 }
 
-/** 加上月數後的日期 */
+/**
+ * 加上月數後的日期
+ * @param {Date|string} date
+ * @param {number} months
+ * @returns {Date}
+ */
 export function addMonths(date, months) {
   const d = new Date(date);
   d.setMonth(d.getMonth() + months);
@@ -44,7 +64,7 @@ export function addMonths(date, months) {
  */
 export function calcStatuteOfLimitations(fromDate, limitYears, today = new Date()) {
   const deadline = addYears(fromDate, limitYears);
-  const daysLeft = Math.ceil((deadline - today) / MS_PER_DAY);
+  const daysLeft = Math.ceil((deadline.getTime() - today.getTime()) / MS_PER_DAY);
   return {
     deadline,
     daysLeft,
@@ -57,8 +77,9 @@ export function calcStatuteOfLimitations(fromDate, limitYears, today = new Date(
  * 依所§4-5，繼承取得不動產者可併計被繼承人持有期間。
  *
  * @param {Date|string} acquiredDate
- * @param {Date|string} [saleDate=today]
+ * @param {Date|string} [saleDate] 出售日期（預設今天）
  * @param {Date|string} [deceasedAcquiredDate] 被繼承人取得日（若併計）
+ * @returns {number | {ownerYears: number, combinedYears: number}}
  */
 export function calcHoldingYears(acquiredDate, saleDate, deceasedAcquiredDate) {
   const sale = saleDate ? new Date(saleDate) : new Date();
@@ -71,7 +92,7 @@ export function calcHoldingYears(acquiredDate, saleDate, deceasedAcquiredDate) {
 /**
  * 繼承相關法定期限
  * @param {Date|string} deathDate  被繼承人死亡日
- * @returns 所有重要期限
+ * @returns {Record<string, {label: string, deadline: Date, law: string}>} 所有重要期限
  */
 export function getInheritanceDeadlines(deathDate) {
   const d = new Date(deathDate);
@@ -85,6 +106,8 @@ export function getInheritanceDeadlines(deathDate) {
 
 /**
  * 格式化日期為 zh-TW 字串
+ * @param {Date|string} date
+ * @returns {string}
  */
 export function formatDate(date) {
   return new Date(date).toLocaleDateString('zh-TW', {

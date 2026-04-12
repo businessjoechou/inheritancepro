@@ -25,6 +25,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tool-page.css">
   <script src="js/persona.js"></script>
   <script type="application/ld+json">
   {
@@ -42,49 +43,19 @@
   }
   </script>
   <style>
-    :root {
-      --ink: #1a1410;
-      --paper: #f5f0e8;
-      --accent: #8b2020;
-      --gold: #c4932a;
-      --soft: #e8e0d0;
-      --muted: #7a6f62;
-      --success: #2a6b4a;
-      --danger: #8b2020;
-      --border: #c8bfb0;
-    }
-    *:focus-visible {
-      outline: 2px solid var(--gold);
-      outline-offset: 2px;
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: 'Noto Sans TC', sans-serif;
-      background: var(--paper);
-      color: var(--ink);
-      font-size: 15px;
       line-height: 1.6;
     }
     header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: #1a1410;
       padding: 0 20px;
       height: 52px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
       box-shadow: 0 2px 8px rgba(0,0,0,0.3);
     }
     .logo {
-      font-family: 'Noto Serif TC', serif;
       font-size: 18px;
-      font-weight: 700;
       color: #f5f0e8;
       text-decoration: none;
     }
-    .logo span { color: var(--gold); }
     .back-link {
       font-family: 'DM Mono', monospace;
       font-size: 13px;
@@ -95,29 +66,10 @@
     }
     .back-link:hover { opacity: 1; }
     main {
-      max-width: 480px;
-      margin: 0 auto;
       padding: 24px 16px 48px;
     }
-    h1 {
-      font-family: 'Noto Serif TC', serif;
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--ink);
-      margin-bottom: 6px;
-    }
     .subtitle {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 24px;
       font-family: 'DM Mono', monospace;
-    }
-    .card {
-      background: #fff;
-      border: 1.5px solid var(--border);
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 16px;
     }
     .card-title {
       font-family: 'Noto Serif TC', serif;

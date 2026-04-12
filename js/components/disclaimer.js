@@ -7,6 +7,7 @@ export const DEFAULT_DISCLAIMER =
 
 /**
  * @param {string} [text]
+ * @returns {string}
  */
 export function renderDisclaimer(text = DEFAULT_DISCLAIMER) {
   return `<div class="ip-disclaimer">${text}</div>`;

@@ -22,32 +22,13 @@
 <meta name="twitter:title" content="意外事故保險金合計試算｜InheritancePro">
 <link rel="canonical" href="https://inheritancepro.app/insurance-accident-combined.html">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tool-page.css">
 <script src="js/pdf-export.js"></script>
 <script src="js/persona.js"></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"意外事故保險金合計試算","url":"https://inheritancepro.app/insurance-accident-combined.html","applicationCategory":"FinanceApplication","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro","url":"https://inheritancepro.app"}}</script>
 <style>
-  :root{--ink:#1a1410;--paper:#f5f0e8;--accent:#8b2020;--gold:#c4932a;--soft:#e8e0d0;--muted:#7a6f62;--success:#2a6b4a;--danger:#8b2020;--border:#c8bfb0;}
-  *:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{background:var(--paper);color:var(--ink);font-family:'Noto Sans TC',sans-serif;min-height:100vh;font-size:15px;}
-  header{background:var(--ink);color:var(--paper);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
-  .logo{font-family:'Noto Serif TC',serif;font-size:20px;font-weight:700;letter-spacing:0.04em;}
-  .logo span{color:var(--gold);}
-  .page-sub{font-size:11px;color:rgba(255,255,255,0.5);margin-top:3px;font-family:'DM Mono',monospace;letter-spacing:0.06em;}
-  .home-link{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:0.08em;}
-  main{padding:24px 20px calc(120px + env(safe-area-inset-bottom,0px));max-width:480px;margin:0 auto;}
-  h1{font-family:'Noto Serif TC',serif;font-size:22px;font-weight:700;margin-bottom:6px;line-height:1.4;}
-  .subtitle{font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.7;}
   .intro{background:rgba(196,147,42,0.08);border-left:3px solid var(--gold);padding:12px 14px;border-radius:0 8px 8px 0;font-size:12px;color:#666;line-height:1.75;margin-bottom:20px;}
   .intro strong{color:var(--ink);}
-  .card{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:20px;margin-bottom:14px;}
-  .section-title{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--soft);}
-  .input-group{margin-bottom:16px;}
-  .input-group:last-child{margin-bottom:0;}
-  label{display:block;font-size:13px;font-weight:500;margin-bottom:6px;}
-  .label-hint{font-size:11px;color:var(--muted);font-weight:400;margin-left:6px;}
-  input[type="number"],select{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:8px;background:var(--paper);font-size:15px;font-family:'DM Mono',monospace;color:var(--ink);-webkit-appearance:none;}
-  input:focus,select:focus{outline:none;border-color:var(--gold);background:#fff;}
   select{font-family:'Noto Sans TC',sans-serif;}
   .insurance-item{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;padding:14px;background:var(--paper);border-radius:10px;margin-bottom:10px;border:1.5px solid transparent;transition:all 0.2s;}
   .insurance-item.checked{border-color:var(--gold);background:#fff;}
@@ -56,8 +37,6 @@
   .insurance-item .ins-name{font-size:13px;font-weight:600;color:var(--ink);display:block;margin-bottom:2px;cursor:pointer;}
   .insurance-item .ins-desc{font-size:11px;color:var(--muted);line-height:1.5;margin-bottom:8px;}
   .insurance-item .amount-input{width:100%;padding:8px 10px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;font-family:'DM Mono',monospace;background:#fff;}
-  .calc-btn{width:100%;padding:16px;background:var(--ink);color:var(--paper);border:none;border-radius:10px;font-size:15px;font-weight:500;cursor:pointer;letter-spacing:0.04em;margin-top:8px;}
-  .calc-btn:hover{background:#2a2420;}
   #results{display:none;margin-top:24px;}
   .total-card{background:var(--ink);color:#fff;border-radius:12px;padding:24px;margin-bottom:14px;text-align:center;}
   .total-lbl{font-size:11px;color:rgba(255,255,255,0.5);font-family:'DM Mono',monospace;letter-spacing:0.12em;}
@@ -75,8 +54,6 @@
   .step-body{flex:1;}
   .step-title{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:3px;}
   .step-desc{font-size:11px;color:var(--muted);line-height:1.6;}
-  .law-note{background:rgba(196,147,42,0.08);border:1px solid rgba(196,147,42,0.25);border-radius:8px;padding:12px 14px;font-size:12px;color:var(--muted);line-height:1.75;margin-top:14px;}
-  .law-note strong{color:var(--gold);}
 </style>
 </head>
 <body>

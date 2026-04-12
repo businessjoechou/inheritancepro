@@ -1,0 +1,434 @@
+{
+  "version": 1,
+  "_comment": "Single source of truth for all InheritancePro tools. Used by generate-sitemap.js and (future) index.html.",
+  "baseUrl": "https://inheritancepro.app",
+  "tabs": [
+    {
+      "id": "death",
+      "label": "有人過世了",
+      "subtitle": "繼承流程、遺產分配、稅務申報一次搞定。",
+      "tools": [
+        {
+          "id": "calculator",
+          "href": "calculator.html",
+          "name": "遺產繼承計算器",
+          "featured": true,
+          "badge": null,
+          "sitemapPriority": 0.9,
+          "desc": "應繼分、特留分、遺產稅一次計算，支援代位繼承與拋棄繼承"
+        },
+        {
+          "id": "inheritance-timeline",
+          "href": "inheritance-timeline.html",
+          "name": "繼承流程時間軸",
+          "featured": false,
+          "badge": null,
+          "sitemapPriority": 0.8,
+          "desc": "死亡登記、拋棄繼承、遺產稅申報各項期限倒數"
+        },
+        {
+          "id": "deadline-dashboard",
+          "href": "deadline-dashboard.html",
+          "name": "期限管理儀表板",
+          "featured": false,
+          "badge": null,
+          "sitemapPriority": 0.7,
+          "desc": "多案件並排追蹤，六項法定期限自動倒數，可勾選完成"
+        },
+        {
+          "id": "caregiver",
+          "href": "caregiver.html",
+          "name": "照顧者特別貢獻",
+          "featured": false,
+          "badge": null,
+          "sitemapPriority": 0.8,
+          "desc": "民法§1149，照顧貢獻估值、主張策略、酌給遺產請求"
+        },
+        {
+          "id": "real-estate",
+          "href": "real-estate.html",
+          "name": "不動產繼承試算",
+          "featured": false,
+          "badge": null,
+          "sitemapPriority": 0.7,
+          "desc": "地價稅、房屋稅、土地增值稅免徵（獨立版）"
+        },
+        {
+          "id": "stock-inheritance",
+          "href": "stock-inheritance.html",
+          "name": "股票繼承估算",
+          "featured": false,
+          "badge": null,
+          "sitemapPriority": 0.7,
+          "desc": "上市收盤價、未上市資產淨值法（獨立版）"
+        },
+        {
+          "id": "inherited-property-trap",
+          "href": "inherited-property-trap.html",
+          "name": "繼承房貸陷阱試算",
+          "featured": true,
+          "badge": "case",
+          "sitemapPriority": 0.9,
+          "desc": "真實案例：不懂規則被課 175 萬，懂規則只要 28.6 萬，差 146 萬"
+        },
+        {
+          "id": "limited-inheritance",
+          "href": "limited-inheritance.html",
+          "name": "限定繼承精算",
+          "featured": false,
+          "badge": null,
+          "sitemapPriority": 0.7,
+          "desc": "§1148 資不抵債分析・清償順序模擬・拋棄繼承時機建議"
+        },
+        {
+          "id": "will-validity",
+          "href": "will-validity.html",
+          "name": "遺囑效力鑑定",
+          "featured": false,
+          "badge": null,
+          "sitemapPriority": 0.7,
+          "desc": "五種遺囑逐條檢核・法定要件比對・效力瑕疵分析"
+        },
+        {
+          "id": "estate-tax-detail",
+          "href": "estate-tax-detail.html",
+          "name": "遺產稅精算工作底稿",
+          "featured": false,
+          "badge": null,
+          "sitemapPriority": 0.7,
+          "desc": "17 項扣除額逐筆精算・自動產出工作底稿・可列印存檔"
+        },
+        {
+          "id": "forced-share",
+          "href": "forced-share.html",
+          "name": "特留分侵害精算",
+          "featured": false,
+          "badge": null,
+          "sitemapPriority": 0.7,
+          "desc": "§1223 逐人精算特留分・侵害金額計算・扣減權時效提醒"
+        },
+        {
+          "id": "case-manager",
+          "href": "case-manager.html",
+          "name": "多案件管理系統",
+          "featured": false,
+          "badge": null,
+          "sitemapPriority": 0.7,
+          "desc": "六項法定期限自動倒數・案件緊急度排序・備註紀錄"
+        }
+      ]
+    },
+    {
+      "id": "insurance",
+      "label": "保險規劃",
+      "subtitle": "保單遺產、受益人、理賠、最低稅負一次搞懂。",
+      "tools": [
+        {
+          "id": "insurance-estate-risk",
+          "href": "insurance-estate-risk.html",
+          "name": "壽險保單遺產稅風險評估",
+          "featured": false,
+          "badge": null,
+          "sitemapPriority": 0.7,
+          "desc": "依國稅局八大態樣評估保單被課遺產稅風險，含補稅金額試算"
+        },
+        {
+          "id": "insurance-gift-tax",
+          "href": "insurance-gift-tax.html",
+          "name": "保單要保人變更贈與稅",
+          "featured": false,
+          "badge": null,
+          "sitemapPriority": 0.7,
+          "desc": "§5-1 要保人變更贈與稅精算，含保價金查詢指引"
+        },
+        {
+          "id": "insurance-policyholder-death",
+          "href": "insurance-policyholder-death.html",
+          "name": "要保人過世保單處理",
+          "featured": false,
+          "badge": "new",
+          "sitemapPriority": 0.8,
+          "desc": "續繳／解約／變更／借款四方案稅務與現金流對比"
+        },
+        {
+          "id": "insurance-amt",
+          "href": "insurance-amt.html",
+          "name": "最低稅負制保單 (AMT)",
+          "featured": false,
+          "badge": "new",
+          "sitemapPriority": 0.7,
+          "desc": "3,740 萬免稅門檻・多保單合計・基本所得額精算"
+        },
+        {
+          "id": "insurance-forced-share",
+          "href": "insurance-forced-share.html",
+          "name": "保單 vs 特留分侵害",
+          "featured": false,
+          "badge": "new",
+          "sitemapPriority": 0.8,
+          "desc": "107 台上 1395 號・保費顯失公平五項風險指標・扣減金額試算"
+        },
+        {
+          "id": "insurance-beneficiary-order",
+          "href": "insurance-beneficiary-order.html",
+          "name": "受益人順位分配",
+          "featured": false,
+          "badge": "new",
+          "sitemapPriority": 0.7,
+          "desc": "§113 + 民法§1138/§1144 自動判定保險金歸屬"
+        },
+        {
+          "id": "insurance-loan-vs-surrender",
+          "href": "insurance-loan-vs-surrender.html",
+          "name": "保單借款 vs 解約",
+          "featured": false,
+          "badge": "new",
+          "sitemapPriority": 0.7,
+          "desc": "淨現金對比・保單失效臨界年數計算・實務判決"
+        },
+        {
+          "id": "insurance-accident-combined",
+          "href": "insurance-accident-combined.html",
+          "name": "意外事故保險金合計",
+          "featured": false,
+          "badge": "new",
+          "sitemapPriority": 0.8,
+          "desc": "12 項險種盤點・申請順序・所需文件清單（常被遺漏數十萬）"
+        },
+        {
+          "id": "insurance-divorce",
+          "href": "insurance-divorce.html",
+          "name": "保價金離婚財產分配",
+          "featured": false,
+          "badge": null,
+          "sitemapPriority": 0.7,
+          "desc": "壽險保價金納入婚後財產計算，含婚前/婚後拆分"
+        }
+      ]
+    },
+    {
+      "id": "divorce",
+      "label": "要離婚了",
+      "subtitle": "財產分配、扶養費、出軌求償一起算。",
+      "tools": [
+        {
+          "id": "property-split",
+          "href": "property-split.html",
+          "name": "剩餘財產差額分配",
+          "featured": false,
+          "badge": null,
+          "sitemapPriority": 0.8,
+          "desc": "民法§1030-1，法定財產制下配偶可請求之差額計算"
+        },
+        {
+          "id": "alimony",
+          "href": "alimony.html",
+          "name": "贍養費試算",
+          "featured": false,
+          "badge": null,
+          "sitemapPriority": 0.8,
+          "desc": "民法§1057，雙方收入、婚姻年數、給付期間估算"
+        },
+        {
+          "id": "child-support",
+          "href": "child-support.html",
+          "name": "子女扶養費計算",
+          "featured": false,
+          "badge": null,
+          "sitemapPriority": 0.8,
+          "desc": "依雙方收入比例分擔，支援多名子女，含親權歸屬情境"
+        },
+        {
+          "id": "infidelity-damages",
+          "href": "infidelity-damages.html",
+          "name": "侵害配偶權損害賠償（出軌）",
+          "featured": false,
+          "badge": "new",
+          "sitemapPriority": 0.8,
+          "desc": "不用離婚也能告！外遇、小三求償金額試算，含被告策略"
+        },
+        {
+          "id": "divorce-damages",
+          "href": "divorce-damages.html",
+          "name": "離婚損害賠償精算",
+          "featured": false,
+          "badge": null,
+          "sitemapPriority": 0.8,
+          "desc": "§1056、§195 逐項估算，含被告對象分析與時效提醒"
+        },
+        {
+          "id": "divorce-agreement",
+          "href": "divorce-agreement.html",
+          "name": "離婚協議書草稿產生器",
+          "featured": false,
+          "badge": null,
+          "sitemapPriority": 0.8,
+          "desc": "自動產生離婚協議書草稿，含子女監護、財產分配條款"
+        },
+        {
+          "id": "insurance-divorce",
+          "href": "insurance-divorce.html",
+          "name": "保價金離婚財產分配",
+          "featured": false,
+          "badge": null,
+          "sitemapPriority": 0.7,
+          "desc": "壽險保價金納入婚後財產計算，含婚前/婚後拆分",
+          "_shared": true
+        }
+      ]
+    },
+    {
+      "id": "gift",
+      "label": "送財產給家人",
+      "subtitle": "贈與節稅、保單規劃、房產移轉。",
+      "tools": [
+        {
+          "id": "gift-tax",
+          "href": "gift-tax.html",
+          "name": "贈與稅試算",
+          "featured": false,
+          "badge": null,
+          "sitemapPriority": 0.7,
+          "desc": "244 萬年度免稅額、分年規劃節稅、vs 繼承稅負比較"
+        },
+        {
+          "id": "gift-planner",
+          "href": "gift-planner.html",
+          "name": "贈與節稅規劃模擬",
+          "featured": false,
+          "badge": null,
+          "sitemapPriority": 0.7,
+          "desc": "分年贈與 vs 一次繼承稅負比較・自動推算最省稅年數"
+        },
+        {
+          "id": "insurance-gift-tax",
+          "href": "insurance-gift-tax.html",
+          "name": "保單要保人變更贈與稅",
+          "featured": false,
+          "badge": null,
+          "sitemapPriority": 0.7,
+          "desc": "§5-1 要保人變更贈與稅精算，含保價金查詢指引",
+          "_shared": true
+        },
+        {
+          "id": "property-sale-tax",
+          "href": "property-sale-tax.html",
+          "name": "房地合一稅試算",
+          "featured": false,
+          "badge": null,
+          "sitemapPriority": 0.7,
+          "desc": "繼承後出售稅率、自住優惠、持有年數計算"
+        }
+      ]
+    },
+    {
+      "id": "accident",
+      "label": "發生事故了",
+      "subtitle": "車禍、霸凌、意外賠償一次盤點。",
+      "tools": [
+        {
+          "id": "accident",
+          "href": "accident.html",
+          "name": "車禍損害賠償分析",
+          "featured": false,
+          "badge": null,
+          "sitemapPriority": 0.7,
+          "desc": "傷害／死亡賠償明細，自動扣除強制責任險給付"
+        },
+        {
+          "id": "insurance-accident-combined",
+          "href": "insurance-accident-combined.html",
+          "name": "意外事故保險金合計",
+          "featured": false,
+          "badge": "new",
+          "sitemapPriority": 0.8,
+          "desc": "12 項險種盤點・申請順序・所需文件清單（常被遺漏數十萬）",
+          "_shared": true
+        },
+        {
+          "id": "minor-damages",
+          "href": "minor-damages.html",
+          "name": "未成年損害賠償試算",
+          "featured": false,
+          "badge": null,
+          "sitemapPriority": 0.7,
+          "desc": "霸凌、傷害事件，含父母連帶責任、精神慰撫金"
+        }
+      ]
+    },
+    {
+      "id": "debt",
+      "label": "有債權糾紛",
+      "subtitle": "欠款追討、時效查詢、脫產偵測。",
+      "tools": [
+        {
+          "id": "interest-calc",
+          "href": "interest-calc.html",
+          "name": "法定利率利息計算器",
+          "featured": false,
+          "badge": null,
+          "sitemapPriority": 0.7,
+          "desc": "依民法§203 年利率 5% 計算損害賠償或借貸糾紛利息"
+        },
+        {
+          "id": "prescription",
+          "href": "prescription.html",
+          "name": "消滅時效計算機",
+          "featured": false,
+          "badge": null,
+          "sitemapPriority": 0.8,
+          "desc": "§125–127、§197 各類請求權時效，含時效中斷提醒"
+        },
+        {
+          "id": "asset-detection",
+          "href": "asset-detection.html",
+          "name": "脫產偵測分析",
+          "featured": false,
+          "badge": null,
+          "sitemapPriority": 0.7,
+          "desc": "財產異動風險評估，依法律規定自動標記，支援 CSV 上傳"
+        },
+        {
+          "id": "litigation-strength",
+          "href": "litigation-strength.html",
+          "name": "訴訟強度分析報告",
+          "featured": false,
+          "badge": null,
+          "sitemapPriority": 0.7,
+          "desc": "11 項因素系統評分・勝訴率預估・弱點分析・策略建議"
+        },
+        {
+          "id": "settlement-calc",
+          "href": "settlement-calc.html",
+          "name": "和解談判模擬器",
+          "featured": false,
+          "badge": null,
+          "sitemapPriority": 0.7,
+          "desc": "期望值模型・最佳開價策略・底線計算・談判區間圖表"
+        },
+        {
+          "id": "legal-basis",
+          "href": "legal-basis.html",
+          "name": "試算分析依據",
+          "featured": false,
+          "badge": null,
+          "sitemapPriority": 0.7,
+          "desc": "各工具法律依據、民法條文、法院判例與計算模型完整說明"
+        }
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "href": "",
+      "name": "首頁",
+      "sitemapPriority": 1.0,
+      "changefreq": "monthly"
+    }
+  ],
+  "_crossReference": {
+    "inSitemapNotInTabs": ["divorce-agreement.html"],
+    "inTabsNotInSitemap": ["deadline-dashboard.html", "legal-basis.html"],
+    "note": "divorce-agreement.html exists as a file and was in sitemap but missing from index.html TABS. deadline-dashboard.html and legal-basis.html are in ALL_TOOLS/TABS but were missing from sitemap.xml. All three are now included in this manifest."
+  }
+}

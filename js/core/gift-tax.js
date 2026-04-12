@@ -26,8 +26,11 @@ export const LATEST_GIFT_YEAR = 2026;
 
 export const GIFT_ANNUAL_EXEMPT = GIFT_TAX_VERSIONS[LATEST_GIFT_YEAR].annualExempt;
 
+/**
+ * @param {number} [year]
+ */
 function getVersion(year) {
-  return GIFT_TAX_VERSIONS[year || LATEST_GIFT_YEAR] || GIFT_TAX_VERSIONS[LATEST_GIFT_YEAR];
+  return GIFT_TAX_VERSIONS[/** @type {keyof typeof GIFT_TAX_VERSIONS} */ (year || LATEST_GIFT_YEAR)] || GIFT_TAX_VERSIONS[LATEST_GIFT_YEAR];
 }
 
 /**
@@ -52,6 +55,12 @@ export function calcGiftTax(netGift, opts = {}) {
   return Math.round(tax);
 }
 
+/**
+ * @param {number} netGift
+ * @param {object} [opts]
+ * @param {number} [opts.year]
+ * @returns {string}
+ */
 export function getGiftTaxRate(netGift, opts = {}) {
   const { brackets } = getVersion(opts.year);
   for (const b of brackets) {
@@ -109,6 +118,10 @@ export function calcGiftTaxFull(p) {
 
 /**
  * 分年贈與規劃：把總額 N 分成幾年可完全免稅
+ * @param {number} totalAmount
+ * @param {object} [opts]
+ * @param {number} [opts.year]
+ * @returns {{freeYears: number, remainder: number, annualExempt: number}}
  */
 export function planGiftYears(totalAmount, opts = {}) {
   const v = getVersion(opts.year);

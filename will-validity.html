@@ -30,34 +30,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tool-page.css">
 <script src="js/pdf-export.js"></script>
 <script src="js/persona.js"></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"遺囑效力評估","url":"https://inheritancepro.app/will-validity.html","applicationCategory":"LegalService","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro","url":"https://inheritancepro.app"}}
 </script>
 <style>
-  :root {
-    --ink: #1a1410; --paper: #f5f0e8; --accent: #8b2020; --gold: #c4932a;
-    --soft: #e8e0d0; --muted: #7a6f62; --success: #2a6b4a; --danger: #8b2020;
-    --border: #c8bfb0;
-  }
-  *:focus-visible {
-    outline: 2px solid var(--gold);
-    outline-offset: 2px;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--paper); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; min-height: 100vh; font-size: 15px; }
-  header { background: var(--ink); color: var(--paper); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
-  .logo { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 700; letter-spacing: 0.04em; }
-  .logo span { color: var(--gold); }
-  .page-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 3px; font-family: 'DM Mono', monospace; letter-spacing: 0.06em; }
-  .home-link { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; }
-  .home-link:hover { color: var(--gold); }
-  main { padding: 24px 20px calc(120px + env(safe-area-inset-bottom, 0px)); max-width: 480px; margin: 0 auto; }
-  h1 { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
-  .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
-  .card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 14px; }
-  .section-title { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--soft); }
   /* Will type selector */
   .type-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .type-btn {
@@ -93,16 +72,9 @@
   .progress-track { height: 6px; background: var(--soft); border-radius: 3px; overflow: hidden; }
   .progress-fill { height: 100%; background: var(--ink); border-radius: 3px; transition: width 0.3s ease; }
   .progress-fill.all-pass { background: var(--success); }
-  /* Buttons */
-  .calc-btn {
-    width: 100%; padding: 16px; background: var(--ink); color: var(--paper);
-    border: none; border-radius: 10px; font-size: 15px; font-family: 'Noto Sans TC', sans-serif;
-    font-weight: 500; cursor: pointer; letter-spacing: 0.04em; margin-top: 8px; transition: background 0.2s;
-  }
-  .calc-btn:hover { background: #2a2420; }
+  /* Results */
   #results { display: none; margin-top: 20px; }
   .result-card { background: var(--ink); color: var(--paper); border-radius: 12px; padding: 24px; margin-bottom: 14px; }
-  .result-title { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 16px; }
   .verdict-pass { background: rgba(42,107,74,0.15); border: 1px solid rgba(42,107,74,0.35); border-radius: 10px; padding: 18px; text-align: center; }
   .verdict-pass .v-icon { font-size: 28px; margin-bottom: 8px; }
   .verdict-pass .v-title { font-family: 'Noto Serif TC', serif; font-size: 17px; font-weight: 700; color: #7ecba1; margin-bottom: 6px; }
@@ -125,8 +97,6 @@
   .info-box strong { color: var(--gold); }
   .link-btn { display: block; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 13px 16px; font-size: 13px; color: rgba(255,255,255,0.85); text-decoration: none; margin-top: 10px; text-align: center; transition: background 0.15s; }
   .link-btn:hover { background: rgba(255,255,255,0.12); }
-  .law-note { background: rgba(196,147,42,0.08); border: 1px solid rgba(196,147,42,0.25); border-radius: 8px; padding: 12px 14px; font-size: 12px; color: var(--muted); line-height: 1.7; margin-top: 14px; }
-  .law-note strong { color: var(--gold); }
 </style>
 </head>
 <body>

@@ -6,6 +6,7 @@
  * @param {object} p
  * @param {string[]|string} p.laws  法條陣列或直接 HTML 字串
  * @param {string} [p.note]
+ * @returns {string}
  */
 export function renderLawNote({ laws, note }) {
   const lawHtml = Array.isArray(laws)

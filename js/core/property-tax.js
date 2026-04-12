@@ -29,7 +29,7 @@ export const LATEST_PROPERTY_YEAR = 2026;
  * @returns {number} 稅率（小數，例如 0.20）
  */
 export function getPropertyTaxRate(holdYears, isForced = false, opts = {}) {
-  const v = PROPERTY_TAX_VERSIONS[opts.year || LATEST_PROPERTY_YEAR] || PROPERTY_TAX_VERSIONS[LATEST_PROPERTY_YEAR];
+  const v = PROPERTY_TAX_VERSIONS[/** @type {keyof typeof PROPERTY_TAX_VERSIONS} */ (opts.year || LATEST_PROPERTY_YEAR)] || PROPERTY_TAX_VERSIONS[LATEST_PROPERTY_YEAR];
   const r = v.rates;
   if (holdYears >= 10) return r.long10;
   if (holdYears >= 5)  return r.long5;
@@ -65,6 +65,7 @@ export function calcPropertyTaxOnce({ salePrice, acquisitionCost, deductibleExpe
  * @param {number} [p.cpiMult=1.08]   物價調整係數
  * @param {number} [p.expenseRate=0.03] 可列舉費用率
  * @param {boolean} [p.isForced=false] 是否主張非自願出售
+ * @param {number} [p.year]           稅法年度
  * @returns {object} 包含兩邊的 taxableGain/tax、各優惠貢獻、省下金額、對比表資料
  */
 export function calcInheritedPropertyTrap(p) {
@@ -128,7 +129,7 @@ export function calcInheritedPropertyTrap(p) {
   const isTrap = cashOnHand > 0 && naive.tax > cashOnHand * 0.5;
   const isExtremeTrap = naive.tax >= cashOnHand;
 
-  const v = PROPERTY_TAX_VERSIONS[year || LATEST_PROPERTY_YEAR] || PROPERTY_TAX_VERSIONS[LATEST_PROPERTY_YEAR];
+  const v = PROPERTY_TAX_VERSIONS[/** @type {keyof typeof PROPERTY_TAX_VERSIONS} */ (year || LATEST_PROPERTY_YEAR)] || PROPERTY_TAX_VERSIONS[LATEST_PROPERTY_YEAR];
 
   return {
     naive: {

@@ -17,23 +17,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tool-page.css">
 <script src="js/supabase-config.js"></script>
 <script src="js/persona.js"></script>
 <style>
-  :root { --ink:#1a1410;--paper:#f5f0e8;--gold:#c4932a;--muted:#7a6f62;--border:#c8bfb0;--soft:#e8e0d0;--card:#ffffff;--accent:#8b2020; }
-  *:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{background:var(--paper);color:var(--ink);font-family:'Noto Sans TC',sans-serif;min-height:100vh;font-size:15px;padding-bottom:60px;}
-  header{background:var(--ink);color:var(--paper);padding:20px 24px;text-align:center;position:sticky;top:0;z-index:100;}
-  .logo{font-family:'Noto Serif TC',serif;font-size:20px;font-weight:700;letter-spacing:0.04em;}
-  .logo span{color:var(--gold);}
+  body{padding-bottom:60px;}
   .badge{font-size:11px;color:rgba(255,255,255,0.5);margin-top:3px;font-family:'DM Mono',monospace;letter-spacing:0.06em;}
-  main{max-width:680px;margin:0 auto;padding:24px 20px;}
-  h1{font-family:'Noto Serif TC',serif;font-size:22px;font-weight:700;margin-bottom:8px;color:var(--ink);}
+  main{max-width:680px;}
   .intro{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:28px;}
   .section{margin-bottom:32px;}
   .section-title{font-family:'Noto Serif TC',serif;font-size:17px;font-weight:700;color:var(--ink);margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--gold);}
-  .tool-basis{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:14px;}
+  .tool-basis{background:#ffffff;border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:14px;}
   .tool-name{font-family:'Noto Serif TC',serif;font-size:15px;font-weight:700;color:var(--ink);margin-bottom:8px;}
   .basis-item{margin-bottom:10px;}
   .basis-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;color:var(--gold);text-transform:uppercase;margin-bottom:3px;}
@@ -42,7 +36,7 @@
   .basis-text a:hover{text-decoration:underline;}
   .case-ref{background:rgba(139,32,32,0.05);border-left:3px solid var(--accent);padding:10px 14px;margin:8px 0;border-radius:0 8px 8px 0;font-size:12.5px;color:#4a3f35;line-height:1.7;}
   .case-ref strong{color:var(--accent);}
-  .disclaimer-bar{max-width:680px;margin:24px auto 0;padding:16px 24px;font-size:11.5px;color:var(--muted);line-height:1.7;border-top:1px solid var(--border);text-align:center;}
+  .disclaimer-bar{max-width:680px;}
 </style>
 </head>
 <body>

@@ -30,57 +30,27 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tool-page.css">
 <script src="js/pdf-export.js"></script>
 <script src="js/persona.js"></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"和解金額試算","url":"https://inheritancepro.app/settlement-calc.html","applicationCategory":"LegalService","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro"}}
 </script>
 <style>
-  :root {
-    --ink: #1a1410; --paper: #f5f0e8; --accent: #8b2020; --gold: #c4932a;
-    --soft: #e8e0d0; --muted: #7a6f62; --success: #2a6b4a; --danger: #8b2020;
-    --border: #c8bfb0;
-  }
-  *:focus-visible {
-    outline: 2px solid var(--gold);
-    outline-offset: 2px;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--paper); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; min-height: 100vh; font-size: 15px; }
-  header { background: var(--ink); color: var(--paper); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
-  .logo { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 700; letter-spacing: 0.04em; }
-  .logo span { color: var(--gold); }
-  .page-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 3px; font-family: 'DM Mono', monospace; letter-spacing: 0.06em; }
-  .home-link { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; }
-  .home-link:hover { color: var(--gold); }
-  main { padding: 24px 20px calc(120px + env(safe-area-inset-bottom, 0px)); max-width: 480px; margin: 0 auto; }
-  h1 { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
-  .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
-  .card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 14px; }
-  .section-title { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--soft); }
-  .input-group { margin-bottom: 16px; }
-  .input-group:last-child { margin-bottom: 0; }
-  label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; }
-  .label-hint { font-size: 11px; color: var(--muted); font-weight: 400; margin-left: 6px; }
-  input[type="number"], select {
-    width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 8px;
-    background: var(--paper); font-size: 15px; font-family: 'DM Mono', monospace;
-    color: var(--ink); transition: border-color 0.2s; -webkit-appearance: none;
-  }
-  input:focus, select:focus { outline: none; border-color: var(--gold); background: #fff; }
+  /* Tool-unique: slider, result-card, result-row (dark bg), range display, compare table, verdict */
   .slider-wrap { margin-bottom: 6px; }
   input[type="range"] { width: 100%; accent-color: var(--gold); }
   .slider-label { display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); margin-top: 4px; }
   .slider-value { text-align: center; font-family: 'DM Mono', monospace; font-size: 22px; font-weight: 600; color: var(--gold); margin: 6px 0; }
-  .calc-btn {
-    width: 100%; padding: 16px; background: var(--ink); color: var(--paper);
-    border: none; border-radius: 10px; font-size: 15px; font-family: 'Noto Sans TC', sans-serif;
-    font-weight: 500; cursor: pointer; letter-spacing: 0.04em; margin-top: 8px; transition: background 0.2s;
+  select {
+    width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 8px;
+    background: var(--paper); font-size: 15px; font-family: 'DM Mono', monospace;
+    color: var(--ink); transition: border-color 0.2s; -webkit-appearance: none;
   }
-  .calc-btn:hover { background: #2a2420; }
+  select:focus { outline: none; border-color: var(--gold); background: #fff; }
   #results { display: none; margin-top: 20px; }
   .result-card { background: var(--ink); color: var(--paper); border-radius: 12px; padding: 24px; margin-bottom: 14px; }
-  .result-title { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 16px; }
+  .result-card .result-title { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 16px; border-bottom: none; padding-bottom: 0; }
   .result-row { display: flex; justify-content: space-between; align-items: baseline; padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 13px; }
   .result-row:last-child { border-bottom: none; }
   .result-row .lbl { color: rgba(255,255,255,0.65); }

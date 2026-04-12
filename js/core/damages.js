@@ -64,6 +64,14 @@ export function calcInjuryDamages(p) {
 
 /**
  * 死亡案件損害賠償
+ * @param {object} p
+ * @param {number} [p.funeral=0]        喪葬費用
+ * @param {number} [p.dependentCount=0] 扶養人數
+ * @param {number} [p.dependentYears=0] 扶養年數
+ * @param {number} [p.monthlySalary=0]  月薪
+ * @param {'low'|'mid'|'high'} [p.solatiumLevel='mid']
+ * @param {number} [p.faultPct=1]       過失比例（0-1）
+ * @returns {object}
  */
 export function calcDeathDamages(p) {
   const { funeral = 0, dependentCount = 0, dependentYears = 0,
@@ -97,7 +105,7 @@ export function calcDeathDamages(p) {
  * @param {Date|string} eventDate  侵權行為發生日
  * @param {Date|string} [knownDate] 知悉損害與加害人之日（預設 = eventDate）
  * @param {Date} [today=new Date()]
- * @returns {{daysLeft2y:number, daysLeft10y:number, hardDeadline:Date, expired:boolean}}
+ * @returns {{daysLeft2y:number, daysLeft10y:number, hardDeadline:Date, expired:boolean, law:string}}
  */
 export function calcDamageDeadline(eventDate, knownDate, today = new Date()) {
   const event = new Date(eventDate);
@@ -106,16 +114,16 @@ export function calcDamageDeadline(eventDate, knownDate, today = new Date()) {
 
   const deadline2y = new Date(known); deadline2y.setFullYear(deadline2y.getFullYear() + 2);
   const deadline10y = new Date(event); deadline10y.setFullYear(deadline10y.getFullYear() + 10);
-  const hard = deadline2y < deadline10y ? deadline2y : deadline10y;
+  const hard = deadline2y.getTime() < deadline10y.getTime() ? deadline2y : deadline10y;
 
-  const daysLeft2y  = Math.ceil((deadline2y  - today) / ms);
-  const daysLeft10y = Math.ceil((deadline10y - today) / ms);
+  const daysLeft2y  = Math.ceil((deadline2y.getTime()  - today.getTime()) / ms);
+  const daysLeft10y = Math.ceil((deadline10y.getTime() - today.getTime()) / ms);
 
   return {
     daysLeft2y,
     daysLeft10y,
     hardDeadline: hard,
-    expired: today > hard,
+    expired: today.getTime() > hard.getTime(),
     law: '民法§197',
   };
 }

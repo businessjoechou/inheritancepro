@@ -43,10 +43,13 @@ export const DEDUCT_PER_PARENT     = ESTATE_TAX_VERSIONS[LATEST_TAX_YEAR].deduct
 export const DEDUCT_PER_DISABLED   = ESTATE_TAX_VERSIONS[LATEST_TAX_YEAR].deductPerDisabled;
 export const INSURANCE_EXCLUDE_MAX = ESTATE_TAX_VERSIONS[LATEST_TAX_YEAR].insuranceExcludeMax;
 
-/** 解析年度 → 稅法版本 */
+/**
+ * 解析年度 → 稅法版本
+ * @param {number} [year]
+ */
 function getVersion(year) {
   const y = year || LATEST_TAX_YEAR;
-  return ESTATE_TAX_VERSIONS[y] || ESTATE_TAX_VERSIONS[LATEST_TAX_YEAR];
+  return ESTATE_TAX_VERSIONS[/** @type {keyof typeof ESTATE_TAX_VERSIONS} */ (y)] || ESTATE_TAX_VERSIONS[LATEST_TAX_YEAR];
 }
 
 /**
@@ -74,6 +77,10 @@ export function calcEstateTax(netEstate, opts = {}) {
 
 /**
  * 適用稅率字串（最高階）
+ * @param {number} netEstate
+ * @param {object} [opts]
+ * @param {number} [opts.year]
+ * @returns {string}
  */
 export function getEstateTaxRate(netEstate, opts = {}) {
   const { brackets } = getVersion(opts.year);
@@ -87,6 +94,10 @@ export function getEstateTaxRate(netEstate, opts = {}) {
 
 /**
  * 累進稅率拆解（供 UI 顯示分段計算）
+ * @param {number} netEstate
+ * @param {object} [opts]
+ * @param {number} [opts.year]
+ * @returns {Array<{rate: number, base: number, tax: number}>}
  */
 export function getEstateTaxBreakdown(netEstate, opts = {}) {
   if (netEstate <= 0) return [];

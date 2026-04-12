@@ -35,11 +35,15 @@ export function renderHeader({
 
 /**
  * 直接掛載到 document.body 開頭
+ * @param {Parameters<typeof renderHeader>[0]} props
+ * @returns {void}
  */
 export function mountHeader(props) {
   const html = renderHeader(props);
   const wrap = document.createElement('div');
   wrap.innerHTML = html;
   const header = wrap.firstElementChild;
-  document.body.insertBefore(header, document.body.firstChild);
+  if (header) {
+    document.body.insertBefore(header, document.body.firstChild);
+  }
 }

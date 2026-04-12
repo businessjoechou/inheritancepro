@@ -7,6 +7,7 @@
 
 /**
  * 讀取目前頁面的品牌主題（從 CSS 變數）
+ * @returns {{logoText: string, logoAccent: string, name: string, url: string}}
  */
 export function getBrandTheme() {
   const get = (name, fallback) => {

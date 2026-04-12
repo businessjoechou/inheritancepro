@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "checkJs": true,
+    "strict": false,
+    "noEmit": true,
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM"],
+    "module": "ES2022",
+    "moduleResolution": "bundler"
+  },
+  "include": ["js/global.d.ts", "js/core/**/*.js", "js/utils/**/*.js", "js/pdf/**/*.js", "js/components/**/*.js"],
+  "exclude": ["node_modules"]
+}

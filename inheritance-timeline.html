@@ -30,29 +30,20 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tool-page.css">
 <script src="js/pdf-export.js"></script>
 <script src="js/persona.js"></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"繼承流程時間軸","description":"輸入被繼承人死亡日期，自動計算中華民國繼承法各項法定期限，產生個人化待辦清單。","url":"https://inheritancepro.app/inheritance-timeline.html","applicationCategory":"LegalService","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro","url":"https://inheritancepro.app"}}
 </script>
 <style>
-  :root{--ink:#1a1410;--paper:#f5f0e8;--gold:#c4932a;--muted:#7a6f62;--border:#c8bfb0;--soft:#e8e0d0;--success:#2a6b4a;--accent:#1a3a5c;--danger:#8b2020;--warn:#b8600a;}
-  *:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{background:var(--paper);color:var(--ink);font-family:'Noto Sans TC',sans-serif;min-height:100vh;font-size:15px;}
-  header{background:var(--ink);color:var(--paper);padding:18px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
-  .logo{font-family:'Noto Serif TC',serif;font-size:18px;font-weight:700;}
-  .logo span{color:var(--gold);}
-  .page-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 3px; font-family: 'DM Mono', monospace; letter-spacing: 0.06em; }
+  /* === inheritance-timeline.html — tool-unique overrides (shared CSS loaded via tool-page.css) === */
+  /* Override accent/warn tokens for this tool's blue/orange theme */
+  :root{--accent:#1a3a5c;--warn:#b8600a;}
 
   .back-link{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:0.06em;}
-  main{max-width:480px;margin:0 auto;padding:28px 20px calc(120px + env(safe-area-inset-bottom, 0px));}
-  h2{font-family:'Noto Serif TC',serif;font-size:22px;font-weight:700;margin-bottom:6px;}
-  .subtitle{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:24px;}
-  .card{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:20px;margin-bottom:14px;}
   .card-title{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:14px;display:flex;align-items:center;gap:6px;}
   .card-title .icon{font-size:15px;}
-  label{display:block;font-size:13px;font-weight:500;margin-bottom:8px;}
   .input-prefix{display:flex;align-items:center;gap:10px;border:1.5px solid var(--border);border-radius:8px;background:var(--paper);padding:0 14px;transition:border-color 0.2s;}
   .input-prefix:focus-within{border-color:var(--gold);background:#fff;}
   .input-prefix input{border:none;background:transparent;padding:11px 0;flex:1;font-size:14px;font-family:'DM Mono',monospace;color:var(--ink);}
@@ -132,17 +123,9 @@
   .countdown-inline.expired{background:#e8e4e0;color:#7a7570;}
   .countdown-inline.future{background:var(--soft);color:var(--muted);}
 
-  .info-box{background:#fffbf0;border:1px solid #e8d48a;border-radius:8px;padding:12px 14px;font-size:12px;color:#7a6020;line-height:1.7;margin-bottom:14px;}
-  .info-box strong{color:#5a4010;}
-
   .btn-pdf{width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;font-family:'Noto Sans TC',sans-serif;margin-top:16px;}
   .btn-reset{width:100%;padding:13px;border:1.5px solid var(--border);border-radius:10px;background:transparent;font-size:14px;color:var(--muted);cursor:pointer;font-family:'Noto Sans TC',sans-serif;margin-top:10px;}
-  .warn-box { background: #fdf3e7; border: 1px solid #e8c882; border-left: 3px solid var(--gold); border-radius: 6px; padding: 12px 14px; font-size: 12px; color: #7a5a10; line-height: 1.7; margin: 8px 0 14px; }
-  .disclaimer-bar{max-width:560px;margin:0 auto;padding:16px 24px 40px;font-size:11.5px;color:rgba(0,0,0,0.62);line-height:1.7;border-top:1px solid rgba(0,0,0,0.12);}
-  .disclaimer-bar strong{color:rgba(0,0,0,0.80);}
-  .save-btn { display: block; width: 100%; padding: 12px; background: var(--accent); color: white; border: none; border-radius: 10px; font-size: 14px; font-family: 'Noto Sans TC', sans-serif; font-weight: 500; cursor: pointer; margin-top: 16px; transition: opacity 0.2s; }
-  .save-btn:hover { opacity: 0.85; }
-  .save-btn:disabled { opacity: 0.6; cursor: default; }
+  .warn-box { margin: 8px 0 14px; }
 </style>
 </head>
 <body>

@@ -30,38 +30,16 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tool-page.css">
 <script src="js/pdf-export.js"></script>
 <script src="js/persona.js"></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"離婚協議書草稿產生器","url":"https://inheritancepro.app/divorce-agreement.html","applicationCategory":"LegalService","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro"}}
 </script>
 <style>
-  :root {
-    --ink: #1a1410; --paper: #f5f0e8; --accent: #8b2020; --gold: #c4932a;
-    --soft: #e8e0d0; --muted: #7a6f62; --success: #2a6b4a; --danger: #8b2020;
-    --border: #c8bfb0;
-  }
-  *:focus-visible {
-    outline: 2px solid var(--gold);
-    outline-offset: 2px;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--paper); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; min-height: 100vh; font-size: 15px; }
-  header { background: var(--ink); color: var(--paper); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
-  .logo { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 700; letter-spacing: 0.04em; }
-  .logo span { color: var(--gold); }
-  .page-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 3px; font-family: 'DM Mono', monospace; letter-spacing: 0.06em; }
-  .home-link { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; }
-  .home-link:hover { color: var(--gold); }
-  main { padding: 24px 20px calc(120px + env(safe-area-inset-bottom, 0px)); max-width: 480px; margin: 0 auto; }
-  h1 { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
-  .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
-  .card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 14px; }
-  .section-title { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--soft); }
-  .input-group { margin-bottom: 14px; }
-  .input-group:last-child { margin-bottom: 0; }
-  label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 5px; }
-  .label-hint { font-size: 11px; color: var(--muted); font-weight: 400; margin-left: 6px; }
+  /* ── Tool-unique: divorce-agreement.html ── */
+
+  /* Form inputs (this tool uses text/date/textarea beyond what shared CSS scopes to .input-group) */
   input[type="text"], input[type="number"], input[type="date"], select, textarea {
     width: 100%; padding: 11px 13px; border: 1.5px solid var(--border); border-radius: 8px;
     background: var(--paper); font-size: 14px; font-family: 'Noto Sans TC', sans-serif;
@@ -70,9 +48,10 @@
   input:focus, select:focus, textarea:focus { outline: none; border-color: var(--gold); background: #fff; }
   textarea { resize: none; font-size: 13px; }
   .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .checkbox-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-  .checkbox-row input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--gold); cursor: pointer; flex-shrink: 0; }
-  .checkbox-row label { margin: 0; cursor: pointer; font-size: 13px; }
+
+  /* Override: checkbox-row uses align-items:center (shared uses flex-start) */
+  .checkbox-row { align-items: center; margin-bottom: 12px; }
+  .checkbox-row input[type="checkbox"] { flex-shrink: 0; }
 
   .gen-btn {
     width: 100%; padding: 16px; background: var(--accent); color: #fff;
@@ -95,8 +74,11 @@
   .agree-paper .sig-section { margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
   .agree-paper .sig-block { border-top: 1px solid #ccc; padding-top: 12px; font-size: 13px; line-height: 1.8; }
   .agree-paper .blank { display: inline-block; min-width: 80px; border-bottom: 1px solid #555; }
+
+  /* Override: warn-box uses different colors in this tool */
   .warn-box { background: rgba(139,32,32,0.07); border: 1px solid rgba(139,32,32,0.2); border-radius: 8px; padding: 12px 14px; font-size: 12px; color: var(--muted); line-height: 1.7; margin-top: 14px; }
   .warn-box strong { color: var(--danger); }
+
   .action-row { display: flex; gap: 10px; margin-top: 14px; }
   .print-btn, .copy-btn {
     flex: 1; padding: 13px; border-radius: 8px; font-size: 13px; cursor: pointer;

@@ -349,6 +349,15 @@ button, .cross-link, .ip-cross-link, .ip-btn-calc { display: none !important; }
 
 /**
  * 產生並觸發專業版 PDF 下載
+ * @param {object} p
+ * @param {string} p.title
+ * @param {string} p.pageSubtitle
+ * @param {string} p.bodyHtml
+ * @param {string} p.filename
+ * @param {ProfessionalCaseMeta} [p.meta]
+ * @param {string} [p.tocHtml]
+ * @param {string} [p.coverBadge]
+ * @returns {Promise<void>}
  */
 export async function exportProfessionalPdf({ title, pageSubtitle, bodyHtml, filename, meta, tocHtml, coverBadge }) {
   const html = buildProfessionalPdfHtml({ title, pageSubtitle, bodyHtml, meta, tocHtml, coverBadge });

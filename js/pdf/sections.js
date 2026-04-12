@@ -10,6 +10,11 @@ const C = PDF_COLORS;
 
 /**
  * Summary 卡片（深色 hero 結果）
+ * @param {object} p
+ * @param {string} p.label
+ * @param {string} p.value
+ * @param {string} [p.desc]
+ * @returns {string}
  */
 export function pdfSummaryCard({ label, value, desc }) {
   return `
@@ -30,6 +35,7 @@ export function pdfSummaryCard({ label, value, desc }) {
  * @param {{label:string, left:string, right:string}} [p.taxRow]
  * @param {string} [p.diffLabel]
  * @param {string} [p.diffValue]
+ * @returns {string}
  */
 export function pdfCompareCard({ leftLabel, rightLabel, rows, taxRow, diffLabel, diffValue }) {
   const rowsHtml = rows.map(r => {
@@ -75,6 +81,10 @@ export function pdfCompareCard({ leftLabel, rightLabel, rows, taxRow, diffLabel,
 
 /**
  * Advantage block（綠色優惠項目）
+ * @param {object} p
+ * @param {string} p.title
+ * @param {string} p.body
+ * @returns {string}
  */
 export function pdfAdvantage({ title, body }) {
   return `
@@ -87,6 +97,8 @@ export function pdfAdvantage({ title, body }) {
 
 /**
  * Law note（法條備註）
+ * @param {string} lawHtml
+ * @returns {string}
  */
 export function pdfLawNote(lawHtml) {
   return `
@@ -98,6 +110,10 @@ export function pdfLawNote(lawHtml) {
 
 /**
  * Trap alert（紅色警示）
+ * @param {object} p
+ * @param {string} p.title
+ * @param {string} p.body
+ * @returns {string}
  */
 export function pdfTrapAlert({ title, body }) {
   return `
@@ -110,6 +126,11 @@ export function pdfTrapAlert({ title, body }) {
 
 /**
  * Detail row（通用「標籤：數值」行）
+ * @param {object} p
+ * @param {string} p.label
+ * @param {string} p.value
+ * @param {boolean} [p.emphasis=false]
+ * @returns {string}
  */
 export function pdfDetailRow({ label, value, emphasis = false }) {
   return `

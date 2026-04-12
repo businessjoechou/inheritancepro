@@ -28,51 +28,24 @@
 <meta name="twitter:title" content="壽險保單遺產稅風險評估｜InheritancePro">
 <link rel="canonical" href="https://inheritancepro.app/insurance-estate-risk.html">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tool-page.css">
 <script src="js/pdf-export.js"></script>
 <script src="js/persona.js"></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"壽險保單遺產稅風險評估","url":"https://inheritancepro.app/insurance-estate-risk.html","applicationCategory":"FinanceApplication","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro"}}
 </script>
 <style>
-  :root {
-    --ink: #1a1410; --paper: #f5f0e8; --accent: #8b2020; --gold: #c4932a;
-    --soft: #e8e0d0; --muted: #7a6f62; --success: #2a6b4a; --danger: #8b2020;
-    --border: #c8bfb0;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--paper); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; min-height: 100vh; font-size: 15px; }
-  header { background: var(--ink); color: var(--paper); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
-  .logo { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 700; letter-spacing: 0.04em; }
-  .logo span { color: var(--gold); }
-  .page-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 3px; font-family: 'DM Mono', monospace; letter-spacing: 0.06em; }
-  .home-link { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; }
-  .home-link:hover { color: var(--gold); }
+  /* Tool-specific: progress bar */
   .progress-bar { height: 3px; background: var(--soft); }
   .progress-fill { height: 100%; background: var(--gold); transition: width 0.4s ease; }
-  main { padding: 24px 20px 120px; max-width: 480px; margin: 0 auto; }
   .step-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
-  h1 { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
-  .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
-  .card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 14px; }
-  .section-title { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--soft); }
-  .input-group { margin-bottom: 18px; }
-  .input-group:last-child { margin-bottom: 0; }
-  label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 8px; }
-  input[type="number"], select {
-    width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 8px;
-    background: var(--paper); font-size: 15px; font-family: 'DM Mono', monospace;
-    color: var(--ink); transition: border-color 0.2s; -webkit-appearance: none;
-  }
-  select { font-family: 'Noto Sans TC', sans-serif; cursor: pointer; }
-  input:focus, select:focus { outline: none; border-color: var(--gold); background: #fff; }
+  select { font-family: 'Noto Sans TC', sans-serif; cursor: pointer; width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 8px; background: var(--paper); font-size: 15px; color: var(--ink); transition: border-color 0.2s; -webkit-appearance: none; }
+  select:focus { outline: none; border-color: var(--gold); background: #fff; }
   .checkbox-group { display: flex; align-items: center; gap: 10px; margin-top: 4px; }
   .checkbox-group input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--accent); cursor: pointer; }
   .checkbox-group label { margin-bottom: 0; font-size: 14px; cursor: pointer; }
-  .info-box { background: #fffbf0; border: 1px solid #e8d48a; border-left: 3px solid var(--gold); border-radius: 6px; padding: 12px 14px; font-size: 12px; color: #7a6020; line-height: 1.7; margin-bottom: 14px; }
-  .info-box strong { color: #5a4010; }
-  .law-note { border-left: 3px solid var(--gold); padding-left: 12px; font-size: 12px; color: var(--muted); line-height: 1.7; margin-top: 10px; }
 
-  /* Risk score circle */
+  /* Tool-specific: risk score circle */
   .risk-circle-wrap { text-align: center; padding: 32px 20px 24px; }
   .risk-circle {
     width: 140px; height: 140px; border-radius: 50%; display: inline-flex;
@@ -84,7 +57,7 @@
   .risk-level { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 700; margin-top: 14px; }
   .risk-desc { font-size: 13px; color: var(--muted); margin-top: 6px; line-height: 1.6; }
 
-  /* Indicator table */
+  /* Tool-specific: indicator table */
   .indicator-table { width: 100%; border-collapse: collapse; font-size: 13px; }
   .indicator-table th { background: var(--soft); padding: 8px 12px; text-align: left; font-size: 11px; font-family: 'DM Mono', monospace; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
   .indicator-table td { padding: 10px 12px; border-bottom: 1px solid var(--soft); vertical-align: middle; }
@@ -97,8 +70,7 @@
   .light-green { background: #43a047; }
   .indicator-score { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; text-align: right; white-space: nowrap; }
 
-  /* Results */
-  .result-hero { background: var(--ink); color: var(--paper); border-radius: 16px; padding: 28px 24px; margin-bottom: 14px; text-align: center; }
+  /* Tool-specific: result-hero label override */
   .result-hero .label { font-size: 12px; color: var(--muted); letter-spacing: 0.12em; font-family: 'DM Mono', monospace; text-transform: uppercase; margin-bottom: 10px; }
   .heir-card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 10px; }
   .heir-header { background: var(--soft); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; }
@@ -110,7 +82,7 @@
   .heir-row-label { font-size: 13px; color: var(--muted); }
   .heir-row-val { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; color: var(--success); }
 
-  /* Suggestions */
+  /* Tool-specific: suggestions */
   .suggestion-item { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--soft); font-size: 13px; line-height: 1.6; }
   .suggestion-item:last-child { border-bottom: none; }
   .suggestion-icon { flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; margin-top: 2px; }
@@ -123,13 +95,8 @@
   .btn-print { background: var(--accent); color: #fff; }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
   @media print { header, .nav-bar, #navBar, .progress-bar { display: none !important; } main { padding: 20px; } }
-  .disclaimer-bar { max-width: 560px; margin: 0 auto; padding: 16px 24px 40px; font-size: 11.5px; color: rgba(0,0,0,0.62); line-height: 1.7; border-top: 1px solid rgba(0,0,0,0.12); }
-  .disclaimer-bar strong { color: rgba(0,0,0,0.80); }
   #resultSection { display: none; animation: fadeUp 0.3s ease both; }
   .cross-links { margin-top: 20px; border-top: 1px solid var(--border); padding-top: 16px; }
-  .cross-links-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
-  .cross-link-btn { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 10px; text-decoration: none; color: var(--ink); background: #fff; margin-bottom: 8px; font-size: 13px; transition: border-color 0.2s; }
-  .cross-link-btn:hover { border-color: var(--gold); }
   .cross-link-btn span { color: var(--muted); font-size: 18px; }
 </style>
 </head>

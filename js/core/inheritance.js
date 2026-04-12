@@ -97,13 +97,13 @@ export function calcStatutoryShare(p) {
 
   const tier = getHeirTier({ children, parents, siblings, grandparents });
 
-  const tierKey = ['', 'children', 'parents', 'siblings', 'grandparents'][tier];
+  const tierKey = /** @type {''|'children'|'parents'|'siblings'|'grandparents'} */ (['', 'children', 'parents', 'siblings', 'grandparents'][tier]);
   const bloodCount = tierKey === 'children' ? children
                     : tierKey === 'parents' ? parents
                     : tierKey === 'siblings' ? siblings
                     : tierKey === 'grandparents' ? grandparents
                     : 0;
-  const renounced = renounce[tierKey] || 0;
+  const renounced = (tierKey && renounce[/** @type {'children'|'parents'|'siblings'|'grandparents'} */ (tierKey)]) || 0;
   const effectiveBlood = Math.max(0, bloodCount - renounced);
 
   // 全數第一順位拋棄：返回警示（民法§1176）
