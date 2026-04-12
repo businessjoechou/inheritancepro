@@ -373,28 +373,10 @@
     window.scrollTo(0, 0);
   }
 
-  async function initSaveButton(tool, title, summary, data) {
-    const container = document.getElementById('save-btn-container');
-    if (!container) return;
-    const sb = (await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm')).createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
-    const { data: { user } } = await sb.auth.getUser();
-    if (!user) {
-      container.innerHTML = `<p style="text-align:center;font-size:13px;color:var(--muted);margin-top:12px;"><a href="login.html" style="color:var(--accent)">登入</a>後可儲存此次結果</p>`;
-      return;
-    }
-    container.innerHTML = `<button class="btn" id="save-btn" onclick="window.doSave()" style="margin-top:12px;background:var(--accent);color:#fff;width:100%;padding:14px;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;">儲存此次結果</button>`;
-    window.doSave = async () => {
-      const btn = document.getElementById('save-btn');
-      btn.textContent = '儲存中…'; btn.disabled = true;
-      const { saveCalculation } = await import('./js/save.js');
-      const result = await saveCalculation({ tool, title, summary, data });
-      if (result.success) { btn.textContent = '✓ 已儲存'; btn.style.background = '#6b1a1a'; }
-      else { btn.textContent = '儲存失敗'; btn.disabled = false; }
-    };
-  }
 </script>
 
 <div class="disclaimer-bar"><strong>免責聲明</strong>：本平台之計算結果僅供初步參考，不構成法律意見或法律諮詢服務。</div>
+<script type="module" src="js/components/save-button.js"></script>
 <script src="js/supabase-config.js"></script>
 <script type="module" src="js/auth-bar.js"></script>
 </body>
