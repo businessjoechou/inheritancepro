@@ -14,7 +14,7 @@ export async function getUser() {
   return user;
 }
 
-// Get user profile (includes is_pro), with expiration check
+// Get user profile
 export async function getProfile() {
   const user = await getUser();
   if (!user) return null;
@@ -23,32 +23,7 @@ export async function getProfile() {
     .select('*')
     .eq('id', user.id)
     .single();
-  if (!data) return null;
-
-  // Check if subscription has expired (lifetime = no expiry date)
-  if (data.is_pro && data.pro_expires_at) {
-    const expired = new Date(data.pro_expires_at) < new Date();
-    if (expired) {
-      // Revoke Pro via security definer RPC (direct update blocked by RLS)
-      await supabase.rpc('revoke_pro');
-      localStorage.setItem('ip_persona', 'public');
-      return { ...data, is_pro: false };
-    }
-  }
-
-  // Cross-device persona sync: keep localStorage in sync with DB pro_tier
-  if (data.is_pro) {
-    const tierMap = { tax: 'accountant', legal: 'lawyer', all: 'all' };
-    const synced = tierMap[data.pro_tier];
-    if (synced) localStorage.setItem('ip_persona', synced);
-  } else {
-    const proPersonas = ['accountant', 'lawyer', 'all'];
-    if (proPersonas.includes(localStorage.getItem('ip_persona'))) {
-      localStorage.setItem('ip_persona', 'public');
-    }
-  }
-
-  return data;
+  return data || null;
 }
 
 // Sign in with Apple

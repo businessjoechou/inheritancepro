@@ -640,7 +640,7 @@
     .featured-strip { margin: 0 -32px 56px; padding: 4px 32px 28px; }
     .tab-scroll-wrap { margin: 0 -32px 16px; padding: 0 32px; }
     .faq-section { max-width: 780px; padding: 0 32px 80px; }
-    .disclaimer-bar { max-width: 780px; padding: 16px 32px 48px; }
+    .disclaimer-bar { max-width: 780px; padding: 16px 32px 72px; }
   }
 </style>
 </head>
@@ -1028,7 +1028,7 @@ async function handleUnsubscribe() {
   // TABS — 6 個情境分類（合併 v1 TABS_PUBLIC 與 TABS_PRO）
   // ═════════════════════════════════════════════════════════════
   const TABS = [
-    { id: 'death', label: '有人過世了',
+    { id: 'death', label: '繼承相關',
       subtitle: '繼承流程、遺產分配、稅務申報一次搞定。',
       tools: ['calculator','inheritance-timeline','deadline-dashboard','caregiver',
               'real-estate','stock-inheritance','inherited-property-trap',
@@ -1204,17 +1204,7 @@ async function handleUnsubscribe() {
   renderFeatured();
   render();
 
-  // Auth 狀態背景載入（不阻塞 UI）
-  (async function() {
-    try {
-      const { supabase, getProfile } = await import('./js/auth.js');
-      const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
-        const profile = await getProfile();
-        window.__inheritanceProIsPro = profile?.is_pro || false;
-      }
-    } catch(e) {}
-  })();
+  // Auth 狀態背景載入（不阻塞 UI，由 auth-bar.js 處理）
 
   document.querySelectorAll('.faq-q').forEach(q => {
     q.addEventListener('click', () => {

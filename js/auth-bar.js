@@ -50,42 +50,6 @@ async function initAuthBar() {
       color: #f5f0e8;
       flex-shrink: 0;
     }
-    .auth-pro-badge {
-      background: linear-gradient(135deg, #c4932a, #e8b84b);
-      color: #1a1410;
-      font-size: 10px;
-      font-weight: 700;
-      padding: 2px 6px;
-      border-radius: 10px;
-      letter-spacing: 0.02em;
-    }
-
-    /* Pro feature visibility */
-    .pro-feature { display: none !important; }
-    .pro-feature.unlocked { display: block !important; }
-    .pro-feature-inline { display: none !important; }
-    .pro-feature-inline.unlocked { display: inline-flex !important; }
-
-    /* Pro gate placeholder shown to free/logged-out users */
-    .pro-gate {
-      display: none;
-      background: rgba(139, 32, 32, 0.06);
-      border: 1px dashed rgba(139, 32, 32, 0.28);
-      border-radius: 10px;
-      padding: 14px 18px;
-      text-align: center;
-      font-size: 13px;
-      color: #7a6f62;
-      margin: 12px 0;
-      line-height: 1.6;
-    }
-    .pro-gate a {
-      color: #8b2020;
-      text-decoration: none;
-      font-weight: 500;
-    }
-    .pro-gate a:hover { text-decoration: underline; }
-
     /* Auth dropdown */
     #auth-dropdown {
       position: fixed;
@@ -184,33 +148,14 @@ async function initAuthBar() {
     bar.innerHTML = `<a class="auth-pill" href="/login.html">
       <div class="auth-avatar">?</div>登入
     </a>`;
-    document.querySelectorAll('.pro-gate').forEach(el => el.style.display = 'block');
   } else {
-    const profile = await getProfile();
-    const isPro = profile?.is_pro || false;
     const initial = (user.email || 'U')[0].toUpperCase();
 
-    if (isPro) {
-      bar.innerHTML = `<div class="auth-pill" id="auth-menu-btn" role="button" tabindex="0" aria-label="帳號選單">
-        <div class="auth-avatar">${initial}</div>
-        <span class="auth-pro-badge">✦ Pro</span>
-      </div>`;
+    bar.innerHTML = `<div class="auth-pill" id="auth-menu-btn" role="button" tabindex="0" aria-label="帳號選單">
+      <div class="auth-avatar">${initial}</div>我的帳號
+    </div>`;
 
-      // Unlock all pro-gated content
-      document.querySelectorAll('.pro-feature, .pro-feature-inline')
-        .forEach(el => el.classList.add('unlocked'));
-      document.querySelectorAll('.pro-gate')
-        .forEach(el => el.style.display = 'none');
-    } else {
-      // Free user — pill with dropdown
-      bar.innerHTML = `<div class="auth-pill" id="auth-menu-btn" role="button" tabindex="0" aria-label="帳號選單">
-        <div class="auth-avatar">${initial}</div>升級 Pro
-      </div>`;
-      document.querySelectorAll('.pro-gate')
-        .forEach(el => el.style.display = 'block');
-    }
-
-    // Dropdown for all logged-in users
+    // Dropdown for logged-in users
     const menuBtn = bar.querySelector('#auth-menu-btn');
     if (menuBtn) {
       const toggleDropdown = (e) => {
@@ -220,10 +165,8 @@ async function initAuthBar() {
 
         const dropdown = document.createElement('div');
         dropdown.id = 'auth-dropdown';
-        const isPro = bar.querySelector('.auth-pro-badge') !== null;
         dropdown.innerHTML = `
           <a href="/account.html">我的帳號</a>
-          ${!isPro ? '<a href="/pricing.html" style="color:var(--gold,#c4932a)">✦ 升級 Pro</a>' : ''}
           <div class="dropdown-divider"></div>
           <div class="dropdown-item dropdown-signout" id="auth-signout-btn">登出</div>
         `;

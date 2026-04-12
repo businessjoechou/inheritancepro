@@ -170,11 +170,6 @@
     color: var(--muted);
     border: 1px solid var(--border);
   }
-  .badge-pro {
-    background: linear-gradient(135deg, #c4932a, #e8b84b);
-    color: var(--ink);
-    border: none;
-  }
 
   /* Redemption form */
   .redeem-row {
@@ -261,13 +256,13 @@
   .redeem-error.visible { display: block; }
 
   /* Pro features list */
-  .pro-feature-list {
+  .feature-list {
     list-style: none;
     margin: 0;
     padding: 0;
   }
 
-  .pro-feature-list li {
+  .feature-list li {
     display: flex;
     align-items: flex-start;
     gap: 10px;
@@ -277,10 +272,10 @@
     color: var(--ink);
     line-height: 1.5;
   }
-  .pro-feature-list li:last-child { border-bottom: none; padding-bottom: 0; }
-  .pro-feature-list li:first-child { padding-top: 0; }
+  .feature-list li:last-child { border-bottom: none; padding-bottom: 0; }
+  .feature-list li:first-child { padding-top: 0; }
 
-  .pro-check {
+  .feature-check {
     width: 18px;
     height: 18px;
     background: linear-gradient(135deg, #c4932a, #e8b84b);
@@ -291,7 +286,7 @@
     flex-shrink: 0;
     margin-top: 1px;
   }
-  .pro-check svg {
+  .feature-check svg {
     width: 10px;
     height: 10px;
     stroke: #1a1410;
@@ -508,10 +503,94 @@
   .modal-key { color: var(--muted); flex-shrink: 0; }
   .modal-val { color: var(--ink); font-weight: 500; text-align: right; word-break: break-all; }
 
+  /* ── Report section styles (rich record detail) ── */
+  .report-hero {
+    background: var(--ink); color: var(--paper); border-radius: 12px;
+    padding: 20px; margin-bottom: 14px; text-align: center;
+  }
+  .report-hero-label {
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: rgba(245,240,232,0.55); margin-bottom: 6px;
+  }
+  .report-hero-value {
+    font-family: 'Noto Serif TC', serif; font-size: 26px; font-weight: 700;
+    color: var(--gold); line-height: 1.3; margin-bottom: 4px;
+  }
+  .report-hero-desc { font-size: 12px; color: rgba(245,240,232,0.7); line-height: 1.6; }
+
+  .report-alert {
+    background: #3a1212; color: #f5d6d6; border-radius: 10px;
+    padding: 14px 16px; margin-bottom: 14px;
+  }
+  .report-alert-title { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+  .report-alert-body { font-size: 12.5px; line-height: 1.7; opacity: 0.9; }
+
+  .report-compare { margin-bottom: 14px; }
+  .report-compare table {
+    width: 100%; border-collapse: collapse; font-size: 12.5px;
+    border-radius: 10px; overflow: hidden;
+  }
+  .report-compare thead th {
+    background: var(--ink); color: var(--paper); padding: 9px 10px;
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em;
+    text-transform: uppercase; font-weight: 500;
+  }
+  .report-compare thead th:first-child { text-align: left; }
+  .report-compare thead th:nth-child(2) { color: #f5a0a0; text-align: right; }
+  .report-compare thead th:nth-child(3) { color: #a0d8b8; text-align: right; }
+  .report-compare tbody td {
+    padding: 8px 10px; border-bottom: 1px solid var(--soft);
+  }
+  .report-compare tbody td:first-child { color: var(--muted); }
+  .report-compare tbody td:nth-child(2) { text-align: right; font-family: 'DM Mono', monospace; }
+  .report-compare tbody td:nth-child(3) { text-align: right; font-family: 'DM Mono', monospace; font-weight: 500; }
+  .report-compare tbody tr:nth-child(even) { background: rgba(232,224,208,0.35); }
+  .report-compare-diff {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 10px; background: var(--ink); color: var(--gold);
+    font-weight: 700; font-size: 13px; border-radius: 0 0 10px 10px;
+  }
+
+  .report-detail { margin-bottom: 14px; }
+  .report-detail-title {
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted);
+    letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid var(--soft);
+  }
+  .report-detail-row {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 12px; padding: 7px 0; border-bottom: 1px solid var(--soft); font-size: 13px;
+  }
+  .report-detail-row:last-child { border-bottom: none; }
+  .report-detail-label { color: var(--muted); flex-shrink: 0; }
+  .report-detail-value { color: var(--ink); font-weight: 500; text-align: right; word-break: break-all; }
+
+  .report-law {
+    border-left: 3px solid var(--gold); background: #f8f5e8;
+    padding: 10px 14px; border-radius: 0 8px 8px 0;
+    font-size: 12px; color: var(--muted); line-height: 1.7; margin-bottom: 14px;
+  }
+
+  .report-text { font-size: 13px; color: var(--ink); line-height: 1.7; margin-bottom: 14px; }
+
+  .report-table { margin-bottom: 14px; }
+  .report-table table {
+    width: 100%; border-collapse: collapse; font-size: 12.5px;
+    border-radius: 10px; overflow: hidden;
+  }
+  .report-table thead th {
+    background: var(--ink); color: var(--paper); padding: 9px 10px;
+    font-size: 11px; font-weight: 500; text-align: left;
+  }
+  .report-table tbody td {
+    padding: 8px 10px; border-bottom: 1px solid var(--soft); font-size: 12.5px;
+  }
+  .report-table tbody tr:nth-child(even) { background: rgba(232,224,208,0.35); }
+
   /* History item clickable */
   .history-item { cursor: pointer; transition: background 0.15s; }
   .history-item:hover { background: var(--border); }
-  .disclaimer-bar{max-width:560px;margin:0 auto;padding:16px 24px 40px;font-size:11.5px;color:rgba(0,0,0,0.62);line-height:1.7;border-top:1px solid rgba(0,0,0,0.12);}
+  .disclaimer-bar{max-width:560px;margin:0 auto;padding:16px 24px 72px;font-size:11.5px;color:rgba(0,0,0,0.62);line-height:1.7;border-top:1px solid rgba(0,0,0,0.12);}
   .disclaimer-bar strong{color:rgba(0,0,0,0.80);}
 </style>
 </head>
@@ -536,7 +615,7 @@
   <div id="not-logged-in" class="hidden">
     <div class="not-logged-in-card">
       <h2>尚未登入</h2>
-      <p>請先登入以查看帳號資訊及管理 Pro 功能。</p>
+      <p>請先登入以查看帳號資訊與計算紀錄。</p>
       <a class="btn-to-login" href="/login.html">前往登入</a>
     </div>
   </div>
@@ -564,7 +643,7 @@
       </div>
 
       <div class="info-row" id="activated-row" style="display:none;">
-        <span class="info-key">Pro 啟用日期</span>
+        <span class="info-key">啟用日期</span>
         <span class="info-val" id="account-activated">—</span>
       </div>
 
@@ -594,7 +673,7 @@
       </div>
 
       <div class="redeem-note">
-        輸入序號即可升級為 Pro 帳號。
+        輸入序號即可啟用進階功能。
       </div>
 
       <div class="redeem-success" id="redeem-success"></div>
@@ -611,21 +690,21 @@
     <!-- 4. 功能總覽 (always visible) -->
     <div class="card">
       <div class="card-title">功能總覽</div>
-      <ul class="pro-feature-list">
+      <ul class="feature-list">
         <li>
-          <div class="pro-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="feature-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
           <span><strong style="color:var(--ink)">遺產稅精算</strong>　遺產稅申報工作底稿、生前贈與 vs 繼承節稅比較、未上市股票資產淨值法、多案件期限管理儀表板</span>
         </li>
         <li>
-          <div class="pro-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="feature-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
           <span><strong style="color:var(--ink)">法律分析</strong>　脫產偵測與財產異動分析、訴訟強度評估、和解金額試算、損害賠償試算（車禍、未成年）</span>
         </li>
         <li>
-          <div class="pro-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="feature-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
           <span>所有計算機 PDF 報告匯出</span>
         </li>
         <li>
-          <div class="pro-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="feature-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
           <span>全部永久免費</span>
         </li>
       </ul>
@@ -691,65 +770,21 @@
     // Load calculation history
     renderHistory();
 
-    // On native iOS: sync StoreKit subscription status before reading profile
-    if (window.Capacitor?.isNativePlatform()) {
-      try {
-        const { registerPlugin } = await import('https://cdn.jsdelivr.net/npm/@capacitor/core@8/+esm');
-        const StoreKit = registerPlugin('StoreKit');
-        const result = await StoreKit.getActiveSubscriptions();
-        const activeSubs = result.activeSubscriptions || [];
-        if (activeSubs.length > 0) {
-          const hasAll   = activeSubs.some(id => id.includes('.all.'));
-          const hasTax   = activeSubs.some(id => id.includes('.tax.'));
-          const hasLegal = activeSubs.some(id => id.includes('.legal.'));
-          const tier = (hasAll || (hasTax && hasLegal)) ? 'all' : hasTax ? 'tax' : 'legal';
-          const persona = tier === 'tax' ? 'accountant' : tier === 'legal' ? 'lawyer' : 'all';
-          localStorage.setItem('ip_persona', persona);
-          // Update Supabase via security definer RPC
-          await supabase.rpc('activate_pro', {
-            p_tier:       tier,
-            p_product_id: activeSubs[0],
-            p_expires_at: null  // StoreKit confirmed active — clear stale expiry date
-          });
-        } else {
-          // No active subscriptions — check if lifetime (pro_expires_at null = lifetime)
-          const { data: p } = await supabase.from('profiles').select('pro_expires_at, pro_source').eq('id', user.id).single();
-          if (p?.pro_expires_at !== null && p?.pro_source === 'apple') {
-            // Subscription lapsed
-            await supabase.rpc('revoke_pro');
-            localStorage.setItem('ip_persona', 'public');
-          }
-        }
-      } catch (e) { /* StoreKit unavailable, skip */ }
-    }
-
     // Populate account info
     const profile = await getProfile();
-    const isPro = profile?.is_pro || false;
 
     document.getElementById('account-email').textContent = user.email || '—';
 
-    document.getElementById('account-status').innerHTML = isPro
-      ? '<span class="badge badge-pro">✦ Pro</span>'
-      : '<span class="badge badge-free">免費版</span>';
-
-    if (isPro && profile?.activated_at) {
-      const activatedRow = document.getElementById('activated-row');
-      activatedRow.style.display = 'flex';
-      document.getElementById('account-activated').textContent =
-        formatDate(profile.activated_at);
-    }
+    document.getElementById('account-status').innerHTML =
+      '<span class="badge badge-free">免費會員</span>';
 
     const createdAt = profile?.created_at || user.created_at;
     document.getElementById('account-created').textContent =
       createdAt ? formatDate(createdAt) : '—';
 
-    // Hide redeem card if already Pro, show upgrade CTA if not
-    if (isPro) {
-      document.getElementById('redeem-card').style.display = 'none';
-    } else {
-      document.getElementById('upgrade-card').style.display = 'block';
-    }
+    // 全面免費 — 隱藏兌換卡，顯示免費說明
+    document.getElementById('redeem-card').style.display = 'none';
+    document.getElementById('upgrade-card').style.display = 'block';
 
     // Redeem code handler
     document.getElementById('btn-redeem').addEventListener('click', async () => {
@@ -779,7 +814,7 @@
         errorEl.textContent = result.error;
         errorEl.classList.add('visible');
       } else {
-        successEl.innerHTML = `✓ 兌換成功！您已升級為 Pro${result.tier ? '（' + result.tier + '）' : ''}，頁面即將重新載入。`;
+        successEl.innerHTML = `✓ 兌換成功！${result.tier ? '（' + result.tier + '）' : ''}頁面即將重新載入。`;
         successEl.classList.add('visible');
         document.getElementById('redeem-input').disabled = true;
         btn.disabled = true;
@@ -1004,6 +1039,75 @@
     return d.toLocaleDateString('zh-TW', { year:'numeric', month:'2-digit', day:'2-digit' });
   }
 
+  // ── Section Renderers ─────────────────────────────────────────────────
+  function renderReportHero(s) {
+    return `<div class="report-hero">
+      ${s.label ? `<div class="report-hero-label">${escapeHtml(s.label)}</div>` : ''}
+      <div class="report-hero-value">${escapeHtml(s.value || '')}</div>
+      ${s.desc ? `<div class="report-hero-desc">${escapeHtml(s.desc)}</div>` : ''}
+    </div>`;
+  }
+
+  function renderReportAlert(s) {
+    return `<div class="report-alert">
+      ${s.title ? `<div class="report-alert-title">${escapeHtml(s.title)}</div>` : ''}
+      <div class="report-alert-body">${escapeHtml(s.body || '')}</div>
+    </div>`;
+  }
+
+  function renderReportCompare(s) {
+    const hdr = `<thead><tr><th></th><th>${escapeHtml(s.leftLabel || '')}</th><th>${escapeHtml(s.rightLabel || '')}</th></tr></thead>`;
+    const rows = (s.rows || []).map(r =>
+      `<tr><td>${escapeHtml(r.label || '')}</td><td>${escapeHtml(r.left || '')}</td><td>${escapeHtml(r.right || '')}</td></tr>`
+    ).join('');
+    const diff = s.diff
+      ? `<div class="report-compare-diff"><span>${escapeHtml(s.diff.label || '')}</span><span>${escapeHtml(s.diff.value || '')}</span></div>`
+      : '';
+    return `<div class="report-compare"><table>${hdr}<tbody>${rows}</tbody></table>${diff}</div>`;
+  }
+
+  function renderReportDetail(s) {
+    const title = s.title ? `<div class="report-detail-title">${escapeHtml(s.title)}</div>` : '';
+    const rows = (s.items || []).map(it =>
+      `<div class="report-detail-row"><span class="report-detail-label">${escapeHtml(it.label || '')}</span><span class="report-detail-value">${escapeHtml(it.value || '')}</span></div>`
+    ).join('');
+    return `<div class="report-detail">${title}${rows}</div>`;
+  }
+
+  function renderReportLaw(s) {
+    return `<div class="report-law">${escapeHtml(s.text || '')}</div>`;
+  }
+
+  function renderReportText(s) {
+    return `<div class="report-text">${escapeHtml(s.text || '')}</div>`;
+  }
+
+  function renderReportTable(s) {
+    const hdr = (s.headers || []).map(h => `<th>${escapeHtml(h)}</th>`).join('');
+    const rows = (s.rows || []).map(r =>
+      `<tr>${(Array.isArray(r) ? r : []).map(c => `<td>${escapeHtml(String(c))}</td>`).join('')}</tr>`
+    ).join('');
+    return `<div class="report-table"><table><thead><tr>${hdr}</tr></thead><tbody>${rows}</tbody></table></div>`;
+  }
+
+  const SECTION_RENDERERS = {
+    hero: renderReportHero,
+    alert: renderReportAlert,
+    compare: renderReportCompare,
+    detail: renderReportDetail,
+    law: renderReportLaw,
+    text: renderReportText,
+    table: renderReportTable,
+  };
+
+  function renderStructuredSections(sections) {
+    if (!Array.isArray(sections) || sections.length === 0) return '';
+    return sections.map(s => {
+      const fn = SECTION_RENDERERS[s.type];
+      return fn ? fn(s) : '';
+    }).join('');
+  }
+
   // ── Modal ────────────────────────────────────────────────────────────
   function showDetailModal(item) {
     document.getElementById('detail-modal')?.remove();
@@ -1013,11 +1117,15 @@
     const dateStr = item.created_at ? formatDate(item.created_at) : '—';
     const data = item.data || {};
 
+    // 決定內容來源
+    const sections = data._pdfPayload?.sections || data._pdfSections || null;
+    const bodyContent = sections
+      ? renderStructuredSections(sections)
+      : renderDataRowsFallback(data);
+
     const overlay = document.createElement('div');
     overlay.className = 'modal-overlay';
     overlay.id = 'detail-modal';
-
-    const dataRows = renderDataRows(data);
 
     overlay.innerHTML = `
       <div class="modal-sheet">
@@ -1029,109 +1137,106 @@
           <div class="modal-meta">
             ${toolLabel ? escapeHtml(toolLabel) + '　·　' : ''}儲存於 ${dateStr}
           </div>
-          ${item.summary ? `<div style="font-size:13px;color:var(--ink);margin-bottom:16px;padding:10px 14px;background:var(--soft);border-radius:8px;">${escapeHtml(item.summary)}</div>` : ''}
-          ${dataRows}
-          <button id="modal-print-btn" style="
-            display:block;width:100%;margin-top:20px;padding:12px;
-            background:var(--ink);color:var(--paper);border:none;border-radius:8px;
+          ${item.summary ? `<div class="report-hero" style="text-align:left;padding:14px 16px;margin-bottom:14px;"><div class="report-hero-desc" style="color:var(--paper);font-size:13px;opacity:0.9;">${escapeHtml(item.summary)}</div></div>` : ''}
+          ${bodyContent}
+          <button id="modal-export-btn" style="
+            display:block;width:100%;margin-top:20px;padding:14px;
+            background:var(--ink);color:var(--paper);border:none;border-radius:10px;
             font-family:'Noto Sans TC',sans-serif;font-size:14px;font-weight:500;cursor:pointer;
-          ">⬇ 列印 / 儲存 PDF</button>
+            transition:opacity 0.2s;
+          ">⬇ 匯出 PDF 報告</button>
         </div>
       </div>
     `;
 
     document.body.appendChild(overlay);
 
-    overlay.querySelector('#modal-close-btn').addEventListener('click', () => overlay.remove());
-    // No click-outside close — prevent accidental dismissal
+    overlay.querySelector('#modal-close-btn')?.addEventListener('click', () => overlay.remove());
 
-    overlay.querySelector('#modal-print-btn').addEventListener('click', () => {
-      printRecord(item);
+    overlay.querySelector('#modal-export-btn')?.addEventListener('click', async () => {
+      const btn = overlay.querySelector('#modal-export-btn');
+      btn.textContent = '產生中…';
+      btn.disabled = true;
+      btn.style.opacity = '0.6';
+      try {
+        await exportRecordPdf(item);
+      } catch (e) {
+        alert('PDF 匯出失敗：' + (e.message || e));
+      } finally {
+        btn.textContent = '⬇ 匯出 PDF 報告';
+        btn.disabled = false;
+        btn.style.opacity = '1';
+      }
     });
   }
 
-  function renderDataRows(data) {
+  // ── Fallback：舊紀錄 key-value 顯示（改良版）──────────────────────
+  function renderDataRowsFallback(data) {
     if (!data || typeof data !== 'object' || Array.isArray(data)) {
       return `<div style="font-size:13px;color:var(--muted);">無詳細資料</div>`;
     }
-    const keys = Object.keys(data);
-    if (keys.length === 0) return `<div style="font-size:13px;color:var(--muted);">無詳細資料</div>`;
+    const entries = Object.entries(data).filter(([k, v]) =>
+      !k.startsWith('_') && v !== null && v !== undefined
+    );
+    if (entries.length === 0) return `<div style="font-size:13px;color:var(--muted);">無詳細資料</div>`;
 
-    const rows = keys.map(k => {
-      const v = data[k];
-      if (v === null || v === undefined) return '';
+    const rows = entries.map(([k, v]) => {
       const label = LABEL_MAP[k] || k;
       const display = formatValue(k, v);
       return `
-        <div class="modal-row">
-          <span class="modal-key">${escapeHtml(label)}</span>
-          <span class="modal-val">${escapeHtml(display)}</span>
+        <div class="report-detail-row">
+          <span class="report-detail-label">${escapeHtml(label)}</span>
+          <span class="report-detail-value">${escapeHtml(display)}</span>
         </div>`;
     }).filter(Boolean);
 
-    return `<div class="modal-section-title">計算資料</div>${rows.join('')}`;
+    return `<div class="report-detail"><div class="report-detail-title">計算資料</div>${rows.join('')}</div>`;
   }
 
-  function printRecord(item) {
+  // ── PDF 匯出 ────────────────────────────────────────────────────────
+  async function exportRecordPdf(item) {
     const data = item.data || {};
+    const title = item.title || '計算紀錄';
+    const tool = item.tool || '';
 
-    // 優先使用計算機存好的原始 print HTML
-    if (data._html) {
-      const w = window.open('', '_blank');
-      if (!w) { alert('請允許彈出視窗以列印'); return; }
-      w.document.write(data._html);
-      w.document.close();
-      w.onload = () => setTimeout(() => w.print(), 400);
+    // Path 1: 完整 PDF payload
+    if (data._pdfPayload) {
+      await exportPdfFromData(data._pdfPayload);
       return;
     }
 
-    // 舊紀錄 fallback：簡易表格格式
-    const title = item.title || '計算紀錄';
-    const dateStr = item.created_at ? formatDate(item.created_at) : '—';
-    const summary = item.summary || '';
-    const tool = item.tool || '';
-    const today = new Date().toLocaleDateString('zh-TW', {year:'numeric', month:'2-digit', day:'2-digit'});
+    // Path 2: 自動擷取的 sections
+    if (data._pdfSections && data._pdfSections.length > 0) {
+      await exportPdfFromData({
+        title: data._pdfTitle || title,
+        subtitle: tool ? tool + ' 計算紀錄' : '計算紀錄',
+        sections: data._pdfSections,
+        filename: 'InheritancePro-' + (data._pdfTitle || title),
+      });
+      return;
+    }
 
-    const rows = Object.entries(data)
-      .filter(([k, v]) => k !== '_html' && v !== null && v !== undefined)
-      .map(([k, v]) => {
-        const label = LABEL_MAP[k] || k;
-        const display = formatValue(k, v);
-        return `<tr><td>${label}</td><td>${display}</td></tr>`;
-      }).join('');
-
-    const html = `<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8">
-<title>${title}</title>
-<style>
-  body{font-family:'Noto Sans TC',sans-serif;padding:40px;max-width:600px;margin:0 auto;font-size:13px;color:#1a1410;}
-  .header{border-bottom:3px solid #1a1410;padding-bottom:16px;margin-bottom:24px;display:flex;justify-content:space-between;align-items:flex-end;}
-  .logo{font-family:serif;font-size:22px;font-weight:700;}
-  .logo span{color:#c4932a;}
-  .meta{font-size:11px;color:#7a6f62;text-align:right;line-height:1.8;}
-  h2{font-size:18px;font-weight:700;margin-bottom:6px;}
-  .summary{background:#f5f0e8;border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:20px;}
-  table{width:100%;border-collapse:collapse;}
-  td{padding:9px 10px;border-bottom:1px solid #e8e0d0;font-size:13px;}
-  td:first-child{color:#7a6f62;width:40%;}
-  td:last-child{font-weight:500;text-align:right;}
-  .footer{margin-top:36px;padding-top:12px;border-top:1px solid #d0c8b8;font-size:11px;color:#a09880;text-align:center;line-height:1.8;}
-  @media print{body{padding:20px;}}
-</style></head><body>
-<div class="header">
-  <div><div class="logo">Inheritance<span>Pro</span></div><div style="font-size:12px;color:#7a6f62;margin-top:4px">${tool ? tool + '　計算紀錄' : '計算紀錄'}</div></div>
-  <div class="meta">產出日期：${today}<br>儲存日期：${dateStr}</div>
-</div>
-<h2>${title}</h2>
-${summary ? `<div class="summary">${summary}</div>` : ''}
-<table><tbody>${rows}</tbody></table>
-<div class="footer">© ${new Date().getFullYear()} InheritancePro &nbsp;·&nbsp; inheritancepro.app<br>本報告僅供參考，不構成法律意見。</div>
-</body></html>`;
-
-    const w = window.open('', '_blank');
-    if (!w) { alert('請允許彈出視窗以列印'); return; }
-    w.document.write(html);
-    w.document.close();
-    w.onload = () => setTimeout(() => w.print(), 400);
+    // Path 3: 舊紀錄 — 從 key-value 建構基本 sections
+    const sections = [];
+    if (item.summary) {
+      sections.push({ type: 'hero', label: title, value: item.summary });
+    }
+    const items = Object.entries(data)
+      .filter(([k, v]) => !k.startsWith('_') && v !== null && v !== undefined)
+      .map(([k, v]) => ({ label: LABEL_MAP[k] || k, value: formatValue(k, v) }));
+    if (items.length > 0) {
+      sections.push({ type: 'detail', title: '計算資料', items });
+    }
+    if (sections.length === 0) {
+      alert('此紀錄無可匯出的資料');
+      return;
+    }
+    await exportPdfFromData({
+      title,
+      subtitle: tool ? tool + ' 計算紀錄' : '計算紀錄',
+      sections,
+      filename: 'InheritancePro-' + title,
+    });
   }
 
   init();
@@ -1147,5 +1252,6 @@ ${summary ? `<div class="summary">${summary}</div>` : ''}
     <span style="opacity:0.5;font-size:11px;">© 2026 InheritancePro</span>
   </div>
 </div>
+<script src="js/pdf-export.js"></script>
 </body>
 </html>

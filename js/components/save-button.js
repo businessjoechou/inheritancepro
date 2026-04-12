@@ -72,8 +72,9 @@ function clearDraft(tool) {
  * @param {string} p.summary      紀錄摘要
  * @param {object} p.data         計算結果 JSON
  * @param {string} [p.containerId='save-btn-container']
+ * @param {object} [p.pdfPayload]  手動提供的 PDF sections（優先於 DOM 自動擷取）
  */
-export async function mountSaveButton({ tool, title, summary, data, containerId }) {
+export async function mountSaveButton({ tool, title, summary, data, containerId, pdfPayload }) {
   const container = document.getElementById(containerId || 'save-btn-container');
   if (!container) return;
 
@@ -97,13 +98,31 @@ export async function mountSaveButton({ tool, title, summary, data, containerId 
     btn.style.opacity = '0.7';
 
     try {
+      // 自動擷取結構化 sections（供紀錄檢視 + PDF 匯出）
+      const enrichedData = { ...data };
+      if (pdfPayload) {
+        enrichedData._pdfPayload = pdfPayload;
+      } else if (typeof window.extractPdfSections === 'function') {
+        const resultContainer = document.getElementById('resultSection')
+          || document.getElementById('results')
+          || document.getElementById('resultContainer');
+        if (resultContainer) {
+          const sections = window.extractPdfSections(resultContainer);
+          if (sections.length > 0) {
+            enrichedData._pdfSections = sections;
+            enrichedData._pdfTitle = title;
+            enrichedData._pdfSubtitle = tool;
+          }
+        }
+      }
+
       // 動態 import（只在使用者真的點擊時才載入 Supabase）
       const { saveCalculation } = await import('../save.js');
-      const result = await saveCalculation({ tool, title, summary, data });
+      const result = await saveCalculation({ tool, title, summary, data: enrichedData });
 
       if (result.error === '請先登入') {
         // 未登入：導向登入頁，存 redirect 資訊
-        sessionStorage.setItem('save_after_login', JSON.stringify({ tool, title, summary, data }));
+        sessionStorage.setItem('save_after_login', JSON.stringify({ tool, title, summary, data: enrichedData }));
         window.location.href = 'login.html';
         return;
       }
@@ -131,6 +150,6 @@ export async function mountSaveButton({ tool, title, summary, data, containerId 
  * 全域函式版（向後相容舊工具的 initSaveButton 呼叫模式）
  * 舊工具用法：initSaveButton('calculator', '標題', '摘要', { data })
  */
-window.initSaveButton = function(tool, title, summary, data) {
-  mountSaveButton({ tool, title, summary, data });
+window.initSaveButton = function(tool, title, summary, data, pdfPayload) {
+  mountSaveButton({ tool, title, summary, data, pdfPayload });
 };

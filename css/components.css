@@ -793,7 +793,7 @@
 .disclaimer-bar, .ip-disclaimer-bar {
   max-width: 560px;
   margin: 0 auto;
-  padding: 16px 24px 40px;
+  padding: 16px 24px 72px; /* 底部留空給 auth-bar fixed 按鈕 */
   font-size: 11.5px;
   color: rgba(0, 0, 0, 0.62);
   line-height: 1.7;

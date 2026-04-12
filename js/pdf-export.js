@@ -169,6 +169,9 @@ function _extractSections(body) {
   return sections;
 }
 
+// 公開給 save-button.js 在儲存時自動擷取 sections
+window.extractPdfSections = _extractSections;
+
 /**
  * 把 PDF blob 交付給使用者（跨平台）
  */
