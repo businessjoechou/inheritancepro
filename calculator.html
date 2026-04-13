@@ -108,11 +108,14 @@
   .faq-wrap .faq-a { font-size: 13px; color: var(--muted); line-height: 1.8; }
   @media print { header, .nav-bar, .progress-bar { display: none; } main { padding: 20px; } }
 </style>
+<script src="js/case-law-data.js"></script>
+<script src="js/case-law-render.js"></script>
 </head>
 <body>
 
 <header>
   <a href="index.html" style="text-decoration:none;color:inherit">
+    <div class="parent-brand">周全 <span>ChouLegal</span></div>
     <div class="logo">Inheritance<span>Pro</span></div>
     <div class="badge">遺產繼承計算器</div>
   </a>
@@ -1233,6 +1236,7 @@
     if (renounced > 0) lawText += `<br>${renounced}人拋棄繼承，其份額由其他同順位繼承人均分（民法第1174條）。`;
 
     document.getElementById('resultContainer').innerHTML = html;
+    IP_renderCaseLaw('inheritance', total, 'resultContainer');
     document.getElementById('lawNote').innerHTML = '⚖️ 法律依據：' + lawText;
 
     // Estate tax

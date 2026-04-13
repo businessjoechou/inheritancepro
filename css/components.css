@@ -377,6 +377,95 @@
 }
 
 /* ============================================================
+ * Case Law Panel — 相關判例摺疊面板
+ * ============================================================ */
+.case-law-panel, .ip-case-law-panel {
+  margin-top: 10px;
+  margin-bottom: 14px;
+  border: 1.5px solid var(--ip-border);
+  border-radius: var(--ip-radius-lg);
+  overflow: hidden;
+  background: var(--ip-ink);
+}
+
+.cl-toggle, .ip-cl-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px 18px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: var(--ip-font-mono);
+  font-size: 11px;
+  color: var(--ip-muted);
+  letter-spacing: 0.1em;
+  text-align: left;
+  transition: color 0.2s;
+}
+
+.cl-toggle:hover, .ip-cl-toggle:hover { color: var(--ip-gold); }
+
+.cl-toggle-icon, .ip-cl-toggle-icon {
+  font-size: 9px;
+  transition: transform 0.25s;
+  display: inline-block;
+}
+
+.case-law-panel.cl-open .cl-toggle-icon,
+.ip-case-law-panel.cl-open .ip-cl-toggle-icon {
+  transform: rotate(90deg);
+}
+
+.cl-body, .ip-cl-body {
+  display: none;
+  padding: 0 18px 18px;
+}
+
+.case-law-panel.cl-open .cl-body,
+.ip-case-law-panel.cl-open .ip-cl-body {
+  display: block;
+}
+
+.cl-item, .ip-cl-item {
+  padding: 14px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.cl-item:first-child, .ip-cl-item:first-child { border-top: none; }
+
+.cl-case-no, .ip-cl-case-no {
+  font-family: var(--ip-font-mono);
+  font-size: 10px;
+  color: var(--ip-gold);
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+
+.cl-amount, .ip-cl-amount {
+  font-family: var(--ip-font-mono);
+  font-size: 14px;
+  color: var(--ip-paper);
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.cl-summary, .ip-cl-summary {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.7;
+}
+
+.cl-law, .ip-cl-law {
+  font-family: var(--ip-font-mono);
+  font-size: 10px;
+  color: var(--ip-accent);
+  margin-top: 6px;
+  letter-spacing: 0.06em;
+}
+
+/* ============================================================
  * Compare card — A/B 對比表
  * ============================================================ */
 .compare-card, .ip-compare-card {

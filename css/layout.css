@@ -32,6 +32,18 @@ header.ip-header {
   color: var(--ip-gold);
 }
 
+.parent-brand, .ip-parent-brand {
+  font-family: var(--ip-font-mono);
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: 0.14em;
+  margin-bottom: 2px;
+}
+.parent-brand span, .ip-parent-brand span {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
 .page-sub, .ip-page-sub {
   font-size: var(--ip-fs-sm);
   color: rgba(255, 255, 255, 0.5);

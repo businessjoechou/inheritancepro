@@ -83,10 +83,13 @@
   .btn-reset{width:100%;padding:13px;border:1.5px solid var(--border);border-radius:10px;background:transparent;font-size:14px;color:var(--muted);cursor:pointer;font-family:'Noto Sans TC',sans-serif;display:none;}
   .cross-links { margin-top: 20px; border-top: 1px solid var(--border); padding-top: 16px; }
 </style>
+<script src="js/case-law-data.js"></script>
+<script src="js/case-law-render.js"></script>
 </head>
 <body>
 <header>
   <a href="index.html" style="text-decoration:none;color:inherit">
+    <div class="parent-brand">周全 <span>ChouLegal</span></div>
     <div class="logo">Inheritance<span>Pro</span></div>
     <div class="page-sub">未成年損害賠償試算</div>
   </a>
@@ -353,6 +356,7 @@
         <div class="result-total">${fmt(totalLow)}<br><span style="font-size:18px;color:#a07020">～ ${fmt(totalHigh)}</span></div>
         <div class="result-sub">依實際判決案例校準之參考範圍<br>法院依個案裁定，實際金額可能不同</div>
       </div>`;
+    IP_renderCaseLaw('minorDamages', Math.round((totalLow + totalHigh) / 2), 'heroBox');
 
     let bd = '';
     if(r.medical>0) bd += bItem('已發生醫療費用', fmt(r.medical), '憑單據全額請求');

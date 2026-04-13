@@ -75,11 +75,14 @@
   @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
   @media print { header, .nav-bar, .progress-bar { display: none; } main { padding: 20px; } }
 </style>
+<script src="js/case-law-data.js"></script>
+<script src="js/case-law-render.js"></script>
 </head>
 <body>
 
 <header>
   <a href="index.html" style="text-decoration:none;color:inherit">
+    <div class="parent-brand">周全 <span>ChouLegal</span></div>
     <div class="logo">Inheritance<span>Pro</span></div>
     <div class="page-sub">車禍損害賠償分析</div>
   </a>
@@ -444,6 +447,7 @@
         </div>
       </div>
     `;
+      IP_renderCaseLaw('accident', netAmount, 'resultContent');
 
       document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
       document.getElementById('step2').classList.add('active');
@@ -543,6 +547,7 @@
         </div>
       </div>
     `;
+    IP_renderCaseLaw('accident', netAmount, 'resultContent');
 
     document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
     document.getElementById('step2').classList.add('active');
@@ -650,6 +655,7 @@
         </div>
       </div>
     `;
+    IP_renderCaseLaw('accident', netAmount, 'resultContent');
 
     document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
     document.getElementById('step2').classList.add('active');

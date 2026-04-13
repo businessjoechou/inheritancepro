@@ -25,6 +25,7 @@ export function renderHeader({
   return `
     <header class="ip-header">
       <a href="${backHref}" style="text-decoration:none;color:inherit">
+        <div class="ip-parent-brand">周全 <span>ChouLegal</span></div>
         <div class="ip-logo">${brandText}<span>${brandAccent}</span></div>
         <div class="ip-page-sub">${subtitle}</div>
       </a>

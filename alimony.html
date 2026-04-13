@@ -101,10 +101,13 @@
   .faq-q{font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px;line-height:1.5;}
   .faq-a{font-size:13px;color:var(--muted);line-height:1.8;}
 </style>
+<script src="js/case-law-data.js"></script>
+<script src="js/case-law-render.js"></script>
 </head>
 <body>
 <header>
   <a href="index.html" style="text-decoration:none;color:inherit">
+    <div class="parent-brand">周全 <span>ChouLegal</span></div>
     <div class="logo">Inheritance<span>Pro</span></div>
     <div class="page-sub">贍養費試算</div>
   </a>
@@ -389,6 +392,7 @@
           <div class="result-range">${fmt(low)}<br>～ ${fmt(high)}</div>
           <div class="result-sub">此為參考範圍，實際金額由法院依個案裁定</div>
         </div>`;
+      IP_renderCaseLaw('alimony', Math.round((low + high) / 2), 'resultHero');
 
       let factorHTML = '<div class="card"><div class="section-title">影響因素分析</div>';
       factors.forEach(f => {

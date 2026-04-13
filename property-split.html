@@ -147,10 +147,13 @@
     .pill-group label { font-size: 12px; padding: 6px 11px; }
   }
 </style>
+<script src="js/case-law-data.js"></script>
+<script src="js/case-law-render.js"></script>
 </head>
 <body>
 <header>
   <a href="index.html" style="text-decoration:none;color:inherit">
+    <div class="parent-brand">周全 <span>ChouLegal</span></div>
     <div class="logo">Inheritance<span>Pro</span></div>
     <div class="page-sub">剩餘財產差額分配</div>
   </a>
@@ -368,6 +371,7 @@
       const requester = aNet < bNet ? '甲方' : '乙方';
       const respondent = aNet < bNet ? '乙方' : '甲方';
       heroEl.innerHTML = `<div class="result-hero"><div class="label">可請求金額</div><div class="result-amount">${fmt(claim)}</div><div class="result-sub">${requester} 得向 ${respondent} 請求此金額</div></div>`;
+      IP_renderCaseLaw('propertySplit', claim, 'resultHero');
     }
 
     // 明細雙欄
