@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <!-- Rounded square background -->
+  <rect width="120" height="120" rx="24" fill="#141418"/>
+
+  <!-- Gold border accent -->
+  <rect x="2" y="2" width="116" height="116" rx="22" stroke="#c4932a" stroke-width="1.5" fill="none" opacity="0.3"/>
+
+  <!-- 周 character -->
+  <text x="60" y="78" font-family="'Noto Serif TC', 'Georgia', serif" font-size="64" font-weight="700" fill="#c4932a" text-anchor="middle">周</text>
+</svg>

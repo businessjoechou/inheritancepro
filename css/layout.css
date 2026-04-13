@@ -33,6 +33,9 @@ header.ip-header {
 }
 
 .parent-brand, .ip-parent-brand {
+  display: flex;
+  align-items: center;
+  gap: 5px;
   font-family: var(--ip-font-mono);
   font-size: 9px;
   color: rgba(255, 255, 255, 0.35);
@@ -42,6 +45,12 @@ header.ip-header {
 .parent-brand span, .ip-parent-brand span {
   text-transform: uppercase;
   letter-spacing: 0.18em;
+}
+.parent-brand .cl-icon, .ip-parent-brand .cl-icon {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  border-radius: 3px;
 }
 
 .page-sub, .ip-page-sub {
