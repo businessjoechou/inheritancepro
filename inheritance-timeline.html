@@ -14,7 +14,7 @@
 <link rel="apple-touch-icon" href="favicon.svg">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>繼承流程時間軸｜InheritancePro</title>
-<meta name="description" content="輸入被繼承人死亡日期，自動計算中華民國繼承法各項法定期限：死亡登記30天、拋棄繼承90天、遺產稅申報180天，並依遺產狀況產生個人化待辦清單。">
+<meta name="description" content="輸入被繼承人死亡日期，自動計算中華民國繼承法各項法定期限：死亡登記30天、拋棄繼承90天、遺產稅申報6個月，並依遺產狀況產生個人化待辦清單。">
 <meta name="keywords" content="繼承期限,拋棄繼承期限,遺產稅申報期限,繼承流程,死亡登記,限定繼承,繼承待辦">
 <meta name="robots" content="index, follow">
 <meta property="og:title" content="繼承流程時間軸｜InheritancePro">
@@ -206,7 +206,7 @@
         <strong>金融資產</strong>：各銀行存款餘額證明（繼承當日）、股票庫存（上市收盤均價；未上市用資產淨值法）、基金單位數及淨值。<br>
         <strong>保險</strong>：各壽險保單死亡給付通知書（確認是否納入遺產）、投資型保單帳戶價值證明。<br>
         <strong>其他</strong>：遺囑正本（若有公證遺囑須備公證書）、死亡前 6 年贈與資料（遺贈稅法 §15）、債務文件（借款合約、稅單欠費）。<br>
-        <strong>申報期限</strong>：183 天（遺贈稅法 §23），若繼承人在國外可延長，但須事先申請。
+        <strong>申報期限</strong>：6 個月（遺贈稅法 §23），若繼承人在國外可延長，但須事先申請。
       </div>
     </div>
     <div class="lawyer-only" style="background:#eef3fa;border:1.5px solid #3a5a80;border-radius:12px;padding:16px 20px;margin-top:16px">
@@ -315,7 +315,7 @@
       },
       {
         title: '遺產稅申報',
-        deadline: addDays(death, 180),
+        deadline: addDays(death, 183),
         desc: '應於被繼承人死亡後6個月內向國稅局辦理遺產稅申報。未申報或逾期申報將加徵罰鍰。可申請延期申報，但須於期限前提出申請。',
         where: '📍 國稅局（依被繼承人戶籍地管轄）',
         law: '遺產及贈與稅法第23條',
@@ -348,7 +348,7 @@
     if(hasProp){
       tasks.push({
         title: '不動產繼承移轉登記',
-        deadline: addDays(death, 180),
+        deadline: addDays(death, 183),
         desc: '繼承不動產應於取得繼承權後6個月內辦理所有權移轉登記，逾期每月按公告地價或房屋評定現值千分之一罰款。辦理前須先完成遺產稅申報並取得完稅或免稅證明。',
         where: '📍 地政事務所（依不動產所在地）',
         law: '土地法第73條',
@@ -360,7 +360,7 @@
     if(hasVehicle){
       tasks.push({
         title: '車輛繼承過戶登記',
-        deadline: addDays(death, 180),
+        deadline: addDays(death, 183),
         desc: '繼承汽機車應向公路監理機關辦理過戶登記。需備妥死亡證明、繼承同意書或法院裁定書、完稅或免稅證明等文件。逾期未過戶仍以被繼承人名義繳交燃料稅、牌照稅等，建議儘早辦理。',
         where: '📍 公路監理所（依車籍地）',
         law: '道路交通安全規則第16條',

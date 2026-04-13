@@ -469,11 +469,43 @@
         <span class="counter-display" id="deductLaborDisplay">NT$ 0</span>
       </div>
     </div>
-    <div class="input-group" style="margin-bottom:0">
+    <div class="input-group">
       <label>5年內再次繼承同一財產扣除（元）<span style="font-weight:400;color:var(--muted);font-size:12px">遺贈稅法§16-1</span></label>
       <div style="display:flex;align-items:center;gap:12px">
         <input type="number" id="deduct_retax" placeholder="0" min="0" inputmode="numeric" oninput="updateRetaxDeduct()" style="flex:1">
         <span class="counter-display" id="deductRetaxDisplay">NT$ 0</span>
+      </div>
+    </div>
+
+    <!-- 進階扣除額（展開） -->
+    <div style="margin-top:12px">
+      <button type="button" id="advancedToggle" onclick="toggleAdvancedDeduct()" style="width:100%;padding:8px;background:none;border:1.5px dashed var(--border);border-radius:8px;color:var(--muted);font-size:12px;cursor:pointer;font-family:'Noto Sans TC',sans-serif">
+        ▼ 展開完整扣除額明細（兄弟姊妹/公設保留地/2年內贈與加計）
+      </button>
+      <div id="advancedDeductSection" style="display:none;margin-top:12px">
+        <div class="input-group">
+          <label>死亡前 2 年內贈與加計金額（元）<span style="font-weight:400;color:var(--muted);font-size:12px">遺贈稅法§15，加回遺產總額</span></label>
+          <div style="display:flex;align-items:center;gap:12px">
+            <input type="number" id="deduct_addback_gifts" placeholder="0" min="0" inputmode="numeric" oninput="updateAddbackDisplay()" style="flex:1">
+            <span class="counter-display" id="deductAddbackDisplay">NT$ 0</span>
+          </div>
+          <div style="font-size:11px;color:var(--accent);margin-top:4px">⚠ 此金額將加入遺產總額計算，不是扣除</div>
+        </div>
+        <div class="input-group">
+          <label>受撫養兄弟姊妹、祖父母扣除 <span style="font-weight:400;color:var(--muted);font-size:12px">每人 56萬，§17④⑤，填人數</span></label>
+          <div class="input-prefix">
+            <span class="prefix-text">人數</span>
+            <input type="number" id="deduct_siblings_count" placeholder="0" min="0" max="20" inputmode="numeric" oninput="updateSiblingsDeduct()">
+          </div>
+          <div id="siblingsDeductAmt" style="font-size:12px;color:var(--success);margin-top:6px;font-family:'DM Mono',monospace"></div>
+        </div>
+        <div class="input-group" style="margin-bottom:0">
+          <label>公共設施保留地扣除（元）<span style="font-weight:400;color:var(--muted);font-size:12px">全額扣除，§17⑦</span></label>
+          <div style="display:flex;align-items:center;gap:12px">
+            <input type="number" id="deduct_public_land" placeholder="0" min="0" inputmode="numeric" oninput="updatePublicLandDisplay()" style="flex:1">
+            <span class="counter-display" id="deductPublicDisplay">NT$ 0</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -569,7 +601,7 @@
     <div class="cross-links-label">下一步建議</div>
     <a class="cross-link-btn" href="inheritance-timeline.html">📅 繼承流程時間軸　查看所有辦理期限 <span>→</span></a>
     <a class="cross-link-btn" href="gift-tax.html">🎁 贈與稅試算　比較贈與 vs 繼承節稅策略 <span>→</span></a>
-    <a class="cross-link-btn" href="property-sale-tax.html">💰 房地合一稅試算　規劃繼承後出售 <span>→</span></a>
+    <a class="cross-link-btn" href="real-estate.html?tab=sale">💰 房地合一稅試算　規劃繼承後出售 <span>→</span></a>
   </div>
 </div>
 
@@ -1037,6 +1069,15 @@
   }
   function updateLaborDeduct() { const v = parseFloat(document.getElementById('deduct_labor_ins').value) || 0; document.getElementById('deductLaborDisplay').textContent = 'NT$ ' + v.toLocaleString('zh-TW'); }
   function updateRetaxDeduct() { const v = parseFloat(document.getElementById('deduct_retax').value) || 0; document.getElementById('deductRetaxDisplay').textContent = 'NT$ ' + v.toLocaleString('zh-TW'); }
+  function toggleAdvancedDeduct() {
+    const s = document.getElementById('advancedDeductSection');
+    const b = document.getElementById('advancedToggle');
+    if (s.style.display === 'none') { s.style.display = 'block'; b.textContent = '▲ 收合完整扣除額明細'; }
+    else { s.style.display = 'none'; b.textContent = '▼ 展開完整扣除額明細（兄弟姊妹/公設保留地/2年內贈與加計）'; }
+  }
+  function updateAddbackDisplay() { const v = parseFloat(document.getElementById('deduct_addback_gifts').value) || 0; document.getElementById('deductAddbackDisplay').textContent = 'NT$ ' + v.toLocaleString('zh-TW'); }
+  function updateSiblingsDeduct() { const c = parseInt(document.getElementById('deduct_siblings_count').value) || 0; document.getElementById('siblingsDeductAmt').textContent = c > 0 ? '= NT$ ' + (c * 560000).toLocaleString('zh-TW') : ''; }
+  function updatePublicLandDisplay() { const v = parseFloat(document.getElementById('deduct_public_land').value) || 0; document.getElementById('deductPublicDisplay').textContent = 'NT$ ' + v.toLocaleString('zh-TW'); }
 
   /* ─── Estate tax ─── */
   function calcEstateTax(net) {
@@ -1072,7 +1113,7 @@
 
     // 全體第一順位拋棄繼承：終止計算並警告（民法§1176）
     if (tier === 1 && effectiveBlood <= 0) {
-      const resultDiv = document.getElementById('result');
+      const resultDiv = document.getElementById('resultContainer');
       resultDiv.innerHTML = `
         <div style="background:#fff8e1;border:2px solid #f9a825;border-radius:12px;padding:24px 20px;margin-top:20px;text-align:left">
           <div style="font-size:16px;font-weight:700;color:#e65100;margin-bottom:12px">⚠ 全數子女拋棄繼承 — 無法直接試算</div>
@@ -1201,7 +1242,10 @@
     const laborIns = parseFloat(document.getElementById('deduct_labor_ins').value) || 0;
     const agriDeduct = parseFloat(document.getElementById('deduct_agri').value) || 0;
     const retaxDeduct = parseFloat(document.getElementById('deduct_retax').value) || 0;
-    const adjustedTotal = total + insuranceTaxable;
+    const addbackGifts = parseFloat(document.getElementById('deduct_addback_gifts')?.value) || 0;
+    const dSiblings = (parseInt(document.getElementById('deduct_siblings_count')?.value) || 0) * 560000;
+    const publicLandDeduct = parseFloat(document.getElementById('deduct_public_land')?.value) || 0;
+    const adjustedTotal = total + insuranceTaxable + addbackGifts;
     const exemption = 13330000;
     const dSpouse = state.hasSpouse ? 5530000 : 0;
     const dFuneral = 1380000;
@@ -1209,7 +1253,7 @@
     const dParents = (parseInt(document.getElementById('deduct_parents_count').value) || 0) * 1380000;
     const dDisabled = (parseInt(document.getElementById('deduct_disabled_count').value) || 0) * 6930000;
     const dOther = parseFloat(document.getElementById('deduct_other').value) || 0;
-    const totalDeduct = dSpouse + dFuneral + dChildren + dParents + dDisabled + dOther + agriDeduct + retaxDeduct;
+    const totalDeduct = dSpouse + dFuneral + dChildren + dParents + dDisabled + dOther + agriDeduct + retaxDeduct + dSiblings + publicLandDeduct;
     const netEstate = Math.max(0, adjustedTotal - exemption - totalDeduct);
     const tax = calcEstateTax(netEstate);
     let taxRate = '10%';
@@ -1453,7 +1497,47 @@
         </div>
       </div>
       <div class="law-note" style="margin-top:8px">⚖️ 每人每年贈與免稅額244萬（遺贈稅法§22，2026年）。生前贈與可降低遺產稅基，但2年內贈與給繼承人仍須計入遺產（民法§1148-1）。建議結合人壽保險規劃（3,330萬免計）一併評估。</div>
-    </div>`;
+    </div>
+    ${tax > 0 ? `<div style="margin-top:16px">
+      <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">節稅策略綜合分析</div>
+      <div class="heir-card">
+        <div class="heir-header" style="background:#f5f0ff">
+          <span class="heir-name">三大節稅策略比較</span>
+          <span class="heir-fraction" style="color:#6b21a8">當前稅負 ${fmt(tax)}</span>
+        </div>
+        <div class="heir-body">
+          <div style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:8px">策略一：配偶先行使剩餘財產分配請求權</div>
+          ${state.hasSpouse ? (() => {
+            const halfEstate = Math.floor(adjustedTotal / 2);
+            const spouseNet = Math.max(0, halfEstate - exemption - totalDeduct);
+            const spouseTax = calcEstateTax(spouseNet);
+            const spouseSaving = tax - spouseTax;
+            return `<div class="heir-row"><span class="heir-row-label">配偶先取回 ${fmt(halfEstate)}（1/2）</span><span class="heir-row-val" style="color:${spouseSaving > 0 ? 'var(--success)' : 'var(--muted)'}">${spouseSaving > 0 ? '節省 ' + fmt(spouseSaving) : '無節稅效果'}</span></div>
+            <div style="font-size:11px;color:var(--muted);margin-bottom:10px">依民法§1030-1，法定財產制下配偶得先請求剩餘財產差額分配，再計算遺產稅。</div>`;
+          })() : `<div style="font-size:12px;color:var(--muted);margin-bottom:10px">無配偶，此策略不適用。</div>`}
+          <div style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:8px;border-top:1px solid var(--soft);padding-top:10px">策略二：善用壽險免稅額（3,330 萬）</div>
+          ${(() => {
+            const insMax = 33300000;
+            const insNet = Math.max(0, adjustedTotal - insMax - exemption - totalDeduct);
+            const insTax = calcEstateTax(insNet);
+            const insSaving = tax - insTax;
+            return `<div class="heir-row"><span class="heir-row-label">投保 3,330 萬壽險（全額免計）</span><span class="heir-row-val" style="color:${insSaving > 0 ? 'var(--success)' : 'var(--muted)'}">${insSaving > 0 ? '節省 ' + fmt(insSaving) : '已無差異'}</span></div>
+            <div style="font-size:11px;color:var(--muted);margin-bottom:10px">依遺贈稅法§16-9，每人 3,330 萬壽險給付免計入遺產。但須注意實質課稅八大態樣。</div>`;
+          })()}
+          <div style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:8px;border-top:1px solid var(--soft);padding-top:10px">策略三：組合方案（贈與 + 保險 + 配偶分配）</div>
+          ${(() => {
+            const combo = (state.hasSpouse ? Math.floor(adjustedTotal / 2) : 0) + 33300000 + 10 * 2440000;
+            const comboRemain = Math.max(0, adjustedTotal - combo);
+            const comboNet = Math.max(0, comboRemain - exemption - totalDeduct);
+            const comboTax = calcEstateTax(comboNet);
+            const comboSaving = tax - comboTax;
+            return `<div class="heir-row"><span class="heir-row-label">三策略合計最大節稅</span><span class="heir-row-val" style="color:var(--gold);font-weight:700;font-size:15px">${comboSaving > 0 ? '節省 ' + fmt(comboSaving) : '已免稅'}</span></div>
+            <div style="font-size:11px;color:var(--muted)">以上為理論最大節稅空間，實際需依個案評估。建議諮詢會計師或律師進行專業規劃。</div>`;
+          })()}
+        </div>
+      </div>
+    </div>` : ''}`;
+
 
     initSaveButton(
       'inheritance',
@@ -1646,7 +1730,7 @@ td{padding:5px 10px;border:1px solid #ddd;font-size:12px;vertical-align:top;}
     state = { hasWill: true, hasSpouse: true, regime: 'legal', children: 0, deceased_children: 0, representatives: [], parents: 0, siblings: 0, grandparents: 0, renounce: { children: 0, parents: 0, siblings: 0, grandparents: 0 }, totalEstate: 0 };
     ['children', 'deceased_children', 'parents', 'siblings', 'grandparents'].forEach(k => { const el = document.getElementById('val_' + k); if (el) el.textContent = '0'; });
     ['children', 'parents', 'siblings', 'grandparents'].forEach(k => { const el = document.getElementById('renounce_' + k); if (el) el.textContent = '0'; const ex = document.getElementById(k + 'Extra'); if (ex) ex.style.display = 'none'; });
-    ['deduct_children_count', 'deduct_parents_count', 'deduct_disabled_count', 'deduct_other', 'deduct_agri', 'deduct_insurance', 'deduct_labor_ins', 'deduct_retax', 'cash', 'otherAssets'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+    ['deduct_children_count', 'deduct_parents_count', 'deduct_disabled_count', 'deduct_other', 'deduct_agri', 'deduct_insurance', 'deduct_labor_ins', 'deduct_retax', 'deduct_addback_gifts', 'deduct_siblings_count', 'deduct_public_land', 'cash', 'otherAssets'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
     document.getElementById('childDeductAmt').textContent = '';
     document.getElementById('parentDeductAmt').textContent = '';
     document.getElementById('disabledDeductAmt').textContent = '';

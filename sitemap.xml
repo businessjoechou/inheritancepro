@@ -23,7 +23,7 @@
   <url><loc>https://inheritancepro.app/settlement-calc.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://inheritancepro.app/child-support.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://inheritancepro.app/divorce-damages.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://inheritancepro.app/infidelity-damages.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <!-- infidelity-damages merged into divorce-damages.html?tab=infidelity -->
   <url><loc>https://inheritancepro.app/divorce-agreement.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://inheritancepro.app/limited-inheritance.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://inheritancepro.app/will-validity.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>

@@ -13,29 +13,29 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="favicon.svg">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>壽險保單遺產稅風險評估｜InheritancePro</title>
-<meta name="description" content="依國稅局實質課稅原則八大態樣，評估壽險保單被追課遺產稅的風險。計算風險分數、預估補稅金額、提供降低風險建議。InheritancePro。">
-<meta name="keywords" content="壽險遺產稅,實質課稅,八大態樣,保單遺產稅風險,躉繳投保,高齡投保,巨額投保,舉債投保">
+<title>壽險保單稅務風險評估｜AMT + 遺產稅 + 特留分｜InheritancePro</title>
+<meta name="description" content="三合一壽險保單稅務風險評估：依八大態樣評估遺產稅風險、最低稅負制 AMT 保單試算、保單受益人特留分侵害計算。InheritancePro。">
+<meta name="keywords" content="壽險遺產稅,實質課稅,八大態樣,保單遺產稅風險,躉繳投保,高齡投保,巨額投保,舉債投保,最低稅負制,AMT,保單所得稅,保險給付,基本所得額,3740萬,指定受益人,特留分,保單特留分,身故保險金,扣減權,顯失公平">
 <meta name="robots" content="index, follow">
 <meta name="author" content="InheritancePro">
-<meta property="og:title" content="壽險保單遺產稅風險評估｜InheritancePro">
-<meta property="og:description" content="依國稅局實質課稅原則八大態樣，評估壽險保單被追課遺產稅的風險，預估補稅金額。">
+<meta property="og:title" content="壽險保單稅務風險評估｜AMT + 遺產稅 + 特留分｜InheritancePro">
+<meta property="og:description" content="三合一壽險保單稅務風險評估：遺產稅八大態樣、最低稅負制 AMT、保單特留分侵害計算。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://inheritancepro.app/insurance-estate-risk.html">
 <meta property="og:site_name" content="InheritancePro">
 <meta property="og:locale" content="zh_TW">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="壽險保單遺產稅風險評估｜InheritancePro">
+<meta name="twitter:title" content="壽險保單稅務風險評估｜AMT + 遺產稅 + 特留分｜InheritancePro">
 <link rel="canonical" href="https://inheritancepro.app/insurance-estate-risk.html">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/tool-page.css">
 <script src="js/pdf-export.js"></script>
 <script src="js/persona.js"></script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"壽險保單遺產稅風險評估","url":"https://inheritancepro.app/insurance-estate-risk.html","applicationCategory":"FinanceApplication","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro"}}
+{"@context":"https://schema.org","@type":"WebApplication","name":"壽險保單稅務風險評估（遺產稅 + AMT + 特留分）","url":"https://inheritancepro.app/insurance-estate-risk.html","applicationCategory":"FinanceApplication","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro","url":"https://inheritancepro.app"}}
 </script>
 <style>
-  /* Tool-specific: progress bar */
+  /* ── Tab 1 (risk): progress bar & form ── */
   .progress-bar { height: 3px; background: var(--soft); }
   .progress-fill { height: 100%; background: var(--gold); transition: width 0.4s ease; }
   .step-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
@@ -45,7 +45,7 @@
   .checkbox-group input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--accent); cursor: pointer; }
   .checkbox-group label { margin-bottom: 0; font-size: 14px; cursor: pointer; }
 
-  /* Tool-specific: risk score circle */
+  /* Tab 1 (risk): risk score circle */
   .risk-circle-wrap { text-align: center; padding: 32px 20px 24px; }
   .risk-circle {
     width: 140px; height: 140px; border-radius: 50%; display: inline-flex;
@@ -57,7 +57,7 @@
   .risk-level { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 700; margin-top: 14px; }
   .risk-desc { font-size: 13px; color: var(--muted); margin-top: 6px; line-height: 1.6; }
 
-  /* Tool-specific: indicator table */
+  /* Tab 1 (risk): indicator table */
   .indicator-table { width: 100%; border-collapse: collapse; font-size: 13px; }
   .indicator-table th { background: var(--soft); padding: 8px 12px; text-align: left; font-size: 11px; font-family: 'DM Mono', monospace; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
   .indicator-table td { padding: 10px 12px; border-bottom: 1px solid var(--soft); vertical-align: middle; }
@@ -70,7 +70,7 @@
   .light-green { background: #43a047; }
   .indicator-score { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; text-align: right; white-space: nowrap; }
 
-  /* Tool-specific: result-hero label override */
+  /* Tab 1 (risk): result-hero label override */
   .result-hero .label { font-size: 12px; color: var(--muted); letter-spacing: 0.12em; font-family: 'DM Mono', monospace; text-transform: uppercase; margin-bottom: 10px; }
   .heir-card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 10px; }
   .heir-header { background: var(--soft); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; }
@@ -82,7 +82,7 @@
   .heir-row-label { font-size: 13px; color: var(--muted); }
   .heir-row-val { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; color: var(--success); }
 
-  /* Tool-specific: suggestions */
+  /* Tab 1 (risk): suggestions */
   .suggestion-item { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--soft); font-size: 13px; line-height: 1.6; }
   .suggestion-item:last-child { border-bottom: none; }
   .suggestion-icon { flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; margin-top: 2px; }
@@ -94,10 +94,51 @@
   .btn-primary:hover { background: #2a1a10; }
   .btn-print { background: var(--accent); color: #fff; }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-  @media print { header, .nav-bar, #navBar, .progress-bar { display: none !important; } main { padding: 20px; } }
+  @media print { header, .nav-bar, #navBar, .progress-bar, .ip-tab-bar { display: none !important; } main { padding: 20px; } }
   #resultSection { display: none; animation: fadeUp 0.3s ease both; }
   .cross-links { margin-top: 20px; border-top: 1px solid var(--border); padding-top: 16px; }
   .cross-link-btn span { color: var(--muted); font-size: 18px; }
+
+  /* ── Tab 2 (amt): specific styles ── */
+  .policy-row{display:grid;grid-template-columns:1fr 1fr 32px;gap:8px;align-items:start;margin-bottom:10px;padding:10px;background:var(--paper);border-radius:8px;}
+  .policy-row input{padding:9px 10px;font-size:13px;}
+  .policy-row .del-btn{background:none;border:1.5px solid var(--border);border-radius:6px;color:var(--muted);cursor:pointer;font-size:16px;padding:0;height:38px;}
+  .policy-row .del-btn:hover{border-color:var(--accent);color:var(--accent);}
+  .policy-row label{font-size:10px;color:var(--muted);margin-bottom:3px;display:block;}
+  .add-btn{width:100%;padding:10px;border:1.5px dashed var(--border);border-radius:8px;background:none;color:var(--muted);font-size:13px;cursor:pointer;margin-top:4px;}
+  .add-btn:hover{border-color:var(--gold);color:var(--gold);}
+  .result-card{background:var(--ink);color:var(--paper);border-radius:12px;padding:24px;margin-bottom:14px;}
+  .result-title{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:16px;}
+  .result-row{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.08);font-size:13px;}
+  .result-row:last-child{border-bottom:none;}
+  .result-row .lbl{color:rgba(255,255,255,0.65);}
+  .result-row .val{font-family:'DM Mono',monospace;}
+  .big-val{font-size:32px;font-weight:700;color:var(--gold);font-family:'DM Mono',monospace;text-align:center;margin:8px 0;}
+  .status-badge{display:inline-block;padding:8px 20px;border-radius:24px;font-size:13px;font-weight:600;letter-spacing:0.04em;margin:0 auto;display:block;width:fit-content;}
+  .status-safe{background:rgba(42,107,74,0.15);color:#7cd4a3;border:1px solid rgba(42,107,74,0.4);}
+  .status-alert{background:rgba(139,32,32,0.25);color:#f28b6e;border:1px solid rgba(139,32,32,0.5);}
+  .amt-progress-bar{height:8px;background:rgba(255,255,255,0.1);border-radius:4px;overflow:hidden;margin-top:12px;}
+  .amt-progress-fill{height:100%;background:linear-gradient(90deg,var(--success),var(--gold),var(--accent));transition:width 0.4s;}
+  .amt-progress-label{display:flex;justify-content:space-between;font-size:10px;font-family:'DM Mono',monospace;color:rgba(255,255,255,0.5);margin-top:6px;}
+  .accountant-only .panel-title{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.12em;margin-bottom:10px;}
+  .tip-item{font-size:12px;color:var(--muted);padding:7px 0;border-bottom:1px solid var(--soft);line-height:1.6;}
+  .tip-item:last-child{border-bottom:none;}
+  .tip-tag{display:inline-block;border-radius:4px;padding:1px 7px;font-size:10px;font-family:'DM Mono',monospace;margin-right:6px;}
+  .tip-tag-green{background:rgba(42,107,74,0.1);color:var(--success);}
+  .tip-tag-red{background:rgba(139,32,32,0.1);color:var(--danger);}
+
+  /* ── Tab 3 (forced-share): specific styles ── */
+  .intro{background:rgba(196,147,42,0.08);border-left:3px solid var(--gold);padding:12px 14px;border-radius:0 8px 8px 0;font-size:12px;color:#666;line-height:1.75;margin-bottom:20px;}
+  .intro strong{color:var(--ink);}
+  .checkbox-row:last-child{margin-bottom:0;}
+  .risk-badge{display:inline-block;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;letter-spacing:0.04em;margin-top:10px;}
+  .risk-low{background:rgba(42,107,74,0.15);color:#7cd4a3;border:1px solid rgba(42,107,74,0.4);}
+  .risk-mid{background:rgba(196,147,42,0.15);color:var(--gold);border:1px solid rgba(196,147,42,0.4);}
+  .risk-high{background:rgba(139,32,32,0.25);color:#f28b6e;border:1px solid rgba(139,32,32,0.5);}
+  .total-highlight{background:rgba(196,147,42,0.15);border:1px solid rgba(196,147,42,0.3);border-radius:8px;padding:16px;margin-top:12px;display:flex;justify-content:space-between;align-items:center;}
+  .total-highlight .lbl{color:rgba(255,255,255,0.8);font-size:13px;}
+  .total-highlight .val{font-family:'DM Mono',monospace;font-size:22px;font-weight:700;color:var(--gold);}
+  .lawyer-only .panel-title{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.12em;margin-bottom:10px;}
 </style>
 </head>
 <body>
@@ -105,7 +146,7 @@
 <header>
   <a href="index.html" style="text-decoration:none;color:inherit">
     <div class="logo">Inheritance<span>Pro</span></div>
-    <div class="page-sub">壽險保單遺產稅風險評估</div>
+    <div class="page-sub">壽險保單稅務風險評估</div>
   </a>
   <a href="index.html" class="home-link">&larr; 首頁</a>
 </header>
@@ -113,203 +154,434 @@
 
 <main>
 
-  <div class="step-label">實質課稅原則 · 八大態樣評估</div>
-  <h1>壽險保單遺產稅風險評估器</h1>
-  <p class="subtitle">依國稅局「實質課稅原則」八大態樣，評估壽險保單被追課遺產稅的風險，預估補稅金額並提供降風險建議。</p>
+  <h1>壽險保單稅務風險評估</h1>
+  <p class="subtitle">三合一壽險保單稅務風險分析：遺產稅八大態樣評估、最低稅負制 AMT 試算、保單受益人特留分侵害計算。</p>
 
-  <!-- Section 1: 基本資訊 -->
-  <div class="card">
-    <div class="section-title">1 · 投保基本資訊</div>
-
-    <div class="input-group">
-      <label>投保年齡（歲）</label>
-      <input type="number" id="insureAge" placeholder="例：72" min="0" max="120" inputmode="numeric">
-    </div>
-
-    <div class="input-group">
-      <label>投保時健康狀況</label>
-      <select id="healthStatus">
-        <option value="healthy">健康</option>
-        <option value="chronic">慢性病（如糖尿病、高血壓等）</option>
-        <option value="critical">重病（如癌症末期、重大傷病等）</option>
-      </select>
-    </div>
-
-    <div class="input-group">
-      <label>繳費方式</label>
-      <select id="paymentMethod">
-        <option value="monthly">月繳</option>
-        <option value="annual">年繳</option>
-        <option value="lump">躉繳（一次繳清）</option>
-      </select>
-    </div>
+  <!-- ========== Tab Bar ========== -->
+  <div class="ip-tab-bar" id="insTabs">
+    <button class="ip-tab-btn active" data-tab="risk">遺產稅風險</button>
+    <button class="ip-tab-btn" data-tab="amt">最低稅負 AMT</button>
+    <button class="ip-tab-btn" data-tab="forced">特留分衝突</button>
   </div>
 
-  <!-- Section 2: 金額資訊 -->
-  <div class="card">
-    <div class="section-title">2 · 保費與保額資訊</div>
+  <!-- ==================== Tab 1: 遺產稅風險（原 insurance-estate-risk） ==================== -->
+  <div class="ip-tab-panel active" data-tab="risk">
 
-    <div class="input-group">
-      <label>保費總額（萬元）</label>
-      <input type="number" id="totalPremium" placeholder="例：3000" min="0" inputmode="numeric">
-    </div>
+    <div class="step-label">實質課稅原則 · 八大態樣評估</div>
 
-    <div class="input-group">
-      <label>保額（萬元）<span style="font-weight:400;color:var(--muted);font-size:12px"> 保險給付金額</span></label>
-      <input type="number" id="insuredAmount" placeholder="例：3200" min="0" inputmode="numeric">
-    </div>
+    <!-- Section 1: 基本資訊 -->
+    <div class="card">
+      <div class="section-title">1 · 投保基本資訊</div>
 
-    <div class="input-group">
-      <label>遺產總額（萬元）<span style="font-weight:400;color:var(--muted);font-size:12px"> 含保險給付</span></label>
-      <input type="number" id="totalEstate" placeholder="例：8000" min="0" inputmode="numeric">
-    </div>
-  </div>
+      <div class="input-group">
+        <label>投保年齡（歲）</label>
+        <input type="number" id="insureAge" placeholder="例：72" min="0" max="120" inputmode="numeric">
+      </div>
 
-  <!-- Section 3: 投保行為 -->
-  <div class="card">
-    <div class="section-title">3 · 投保行為態樣</div>
+      <div class="input-group">
+        <label>投保時健康狀況</label>
+        <select id="healthStatus">
+          <option value="healthy">健康</option>
+          <option value="chronic">慢性病（如糖尿病、高血壓等）</option>
+          <option value="critical">重病（如癌症末期、重大傷病等）</option>
+        </select>
+      </div>
 
-    <div class="input-group">
-      <label>投保至身故年數</label>
-      <input type="number" id="yearsToDecease" placeholder="例：1.5" min="0" step="0.1" inputmode="decimal">
-    </div>
-
-    <div class="input-group">
-      <label>2年內購買保單數量（張）</label>
-      <input type="number" id="policyCount" placeholder="例：3" min="0" inputmode="numeric">
-    </div>
-
-    <div class="input-group" style="margin-bottom:0">
-      <div class="checkbox-group">
-        <input type="checkbox" id="debtInsure">
-        <label for="debtInsure">是否舉債投保（借錢買保險）</label>
+      <div class="input-group">
+        <label>繳費方式</label>
+        <select id="paymentMethod">
+          <option value="monthly">月繳</option>
+          <option value="annual">年繳</option>
+          <option value="lump">躉繳（一次繳清）</option>
+        </select>
       </div>
     </div>
-  </div>
 
-  <div class="info-box">
-    <strong>法律依據</strong>：依所得稅法§12-1實質課稅原則、保險法§112、遺產及贈與稅法§16第9款。國稅局依財政部函釋及實務判決，針對具有「規避遺產稅」目的之壽險保單，得將保險給付計入遺產總額課稅。
-  </div>
+    <!-- Section 2: 金額資訊 -->
+    <div class="card">
+      <div class="section-title">2 · 保費與保額資訊</div>
 
-  <!-- Results -->
-  <div id="resultSection">
+      <div class="input-group">
+        <label>保費總額（萬元）<span style="font-weight:400;color:var(--muted);font-size:12px"> 例：3,000 萬請輸入 3000</span></label>
+        <input type="number" id="totalPremium" placeholder="例：3000" min="0" inputmode="numeric" oninput="warnIfTooLarge(this)">
+      </div>
 
-    <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">風險評估結果</div>
+      <div class="input-group">
+        <label>保額（萬元）<span style="font-weight:400;color:var(--muted);font-size:12px"> 保險給付金額，例：3,200 萬請輸入 3200</span></label>
+        <input type="number" id="insuredAmount" placeholder="例：3200" min="0" inputmode="numeric" oninput="warnIfTooLarge(this)">
+      </div>
 
-    <!-- Risk Score Circle -->
-    <div class="result-hero">
-      <div class="label">風險評分</div>
-      <div class="risk-circle-wrap">
-        <div class="risk-circle" id="riskCircle">
-          <div class="risk-score" id="riskScore">0</div>
-          <div class="risk-max">/ 120</div>
+      <div class="input-group">
+        <label>遺產總額（萬元）<span style="font-weight:400;color:var(--muted);font-size:12px"> 含保險給付，例：8,000 萬請輸入 8000</span></label>
+        <input type="number" id="totalEstate" placeholder="例：8000" min="0" inputmode="numeric" oninput="warnIfTooLarge(this)">
+      </div>
+    </div>
+
+    <!-- Section 3: 投保行為 -->
+    <div class="card">
+      <div class="section-title">3 · 投保行為態樣</div>
+
+      <div class="input-group">
+        <label>投保至身故年數</label>
+        <input type="number" id="yearsToDecease" placeholder="例：1.5" min="0" step="0.1" inputmode="decimal">
+      </div>
+
+      <div class="input-group">
+        <label>2年內購買保單數量（張）</label>
+        <input type="number" id="policyCount" placeholder="例：3" min="0" inputmode="numeric">
+      </div>
+
+      <div class="input-group" style="margin-bottom:0">
+        <div class="checkbox-group">
+          <input type="checkbox" id="debtInsure">
+          <label for="debtInsure">是否舉債投保（借錢買保險）</label>
         </div>
-        <div class="risk-level" id="riskLevel">--</div>
-        <div class="risk-desc" id="riskDesc"></div>
       </div>
     </div>
 
-    <!-- 八大態樣表 -->
-    <div class="heir-card">
-      <div class="heir-header">
-        <span class="heir-name">八大態樣逐項分析</span>
-        <span class="heir-fraction" id="hitCount">--</span>
-      </div>
-      <div class="heir-body" style="padding:0">
-        <table class="indicator-table">
-          <thead>
-            <tr>
-              <th>態樣</th>
-              <th style="text-align:right">評分</th>
-            </tr>
-          </thead>
-          <tbody id="indicatorBody"></tbody>
-        </table>
-      </div>
+    <div class="info-box">
+      <strong>法律依據</strong>：依所得稅法§12-1實質課稅原則、保險法§112、遺產及贈與稅法§16第9款。國稅局依財政部函釋及實務判決，針對具有「規避遺產稅」目的之壽險保單，得將保險給付計入遺產總額課稅。
     </div>
 
-    <!-- 預估補稅 -->
-    <div class="heir-card" id="taxCard">
-      <div class="heir-header" style="background:#fff5f0">
-        <span class="heir-name">預估補稅金額</span>
-        <span class="heir-fraction" id="taxRateLabel">--</span>
-      </div>
-      <div class="heir-body">
-        <div class="heir-row">
-          <span class="heir-row-label">保險給付（保額）</span>
-          <span class="heir-row-val" style="color:var(--muted)" id="r_insured">--</span>
+    <!-- Results -->
+    <div id="resultSection">
+
+      <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">風險評估結果</div>
+
+      <!-- Risk Score Circle -->
+      <div class="result-hero">
+        <div class="label">風險評分</div>
+        <div class="risk-circle-wrap">
+          <div class="risk-circle" id="riskCircle">
+            <div class="risk-score" id="riskScore">0</div>
+            <div class="risk-max">/ 120</div>
+          </div>
+          <div class="risk-level" id="riskLevel">--</div>
+          <div class="risk-desc" id="riskDesc"></div>
         </div>
-        <div class="heir-row">
-          <span class="heir-row-label">遺產稅邊際稅率</span>
-          <span class="heir-row-val" style="color:var(--muted)" id="r_marginal">--</span>
+      </div>
+
+      <!-- 八大態樣表 -->
+      <div class="heir-card">
+        <div class="heir-header">
+          <span class="heir-name">八大態樣逐項分析</span>
+          <span class="heir-fraction" id="hitCount">--</span>
         </div>
-        <div class="heir-row" style="border-top:1px solid var(--soft);padding-top:10px;margin-top:4px">
-          <span class="heir-row-label" style="font-weight:600;color:var(--ink)">預估補繳遺產稅</span>
-          <span class="heir-row-val" style="font-size:17px;color:var(--accent)" id="r_extraTax">--</span>
+        <div class="heir-body" style="padding:0">
+          <table class="indicator-table">
+            <thead>
+              <tr>
+                <th>態樣</th>
+                <th style="text-align:right">評分</th>
+              </tr>
+            </thead>
+            <tbody id="indicatorBody"></tbody>
+          </table>
         </div>
-        <div style="font-size:11px;color:var(--muted);margin-top:8px;line-height:1.6">若國稅局認定保單為規避遺產稅，保險給付將計入遺產總額，依邊際稅率補課遺產稅。</div>
+      </div>
+
+      <!-- 預估補稅 -->
+      <div class="heir-card" id="taxCard">
+        <div class="heir-header" style="background:#fff5f0">
+          <span class="heir-name">預估補稅金額</span>
+          <span class="heir-fraction" id="taxRateLabel">--</span>
+        </div>
+        <div class="heir-body">
+          <div class="heir-row">
+            <span class="heir-row-label">保險給付（保額）</span>
+            <span class="heir-row-val" style="color:var(--muted)" id="r_insured">--</span>
+          </div>
+          <div class="heir-row">
+            <span class="heir-row-label">遺產稅邊際稅率</span>
+            <span class="heir-row-val" style="color:var(--muted)" id="r_marginal">--</span>
+          </div>
+          <div class="heir-row" style="border-top:1px solid var(--soft);padding-top:10px;margin-top:4px">
+            <span class="heir-row-label" style="font-weight:600;color:var(--ink)">預估補繳遺產稅</span>
+            <span class="heir-row-val" style="font-size:17px;color:var(--accent)" id="r_extraTax">--</span>
+          </div>
+          <div style="font-size:11px;color:var(--muted);margin-top:8px;line-height:1.6">若國稅局認定保單為規避遺產稅，保險給付將計入遺產總額，依邊際稅率補課遺產稅。</div>
+        </div>
+      </div>
+
+      <!-- 降低風險建議 -->
+      <div class="heir-card" id="suggestCard">
+        <div class="heir-header" style="background:#e8f5e9">
+          <span class="heir-name">降低風險建議</span>
+          <span class="heir-fraction" style="color:var(--success)">建議</span>
+        </div>
+        <div class="heir-body" id="suggestBody">
+        </div>
+      </div>
+
+      <!-- Pro: Lawyer -->
+      <div class="lawyer-only" style="background:#eef3fa;border:1.5px solid #3a5a80;border-radius:12px;padding:16px 20px;margin-top:16px">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:#3a5a80;letter-spacing:0.12em;margin-bottom:10px">LAWYER MEMO</div>
+        <div style="font-family:'Noto Serif TC',serif;font-size:15px;font-weight:700;color:#1a3a5c;margin-bottom:10px">訴訟策略備忘</div>
+        <div style="font-size:13px;color:#2a4a6c;line-height:1.8">
+          <strong>行政救濟要點：</strong><br>
+          1. 確認國稅局是否已踐行「實質課稅」之舉證義務（稅捐稽徵法§12-1第3項）<br>
+          2. 爭點：投保目的是否確有保障需求，非僅為規避遺產稅<br>
+          3. 審酌保單投保時點與被繼承人健康狀態之關聯性<br>
+          4. 復查 → 訴願 → 行政訴訟之期限管控（復查30日、訴願30日）<br><br>
+          <strong>舉證責任分配：</strong><br>
+          1. 國稅局應就「規避稅捐之主觀意圖」負舉證責任<br>
+          2. 納稅義務人可提出：投保動機說明、家庭保障需求、財務規劃紀錄<br>
+          3. 參考判決：最高行政法院107年度判字第XXX號（實質課稅應嚴格認定）<br>
+          4. 若僅符合1-2項態樣且有合理說明，爭訟成功機率較高
+        </div>
+      </div>
+
+      <!-- Pro: Accountant -->
+      <div class="accountant-only" style="background:#eef8f2;border:1.5px solid #2a6b4a;border-radius:12px;padding:16px 20px;margin-top:16px">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:#2a6b4a;letter-spacing:0.12em;margin-bottom:10px">ACCOUNTANT MEMO</div>
+        <div style="font-family:'Noto Serif TC',serif;font-size:15px;font-weight:700;color:#1a4a3c;margin-bottom:10px">申報實務備忘</div>
+        <div style="font-size:13px;color:#2a5a4c;line-height:1.8">
+          <strong>遺產稅申報注意事項：</strong><br>
+          1. 死亡前投保之壽險保單，若符合實質課稅態樣，建議主動申報並附說明<br>
+          2. 保費列舉扣除額：每人每年2.4萬（所得稅），與遺產稅不同體系<br>
+          3. 保險給付若被計入遺產，應確認是否已從保險公司取得完整給付明細<br>
+          4. 多張保單應逐張評估，個別判斷是否符合態樣<br><br>
+          <strong>保費列舉扣除額提醒：</strong><br>
+          1. 人身保險費每人每年最高2.4萬（綜所稅列舉扣除）<br>
+          2. 全民健保費不受2.4萬上限限制，可全額扣除<br>
+          3. 要保人與被保險人須在同一申報戶<br>
+          4. 躉繳保費可分年攤提列報（依保單年限平均分攤）
+        </div>
+      </div>
+
+      <div class="law-note" style="margin-top:16px">
+        依所得稅法第12條之1「實質課稅原則」及財政部相關函釋，國稅局得將具有規避遺產稅意圖之壽險保單給付計入遺產總額課稅。本評估僅供參考，實際認定以國稅局核定為準。
+      </div>
+
+      <button class="btn btn-print" style="width:100%;margin-top:14px;padding:13px;border-radius:10px;font-size:14px;" onclick="printOrExport('InheritancePro-保單遺產風險')">列印 / 儲存 PDF</button>
+
+      <div class="cross-links">
+        <div class="cross-links-label">相關工具</div>
+        <a class="cross-link-btn" href="calculator.html">遺產繼承計算器　完整遺產稅試算 <span>&rarr;</span></a>
+        <a class="cross-link-btn" href="gift-tax.html">贈與稅試算　生前贈與節稅規劃 <span>&rarr;</span></a>
+        <a class="cross-link-btn" href="asset-detection.html">脫產偵測分析　2年內贈與追回 <span>&rarr;</span></a>
       </div>
     </div>
 
-    <!-- 降低風險建議 -->
-    <div class="heir-card" id="suggestCard">
-      <div class="heir-header" style="background:#e8f5e9">
-        <span class="heir-name">降低風險建議</span>
-        <span class="heir-fraction" style="color:var(--success)">建議</span>
+  </div><!-- /Tab 1 risk -->
+
+  <!-- ==================== Tab 2: 最低稅負 AMT（原 insurance-amt） ==================== -->
+  <div class="ip-tab-panel" data-tab="amt">
+
+    <p class="subtitle" style="margin-top:0">95 年以後生效的保單，<strong>受益人非要保人本人</strong>時，每年合計超過 <strong>3,740 萬</strong>的保險給付須併入基本所得額課 20% 最低稅負。</p>
+
+    <div class="card">
+      <div class="section-title">A · 本年度保險給付</div>
+      <div id="amt_policyList">
+        <div class="policy-row">
+          <div><label>保單名稱/編號</label><input type="text" class="amt-policy-name" placeholder="終身壽險 A"></div>
+          <div><label>當年度給付 (元)</label><input type="number" class="amt-policy-amount" placeholder="例：15000000" min="0"></div>
+          <button class="del-btn" onclick="amtRemoveRow(this)">×</button>
+        </div>
       </div>
-      <div class="heir-body" id="suggestBody">
-      </div>
+      <button class="add-btn" onclick="amtAddRow()">+ 新增保單</button>
     </div>
 
-    <!-- Pro: Lawyer -->
-    <div class="lawyer-only" style="background:#eef3fa;border:1.5px solid #3a5a80;border-radius:12px;padding:16px 20px;margin-top:16px">
-      <div style="font-family:'DM Mono',monospace;font-size:10px;color:#3a5a80;letter-spacing:0.12em;margin-bottom:10px">LAWYER MEMO</div>
-      <div style="font-family:'Noto Serif TC',serif;font-size:15px;font-weight:700;color:#1a3a5c;margin-bottom:10px">訴訟策略備忘</div>
-      <div style="font-size:13px;color:#2a4a6c;line-height:1.8">
-        <strong>行政救濟要點：</strong><br>
-        1. 確認國稅局是否已踐行「實質課稅」之舉證義務（稅捐稽徵法§12-1第3項）<br>
-        2. 爭點：投保目的是否確有保障需求，非僅為規避遺產稅<br>
-        3. 審酌保單投保時點與被繼承人健康狀態之關聯性<br>
-        4. 復查 → 訴願 → 行政訴訟之期限管控（復查30日、訴願30日）<br><br>
-        <strong>舉證責任分配：</strong><br>
-        1. 國稅局應就「規避稅捐之主觀意圖」負舉證責任<br>
-        2. 納稅義務人可提出：投保動機說明、家庭保障需求、財務規劃紀錄<br>
-        3. 參考判決：最高行政法院107年度判字第XXX號（實質課稅應嚴格認定）<br>
-        4. 若僅符合1-2項態樣且有合理說明，爭訟成功機率較高
+    <div class="card">
+      <div class="section-title">B · 排除條件確認</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.75">
+        以下情形<strong>不須</strong>併入基本所得額，請先確認：<br>
+        · 95 年 1 月 1 日<strong>以前</strong>生效的保單<br>
+        · 要保人與受益人為<strong>同一人</strong>的保單<br>
+        · 健康險、傷害險、醫療險給付<br>
+        · 死亡給付中 <strong>3,740 萬</strong>以下部分<br>
+        · 年金險之「保證期間」內給付
       </div>
-    </div>
-
-    <!-- Pro: Accountant -->
-    <div class="accountant-only" style="background:#eef8f2;border:1.5px solid #2a6b4a;border-radius:12px;padding:16px 20px;margin-top:16px">
-      <div style="font-family:'DM Mono',monospace;font-size:10px;color:#2a6b4a;letter-spacing:0.12em;margin-bottom:10px">ACCOUNTANT MEMO</div>
-      <div style="font-family:'Noto Serif TC',serif;font-size:15px;font-weight:700;color:#1a4a3c;margin-bottom:10px">申報實務備忘</div>
-      <div style="font-size:13px;color:#2a5a4c;line-height:1.8">
-        <strong>遺產稅申報注意事項：</strong><br>
-        1. 死亡前投保之壽險保單，若符合實質課稅態樣，建議主動申報並附說明<br>
-        2. 保費列舉扣除額：每人每年2.4萬（所得稅），與遺產稅不同體系<br>
-        3. 保險給付若被計入遺產，應確認是否已從保險公司取得完整給付明細<br>
-        4. 多張保單應逐張評估，個別判斷是否符合態樣<br><br>
-        <strong>保費列舉扣除額提醒：</strong><br>
-        1. 人身保險費每人每年最高2.4萬（綜所稅列舉扣除）<br>
-        2. 全民健保費不受2.4萬上限限制，可全額扣除<br>
-        3. 要保人與被保險人須在同一申報戶<br>
-        4. 躉繳保費可分年攤提列報（依保單年限平均分攤）
+      <div style="margin-top:14px;padding:12px;background:rgba(196,147,42,0.08);border-radius:8px;font-size:12px;color:var(--muted);line-height:1.7">
+        ⚠️ 本工具預設您已排除上述情形，僅就「95 年後生效、受益人非要保人、死亡給付部分」進行合計與試算。
       </div>
     </div>
 
-    <div class="law-note" style="margin-top:16px">
-      依所得稅法第12條之1「實質課稅原則」及財政部相關函釋，國稅局得將具有規避遺產稅意圖之壽險保單給付計入遺產總額課稅。本評估僅供參考，實際認定以國稅局核定為準。
+    <div class="card">
+      <div class="section-title">C · 其他基本所得額項目</div>
+      <div class="input-group">
+        <label>綜合所得淨額<span class="label-hint">元，當年度</span></label>
+        <input type="number" id="amt_regularIncome" placeholder="例：2000000" min="0">
+      </div>
+      <div class="input-group">
+        <label>海外所得<span class="label-hint">元，100 萬以上部分須併入</span></label>
+        <input type="number" id="amt_overseas" placeholder="0" min="0">
+      </div>
+      <div class="input-group">
+        <label>未上市櫃股票交易所得<span class="label-hint">元，110 年起併入</span></label>
+        <input type="number" id="amt_stockGain" placeholder="0" min="0">
+      </div>
+      <div class="input-group" style="margin-bottom:0">
+        <label>私募基金受益憑證<span class="label-hint">元</span></label>
+        <input type="number" id="amt_fundGain" placeholder="0" min="0">
+      </div>
     </div>
 
-    <button class="btn btn-print" style="width:100%;margin-top:14px;padding:13px;border-radius:10px;font-size:14px;" onclick="printOrExport('InheritancePro-保單遺產風險')">列印 / 儲存 PDF</button>
-
-    <div class="cross-links">
-      <div class="cross-links-label">相關工具</div>
-      <a class="cross-link-btn" href="calculator.html">遺產繼承計算器　完整遺產稅試算 <span>&rarr;</span></a>
-      <a class="cross-link-btn" href="gift-tax.html">贈與稅試算　生前贈與節稅規劃 <span>&rarr;</span></a>
-      <a class="cross-link-btn" href="asset-detection.html">脫產偵測分析　2年內贈與追回 <span>&rarr;</span></a>
+    <div class="card accountant-only">
+      <div class="panel-title">📊 會計師備忘</div>
+      <div class="tip-item"><span class="tip-tag tip-tag-green">依據</span>所得基本稅額條例§12：保險死亡給付每一申報戶全年合計 3,740 萬元以下免計入。</div>
+      <div class="tip-item"><span class="tip-tag tip-tag-green">§13</span>基本所得額 = 綜所淨額 + 保險 + 海外 + 未上市櫃 + 私募基金；扣除 750 萬免稅額後適用 20% 稅率。</div>
+      <div class="tip-item"><span class="tip-tag tip-tag-green">比較</span>基本稅額 vs 一般所得稅額取高者繳納（§4）。</div>
+      <div class="tip-item"><span class="tip-tag tip-tag-green">實務</span>高資產客戶常忽略多張大額保單累加效應；建議申報前做 AMT 模擬。</div>
+      <div class="tip-item"><span class="tip-tag tip-tag-green">時效</span>若短漏報，核課期間 5 年（稅捐稽徵法§21）。</div>
     </div>
-  </div>
+
+    <button class="calc-btn" onclick="amtCalculate()">計算 AMT 應納稅額</button>
+
+    <div id="amt_results" style="display:none;margin-top:24px">
+      <div class="result-card">
+        <div class="result-title">保險給付合計</div>
+        <div class="big-val" id="amt_r-total">—</div>
+        <div class="amt-progress-bar"><div class="amt-progress-fill" id="amt_r-progress" style="width:0%"></div></div>
+        <div class="amt-progress-label"><span>0</span><span>3,740 萬門檻</span><span id="amt_r-over">—</span></div>
+        <div style="margin-top:16px"><span id="amt_r-status" class="status-badge"></span></div>
+      </div>
+
+      <div class="result-card" id="amt_amtCard" style="display:none">
+        <div class="result-title">AMT 試算明細</div>
+        <div class="result-row"><span class="lbl">保險給付超過門檻</span><span class="val" id="amt_r-insurance">—</span></div>
+        <div class="result-row"><span class="lbl">綜合所得淨額</span><span class="val" id="amt_r-regular">—</span></div>
+        <div class="result-row"><span class="lbl">海外所得</span><span class="val" id="amt_r-overseas">—</span></div>
+        <div class="result-row"><span class="lbl">未上市櫃股票</span><span class="val" id="amt_r-stock">—</span></div>
+        <div class="result-row"><span class="lbl">私募基金</span><span class="val" id="amt_r-fund">—</span></div>
+        <div class="result-row" style="padding-top:12px;border-top:2px solid rgba(255,255,255,0.2)"><span class="lbl">基本所得額</span><span class="val" id="amt_r-base">—</span></div>
+        <div class="result-row"><span class="lbl">扣除額（750 萬）</span><span class="val">－ NT$ 7,500,000</span></div>
+        <div class="result-row"><span class="lbl">基本稅額課稅基準</span><span class="val" id="amt_r-taxBase">—</span></div>
+        <div class="result-row" style="padding-top:12px;border-top:1px solid rgba(255,255,255,0.15)"><span class="lbl">最低稅負（× 20%）</span><span class="val" style="color:var(--gold);font-size:18px;font-weight:700" id="amt_r-amt">—</span></div>
+      </div>
+
+      <div class="law-note">
+        <strong>法律依據：</strong>所得基本稅額條例§12、§13、§14、§4；財政部每年公告免稅額、保險給付免稅額度（最新 114 年度：保險 3,740 萬、個人基本免稅額 750 萬）。<br>
+        <strong>重要提醒：</strong>本工具為試算參考，實際申報請檢附保險公司出具之保險給付明細。高額保單規劃建議諮詢會計師與理財顧問。
+      </div>
+
+      <button class="calc-btn" onclick="amtDownloadPDF()" style="margin-top:16px">↓ 匯出 PDF 報告</button>
+    </div>
+    <div class="disclaimer" style="font-size:11px;color:#aaa;text-align:center;padding:16px 0;line-height:1.6">本工具計算結果僅供參考，不構成稅務意見。</div>
+
+  </div><!-- /Tab 2 amt -->
+
+  <!-- ==================== Tab 3: 特留分衝突（原 insurance-forced-share） ==================== -->
+  <div class="ip-tab-panel" data-tab="forced">
+
+    <p class="subtitle" style="margin-top:0">指定受益人獨拿身故保險金，其他繼承人可以主張嗎？本工具判斷保費是否「顯失公平」並計算可扣減金額。</p>
+    <div class="intro">
+      📌 <strong>最高法院 107 年台上字第 1395 號</strong>：身故保險金原則上不屬於遺產，由指定受益人獨享。<strong>但若保費顯失公平</strong>（如臨終前集中投保、保費佔遺產比例過高），其他繼承人得主張扣減、回復特留分。
+    </div>
+
+    <div class="card">
+      <div class="section-title">A · 保單資訊</div>
+      <div class="input-group">
+        <label>累計已繳保費<span class="label-hint">元，被繼承人生前總保費支出</span></label>
+        <input type="number" id="fs_totalPremium" placeholder="例：3000000" min="0" inputmode="numeric">
+      </div>
+      <div class="input-group">
+        <label>身故保險金額<span class="label-hint">元，受益人可領之保險金</span></label>
+        <input type="number" id="fs_payout" placeholder="例：5000000" min="0" inputmode="numeric">
+      </div>
+      <div class="input-group" style="margin-bottom:0">
+        <label>被繼承人其他遺產總額<span class="label-hint">元，不含保險金</span></label>
+        <input type="number" id="fs_otherEstate" placeholder="例：4000000" min="0" inputmode="numeric">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">B · 繼承人資訊</div>
+      <div class="input-group">
+        <label>法定繼承人人數<span class="label-hint">配偶、子女、父母等</span></label>
+        <input type="number" id="fs_heirCount" placeholder="例：3" min="1" max="20" inputmode="numeric">
+      </div>
+      <div class="input-group" style="margin-bottom:0">
+        <label>繼承人順位類別</label>
+        <select id="fs_heirType">
+          <option value="direct">配偶或直系血親卑親屬（特留分 1/2）</option>
+          <option value="parent">父母（特留分 1/2）</option>
+          <option value="sibling">兄弟姊妹（特留分 1/3）</option>
+          <option value="grand">祖父母（特留分 1/3）</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">C · 風險指標（可複選）</div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="fs_risk-terminal">
+        <div>
+          <label for="fs_risk-terminal">被繼承人罹患重病後才投保</label>
+          <div class="hint">經濟學上稱為「自殺式投保」，實務常被認定顯失公平</div>
+        </div>
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="fs_risk-largeSum">
+        <div>
+          <label for="fs_risk-largeSum">短期內大額躉繳保費</label>
+          <div class="hint">3 年內躉繳超過一般年收入 10 倍以上</div>
+        </div>
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="fs_risk-nonHeir">
+        <div>
+          <label for="fs_risk-nonHeir">受益人非繼承人（如外遇對象、朋友）</label>
+          <div class="hint">指定給無繼承權之第三人風險最高</div>
+        </div>
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="fs_risk-loan">
+        <div>
+          <label for="fs_risk-loan">以貸款或變賣資產方式繳納保費</label>
+          <div class="hint">排擠遺產供特定人受益，加重顯失公平認定</div>
+        </div>
+      </div>
+      <div class="checkbox-row" style="margin-bottom:0">
+        <input type="checkbox" id="fs_risk-minor">
+        <div>
+          <label for="fs_risk-minor">將未成年子女列為受益人而規避配偶</label>
+          <div class="hint">透過受益人安排間接侵害配偶應繼分</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card lawyer-only">
+      <div class="panel-title">⚖ 訴訟策略提示</div>
+      <div class="tip-item"><span class="tip-tag tip-tag-red">§1187</span>遺產扣減權：受特留分侵害之繼承人得對受讓人請求扣減（類推適用）。</div>
+      <div class="tip-item"><span class="tip-tag tip-tag-red">保險法§112</span>受益人經指定者，保險金不列入遺產，但不得侵害特留分為法院常見見解。</div>
+      <div class="tip-item"><span class="tip-tag tip-tag-red">107台上1395</span>最高法院見解：若保費支出顯失公平，他繼承人得請求受益人返還相當金額。</div>
+      <div class="tip-item"><span class="tip-tag tip-tag-red">時效</span>§1146 繼承回復請求權：自知悉被侵害時起 <strong>2 年</strong>；自繼承開始時起 <strong>10 年</strong>。</div>
+      <div class="tip-item"><span class="tip-tag tip-tag-red">舉證</span>檢附被繼承人投保當時健康狀態、保費來源、投保時點，證明構成顯失公平。</div>
+    </div>
+
+    <button class="calc-btn" onclick="forcedShareAssess()">計算特留分侵害</button>
+
+    <div id="fs_results" style="display:none;margin-top:24px">
+      <div class="result-card">
+        <div class="result-title">風險評估</div>
+        <div class="result-row"><span class="lbl">保費 / 遺產總額（含保單）</span><span class="val" id="fs_r-ratio">—</span></div>
+        <div class="result-row"><span class="lbl">風險分數</span><span class="val" id="fs_r-score">—</span></div>
+        <div class="result-row"><span class="lbl">顯失公平認定風險</span><span class="val" id="fs_r-risk">—</span></div>
+        <div style="text-align:center"><span id="fs_r-badge" class="risk-badge"></span></div>
+      </div>
+
+      <div class="result-card">
+        <div class="result-title">特留分計算</div>
+        <div class="result-row"><span class="lbl">遺產總額（不含保險金）</span><span class="val" id="fs_r-estate">—</span></div>
+        <div class="result-row"><span class="lbl">計入保費後「實質遺產」</span><span class="val" id="fs_r-virtual">—</span></div>
+        <div class="result-row"><span class="lbl">應繼分（每位繼承人）</span><span class="val" id="fs_r-per">—</span></div>
+        <div class="result-row"><span class="lbl">特留分（每位繼承人）</span><span class="val" id="fs_r-forced">—</span></div>
+        <div class="total-highlight">
+          <span class="lbl">可主張扣減金額（上限）</span>
+          <span class="val" id="fs_r-claim">—</span>
+        </div>
+      </div>
+
+      <div class="law-note">
+        <strong>重要說明：</strong>本試算為參考模型。實務上是否認定「顯失公平」由法院綜合被繼承人投保動機、經濟狀況、保費與遺產比例、是否規避特留分等因素酌定。金額非保證，建議諮詢律師。
+      </div>
+
+      <button class="calc-btn" onclick="fsDownloadPDF()" style="margin-top:16px">↓ 匯出 PDF 報告</button>
+    </div>
+    <div class="disclaimer" style="font-size:11px;color:#aaa;text-align:center;padding:16px 0;line-height:1.6">本工具計算結果僅供參考，不構成法律意見。實際個案請諮詢執業律師。</div>
+
+  </div><!-- /Tab 3 forced -->
 
 </main>
 
@@ -321,15 +593,31 @@
 <script src="js/supabase-config.js"></script>
 <script type="module" src="js/auth-bar.js"></script>
 
+<!-- ========== Tab 1 JS: 遺產稅風險評估 ========== -->
 <script>
   function fmt(n) { return 'NT$ ' + Math.round(n).toLocaleString('zh-TW'); }
   function fmtWan(n) { return n.toLocaleString('zh-TW') + ' 萬'; }
 
+  // 偵測使用者可能輸入「元」而非「萬」：超過 100 萬（100,0000）時提醒
+  function warnIfTooLarge(el) {
+    const v = parseFloat(el.value) || 0;
+    let hint = el.parentElement.querySelector('.unit-warn');
+    if (v >= 1000000) {
+      if (!hint) {
+        hint = document.createElement('div');
+        hint.className = 'unit-warn';
+        hint.style.cssText = 'color:#d32f2f;font-size:12px;margin-top:4px;font-weight:500';
+        el.parentElement.appendChild(hint);
+      }
+      hint.textContent = '⚠ 單位是「萬元」，' + v.toLocaleString() + ' 萬 = ' + (v/10000).toLocaleString() + ' 億元。您是否要輸入 ' + Math.round(v/10000).toLocaleString() + '？';
+    } else if (hint) {
+      hint.remove();
+    }
+  }
+
   // 遺產稅邊際稅率（2026年）
-  // 遺產淨額 5,000萬以下 10%、5,000萬-1億 15%、1億以上 20%
-  // 免稅額 1,333萬
   function getMarginalRate(estateWan) {
-    const exempt = 1333; // 萬
+    const exempt = 1333;
     const net = Math.max(0, estateWan - exempt);
     if (net <= 5000) return 0.10;
     if (net <= 10000) return 0.15;
@@ -514,6 +802,153 @@
   }
 
   document.getElementById('btnEvaluate').addEventListener('click', evaluate);
+</script>
+
+<!-- ========== Tab 2 JS: AMT 最低稅負制（IIFE 隔離） ========== -->
+<script>
+(function(){
+  const AMT_FMT = v => 'NT$ ' + Math.round(v).toLocaleString('zh-TW');
+  const INSURANCE_THRESHOLD = 37400000;
+  const BASIC_DEDUCTION = 7500000;
+  const AMT_RATE = 0.20;
+
+  window.amtAddRow = function(){
+    const list = document.getElementById('amt_policyList');
+    const row = document.createElement('div');
+    row.className = 'policy-row';
+    row.innerHTML = '<div><label>保單名稱/編號</label><input type="text" class="amt-policy-name" placeholder="保單名稱"></div>' +
+      '<div><label>當年度給付 (元)</label><input type="number" class="amt-policy-amount" placeholder="0" min="0"></div>' +
+      '<button class="del-btn" onclick="amtRemoveRow(this)">×</button>';
+    list.appendChild(row);
+  };
+
+  window.amtRemoveRow = function(btn){
+    const rows = document.querySelectorAll('#amt_policyList .policy-row');
+    if (rows.length > 1) btn.parentElement.remove();
+  };
+
+  window.amtCalculate = function(){
+    const amounts = [...document.querySelectorAll('.amt-policy-amount')].map(i => parseFloat(i.value) || 0);
+    const totalInsurance = amounts.reduce((s, v) => s + v, 0);
+    const regular = parseFloat(document.getElementById('amt_regularIncome').value) || 0;
+    const overseas = parseFloat(document.getElementById('amt_overseas').value) || 0;
+    const stock = parseFloat(document.getElementById('amt_stockGain').value) || 0;
+    const fund = parseFloat(document.getElementById('amt_fundGain').value) || 0;
+
+    if (totalInsurance <= 0) { alert('請至少填入一筆保險給付金額'); return; }
+
+    const insuranceOver = Math.max(0, totalInsurance - INSURANCE_THRESHOLD);
+    const overseasTaxable = overseas >= 1000000 ? overseas : 0;
+    const baseAmount = regular + insuranceOver + overseasTaxable + stock + fund;
+    const taxBase = Math.max(0, baseAmount - BASIC_DEDUCTION);
+    const amt = Math.round(taxBase * AMT_RATE);
+
+    document.getElementById('amt_r-total').textContent = AMT_FMT(totalInsurance);
+    const progress = Math.min(100, (totalInsurance / INSURANCE_THRESHOLD) * 100);
+    document.getElementById('amt_r-progress').style.width = progress + '%';
+    document.getElementById('amt_r-over').textContent = progress >= 100 ? '超過 ' + AMT_FMT(insuranceOver) : AMT_FMT(totalInsurance);
+
+    const status = document.getElementById('amt_r-status');
+    if (totalInsurance < INSURANCE_THRESHOLD) {
+      status.className = 'status-badge status-safe';
+      status.textContent = '未達門檻，無 AMT';
+      document.getElementById('amt_amtCard').style.display = 'none';
+    } else {
+      status.className = 'status-badge status-alert';
+      status.textContent = '⚠ 觸發最低稅負制';
+      document.getElementById('amt_amtCard').style.display = 'block';
+      document.getElementById('amt_r-insurance').textContent = AMT_FMT(insuranceOver);
+      document.getElementById('amt_r-regular').textContent = AMT_FMT(regular);
+      document.getElementById('amt_r-overseas').textContent = AMT_FMT(overseasTaxable);
+      document.getElementById('amt_r-stock').textContent = AMT_FMT(stock);
+      document.getElementById('amt_r-fund').textContent = AMT_FMT(fund);
+      document.getElementById('amt_r-base').textContent = AMT_FMT(baseAmount);
+      document.getElementById('amt_r-taxBase').textContent = AMT_FMT(taxBase);
+      document.getElementById('amt_r-amt').textContent = AMT_FMT(amt);
+    }
+
+    document.getElementById('amt_results').style.display = 'block';
+    document.getElementById('amt_results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  window.amtDownloadPDF = async function(){
+    const today = new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' });
+    const resultsHTML = document.getElementById('amt_results').innerHTML;
+    const html = '<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>InheritancePro</title><style>@import url(\'https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap\');*{box-sizing:border-box;margin:0;padding:0;}body{font-family:\'Noto Sans TC\',sans-serif;color:#1a1410;font-size:13px;padding:40px;max-width:700px;margin:0 auto;}.pdf-header{border-bottom:3px solid #1a1410;padding-bottom:20px;margin-bottom:28px;display:flex;justify-content:space-between;}.pdf-logo{font-family:\'Noto Serif TC\',serif;font-size:24px;font-weight:700;}.pdf-logo span{color:#c4932a;}.result-card{background:#1a1410;color:#f5f0e8;border-radius:12px;padding:24px;margin-bottom:14px;}.result-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.07);}.lbl{color:rgba(255,255,255,0.6);}.val{font-family:\'DM Mono\',monospace;}.big-val{font-size:28px;font-weight:700;color:#c4932a;text-align:center;margin:8px 0;font-family:\'DM Mono\',monospace;}.law-note{background:#f8f5e8;border-left:3px solid #c4932a;padding:12px 14px;font-size:11px;color:#7a6f62;margin:14px 0;line-height:1.7;}button{display:none!important;}@media print{body{padding:20px;}}</style></head><body><div class="pdf-header"><div><div class="pdf-logo">Inheritance<span>Pro</span></div><div style="font-size:12px;color:#7a6f62">最低稅負制保單試算</div></div><div style="font-size:11px;color:#7a6f62">產出日期：' + today + '</div></div>' + resultsHTML + '<div style="margin-top:40px;padding-top:16px;border-top:1px solid #c8bfb0;font-size:11px;color:#7a6f62;text-align:center">\u00a9 ' + new Date().getFullYear() + ' InheritancePro \u00b7 inheritancepro.app</div></body></html>';
+    exportPDF(html, 'InheritancePro-AMT保單');
+  };
+})();
+</script>
+
+<!-- ========== Tab 3 JS: 特留分衝突（IIFE 隔離） ========== -->
+<script>
+(function(){
+  const FS_FMT = v => 'NT$ ' + Math.round(v).toLocaleString('zh-TW');
+
+  window.forcedShareAssess = function(){
+    const premium = parseFloat(document.getElementById('fs_totalPremium').value) || 0;
+    const payout = parseFloat(document.getElementById('fs_payout').value) || 0;
+    const other = parseFloat(document.getElementById('fs_otherEstate').value) || 0;
+    const heirCount = parseInt(document.getElementById('fs_heirCount').value) || 1;
+    const heirType = document.getElementById('fs_heirType').value;
+
+    if (!premium || !payout || other < 0) { alert('請完整填寫金額欄位'); return; }
+
+    const virtualEstate = other + premium;
+    const perShare = virtualEstate / heirCount;
+    const forcedRatio = (heirType === 'direct' || heirType === 'parent') ? 0.5 : (1/3);
+    const forcedShare = perShare * forcedRatio;
+
+    const totalWithPayout = other + payout;
+    const ratio = totalWithPayout > 0 ? (premium / totalWithPayout) : 0;
+
+    let score = Math.round(ratio * 50);
+    const risks = ['fs_risk-terminal', 'fs_risk-largeSum', 'fs_risk-nonHeir', 'fs_risk-loan', 'fs_risk-minor'];
+    let riskCount = 0;
+    risks.forEach(id => { if (document.getElementById(id).checked) { score += 15; riskCount++; } });
+    score = Math.min(100, score);
+
+    let level, badgeClass;
+    if (score < 30) { level = '低風險'; badgeClass = 'risk-low'; }
+    else if (score < 60) { level = '中度風險'; badgeClass = 'risk-mid'; }
+    else { level = '高風險（顯失公平可能性高）'; badgeClass = 'risk-high'; }
+
+    let claimable = 0;
+    if (score >= 30) {
+      const riskMult = Math.min(1, score / 100);
+      claimable = Math.round(forcedShare * riskMult);
+    }
+
+    document.getElementById('fs_r-ratio').textContent = (ratio * 100).toFixed(1) + '%';
+    document.getElementById('fs_r-score').textContent = score + ' / 100';
+    document.getElementById('fs_r-risk').textContent = level;
+    const badge = document.getElementById('fs_r-badge');
+    badge.className = 'risk-badge ' + badgeClass;
+    badge.textContent = level;
+
+    document.getElementById('fs_r-estate').textContent = FS_FMT(other);
+    document.getElementById('fs_r-virtual').textContent = FS_FMT(virtualEstate);
+    document.getElementById('fs_r-per').textContent = FS_FMT(perShare);
+    document.getElementById('fs_r-forced').textContent = FS_FMT(forcedShare);
+    document.getElementById('fs_r-claim').textContent = FS_FMT(claimable);
+
+    document.getElementById('fs_results').style.display = 'block';
+    document.getElementById('fs_results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  window.fsDownloadPDF = async function(){
+    const today = new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' });
+    const resultsHTML = document.getElementById('fs_results').innerHTML;
+    const html = '<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>InheritancePro 計算報告</title><style>@import url(\'https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap\');*{box-sizing:border-box;margin:0;padding:0;}body{font-family:\'Noto Sans TC\',sans-serif;background:#fff;color:#1a1410;font-size:13px;padding:40px;max-width:700px;margin:0 auto;}.pdf-header{border-bottom:3px solid #1a1410;padding-bottom:20px;margin-bottom:28px;display:flex;justify-content:space-between;align-items:flex-end;}.pdf-logo{font-family:\'Noto Serif TC\',serif;font-size:24px;font-weight:700;}.pdf-logo span{color:#c4932a;}.result-card{background:#1a1410;color:#f5f0e8;border-radius:12px;padding:24px;margin-bottom:14px;}.result-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.07);}.lbl{font-size:13px;color:rgba(245,240,232,0.65);}.val{font-family:\'DM Mono\',monospace;font-size:14px;color:#f5f0e8;}.total-highlight{background:rgba(196,147,42,0.15);border-radius:8px;padding:12px 16px;display:flex;justify-content:space-between;margin-top:8px;}.law-note{background:#f8f5e8;border-left:3px solid #c4932a;padding:12px 14px;font-size:11px;color:#7a6f62;line-height:1.75;margin:14px 0;}button{display:none!important;}.risk-badge{display:inline-block;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;}@media print{body{padding:20px;}}</style></head><body><div class="pdf-header"><div><div class="pdf-logo">Inheritance<span>Pro</span></div><div style="font-size:12px;color:#7a6f62;margin-top:4px">保單受益人 vs 特留分侵害試算</div></div><div style="font-size:11px;color:#7a6f62">產出日期：' + today + '</div></div>' + resultsHTML + '<div style="margin-top:40px;padding-top:16px;border-top:1px solid #c8bfb0;font-size:11px;color:#7a6f62;text-align:center">\u00a9 ' + new Date().getFullYear() + ' InheritancePro \u00b7 inheritancepro.app<div style="font-size:10px;color:#aaa;margin-top:8px">本報告僅供參考，不構成法律意見。</div></div></body></html>';
+    exportPDF(html, 'InheritancePro-保單特留分');
+  };
+})();
+</script>
+
+<!-- ========== Tab 切換初始化 ========== -->
+<script type="module">
+  import { initTabs } from './js/components/tab-bar.js';
+  initTabs('insTabs');
 </script>
 
 </body>

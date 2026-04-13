@@ -91,7 +91,7 @@
         },
         {
           "id": "estate-tax-detail",
-          "href": "estate-tax-detail.html",
+          "href": "calculator.html",
           "name": "遺產稅精算工作底稿",
           "featured": false,
           "badge": null,
@@ -109,7 +109,7 @@
         },
         {
           "id": "case-manager",
-          "href": "case-manager.html",
+          "href": "deadline-dashboard.html",
           "name": "多案件管理系統",
           "featured": false,
           "badge": null,
@@ -152,7 +152,7 @@
         },
         {
           "id": "insurance-amt",
-          "href": "insurance-amt.html",
+          "href": "insurance-estate-risk.html?tab=amt",
           "name": "最低稅負制保單 (AMT)",
           "featured": false,
           "badge": "new",
@@ -161,7 +161,7 @@
         },
         {
           "id": "insurance-forced-share",
-          "href": "insurance-forced-share.html",
+          "href": "insurance-estate-risk.html?tab=forced",
           "name": "保單 vs 特留分侵害",
           "featured": false,
           "badge": "new",
@@ -240,7 +240,7 @@
         },
         {
           "id": "infidelity-damages",
-          "href": "infidelity-damages.html",
+          "href": "divorce-damages.html?tab=infidelity",
           "name": "侵害配偶權損害賠償（出軌）",
           "featured": false,
           "badge": "new",
@@ -293,7 +293,7 @@
         },
         {
           "id": "gift-planner",
-          "href": "gift-planner.html",
+          "href": "gift-tax.html?tab=planner",
           "name": "贈與節稅規劃模擬",
           "featured": false,
           "badge": null,
@@ -312,7 +312,7 @@
         },
         {
           "id": "property-sale-tax",
-          "href": "property-sale-tax.html",
+          "href": "real-estate.html?tab=sale",
           "name": "房地合一稅試算",
           "featured": false,
           "badge": null,

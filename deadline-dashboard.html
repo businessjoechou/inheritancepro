@@ -11,12 +11,26 @@
 </script>
 <meta charset="UTF-8">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="遺產繼承案件管理工具，追蹤多案件關鍵期限，含六項法定期限倒數、案件備註與狀態追蹤。InheritancePro。">
+<meta name="keywords" content="案件管理,遺產案件,繼承期限,期限管理,遺產稅申報期限,期限儀表板">
+<meta name="robots" content="index, follow">
+<meta name="author" content="InheritancePro">
+<meta property="og:title" content="繼承期限管理儀表板｜InheritancePro">
+<meta property="og:description" content="遺產繼承案件管理工具，追蹤多案件關鍵期限，含六項法定期限倒數、案件備註與狀態追蹤。">
+<meta property="og:url" content="https://inheritancepro.app/deadline-dashboard.html">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://inheritancepro.app/deadline-dashboard.html">
 <title>繼承期限管理儀表板｜InheritancePro</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/tool-page.css">
+<script src="js/persona.js"></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"繼承期限管理儀表板","url":"https://inheritancepro.app/deadline-dashboard.html","applicationCategory":"FinanceApplication","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro"}}
+</script>
 <style>
   body { font-size: 14px; }
   :root { --warn: #c47a1a; --danger: #b02020; }
@@ -85,6 +99,19 @@
   .empty-state .empty-icon { font-size: 40px; margin-bottom: 12px; }
   .empty-state p { font-size: 14px; line-height: 1.7; }
 
+  /* Case notes & status */
+  .case-extra { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--soft); }
+  .case-extra-row { margin-bottom: 12px; }
+  .case-extra-row:last-child { margin-bottom: 0; }
+  .case-extra-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+  .case-notes-ta { width: 100%; padding: 8px 12px; border: 1.5px solid var(--border); border-radius: 8px; background: var(--paper); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; font-size: 13px; resize: vertical; min-height: 56px; outline: none; transition: border-color 0.2s; }
+  .case-notes-ta:focus { border-color: var(--gold); }
+  .case-notes-saved { font-size: 11px; color: var(--success); opacity: 0; transition: opacity 0.3s; margin-top: 4px; }
+  .case-notes-saved.show { opacity: 1; }
+  .case-status-select { padding: 7px 12px; border: 1.5px solid var(--border); border-radius: 8px; background: var(--paper); font-size: 13px; font-family: 'Noto Sans TC', sans-serif; color: var(--ink); cursor: pointer; outline: none; }
+  .case-status-select:focus { border-color: var(--gold); }
+  .badge.paused { background: #f0eee8; color: #8a8070; border: 1px solid #d8d0c4; }
+
   .disclaimer { font-size: 11px; color: var(--muted); line-height: 1.7; border-top: 1px solid var(--border); padding-top: 16px; margin-top: 32px; }
 
   @media (max-width: 480px) {
@@ -137,15 +164,46 @@
     { id: 'creditor',    name: '債權人公告催告期滿',  days: 180, law: '民法§1157' },
   ];
 
+  /* --- 資料遷移：吸收 ip_cases (case-manager) 到 ip_deadline_cases --- */
+  (function migrateOldCases() {
+    const oldRaw = localStorage.getItem('ip_cases');
+    if (!oldRaw) return;
+    try {
+      const oldCases = JSON.parse(oldRaw);
+      if (!Array.isArray(oldCases) || oldCases.length === 0) return;
+      const existing = JSON.parse(localStorage.getItem('ip_deadline_cases') || '[]');
+      const existingIds = new Set(existing.map(c => String(c.id)));
+      let merged = false;
+      oldCases.forEach(oc => {
+        if (existingIds.has(String(oc.id))) return;
+        existing.push({
+          id: typeof oc.id === 'string' ? parseInt(oc.id, 10) || Date.now() : oc.id,
+          name: oc.name || '未命名案件',
+          deathDate: oc.deathDate,
+          done: {},
+          notes: oc.notes || '',
+          status: 'active'
+        });
+        merged = true;
+      });
+      if (merged) localStorage.setItem('ip_deadline_cases', JSON.stringify(existing));
+      localStorage.removeItem('ip_cases');
+    } catch (e) { /* 格式不符就忽略 */ }
+  })();
+
   let cases = JSON.parse(localStorage.getItem('ip_deadline_cases') || '[]');
 
   function save() { localStorage.setItem('ip_deadline_cases', JSON.stringify(cases)); }
+
+  function escHtml(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
 
   function addCase() {
     const name = document.getElementById('newCaseName').value.trim();
     const date = document.getElementById('newDeathDate').value;
     if (!name || !date) { alert('請填入案件名稱與死亡日期'); return; }
-    cases.unshift({ id: Date.now(), name, deathDate: date, done: {} });
+    cases.unshift({ id: Date.now(), name, deathDate: date, done: {}, notes: '', status: 'active' });
     save(); render();
     document.getElementById('newCaseName').value = '';
     document.getElementById('newDeathDate').value = '';
@@ -169,6 +227,28 @@
     if (el) el.classList.toggle('open');
   }
 
+  /* --- 備註自動儲存 --- */
+  let _noteTimers = {};
+  function onNoteInput(caseId) {
+    clearTimeout(_noteTimers[caseId]);
+    _noteTimers[caseId] = setTimeout(() => {
+      const ta = document.getElementById('notes-' + caseId);
+      if (!ta) return;
+      const c = cases.find(x => x.id === caseId);
+      if (c) { c.notes = ta.value; save(); }
+      const hint = document.getElementById('notes-saved-' + caseId);
+      if (hint) { hint.classList.add('show'); setTimeout(() => hint.classList.remove('show'), 1500); }
+    }, 600);
+  }
+
+  /* --- 狀態切換 --- */
+  function onStatusChange(caseId) {
+    const sel = document.getElementById('status-' + caseId);
+    if (!sel) return;
+    const c = cases.find(x => x.id === caseId);
+    if (c) { c.status = sel.value; save(); render(); }
+  }
+
   function getStatus(deadlineDate, done) {
     if (done) return 'done';
     const today = new Date(); today.setHours(0,0,0,0);
@@ -190,6 +270,8 @@
   }
 
   function caseUrgency(c) {
+    if (c.status === 'completed') return 'done';
+    if (c.status === 'paused') return 'paused';
     const statuses = DEADLINES.map(dl => {
       const date = new Date(new Date(c.deathDate).getTime() + dl.days * 86400000).toISOString().split('T')[0];
       return getStatus(date, c.done[dl.id]);
@@ -198,6 +280,16 @@
     if (statuses.includes('urgent')) return 'urgent';
     if (statuses.every(s => s === 'done')) return 'done';
     return 'ok';
+  }
+
+  function urgencyBadgeText(urgency) {
+    switch (urgency) {
+      case 'overdue': return '有逾期';
+      case 'urgent': return '即將到期';
+      case 'done': return '全部完成';
+      case 'paused': return '已暫停';
+      default: return '進行中';
+    }
   }
 
   function render() {
@@ -214,7 +306,13 @@
       <div class="stat-card warn"><div class="stat-num">${urgent}</div><div class="stat-label">14天內到期</div></div>
       <div class="stat-card ok"><div class="stat-num">${ok}</div><div class="stat-label">進度正常</div></div>`;
 
-    // Cases
+    // Cases — remember which cards are open
+    const openIds = new Set();
+    document.querySelectorAll('.case-card.open').forEach(el => {
+      const id = el.id.replace('case-', '');
+      if (id) openIds.add(id);
+    });
+
     const list = document.getElementById('caseList');
     if (cases.length === 0) {
       list.innerHTML = `<div class="empty-state"><div class="empty-icon">📋</div><p>尚未建立任何案件<br>在上方填入案件名稱與死亡日期開始追蹤</p></div>`;
@@ -222,8 +320,11 @@
     }
     list.innerHTML = cases.map(c => {
       const urgency = caseUrgency(c);
-      const badgeText = urgency === 'overdue' ? '有逾期' : urgency === 'urgent' ? '即將到期' : urgency === 'done' ? '全部完成' : '進行中';
+      const badgeText = urgencyBadgeText(urgency);
       const deathStr = new Date(c.deathDate).toLocaleDateString('zh-TW', {year:'numeric',month:'2-digit',day:'2-digit'});
+      const isOpen = openIds.has(String(c.id));
+      const caseStatus = c.status || 'active';
+      const notesEscaped = escHtml(c.notes || '');
 
       const rows = DEADLINES.map(dl => {
         const dlDate = new Date(new Date(c.deathDate).getTime() + dl.days * 86400000);
@@ -240,10 +341,10 @@
         </div>`;
       }).join('');
 
-      return `<div class="case-card" id="case-${c.id}">
+      return `<div class="case-card${isOpen ? ' open' : ''}" id="case-${c.id}">
         <div class="case-header" onclick="toggleOpen(${c.id})">
           <div>
-            <div class="case-title">${c.name}</div>
+            <div class="case-title">${escHtml(c.name)}</div>
             <div class="case-meta">死亡日：${deathStr}</div>
           </div>
           <div class="case-badges">
@@ -252,7 +353,24 @@
             <svg class="case-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="4,6 8,10 12,6"/></svg>
           </div>
         </div>
-        <div class="case-body">${rows}</div>
+        <div class="case-body">
+          ${rows}
+          <div class="case-extra">
+            <div class="case-extra-row">
+              <div class="case-extra-label">案件狀態</div>
+              <select class="case-status-select" id="status-${c.id}" onchange="onStatusChange(${c.id})">
+                <option value="active"${caseStatus === 'active' ? ' selected' : ''}>進行中</option>
+                <option value="completed"${caseStatus === 'completed' ? ' selected' : ''}>已完成</option>
+                <option value="paused"${caseStatus === 'paused' ? ' selected' : ''}>暫停</option>
+              </select>
+            </div>
+            <div class="case-extra-row">
+              <div class="case-extra-label">案件備註</div>
+              <textarea class="case-notes-ta" id="notes-${c.id}" placeholder="例：不動產坐落地址、繼承人名單……" oninput="onNoteInput(${c.id})">${notesEscaped}</textarea>
+              <div class="case-notes-saved" id="notes-saved-${c.id}">已自動儲存</div>
+            </div>
+          </div>
+        </div>
       </div>`;
     }).join('');
   }

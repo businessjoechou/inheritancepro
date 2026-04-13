@@ -1,4 +1,13 @@
 {
+  "redirects": [
+    { "source": "/gift-planner.html", "destination": "/gift-tax.html?tab=planner", "statusCode": 301 },
+    { "source": "/infidelity-damages.html", "destination": "/divorce-damages.html?tab=infidelity", "statusCode": 301 },
+    { "source": "/insurance-amt.html", "destination": "/insurance-estate-risk.html?tab=amt", "statusCode": 301 },
+    { "source": "/insurance-forced-share.html", "destination": "/insurance-estate-risk.html?tab=forced", "statusCode": 301 },
+    { "source": "/property-sale-tax.html", "destination": "/real-estate.html?tab=sale", "statusCode": 301 },
+    { "source": "/case-manager.html", "destination": "/deadline-dashboard.html", "statusCode": 301 },
+    { "source": "/estate-tax-detail.html", "destination": "/calculator.html", "statusCode": 301 }
+  ],
   "headers": [
     {
       "source": "/.well-known/assetlinks.json",
