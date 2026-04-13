@@ -41,6 +41,7 @@ export default async function handler(req, res) {
 
     let sent = 0;
     let failed = 0;
+    const errors = [];
 
     // Send in batches of 10
     for (let i = 0; i < subscribers.length; i += 10) {
@@ -59,13 +60,22 @@ export default async function handler(req, res) {
             subject: subject,
             html: html.replace('{{name}}', sub.name || '用戶')
           })
-        }).then(r => { if (r.ok) sent++; else failed++; })
-          .catch(() => failed++)
+        }).then(async r => {
+          if (r.ok) { sent++; }
+          else {
+            failed++;
+            const body = await r.text().catch(() => '');
+            errors.push({ email: sub.email, status: r.status, error: body });
+          }
+        }).catch(err => {
+          failed++;
+          errors.push({ email: sub.email, error: err.message });
+        })
       );
       await Promise.all(promises);
     }
 
-    return res.status(200).json({ sent, failed, total: subscribers.length });
+    return res.status(200).json({ sent, failed, total: subscribers.length, errors });
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
