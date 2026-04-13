@@ -43,9 +43,10 @@ export default async function handler(req, res) {
     let failed = 0;
     const errors = [];
 
-    // Send in batches of 10
-    for (let i = 0; i < subscribers.length; i += 10) {
-      const batch = subscribers.slice(i, i + 10);
+    // Send in batches of 2 (Resend free tier: 2 req/sec)
+    for (let i = 0; i < subscribers.length; i += 2) {
+      if (i > 0) await new Promise(r => setTimeout(r, 1100)); // 1.1s delay between batches
+      const batch = subscribers.slice(i, i + 2);
       const promises = batch.map(sub =>
         fetch('https://api.resend.com/emails', {
           method: 'POST',
