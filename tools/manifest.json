@@ -1,7 +1,7 @@
 {
   "version": 1,
   "_comment": "Single source of truth for all InheritancePro tools. Used by generate-sitemap.js and (future) index.html.",
-  "baseUrl": "https://inheritancepro.app",
+  "baseUrl": "https://inheritancepro.choulegal.com",
   "tabs": [
     {
       "id": "death",

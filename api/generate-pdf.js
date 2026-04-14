@@ -290,7 +290,7 @@ export default async function handler(req, res) {
       doc.switchToPage(i);
       doc.fillColor('#aaa').fontSize(7).font('NotoSansTC')
          .text(
-           `© ${new Date().getFullYear()} InheritancePro · inheritancepro.app · 本報告僅供參考，不構成法律意見`,
+           `© ${new Date().getFullYear()} InheritancePro · inheritancepro.choulegal.com · 本報告僅供參考，不構成法律意見`,
            50, doc.page.height - 30,
            { width: pageW - 100, align: 'center' }
          );

@@ -21,7 +21,7 @@ export function getBrandTheme() {
     logoText:   get('--brand-logo-text',   'Inheritance'),
     logoAccent: get('--brand-logo-accent', 'Pro'),
     name:       get('--brand-name',        'InheritancePro'),
-    url:        get('--brand-url',         'inheritancepro.app'),
+    url:        get('--brand-url',         'inheritancepro.choulegal.com'),
   };
 }
 
