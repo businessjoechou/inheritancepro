@@ -1,4 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="8" fill="#1a1410"/>
-  <text x="16" y="22" text-anchor="middle" font-family="serif" font-size="18" font-weight="700" fill="#c4932a">法</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none">
+  <!-- Background -->
+  <rect width="400" height="400" fill="#141418"/>
+
+  <!-- Top: CHOULEGAL small label -->
+  <text x="200" y="145" font-family="'DM Mono', Courier New, monospace" font-size="12" font-weight="500" fill="#6a6a72" text-anchor="middle" letter-spacing="0.36em">CHOULEGAL</text>
+
+  <!-- Center: 周全 -->
+  <text x="200" y="220" font-family="'Noto Serif TC', Georgia, serif" font-size="72" font-weight="700" fill="#f0ede8" text-anchor="middle" letter-spacing="0.08em">周全</text>
+
+  <!-- Divider -->
+  <line x1="170" y1="242" x2="230" y2="242" stroke="#c4932a" stroke-width="1.5"/>
+
+  <!-- Bottom: 法律科技 -->
+  <text x="200" y="275" font-family="'Noto Sans TC', Helvetica, sans-serif" font-size="18" fill="#c4932a" text-anchor="middle" letter-spacing="0.2em">法律科技</text>
 </svg>

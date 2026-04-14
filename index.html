@@ -91,14 +91,17 @@
   .parent-brand {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 7px;
     font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: rgba(255, 255, 255, 0.45);
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.55);
     letter-spacing: 0.14em;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
+    text-decoration: none;
+    transition: color 0.2s;
   }
-  .parent-brand .cl-icon { width: 16px; height: 16px; border-radius: 3px; }
+  .parent-brand:hover { color: rgba(255, 255, 255, 0.85); }
+  .parent-brand .cl-icon { width: 20px; height: 20px; border-radius: 4px; }
   .parent-brand span {
     text-transform: uppercase;
     letter-spacing: 0.18em;
@@ -658,14 +661,191 @@
     .faq-section { max-width: 780px; padding: 0 32px 80px; }
     .disclaimer-bar { max-width: 780px; padding: 16px 32px 72px; }
   }
+
+  /* ─────────── Light Mode ─────────── */
+  [data-theme="light"] {
+    --ink: #faf8f4;
+    --ink-2: #f2efe8;
+    --paper: #1a1814;
+    --gold: #a07820;
+    --gold-soft: #b88e2e;
+    --muted: #7a7068;
+    --muted-2: #a09890;
+    --border: #ddd8d0;
+    --border-2: #ccc6bc;
+    --card: #ffffff;
+    --accent: #a82828;
+    --badge-new: #1a8a4a;
+    --badge-case: #a82828;
+    --badge-hot: #a07820;
+  }
+
+  [data-theme="light"] .parent-brand {
+    color: rgba(0, 0, 0, 0.5);
+  }
+  [data-theme="light"] .parent-brand:hover {
+    color: rgba(0, 0, 0, 0.75);
+  }
+  [data-theme="light"] .tag {
+    border-color: #bbb;
+  }
+  [data-theme="light"] .search-bar input {
+    background: rgba(0, 0, 0, 0.03);
+  }
+  [data-theme="light"] .search-bar input::placeholder {
+    color: #a09890;
+  }
+  [data-theme="light"] .search-bar input:focus {
+    background: rgba(168, 122, 26, 0.05);
+  }
+
+  [data-theme="light"] .featured-card {
+    background: var(--card);
+    border-color: var(--border);
+  }
+  [data-theme="light"] .featured-card.case {
+    background: linear-gradient(145deg, rgba(168, 40, 40, 0.06) 0%, var(--card) 60%);
+    border-color: rgba(168, 40, 40, 0.3);
+  }
+  [data-theme="light"] .featured-card.new {
+    background: linear-gradient(145deg, rgba(26, 138, 74, 0.06) 0%, var(--card) 60%);
+    border-color: rgba(26, 138, 74, 0.3);
+  }
+  [data-theme="light"] .featured-badge.case { background: rgba(168, 40, 40, 0.1); color: #a82828; }
+  [data-theme="light"] .featured-badge.new { background: rgba(26, 138, 74, 0.1); color: #1a8a4a; }
+  [data-theme="light"] .featured-badge.hot { background: rgba(160, 120, 32, 0.1); color: var(--gold); }
+  [data-theme="light"] .featured-card-desc { color: rgba(26, 24, 20, 0.55); }
+  [data-theme="light"] .featured-card-arrow { border-top-color: rgba(0, 0, 0, 0.06); }
+
+  [data-theme="light"] .tab-btn.active {
+    color: #fff;
+    background: var(--paper);
+    border-color: var(--paper);
+  }
+
+  [data-theme="light"] .tool-card.featured {
+    background: linear-gradient(135deg, #fff 0%, #f8f5f0 100%);
+    border-color: rgba(160, 120, 32, 0.3);
+  }
+  [data-theme="light"] .tool-badge.new {
+    background: rgba(26, 138, 74, 0.1);
+    color: #1a8a4a;
+    border-color: rgba(26, 138, 74, 0.3);
+  }
+  [data-theme="light"] .tool-badge.case {
+    background: rgba(168, 40, 40, 0.1);
+    color: #a82828;
+    border-color: rgba(168, 40, 40, 0.3);
+  }
+  [data-theme="light"] .tool-badge.hot {
+    background: rgba(160, 120, 32, 0.1);
+    color: var(--gold);
+    border-color: rgba(160, 120, 32, 0.3);
+  }
+
+  [data-theme="light"] .search-chip {
+    background: rgba(160, 120, 32, 0.06);
+    border-color: rgba(160, 120, 32, 0.25);
+  }
+
+  [data-theme="light"] .free-banner {
+    border-color: rgba(160, 120, 32, 0.3);
+    background: linear-gradient(135deg, rgba(160, 120, 32, 0.08) 0%, rgba(160, 120, 32, 0.02) 100%);
+  }
+  [data-theme="light"] .free-banner-desc {
+    color: rgba(26, 24, 20, 0.65);
+  }
+
+  [data-theme="light"] .hero-footer {
+    color: rgba(26, 24, 20, 0.35);
+  }
+  [data-theme="light"] .hero-footer a { color: rgba(26, 24, 20, 0.35); }
+
+  [data-theme="light"] .disclaimer-bar {
+    color: rgba(0, 0, 0, 0.5);
+    border-top-color: rgba(0, 0, 0, 0.1);
+  }
+  [data-theme="light"] .disclaimer-bar strong { color: rgba(0, 0, 0, 0.7); }
+
+  /* ─── Theme Toggle Button ─── */
+  #themeToggle {
+    position: absolute;
+    top: 48px;
+    right: 24px;
+    z-index: 1000;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: rgba(128,128,128,0.12);
+    color: var(--paper);
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    line-height: 1;
+    padding: 0;
+  }
+  #themeToggle:hover {
+    background: rgba(128,128,128,0.22);
+    border-color: var(--gold);
+    transform: scale(1.08);
+  }
+  @media (min-width: 720px) {
+    #themeToggle { right: calc(50% - 390px + 32px); }
+  }
+
+  /* ─── Theme Transition ─── */
+  html.theme-transitioning,
+  html.theme-transitioning *,
+  html.theme-transitioning *::before,
+  html.theme-transitioning *::after {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+  }
 </style>
 </head>
 <body>
+<script>
+(function(){
+  var html = document.documentElement;
+  var stored = localStorage.getItem('theme');
+  var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  var theme = stored || (prefersDark ? 'dark' : 'light');
+  if (theme === 'light') html.setAttribute('data-theme', 'light');
+
+  function updateIcon(t) {
+    var btn = document.getElementById('themeToggle');
+    if (btn) btn.textContent = t === 'light' ? '\u263E' : '\u2600';
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var btn = document.getElementById('themeToggle');
+    if (!btn) return;
+    updateIcon(theme);
+    btn.addEventListener('click', function() {
+      html.classList.add('theme-transitioning');
+      var current = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      if (current === 'light') html.setAttribute('data-theme', 'light');
+      else html.removeAttribute('data-theme');
+      localStorage.setItem('theme', current);
+      updateIcon(current);
+      setTimeout(function(){ html.classList.remove('theme-transitioning'); }, 350);
+    });
+  });
+})();
+</script>
 
 <div class="hero">
-  <div class="hero-top">
-    <div class="parent-brand"><img class="cl-icon" src="img/choulegal-icon.svg" alt="">周全 <span>ChouLegal</span></div>
-    <a href="/" class="logo">Inheritance<span>Pro</span><span class="tag">Beta</span></a>
+  <div class="hero-top" style="display:flex;align-items:flex-start;justify-content:space-between;">
+    <div>
+      <a href="https://choulegal.com" class="parent-brand" target="_blank" rel="noopener"><img class="cl-icon" src="img/choulegal-icon.svg" alt="">周全 <span>ChouLegal</span></a>
+      <a href="/" class="logo">Inheritance<span>Pro</span><span class="tag">Beta</span></a>
+    </div>
+    <button id="themeToggle" aria-label="切換深色/淺色模式"></button>
   </div>
 
   <span class="eyebrow">中華民國民法 · 財產權益</span>
