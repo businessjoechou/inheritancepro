@@ -419,14 +419,12 @@
 }
 
 .cl-body, .ip-cl-body {
-  display: none;
   padding: 0 18px 18px;
+  /* animated open/close handled in Animations section below */
 }
 
-.case-law-panel.cl-open .cl-body,
-.ip-case-law-panel.cl-open .ip-cl-body {
-  display: block;
-}
+/* Legacy display toggle removed — smooth height animation used instead
+   (see Animations section: .cl-body max-height transition) */
 
 .cl-item, .ip-cl-item {
   padding: 14px 0;
@@ -887,4 +885,237 @@
   color: rgba(0, 0, 0, 0.62);
   line-height: 1.7;
   border-top: 1px solid var(--ip-border);
+}
+
+/* ============================================================
+ * ===== Animations =====
+ * Premium micro-interactions for InheritancePro tool pages
+ * ============================================================ */
+
+/* ── Keyframes ── */
+@keyframes ipFadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes ipFadeScale {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes ipBorderWipeLeft {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+@keyframes ipCtaPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(196, 147, 42, 0.25); }
+  50%      { box-shadow: 0 0 0 6px rgba(196, 147, 42, 0); }
+}
+
+/* ── 6. Form Interactions ── */
+/* Input focus: border transitions to gold + subtle outer glow */
+.input-group input[type="number"],
+.input-group input[type="text"],
+.input-group input[type="email"],
+.input-group input[type="date"],
+.ip-input-group input[type="number"],
+.ip-input-group input[type="text"],
+.ip-input-group input[type="email"],
+.ip-input-group input[type="date"] {
+  transition: border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.25s;
+}
+
+.input-group input:focus,
+.ip-input-group input:focus {
+  box-shadow: 0 0 0 3px rgba(196, 147, 42, 0.15);
+}
+
+/* Select dropdowns: smooth border color change */
+.input-group select,
+.ip-input-group select {
+  transition: border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.input-group select:focus,
+.ip-input-group select:focus {
+  border-color: var(--ip-gold);
+  box-shadow: 0 0 0 3px rgba(196, 147, 42, 0.15);
+  outline: none;
+}
+
+/* Labels: smooth color transition */
+.input-group label,
+.ip-input-group label {
+  transition: color 0.25s;
+}
+
+/* ── 7. Result Display ── */
+/* Result cards: fade in + slide up sequentially */
+.ip-anim-result {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.ip-anim-result.ip-anim-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Count-up animation target marker */
+.ip-count-up {
+  /* JS will animate the text content */
+  font-variant-numeric: tabular-nums;
+}
+
+/* Success/danger/warn boxes: fade in + slide up */
+.ip-anim-result .success-box,
+.ip-anim-result .ip-success-box,
+.ip-anim-result .danger-box,
+.ip-anim-result .ip-danger-box,
+.ip-anim-result .warn-box,
+.ip-anim-result .ip-warn-box {
+  /* Inherits parent reveal animation; no separate animation needed */
+}
+
+/* ── 8. Button Effects ── */
+/* Primary buttons: hover scale + shadow */
+.calc-btn, .ip-btn-calc,
+.ip-btn-primary {
+  transition: background 0.25s,
+              transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s;
+}
+.calc-btn:hover, .ip-btn-calc:hover,
+.ip-btn-primary:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+/* Click: momentary press */
+.calc-btn:active, .ip-btn-calc:active,
+.ip-btn-primary:active {
+  transform: scale(0.98);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Subtle idle pulse on main CTA */
+.ip-btn-cta-pulse {
+  animation: ipCtaPulse 3s ease-in-out infinite;
+}
+
+/* Secondary button hover */
+.ip-btn-secondary {
+  transition: border-color 0.25s, color 0.25s, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.ip-btn-secondary:hover {
+  transform: scale(1.02);
+}
+.ip-btn-secondary:active {
+  transform: scale(0.98);
+}
+
+/* Save button */
+.save-btn, .ip-save-btn {
+  transition: opacity 0.25s, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.save-btn:hover, .ip-save-btn:hover {
+  transform: scale(1.02);
+}
+.save-btn:active, .ip-save-btn:active {
+  transform: scale(0.98);
+}
+
+/* ── 9. Case Law Panel ── */
+/* Smooth height animation instead of instant display toggle */
+.cl-body, .ip-cl-body {
+  display: block !important;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 500ms cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 400ms cubic-bezier(0.16, 1, 0.3, 1),
+              padding 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.case-law-panel.cl-open .cl-body,
+.ip-case-law-panel.cl-open .ip-cl-body {
+  max-height: 2000px;
+  opacity: 1;
+  padding-top: 0;
+  padding-bottom: 18px;
+}
+
+/* Individual case items: staggered fade in */
+.cl-item, .ip-cl-item {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 400ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.case-law-panel.cl-open .cl-item,
+.ip-case-law-panel.cl-open .ip-cl-item {
+  opacity: 1;
+  transform: translateY(0);
+}
+.case-law-panel.cl-open .cl-item:nth-child(1),
+.ip-case-law-panel.cl-open .ip-cl-item:nth-child(1) { transition-delay: 100ms; }
+.case-law-panel.cl-open .cl-item:nth-child(2),
+.ip-case-law-panel.cl-open .ip-cl-item:nth-child(2) { transition-delay: 200ms; }
+.case-law-panel.cl-open .cl-item:nth-child(3),
+.ip-case-law-panel.cl-open .ip-cl-item:nth-child(3) { transition-delay: 300ms; }
+.case-law-panel.cl-open .cl-item:nth-child(4),
+.ip-case-law-panel.cl-open .ip-cl-item:nth-child(4) { transition-delay: 400ms; }
+.case-law-panel.cl-open .cl-item:nth-child(5),
+.ip-case-law-panel.cl-open .ip-cl-item:nth-child(5) { transition-delay: 500ms; }
+
+/* ── Scroll Reveal (tool pages) ── */
+.ip-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.ip-reveal.ip-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── prefers-reduced-motion: disable all animations ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .ip-reveal,
+  .ip-anim-result,
+  .cl-item, .ip-cl-item {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .cl-body, .ip-cl-body {
+    transition: none !important;
+  }
+}
+
+/* ── Print safety: hide animations, show all content ── */
+@media print {
+  .ip-reveal,
+  .ip-anim-result,
+  .cl-item, .ip-cl-item {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+  .cl-body, .ip-cl-body {
+    max-height: none !important;
+    opacity: 1 !important;
+    overflow: visible !important;
+    display: block !important;
+  }
 }

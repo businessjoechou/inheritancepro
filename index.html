@@ -301,15 +301,15 @@
     padding: 22px 22px 20px;
     text-decoration: none;
     position: relative;
-    transition: border-color 0.2s, transform 0.2s;
     display: flex;
     flex-direction: column;
     gap: 10px;
     min-height: 196px;
+    /* transition moved to animation section */
   }
   .featured-card:hover {
     border-color: var(--gold);
-    transform: translateY(-2px);
+    /* transform + box-shadow handled in animation section */
   }
   .featured-card.case {
     background: linear-gradient(145deg, rgba(139, 32, 32, 0.12) 0%, var(--card) 60%);
@@ -436,14 +436,15 @@
     border: 1.5px solid var(--border);
     border-radius: 12px;
     padding: 20px 22px;
-    transition: all 0.2s;
     position: relative;
     overflow: hidden;
     cursor: pointer;
+    /* transition handled in animation section */
   }
   .tool-card:hover {
     border-color: var(--gold);
     background: rgba(196, 147, 42, 0.04);
+    /* transform + box-shadow handled in animation section */
   }
   .tool-card-inner {
     display: flex;
@@ -646,14 +647,120 @@
   .disclaimer-bar strong { color: rgba(255, 255, 255, 0.8); }
 
   /* ─────────── 動畫 ─────────── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
+  @keyframes ipFadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
-  .hero-title { animation: fadeUp 0.5s ease both; }
-  .hero-sub { animation: fadeUp 0.5s 0.08s ease both; }
-  .free-banner { animation: fadeUp 0.5s 0.14s ease both; }
-  .search-bar { animation: fadeUp 0.5s 0.2s ease both; }
+  @keyframes ipFadeScale {
+    from { opacity: 0; transform: scale(0.97) translateY(8px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  @keyframes ipBadgePulse {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.55; }
+  }
+
+  /* Hero entrance sequence */
+  .hero-title {
+    animation: ipFadeUp 600ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    will-change: opacity, transform;
+  }
+  .hero-sub {
+    animation: ipFadeUp 600ms 200ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    will-change: opacity, transform;
+  }
+  .free-banner {
+    animation: ipFadeUp 600ms 300ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    will-change: opacity, transform;
+  }
+  .search-bar {
+    animation: ipFadeScale 600ms 400ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    will-change: opacity, transform;
+  }
+
+  /* Featured card hover: lift + warm gold shadow glow */
+  .featured-card {
+    transition: border-color 0.25s, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s;
+  }
+  .featured-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 28px rgba(196, 147, 42, 0.18), 0 2px 8px rgba(0,0,0,0.12);
+  }
+
+  /* NEW badge pulse */
+  .featured-badge.new,
+  .tool-badge.new {
+    animation: ipBadgePulse 2.8s ease-in-out infinite;
+  }
+
+  /* Tool card hover: lift + shadow + gold border shimmer */
+  .tool-card {
+    transition: border-color 0.25s, background 0.25s, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s;
+  }
+  .tool-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(196, 147, 42, 0.12), 0 2px 6px rgba(0,0,0,0.08);
+  }
+
+  /* Scroll reveal: elements start hidden, revealed by IntersectionObserver */
+  .ip-reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
+                transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+  .ip-reveal.ip-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Tab content crossfade */
+  .tools {
+    transition: opacity 250ms ease;
+  }
+  .tools.ip-tab-fading {
+    opacity: 0;
+  }
+
+  /* Tool cards stagger entrance */
+  .tool-card.ip-stagger-in {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  .tool-card.ip-stagger-visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 400ms cubic-bezier(0.16, 1, 0.3, 1),
+                transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Tab underline slide indicator */
+  .tab-nav {
+    position: relative;
+  }
+  .tab-indicator {
+    position: absolute;
+    bottom: -2px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 1px;
+    transition: left 350ms cubic-bezier(0.16, 1, 0.3, 1),
+                width 350ms cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: left, width;
+  }
+
+  /* prefers-reduced-motion: disable all animations */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    .ip-reveal { opacity: 1; transform: none; }
+    .tool-card.ip-stagger-in { opacity: 1; transform: none; }
+    .tools.ip-tab-fading { opacity: 1; }
+  }
 
   /* ─────────── 桌機放大 ─────────── */
   @media (min-width: 720px) {
@@ -1330,7 +1437,7 @@ async function handleUnsubscribe() {
     }
   }
 
-  function renderTabs() {
+  function renderTabs(animate) {
     // Restore sections
     document.getElementById('featuredSection').style.display = '';
     document.getElementById('browseHeader').style.display = '';
@@ -1341,6 +1448,9 @@ async function handleUnsubscribe() {
     document.getElementById('tabNav').innerHTML = TABS.map(tab =>
       `<button class="tab-btn ${tab.id === activeTab ? 'active' : ''}" onclick="setTab('${tab.id}')">${tab.label}</button>`
     ).join('');
+
+    // Update sliding tab indicator
+    requestAnimationFrame(() => { updateTabIndicator(); });
 
     // Subtitle
     const current = TABS.find(t => t.id === activeTab) || TABS[0];
@@ -1353,23 +1463,68 @@ async function handleUnsubscribe() {
       .map(t => renderToolCard(t))
       .join('');
     document.getElementById('toolsContainer').innerHTML = toolsHtml;
+
+    // Staggered card entrance
+    if (animate) {
+      staggerToolCards();
+    }
   }
 
-  function render() {
+  function render(animate) {
     if (searchQuery) { renderSearch(); return; }
-    renderTabs();
+    renderTabs(animate);
   }
 
   function setTab(id) {
-    activeTab = id;
-    render();
-    // Scroll active tab into view
+    if (id === activeTab) return;
+    const container = document.getElementById('toolsContainer');
+    // Crossfade out
+    container.classList.add('ip-tab-fading');
     setTimeout(() => {
+      activeTab = id;
+      render(true);
+      // Crossfade in
+      requestAnimationFrame(() => {
+        container.classList.remove('ip-tab-fading');
+      });
+      // Scroll active tab into view
       const activeBtn = document.querySelector('.tab-btn.active');
       if (activeBtn && activeBtn.scrollIntoView) {
         activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
       }
-    }, 0);
+    }, 250);
+  }
+
+  /* Tab underline indicator positioning */
+  function updateTabIndicator() {
+    const nav = document.getElementById('tabNav');
+    if (!nav) return;
+    let indicator = nav.querySelector('.tab-indicator');
+    if (!indicator) {
+      indicator = document.createElement('div');
+      indicator.className = 'tab-indicator';
+      nav.appendChild(indicator);
+    }
+    const activeBtn = nav.querySelector('.tab-btn.active');
+    if (activeBtn) {
+      const navRect = nav.getBoundingClientRect();
+      const btnRect = activeBtn.getBoundingClientRect();
+      indicator.style.left = (btnRect.left - navRect.left) + 'px';
+      indicator.style.width = btnRect.width + 'px';
+    }
+  }
+
+  /* Stagger tool card entrance animation */
+  function staggerToolCards() {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return;
+    const cards = document.querySelectorAll('#toolsContainer .tool-card');
+    cards.forEach((card, i) => {
+      card.classList.add('ip-stagger-in');
+      setTimeout(() => {
+        card.classList.add('ip-stagger-visible');
+      }, 50 * i + 30);
+    });
   }
 
   function searchFor(q) {
@@ -1402,7 +1557,7 @@ async function handleUnsubscribe() {
 
   // 立刻渲染卡片（不等 Supabase）
   renderFeatured();
-  render();
+  render(true);
 
   // Auth 狀態背景載入（不阻塞 UI，由 auth-bar.js 處理）
 
@@ -1412,6 +1567,57 @@ async function handleUnsubscribe() {
       item.classList.toggle('open');
     });
   });
+
+  // ═════════════════════════════════════════════════════════════
+  // Scroll Reveal — IntersectionObserver for all major sections
+  // ═════════════════════════════════════════════════════════════
+  (function initScrollReveal() {
+    var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return;
+
+    // Mark sections for reveal
+    var revealTargets = [
+      '#featuredSection',
+      '#browseHeader',
+      '#tabScrollWrap',
+      '.faq-section',
+      '.disclaimer-bar'
+    ];
+    revealTargets.forEach(function(sel) {
+      var el = document.querySelector(sel);
+      if (el) el.classList.add('ip-reveal');
+    });
+
+    // FAQ items get stagger
+    document.querySelectorAll('.faq-item').forEach(function(el) {
+      el.classList.add('ip-reveal');
+    });
+
+    // Inline sections (subscribe, business)
+    document.querySelectorAll('section[style]').forEach(function(el) {
+      el.classList.add('ip-reveal');
+    });
+
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          // Stagger siblings
+          var parent = entry.target.parentElement;
+          var siblings = parent ? Array.from(parent.querySelectorAll(':scope > .ip-reveal')) : [];
+          var idx = siblings.indexOf(entry.target);
+          var delay = idx > 0 ? idx * 80 : 0;
+          setTimeout(function() {
+            entry.target.classList.add('ip-visible');
+          }, delay);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.ip-reveal').forEach(function(el) {
+      observer.observe(el);
+    });
+  })();
 </script>
 </body>
 </html>
