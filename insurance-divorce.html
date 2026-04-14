@@ -45,7 +45,7 @@
   .input-prefix { display: flex; align-items: center; gap: 10px; border: 1.5px solid var(--border); border-radius: 8px; background: var(--paper); padding: 0 14px; transition: border-color 0.2s; }
   .input-prefix:focus-within { border-color: var(--gold); background: #fff; }
   .prefix-text { font-size: 13px; color: var(--muted); white-space: nowrap; }
-  .input-prefix input { border: none; background: transparent; padding: 11px 0; flex: 1; font-size: 14px; font-family: 'DM Mono', monospace; color: var(--ink); }
+  .input-prefix input { border: none; background: transparent; padding: 11px 0; flex: 1; font-size: 14px; font-family: 'Noto Serif TC', serif; color: var(--ink); }
   .input-prefix input:focus { outline: none; }
   .input-prefix input[type="text"] { font-family: 'Noto Sans TC', sans-serif; font-size: 13px; }
 
@@ -62,7 +62,7 @@
   .policy-list { margin-top: 10px; }
   .policy-item { background: var(--paper); border: 1px solid var(--border); border-radius: 10px; padding: 14px; margin-bottom: 10px; position: relative; }
   .policy-item .policy-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-  .policy-item .policy-num { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.06em; }
+  .policy-item .policy-num { font-family: 'Noto Serif TC', serif; font-size: 11px; color: var(--muted); letter-spacing: 0.06em; }
   .policy-remove { background: none; border: none; color: var(--muted); font-size: 16px; cursor: pointer; padding: 2px 6px; border-radius: 4px; transition: color 0.15s; }
   .policy-remove:hover { color: var(--accent); }
   .policy-item .input-group { margin-bottom: 10px; }
@@ -84,7 +84,7 @@
   @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
   #resultSection { display: none; animation: fadeIn 0.35s ease both; }
 
-  .result-hero .label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
+  .result-hero .label { font-family: 'Noto Serif TC', serif; font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
   .result-amount { font-family: 'Noto Serif TC', serif; font-size: 28px; font-weight: 700; color: var(--gold); }
   .result-sub { font-size: 12px; color: var(--muted); margin-top: 6px; }
   .no-claim { background: #edf7f1; border: 1.5px solid #a8d4b8; border-radius: 10px; padding: 16px 18px; text-align: center; font-size: 14px; color: var(--success); font-weight: 500; margin-bottom: 14px; }
@@ -95,7 +95,7 @@
   .detail-row { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px solid var(--soft); font-size: 12px; gap: 6px; }
   .detail-row:last-child { border-bottom: none; }
   .detail-row .dr-label { color: var(--muted); flex-shrink: 0; }
-  .detail-row .dr-val { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; text-align: right; }
+  .detail-row .dr-val { font-family: 'Noto Serif TC', serif; font-size: 12px; font-weight: 500; text-align: right; }
   .detail-row.net-row { background: var(--soft); border-radius: 6px; padding: 7px 8px; margin-top: 6px; border-bottom: none; }
   .detail-row.net-row .dr-label { color: var(--ink); font-weight: 600; }
   .detail-row.net-row .dr-val { font-size: 13px; font-weight: 700; }
@@ -104,10 +104,10 @@
   .summary-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--soft); font-size: 13px; }
   .summary-row:last-child { border-bottom: none; }
   .summary-row .sr-label { color: var(--muted); }
-  .summary-row .sr-val { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; }
+  .summary-row .sr-val { font-family: 'Noto Serif TC', serif; font-size: 14px; font-weight: 500; }
   .claim-row { background: var(--ink); border-radius: 8px; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
   .claim-row .sr-label { color: #aaa; font-size: 13px; }
-  .claim-row .sr-val { font-family: 'DM Mono', monospace; font-size: 16px; font-weight: 700; color: var(--gold); }
+  .claim-row .sr-val { font-family: 'Noto Serif TC', serif; font-size: 16px; font-weight: 700; color: var(--gold); }
 
   /* Tool-specific: bar chart */
   .bar-chart { margin: 16px 0; }
@@ -115,16 +115,16 @@
   .bar-chart-label { font-size: 12px; font-weight: 500; width: 36px; flex-shrink: 0; }
   .bar-chart-track { flex: 1; height: 24px; background: var(--soft); border-radius: 6px; overflow: hidden; position: relative; }
   .bar-chart-fill { height: 100%; border-radius: 6px; transition: width 0.5s ease; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; min-width: 2px; }
-  .bar-chart-fill span { font-family: 'DM Mono', monospace; font-size: 10px; color: #fff; font-weight: 500; white-space: nowrap; }
+  .bar-chart-fill span { font-family: 'Noto Serif TC', serif; font-size: 10px; color: #fff; font-weight: 500; white-space: nowrap; }
   .bar-chart-fill.a { background: var(--gold); }
   .bar-chart-fill.b { background: #1a3a5c; }
 
   /* Tool-specific: compare card (custom layout, not shared compare-card) */
   .compare-card { background: #faf8f4; border: 1.5px solid var(--border); border-radius: 12px; padding: 16px 18px; margin-bottom: 14px; }
-  .compare-title { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 12px; }
+  .compare-title { font-family: 'Noto Serif TC', serif; font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 12px; }
   .compare-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; font-size: 13px; }
   .compare-row .cr-label { color: var(--muted); }
-  .compare-row .cr-val { font-family: 'DM Mono', monospace; font-weight: 600; }
+  .compare-row .cr-val { font-family: 'Noto Serif TC', serif; font-weight: 600; }
   .compare-row.highlight { background: #fff8ed; border-radius: 6px; padding: 8px 10px; margin-top: 4px; }
   .compare-row.highlight .cr-val { color: var(--gold); font-size: 14px; }
 

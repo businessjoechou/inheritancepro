@@ -43,32 +43,32 @@
   /* Tool-specific: progress bar */
   .progress-bar { height: 3px; background: var(--soft); }
   .progress-fill { height: 100%; background: var(--gold); transition: width 0.4s ease; }
-  .step-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
+  .step-label { font-family: 'Noto Serif TC', serif; font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
   h2 { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
   /* Tool-specific: toggle-group override (3-col grid instead of flex) */
   .toggle-group { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
   .toggle-btn.active { border-color: var(--accent); background: #fff5f5; color: var(--accent); font-weight: 500; }
   .info-box strong { color: #5a4010; }
   /* Tool-specific: result components */
-  .result-hero .label { font-size: 12px; color: var(--muted); letter-spacing: 0.12em; font-family: 'DM Mono', monospace; text-transform: uppercase; margin-bottom: 10px; }
+  .result-hero .label { font-size: 12px; color: var(--muted); letter-spacing: 0.12em; font-family: 'Noto Serif TC', serif; text-transform: uppercase; margin-bottom: 10px; }
   .result-total { font-family: 'Noto Serif TC', serif; font-size: 28px; font-weight: 700; color: var(--gold); margin-bottom: 6px; }
   .result-sub { font-size: 13px; color: var(--muted); }
   .heir-card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 10px; }
   .heir-header { background: var(--soft); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; }
   .heir-name { font-weight: 600; font-size: 14px; color: var(--ink); }
-  .heir-fraction { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent); font-weight: 500; }
+  .heir-fraction { font-family: 'Noto Serif TC', serif; font-size: 13px; color: var(--accent); font-weight: 500; }
   .heir-body { padding: 14px 16px; }
   .heir-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
   .heir-row:last-child { margin-bottom: 0; }
   .heir-row-label { font-size: 13px; color: var(--muted); }
-  .heir-row-val { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; color: var(--success); }
+  .heir-row-val { font-family: 'Noto Serif TC', serif; font-size: 14px; font-weight: 500; color: var(--success); }
   /* Tool-specific: plan table */
   .plan-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 10px; }
-  .plan-table th { background: var(--soft); padding: 8px 10px; text-align: left; font-size: 11px; font-family: 'DM Mono', monospace; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+  .plan-table th { background: var(--soft); padding: 8px 10px; text-align: left; font-size: 11px; font-family: 'Noto Serif TC', serif; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
   .plan-table td { padding: 8px 10px; border-bottom: 1px solid var(--soft); color: var(--ink); }
   .plan-table tr:last-child td { border-bottom: none; }
-  .plan-table td:last-child { font-family: 'DM Mono', monospace; color: var(--success); text-align: right; }
-  .plan-table td:nth-child(2) { font-family: 'DM Mono', monospace; text-align: right; color: var(--muted); }
+  .plan-table td:last-child { font-family: 'Noto Serif TC', serif; color: var(--success); text-align: right; }
+  .plan-table td:nth-child(2) { font-family: 'Noto Serif TC', serif; text-align: right; color: var(--muted); }
   /* Nav */
   .nav-bar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); background: #fff; border-top: 1px solid var(--border); padding: 16px 20px 28px; display: flex; gap: 10px; width: 100%; max-width: 480px; z-index: 10000; }
   .btn { flex: 1; padding: 14px; border-radius: 10px; border: none; font-size: 15px; font-family: 'Noto Sans TC', sans-serif; font-weight: 500; cursor: pointer; transition: all 0.2s; }
@@ -79,7 +79,7 @@
   @media print { header, .nav-bar, #navBar, .progress-bar, .ip-tab-bar { display: none !important; } main { padding: 20px; } .ip-tab-panel { display: block !important; } }
   #resultSection { display: none; animation: fadeUp 0.3s ease both; }
   /* Tool-specific: badge pills */
-  .badge-pill { display: inline-block; font-family: 'DM Mono', monospace; font-size: 11px; padding: 2px 8px; border-radius: 12px; font-weight: 500; }
+  .badge-pill { display: inline-block; font-family: 'Noto Serif TC', serif; font-size: 11px; padding: 2px 8px; border-radius: 12px; font-weight: 500; }
   .badge-ok { background: #e8f5e9; color: var(--success); }
   .badge-warn { background: #fff3e0; color: #c4722a; }
   .badge-danger { background: #fdf0f0; color: var(--danger); }
@@ -91,30 +91,30 @@
   select:focus { outline: none; border-color: var(--gold); background: #fff; }
   .slider-wrap { margin-bottom: 6px; }
   input[type="range"] { width: 100%; accent-color: var(--gold); }
-  .slider-label { display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); margin-top: 4px; }
-  .slider-value { text-align: center; font-family: 'DM Mono', monospace; font-size: 18px; font-weight: 500; color: var(--gold); margin: 6px 0; }
+  .slider-label { display: flex; justify-content: space-between; font-family: 'Noto Serif TC', serif; font-size: 11px; color: var(--muted); margin-top: 4px; }
+  .slider-value { text-align: center; font-family: 'Noto Serif TC', serif; font-size: 18px; font-weight: 500; color: var(--gold); margin: 6px 0; }
   #plannerResults { display: none; margin-top: 20px; }
   .planner-result-card { background: var(--ink); color: var(--paper); border-radius: 12px; padding: 24px; margin-bottom: 14px; }
-  .planner-result-title { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 16px; }
+  .planner-result-title { font-family: 'Noto Serif TC', serif; font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 16px; }
   .planner-result-row { display: flex; justify-content: space-between; align-items: baseline; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 13px; }
   .planner-result-row:last-child { border-bottom: none; }
   .planner-result-row .lbl { color: rgba(255,255,255,0.65); }
-  .planner-result-row .val { font-family: 'DM Mono', monospace; }
+  .planner-result-row .val { font-family: 'Noto Serif TC', serif; }
   .val.gold { color: var(--gold); font-weight: 700; font-size: 17px; }
   .val.green { color: #7ecba1; }
   .val.red { color: #f28b6e; }
   .val.muted-val { color: rgba(255,255,255,0.5); }
   .planner-compare-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 4px; }
-  .planner-compare-table th { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.45); letter-spacing: 0.1em; text-align: left; padding: 6px 4px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-  .planner-compare-table td { padding: 9px 4px; border-bottom: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.75); font-family: 'DM Mono', monospace; font-size: 12px; vertical-align: top; }
+  .planner-compare-table th { font-family: 'Noto Serif TC', serif; font-size: 10px; color: rgba(255,255,255,0.45); letter-spacing: 0.1em; text-align: left; padding: 6px 4px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .planner-compare-table td { padding: 9px 4px; border-bottom: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.75); font-family: 'Noto Serif TC', serif; font-size: 12px; vertical-align: top; }
   .planner-compare-table tr.best-row td { color: var(--gold); font-weight: 600; }
   .recommend-banner { background: rgba(196,147,42,0.15); border: 1px solid rgba(196,147,42,0.4); border-radius: 8px; padding: 14px; margin-top: 12px; font-size: 13px; line-height: 1.7; }
   .recommend-banner strong { color: var(--gold); }
   .planner-timeline-bar { margin: 12px 0; }
   .planner-timeline-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 12px; }
-  .planner-timeline-row .yr { font-family: 'DM Mono', monospace; color: rgba(255,255,255,0.5); width: 40px; flex-shrink: 0; }
+  .planner-timeline-row .yr { font-family: 'Noto Serif TC', serif; color: rgba(255,255,255,0.5); width: 40px; flex-shrink: 0; }
   .planner-timeline-row .bar { height: 8px; background: var(--gold); border-radius: 4px; opacity: 0.8; }
-  .planner-timeline-row .amt { font-family: 'DM Mono', monospace; color: rgba(255,255,255,0.7); font-size: 11px; }
+  .planner-timeline-row .amt { font-family: 'Noto Serif TC', serif; color: rgba(255,255,255,0.7); font-size: 11px; }
 
   /* === Tab 3 (calendar) specific === */
   .cal-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 4px; }
@@ -125,20 +125,20 @@
   .cal-summary-card { background: var(--ink); color: var(--paper); border-radius: 12px; padding: 20px 18px; margin-bottom: 16px; }
   .cal-summary-row { display: flex; justify-content: space-between; align-items: baseline; padding: 6px 0; font-size: 13px; }
   .cal-summary-row .lbl { color: rgba(255,255,255,0.65); }
-  .cal-summary-row .val { font-family: 'DM Mono', monospace; color: var(--gold); font-weight: 600; }
+  .cal-summary-row .val { font-family: 'Noto Serif TC', serif; color: var(--gold); font-weight: 600; }
   .cal-progress-wrap { margin: 16px 0 8px; }
   .cal-progress-track { height: 10px; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden; }
   .cal-progress-bar { height: 100%; background: var(--gold); border-radius: 5px; transition: width 0.5s ease; }
-  .cal-progress-label { display: flex; justify-content: space-between; font-size: 11px; color: rgba(255,255,255,0.45); font-family: 'DM Mono', monospace; margin-top: 4px; }
+  .cal-progress-label { display: flex; justify-content: space-between; font-size: 11px; color: rgba(255,255,255,0.45); font-family: 'Noto Serif TC', serif; margin-top: 4px; }
   .cal-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   .cal-table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 600px; }
-  .cal-table th { background: var(--soft); padding: 8px 6px; text-align: center; font-size: 10px; font-family: 'DM Mono', monospace; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; position: sticky; top: 0; }
+  .cal-table th { background: var(--soft); padding: 8px 6px; text-align: center; font-size: 10px; font-family: 'Noto Serif TC', serif; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; position: sticky; top: 0; }
   .cal-table th:first-child { text-align: left; }
   .cal-table td { padding: 8px 6px; border-bottom: 1px solid var(--soft); text-align: center; color: var(--ink); font-size: 12px; }
-  .cal-table td:first-child { text-align: left; font-family: 'DM Mono', monospace; font-weight: 500; color: var(--gold); }
+  .cal-table td:first-child { text-align: left; font-family: 'Noto Serif TC', serif; font-weight: 500; color: var(--gold); }
   .cal-table td.cal-free { color: var(--success); font-weight: 500; }
   .cal-table td.cal-taxed { color: var(--accent); }
-  .cal-table td.cal-mono { font-family: 'DM Mono', monospace; font-size: 11px; }
+  .cal-table td.cal-mono { font-family: 'Noto Serif TC', serif; font-size: 11px; }
   .cal-table tr:last-child td { border-bottom: none; font-weight: 600; }
   .cal-highlight { background: #f8f5ee; }
 </style>
@@ -235,7 +235,7 @@
     <!-- Results -->
     <div id="resultSection">
 
-      <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">試算結果</div>
+      <div style="font-family:'Noto Serif TC',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">試算結果</div>
 
       <!-- 年度贈與結果 -->
       <div class="heir-card">
@@ -403,7 +403,7 @@
           <span class="val" id="pr-remaining">&mdash;</span>
         </div>
         <div id="plannerTimelineSection">
-          <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:0.1em;margin:14px 0 8px">YEAR &middot; PLAN</div>
+          <div style="font-family:'Noto Serif TC',monospace;font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:0.1em;margin:14px 0 8px">YEAR &middot; PLAN</div>
           <div class="planner-timeline-bar" id="plannerTimeline"></div>
         </div>
       </div>
@@ -757,7 +757,7 @@
       tl += '<div class="planner-timeline-row"><span class="yr">第' + i + '年</span><div class="bar" style="width:' + w + '%"></div><span class="amt">' + FMT_W(amt) + '</span></div>';
     }
     if (years > 8 && total > 8 * annualFree) {
-      tl += '<div style="font-size:11px;color:rgba(255,255,255,0.35);font-family:\'DM Mono\',monospace;margin-top:4px">... 共 ' + years + ' 年，每年 244 萬</div>';
+      tl += '<div style="font-size:11px;color:rgba(255,255,255,0.35);font-family:\'Noto Serif TC\',monospace;margin-top:4px">... 共 ' + years + ' 年，每年 244 萬</div>';
     }
     document.getElementById('plannerTimeline').innerHTML = tl;
 
@@ -789,7 +789,7 @@
   window.plannerDownloadPDF = function() {
     var today = new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' });
     var resultsHTML = document.getElementById('plannerResults').innerHTML;
-    var html = '<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>InheritancePro 計算報告</title><style>@import url(\'https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap\');*{box-sizing:border-box;margin:0;padding:0;}body{font-family:\'Noto Sans TC\',sans-serif;background:#fff;color:#1a1410;font-size:13px;padding:40px;max-width:700px;margin:0 auto;}.pdf-header{border-bottom:3px solid #1a1410;padding-bottom:20px;margin-bottom:28px;display:flex;justify-content:space-between;align-items:flex-end;}.pdf-logo{font-family:\'Noto Serif TC\',serif;font-size:24px;font-weight:700;}.pdf-logo span{color:#c4932a;}.pdf-meta{font-size:11px;color:#7a6f62;text-align:right;line-height:1.8;font-family:\'DM Mono\',monospace;}.planner-result-card{background:#1a1410;color:#f5f0e8;border-radius:12px;padding:24px;margin-bottom:14px;break-inside:avoid;}.planner-result-title{font-family:\'DM Mono\',monospace;font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:16px;}.planner-result-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.07);}.planner-result-row:last-child{border-bottom:none;}.lbl{font-size:13px;color:rgba(245,240,232,0.65);}.val{font-family:\'DM Mono\',monospace;font-size:14px;font-weight:500;color:#f5f0e8;}.val.red{color:#e8a0a0;}.val.green{color:#a8d8bc;}.val.big{font-size:18px;color:#c4932a;}.law-note{background:#f8f8f8;border-left:3px solid #c4932a;border-radius:0 8px 8px 0;padding:10px 14px;font-size:11px;color:#7a6f62;line-height:1.7;margin:14px 0;}.pdf-footer{margin-top:40px;padding-top:16px;border-top:1px solid #c8bfb0;font-size:11px;color:#7a6f62;line-height:1.8;text-align:center;}.pdf-disc{font-size:10px;color:#aaa;margin-top:8px;}button{display:none!important;}</style></head><body><div class="pdf-header"><div><div class="pdf-logo">Inheritance<span>Pro</span></div><div style="font-size:12px;color:#7a6f62;margin-top:4px">贈與規劃試算</div></div><div class="pdf-meta">產出日期：' + today + '</div></div>' + resultsHTML + '<div class="pdf-footer">&copy; ' + new Date().getFullYear() + ' InheritancePro &middot; inheritancepro.choulegal.com<div class="pdf-disc">本報告僅供參考，不構成法律意見。實際個案請諮詢執業律師或法律顧問。</div></div></body></html>';
+    var html = '<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>InheritancePro 計算報告</title><style>@import url(\'https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap\');*{box-sizing:border-box;margin:0;padding:0;}body{font-family:\'Noto Sans TC\',sans-serif;background:#fff;color:#1a1410;font-size:13px;padding:40px;max-width:700px;margin:0 auto;}.pdf-header{border-bottom:3px solid #1a1410;padding-bottom:20px;margin-bottom:28px;display:flex;justify-content:space-between;align-items:flex-end;}.pdf-logo{font-family:\'Noto Serif TC\',serif;font-size:24px;font-weight:700;}.pdf-logo span{color:#c4932a;}.pdf-meta{font-size:11px;color:#7a6f62;text-align:right;line-height:1.8;font-family:\'Noto Serif TC\',monospace;}.planner-result-card{background:#1a1410;color:#f5f0e8;border-radius:12px;padding:24px;margin-bottom:14px;break-inside:avoid;}.planner-result-title{font-family:\'Noto Serif TC\',monospace;font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:16px;}.planner-result-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.07);}.planner-result-row:last-child{border-bottom:none;}.lbl{font-size:13px;color:rgba(245,240,232,0.65);}.val{font-family:\'Noto Serif TC\',monospace;font-size:14px;font-weight:500;color:#f5f0e8;}.val.red{color:#e8a0a0;}.val.green{color:#a8d8bc;}.val.big{font-size:18px;color:#c4932a;}.law-note{background:#f8f8f8;border-left:3px solid #c4932a;border-radius:0 8px 8px 0;padding:10px 14px;font-size:11px;color:#7a6f62;line-height:1.7;margin:14px 0;}.pdf-footer{margin-top:40px;padding-top:16px;border-top:1px solid #c8bfb0;font-size:11px;color:#7a6f62;line-height:1.8;text-align:center;}.pdf-disc{font-size:10px;color:#aaa;margin-top:8px;}button{display:none!important;}</style></head><body><div class="pdf-header"><div><div class="pdf-logo">Inheritance<span>Pro</span></div><div style="font-size:12px;color:#7a6f62;margin-top:4px">贈與規劃試算</div></div><div class="pdf-meta">產出日期：' + today + '</div></div>' + resultsHTML + '<div class="pdf-footer">&copy; ' + new Date().getFullYear() + ' InheritancePro &middot; inheritancepro.choulegal.com<div class="pdf-disc">本報告僅供參考，不構成法律意見。實際個案請諮詢執業律師或法律顧問。</div></div></body></html>';
     exportPDF(html, 'InheritancePro-贈與規劃');
   };
 })();

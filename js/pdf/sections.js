@@ -44,8 +44,8 @@ export function pdfCompareCard({ leftLabel, rightLabel, rows, taxRow, diffLabel,
     return `
       <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr;border-bottom:1px solid ${C.soft};${border}${hl}">
         <div style="padding:10px 8px;color:${C.muted};font-size:11px;">${r.label}</div>
-        <div style="padding:10px 8px;font-family:'DM Mono',monospace;text-align:right;font-size:12px;color:${C.accent};">${r.left}</div>
-        <div style="padding:10px 8px;font-family:'DM Mono',monospace;text-align:right;font-size:12px;color:${C.success};">${r.right}</div>
+        <div style="padding:10px 8px;font-family:'Noto Serif TC',monospace;text-align:right;font-size:12px;color:${C.accent};">${r.left}</div>
+        <div style="padding:10px 8px;font-family:'Noto Serif TC',monospace;text-align:right;font-size:12px;color:${C.success};">${r.right}</div>
       </div>
     `;
   }).join('');
@@ -53,15 +53,15 @@ export function pdfCompareCard({ leftLabel, rightLabel, rows, taxRow, diffLabel,
   const taxRowHtml = taxRow ? `
     <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr;background:${C.soft};font-weight:700;">
       <div style="padding:12px 8px;color:${C.ink};font-size:12px;">${taxRow.label}</div>
-      <div style="padding:12px 8px;font-family:'DM Mono',monospace;text-align:right;font-size:14px;color:${C.accent};">${taxRow.left}</div>
-      <div style="padding:12px 8px;font-family:'DM Mono',monospace;text-align:right;font-size:14px;color:${C.success};">${taxRow.right}</div>
+      <div style="padding:12px 8px;font-family:'Noto Serif TC',monospace;text-align:right;font-size:14px;color:${C.accent};">${taxRow.left}</div>
+      <div style="padding:12px 8px;font-family:'Noto Serif TC',monospace;text-align:right;font-size:14px;color:${C.success};">${taxRow.right}</div>
     </div>
   ` : '';
 
   const diffHtml = (diffLabel || diffValue) ? `
     <div style="background:rgba(196,147,42,0.12);display:flex;justify-content:space-between;padding:16px 14px;">
-      <span style="font-size:12px;color:${C.muted};font-family:'DM Mono',monospace;">${diffLabel || ''}</span>
-      <span style="font-family:'DM Mono',monospace;font-size:22px;font-weight:700;color:${C.gold};">${diffValue || ''}</span>
+      <span style="font-size:12px;color:${C.muted};font-family:'Noto Serif TC',monospace;">${diffLabel || ''}</span>
+      <span style="font-family:'Noto Serif TC',monospace;font-size:22px;font-weight:700;color:${C.gold};">${diffValue || ''}</span>
     </div>
   ` : '';
 
@@ -136,7 +136,7 @@ export function pdfDetailRow({ label, value, emphasis = false }) {
   return `
     <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid ${C.soft};font-size:12px;">
       <span style="color:${C.muted};">${label}</span>
-      <span style="font-family:'DM Mono',monospace;${emphasis ? `font-weight:700;color:${C.ink};` : ''}">${value}</span>
+      <span style="font-family:'Noto Serif TC',monospace;${emphasis ? `font-weight:700;color:${C.ink};` : ''}">${value}</span>
     </div>
   `;
 }

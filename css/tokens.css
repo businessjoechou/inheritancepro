@@ -53,7 +53,7 @@
   /* === 字體 === */
   --ip-font-serif: 'Noto Serif TC', serif;
   --ip-font-sans:  'Noto Sans TC', sans-serif;
-  --ip-font-mono:  'DM Mono', monospace;
+  --ip-font-mono:  'Noto Serif TC', serif;
 
   /* === 字體尺寸 === */
   --ip-fs-xs:   10px;

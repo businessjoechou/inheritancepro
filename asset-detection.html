@@ -42,8 +42,8 @@
 <style>
   /* Tool-unique: extra token, wider main, module-badge, back-link, page-title, law-tag, tabs, card-title, tx-table, upload, paste, analyze, risk, gap, law-summary */
   :root { --warn: #d4691e; }
-  .module-badge { background: var(--danger); color: #fff; font-size: 10px; font-family: 'DM Mono', monospace; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.1em; }
-  .back-link { color: var(--muted); font-size: 12px; text-decoration: none; font-family: 'DM Mono', monospace; }
+  .module-badge { background: var(--danger); color: #fff; font-size: 10px; font-family: 'Noto Serif TC', serif; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.1em; }
+  .back-link { color: var(--muted); font-size: 12px; text-decoration: none; font-family: 'Noto Serif TC', serif; }
   .back-link:hover { color: var(--gold); }
   main { max-width: 860px; }
 
@@ -51,7 +51,7 @@
   .page-title { margin-bottom: 28px; }
   .page-title h1 { font-family: 'Noto Serif TC', serif; font-size: 26px; font-weight: 700; margin-bottom: 6px; }
   .page-title p { font-size: 13px; color: var(--muted); line-height: 1.6; }
-  .law-tag { display: inline-block; background: rgba(196,147,42,0.1); color: var(--gold); font-size: 11px; font-family: 'DM Mono', monospace; padding: 2px 8px; border-radius: 3px; margin-top: 8px; }
+  .law-tag { display: inline-block; background: rgba(196,147,42,0.1); color: var(--gold); font-size: 11px; font-family: 'Noto Serif TC', serif; padding: 2px 8px; border-radius: 3px; margin-top: 8px; }
 
   /* Tabs */
   .tabs { display: flex; gap: 0; border-bottom: 2px solid var(--border); margin-bottom: 24px; }
@@ -61,16 +61,16 @@
   .tab-panel.active { display: block; }
 
   /* Card-title (unique to this tool) */
-  .card-title { font-size: 12px; font-family: 'DM Mono', monospace; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
+  .card-title { font-size: 12px; font-family: 'Noto Serif TC', serif; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
 
   /* Manual input table */
   .tx-table { width: 100%; border-collapse: collapse; }
-  .tx-table th { font-size: 11px; font-family: 'DM Mono', monospace; color: var(--muted); text-align: left; padding: 0 8px 10px; border-bottom: 1px solid var(--border); font-weight: 400; letter-spacing: 0.08em; }
+  .tx-table th { font-size: 11px; font-family: 'Noto Serif TC', serif; color: var(--muted); text-align: left; padding: 0 8px 10px; border-bottom: 1px solid var(--border); font-weight: 400; letter-spacing: 0.08em; }
   .tx-table td { padding: 6px 8px; border-bottom: 1px solid var(--soft); vertical-align: middle; }
   .tx-table tr:last-child td { border-bottom: none; }
   .tx-table input, .tx-table select { width: 100%; padding: 7px 10px; border: 1.5px solid var(--border); border-radius: 6px; font-size: 13px; font-family: 'Noto Sans TC', sans-serif; background: var(--paper); color: var(--ink); }
   .tx-table input:focus, .tx-table select:focus { outline: none; border-color: var(--gold); background: #fff; }
-  .tx-table input[type="number"] { font-family: 'DM Mono', monospace; }
+  .tx-table input[type="number"] { font-family: 'Noto Serif TC', serif; }
 
   .add-row-btn { margin-top: 12px; padding: 8px 16px; border: 1.5px dashed var(--border); border-radius: 6px; background: transparent; cursor: pointer; font-size: 13px; color: var(--muted); font-family: 'Noto Sans TC', sans-serif; width: 100%; transition: all 0.2s; }
   .add-row-btn:hover { border-color: var(--gold); color: var(--gold); background: var(--paper); }
@@ -79,7 +79,7 @@
   .del-btn:hover { color: var(--danger); }
 
   /* Paste area */
-  .paste-area { width: 100%; min-height: 160px; padding: 14px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 13px; font-family: 'DM Mono', monospace; background: var(--paper); color: var(--ink); resize: vertical; line-height: 1.8; }
+  .paste-area { width: 100%; min-height: 160px; padding: 14px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 13px; font-family: 'Noto Serif TC', serif; background: var(--paper); color: var(--ink); resize: vertical; line-height: 1.8; }
   .paste-area:focus { outline: none; border-color: var(--gold); background: #fff; }
   .paste-hint { font-size: 11px; color: var(--muted); margin-top: 8px; line-height: 1.7; }
   .parse-btn { margin-top: 12px; padding: 10px 20px; background: var(--accent); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-family: 'Noto Sans TC', sans-serif; }
@@ -90,7 +90,7 @@
   .upload-zone p { color: var(--muted); font-size: 13px; margin-top: 10px; }
   .upload-zone .icon { font-size: 32px; }
   .upload-zone input[type="file"] { display: none; }
-  .upload-zone .file-name { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--success); margin-top: 8px; }
+  .upload-zone .file-name { font-family: 'Noto Serif TC', serif; font-size: 12px; color: var(--success); margin-top: 8px; }
 
   /* Analyze btn */
   .analyze-btn { width: 100%; padding: 14px; background: var(--ink); color: var(--paper); border: none; border-radius: 8px; font-size: 15px; font-weight: 500; cursor: pointer; font-family: 'Noto Sans TC', sans-serif; letter-spacing: 0.03em; transition: background 0.2s; margin-top: 8px; }
@@ -104,7 +104,7 @@
   .risk-box.high { background: #fdf0ef; border: 1.5px solid #e8b4b0; }
   .risk-box.med { background: #fef6ed; border: 1.5px solid #f0d4b0; }
   .risk-box.low { background: #edf7f1; border: 1.5px solid #a8d4b8; }
-  .risk-box .num { font-family: 'DM Mono', monospace; font-size: 28px; font-weight: 500; }
+  .risk-box .num { font-family: 'Noto Serif TC', serif; font-size: 28px; font-weight: 500; }
   .risk-box.high .num { color: var(--danger); }
   .risk-box.med .num { color: var(--warn); }
   .risk-box.low .num { color: var(--success); }
@@ -121,7 +121,7 @@
   .overall-risk.MEDIUM .risk-label { color: var(--gold); }
   .overall-risk.LOW .risk-label { color: var(--success); }
   .overall-risk .risk-desc { font-size: 12px; color: var(--muted); margin-top: 3px; }
-  .risk-score { font-family: 'DM Mono', monospace; font-size: 32px; font-weight: 500; }
+  .risk-score { font-family: 'Noto Serif TC', serif; font-size: 32px; font-weight: 500; }
   .overall-risk.CRITICAL .risk-score { color: var(--danger); }
   .overall-risk.HIGH .risk-score { color: var(--warn); }
   .overall-risk.MEDIUM .risk-score { color: var(--gold); }
@@ -134,11 +134,11 @@
   .tx-result-header.MEDIUM { background: #fef6ed; border-left: 4px solid var(--warn); }
   .tx-result-header.LOW { background: #f8f8f4; border-left: 4px solid var(--border); }
   .tx-meta { flex: 1; }
-  .tx-date { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+  .tx-date { font-family: 'Noto Serif TC', serif; font-size: 11px; color: var(--muted); }
   .tx-desc { font-size: 13px; font-weight: 500; margin-top: 2px; }
-  .tx-amount { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; white-space: nowrap; }
+  .tx-amount { font-family: 'Noto Serif TC', serif; font-size: 14px; font-weight: 500; white-space: nowrap; }
   .tx-amount.neg { color: var(--danger); }
-  .tx-badge { font-size: 10px; font-family: 'DM Mono', monospace; padding: 2px 8px; border-radius: 3px; white-space: nowrap; }
+  .tx-badge { font-size: 10px; font-family: 'Noto Serif TC', serif; padding: 2px 8px; border-radius: 3px; white-space: nowrap; }
   .tx-badge.HIGH, .tx-badge.CRITICAL { background: var(--danger); color: #fff; }
   .tx-badge.MEDIUM { background: var(--warn); color: #fff; }
   .tx-badge.LOW { background: var(--border); color: var(--muted); }
@@ -154,15 +154,15 @@
 
   /* Gap analysis */
   .gap-box { border-radius: 10px; padding: 18px 20px; margin-bottom: 20px; border: 2px solid var(--border); background: #fff; }
-  .gap-box-title { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
+  .gap-box-title { font-family: 'Noto Serif TC', serif; font-size: 11px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
   .gap-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--soft); font-size: 13px; }
   .gap-row:last-child { border-bottom: none; padding-bottom: 0; }
   .gap-label { color: var(--muted); }
-  .gap-val { font-family: 'DM Mono', monospace; font-weight: 500; }
+  .gap-val { font-family: 'Noto Serif TC', serif; font-weight: 500; }
   .gap-val.ok { color: var(--success); }
   .gap-val.warn { color: var(--warn); }
   .gap-val.danger { color: var(--danger); }
-  .gap-badge { font-size: 10px; font-family: 'DM Mono', monospace; padding: 2px 8px; border-radius: 3px; margin-left: 10px; }
+  .gap-badge { font-size: 10px; font-family: 'Noto Serif TC', serif; padding: 2px 8px; border-radius: 3px; margin-left: 10px; }
   .gap-badge.ok { background: #edf7f1; color: var(--success); }
   .gap-badge.warn { background: #fef6ed; color: var(--warn); }
   .gap-badge.danger { background: #fdf0ef; color: var(--danger); }
@@ -172,10 +172,10 @@
   .law-sum-box { background: #fff; border: 1.5px solid var(--border); border-radius: 8px; padding: 14px; text-align: center; }
   .law-sum-box.active-2yr { border-color: var(--danger); background: #fdf0ef; }
   .law-sum-box.active-6yr { border-color: var(--warn); background: #fef6ed; }
-  .law-sum-label { font-size: 10px; font-family: 'DM Mono', monospace; color: var(--muted); letter-spacing: 0.08em; margin-bottom: 6px; }
+  .law-sum-label { font-size: 10px; font-family: 'Noto Serif TC', serif; color: var(--muted); letter-spacing: 0.08em; margin-bottom: 6px; }
   .law-sum-box.active-2yr .law-sum-label { color: var(--danger); }
   .law-sum-box.active-6yr .law-sum-label { color: var(--warn); }
-  .law-sum-amt { font-family: 'DM Mono', monospace; font-size: 16px; font-weight: 600; color: var(--ink); }
+  .law-sum-amt { font-family: 'Noto Serif TC', serif; font-size: 16px; font-weight: 600; color: var(--ink); }
   .law-sum-box.active-2yr .law-sum-amt { color: var(--danger); }
   .law-sum-box.active-6yr .law-sum-amt { color: var(--warn); }
   .law-sum-count { font-size: 11px; color: var(--muted); margin-top: 3px; }
@@ -275,7 +275,7 @@
         </div>
         <div>
           <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">遺產申報總額（萬元）</label>
-          <input type="number" id="declaredEstate" placeholder="0" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;font-family:'DM Mono',monospace;background:var(--paper);color:var(--ink)">
+          <input type="number" id="declaredEstate" placeholder="0" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;font-family:'Noto Serif TC',monospace;background:var(--paper);color:var(--ink)">
         </div>
       </div>
     </div>
@@ -304,7 +304,7 @@
         </div>
         <div>
           <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">遺產申報總額（萬元）</label>
-          <input type="number" id="declaredEstatePaste" placeholder="0" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;font-family:'DM Mono',monospace;background:var(--paper);color:var(--ink)">
+          <input type="number" id="declaredEstatePaste" placeholder="0" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;font-family:'Noto Serif TC',monospace;background:var(--paper);color:var(--ink)">
         </div>
       </div>
     </div>
@@ -334,7 +334,7 @@
         <input type="file" id="csvFile" accept=".csv" onchange="handleCSV(this)">
       </div>
       <div class="paste-hint" style="margin-top:12px">
-        CSV 範本欄位：<span style="font-family:'DM Mono',monospace">日期, 金額(萬), 類型, 對象說明</span><br>
+        CSV 範本欄位：<span style="font-family:'Noto Serif TC',monospace">日期, 金額(萬), 類型, 對象說明</span><br>
         類型填寫：現金贈與 / 不動產贈與 / 低價出售 / 大額提款 / 壽險保費 / 其他
       </div>
     </div>
@@ -348,7 +348,7 @@
         </div>
         <div>
           <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">遺產申報總額（萬元）</label>
-          <input type="number" id="declaredEstateCSV" placeholder="0" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;font-family:'DM Mono',monospace;background:var(--paper);color:var(--ink)">
+          <input type="number" id="declaredEstateCSV" placeholder="0" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;font-family:'Noto Serif TC',monospace;background:var(--paper);color:var(--ink)">
         </div>
       </div>
     </div>
@@ -486,7 +486,7 @@
       const item = { date: dateStr, amount, type: guessType(typeStr), note: noteStr };
       parsedData.push(item);
       const tr = document.createElement('tr');
-      tr.innerHTML = `<td>${dateStr}</td><td style="font-family:'DM Mono',monospace">${amount}萬</td><td>${typeStr}</td><td>${noteStr}</td>`;
+      tr.innerHTML = `<td>${dateStr}</td><td style="font-family:'Noto Serif TC',monospace">${amount}萬</td><td>${typeStr}</td><td>${noteStr}</td>`;
       tbody.appendChild(tr);
     });
     document.getElementById('parsedPreview').style.display = parsedData.length > 0 ? 'block' : 'none';
@@ -538,7 +538,7 @@
         const item = { date: parts[0], amount, type: guessType(parts[2] || ''), note: parts[3] || '' };
         parsedData.push(item);
         const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${parts[0]}</td><td style="font-family:'DM Mono',monospace">${amount}萬</td><td>${parts[2]||''}</td><td>${parts[3]||''}</td>`;
+        tr.innerHTML = `<td>${parts[0]}</td><td style="font-family:'Noto Serif TC',monospace">${amount}萬</td><td>${parts[2]||''}</td><td>${parts[3]||''}</td>`;
         tbody.appendChild(tr);
       }
       document.getElementById('csvPreview').style.display = parsedData.length > 0 ? 'block' : 'none';
@@ -694,7 +694,7 @@
 
     // 法條彙總框
     const lawSumHTML = `
-    <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px">依法條期間彙總</div>
+    <div style="font-family:'Noto Serif TC',monospace;font-size:11px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px">依法條期間彙總</div>
     <div class="law-summary">
       <div class="law-sum-box ${tx2yr.length > 0 ? 'active-2yr' : ''}">
         <div class="law-sum-label">民法§1148-1<br>2年內</div>
@@ -799,7 +799,7 @@
     // 建議後續調查步驟
     const stepsHTML = `
     <div style="margin-top:16px">
-      <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px">建議後續調查步驟</div>
+      <div style="font-family:'Noto Serif TC',monospace;font-size:11px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px">建議後續調查步驟</div>
       <div class="card" style="padding:16px 20px">
         ${high > 0 ? `<div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--border)">
           <div style="font-size:12px;font-weight:600;color:var(--danger);margin-bottom:6px">🔴 高優先度</div>

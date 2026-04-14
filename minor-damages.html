@@ -42,12 +42,12 @@
 <style>
   /* Tool-unique: extra tokens, back-link, input-prefix, toggle (accent-themed grid), warn-box (red), result breakdown, liability cards, disclaimer, buttons */
   :root { --accent:#1a3a5c; --warn:#b8600a; }
-  .back-link{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:0.06em;}
+  .back-link{font-family:'Noto Serif TC',monospace;font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:0.06em;}
   label .hint{font-weight:400;color:var(--muted);font-size:12px;margin-left:6px;}
   .input-prefix{display:flex;align-items:center;gap:10px;border:1.5px solid var(--border);border-radius:8px;background:var(--paper);padding:0 14px;transition:border-color 0.2s;}
   .input-prefix:focus-within{border-color:var(--gold);background:#fff;}
   .prefix-text{font-size:13px;color:var(--muted);white-space:nowrap;}
-  .input-prefix input{border:none;background:transparent;padding:11px 0;flex:1;font-size:14px;font-family:'DM Mono',monospace;color:var(--ink);}
+  .input-prefix input{border:none;background:transparent;padding:11px 0;flex:1;font-size:14px;font-family:'Noto Serif TC',monospace;color:var(--ink);}
   .input-prefix input:focus{outline:none;}
   .toggle-group{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
   .toggle-group.three{grid-template-columns:1fr 1fr 1fr;}
@@ -55,14 +55,14 @@
   .toggle-btn.active{border-color:var(--accent);background:#f0f4f8;color:var(--accent);font-weight:500;}
   .warn-box{background:#fdf0ef;border:1px solid #e8b0a8;border-radius:8px;padding:12px 14px;font-size:12px;color:var(--danger);line-height:1.7;margin-bottom:14px;}
   #resultSection{display:none;}
-  .result-hero .label{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.12em;margin-bottom:8px;}
+  .result-hero .label{font-family:'Noto Serif TC',monospace;font-size:11px;color:var(--muted);letter-spacing:0.12em;margin-bottom:8px;}
   .result-total{font-family:'Noto Serif TC',serif;font-size:26px;font-weight:700;color:var(--gold);line-height:1.4;}
   .result-sub{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.6;}
   .breakdown-item{padding:11px 0;border-bottom:1px solid var(--soft);}
   .breakdown-item:last-child{border-bottom:none;}
   .breakdown-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:3px;}
   .breakdown-name{font-size:13px;font-weight:600;color:var(--ink);}
-  .breakdown-amt{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;color:var(--success);margin-left:8px;white-space:nowrap;}
+  .breakdown-amt{font-family:'Noto Serif TC',monospace;font-size:13px;font-weight:500;color:var(--success);margin-left:8px;white-space:nowrap;}
   .breakdown-desc{font-size:11px;color:var(--muted);line-height:1.6;}
   .case-ref{font-size:11px;color:var(--accent);margin-top:3px;}
   .liability-card{border-radius:10px;padding:14px 16px;margin-bottom:10px;}
@@ -73,7 +73,7 @@
   .liability-card.offender .liability-title{color:var(--danger);}
   .liability-card.parent .liability-title{color:var(--warn);}
   .liability-card.school .liability-title{color:var(--accent);}
-  .liability-amt{font-family:'DM Mono',monospace;font-size:17px;font-weight:600;margin-bottom:5px;}
+  .liability-amt{font-family:'Noto Serif TC',monospace;font-size:17px;font-weight:600;margin-bottom:5px;}
   .liability-card.offender .liability-amt{color:var(--danger);}
   .liability-card.parent .liability-amt{color:var(--warn);}
   .liability-card.school .liability-amt{color:var(--accent);}
@@ -222,7 +222,7 @@
   <div id="resultSection">
     <div id="heroBox"></div>
     <div class="card" id="breakdownCard"><div class="section-title">賠償項目明細</div><div id="breakdownItems"></div></div>
-    <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin:16px 0 10px">責任歸屬</div>
+    <div style="font-family:'Noto Serif TC',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin:16px 0 10px">責任歸屬</div>
     <div id="liabilityCards"></div>
     <div class="law-note" id="lawNote"></div>
     <div class="disclaimer">⚠ 精神慰撫金無固定公式。本試算依實際判決案例校準，但每案情況不同，實際金額由法院裁量。請求時效：自知悉時起<strong>2年內</strong>（民法第197條）。</div>
@@ -463,15 +463,15 @@ body{font-family:'Noto Sans TC',sans-serif;padding:40px;max-width:700px;margin:0
 .header{border-bottom:3px solid #1a1410;padding-bottom:18px;margin-bottom:28px;display:flex;justify-content:space-between;align-items:flex-end;}
 .logo{font-family:'Noto Serif TC',serif;font-size:22px;font-weight:700;}
 .logo span{color:#c4932a;}
-.meta{font-size:11px;color:#7a6f62;text-align:right;line-height:1.8;font-family:'DM Mono',monospace;}
+.meta{font-size:11px;color:#7a6f62;text-align:right;line-height:1.8;font-family:'Noto Serif TC',monospace;}
 .result-box{background:#1a1410;color:#f5f0e8;border-radius:12px;padding:24px;text-align:center;margin-bottom:24px;}
-.result-box .lbl{font-size:11px;color:#7a6f62;letter-spacing:.12em;margin-bottom:8px;font-family:'DM Mono',monospace;}
+.result-box .lbl{font-size:11px;color:#7a6f62;letter-spacing:.12em;margin-bottom:8px;font-family:'Noto Serif TC',monospace;}
 .result-box .amount{font-family:'Noto Serif TC',serif;font-size:24px;font-weight:700;color:#c4932a;line-height:1.5;}
 h2{font-family:'Noto Serif TC',serif;font-size:15px;margin:20px 0 10px;}
 table{width:100%;border-collapse:collapse;margin-bottom:20px;font-size:12px;}
 th{background:#f5f0e8;padding:8px 12px;text-align:left;font-weight:500;border-bottom:2px solid #c8bfb0;}
 td{padding:8px 12px;border-bottom:1px solid #e8e0d0;vertical-align:top;}
-.val{font-family:'DM Mono',monospace;font-weight:500;}
+.val{font-family:'Noto Serif TC',monospace;font-weight:500;}
 .law-box{background:#f8f8f4;border-left:3px solid #c4932a;padding:12px 16px;font-size:11px;color:#7a6f62;line-height:1.8;border-radius:0 6px 6px 0;margin-bottom:16px;}
 .law-box strong{color:#1a1410;}
 .disclaimer{background:#f0f0f0;border-radius:6px;padding:10px 14px;font-size:10px;color:#7a6f62;line-height:1.7;margin-bottom:20px;}

@@ -41,7 +41,7 @@
   /* Tool-specific: progress bar */
   .progress-bar { height: 3px; background: var(--soft); }
   .progress-fill { height: 100%; background: var(--gold); transition: width 0.4s ease; }
-  .step-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
+  .step-label { font-family: 'Noto Serif TC', serif; font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
   select { font-family: 'Noto Sans TC', sans-serif; cursor: pointer; width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 8px; background: var(--paper); font-size: 15px; color: var(--ink); transition: border-color 0.2s; -webkit-appearance: none; }
   select:focus { outline: none; border-color: var(--gold); background: #fff; }
   /* Policy list */
@@ -52,7 +52,7 @@
   .add-policy-btn { display: block; width: 100%; padding: 10px; border: 1.5px dashed var(--border); border-radius: 8px; background: transparent; color: var(--muted); font-size: 13px; font-family: 'Noto Sans TC', sans-serif; cursor: pointer; transition: all 0.2s; margin-top: 4px; }
   .add-policy-btn:hover { border-color: var(--gold); color: var(--gold); }
   /* Results */
-  .result-hero .label { font-size: 12px; color: var(--muted); letter-spacing: 0.12em; font-family: 'DM Mono', monospace; text-transform: uppercase; margin-bottom: 10px; }
+  .result-hero .label { font-size: 12px; color: var(--muted); letter-spacing: 0.12em; font-family: 'Noto Serif TC', serif; text-transform: uppercase; margin-bottom: 10px; }
   .result-total { font-family: 'Noto Serif TC', serif; font-size: 28px; font-weight: 700; color: var(--gold); margin-bottom: 6px; }
   .result-sub { font-size: 13px; color: var(--muted); }
   .spouse-exempt-banner { background: #e8f5e9; border: 2px solid var(--success); border-radius: 16px; padding: 28px 24px; margin-bottom: 14px; text-align: center; }
@@ -61,12 +61,12 @@
   .heir-card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 10px; }
   .heir-header { background: var(--soft); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; }
   .heir-name { font-weight: 600; font-size: 14px; color: var(--ink); }
-  .heir-fraction { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent); font-weight: 500; }
+  .heir-fraction { font-family: 'Noto Serif TC', serif; font-size: 13px; color: var(--accent); font-weight: 500; }
   .heir-body { padding: 14px 16px; }
   .heir-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
   .heir-row:last-child { margin-bottom: 0; }
   .heir-row-label { font-size: 13px; color: var(--muted); }
-  .heir-row-val { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; color: var(--success); }
+  .heir-row-val { font-family: 'Noto Serif TC', serif; font-size: 14px; font-weight: 500; color: var(--success); }
   .tip-card { background: #f0f7f3; border: 1.5px solid #b8d8c8; border-radius: 12px; padding: 16px 20px; margin-bottom: 14px; }
   .tip-title { font-size: 13px; font-weight: 600; color: var(--success); margin-bottom: 8px; }
   .tip-body { font-size: 12px; color: #2a4a3a; line-height: 1.8; }
@@ -153,7 +153,7 @@
   <!-- Results -->
   <div id="resultSection">
 
-    <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">試算結果</div>
+    <div style="font-family:'Noto Serif TC',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">試算結果</div>
 
     <!-- 配偶免稅大橫幅 -->
     <div id="spouseExemptBanner" class="spouse-exempt-banner" style="display:none">
@@ -226,7 +226,7 @@
 
     <!-- 會計師備忘卡 -->
     <div class="accountant-only" style="background:#eef8f2;border:1.5px solid #2a6b4a;border-radius:12px;padding:16px 20px;margin-top:16px">
-      <div style="font-size:12px;font-weight:700;color:#2a6b4a;margin-bottom:8px;font-family:'DM Mono',monospace;letter-spacing:0.06em">MEMO &middot; 會計師備忘</div>
+      <div style="font-size:12px;font-weight:700;color:#2a6b4a;margin-bottom:8px;font-family:'Noto Serif TC',monospace;letter-spacing:0.06em">MEMO &middot; 會計師備忘</div>
       <div style="font-size:12px;color:#1a3a28;line-height:1.9">
         <strong>申報期限</strong>：要保人變更日起 30 日內向戶籍所在地國稅局申報贈與稅。<br>
         <strong>保價金查詢</strong>：向保險公司申請「變更日保單價值準備金證明」，需載明變更基準日、保價金金額。部分保險公司可線上查詢或電話申請。<br>
@@ -238,7 +238,7 @@
 
     <!-- 律師備忘卡 -->
     <div class="lawyer-only" style="background:#eef3fa;border:1.5px solid #3a5a80;border-radius:12px;padding:16px 20px;margin-top:16px">
-      <div style="font-size:12px;font-weight:700;color:#1a3a5c;margin-bottom:8px;font-family:'DM Mono',monospace;letter-spacing:0.06em">MEMO &middot; 律師備忘</div>
+      <div style="font-size:12px;font-weight:700;color:#1a3a5c;margin-bottom:8px;font-family:'Noto Serif TC',monospace;letter-spacing:0.06em">MEMO &middot; 律師備忘</div>
       <div style="font-size:12px;color:#1a2a3a;line-height:1.9">
         <strong>&sect;5-1 適用爭議</strong>：2006年以前之要保人變更不適用本條。實務上曾有納稅義務人主張變更日在施行前而免課贈與稅之案例。<br>
         <strong>保價金認定爭議</strong>：國稅局以「變更日」之保價金為課稅基礎，非保單面額或解約金。若保險公司出具之保價金有異議，可申請重新鑑價。<br>

@@ -109,7 +109,7 @@ async function initAuthBar() {
       border: 1px solid rgba(200, 191, 176, 0.2);
       border-radius: 20px;
       padding: 6px 14px;
-      font-family: 'DM Mono', monospace;
+      font-family: 'Noto Serif TC', monospace;
       font-size: 11px;
       color: rgba(245, 240, 232, 0.6);
       text-decoration: none;

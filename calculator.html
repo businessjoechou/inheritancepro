@@ -39,15 +39,15 @@
 <script src="js/persona.js"></script>
 <style>
   /* === calculator.html — tool-unique overrides (shared CSS loaded via tool-page.css) === */
-  .badge { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 3px; font-family: 'DM Mono', monospace; letter-spacing: 0.06em; }
+  .badge { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 3px; font-family: 'Noto Serif TC', serif; letter-spacing: 0.06em; }
   .progress-bar { height: 3px; background: var(--soft); }
   .progress-fill { height: 100%; background: var(--gold); transition: width 0.4s ease; width: 20%; }
-  .step-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
+  .step-label { font-family: 'Noto Serif TC', serif; font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
   h2 { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin-bottom: 6px; line-height: 1.4; }
   .input-prefix { display: flex; align-items: center; gap: 10px; border: 1.5px solid var(--border); border-radius: 8px; background: var(--paper); padding: 0 14px; transition: border-color 0.2s; }
   .input-prefix:focus-within { border-color: var(--gold); background: #fff; }
   .prefix-text { font-size: 14px; color: var(--muted); white-space: nowrap; }
-  .input-prefix input { border: none; background: transparent; padding: 12px 0; flex: 1; font-family: 'DM Mono', monospace; }
+  .input-prefix input { border: none; background: transparent; padding: 12px 0; flex: 1; font-family: 'Noto Serif TC', serif; }
   .input-prefix input:focus { outline: none; }
   .counter-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--soft); }
   .counter-row:last-child { border-bottom: none; padding-bottom: 0; }
@@ -57,8 +57,8 @@
   .counter-ctrl { display: flex; align-items: center; gap: 14px; }
   .cnt-btn { width: 32px; height: 32px; border: 1.5px solid var(--border); border-radius: 50%; background: var(--paper); cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; color: var(--ink); transition: all 0.15s; line-height: 1; }
   .cnt-btn:active { background: var(--soft); }
-  .cnt-val { font-family: 'DM Mono', monospace; font-size: 18px; font-weight: 500; min-width: 24px; text-align: center; }
-  .counter-display { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--success); white-space: nowrap; text-align: right; flex-shrink: 0; }
+  .cnt-val { font-family: 'Noto Serif TC', serif; font-size: 18px; font-weight: 500; min-width: 24px; text-align: center; }
+  .counter-display { font-family: 'Noto Serif TC', serif; font-size: 13px; color: var(--success); white-space: nowrap; text-align: right; flex-shrink: 0; }
   .nav-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid var(--border); padding: 16px 20px 28px; display: flex; gap: 12px; max-width: 480px; margin: 0 auto; }
   .btn-back { flex: 0 0 80px; padding: 14px; border: 1.5px solid var(--border); border-radius: 10px; background: transparent; cursor: pointer; font-size: 14px; color: var(--muted); font-family: 'Noto Sans TC', sans-serif; transition: all 0.2s; }
   .btn-back:active { background: var(--soft); }
@@ -67,34 +67,34 @@
   .step { display: none; }
   .step.active { display: block; }
   /* Result */
-  .result-hero .label { font-size: 12px; color: var(--muted); letter-spacing: 0.12em; font-family: 'DM Mono', monospace; text-transform: uppercase; margin-bottom: 10px; }
+  .result-hero .label { font-size: 12px; color: var(--muted); letter-spacing: 0.12em; font-family: 'Noto Serif TC', serif; text-transform: uppercase; margin-bottom: 10px; }
   .result-total { font-family: 'Noto Serif TC', serif; font-size: 28px; font-weight: 700; color: var(--gold); letter-spacing: 0.02em; margin-bottom: 6px; }
   .result-sub { font-size: 13px; color: var(--muted); }
   .heir-card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 10px; }
   .heir-header { background: var(--soft); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; }
   .heir-name { font-weight: 600; font-size: 14px; color: var(--ink); }
-  .heir-fraction { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent); font-weight: 500; }
+  .heir-fraction { font-family: 'Noto Serif TC', serif; font-size: 13px; color: var(--accent); font-weight: 500; }
   .heir-body { padding: 14px 16px; }
   .heir-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
   .heir-row:last-child { margin-bottom: 0; }
   .heir-row-label { font-size: 13px; color: var(--muted); }
-  .heir-row-val { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; color: var(--success); }
+  .heir-row-val { font-family: 'Noto Serif TC', serif; font-size: 14px; font-weight: 500; color: var(--success); }
   .divider { height: 1px; background: var(--soft); margin: 18px 0; }
   .chip { display: inline-block; padding: 3px 10px; background: #fff0e8; border-radius: 20px; font-size: 12px; color: var(--accent); font-weight: 500; margin-left: 8px; }
   /* Asset rows in step 1 */
   .asset-subrow { border: 1.5px solid var(--border); border-radius: 10px; padding: 14px; margin-bottom: 10px; background: var(--paper); position: relative; }
   .asset-subrow-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-  .asset-subrow-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.08em; }
+  .asset-subrow-label { font-family: 'Noto Serif TC', serif; font-size: 11px; color: var(--muted); letter-spacing: 0.08em; }
   .remove-row-btn { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 20px; line-height: 1; padding: 0 2px; }
   .remove-row-btn:hover { color: var(--accent); }
   .add-row-btn { width: 100%; padding: 11px; border: 1.5px dashed var(--border); border-radius: 8px; background: transparent; font-size: 14px; color: var(--muted); cursor: pointer; font-family: 'Noto Sans TC', sans-serif; transition: all 0.2s; }
   .add-row-btn:hover { border-color: var(--gold); color: var(--gold); }
   .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .asset-total-card { background: var(--ink); color: var(--paper); border-radius: 12px; padding: 18px 20px; margin-top: 4px; }
-  .asset-total-label { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 12px; }
+  .asset-total-label { font-family: 'Noto Serif TC', serif; font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 12px; }
   .asset-total-row { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; font-size: 13px; }
   .asset-total-row .atr-label { color: rgba(255,255,255,0.55); }
-  .asset-total-row .atr-val { font-family: 'DM Mono', monospace; font-size: 13px; color: rgba(255,255,255,0.85); }
+  .asset-total-row .atr-val { font-family: 'Noto Serif TC', serif; font-size: 13px; color: rgba(255,255,255,0.85); }
   .asset-total-sum { display: flex; justify-content: space-between; align-items: baseline; padding: 10px 0 0; border-top: 1px solid rgba(255,255,255,0.15); margin-top: 6px; }
   .asset-total-sum .atr-label { font-size: 14px; font-weight: 600; color: var(--paper); }
   .asset-total-sum .atr-val { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 700; color: var(--gold); }
@@ -105,7 +105,7 @@
   footer a { color: var(--muted); text-decoration: none; }
   footer .disclaimer { max-width: 400px; margin: 10px auto 0; font-size: 11px; color: #555; line-height: 1.7; }
   .faq-wrap { max-width: 700px; margin: 48px auto 0; padding: 0 20px 64px; }
-  .faq-wrap .faq-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+  .faq-wrap .faq-label { font-family: 'Noto Serif TC', serif; font-size: 10px; color: var(--muted); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
   .faq-wrap .faq-item { padding: 16px 0; border-bottom: 1px solid var(--border); }
   .faq-wrap .faq-q { font-family: 'Noto Serif TC', serif; font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 8px; line-height: 1.5; }
   .faq-wrap .faq-a { font-size: 13px; color: var(--muted); line-height: 1.8; }
@@ -402,21 +402,21 @@
         <div class="counter-label">免稅額</div>
         <div class="counter-sub">每位被繼承人固定 1,333萬</div>
       </div>
-      <div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--success)">NT$ 13,330,000</div>
+      <div style="font-family:'Noto Serif TC',monospace;font-size:13px;color:var(--success)">NT$ 13,330,000</div>
     </div>
     <div class="counter-row" id="autoSpouseRow" style="display:none">
       <div>
         <div class="counter-label">配偶扣除額</div>
         <div class="counter-sub">有配偶自動扣除 553萬</div>
       </div>
-      <div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--success)">NT$ 5,530,000</div>
+      <div style="font-family:'Noto Serif TC',monospace;font-size:13px;color:var(--success)">NT$ 5,530,000</div>
     </div>
     <div class="counter-row" id="autoFuneralRow">
       <div>
         <div class="counter-label">喪葬費扣除額</div>
         <div class="counter-sub">固定上限 138萬</div>
       </div>
-      <div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--success)">NT$ 1,380,000</div>
+      <div style="font-family:'Noto Serif TC',monospace;font-size:13px;color:var(--success)">NT$ 1,380,000</div>
     </div>
   </div>
 
@@ -428,7 +428,7 @@
         <span class="prefix-text">人數</span>
         <input type="number" id="deduct_children_count" placeholder="0" min="0" max="20" inputmode="numeric" oninput="updateChildDeduct()">
       </div>
-      <div id="childDeductAmt" style="font-size:12px;color:var(--success);margin-top:6px;font-family:'DM Mono',monospace"></div>
+      <div id="childDeductAmt" style="font-size:12px;color:var(--success);margin-top:6px;font-family:'Noto Serif TC',monospace"></div>
     </div>
     <div class="input-group">
       <label>父母扣除額 <span style="font-weight:400;color:var(--muted);font-size:12px">每人 138萬，填人數</span></label>
@@ -436,7 +436,7 @@
         <span class="prefix-text">人數</span>
         <input type="number" id="deduct_parents_count" placeholder="0" min="0" max="4" inputmode="numeric" oninput="updateParentDeduct()">
       </div>
-      <div id="parentDeductAmt" style="font-size:12px;color:var(--success);margin-top:6px;font-family:'DM Mono',monospace"></div>
+      <div id="parentDeductAmt" style="font-size:12px;color:var(--success);margin-top:6px;font-family:'Noto Serif TC',monospace"></div>
     </div>
     <div class="input-group">
       <label>身心障礙扣除額 <span style="font-weight:400;color:var(--muted);font-size:12px">重度以上，每人 693萬</span></label>
@@ -444,7 +444,7 @@
         <span class="prefix-text">人數</span>
         <input type="number" id="deduct_disabled_count" placeholder="0" min="0" max="20" inputmode="numeric" oninput="updateDisabledDeduct()">
       </div>
-      <div id="disabledDeductAmt" style="font-size:12px;color:var(--success);margin-top:6px;font-family:'DM Mono',monospace"></div>
+      <div id="disabledDeductAmt" style="font-size:12px;color:var(--success);margin-top:6px;font-family:'Noto Serif TC',monospace"></div>
     </div>
     <div class="input-group">
       <label>其他扣除額 <span style="font-weight:400;color:var(--muted);font-size:12px">債務、未償醫療費等</span></label>
@@ -503,7 +503,7 @@
             <span class="prefix-text">人數</span>
             <input type="number" id="deduct_siblings_count" placeholder="0" min="0" max="20" inputmode="numeric" oninput="updateSiblingsDeduct()">
           </div>
-          <div id="siblingsDeductAmt" style="font-size:12px;color:var(--success);margin-top:6px;font-family:'DM Mono',monospace"></div>
+          <div id="siblingsDeductAmt" style="font-size:12px;color:var(--success);margin-top:6px;font-family:'Noto Serif TC',monospace"></div>
         </div>
         <div class="input-group" style="margin-bottom:0">
           <label>公共設施保留地扣除（元）<span style="font-weight:400;color:var(--muted);font-size:12px">全額扣除，§17⑦</span></label>
@@ -578,7 +578,7 @@
         </div>
       </div>
       <div id="careValueDisplay" style="display:none;margin-top:14px;padding:14px;background:var(--soft);border-radius:10px">
-        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.1em;margin-bottom:6px">照顧貢獻估值</div>
+        <div style="font-family:'Noto Serif TC',monospace;font-size:10px;color:var(--muted);letter-spacing:0.1em;margin-bottom:6px">照顧貢獻估值</div>
         <div id="careValueAmount" style="font-family:'Noto Serif TC',serif;font-size:20px;font-weight:700;color:var(--accent)">NT$ 0</div>
       </div>
     </div>
@@ -953,7 +953,7 @@
       if (totalStockValue > 0) parts.push(`股票 ${fmt(totalStockValue)}`);
       if (otherAssets > 0) parts.push(`其他 ${fmt(otherAssets)}`);
       document.getElementById('step4AssetSummary').innerHTML =
-        `<div style="font-family:'DM Mono',monospace;font-size:16px;font-weight:700;color:var(--accent);margin-bottom:6px">${fmt(totalEstate)}</div>` +
+        `<div style="font-family:'Noto Serif TC',monospace;font-size:16px;font-weight:700;color:var(--accent);margin-bottom:6px">${fmt(totalEstate)}</div>` +
         `<div style="font-size:12px;color:var(--muted)">${parts.join('　')}</div>`;
     }
 
@@ -1284,7 +1284,7 @@
 
     document.getElementById('taxContainer').innerHTML = `
     <div style="margin-top:16px">
-      <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">遺產稅試算（2026年）</div>
+      <div style="font-family:'Noto Serif TC',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">遺產稅試算（2026年）</div>
       <div class="heir-card">
         <div class="heir-header" style="background:${tax === 0 ? '#e8f5e9' : '#fff5f0'}">
           <span class="heir-name">預估應納遺產稅</span>
@@ -1338,7 +1338,7 @@
         <div style="padding:0 0 10px 0">
           <button id="propSaleBtn_${i}" type="button" onclick="togglePropSale(${i})" style="font-size:11px;color:var(--accent);background:none;border:1px solid var(--border);border-radius:6px;padding:4px 10px;cursor:pointer;margin-top:2px">展開試算 ▼</button>
           <div id="propSalePanel_${i}" style="display:none;margin-top:10px;background:var(--soft);border-radius:8px;padding:12px">
-            <div style="font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:0.1em;margin-bottom:10px">房地合一稅 2.0 試算（${p.name}）</div>
+            <div style="font-size:11px;color:var(--muted);font-family:'Noto Serif TC',monospace;letter-spacing:0.1em;margin-bottom:10px">房地合一稅 2.0 試算（${p.name}）</div>
             <div class="two-col" style="margin-bottom:10px">
               <div>
                 <label style="font-size:12px;margin-bottom:4px;display:block">被繼承人取得日期</label>
@@ -1376,7 +1376,7 @@
 
       document.getElementById('realEstateContainer').innerHTML = `
       <div style="margin-top:16px">
-        <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">不動產持有稅務</div>
+        <div style="font-family:'Noto Serif TC',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">不動產持有稅務</div>
         <div class="success-box">✓ 繼承取得土地免徵土地增值稅（土地稅法§28-1）。此免徵優惠僅適用繼承，嗣後出售仍需課徵。</div>
         <div class="heir-card">
           <div class="heir-header" style="background:#e8f5e9">
@@ -1399,13 +1399,13 @@
     if (stocks.length > 0 && totalStockValue > 0) {
       const stockDetailRows = stocks.map(s => `
         <div class="heir-row">
-          <span class="heir-row-label" style="flex:1">${s.name} <span style="font-family:'DM Mono',monospace;font-size:10px;background:var(--soft);color:var(--muted);border-radius:3px;padding:1px 5px;margin-left:4px">${s.typeLabel}</span></span>
+          <span class="heir-row-label" style="flex:1">${s.name} <span style="font-family:'Noto Serif TC',monospace;font-size:10px;background:var(--soft);color:var(--muted);border-radius:3px;padding:1px 5px;margin-left:4px">${s.typeLabel}</span></span>
           <span class="heir-row-val" style="color:var(--muted)">${fmt(s.value)}</span>
         </div>`).join('');
 
       document.getElementById('stockContainer').innerHTML = `
       <div style="margin-top:16px">
-        <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">股票估值明細</div>
+        <div style="font-family:'Noto Serif TC',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">股票估值明細</div>
         <div class="heir-card">
           <div class="heir-header">
             <span class="heir-name">股票合計</span>
@@ -1440,7 +1440,7 @@
       const isNonHeir = careRole === 'nonheir';
       document.getElementById('careContainer').innerHTML = careTotal > 0 ? `
       <div style="margin-top:16px">
-        <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">照顧者特別貢獻估算</div>
+        <div style="font-family:'Noto Serif TC',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">照顧者特別貢獻估算</div>
         <div class="heir-card">
           <div class="heir-header" style="background:#f4f0ff">
             <span class="heir-name">照顧貢獻估值</span>
@@ -1486,7 +1486,7 @@
     });
     document.getElementById('taxPlanContainer').innerHTML = `
     <div style="margin-top:16px">
-      <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">生前贈與 vs 繼承節稅試算</div>
+      <div style="font-family:'Noto Serif TC',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">生前贈與 vs 繼承節稅試算</div>
       <div class="heir-card">
         <div class="heir-header" style="background:#f0f4ff">
           <span class="heir-name">節稅規劃比較</span>
@@ -1506,7 +1506,7 @@
       <div class="law-note" style="margin-top:8px">⚖️ 每人每年贈與免稅額244萬（遺贈稅法§22，2026年）。生前贈與可降低遺產稅基，但2年內贈與給繼承人仍須計入遺產（民法§1148-1）。建議結合人壽保險規劃（3,330萬免計）一併評估。</div>
     </div>
     ${tax > 0 ? `<div style="margin-top:16px">
-      <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">節稅策略綜合分析</div>
+      <div style="font-family:'Noto Serif TC',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">節稅策略綜合分析</div>
       <div class="heir-card">
         <div class="heir-header" style="background:#f5f0ff">
           <span class="heir-name">三大節稅策略比較</span>
@@ -1569,19 +1569,19 @@
 *{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans TC',sans-serif;background:#fff;color:#1a1410;font-size:13px;padding:40px;max-width:700px;margin:0 auto;}
 .pdf-header{border-bottom:3px solid #1a1410;padding-bottom:20px;margin-bottom:28px;display:flex;justify-content:space-between;align-items:flex-end;}
 .pdf-logo{font-family:'Noto Serif TC',serif;font-size:24px;font-weight:700;}.pdf-logo span{color:#c4932a;}
-.pdf-meta{font-size:11px;color:#7a6f62;text-align:right;line-height:1.8;font-family:'DM Mono',monospace;}
+.pdf-meta{font-size:11px;color:#7a6f62;text-align:right;line-height:1.8;font-family:'Noto Serif TC',monospace;}
 h1{font-family:'Noto Serif TC',serif;font-size:18px;margin-bottom:6px;}
-.section-title{font-size:11px;color:#7a6f62;letter-spacing:0.12em;text-transform:uppercase;font-family:'DM Mono',monospace;margin:20px 0 10px;}
+.section-title{font-size:11px;color:#7a6f62;letter-spacing:0.12em;text-transform:uppercase;font-family:'Noto Serif TC',monospace;margin:20px 0 10px;}
 .result-hero{background:#1a1410;color:#f5f0e8;border-radius:10px;padding:20px;text-align:center;margin-bottom:14px;}
-.result-hero .label{font-size:11px;color:#7a6f62;letter-spacing:0.12em;font-family:'DM Mono',monospace;margin-bottom:6px;}
+.result-hero .label{font-size:11px;color:#7a6f62;letter-spacing:0.12em;font-family:'Noto Serif TC',monospace;margin-bottom:6px;}
 .result-total{font-family:'Noto Serif TC',serif;font-size:24px;font-weight:700;color:#c4932a;}
 .result-sub{font-size:12px;color:#7a6f62;margin-top:4px;}
 .heir-card{border:1.5px solid #c8bfb0;border-radius:10px;overflow:hidden;margin-bottom:10px;break-inside:avoid;}
 .heir-header{background:#e8e0d0;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;}
-.heir-name{font-weight:600;font-size:13px;}.heir-fraction{font-family:'DM Mono',monospace;font-size:12px;color:#8b2020;font-weight:500;}
+.heir-name{font-weight:600;font-size:13px;}.heir-fraction{font-family:'Noto Serif TC',monospace;font-size:12px;color:#8b2020;font-weight:500;}
 .heir-body{padding:12px 14px;}.heir-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
 .heir-row:last-child{margin-bottom:0;}.heir-row-label{font-size:12px;color:#7a6f62;}
-.heir-row-val{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;color:#2a6b4a;}
+.heir-row-val{font-family:'Noto Serif TC',monospace;font-size:13px;font-weight:500;color:#2a6b4a;}
 .law-note{background:#f8f8f8;border-left:3px solid #c4932a;border-radius:0 8px 8px 0;padding:10px 14px;font-size:11px;color:#7a6f62;line-height:1.7;margin-bottom:14px;}
 .law-note strong{color:#1a1410;}.info-box{background:#fffbf0;border:1px solid #e8d48a;border-radius:8px;padding:10px 14px;font-size:11px;color:#7a6020;line-height:1.6;margin-bottom:14px;}
 .success-box{background:#f0fdf4;border:1px solid #a8d5b5;border-left:3px solid #2a6b4a;border-radius:6px;padding:10px 14px;font-size:11px;color:#2a6b4a;line-height:1.7;margin-bottom:10px;}

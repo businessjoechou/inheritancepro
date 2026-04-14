@@ -180,7 +180,7 @@ body {
   border: 1.5px solid ${C.accent};
   color: ${C.accent};
   font-size: 11px;
-  font-family: 'DM Mono', monospace;
+  font-family: 'Noto Serif TC', monospace;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
@@ -197,7 +197,7 @@ body {
   letter-spacing: 0.05em;
 }
 .cover-firm-contact {
-  font-family: 'DM Mono', monospace;
+  font-family: 'Noto Serif TC', monospace;
   font-size: 11px;
   color: ${C.muted};
   margin-top: 8px;
@@ -208,7 +208,7 @@ body {
   padding: 60px 0;
 }
 .cover-report-type {
-  font-family: 'DM Mono', monospace;
+  font-family: 'Noto Serif TC', monospace;
   font-size: 12px;
   letter-spacing: 0.3em;
   color: ${C.gold};
@@ -244,7 +244,7 @@ body {
 .cover-meta-row:last-child { border-bottom: none; }
 .cover-meta-row span {
   color: ${C.muted};
-  font-family: 'DM Mono', monospace;
+  font-family: 'Noto Serif TC', monospace;
   font-size: 11px;
   letter-spacing: 0.1em;
 }
@@ -288,7 +288,7 @@ body {
   padding-bottom: 10px;
   margin-bottom: 24px;
   border-bottom: 1px solid ${C.border};
-  font-family: 'DM Mono', monospace;
+  font-family: 'Noto Serif TC', monospace;
   font-size: 10px;
   color: ${C.muted};
   letter-spacing: 0.08em;
@@ -309,7 +309,7 @@ body {
 .sig-label {
   font-size: 12px;
   color: ${C.muted};
-  font-family: 'DM Mono', monospace;
+  font-family: 'Noto Serif TC', monospace;
   letter-spacing: 0.1em;
   margin-bottom: 40px;
 }

@@ -72,7 +72,7 @@ body {
   color: ${C.muted};
   text-align: right;
   line-height: 1.8;
-  font-family: 'DM Mono', monospace;
+  font-family: 'Noto Serif TC', monospace;
 }
 .pdf-footer {
   margin-top: 40px;
