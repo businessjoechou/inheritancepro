@@ -20,3 +20,73 @@
 .ip-results.is-visible {
   display: block;
 }
+
+/* ===== Print ===== */
+@media print {
+  /* 重設 CSS 變數 */
+  :root {
+    --ip-ink: #ffffff;
+    --ip-ink-2: #f5f5f5;
+    --ip-paper: #1a1a1a;
+    --ip-gold: #8b6914;
+    --ip-muted: #555555;
+    --ip-border: #cccccc;
+    --ip-card: #ffffff;
+    --ip-accent: #6e1a1a;
+    --ink: #ffffff;
+    --ink-2: #f5f5f5;
+    --paper: #1a1a1a;
+    --gold: #8b6914;
+    --muted: #555555;
+    --border: #cccccc;
+    --card: #ffffff;
+  }
+
+  /* 隱藏非內容元素 */
+  header, .nav-bar, #navBar, .progress-bar, .disclaimer-bar,
+  #themeToggle, .case-law-panel, .ip-tab-bar,
+  .search-bar, .hero-footer, .parent-brand,
+  button, .btn, .nav-bar-spacer, .badge { display: none !important; }
+
+  /* 基本版面 */
+  body {
+    background: #fff !important;
+    color: #1a1a1a !important;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  main { padding: 0 !important; max-width: 100% !important; }
+
+  /* 顯示所有步驟和結果 */
+  .step, .ip-results { display: block !important; }
+  .ip-tab-panel { display: block !important; }
+
+  /* 卡片 */
+  .ip-card, .result-card, .action-card, .info-card {
+    break-inside: avoid;
+    border: 1px solid #ccc;
+    background: #fff !important;
+  }
+
+  /* 結果區塊 */
+  .result-hero, .ip-result-hero {
+    background: #f5f5f5 !important;
+    border: 1px solid #ccc;
+    break-inside: avoid;
+  }
+  .result-hero-amount, .ip-result-amount { color: #8b6914 !important; }
+
+  /* 深色底改淺色底 */
+  [style*="background"] {
+    background: transparent !important;
+  }
+
+  /* 表格 */
+  table { width: 100%; border-collapse: collapse; }
+  th, td { border-bottom: 1px solid #ddd; color: #1a1a1a !important; }
+
+  /* 分頁控制 */
+  h1, h2, h3 { break-after: avoid; color: #1a1a1a !important; }
+
+  a { text-decoration: none !important; color: #1a1a1a !important; }
+}
