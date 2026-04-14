@@ -55,7 +55,7 @@ export default async function handler(req, res) {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            from: 'InheritancePro <notify@choulegal.com>',
+            from: '周全法律科技 ChouLegal <notify@choulegal.com>',
             to: sub.email,
             reply_to: 'businessjoechou@gmail.com',
             subject: subject,
