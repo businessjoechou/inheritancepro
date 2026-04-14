@@ -91,24 +91,56 @@
   }
   .logo span { color: var(--gold); }
 
-  .parent-brand {
+  /* ── Brand Header: icon left + 2 lines right ── */
+  .brand-header {
     display: flex;
     align-items: center;
-    gap: 7px;
-    font-family: 'DM Mono', monospace;
-    font-size: 13px;
-    color: rgba(255, 255, 255, 0.55);
-    letter-spacing: 0.14em;
-    margin-bottom: 8px;
+    gap: 12px;
     text-decoration: none;
-    transition: color 0.2s;
+    margin-bottom: 10px;
   }
-  .parent-brand:hover { color: rgba(255, 255, 255, 0.85); }
-  .parent-brand .cl-icon { width: 20px; height: 20px; border-radius: 4px; }
-  .parent-brand span {
+  .brand-header .cl-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+  .brand-header .brand-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .brand-header .brand-parent {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.45);
+    letter-spacing: 0.14em;
+  }
+  .brand-header .brand-parent span {
     text-transform: uppercase;
     letter-spacing: 0.18em;
   }
+  .brand-header .brand-child {
+    font-family: 'DM Mono', monospace;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--paper);
+    letter-spacing: 0.02em;
+  }
+  .brand-header .brand-child em {
+    color: var(--gold);
+    font-style: normal;
+  }
+  .brand-header .brand-child .tag {
+    font-size: 9px;
+    vertical-align: middle;
+    margin-left: 6px;
+  }
+  .brand-header:hover .brand-parent { color: rgba(255, 255, 255, 0.7); }
+  .brand-header:hover .brand-child { color: #fff; }
+
+  /* hide old separate elements */
+  .parent-brand { display: none !important; }
 
   .tag {
     display: inline-block;
@@ -790,11 +822,14 @@
     --badge-hot: #a07820;
   }
 
-  [data-theme="light"] .parent-brand {
-    color: rgba(0, 0, 0, 0.5);
+  [data-theme="light"] .brand-header .brand-parent {
+    color: rgba(0, 0, 0, 0.45);
   }
-  [data-theme="light"] .parent-brand:hover {
-    color: rgba(0, 0, 0, 0.75);
+  [data-theme="light"] .brand-header .brand-child {
+    color: #1a1a1a;
+  }
+  [data-theme="light"] .brand-header:hover .brand-parent {
+    color: rgba(0, 0, 0, 0.7);
   }
   [data-theme="light"] .tag {
     border-color: #bbb;
@@ -952,8 +987,13 @@
 <div class="hero">
   <div class="hero-top" style="display:flex;align-items:flex-start;justify-content:space-between;">
     <div>
-      <a href="https://choulegal.com" class="parent-brand" target="_blank" rel="noopener" aria-label="周全法律科技 ChouLegal 官網"><img class="cl-icon" src="img/choulegal-icon.svg" alt="周全法律科技">周全 <span>ChouLegal</span></a>
-      <a href="/" class="logo">Inheritance<span>Pro</span><span class="tag">Beta</span></a>
+      <a href="https://choulegal.com" class="brand-header" target="_blank" rel="noopener" aria-label="周全法律科技 ChouLegal 官網">
+        <img class="cl-icon" src="img/choulegal-icon.svg" alt="周全法律科技">
+        <div class="brand-text">
+          <div class="brand-parent">周全 <span>ChouLegal</span></div>
+          <div class="brand-child">Inheritance<em>Pro</em><span class="tag">Beta</span></div>
+        </div>
+      </a>
     </div>
     <button id="themeToggle" aria-label="切換深色/淺色模式"></button>
   </div>
