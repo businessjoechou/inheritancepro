@@ -49,10 +49,14 @@ export async function signInWithApple() {
   }
 
   // Web: OAuth redirect
-  await supabase.auth.signInWithOAuth({
+  const { error } = await supabase.auth.signInWithOAuth({
     provider: 'apple',
     options: { redirectTo: window.location.origin + '/account.html' }
   });
+  
+  if (error) {
+    throw error;
+  }
 }
 
 // Sign in with magic link (email OTP)
