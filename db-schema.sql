@@ -220,3 +220,51 @@ begin
   return jsonb_build_object('success', true, 'tier', v_code_data.tier);
 end;
 $$;
+
+-- ============================================================
+-- 5. Calculations table
+--    儲存用戶計算歷史記錄
+-- ============================================================
+create table if not exists public.calculations (
+  id         uuid default gen_random_uuid() primary key,
+  user_id    uuid references auth.users on delete cascade not null,
+  tool       text not null,
+  title      text,
+  summary    text,
+  data       jsonb,
+  created_at timestamptz default now()
+);
+
+-- Row Level Security — 每位用戶只能存取自己的計算紀錄
+alter table public.calculations enable row level security;
+
+create policy "Users can view own calculations"
+  on public.calculations for select
+  using (auth.uid() = user_id);
+
+create policy "Users can insert own calculations"
+  on public.calculations for insert
+  with check (auth.uid() = user_id);
+
+create policy "Users can delete own calculations"
+  on public.calculations for delete
+  using (auth.uid() = user_id);
+
+-- ============================================================
+-- 6. Subscribers table (Newsletter)
+--    由 API routes 透過 service key 存取，前端不直接操作
+-- ============================================================
+create table if not exists public.subscribers (
+  id         uuid default gen_random_uuid() primary key,
+  email      text unique not null,
+  name       text,
+  is_active  boolean default true,
+  created_at timestamptz default now()
+);
+
+-- Row Level Security — 前端完全禁止直接存取，只由 server-side service key 操作
+alter table public.subscribers enable row level security;
+
+create policy "No direct access to subscribers"
+  on public.subscribers for all
+  using (false);

@@ -12,6 +12,24 @@
       "runtimeExecutable": "python3",
       "runtimeArgs": ["/Users/chouchunyeh/Desktop/台灣行政法計算機/server.py"],
       "port": 3457
+    },
+    {
+      "name": "legal-hub",
+      "runtimeExecutable": "/opt/homebrew/Cellar/node/25.8.2/bin/node",
+      "runtimeArgs": ["/tmp/serve_legalhub.js"],
+      "port": 3458
+    },
+    {
+      "name": "laborpro",
+      "runtimeExecutable": "/opt/homebrew/Cellar/node/25.8.2/bin/node",
+      "runtimeArgs": ["/tmp/serve_laborpro.js"],
+      "port": 3459
+    },
+    {
+      "name": "choulegal",
+      "runtimeExecutable": "/opt/homebrew/Cellar/node/25.8.2/bin/node",
+      "runtimeArgs": ["/tmp/serve_choulegal.js"],
+      "port": 3460
     }
   ]
 }
