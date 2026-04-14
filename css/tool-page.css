@@ -23,70 +23,98 @@
 
 /* ===== Print ===== */
 @media print {
-  /* 重設 CSS 變數 */
-  :root {
-    --ip-ink: #ffffff;
-    --ip-ink-2: #f5f5f5;
-    --ip-paper: #1a1a1a;
-    --ip-gold: #8b6914;
-    --ip-muted: #555555;
-    --ip-border: #cccccc;
-    --ip-card: #ffffff;
-    --ip-accent: #6e1a1a;
-    --ink: #ffffff;
-    --ink-2: #f5f5f5;
-    --paper: #1a1a1a;
-    --gold: #8b6914;
-    --muted: #555555;
-    --border: #cccccc;
-    --card: #ffffff;
+  /* 核彈級重設 */
+  *, *::before, *::after {
+    color: #1a1a1a !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
   }
 
-  /* 隱藏非內容元素 */
+  :root {
+    --ip-ink: #ffffff; --ip-paper: #1a1a1a; --ip-gold: #8b6914;
+    --ip-muted: #555; --ip-border: #ccc; --ip-card: #fff;
+    --ink: #ffffff; --paper: #1a1a1a; --gold: #8b6914;
+    --muted: #555; --border: #ccc; --card: #fff;
+  }
+
+  /* 母品牌頁首 */
+  body::before {
+    content: "InheritancePro｜中華民國民法財產權益計算平台 — 周全法律科技 ChouLegal";
+    display: block;
+    font-size: 10px;
+    color: #888 !important;
+    border-bottom: 2px solid #8b6914;
+    padding: 8px 0 10px;
+    margin-bottom: 20px;
+  }
+  body::after {
+    content: "本文件由 InheritancePro（inheritancepro.choulegal.com）產出，僅供參考，不構成法律意見。";
+    display: block;
+    font-size: 9px;
+    color: #999 !important;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+    margin-top: 30px;
+  }
+
+  /* 隱藏非內容 */
   header, .nav-bar, #navBar, .progress-bar, .disclaimer-bar,
   #themeToggle, .case-law-panel, .ip-tab-bar,
   .search-bar, .hero-footer, .parent-brand,
-  button, .btn, .nav-bar-spacer, .badge { display: none !important; }
+  button, .btn, .nav-bar-spacer, .badge, .back-link { display: none !important; }
 
-  /* 基本版面 */
   body {
     background: #fff !important;
     color: #1a1a1a !important;
     font-size: 12px;
-    line-height: 1.6;
+    line-height: 1.7;
+    padding: 20px;
   }
   main { padding: 0 !important; max-width: 100% !important; }
 
-  /* 顯示所有步驟和結果 */
   .step, .ip-results { display: block !important; }
   .ip-tab-panel { display: block !important; }
+  #step1 { display: none !important; }
 
-  /* 卡片 */
+  /* 結果區專業樣式 */
+  .result-hero, .ip-result-hero {
+    background: #f8f7f4 !important;
+    border: 2px solid #8b6914 !important;
+    border-radius: 8px;
+    padding: 20px !important;
+    margin: 16px 0 !important;
+    break-inside: avoid;
+  }
+  .result-hero-amount, .ip-result-amount {
+    color: #8b6914 !important;
+    font-size: 28px !important;
+    font-weight: 700 !important;
+  }
+
   .ip-card, .result-card, .action-card, .info-card {
     break-inside: avoid;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd !important;
+    border-radius: 6px;
+    padding: 14px !important;
+    margin: 10px 0 !important;
     background: #fff !important;
   }
 
-  /* 結果區塊 */
-  .result-hero, .ip-result-hero {
-    background: #f5f5f5 !important;
-    border: 1px solid #ccc;
-    break-inside: avoid;
-  }
-  .result-hero-amount, .ip-result-amount { color: #8b6914 !important; }
+  .warn-box { border-left: 4px solid #c4932a !important; background: #fffbf0 !important; }
+  .success-box { border-left: 4px solid #1a5c2e !important; background: #f0faf4 !important; }
+  .danger-box { border-left: 4px solid #8b2020 !important; background: #fef5f5 !important; }
 
-  /* 深色底改淺色底 */
-  [style*="background"] {
-    background: transparent !important;
-  }
-
-  /* 表格 */
   table { width: 100%; border-collapse: collapse; }
-  th, td { border-bottom: 1px solid #ddd; color: #1a1a1a !important; }
+  th { font-size: 10px !important; color: #555 !important; border-bottom: 2px solid #ddd; padding: 6px 8px; }
+  td { font-size: 12px !important; border-bottom: 1px solid #eee; padding: 8px; }
 
-  /* 分頁控制 */
-  h1, h2, h3 { break-after: avoid; color: #1a1a1a !important; }
+  h1 { font-size: 20px !important; break-after: avoid; }
+  h2, h3 { break-after: avoid; }
 
-  a { text-decoration: none !important; color: #1a1a1a !important; }
+  a { text-decoration: none !important; }
 }
