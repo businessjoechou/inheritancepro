@@ -2,7 +2,10 @@
  * core/dates.js — 日期計算工具（時效倒數、持有年數、繼承期限）
  *
  * 所有時效計算以民法與稅法規定為準。
+ * 日期字串解析統一走 parseDateTW（Asia/Taipei +08:00），避免跨時區差一天 bug。
  */
+
+import { parseDateTW } from '../utils/dates-tw.js';
 
 const MS_PER_DAY = 86_400_000;
 
@@ -13,7 +16,7 @@ const MS_PER_DAY = 86_400_000;
  * @returns {number}
  */
 export function daysBetween(a, b) {
-  const d1 = new Date(a), d2 = new Date(b);
+  const d1 = parseDateTW(a), d2 = parseDateTW(b);
   return Math.floor((d2.getTime() - d1.getTime()) / MS_PER_DAY);
 }
 
@@ -24,7 +27,7 @@ export function daysBetween(a, b) {
  * @returns {number}
  */
 export function yearsBetween(a, b) {
-  const d1 = new Date(a), d2 = new Date(b);
+  const d1 = parseDateTW(a), d2 = parseDateTW(b);
   let years = d2.getFullYear() - d1.getFullYear();
   const m = d2.getMonth() - d1.getMonth();
   if (m < 0 || (m === 0 && d2.getDate() < d1.getDate())) years--;
@@ -38,7 +41,7 @@ export function yearsBetween(a, b) {
  * @returns {Date}
  */
 export function addYears(date, years) {
-  const d = new Date(date);
+  const d = parseDateTW(date);
   d.setFullYear(d.getFullYear() + years);
   return d;
 }
@@ -50,7 +53,7 @@ export function addYears(date, years) {
  * @returns {Date}
  */
 export function addMonths(date, months) {
-  const d = new Date(date);
+  const d = parseDateTW(date);
   d.setMonth(d.getMonth() + months);
   return d;
 }
@@ -82,7 +85,7 @@ export function calcStatuteOfLimitations(fromDate, limitYears, today = new Date(
  * @returns {number | {ownerYears: number, combinedYears: number}}
  */
 export function calcHoldingYears(acquiredDate, saleDate, deceasedAcquiredDate) {
-  const sale = saleDate ? new Date(saleDate) : new Date();
+  const sale = saleDate ? parseDateTW(saleDate) : new Date();
   const ownerYears = yearsBetween(acquiredDate, sale);
   if (!deceasedAcquiredDate) return ownerYears;
   const combinedYears = yearsBetween(deceasedAcquiredDate, sale);
@@ -95,7 +98,7 @@ export function calcHoldingYears(acquiredDate, saleDate, deceasedAcquiredDate) {
  * @returns {Record<string, {label: string, deadline: Date, law: string}>} 所有重要期限
  */
 export function getInheritanceDeadlines(deathDate) {
-  const d = new Date(deathDate);
+  const d = parseDateTW(deathDate);
   return {
     renounce:        { label: '拋棄繼承', deadline: addMonths(d, 3),  law: '民法§1174' },
     limitedAccept:   { label: '限定繼承',  deadline: addMonths(d, 3),  law: '民法§1156' },
@@ -110,7 +113,7 @@ export function getInheritanceDeadlines(deathDate) {
  * @returns {string}
  */
 export function formatDate(date) {
-  return new Date(date).toLocaleDateString('zh-TW', {
+  return parseDateTW(date).toLocaleDateString('zh-TW', {
     year: 'numeric', month: 'long', day: 'numeric',
   });
 }

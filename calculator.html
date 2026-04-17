@@ -1069,9 +1069,12 @@
   function updateDisabledDeduct() { const n = parseInt(document.getElementById('deduct_disabled_count').value) || 0; document.getElementById('disabledDeductAmt').textContent = n > 0 ? `= NT$ ${(n * 6930000).toLocaleString('zh-TW')}` : ''; }
   function updateAgriDeduct() { const v = parseFloat(document.getElementById('deduct_agri').value) || 0; document.getElementById('deductAgriDisplay').textContent = 'NT$ ' + v.toLocaleString('zh-TW'); }
   function updateInsDeduct() {
+    // 3,740 萬為所得基本稅額條例§12-I-2 保險死亡給付免稅額（114 年調整，AMT 概念，
+    // 非遺贈稅法「免計入遺產」的硬性上限；遺贈稅§16-I-9 本身無金額上限，由實質課稅原則判斷）。
+    // 此處借作「大額保險給付可能被實質課稅原則認定為遺產」的警示門檻。
     const v = parseFloat(document.getElementById('deduct_insurance').value) || 0;
-    const taxable = Math.max(0, v - 33300000);
-    document.getElementById('deductInsDisplay').textContent = 'NT$ ' + v.toLocaleString('zh-TW') + (taxable > 0 ? `（超過部分 NT$ ${taxable.toLocaleString('zh-TW')} 計入遺產）` : '');
+    const taxable = Math.max(0, v - 37400000);
+    document.getElementById('deductInsDisplay').textContent = 'NT$ ' + v.toLocaleString('zh-TW') + (taxable > 0 ? `（超過 3,740 萬參考門檻之部分 NT$ ${taxable.toLocaleString('zh-TW')}，建議評估是否觸發實質課稅原則）` : '');
   }
   function updateLaborDeduct() { const v = parseFloat(document.getElementById('deduct_labor_ins').value) || 0; document.getElementById('deductLaborDisplay').textContent = 'NT$ ' + v.toLocaleString('zh-TW'); }
   function updateRetaxDeduct() { const v = parseFloat(document.getElementById('deduct_retax').value) || 0; document.getElementById('deductRetaxDisplay').textContent = 'NT$ ' + v.toLocaleString('zh-TW'); }
@@ -1244,8 +1247,9 @@
 
     // Estate tax
     const insurancePaid = parseFloat(document.getElementById('deduct_insurance').value) || 0;
-    const insuranceTaxable = Math.max(0, insurancePaid - 33300000);
-    const insuranceExcluded = Math.min(insurancePaid, 33300000);
+    // 3,740 萬：AMT 免稅額借為實質課稅原則警示門檻（見上方 updateInsDeduct 說明）
+    const insuranceTaxable = Math.max(0, insurancePaid - 37400000);
+    const insuranceExcluded = Math.min(insurancePaid, 37400000);
     const laborIns = parseFloat(document.getElementById('deduct_labor_ins').value) || 0;
     const agriDeduct = parseFloat(document.getElementById('deduct_agri').value) || 0;
     const retaxDeduct = parseFloat(document.getElementById('deduct_retax').value) || 0;
@@ -1312,12 +1316,12 @@
           </div>
           ${(insuranceExcluded > 0 || laborIns > 0) ? `<div style="border-top:1px solid var(--soft);padding-top:8px;margin-top:8px;font-size:11px;color:var(--muted)">
             <div style="font-weight:600;color:var(--ink);margin-bottom:4px">免計遺產項目</div>
-            ${insuranceExcluded > 0 ? `<div>人壽保險免計入遺產：NT$ ${insuranceExcluded.toLocaleString('zh-TW')}（上限3,330萬）</div>` : ''}
+            ${insuranceExcluded > 0 ? `<div>人壽保險免計入遺產：NT$ ${insuranceExcluded.toLocaleString('zh-TW')}（依遺贈稅§16-I-9；超過 AMT 免稅額 3,740 萬之部分，建議評估實質課稅原則風險）</div>` : ''}
             ${laborIns > 0 ? `<div>勞保/公保/軍保給付全額免計：NT$ ${laborIns.toLocaleString('zh-TW')}</div>` : ''}
           </div>` : ''}
         </div>
       </div>
-      <div class="law-note" style="margin-top:10px">⚖️ 依《遺產及贈與稅法》第13條（2026年稅率：5,000萬以下10%、5,000萬～1億15%、1億以上20%）。本試算僅供參考，實際稅額以國稅局核定為準。申報期限：被繼承人死亡後6個月內。</div>
+      <div class="law-note" style="margin-top:10px">⚖️ 依《遺產及贈與稅法》第13條（自 114/01/01 起級距：5,621 萬以下 10%、5,621 萬～1 億 1,242 萬 15%、超過 1 億 1,242 萬 20%；依§12-1 物價連動，財政部 113/11/28 公告）。本試算僅供參考，實際稅額以國稅局核定為準。申報期限：被繼承人死亡後 6 個月內。</div>
     </div>`;
 
     // Real estate section
@@ -1503,7 +1507,7 @@
           ${tax === 0 ? `<div style="margin-top:8px;font-size:12px;color:var(--muted)">目前遺產稅已免稅，贈與規劃對稅負影響有限。</div>` : ''}
         </div>
       </div>
-      <div class="law-note" style="margin-top:8px">⚖️ 每人每年贈與免稅額244萬（遺贈稅法§22，2026年）。生前贈與可降低遺產稅基，但2年內贈與給繼承人仍須計入遺產（民法§1148-1）。建議結合人壽保險規劃（3,330萬免計）一併評估。</div>
+      <div class="law-note" style="margin-top:8px">⚖️ 每人每年贈與免稅額 244 萬（遺贈稅法§22，財政部 113/11/28 公告）。生前贈與可降低遺產稅基，但 2 年內贈與給繼承人仍須計入遺產（遺贈稅§15）。建議結合人壽保險規劃（遺贈稅§16-I-9 免計入遺產，但超過 AMT 免稅額 3,740 萬時須評估實質課稅原則）一併評估。</div>
     </div>
     ${tax > 0 ? `<div style="margin-top:16px">
       <div style="font-family:'Noto Serif TC',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">節稅策略綜合分析</div>
@@ -1522,18 +1526,20 @@
             return `<div class="heir-row"><span class="heir-row-label">配偶先取回 ${fmt(halfEstate)}（1/2）</span><span class="heir-row-val" style="color:${spouseSaving > 0 ? 'var(--success)' : 'var(--muted)'}">${spouseSaving > 0 ? '節省 ' + fmt(spouseSaving) : '無節稅效果'}</span></div>
             <div style="font-size:11px;color:var(--muted);margin-bottom:10px">依民法§1030-1，法定財產制下配偶得先請求剩餘財產差額分配，再計算遺產稅。</div>`;
           })() : `<div style="font-size:12px;color:var(--muted);margin-bottom:10px">無配偶，此策略不適用。</div>`}
-          <div style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:8px;border-top:1px solid var(--soft);padding-top:10px">策略二：善用壽險免稅額（3,330 萬）</div>
+          <div style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:8px;border-top:1px solid var(--soft);padding-top:10px">策略二：人壽保險規劃（AMT 免稅額 3,740 萬作為警示門檻）</div>
           ${(() => {
-            const insMax = 33300000;
+            // 3,740 萬為所得基本稅額條例§12-I-2 保險死亡給付免稅額（AMT，非遺贈稅上限）；
+            // 借作大額保險是否被實質課稅原則認定為遺產的警示門檻
+            const insMax = 37400000;
             const insNet = Math.max(0, adjustedTotal - insMax - exemption - totalDeduct);
             const insTax = calcEstateTax(insNet);
             const insSaving = tax - insTax;
-            return `<div class="heir-row"><span class="heir-row-label">投保 3,330 萬壽險（全額免計）</span><span class="heir-row-val" style="color:${insSaving > 0 ? 'var(--success)' : 'var(--muted)'}">${insSaving > 0 ? '節省 ' + fmt(insSaving) : '已無差異'}</span></div>
-            <div style="font-size:11px;color:var(--muted);margin-bottom:10px">依遺贈稅法§16-9，每人 3,330 萬壽險給付免計入遺產。但須注意實質課稅八大態樣。</div>`;
+            return `<div class="heir-row"><span class="heir-row-label">投保 3,740 萬壽險（若未觸發實質課稅原則，得依遺贈稅§16-I-9 免計入遺產）</span><span class="heir-row-val" style="color:${insSaving > 0 ? 'var(--success)' : 'var(--muted)'}">${insSaving > 0 ? '節省 ' + fmt(insSaving) : '已無差異'}</span></div>
+            <div style="font-size:11px;color:var(--muted);margin-bottom:10px">依遺贈稅§16-I-9，約定於本人死亡時給付其指定受益人之壽險金額不計入遺產（法條本身無金額上限）；但若屬躉繳、鉅額、帶病投保、高齡投保等態樣，稽徵實務依實質課稅原則（司法院釋字第 420 號、財政部 101.7.13 台財稅字第 10100107900 號函）仍可能計入遺產。3,740 萬是《所得基本稅額條例§12-I-2》保險死亡給付 AMT 免稅額（財政部 113/11/28 公告，114 年起自 3,330 萬調升），本站借作風險評估門檻。</div>`;
           })()}
           <div style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:8px;border-top:1px solid var(--soft);padding-top:10px">策略三：組合方案（贈與 + 保險 + 配偶分配）</div>
           ${(() => {
-            const combo = (state.hasSpouse ? Math.floor(adjustedTotal / 2) : 0) + 33300000 + 10 * 2440000;
+            const combo = (state.hasSpouse ? Math.floor(adjustedTotal / 2) : 0) + 37400000 + 10 * 2440000;
             const comboRemain = Math.max(0, adjustedTotal - combo);
             const comboNet = Math.max(0, comboRemain - exemption - totalDeduct);
             const comboTax = calcEstateTax(comboNet);
@@ -1619,7 +1625,8 @@ ${stockHTML ? `<div class="section-title">股票估值明細</div>${stockHTML}` 
     const today = new Date().toLocaleDateString('zh-TW', {year:'numeric',month:'2-digit',day:'2-digit'});
 
     const insurancePaid = parseFloat(document.getElementById('deduct_insurance')?.value) || 0;
-    const insuranceTaxable = Math.max(0, insurancePaid - 33300000);
+    // 3,740 萬：AMT 免稅額借為警示門檻；詳見 updateInsDeduct 說明
+    const insuranceTaxable = Math.max(0, insurancePaid - 37400000);
     const adjustedTotal = totalEstate + insuranceTaxable;
     const exemption = 13330000;
     const dSpouse = state.hasSpouse ? 5530000 : 0;
@@ -1695,7 +1702,7 @@ td{padding:5px 10px;border:1px solid #ddd;font-size:12px;vertical-align:top;}
 <table>
   <tr><th style="width:36px">#</th><th>項目說明</th><th style="width:160px;text-align:right">金額（新台幣元）</th></tr>
   ${assetRows}
-  ${insuranceTaxable > 0 ? `<tr><td></td><td>保險金超額計入（超過3,330萬部分）</td><td style="text-align:right">＋ ${fmtN(insuranceTaxable)}</td></tr>` : ''}
+  ${insuranceTaxable > 0 ? `<tr><td></td><td>保險金計入遺產（超過 AMT 免稅額 3,740 萬部分，提醒實質課稅原則風險）</td><td style="text-align:right">＋ ${fmtN(insuranceTaxable)}</td></tr>` : ''}
   <tr class="total-row"><td></td><td>遺產總額（調整後）</td><td style="text-align:right">${fmtN(adjustedTotal)}</td></tr>
 </table>
 

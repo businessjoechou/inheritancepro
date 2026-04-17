@@ -174,6 +174,12 @@ async function initAuthBar() {
 
         dropdown.querySelector('#auth-signout-btn').addEventListener('click', async () => {
           dropdown.remove();
+          try {
+            for (let i = localStorage.length - 1; i >= 0; i--) {
+              const k = localStorage.key(i);
+              if (k && k.startsWith('ip_draft_')) localStorage.removeItem(k);
+            }
+          } catch (_) {}
           await supabase.auth.signOut();
           window.location.href = '/';
         });
@@ -197,6 +203,12 @@ async function initAuthBar() {
 
   // Global sign-out helper (used by account.html inline buttons too)
   window.__signOut = async () => {
+    try {
+      for (let i = localStorage.length - 1; i >= 0; i--) {
+        const k = localStorage.key(i);
+        if (k && k.startsWith('ip_draft_')) localStorage.removeItem(k);
+      }
+    } catch (_) {}
     await supabase.auth.signOut();
     window.location.href = '/';
   };

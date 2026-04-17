@@ -3,9 +3,17 @@
  *
  * 從 accident.html / minor-damages.html / infidelity-damages.html 提取。
  * 核心：過失比例、強制險抵扣、精神慰撫金區間、時效（§197 2 年 / 10 年）。
+ * 日期字串統一走 parseDateTW（Asia/Taipei +08:00），避免跨時區差一天 bug。
  */
 
+import { parseDateTW } from '../utils/dates-tw.js';
+
 // === 精神慰撫金區間（法院判決實務約略值） ===
+// 法源：民法§194（死亡慰撫金請求）、§195（身體健康名譽等人格權慰撫金）。
+// 區間數字**非法條明文**，為我國法院實務判例之經驗值範圍，法院審酌因素包括：
+// 加害人與被害人雙方之經濟能力、社會地位、加害情節、被害人痛苦程度等
+// （最高法院 51 年台上字第 223 號、75 年台上字第 2403 號、96 年台上字第 513 號判例要旨）。
+// 使用者應以本區間作為初步參考，個案之實際判決金額可能顯著偏離此範圍。
 export const SOLATIUM_INJURY = {
   light:   { low: 100_000,   high: 500_000,   mid: 200_000   },
   serious: { low: 500_000,   high: 2_000_000, mid: 1_000_000 },
@@ -19,8 +27,13 @@ export const SOLATIUM_DEATH = {
 };
 
 // === 強制汽車責任保險（強制險）給付上限 ===
-export const COMPULSORY_INJURY_MAX = 200_000;    // 傷害醫療給付上限 20 萬（僅抵醫療）
-export const COMPULSORY_DEATH_MAX  = 2_000_000;  // 死亡給付 200 萬（抵全部損害）
+// 法源：強制汽車責任保險給付標準（law.moj.gov.tw PCODE=G0390067）
+//   §2 傷害醫療給付上限 20 萬／§6 死亡給付／§7 合計給付金額上限
+// 強制汽車責任保險法本法（PCODE=G0390060）§25 規範給付時限（10 工作日），非金額
+// 預告修正：金管會 2026/2/12 預告，2026/7/1（民國115/7/1）施行
+//   死亡給付 200 萬 → 300 萬；合計上限 220 萬 → 320 萬
+export const COMPULSORY_INJURY_MAX = 200_000;    // §2 傷害醫療給付上限 20 萬（僅抵醫療）
+export const COMPULSORY_DEATH_MAX  = 2_000_000;  // §6 死亡給付 200 萬（2026/7/1 起升 300 萬）
 
 /**
  * 傷害案件損害賠償
@@ -38,14 +51,17 @@ export function calcInjuryDamages(p) {
   const { medical = 0, careDays = 0, careRate = 2400, workLossDays = 0,
           monthlySalary = 0, solatiumLevel = 'light', faultPct = 1 } = p;
 
+  const safeFault = Math.max(0, Math.min(1, faultPct));
+  const safeLevel = SOLATIUM_INJURY[solatiumLevel] ? solatiumLevel : 'light';
+
   const careTotal = careDays * careRate;
   const workLoss = (monthlySalary / 30) * workLossDays;
-  const solatium = (SOLATIUM_INJURY[solatiumLevel] || SOLATIUM_INJURY.light).mid;
+  const solatium = SOLATIUM_INJURY[safeLevel].mid;
   const subtotal = medical + careTotal + workLoss + solatium;
 
   // 強制險：僅抵醫療費用
   const insuranceOffset = Math.min(COMPULSORY_INJURY_MAX, medical);
-  const netAmount = Math.max(0, (subtotal - insuranceOffset) * faultPct);
+  const netAmount = Math.max(0, (subtotal - insuranceOffset) * safeFault);
 
   return {
     items: {
@@ -58,7 +74,7 @@ export function calcInjuryDamages(p) {
     insuranceOffset,
     faultPct,
     netAmount,
-    law: '民法§184, §193, §195, §197；強制汽車責任保險法§25',
+    law: '民法§184, §193, §195, §197；強制汽車責任保險給付標準§2（傷害醫療給付 20 萬）',
   };
 }
 
@@ -77,11 +93,14 @@ export function calcDeathDamages(p) {
   const { funeral = 0, dependentCount = 0, dependentYears = 0,
           monthlySalary = 0, solatiumLevel = 'mid', faultPct = 1 } = p;
 
+  const safeFault = Math.max(0, Math.min(1, faultPct));
+  const safeLevel = SOLATIUM_DEATH[solatiumLevel] ? solatiumLevel : 'mid';
+
   const maintenance = monthlySalary * 12 * dependentYears * dependentCount;
-  const solatium = (SOLATIUM_DEATH[solatiumLevel] || SOLATIUM_DEATH.mid).mid;
+  const solatium = SOLATIUM_DEATH[safeLevel].mid;
   const subtotal = funeral + maintenance + solatium;
 
-  const faultShare = subtotal * faultPct;
+  const faultShare = subtotal * safeFault;
   // 死亡強制險：抵全部損害
   const netAmount = Math.max(0, faultShare - COMPULSORY_DEATH_MAX);
 
@@ -96,7 +115,7 @@ export function calcDeathDamages(p) {
     insuranceOffset: COMPULSORY_DEATH_MAX,
     faultPct,
     netAmount,
-    law: '民法§184, §192, §194, §197；強制汽車責任保險法§25',
+    law: '民法§184, §192, §194, §197；強制汽車責任保險給付標準§6（死亡給付 200 萬，2026/7/1 起升 300 萬）',
   };
 }
 
@@ -108,8 +127,8 @@ export function calcDeathDamages(p) {
  * @returns {{daysLeft2y:number, daysLeft10y:number, hardDeadline:Date, expired:boolean, law:string}}
  */
 export function calcDamageDeadline(eventDate, knownDate, today = new Date()) {
-  const event = new Date(eventDate);
-  const known = new Date(knownDate || eventDate);
+  const event = parseDateTW(eventDate);
+  const known = parseDateTW(knownDate || eventDate);
   const ms = 86_400_000;
 
   const deadline2y = new Date(known); deadline2y.setFullYear(deadline2y.getFullYear() + 2);

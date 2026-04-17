@@ -70,6 +70,13 @@ export async function signInWithEmail(email) {
 
 // Sign out
 export async function signOut() {
+  // 登出時立即清除所有 localStorage 草稿（敏感計算資料），避免殘留在共用裝置
+  try {
+    for (let i = localStorage.length - 1; i >= 0; i--) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith('ip_draft_')) localStorage.removeItem(k);
+    }
+  } catch (_) {}
   await supabase.auth.signOut();
   window.location.reload();
 }

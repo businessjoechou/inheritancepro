@@ -7,11 +7,40 @@
  * 注意：本模組為 Phase 2 初版，完整邊界條件請於 Phase 6 遷移各保險工具時補齊。
  */
 
-// === 常數（2026 年）===
-export const AMT_EXEMPTION = 7_500_000; // 個人基本所得額扣除額 750 萬
-export const AMT_RATE = 0.20;           // 最低稅負稅率 20%
-export const LIFE_INSURANCE_AMT_THRESHOLD = 37_400_000; // 死亡給付 3,740 萬以下免計入 AMT
-export const LIFE_INSURANCE_ESTATE_EXCLUDE = 33_300_000; // 遺贈稅法§16(9) 免計入遺產上限
+/**
+ * 各年度保險相關常數。新年度調整時請新增條目，舊條目永不刪除。
+ * 這樣過往年度儲存的計算記錄，在未來重新開啟時仍能重現原始數字。
+ */
+export const INSURANCE_VERSIONS = {
+  2026: {
+    lawVersion: '2026-Q1',
+    amtExemption: 7_500_000,                 // 個人基本所得額扣除額 750 萬
+    amtRate: 0.20,                           // 最低稅負稅率 20%
+    lifeInsuranceAmtThreshold: 37_400_000,   // 所得基本稅額條例§12-I-2 保險死亡給付免稅額（財政部 113/11/28 公告，114 年起自 3,330 萬調為 3,740 萬）
+    // 舊欄位：遺贈稅法§16(9) 本身**無金額上限**，是否計入遺產由「實質課稅原則」個案判斷
+    //   （釋字 420、財政部 101.7.13 台財稅字第 10100107900 號函）。
+    //   前版常數 33_300_000（舊 AMT 免稅額）被誤述為「遺產稅 免計上限」，已停用；
+    //   若工具需要警示門檻請改用 lifeInsuranceAmtThreshold。
+    lifeInsuranceEstateExclude: 37_400_000,  // 向後相容保留；語意同 lifeInsuranceAmtThreshold（非遺產稅法上限）
+  },
+};
+
+export const LATEST_INSURANCE_YEAR = 2026;
+
+/**
+ * 解析年度 → 保險版本
+ * @param {number} [year]
+ */
+function getVersion(year) {
+  const y = year || LATEST_INSURANCE_YEAR;
+  return INSURANCE_VERSIONS[/** @type {keyof typeof INSURANCE_VERSIONS} */ (y)] || INSURANCE_VERSIONS[LATEST_INSURANCE_YEAR];
+}
+
+// === 便利常數（以最新年度為準）===
+export const AMT_EXEMPTION = INSURANCE_VERSIONS[LATEST_INSURANCE_YEAR].amtExemption;
+export const AMT_RATE = INSURANCE_VERSIONS[LATEST_INSURANCE_YEAR].amtRate;
+export const LIFE_INSURANCE_AMT_THRESHOLD = INSURANCE_VERSIONS[LATEST_INSURANCE_YEAR].lifeInsuranceAmtThreshold;
+export const LIFE_INSURANCE_ESTATE_EXCLUDE = INSURANCE_VERSIONS[LATEST_INSURANCE_YEAR].lifeInsuranceEstateExclude;
 
 /**
  * AMT（最低稅負制）計算
@@ -19,15 +48,17 @@ export const LIFE_INSURANCE_ESTATE_EXCLUDE = 33_300_000; // 遺贈稅法§16(9) 
  * @param {number} p.regularIncomeTax  一般綜所稅應納額
  * @param {number} p.insurancePayout   死亡保險給付（受益人非要保人）
  * @param {number} [p.otherAmtItems=0] 其他最低稅負項目（如海外所得）
+ * @param {number} [p.year]            指定稅法年度
  */
 export function calcAmt(p) {
-  const { regularIncomeTax = 0, insurancePayout = 0, otherAmtItems = 0 } = p;
+  const { regularIncomeTax = 0, insurancePayout = 0, otherAmtItems = 0, year } = p;
+  const v = getVersion(year);
 
-  // 保險給付超過 3,740 萬部分計入基本所得
-  const insuranceAmtBase = Math.max(0, insurancePayout - LIFE_INSURANCE_AMT_THRESHOLD);
+  // 保險給付超過門檻部分計入基本所得
+  const insuranceAmtBase = Math.max(0, insurancePayout - v.lifeInsuranceAmtThreshold);
   const amtBase = insuranceAmtBase + otherAmtItems;
-  const netAmtBase = Math.max(0, amtBase - AMT_EXEMPTION);
-  const amtTax = Math.round(netAmtBase * AMT_RATE);
+  const netAmtBase = Math.max(0, amtBase - v.amtExemption);
+  const amtTax = Math.round(netAmtBase * v.amtRate);
 
   // AMT 只補差額
   const amtPayable = Math.max(0, amtTax - regularIncomeTax);
@@ -53,9 +84,11 @@ export function calcAmt(p) {
  * @param {number} p.insuranceAmount 保險金額
  * @param {boolean} p.designatedBeneficiary 是否指定受益人
  * @param {boolean} [p.suspiciousFeatures=false] 是否具國稅局實質課稅特徵
+ * @param {number} [p.year] 指定稅法年度
  */
 export function analyzeInsuranceEstateRisk(p) {
-  const { insuranceAmount = 0, designatedBeneficiary = false, suspiciousFeatures = false } = p;
+  const { insuranceAmount = 0, designatedBeneficiary = false, suspiciousFeatures = false, year } = p;
+  // year reserved for future use when estate-exclude threshold affects logic
 
   if (!designatedBeneficiary) {
     return {

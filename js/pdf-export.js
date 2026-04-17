@@ -17,6 +17,15 @@ function _isCapacitor() {
 }
 
 /**
+ * HTML escape（防 XSS）— 用於把任意字串安全嵌入 HTML 屬性或文字節點
+ */
+function _escHtml(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+  }[c]));
+}
+
+/**
  * 新 API：從結構化資料產生 PDF（推薦所有新工具使用）
  *
  * @param {object} p
@@ -61,20 +70,10 @@ async function exportPDF(htmlString, filename) {
 
   // 先嘗試用 API（從 DOM 提取結構化資料）
   try {
-    // 建立一個隱藏 iframe 解析 HTML
-    const iframe = document.createElement('iframe');
-    iframe.style.cssText = 'position:fixed;left:-9999px;top:0;width:800px;height:600px;border:none;opacity:0;pointer-events:none;';
-    document.body.appendChild(iframe);
-    const iDoc = iframe.contentDocument || iframe.contentWindow.document;
-    iDoc.open();
-    iDoc.write(htmlString);
-    iDoc.close();
-    await new Promise(r => setTimeout(r, 300));
-
-    // 從 HTML 提取文字內容
-    const body = iDoc.body;
+    // 用 DOMParser 解析 HTML（不會執行 <script>，避免 XSS；取代舊的 iframe + document.write）
+    const parsed = new DOMParser().parseFromString(htmlString, 'text/html');
+    const body = parsed.body;
     const sections = _extractSections(body);
-    document.body.removeChild(iframe);
 
     if (sections.length > 0) {
       // 取標題
@@ -197,19 +196,21 @@ async function _deliverPdf(blob, filename) {
       }
     } catch (_) { /* fall through */ }
 
-    // Capacitor fallback：blob URL in new tab
+    // Capacitor fallback：blob URL in new tab（filename 必須 escape，避免 XSS）
     const url = URL.createObjectURL(blob);
     const w = window.open('', '_blank');
     if (w) {
+      const safeFilename = _escHtml(filename);
+      const safeUrl = _escHtml(url);
       w.document.write(`
-        <html><head><title>${filename}</title><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+        <html><head><title>${safeFilename}</title><meta name="viewport" content="width=device-width,initial-scale=1"></head>
         <body style="margin:0;padding:20px;display:flex;flex-direction:column;align-items:center;background:#f5f0e8;font-family:-apple-system,sans-serif;">
           <p style="margin:0 0 16px;font-size:16px;color:#1a1410;">PDF 已產生</p>
-          <a href="${url}" download="${filename}.pdf"
+          <a href="${safeUrl}" download="${safeFilename}.pdf"
              style="display:inline-block;padding:14px 28px;background:#1a1410;color:#f5f0e8;border-radius:10px;text-decoration:none;font-size:15px;font-weight:600;">
              ⬇ 儲存 PDF
           </a>
-          <iframe src="${url}" style="width:100%;height:80vh;border:none;margin-top:16px;border-radius:8px;"></iframe>
+          <iframe src="${safeUrl}" style="width:100%;height:80vh;border:none;margin-top:16px;border-radius:8px;"></iframe>
         </body></html>
       `);
       w.document.close();
@@ -233,19 +234,28 @@ async function _deliverPdf(blob, filename) {
 
 /**
  * window.print() fallback（最後手段）
+ *
+ * 改用 Blob URL 載入列印視窗，避免直接 document.write(htmlString) 執行 <script>。
+ * Blob 本身是 text/html，新視窗仍會 render HTML，但外層 document 是獨立 origin 的 blob context。
+ * （若仍需全 sandbox，可再改為 iframe srcdoc + sandbox="allow-same-origin allow-modals"）
  */
 function _printFallback(htmlString, filename) {
   try {
-    const w = window.open('', '_blank');
+    const blob = new Blob([String(htmlString || '')], { type: 'text/html;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const w = window.open(url, '_blank');
     if (w) {
-      w.document.write(htmlString);
-      w.document.close();
-      setTimeout(() => w.print(), 600);
+      setTimeout(() => {
+        try { w.print(); } catch (_) {}
+        // 延遲回收 Blob URL，確保列印視窗已拿到內容
+        setTimeout(() => URL.revokeObjectURL(url), 30_000);
+      }, 600);
       return;
     }
+    URL.revokeObjectURL(url);
   } catch (_) {}
 
-  // 真的開不了 popup，把 HTML 寫入當前頁面（最後手段）
+  // 真的開不了 popup，提示使用者
   alert('無法開啟列印視窗，請使用瀏覽器的「列印」功能（Ctrl+P / Cmd+P）來儲存 PDF。');
 }
 

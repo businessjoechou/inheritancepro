@@ -123,10 +123,9 @@ export function calcStatutoryShare(p) {
     bloodSlots = aliveActive + dec; // 每個代位位算 1 個 slot
   }
 
-  const { spouseShare, spouseFrac, bloodShareTotal } = getSpouseShare(
-    hasSpouse ? tier : tier, // 若無配偶則 bloodShareTotal 直接 = 1
-    bloodSlots,
-  );
+  const { spouseShare, spouseFrac, bloodShareTotal } = hasSpouse
+    ? getSpouseShare(tier, bloodSlots)
+    : { spouseShare: 0, spouseFrac: '0', bloodShareTotal: 1 };
 
   const spouseAmount = hasSpouse ? totalEstate * spouseShare : 0;
   const bloodPool = hasSpouse ? totalEstate * bloodShareTotal : totalEstate;

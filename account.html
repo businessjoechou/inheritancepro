@@ -730,6 +730,7 @@
         </svg>
         登出
       </button>
+      <button class="btn-delete-account" id="btn-clear-drafts" style="margin-right:8px">清除本機暫存</button>
       <button class="btn-delete-account" id="btn-delete-account">刪除帳號</button>
     </div>
 
@@ -831,11 +832,32 @@
       if (e.key === 'Enter') document.getElementById('btn-redeem').click();
     });
 
+    // Helper: clear all ip_draft_* from localStorage (used by signout + manual clear)
+    function ipClearAllDrafts() {
+      let n = 0;
+      try {
+        for (let i = localStorage.length - 1; i >= 0; i--) {
+          const k = localStorage.key(i);
+          if (k && k.startsWith('ip_draft_')) { localStorage.removeItem(k); n++; }
+        }
+      } catch (_) {}
+      return n;
+    }
+
+    // Manual clear drafts
+    document.getElementById('btn-clear-drafts').addEventListener('click', () => {
+      const n = ipClearAllDrafts();
+      const btn = document.getElementById('btn-clear-drafts');
+      btn.textContent = n > 0 ? `✓ 已清除 ${n} 筆暫存` : '✓ 無暫存資料';
+      setTimeout(() => { btn.textContent = '清除本機暫存'; }, 2000);
+    });
+
     // Sign out
     document.getElementById('btn-signout').addEventListener('click', async () => {
       const btn = document.getElementById('btn-signout');
       btn.textContent = '登出中…';
       btn.disabled = true;
+      ipClearAllDrafts();
       await supabase.auth.signOut();
       window.location.href = '/';
     });
@@ -855,6 +877,7 @@
       await supabase.from('profiles').delete().eq('id', user.id);
       await supabase.auth.signOut();
       localStorage.removeItem('ip_persona');
+      ipClearAllDrafts();
       window.location.href = '/';
     });
   }

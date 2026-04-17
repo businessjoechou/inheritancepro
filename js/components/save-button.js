@@ -31,9 +31,11 @@
  */
 
 const DRAFT_PREFIX = 'ip_draft_';
+// localStorage 未加密，敏感資料（遺產、家庭成員）72 小時後自動過期以降低曝險
+const DRAFT_TTL_MS = 72 * 60 * 60 * 1000;
 
 /**
- * 暫存計算結果到 localStorage（重整頁面後還原用）
+ * 暫存計算結果到 localStorage（重整頁面後還原用）。加入 savedAt 時戳，loadDraft 會據此自動過期。
  */
 function saveDraft(tool, data) {
   try {
@@ -45,22 +47,51 @@ function saveDraft(tool, data) {
 }
 
 /**
- * 讀取暫存草稿
+ * 讀取暫存草稿；若已逾 DRAFT_TTL_MS 則視為過期並自動清除。
  */
 export function loadDraft(tool) {
   try {
     const raw = localStorage.getItem(DRAFT_PREFIX + tool);
-    return raw ? JSON.parse(raw) : null;
+    if (!raw) return null;
+    const wrapped = JSON.parse(raw);
+    const savedMs = wrapped && wrapped.savedAt ? new Date(wrapped.savedAt).getTime() : NaN;
+    if (!Number.isFinite(savedMs) || Date.now() - savedMs > DRAFT_TTL_MS) {
+      localStorage.removeItem(DRAFT_PREFIX + tool);
+      return null;
+    }
+    return wrapped;
   } catch (_) {
     return null;
   }
 }
 
 /**
- * 清除暫存草稿
+ * 清除單一工具的暫存草稿
  */
 function clearDraft(tool) {
   localStorage.removeItem(DRAFT_PREFIX + tool);
+}
+
+/**
+ * 立即清除所有 ip_draft_* 草稿（登出、使用者主動離開共用電腦時用）
+ * @returns {number} 清除數量
+ */
+export function clearAllDrafts() {
+  let n = 0;
+  try {
+    const keys = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith(DRAFT_PREFIX)) keys.push(k);
+    }
+    for (const k of keys) { localStorage.removeItem(k); n++; }
+  } catch (_) {}
+  return n;
+}
+
+// 也掛到 window 便於 account.html / 未登入 UI 的「立即清除」按鈕使用
+if (typeof window !== 'undefined') {
+  window.IP_clearAllDrafts = clearAllDrafts;
 }
 
 /**
