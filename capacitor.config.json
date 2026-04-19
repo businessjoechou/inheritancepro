@@ -3,7 +3,7 @@
   "appName": "InheritancePro",
   "webDir": "www",
   "server": {
-    "url": "https://inheritancepro.choulegal.com",
+    "url": "https://inheritance.choulegal.com",
     "cleartext": false,
     "allowNavigation": [
       "*.supabase.co",

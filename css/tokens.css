@@ -35,7 +35,7 @@
   --ip-brand-logo-text:   'Inheritance';
   --ip-brand-logo-accent: 'Pro';
   --ip-brand-name:        'InheritancePro';
-  --ip-brand-url:         'inheritancepro.choulegal.com';
+  --ip-brand-url:         'inheritance.choulegal.com';
 
   /* === 舊別名（兼容既有未遷移工具，未來 Phase 6 完成後可刪） === */
   --ink:       var(--ip-ink);

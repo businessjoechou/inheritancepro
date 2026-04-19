@@ -4,4 +4,4 @@ Disallow: /property-check.html
 Disallow: /test-core.html
 Disallow: /pitch.html
 
-Sitemap: https://inheritancepro.choulegal.com/sitemap.xml
+Sitemap: https://inheritance.choulegal.com/sitemap.xml
