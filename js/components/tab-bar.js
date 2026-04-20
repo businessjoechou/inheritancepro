@@ -70,9 +70,7 @@ function injectCSS() {
 /**
  * 初始化 tab 切換
  * @param {string} barId - tab bar 的 id
- * @param {object} opts
- * @param {string} opts.paramName - URL 參數名（預設 'tab'）
- * @param {Function} opts.onSwitch - 切換時的 callback(tabKey)
+ * @param {{ paramName?: string, onSwitch?: (tabKey: string) => void }} [opts]
  */
 export function initTabs(barId, opts = {}) {
   injectCSS();
@@ -83,8 +81,8 @@ export function initTabs(barId, opts = {}) {
   const paramName = opts.paramName || 'tab';
   const onSwitch = opts.onSwitch || null;
 
-  const btns = bar.querySelectorAll('.ip-tab-btn');
-  const panels = document.querySelectorAll(`.ip-tab-panel[data-tab-group="${barId}"], .ip-tab-panel`);
+  const btns = /** @type {NodeListOf<HTMLElement>} */ (bar.querySelectorAll('.ip-tab-btn'));
+  const panels = /** @type {NodeListOf<HTMLElement>} */ (document.querySelectorAll(`.ip-tab-panel[data-tab-group="${barId}"], .ip-tab-panel`));
 
   // 過濾出屬於此 bar 的 panels（靠 data-tab 值匹配）
   const tabKeys = new Set(Array.from(btns).map(b => b.dataset.tab));
@@ -94,7 +92,7 @@ export function initTabs(barId, opts = {}) {
     btns.forEach(b => b.classList.toggle('active', b.dataset.tab === key));
     myPanels.forEach(p => p.classList.toggle('active', p.dataset.tab === key));
     // 更新 URL（不觸發頁面重載）
-    const url = new URL(window.location);
+    const url = new URL(window.location.href);
     url.searchParams.set(paramName, key);
     history.replaceState(null, '', url);
     if (onSwitch) onSwitch(key);

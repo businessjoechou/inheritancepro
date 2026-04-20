@@ -1,14 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-<!-- Google Analytics GA4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-9P35VNFL1V"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-9P35VNFL1V');
-</script>
+<script src="js/ga.js" defer></script>
 <meta charset="UTF-8">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="favicon.svg">
@@ -178,15 +171,22 @@
       const existingIds = new Set(existing.map(c => String(c.id)));
       let merged = false;
       oldCases.forEach(oc => {
-        if (existingIds.has(String(oc.id))) return;
+        // 驗證必要欄位；缺 id 或 deathDate 即跳過避免無效資料污染
+        if (!oc || typeof oc !== 'object') return;
+        if (!oc.deathDate || typeof oc.deathDate !== 'string') return;
+        const normalizedId = oc.id == null
+          ? Date.now() + Math.floor(Math.random() * 1000)
+          : (typeof oc.id === 'string' ? (parseInt(oc.id, 10) || Date.now()) : oc.id);
+        if (existingIds.has(String(normalizedId))) return;
         existing.push({
-          id: typeof oc.id === 'string' ? parseInt(oc.id, 10) || Date.now() : oc.id,
+          id: normalizedId,
           name: oc.name || '未命名案件',
           deathDate: oc.deathDate,
           done: {},
           notes: oc.notes || '',
           status: 'active'
         });
+        existingIds.add(String(normalizedId));
         merged = true;
       });
       if (merged) localStorage.setItem('ip_deadline_cases', JSON.stringify(existing));

@@ -1,14 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-<!-- Google Analytics GA4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-9P35VNFL1V"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-9P35VNFL1V');
-</script>
+<script src="js/ga.js" defer></script>
 <meta charset="UTF-8">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="favicon.svg">
@@ -461,12 +454,12 @@
       </div>
     </div>
     <div class="input-group">
-      <label>人壽保險死亡給付（元）<span style="font-weight:400;color:var(--muted);font-size:12px">每位被繼承人最高 3,330 萬免計入遺產</span></label>
+      <label>人壽保險死亡給付（元）<span style="font-weight:400;color:var(--muted);font-size:12px">遺贈稅§16-I-9 免計入遺產，惟大額保險須評估實質課稅原則</span></label>
       <div style="display:flex;align-items:center;gap:12px">
         <input type="number" id="deduct_insurance" placeholder="0" min="0" inputmode="numeric" oninput="updateInsDeduct()" style="flex:1">
         <span class="counter-display" id="deductInsDisplay">NT$ 0</span>
       </div>
-      <div style="font-size:11px;color:var(--muted);margin-top:4px">超過 3,330 萬部分仍計入遺產總額</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:4px">超過 AMT 免稅額 3,740 萬部分，請另行評估是否觸發實質課稅原則</div>
     </div>
     <div class="input-group">
       <label>勞保 / 公保 / 軍保死亡給付（元）<span style="font-weight:400;color:var(--muted);font-size:12px">全額不計入遺產</span></label>
@@ -1069,7 +1062,7 @@
   function updateDisabledDeduct() { const n = parseInt(document.getElementById('deduct_disabled_count').value) || 0; document.getElementById('disabledDeductAmt').textContent = n > 0 ? `= NT$ ${(n * 6930000).toLocaleString('zh-TW')}` : ''; }
   function updateAgriDeduct() { const v = parseFloat(document.getElementById('deduct_agri').value) || 0; document.getElementById('deductAgriDisplay').textContent = 'NT$ ' + v.toLocaleString('zh-TW'); }
   function updateInsDeduct() {
-    // 3,740 萬為所得基本稅額條例§12-I-2 保險死亡給付免稅額（114 年調整，AMT 概念，
+    // 3,740 萬為所得基本稅額條例§12-I-2 保險死亡給付免稅額（113 年度起適用，AMT 概念，
     // 非遺贈稅法「免計入遺產」的硬性上限；遺贈稅§16-I-9 本身無金額上限，由實質課稅原則判斷）。
     // 此處借作「大額保險給付可能被實質課稅原則認定為遺產」的警示門檻。
     const v = parseFloat(document.getElementById('deduct_insurance').value) || 0;

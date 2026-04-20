@@ -1,14 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-<!-- Google Analytics GA4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-9P35VNFL1V"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-9P35VNFL1V');
-</script>
+<script src="js/ga.js" defer></script>
 <meta charset="UTF-8">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="favicon.svg">
@@ -179,7 +172,7 @@
       <div style="font-size:12px;font-weight:700;color:#1a3a5c;letter-spacing:0.04em;margin-bottom:10px">⚖ 律師訴訟策略備忘</div>
       <div style="font-size:12px;color:#1a2a3a;line-height:1.9">
         <strong>關鍵證據清單</strong>：照護日誌（逐日）、醫療收據、藥費單據、長照評估報告、Line 截圖、家人或鄰居書面證詞。<br>
-        <strong>時效注意</strong>：§1149 請求應於繼承開始起 <strong>2 年內</strong>聲請，逾期不予受理，建議在死亡後第一時間啟動評估。<br>
+        <strong>時效注意</strong>：民法 §1149 本條未明文時效，實務類推適用 §1146：自請求權人知悉（即繼承開始）起 <strong>2 年</strong>間不行使而消滅；自繼承開始起逾 <strong>10 年</strong>者亦同。建議在死亡後第一時間啟動評估與舉證。<br>
         <strong>訴訟路徑</strong>：① 先召開親屬會議請求酌給 → ② 若不召開或決議不公，向家事法院聲請（§1132） → ③ 大額案件可與遺產分割訴訟合併審理。<br>
         <strong>繼承人 vs 非繼承人</strong>：繼承人於分割協議或分割訴訟中主張特別貢獻；非繼承人只能走 §1149，酌給金額實務上約為估值的 30–60%。
       </div>
@@ -196,7 +189,7 @@
     <div class="cross-links">
       <div class="cross-links-label">相關工具</div>
       <a class="cross-link-btn" href="calculator.html">📋 遺產繼承計算器　計算基本應繼分 <span>→</span></a>
-      <a class="cross-link-btn" href="prescription.html">⏱ 消滅時效計算機　§1149請求2年時效 <span>→</span></a>
+      <a class="cross-link-btn" href="prescription.html">⏱ 消滅時效計算機　§1149 請求類推 §1146 之 2 年時效 <span>→</span></a>
     </div>
   </div>
 
@@ -345,7 +338,9 @@
         </div>
       </div>
     `;
-    IP_renderCaseLaw('caregiver', totalContribution, 'resultContent');
+    if (typeof IP_renderCaseLaw === 'function') {
+      IP_renderCaseLaw('caregiver', totalContribution, 'resultContent');
+    }
 
     document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
     document.getElementById('step2').classList.add('active');

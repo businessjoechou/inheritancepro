@@ -1,4 +1,5 @@
 // auth.js — Supabase Auth helper module
+// @ts-ignore — CDN ESM import; types not available in this browser-only build
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 // registerPlugin loaded dynamically only when needed (Capacitor native)
 
@@ -30,6 +31,7 @@ export async function getProfile() {
 export async function signInWithApple() {
   // In Capacitor native app: use native Apple Sign In
   if (window.Capacitor?.isNativePlatform()) {
+    // @ts-ignore — CDN ESM import; loaded lazily only in Capacitor native
     const { registerPlugin } = await import('https://cdn.jsdelivr.net/npm/@capacitor/core@8/+esm');
     const AppleSignIn = registerPlugin('AppleSignIn');
     const result = await AppleSignIn.signIn();

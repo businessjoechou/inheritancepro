@@ -120,7 +120,8 @@ export async function mountSaveButton({ tool, title, summary, data, containerId,
     </button>
   `;
 
-  const btn = document.getElementById('ip-save-btn');
+  const btn = /** @type {HTMLButtonElement} */ (document.getElementById('ip-save-btn'));
+  if (!btn) return;
 
   btn.addEventListener('click', async function handleSave() {
     if (btn.disabled) return;

@@ -91,8 +91,8 @@ assert('[inh] 兄弟姊妹特留分比例 = 1/3', getForcedShareRate(3, 'blood')
 
 // === estate-tax.js ===
 assert('[et] 5000萬淨額稅 = 500萬', calcEstateTax(50_000_000), 5_000_000);
-assert('[et] 1億淨額稅 = 1250萬', calcEstateTax(100_000_000), 12_500_000);
-assert('[et] 2億淨額稅 = 3250萬', calcEstateTax(200_000_000), 32_500_000);
+assert('[et] 1億淨額稅 ≈ 1218.95萬（V2025 brackets）', calcEstateTax(100_000_000), 12_189_500);
+assert('[et] 2億淨額稅 ≈ 3156.85萬（V2025 brackets）', calcEstateTax(200_000_000), 31_568_500);
 assert('[et] 5000萬指定 2026 年 = 500萬', calcEstateTax(50_000_000, { year: 2026 }), 5_000_000);
 assert('[et] 未知年度 fallback 到 latest', calcEstateTax(50_000_000, { year: 9999 }), 5_000_000);
 assert('[et] 2026 版本存在', !!ESTATE_TAX_VERSIONS[2026], true);
@@ -103,7 +103,7 @@ const etFull = calcEstateTaxFull({
 });
 assert('[et] 2000萬配偶+2子女 應納 = 0', etFull.tax, 0);
 assert('[et] etFull 帶 taxYear', etFull.taxYear, 2026);
-assert('[et] etFull 帶 lawVersion', etFull.lawVersion, '2026-Q1');
+assert('[et] etFull 帶 lawVersion', etFull.lawVersion, '2025 (財政部 113/11/28 公告)');
 
 // === gift-tax.js ===
 assert('[gt] 244萬贈與免稅', calcGiftTaxFull({ priorGifts: 0, currentGift: 2_440_000 }).tax, 0);

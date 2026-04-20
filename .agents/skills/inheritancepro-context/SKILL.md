@@ -9,7 +9,7 @@ description: >
 
 # InheritancePro — 專案上下文
 
-**網址**：https://inheritancepro.app
+**網址**：https://inheritance.choulegal.com
 **Git remote**：`origin main`
 **根目錄**：`/Users/chouchunyeh/Desktop/台灣民法財產權計算機/`
 **Tech stack**：純 HTML + Vanilla JS + CSS，Supabase（auth + DB），無 framework
@@ -151,16 +151,16 @@ const TABS = [
 <meta property="og:title" content="xxx｜InheritancePro">
 <meta property="og:description" content="xxx">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://inheritancepro.app/xxx.html">
+<meta property="og:url" content="https://inheritance.choulegal.com/xxx.html">
 <meta property="og:site_name" content="InheritancePro">
 <meta property="og:locale" content="zh_TW">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="xxx｜InheritancePro">
-<link rel="canonical" href="https://inheritancepro.app/xxx.html">
+<link rel="canonical" href="https://inheritance.choulegal.com/xxx.html">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="js/persona.js"></script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"xxx","url":"https://inheritancepro.app/xxx.html","applicationCategory":"LegalService","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro","url":"https://inheritancepro.app"}}
+{"@context":"https://schema.org","@type":"WebApplication","name":"xxx","url":"https://inheritance.choulegal.com/xxx.html","applicationCategory":"LegalService","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro","url":"https://inheritance.choulegal.com"}}
 </script>
 ```
 新頁面加入 sitemap.xml 時優先度建議 `0.7`。
