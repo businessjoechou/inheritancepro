@@ -1,14 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-<!-- Google Analytics GA4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-9P35VNFL1V"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-9P35VNFL1V');
-</script>
+<script src="js/ga.js" defer></script>
 <meta charset="UTF-8">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="favicon.svg">
@@ -320,9 +313,18 @@
     -webkit-overflow-scrolling: touch;
     margin: 0 -24px 48px;
     padding: 4px 24px 24px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(120, 120, 120, 0.35) transparent;
   }
-  .featured-strip::-webkit-scrollbar { display: none; }
-  .featured-strip { scrollbar-width: none; }
+  .featured-strip::-webkit-scrollbar { height: 8px; }
+  .featured-strip::-webkit-scrollbar-track { background: transparent; }
+  .featured-strip::-webkit-scrollbar-thumb {
+    background: rgba(120, 120, 120, 0.35);
+    border-radius: 4px;
+  }
+  .featured-strip::-webkit-scrollbar-thumb:hover {
+    background: rgba(120, 120, 120, 0.65);
+  }
 
   .featured-card {
     flex: 0 0 280px;
@@ -1658,6 +1660,16 @@ async function handleUnsubscribe() {
       observer.observe(el);
     });
   })();
+
+  // 滑鼠滾輪 → 水平滾動（解決桌機卡片列只能拖的問題；觸控/觸控板水平手勢照常）
+  document.querySelectorAll('.featured-strip').forEach(function(strip){
+    strip.addEventListener('wheel', function(e){
+      if (Math.abs(e.deltaX) > 0) return;
+      if (!e.deltaY) return;
+      e.preventDefault();
+      strip.scrollLeft += e.deltaY;
+    }, { passive: false });
+  });
 </script>
 </body>
 </html>
