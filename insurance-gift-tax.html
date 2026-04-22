@@ -315,18 +315,26 @@
     sibling: '兄弟姊妹', other: '其他'
   };
 
+  // 優先 bridge 到 core；fallback V2025 累進差額公式（與 core 數學等價）
+  //   ≤ 2,811 萬 10%；2,811 萬 ~ 5,621 萬 15%（累進差額 140.55 萬）；> 5,621 萬 20%（累進差額 421.45 萬）
   function calcGiftTax(netAmount) {
+    if (window.IP_CORE && typeof window.IP_CORE.calcGiftTax === 'function') {
+      return window.IP_CORE.calcGiftTax(netAmount);
+    }
     if (netAmount <= 0) return 0;
-    const t1 = 25000000, t2 = 50000000;
+    const t1 = 28110000, t2 = 56210000;
     if (netAmount <= t1) return Math.round(netAmount * 0.10);
-    if (netAmount <= t2) return Math.round(netAmount * 0.15 - 1250000);
-    return Math.round(netAmount * 0.20 - 3750000);
+    if (netAmount <= t2) return Math.round(netAmount * 0.15 - 1405500);
+    return Math.round(netAmount * 0.20 - 4214500);
   }
 
   function getTaxRate(netAmount) {
+    if (window.IP_CORE && typeof window.IP_CORE.giftTaxRateLabel === 'function') {
+      return window.IP_CORE.giftTaxRateLabel(netAmount);
+    }
     if (netAmount <= 0) return '0%';
-    if (netAmount <= 25000000) return '10%';
-    if (netAmount <= 50000000) return '15%';
+    if (netAmount <= 28110000) return '10%';
+    if (netAmount <= 56210000) return '15%';
     return '20%';
   }
 
@@ -443,6 +451,7 @@
 
 </script>
 <div class="disclaimer-bar">本工具僅供參考，實際稅務認定以國稅局核定為準。</div>
+<script type="module" src="js/ip-core-bridge.js"></script>
 <script type="module" src="js/components/save-button.js"></script>
 <script src="js/supabase-config.js"></script>
 <script type="module" src="js/auth-bar.js"></script>

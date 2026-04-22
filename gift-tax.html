@@ -222,7 +222,19 @@
     </div>
 
     <div class="info-box">
-      <strong>法律依據</strong>：遺贈稅法&sect;22（年度免稅額244萬）、&sect;19（稅率：2,500萬以下10%、2,500萬～5,000萬15%、5,000萬以上20%）、&sect;5（視為贈與）。配偶間贈與依&sect;20第1項第6款不計入贈與總額，全額免稅。
+      <strong>法律依據</strong>：遺贈稅法&sect;22（年度免稅額 244 萬）、&sect;19（稅率：2,811 萬以下 10%、2,811 萬~5,621 萬 15%、5,621 萬以上 20%，依財政部 113/11/28 公告 114/01/01 起適用）、&sect;5（視為贈與，詳見下方）。配偶間贈與依&sect;20 第 1 項第 6 款不計入贈與總額，全額免稅。
+    </div>
+
+    <!-- §5 視為贈與 6 款（遺贈稅法） -->
+    <div class="info-box" style="background:#fff4e5;border-left:3px solid #d4691e;margin-top:10px;font-size:12px;line-height:1.8">
+      📢 <strong>遺贈稅法 §5 視為贈與 6 款（以贈與論，課徵贈與稅）</strong><br>
+      ① <strong>債務免除／承擔</strong>：在請求權時效內無償免除或承擔他人債務 — 免除／承擔之金額視為贈與。<br>
+      ② <strong>以自己之財產為他人購置財產</strong>：購置之財產視為贈與（不動產則以該不動產視為贈與）。<br>
+      ③ <strong>顯著不相當代價讓與財產</strong>：以顯著低於市價之代價讓與財產、免除或承擔債務者，其差額部分視為贈與。<br>
+      ④ <strong>限制或無行為能力人購置財產</strong>：由其<strong>法定代理人</strong>贈與論（但能證明資金屬購買人所有者除外）。<br>
+      ⑤ <strong>二親等以內親屬間財產買賣</strong>：視為贈與（但能提出已支付價款證明，且該價款<strong>非由出賣人貸與或提供擔保</strong>者除外）。<br>
+      ⑥ <strong>信託利益</strong>：信託行為明定信託利益全部或一部之受益人為<strong>非委託人</strong>者，視為委託人將享有信託利益之權利贈與該受益人（§5-1）。<br>
+      <span style="color:#888;font-size:11px">⚠️ 以上 6 款均須申報贈與稅；若有疑義請諮詢會計師或稅務代理人。二親等買賣（第 5 款）最常見於父母→子女不動產轉讓，需備齊金流證明</span>
     </div>
 
     <!-- Results -->
@@ -351,9 +363,9 @@
       <div class="input-group">
         <label>預估遺產稅率級距</label>
         <select id="plannerEstateRate" onchange="plannerAutoCalc()">
-          <option value="0.10">10%（課稅淨額 5,000 萬以下）</option>
-          <option value="0.15" selected>15%（5,001 萬～1 億）</option>
-          <option value="0.20">20%（1 億以上）</option>
+          <option value="0.10">10%（課稅淨額 5,621 萬以下）</option>
+          <option value="0.15" selected>15%（5,621 萬～1 億 1,242 萬）</option>
+          <option value="0.20">20%（1 億 1,242 萬以上）</option>
         </select>
       </div>
     </div>
@@ -550,10 +562,15 @@
 
   var GIFT_ANNUAL_EXEMPT = 2440000;
 
+  // 優先 bridge 到 core；fallback V2025 硬編（與 core LATEST_GIFT_YEAR 同步）
+  //   ≤ 2,811 萬 10%；2,811 萬 ~ 5,621 萬 15%；> 5,621 萬 20%
   function calcGiftTax(netGiftAmount) {
+    if (window.IP_CORE && typeof window.IP_CORE.calcGiftTax === 'function') {
+      return window.IP_CORE.calcGiftTax(netGiftAmount);
+    }
     if (netGiftAmount <= 0) return 0;
     var tax = 0;
-    var t1 = 25000000, t2 = 50000000;
+    var t1 = 28110000, t2 = 56210000;
     if (netGiftAmount <= t1) {
       tax = netGiftAmount * 0.10;
     } else if (netGiftAmount <= t2) {
@@ -564,9 +581,14 @@
     return Math.round(tax);
   }
 
+  // 優先 bridge 到 core；fallback V2025 遺產稅級距硬編
+  //   ≤ 5,621 萬 10%；5,621 萬 ~ 1 億 1,242 萬 15%；> 1 億 1,242 萬 20%
   function calcEstateTax(net) {
+    if (window.IP_CORE && typeof window.IP_CORE.calcEstateTax === 'function') {
+      return window.IP_CORE.calcEstateTax(net);
+    }
     if (net <= 0) return 0;
-    var t1 = 50000000, t2 = 100000000;
+    var t1 = 56210000, t2 = 112420000;
     if (net <= t1) return Math.round(net * 0.10);
     if (net <= t2) return Math.round(t1 * 0.10 + (net - t1) * 0.15);
     return Math.round(t1 * 0.10 + (t2 - t1) * 0.15 + (net - t2) * 0.20);
@@ -615,7 +637,7 @@
 
     var headerBg = giftTax === 0 ? '#e8f5e9' : '#fff5f0';
     document.getElementById('resultHeader').style.background = headerBg;
-    document.getElementById('resultBadge').textContent = giftTax === 0 ? '免稅' : (netGift <= 25000000 ? '10%' : netGift <= 50000000 ? '15%' : '20%');
+    document.getElementById('resultBadge').textContent = giftTax === 0 ? '免稅' : (netGift <= 28110000 ? '10%' : netGift <= 56210000 ? '15%' : '20%');
     document.getElementById('resultBadge').style.color = giftTax === 0 ? 'var(--success)' : 'var(--accent)';
 
     // 分年規劃
@@ -710,11 +732,16 @@
     if (document.getElementById('plannerResults').style.display === 'block') plannerCalculate(true);
   };
 
+  // 優先 bridge 到 core；fallback 用 V2025 累進差額公式（級距2=281.05 萬、級距3=843.15 萬）
+  // 註：累進差額與 core 的逐級距相加結果數學等價，任一皆對。
   function plannerEstateTax(taxableNet) {
+    if (window.IP_CORE && typeof window.IP_CORE.calcEstateTax === 'function') {
+      return window.IP_CORE.calcEstateTax(taxableNet);
+    }
     if (taxableNet <= 0) return 0;
-    if (taxableNet <= 50000000) return taxableNet * 0.10;
-    if (taxableNet <= 100000000) return taxableNet * 0.15 - 2500000;
-    return taxableNet * 0.20 - 7500000;
+    if (taxableNet <= 56210000) return taxableNet * 0.10;
+    if (taxableNet <= 112420000) return taxableNet * 0.15 - 2810500;
+    return taxableNet * 0.20 - 8431500;
   }
 
   window.plannerCalculate = function(silent) {
@@ -799,9 +826,13 @@
   function fmt(n) { return 'NT$ ' + Math.round(n).toLocaleString('zh-TW'); }
   function fmtWan(n) { return (n / 10000).toFixed(0) + ' 萬'; }
 
+  // 優先 bridge 到 core；fallback V2025 贈與稅級距（見上方 calcGiftTax 說明）
   function calcGiftTaxLocal(netGift) {
+    if (window.IP_CORE && typeof window.IP_CORE.calcGiftTax === 'function') {
+      return window.IP_CORE.calcGiftTax(netGift);
+    }
     if (netGift <= 0) return 0;
-    var t1 = 25000000, t2 = 50000000;
+    var t1 = 28110000, t2 = 56210000;
     if (netGift <= t1) return Math.round(netGift * 0.10);
     if (netGift <= t2) return Math.round(t1 * 0.10 + (netGift - t1) * 0.15);
     return Math.round(t1 * 0.10 + (t2 - t1) * 0.15 + (netGift - t2) * 0.20);
@@ -985,6 +1016,7 @@
 </script>
 
 <div class="disclaimer-bar"><strong>免責聲明</strong>：本平台之計算結果僅供初步參考，不構成法律意見或法律諮詢服務。</div>
+<script type="module" src="js/ip-core-bridge.js"></script>
 <script type="module" src="js/components/save-button.js"></script>
 <script src="js/supabase-config.js"></script>
 <script type="module" src="js/auth-bar.js"></script>

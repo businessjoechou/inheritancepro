@@ -7,11 +7,11 @@
 <link rel="apple-touch-icon" href="favicon.svg">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>脫產偵測模組｜InheritancePro</title>
-<meta name="description" content="中華民國遺產脫產偵測工具，依民法第1148-1條及遺贈稅法第15條，分析被繼承人生前財產異動風險，自動標記可疑移轉並產生風險報告。">
+<meta name="description" content="中華民國遺產脫產偵測工具，依遺贈稅法第15條（2年內贈與視為遺產課稅）、民法第1148-1條（限定繼承債權人保護）及民法第244條（撤銷詐害債權），分析被繼承人生前財產異動風險。">
 <meta name="keywords" content="脫產偵測,遺產脫產,財產異動分析,民法1148-1條,遺贈稅法,繼承脫產,遺產風險">
 <meta name="robots" content="index, follow">
 <meta property="og:title" content="脫產偵測分析｜InheritancePro">
-<meta property="og:description" content="分析被繼承人生前財產異動，自動標記2年內及6年內可疑移轉，依中華民國法律計算風險等級。">
+<meta property="og:description" content="分析被繼承人生前財產異動，自動標記 2 年內（§15 + §1148-1 雙軌適用）與 2–10 年（§244 詐害撤銷）可疑移轉，依中華民國法律計算風險等級。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://inheritance.choulegal.com/asset-detection.html">
 <meta property="og:site_name" content="InheritancePro">
@@ -198,11 +198,18 @@
   <div class="page-title">
     <h1>財產異動風險分析</h1>
     <p>輸入被繼承人生前的財產異動紀錄，系統依中華民國法律規定自動偵測可疑脫產行為並給出風險評級。</p>
-    <span class="law-tag">民法§1148-1 ｜ 遺贈稅§15 ｜ 刑法§356</span>
+    <span class="law-tag">遺贈稅§15 ｜ 民法§1148-1 ｜ 民法§244 ｜ 刑法§356</span>
   </div>
 
   <div class="info-box">
-    ⚖️ <strong>法律重點：</strong>被繼承人死亡前<strong>2年內</strong>的贈與視為遺產（民法第1148-1條）；生前<strong>6年內</strong>的贈與需計入遺產總額課稅（遺贈稅法第15條）。
+    ⚖️ <strong>法律重點（請分清三條軌道）：</strong><br>
+    ①【稅面】遺贈稅法第 15 條：死亡前<strong>2 年</strong>內贈與配偶、繼承人或繼承人配偶的財產，應視為遺產總額併入課稅。<br>
+    ②【限定繼承責任】民法第 1148-1 條：繼承人於繼承開始前<strong>2 年</strong>內從被繼承人受贈之財產，視為所得遺產，僅對被繼承人的<strong>債權人</strong>可主張（不擴張遺產稅基、不等於特留分加回）。<br>
+    ③【詐害撤銷】民法第 244 條（撤銷權之要件）＋ 第 245 條（除斥期間）：被繼承人生前以詐害債權人為目的而處分財產者，債權人／繼承人得聲請撤銷；其撤銷權自知悉起 1 年、行為起 10 年內行使（§245）。
+  </div>
+
+  <div class="info-box" style="background:#fff4e5;border-left:3px solid #d4691e;margin-top:10px;font-size:12px;line-height:1.7">
+    📢 <strong>法規變動預告：</strong>憲法法庭 113 年憲判字第 11 號（2024/10/29 公告）判決<strong>遺贈稅法§15 第 1 項第 1 款部分違憲</strong>：(1)擬制遺產為配偶受贈時，與其他繼承人如何負擔稅捐欠缺明確規範；(2)未給予相當於§17-1 剩餘財產差額分配請求權之扣除。立法院須於 <strong>2026/10/28 前</strong>修法，在修法完成前，相關機關應依判決意旨辦理。本工具現行計算暫依既有§15 規定呈現，修法後可能調整。
   </div>
 
   <!-- Input tabs -->
@@ -399,9 +406,9 @@
     <div class="lawyer-only" style="background:#eef3fa;border:1.5px solid #3a5a80;border-radius:12px;padding:16px 20px;margin-top:16px">
       <div style="font-size:12px;font-weight:700;color:#2a4a6c;letter-spacing:0.04em;margin-bottom:10px">⚖ 律師訴訟策略備忘</div>
       <div style="font-size:12px;color:#1a2a3a;line-height:1.9">
-        <strong>§1148-1 擬制遺產</strong>：繼承開始前 <strong>2 年內</strong>對繼承人以外第三人的贈與，視為遺產，可追加計入繼承財產。<br>
-        <strong>遺贈稅法 §15</strong>：死亡前 <strong>6 年內</strong>贈與配偶、繼承人者，須併入遺產申報，稅務追溯期與民法不同，需分別計算。<br>
-        <strong>§244 撤銷詐害</strong>：被繼承人生前以詐害繼承人為目的而處分財產者，繼承人可提起撤銷訴訟（§244），自知悉起 <strong>1 年</strong>、行為起 <strong>10 年</strong>除斥期間。<br>
+        <strong>遺贈稅 §15（稅面）</strong>：死亡前 <strong>2 年內</strong>贈與配偶、民法 §1138 / §1140 各順序繼承人及其配偶者，須併入遺產總額課稅。<br>
+        <strong>民法 §1148-1（限定繼承責任面）</strong>：繼承人於繼承開始前 <strong>2 年內</strong>從被繼承人受贈之財產，視為所得遺產——<strong>僅被繼承人之債權人得主張</strong>（用於限定繼承責任範圍；不擴張稅基、不等於特留分加回）。<br>
+        <strong>§244（要件）＋ §245（除斥期間）撤銷詐害債權</strong>：被繼承人生前以詐害債權人為目的而處分財產者，依§244 得聲請撤銷；撤銷權依§245 自知悉起 <strong>1 年</strong>、行為起 <strong>10 年</strong>除斥期間（可追溯範圍遠大於稅面 2 年）。<br>
         <strong>假扣押保全</strong>：發現高風險異動後，應儘速向法院聲請假扣押，凍結受讓人財產以備將來執行。<br>
         <strong>刑事途徑</strong>：若有偽造文書、隱匿遺產或詐欺情事，可考慮同步提出刑事告訴，增加談判籌碼。
       </div>
@@ -419,6 +426,15 @@
 <script>
   let parsedData = [];
   let analysisResult = null;
+
+  // XSS 防護：使用者輸入（如備註欄 tx.note）在嵌入 innerHTML 前必須 escape
+  // 避免 <script>、<img onerror> 等注入式攻擊
+  function esc(s) {
+    if (s === null || s === undefined) return '';
+    return String(s).replace(/[&<>"']/g, c => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+  }
 
   // Tab switching
   function switchTab(tab) {
@@ -578,7 +594,7 @@
           activeTab.querySelector('.analyze-btn').insertAdjacentElement('afterend', errBox);
         }
         errBox.innerHTML = `⚠ <strong>時間線錯誤</strong>：以下 ${invalidRows.length} 筆交易日期晚於死亡日期，請確認後重新分析。<br>` +
-          invalidRows.map(r => `&nbsp;&nbsp;▸ ${r.date}（${r.note || r.typeLabel || '未填說明'}）`).join('<br>');
+          invalidRows.map(r => `&nbsp;&nbsp;▸ ${esc(r.date)}（${esc(r.note) || esc(r.typeLabel) || '未填說明'}）`).join('<br>');
         return;
       }
     }
@@ -605,16 +621,17 @@
       daysBefore = (deathDate - txDate) / (1000 * 60 * 60 * 24);
     }
 
-    // Rule 1: Within 2 years of death (民法1148-1)
+    // Rule 1: Within 2 years of death — 遺贈稅§15 稅面 + 民法§1148-1 限定繼承責任面
     if (daysBefore !== null && daysBefore >= 0 && daysBefore <= 730) {
       score += 40;
-      flags.push({ level: 'alert', text: `死亡前 ${Math.round(daysBefore)} 天內的異動，依民法第1148-1條視為遺產` });
+      flags.push({ level: 'alert', text: `死亡前 ${Math.round(daysBefore)} 天內的異動，依遺贈稅法第 15 條應併入遺產課稅；對被繼承人債權人另依民法第 1148-1 條視為所得遺產` });
     }
 
-    // Rule 2: Between 2-6 years (遺贈稅§15)
-    if (daysBefore !== null && daysBefore > 730 && daysBefore <= 2190) {
+    // Rule 2: Between 2–10 years — 民法§244 詐害撤銷除斥期
+    // （§15 與 §1148-1 僅適用 2 年內；超過 2 年後僅剩 §244 撤銷詐害可追溯，除斥期 10 年）
+    if (daysBefore !== null && daysBefore > 730 && daysBefore <= 3650) {
       score += 20;
-      flags.push({ level: 'warn', text: `死亡前6年內的贈與，依遺贈稅法第15條需計入遺產課稅` });
+      flags.push({ level: 'warn', text: `死亡前 2–10 年間的異動，已超出 §15 與 §1148-1 適用範圍，僅民法 §244 詐害撤銷可追溯（需證明詐害意圖）` });
     }
 
     // Rule 3: High amount
@@ -633,7 +650,7 @@
     const recipient = tx.recipient || 'unknown';
     if (recipient === 'heir') {
       score += 25;
-      flags.push({ level: 'alert', text: '受贈人為繼承人：民法§1148-1直接適用，2年內贈與法定視為遺產，不須另行舉證' });
+      flags.push({ level: 'alert', text: '受贈人為繼承人：2 年內贈與雙軌適用—遺贈稅 §15（稅面併入遺產總額）+ 民法 §1148-1（被繼承人債權人可主張視為所得遺產）' });
     } else if (recipient === 'heir_spouse') {
       score += 15;
       flags.push({ level: 'warn', text: '受贈人為繼承人配偶：需評估是否為間接移轉，實務上常見迴避方式' });
@@ -676,33 +693,36 @@
       LOW: '財產異動符合一般常規，風險相對較低'
     };
 
-    // 法條彙總
-    const tx2yr  = results.filter(r => r.daysBefore !== null && r.daysBefore >= 0 && r.daysBefore <= 730);
-    const tx6yr  = results.filter(r => r.daysBefore !== null && r.daysBefore > 730 && r.daysBefore <= 2190);
-    const txOld  = results.filter(r => r.daysBefore === null || r.daysBefore > 2190 || r.daysBefore < 0);
-    const sum2yr = tx2yr.reduce((s,r) => s + r.amount, 0);
-    const sum6yr = tx6yr.reduce((s,r) => s + r.amount, 0);
-    const sumOld = txOld.reduce((s,r) => s + r.amount, 0);
-    const sumAll = results.reduce((s,r) => s + r.amount, 0);
+    // 法條彙總（依追溯可行期間分 3 群）
+    // 群 1：0–2 年內 → 遺贈稅§15 稅面 + 民法§1148-1 債權人面 雙軌適用
+    // 群 2：2–10 年 → 僅民法§244 詐害撤銷可追溯（除斥期 10 年）
+    // 群 3：10 年以上 → 法律上幾乎無法追溯，僅供參考
+    const tx2yr   = results.filter(r => r.daysBefore !== null && r.daysBefore >= 0 && r.daysBefore <= 730);
+    const tx10yr  = results.filter(r => r.daysBefore !== null && r.daysBefore > 730 && r.daysBefore <= 3650);
+    const txOld   = results.filter(r => r.daysBefore === null || r.daysBefore > 3650 || r.daysBefore < 0);
+    const sum2yr  = tx2yr.reduce((s,r) => s + r.amount, 0);
+    const sum10yr = tx10yr.reduce((s,r) => s + r.amount, 0);
+    const sumOld  = txOld.reduce((s,r) => s + r.amount, 0);
+    const sumAll  = results.reduce((s,r) => s + r.amount, 0);
 
     // 法條彙總框
     const lawSumHTML = `
     <div style="font-family:'Noto Serif TC',monospace;font-size:11px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px">依法條期間彙總</div>
     <div class="law-summary">
       <div class="law-sum-box ${tx2yr.length > 0 ? 'active-2yr' : ''}">
-        <div class="law-sum-label">民法§1148-1<br>2年內</div>
+        <div class="law-sum-label">遺贈稅§15 + §1148-1<br>2 年內雙軌</div>
         <div class="law-sum-amt">${fmtWan(sum2yr)}</div>
-        <div class="law-sum-count">${tx2yr.length} 筆・視為遺產</div>
+        <div class="law-sum-count">${tx2yr.length} 筆・稅面併入課稅／債權人可追</div>
       </div>
-      <div class="law-sum-box ${tx6yr.length > 0 ? 'active-6yr' : ''}">
-        <div class="law-sum-label">遺贈稅§15<br>2–6年</div>
-        <div class="law-sum-amt">${fmtWan(sum6yr)}</div>
-        <div class="law-sum-count">${tx6yr.length} 筆・計入課稅</div>
+      <div class="law-sum-box ${tx10yr.length > 0 ? 'active-6yr' : ''}">
+        <div class="law-sum-label">民法§244<br>2–10 年詐害撤銷</div>
+        <div class="law-sum-amt">${fmtWan(sum10yr)}</div>
+        <div class="law-sum-count">${tx10yr.length} 筆・需證明詐害意圖</div>
       </div>
       <div class="law-sum-box">
-        <div class="law-sum-label">其他<br>6年以前</div>
+        <div class="law-sum-label">無追溯法據<br>10 年以前</div>
         <div class="law-sum-amt">${fmtWan(sumOld)}</div>
-        <div class="law-sum-count">${txOld.length} 筆・供參考</div>
+        <div class="law-sum-count">${txOld.length} 筆・僅供參考</div>
       </div>
     </div>`;
 
@@ -710,12 +730,12 @@
     let gapHTML = '';
     if (declaredAmt > 0) {
       const gap2 = sum2yr - declaredAmt;
-      const gap6 = (sum2yr + sum6yr) - declaredAmt;
       const gapAll = sumAll - declaredAmt;
       const gapClass = (n) => n > 0 ? 'danger' : 'ok';
       const gapBadge = (n) => n > 0
         ? `<span class="gap-badge danger">超出 ${fmtWan(n)}</span>`
         : `<span class="gap-badge ok">未超出</span>`;
+      const gap10 = (sum2yr + sum10yr) - declaredAmt;
       gapHTML = `
       <div class="gap-box">
         <div class="gap-box-title">差距分析 — 申報 vs 發現</div>
@@ -724,12 +744,12 @@
           <span class="gap-val">${fmtWan(declaredAmt)}</span>
         </div>
         <div class="gap-row">
-          <span class="gap-label">2年內可疑移轉（§1148-1）</span>
+          <span class="gap-label">2 年內可疑移轉（§15 + §1148-1 雙軌）</span>
           <span class="gap-val ${gapClass(gap2)}">${fmtWan(sum2yr)} ${gapBadge(gap2)}</span>
         </div>
         <div class="gap-row">
-          <span class="gap-label">6年內累計移轉（含§15）</span>
-          <span class="gap-val ${gapClass(gap6)}">${fmtWan(sum2yr + sum6yr)} ${gapBadge(gap6)}</span>
+          <span class="gap-label">2–10 年詐害撤銷區間（§244）</span>
+          <span class="gap-val ${gapClass(gap10)}">${fmtWan(sum2yr + sum10yr)} ${gapBadge(gap10)}</span>
         </div>
         <div class="gap-row">
           <span class="gap-label">全部紀錄合計</span>
@@ -770,7 +790,7 @@
         <div class="tx-result-header ${r.level}">
           <div class="tx-meta">
             <div class="tx-date">${r.date || '日期未填'}${r.daysBefore !== null && r.daysBefore >= 0 ? ` ｜ 死亡前 ${Math.round(r.daysBefore)} 天` : r.daysBefore !== null ? ' ｜ 死亡後' : ''}</div>
-            <div class="tx-desc">${r.typeLabel} ▸ ${r.recipientLabel}${r.note ? ' — ' + r.note : ''}</div>
+            <div class="tx-desc">${esc(r.typeLabel)} ▸ ${esc(r.recipientLabel)}${r.note ? ' — ' + esc(r.note) : ''}</div>
           </div>
           <div style="display:flex;align-items:center;gap:10px">
             <div class="tx-amount neg">NT$ ${(r.amount * 10000).toLocaleString('zh-TW')}</div>
@@ -782,10 +802,16 @@
     });
 
     const laws = [];
-    if (results.some(r => r.daysBefore !== null && r.daysBefore <= 730)) laws.push('・<strong>民法第1148-1條</strong>：繼承人因被繼承人死亡前二年內贈與之財產，應計入遺產。');
-    if (results.some(r => r.daysBefore !== null && r.daysBefore <= 2190)) laws.push('・<strong>遺產及贈與稅法第15條</strong>：被繼承人死亡前六年內贈與繼承人之財產，應併入遺產課稅。');
-    if (results.some(r => r.type === 'transfer_low')) laws.push('・<strong>遺產及贈與稅法第5條</strong>：以顯著不相當之代價讓與財產，其差額視為贈與。');
-    laws.push('・<strong>刑法第356條</strong>：損害債權罪，隱匿或毀棄財產情節重大者，可能涉及刑事責任。');
+    if (results.some(r => r.daysBefore !== null && r.daysBefore <= 730)) {
+      laws.push('・<strong>遺產及贈與稅法第 15 條</strong>：被繼承人死亡前 <strong>2 年</strong>內贈與配偶、民法 §1138/§1140 各順序繼承人及其配偶之財產，應視為遺產總額併入課稅。');
+      laws.push('・<strong>民法第 1148-1 條</strong>：繼承人於繼承開始前 <strong>2 年</strong>內從被繼承人受贈之財產，視為所得遺產 — 僅被繼承人之債權人得主張（用於限定繼承責任範圍之計算）。');
+    }
+    if (results.some(r => r.daysBefore !== null && r.daysBefore > 730 && r.daysBefore <= 3650)) {
+      laws.push('・<strong>民法第 244 條</strong>：債務人所為有害及債權之行為，債權人得聲請法院撤銷之。');
+      laws.push('・<strong>民法第 245 條</strong>：前條撤銷權，自債權人知有撤銷原因時起 1 年間不行使，或自行為時起 10 年內消滅（除斥期間）。');
+    }
+    if (results.some(r => r.type === 'transfer_low')) laws.push('・<strong>遺產及贈與稅法第 5 條</strong>：以顯著不相當之代價讓與財產，其差額視為贈與。');
+    laws.push('・<strong>刑法第 356 條</strong>：損害債權罪，隱匿或毀棄財產情節重大者，可能涉及刑事責任。');
 
     document.getElementById('lawRef').innerHTML = '⚖️ 相關法律依據：<br>' + laws.join('<br>');
 
@@ -814,7 +840,7 @@
         <div>
           <div style="font-size:12px;font-weight:600;color:var(--muted);margin-bottom:6px">📋 一般建議</div>
           <div style="font-size:12px;color:var(--ink);line-height:1.9">
-            ▸ 本分析依民法§1148-1、遺贈稅法§15等規定進行初步篩查，<strong>不構成鑑定意見</strong><br>
+            ▸ 本分析依遺贈稅§15（稅面）、民法§1148-1（限定繼承責任）、民法§244（詐害撤銷）進行初步篩查，<strong>不構成鑑定意見</strong><br>
             ▸ 發現可疑異動後，建議向國稅局補申報或聲明異議，避免裁罰<br>
             ▸ 情節重大者可考慮向地檢署提出<strong>刑法第356條</strong>（損害債權罪）告訴
           </div>
@@ -840,11 +866,11 @@
     const today = new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' });
     const totalScore = Math.min(100, Math.round(results.reduce((s, r) => s + r.score, 0) / results.length));
 
-    const tx2yr  = results.filter(r => r.daysBefore !== null && r.daysBefore >= 0 && r.daysBefore <= 730);
-    const tx6yr  = results.filter(r => r.daysBefore !== null && r.daysBefore > 730 && r.daysBefore <= 2190);
-    const sum2yr = tx2yr.reduce((s,r) => s + r.amount, 0);
-    const sum6yr = tx6yr.reduce((s,r) => s + r.amount, 0);
-    const sumAll = results.reduce((s,r) => s + r.amount, 0);
+    const tx2yr   = results.filter(r => r.daysBefore !== null && r.daysBefore >= 0 && r.daysBefore <= 730);
+    const tx10yr  = results.filter(r => r.daysBefore !== null && r.daysBefore > 730 && r.daysBefore <= 3650);
+    const sum2yr  = tx2yr.reduce((s,r) => s + r.amount, 0);
+    const sum10yr = tx10yr.reduce((s,r) => s + r.amount, 0);
+    const sumAll  = results.reduce((s,r) => s + r.amount, 0);
     let overallLevel = 'LOW';
     if (totalScore >= 70) overallLevel = 'CRITICAL';
     else if (totalScore >= 50) overallLevel = 'HIGH';
@@ -858,7 +884,7 @@
         <td>${r.date || '—'}</td>
         <td style="font-family:monospace">NT$ ${(r.amount * 10000).toLocaleString('zh-TW')}</td>
         <td>${r.typeLabel}</td>
-        <td>${r.recipientLabel || '—'}${r.note ? '・' + r.note : ''}</td>
+        <td>${esc(r.recipientLabel) || '—'}${r.note ? '・' + esc(r.note) : ''}</td>
         <td style="color:${r.level === 'CRITICAL' || r.level === 'HIGH' ? 'var(--danger)' : r.level === 'MEDIUM' ? '#d4691e' : 'var(--success)'};font-weight:600">${r.level === 'CRITICAL' ? '極高' : r.level === 'HIGH' ? '高' : r.level === 'MEDIUM' ? '中' : '低'}</td>
       </tr>
       ${r.flags.length > 0 ? `<tr><td colspan="5" style="padding:4px 12px 10px;background:#fafafa"><ul style="font-size:11px;margin-left:16px">${flagsHTML}</ul></td></tr>` : ''}`;
@@ -909,18 +935,20 @@ ${declaredAmt > 0 ? `
 <h2>差距分析</h2>
 <table style="margin-bottom:16px"><thead><tr><th>項目</th><th>金額</th><th>備註</th></tr></thead><tbody>
 <tr><td>申報遺產總額</td><td style="font-family:monospace">${fmtWan(declaredAmt)}</td><td>—</td></tr>
-<tr><td>2年內可疑移轉（民法§1148-1）</td><td style="font-family:monospace;color:${sum2yr > declaredAmt ? 'var(--danger)':'var(--success)'}">${fmtWan(sum2yr)}</td><td>${tx2yr.length}筆・${sum2yr > declaredAmt ? '超出 '+fmtWan(sum2yr-declaredAmt) : '未超出申報額'}</td></tr>
-<tr><td>6年內累計移轉（含§15）</td><td style="font-family:monospace;color:${(sum2yr+sum6yr) > declaredAmt ? 'var(--danger)':'var(--success)'}">${fmtWan(sum2yr+sum6yr)}</td><td>${tx2yr.length+tx6yr.length}筆・${(sum2yr+sum6yr) > declaredAmt ? '超出 '+fmtWan(sum2yr+sum6yr-declaredAmt) : '未超出申報額'}</td></tr>
+<tr><td>2 年內可疑移轉（§15 + §1148-1 雙軌）</td><td style="font-family:monospace;color:${sum2yr > declaredAmt ? 'var(--danger)':'var(--success)'}">${fmtWan(sum2yr)}</td><td>${tx2yr.length}筆・${sum2yr > declaredAmt ? '超出 '+fmtWan(sum2yr-declaredAmt) : '未超出申報額'}</td></tr>
+<tr><td>2–10 年詐害撤銷區間（§244）</td><td style="font-family:monospace;color:${(sum2yr+sum10yr) > declaredAmt ? 'var(--danger)':'var(--success)'}">${fmtWan(sum2yr+sum10yr)}</td><td>${tx2yr.length+tx10yr.length}筆・${(sum2yr+sum10yr) > declaredAmt ? '超出 '+fmtWan(sum2yr+sum10yr-declaredAmt) : '未超出申報額'}</td></tr>
 <tr><td>全部紀錄合計</td><td style="font-family:monospace">${fmtWan(sumAll)}</td><td>${results.length}筆</td></tr>
 </tbody></table>` : ''}
 <h2>各筆異動風險明細</h2>
 <table><thead><tr><th>日期</th><th>金額</th><th>類型</th><th>受贈人・說明</th><th>風險</th></tr></thead><tbody>${txHTML}</tbody></table>
 <div class="law-box">
   ⚖️ 相關法律依據<br>
-  ・<strong>民法第1148-1條</strong>：死亡前二年內贈與視為遺產。<br>
-  ・<strong>遺贈稅法第15條</strong>：死亡前六年內贈與需計入遺產課稅。<br>
-  ・<strong>遺贈稅法第5條</strong>：顯著不相當代價讓與之差額視為贈與。<br>
-  ・<strong>刑法第356條</strong>：損害債權罪。
+  ・<strong>遺贈稅法第 15 條</strong>：死亡前 2 年內贈與配偶／繼承人／繼承人配偶之財產，視為遺產總額課稅。<br>
+  ・<strong>民法第 1148-1 條</strong>：繼承人於繼承前 2 年內受贈，視為所得遺產（僅被繼承人債權人得主張，用於限定繼承責任範圍）。<br>
+  ・<strong>民法第 244 條</strong>：債務人詐害債權之行為，債權人得聲請法院撤銷。<br>
+  ・<strong>民法第 245 條</strong>：前條撤銷權，自知悉起 1 年、行為起 10 年內消滅（除斥期間）。<br>
+  ・<strong>遺贈稅法第 5 條</strong>：顯著不相當代價讓與之差額視為贈與。<br>
+  ・<strong>刑法第 356 條</strong>：損害債權罪。
 </div>
 <div class="footer">
   © ${new Date().getFullYear()} InheritancePro &nbsp;·&nbsp; inheritance.choulegal.com<br>

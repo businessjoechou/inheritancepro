@@ -64,8 +64,8 @@ const V2025 = {
  * @see https://www.dot.gov.tw/singlehtml/ch26?cntId=4c40feb43876418f94ac0cb8dbe4ea86
  * @see https://www.dot.gov.tw/singlehtml/ch26?cntId=fae59b5407394d3989e2db2121c59af3
  */
-const V2022_2024 = {
-  lawVersion: '2022-2024 (財政部 110/11/24 公告)',
+const V2022_2023 = {
+  lawVersion: '2022-2023 (財政部 110/11/24 公告)',
   appliesFrom: '2022-01-01',
   exemption:          13_330_000, // 免稅額 1,333 萬
   deductSpouse:       4_930_000,  // 配偶扣除 493 萬
@@ -82,6 +82,45 @@ const V2022_2024 = {
 };
 
 /**
+ * 2024 版：遺贈稅法相關金額與 2022-2023 相同（CPI 未達 10%），但 AMT 保險死亡
+ * 給付免稅額於 113 年度（= 民國 113 = 西元 2024）已自 3,330 萬調為 3,740 萬
+ * （財政部 112/11/23 台財稅字第 11204674390 號公告）。
+ * 因為本模組的 insuranceExcludeMax 是借用 AMT 免稅額作為實質課稅警示門檻，
+ * 2024 年發生之繼承案件應改用 3,740 萬，故單獨拆出一版。
+ *
+ * @deprecated 此物件為 V2022_2023 + 新版 insuranceExcludeMax 的合成，舊版本常數
+ *   V2022_2024 已廢棄但不刪除，見 ESTATE_TAX_VERSIONS 註解。
+ */
+const V2024 = {
+  ...V2022_2023,
+  lawVersion: '2024 (遺贈稅沿用 110/11/24 公告；AMT 門檻改用 112/11/23 公告 3,740 萬)',
+  appliesFrom: '2024-01-01',
+  insuranceExcludeMax: 37_400_000, // 113 年度 AMT 免稅額（財政部 112/11/23 公告）
+};
+
+/**
+ * @deprecated 2026-04-21 修正：2024 年 AMT 免稅額已調為 3,740 萬，此常數對 2024
+ *   年度不再正確，請改用 V2024。但依「舊常數永不刪」原則保留，供 2026-04-21
+ *   以前儲存的歷史計算記錄之向後相容使用。**新程式不得再引用本常數**。
+ */
+const V2022_2024 = {
+  lawVersion: '2022-2024 (deprecated; 2024 年請改用 V2024)',
+  appliesFrom: '2022-01-01',
+  exemption:          13_330_000,
+  deductSpouse:       4_930_000,
+  deductFuneral:      1_230_000,
+  deductPerChild:     500_000,
+  deductPerParent:    1_230_000,
+  deductPerDisabled:  6_180_000,
+  insuranceExcludeMax: 33_300_000,
+  brackets: [
+    { upTo: 50_000_000,  rate: 0.10 },
+    { upTo: 100_000_000, rate: 0.15 },
+    { upTo: Infinity,    rate: 0.20 },
+  ],
+};
+
+/**
  * 各年度稅法常數。新年度調整時請新增條目，舊條目永不刪除（以便重現舊案件）。
  *
  * 目前尚未支援 2021/12/31 以前發生之案件（1,200 萬免稅額版本，財政部 97 年公告）；
@@ -89,16 +128,20 @@ const V2022_2024 = {
  */
 export const ESTATE_TAX_VERSIONS = {
   /** 2022 版：財政部 110/11/24 公告，自 111/01/01 起適用 */
-  2022: V2022_2024,
+  2022: V2022_2023,
   /** 2023 版：CPI 未達 10% 門檻，沿用 2022 版 */
-  2023: V2022_2024,
-  /** 2024 版：CPI 未達 10% 門檻，沿用 2022 版 */
-  2024: V2022_2024,
+  2023: V2022_2023,
+  /** 2024 版：遺贈稅沿用，但 AMT 保險給付免稅額於 113 年度調升至 3,740 萬 */
+  2024: V2024,
   /** 2025 版：財政部 113/11/28 公告，自 114/01/01 起適用 */
   2025: V2025,
   /** 2026 版：CPI 未達 10% 門檻，沿用 2025 版 */
   2026: V2025,
 };
+
+// 歷史常數保留供向後相容，不要刪除（但新程式不得再引用）
+// eslint-disable-next-line no-unused-vars
+const _LEGACY_V2022_2024 = V2022_2024;
 
 export const LATEST_TAX_YEAR = 2026;
 
@@ -187,7 +230,7 @@ export function getEstateTaxBreakdown(netEstate, opts = {}) {
  * 一站式遺產稅計算（含扣除額）
  * @param {object} p
  * @param {number} p.totalAssets        遺產總額
- * @param {number} [p.insurancePaid=0]  人壽保險給付（>3,330 萬部分須計入）
+ * @param {number} [p.insurancePaid=0]  人壽保險給付（年度 AMT 免稅額：2022-2023 為 3,330 萬，2024 起為 3,740 萬，超過部分計入遺產作為實質課稅原則警示）
  * @param {boolean} [p.hasSpouse=false]
  * @param {number} [p.childrenCount=0]
  * @param {number} [p.parentsCount=0]

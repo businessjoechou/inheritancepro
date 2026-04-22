@@ -7,7 +7,7 @@
 <link rel="apple-touch-icon" href="favicon.svg">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>贍養費試算｜InheritancePro</title>
-<meta name="description" content="依民法§1114及家事事件法計算贍養費金額，考量雙方收入、子女需求、生活水準等因素。免費使用，立即試算。">
+<meta name="description" content="依民法§1057（贍養費）及家事事件法計算贍養費金額，考量雙方收入、子女需求、生活水準等因素。免費使用，立即試算。">
 <meta name="keywords" content="贍養費試算,中華民國贍養費,離婚贍養費,民法第1057條,贍養費計算,離婚財產,司法院最低生活費">
 <meta name="robots" content="index, follow">
 <meta property="og:title" content="贍養費試算｜InheritancePro">
@@ -220,10 +220,10 @@
     <div class="lawyer-only" style="background:#eef3fa;border:1.5px solid #3a5a80;border-radius:12px;padding:16px 20px;margin-top:16px">
       <div style="font-size:12px;font-weight:700;color:#1a3a5c;letter-spacing:0.04em;margin-bottom:10px">⚖ 律師訴訟策略備忘</div>
       <div style="font-size:12px;color:#1a2a3a;line-height:1.9">
-        <strong>聲請時機</strong>：可於離婚訴訟中一併聲請，亦可離婚後 <strong>2 年內</strong>單獨提起（民法 §1058 類推，請務必確認個案時效）。<br>
+        <strong>聲請時機</strong>：可於離婚訴訟中一併聲請。離婚後單獨提起之時效，民法未明文；實務上贍養費屬定期給付者多適用 §126 五年短期時效、一次給付者適用 §125 一般 15 年時效，見解分歧，請諮詢律師個案判斷。<br>
         <strong>核心要件</strong>：① 判決離婚（非協議） ② 請求方無過失或過失較小 ③ 離婚後陷於生活困難（無財產、無工作能力、高齡）。<br>
         <strong>有過失方</strong>：雙方均有過失者，法院「得」酌減，但不一定全額駁回，可積極主張對方過失較重。<br>
-        <strong>再婚</strong>：請求方再婚後喪失請求權（§1058），若已再婚應預告客戶風險。<br>
+        <strong>再婚</strong>：再婚後原則上喪失贍養費請求權（§1057 之「生活困難」要件不復存在），若已再婚應預告客戶風險。<br>
         <strong>給付方式</strong>：一次給付 vs 定期給付，評估對方支付能力、客觀預期收入，一次給付可避免日後執行困難。
       </div>
     </div>
@@ -231,7 +231,7 @@
     <div class="cross-links">
       <div class="cross-links-label">離婚相關工具</div>
       <a class="cross-link-btn" href="property-split.html">⚖️ 剩餘財產差額分配　夫妻財產清算 <span>→</span></a>
-      <a class="cross-link-btn" href="prescription.html">⏱ 消滅時效計算機　贍養費請求2年時效 <span>→</span></a>
+      <a class="cross-link-btn" href="prescription.html">⏱ 消滅時效計算機　贍養費時效（§126 五年／§125 十五年，見解分歧） <span>→</span></a>
     </div>
   </div>
 </main>
@@ -414,7 +414,7 @@
 
       document.getElementById('sourceNote').innerHTML = `📊 參考依據：司法院114年公告${cityNames[r.city]}最低生活費 NT$ ${minLife.toLocaleString('zh-TW')} 元。本試算以此為生活基準，惟法院實際裁量時依個案情形（雙方收入、財產、健康、婚姻年數等）綜合判斷，並無固定公式，僅供參考。`;
 
-      document.getElementById('lawNote').innerHTML = `⚖️ <strong>民法第1057條：</strong>夫妻無過失之一方，因判決離婚而陷於生活困難者，他方縱無過失，亦應給與相當之贍養費。雙方均有過失者，法院得酌減之。<br><br><strong>請求時效：</strong>離婚後2年內（民法第1058條準用相關規定）。再婚後喪失請求權。`;
+      document.getElementById('lawNote').innerHTML = `⚖️ <strong>民法第 1057 條：</strong>夫妻無過失之一方，因判決離婚而陷於生活困難者，他方縱無過失，亦應給與相當之贍養費。雙方均有過失者，法院得酌減之。<br><br><strong>請求時效：</strong>民法未明文，實務見解分歧：定期給付多適用 §126 五年、一次給付適用 §125 十五年。再婚後原則上喪失請求權（生活困難要件不復存在）。請諮詢律師個案判斷。`;
     }
 
     document.getElementById('resultSection').style.display = 'block';

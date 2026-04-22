@@ -27,6 +27,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/tool-page.css">
+<script src="js/xss-escape.js"></script>
 <script src="js/pdf-export.js"></script>
 <script src="js/persona.js"></script>
 <script type="application/ld+json">
@@ -437,17 +438,24 @@
     return 'NT$ ' + Math.round(n).toLocaleString('zh-TW');
   }
 
+  // 優先 bridge 到 core；fallback 為 V2025 硬編（與 core LATEST_TAX_YEAR 同步）
   function calcEstateTax(net) {
+    if (window.IP_CORE && typeof window.IP_CORE.calcEstateTax === 'function') {
+      return window.IP_CORE.calcEstateTax(net);
+    }
     if (net <= 0) return 0;
-    const t1 = 50000000, t2 = 100000000;
+    const t1 = 56210000, t2 = 112420000;
     if (net <= t1) return Math.round(net * 0.10);
     if (net <= t2) return Math.round(t1 * 0.10 + (net - t1) * 0.15);
     return Math.round(t1 * 0.10 + (t2 - t1) * 0.15 + (net - t2) * 0.20);
   }
 
   function estateTaxRateLabel(netEstate) {
-    if (netEstate <= 50000000) return '稅率 10%';
-    if (netEstate <= 100000000) return '稅率 10%（5,000萬以下）+ 15%（超出部分）';
+    if (window.IP_CORE && typeof window.IP_CORE.estateTaxRateLabel === 'function') {
+      return window.IP_CORE.estateTaxRateLabel(netEstate);
+    }
+    if (netEstate <= 56210000) return '稅率 10%';
+    if (netEstate <= 112420000) return '稅率 10%（5,621 萬以下）+ 15%（超出部分）';
     return '稅率 10% / 15% / 20% 累進';
   }
 
@@ -492,14 +500,14 @@
       const houseTax = p.building * houseTaxRate;
       return `
         <div class="result-row">
-          <span class="result-label">${p.name}（${p.selfUse ? '自住1.2%' : '非自住2.4%'}）</span>
+          <span class="result-label">${escHtml(p.name)}（${p.selfUse ? '自住1.2%' : '非自住2.4%'}）</span>
           <span class="result-value">${p.building > 0 ? fmt(houseTax) + ' / 年' : '—'}</span>
         </div>`;
     }).join('');
 
     const propSummaryRows = props.map((p, i) => `
       <div class="result-row">
-        <span class="result-label">${p.name}</span>
+        <span class="result-label">${escHtml(p.name)}</span>
         <span class="result-value">${fmt(p.land + p.building)}</span>
       </div>`).join('');
 
@@ -888,6 +896,7 @@
 </script>
 
 <div class="disclaimer-bar"><strong>免責聲明</strong>：本平台之計算結果僅供初步參考，不構成法律意見或法律諮詢服務。</div>
+<script type="module" src="js/ip-core-bridge.js"></script>
 <script type="module" src="js/components/save-button.js"></script>
 <script src="js/supabase-config.js"></script>
 <script type="module" src="js/auth-bar.js"></script>

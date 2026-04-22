@@ -228,10 +228,10 @@
           <div class="type-item" onclick="selectType(this,'forced_share')">
             <div class="type-dot"></div>
             <div class="type-text">
-              <div class="type-name">特留分扣減權</div>
-              <div class="type-desc">遺囑侵害特留分時，繼承人得行使扣減權，自知悉起算</div>
+              <div class="type-name">特留分扣減權（§1225）</div>
+              <div class="type-desc">遺囑侵害特留分時，繼承人得依§1225 行使扣減權；行使期限民法未明文，見解分歧</div>
             </div>
-            <div class="type-badge">1 年</div>
+            <div class="type-badge">見解分歧</div>
           </div>
 
           <div class="cat-label">特殊時效規定</div>
@@ -292,7 +292,7 @@
         <strong>催告效力有限（§130）</strong>：催告僅使時效暫緩 6 個月，催告後 <strong>6 個月內</strong>須起訴，否則視為未中斷。<br>
         <strong>時效不完成（§139-143）</strong>：天然災害、法定代理人欠缺等情形，時效於障礙消滅後 <strong>6 個月</strong>內不完成，可作為抗辯依據。<br>
         <strong>對方援引時效抗辯</strong>：應確認是否有中斷或不完成事由；若有，可主張時效尚未屆至，否則考慮其他救濟途徑（如不當得利、侵權行為）。<br>
-        <strong>繼承請求權特別規定</strong>：繼承回復請求權為 <strong>2 年＋30 年</strong>（§1146），特留分侵害扣減權為知悉起 <strong>1 年</strong>（§1224），請勿混用一般時效。
+        <strong>繼承請求權特別規定</strong>：繼承回復請求權依§1146：知悉起 <strong>2 年</strong>主觀時效；§1146 第 2 項原「繼承開始起 10 年」客觀時效經 <strong>釋字第 771 號</strong>宣告違憲失效，實務改依一般消滅時效（§125 十五年）或依個案類推 10 年，見解分歧。特留分侵害扣減權之行使期限民法未明文，實務及學說分別援用§1146（2 年／10 年）或§197 之 2（2 年／10 年），見解分歧，請勿僅以「§1225 知悉起 1 年」單一見解主張。
       </div>
     </div>
   </div>
@@ -319,7 +319,7 @@
     merchant:   { years: 2,  label: '商品、製造物代價', law: '民法第127條第8款', note: '商人、製造人、手工業人所供給商品及產物之代價，自交付商品時起算。' },
     tort:       { years: 2,  label: '侵權行為損害賠償', law: '民法第197條', note: '雙重時效：①知悉損害及賠償義務人起2年；②侵權行為發生起10年。以先屆至者為準。', isTort: true },
     inheritance_recovery: { years: 2, label: '繼承回復請求權', law: '民法第1146條', note: '雙重時效：①知悉繼承權被侵害起2年；②自繼承開始時起10年。以先屆至者為準。', isTort: true, tortLabel: '繼承開始日（被繼承人死亡日，10年客觀時效起算）', startLabel: '知悉繼承權被侵害日（2年主觀時效起算）' },
-    forced_share: { years: 1, label: '特留分扣減權', law: '民法第1225條', note: '繼承人得知特留分被遺囑侵害時起1年內行使扣減權。自繼承開始時起逾10年者亦同。' },
+    forced_share: { years: 2, label: '特留分扣減權（§1225）', law: '民法第1225條', note: '扣減權行使期限民法未明文，實務及學說分別援用§1146（知悉起2年／繼承開始起10年）或§197 之 2（知悉起2年／行為起10年），見解分歧。本欄以較保守的 2 年主觀時效顯示，實際應諮詢律師。' },
     labor:      { years: 5,  label: '勞工薪資請求權', law: '民法第126條（勞基法準用）', note: '工資、加班費各期各自起算，自原應給付日起5年。特休未休工資亦同。' },
   };
 

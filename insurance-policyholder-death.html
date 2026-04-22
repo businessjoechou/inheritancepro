@@ -147,13 +147,22 @@
     if(!cashValue||!totalEstate){alert('請填入保價金與遺產總額');return;}
 
     // 遺產稅估算：免稅額 1333萬 + 配偶扣除 553萬（若繼承人含配偶，簡化為有配偶）+ 直系卑親屬每人 56 萬
+    // V2025 級距（財政部 113/11/28 公告，114/01/01 起適用）：
+    //   ≤ 5,621 萬 10%；5,621 萬 ~ 1 億 1,242 萬 15%；> 1 億 1,242 萬 20%
     const baseExempt=13330000;
     const heirDeduction=heirCount*560000;
     const taxableEstate=Math.max(0,totalEstate-baseExempt-heirDeduction);
-    let estateTaxRate=0.1;
-    if(taxableEstate>50000000)estateTaxRate=0.2;
-    if(taxableEstate>100000000)estateTaxRate=0.15; // simplified
-    const estateTax=Math.round(taxableEstate*0.1); // 簡化為 10% 級距
+    // 優先 bridge 到 core；fallback V2025 硬編
+    const estateTax=(function(net){
+      if(window.IP_CORE && typeof window.IP_CORE.calcEstateTax === 'function'){
+        return window.IP_CORE.calcEstateTax(net);
+      }
+      if(net<=0)return 0;
+      const t1=56210000,t2=112420000;
+      if(net<=t1)return Math.round(net*0.10);
+      if(net<=t2)return Math.round(t1*0.10+(net-t1)*0.15);
+      return Math.round(t1*0.10+(t2-t1)*0.15+(net-t2)*0.20);
+    })(taxableEstate);
     // 保價金佔遺產比例對應分擔的稅
     const policyTaxShare=totalEstate>0?Math.round(estateTax*(cashValue/totalEstate)):0;
 
@@ -227,6 +236,7 @@
     exportPDF(html,'InheritancePro-保單處理');
   }
 </script>
+<script type="module" src="js/ip-core-bridge.js"></script>
 <script src="js/supabase-config.js"></script>
 <script type="module" src="js/auth-bar.js"></script>
 </body>

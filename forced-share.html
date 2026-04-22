@@ -100,11 +100,11 @@
       <input type="number" id="grossEstate" placeholder="0" min="0" max="9999999999" oninput="autoCalc()">
     </div>
     <div class="input-group">
-      <label>死亡前贈與應加回金額<span class="label-hint">元，§1148-1，一年內特種贈與</span></label>
+      <label>死亡前贈與應加回金額<span class="label-hint">元，民法§1173 生前特種贈與（結婚、分居、營業）之歸扣；非特種贈與由法官裁量</span></label>
       <input type="number" id="addBackGifts" placeholder="0" min="0" max="9999999999" oninput="autoCalc()">
     </div>
     <div class="input-group">
-      <label>遺囑指定給特定繼承人之金額<span class="label-hint">元（超出應繼分的部分）</span></label>
+      <label>遺囑指定給特定繼承人之金額<span class="label-hint">元；<strong>本欄僅作紀錄，不進入自動計算</strong>（工具未問指定對象，無法正確分配）</span></label>
       <input type="number" id="willedToHeirs" placeholder="0" min="0" max="9999999999" oninput="autoCalc()">
     </div>
     <div class="input-group">
@@ -146,7 +146,10 @@
     </div>
 
     <div class="law-note">
-      <strong>法律依據：</strong>§1223 特留分比例、§1224 特留分之扣減。扣減權行使期限：知悉特留分受侵害後 <strong>2年</strong> 內，或繼承開始後 <strong>10年</strong> 內（§1130準用§125）。生前特種贈與加回依§1148-1（繼承開始前1年內之贈與）。本試算僅供參考，實際情形請諮詢律師。
+      <strong>法律依據：</strong>§1223（特留分比例）、§1224（特留分之算定）、§1225（特留分被侵害時之扣減權）；生前特種贈與加回依§1173（因結婚、分居、營業所受之贈與應於繼承時歸入應繼遺產）。扣減權行使期限民法未明文，實務及學說分別援用§1146（繼承回復請求權，2 年／10 年）或§197 之 2（侵權行為請求權，2 年／10 年），見解分歧，實際請諮詢律師。<br><span style="color:#aaa;font-size:11px">⚠️ 注意：§1148-1（繼承人於繼承前 2 年內受贈視為所得遺產）僅適用於<strong>限定繼承責任範圍</strong>之計算，<strong>不是</strong>特留分加回條款，請勿混用。</span>
+    </div>
+    <div class="law-note" style="background:#fff8e1;border-left:3px solid #d4691e;padding:12px 14px;margin-top:8px;font-size:12px;line-height:1.7">
+      <strong>⚠️ 計算假設（請詳讀）</strong>：本工具以「遺贈先扣，剩餘按應繼分公平分配」為計算邏輯。若遺囑對<strong>特定繼承人超額指定</strong>（如：兩子女但遺囑把 80% 給長子），本工具無法辨識指定對象，計算結果可能<strong>未反映被超額指定者以外的繼承人實際情形</strong>。遇此情境：請先算出「若無遺囑」各人應繼分，再比對實際分配差額。建議委請律師試算。
     </div>
     <div class="law-note" style="margin-top:6px;font-size:12px;color:#888;line-height:1.6">
       📌 扣減順序：應先扣減遺贈，若仍不足，再按比例扣減指定應繼分（最高法院104年台上字第521號方向）
@@ -274,7 +277,11 @@
 
       const shouldInherit = base * (sn / sd);
       const forcedShare = shouldInherit * (rn / rd);
-      const actualGot = distributable * (sn / sd); // simplified
+      // 依§1225 扣減順序：應先扣減遺贈（willedToThird），再按應繼分分配剩餘。
+      // willedToHeirs（遺囑對特定繼承人之超額指定）由於本工具未要求指定對象，
+      // 無法正確分配到「被指定者」與「其他人」，故不納入自動計算。
+      // 使用者若遇此情境，請參考下方警語自行判讀被指定繼承人的實得金額是否 ≥ 特留分。
+      const actualGot = distributable * (sn / sd);
       const infringed = Math.max(0, forcedShare - actualGot);
       totalInfringement += infringed;
 
@@ -305,7 +312,7 @@
         <div class="summary-row"><span class="lbl">遺囑贈予第三人</span><span class="val">${FMT(willedToThird)}</span></div>
         <div class="action-box">
           <strong>⚠ 建議行動</strong><br>
-          受侵害之繼承人可依§1224行使<strong>扣減權</strong>，向受遺贈人或特定繼承人請求返還侵害金額。<br>
+          受侵害之繼承人可依§1225行使<strong>扣減權</strong>，向受遺贈人或特定繼承人請求返還侵害金額。<br>
           期限：知悉後 <strong>2年</strong> 或繼承開始後 <strong>10年</strong>，擇一先到期者為準。<br>
           可先向受遺贈人行使，不足再向特定繼承人請求。
         </div>`;

@@ -25,6 +25,7 @@
 <link rel="canonical" href="https://inheritance.choulegal.com/insurance-beneficiary-order.html">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/tool-page.css">
+<script src="js/xss-escape.js"></script>
 <script src="js/pdf-export.js"></script>
 <script src="js/persona.js"></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"保單受益人順位分配試算","url":"https://inheritance.choulegal.com/insurance-beneficiary-order.html","applicationCategory":"LegalService","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro","url":"https://inheritance.choulegal.com"}}</script>
@@ -323,8 +324,8 @@
     const html=result.map(r=>`
       <div class="beneficiary-row">
         <div>
-          <div class="bene-name">${r.name}</div>
-          <div class="bene-rel">${r.relation}${r.tier?' ｜ '+r.tier:''}</div>
+          <div class="bene-name">${escHtml(r.name)}</div>
+          <div class="bene-rel">${escHtml(r.relation)}${r.tier?' ｜ '+escHtml(r.tier):''}</div>
         </div>
         <div style="text-align:right">
           <div class="bene-amount">${FMT(r.amount)}</div>
