@@ -809,7 +809,8 @@
         errorEl.textContent = result.error;
         errorEl.classList.add('visible');
       } else {
-        successEl.innerHTML = `✓ 兌換成功！${result.tier ? '（' + result.tier + '）' : ''}頁面即將重新載入。`;
+        // XSS defensive: result.tier 雖為自家 API 回傳，仍 escapeHtml 防 API 劫持
+        successEl.innerHTML = `✓ 兌換成功！${result.tier ? '（' + escapeHtml(String(result.tier)) + '）' : ''}頁面即將重新載入。`;
         successEl.classList.add('visible');
         document.getElementById('redeem-input').disabled = true;
         btn.disabled = true;

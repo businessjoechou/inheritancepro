@@ -891,7 +891,9 @@ async function handleUnsubscribe() {
 
     const container = document.getElementById('toolsContainer');
     if (matches.length === 0) {
-      container.innerHTML = `<div style="text-align:center;padding:32px 0;color:var(--muted);font-size:13px;">找不到「${searchQuery}」相關工具</div>`;
+      // XSS fix: searchQuery 為使用者輸入，用 textContent 避免 HTML 注入
+      container.innerHTML = '<div style="text-align:center;padding:32px 0;color:var(--muted);font-size:13px;"></div>';
+      container.firstChild.textContent = `找不到「${searchQuery}」相關工具`;
     } else {
       container.innerHTML = matches.map(t => renderToolCard(t, persona)).join('');
     }

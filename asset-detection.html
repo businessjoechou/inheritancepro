@@ -495,7 +495,8 @@
       const item = { date: dateStr, amount, type: guessType(typeStr), note: noteStr };
       parsedData.push(item);
       const tr = document.createElement('tr');
-      tr.innerHTML = `<td>${dateStr}</td><td style="font-family:'Noto Serif TC',monospace">${amount}萬</td><td>${typeStr}</td><td>${noteStr}</td>`;
+      // XSS fix: dateStr/typeStr/noteStr 為使用者貼入資料，用 esc() 過濾
+      tr.innerHTML = `<td>${esc(dateStr)}</td><td style="font-family:'Noto Serif TC',monospace">${amount}萬</td><td>${esc(typeStr)}</td><td>${esc(noteStr)}</td>`;
       tbody.appendChild(tr);
     });
     document.getElementById('parsedPreview').style.display = parsedData.length > 0 ? 'block' : 'none';
@@ -547,7 +548,8 @@
         const item = { date: parts[0], amount, type: guessType(parts[2] || ''), note: parts[3] || '' };
         parsedData.push(item);
         const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${parts[0]}</td><td style="font-family:'Noto Serif TC',monospace">${amount}萬</td><td>${parts[2]||''}</td><td>${parts[3]||''}</td>`;
+        // XSS fix: parts[0/2/3] 為 CSV 使用者輸入，用 esc() 過濾
+        tr.innerHTML = `<td>${esc(parts[0])}</td><td style="font-family:'Noto Serif TC',monospace">${amount}萬</td><td>${esc(parts[2]||'')}</td><td>${esc(parts[3]||'')}</td>`;
         tbody.appendChild(tr);
       }
       document.getElementById('csvPreview').style.display = parsedData.length > 0 ? 'block' : 'none';
