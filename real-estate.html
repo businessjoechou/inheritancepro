@@ -438,7 +438,8 @@
     return 'NT$ ' + Math.round(n).toLocaleString('zh-TW');
   }
 
-  // 優先 bridge 到 core；fallback 為 V2025 硬編（與 core LATEST_TAX_YEAR 同步）
+  // 優先 bridge 到 core；fallback 同步 V2025（2025-2026 皆用此版，CPI 未達遺贈稅§12-1 10% 門檻沿用）
+  // ⚠️ 若 core estate-tax.js 的 LATEST_TAX_YEAR 更新或級距變動，必須同步改此處 t1/t2 數值，否則 core 未載入時 fallback 會與 prod 不一致
   function calcEstateTax(net) {
     if (window.IP_CORE && typeof window.IP_CORE.calcEstateTax === 'function') {
       return window.IP_CORE.calcEstateTax(net);
