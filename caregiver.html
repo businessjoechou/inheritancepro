@@ -227,6 +227,9 @@
     const outOfPocket = parseFloat(document.getElementById('outOfPocket').value) || 0;
     const totalEstate = parseFloat(document.getElementById('totalEstate').value) || 0;
 
+    // 照顧時薪預設 280：**非法定**，為衛福部 114 年居家服務市場區間之中位參考值
+    // （外籍看護約 250 / 本國看護約 350；UI 欄位 hint 已揭示）。使用者可自行輸入
+    // 實際支付金額。此為機會成本估算用，非裁判認定標準。
     const hourlyRate = parseInt(document.getElementById('careHourlyRate').value) || 280;
     // 機構照顧費推估：時數 × 月 × 年 × 時薪
     const institutionalCost = years * 12 * hoursPerMonth * hourlyRate;

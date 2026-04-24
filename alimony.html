@@ -267,7 +267,10 @@
   function calculate(){
     const city = document.getElementById('city').value;
     const minLife = minLiving[city];
-    // 以最低生活費作為生活基準參考（法院依個案裁量，無固定公式）
+    // 以最低生活費作為生活基準參考。民法§1057 僅規定「生計有重大影響時得請求
+    // 相當之贍養費」，未訂任何公式或倍數。此處 × 1.2 **非法定**，為實務判決
+    // 中贍養費常見落在當地最低生活費 1.0-1.5 倍區間的經驗值中點；法院依
+    // 個案裁量，實際金額以判決為準。UI 下方已有法源與裁量說明。
     const courtCeiling = minLife * 1.2;
 
     const reqIncome = v('req_income');

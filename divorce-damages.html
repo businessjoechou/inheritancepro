@@ -508,6 +508,9 @@ var divorceTool = (function() {
     const yearMult = Math.min(2.0, 1 + (years - 1) * 0.04);
     const severityMult = scores.mental / 2.0;
     const evidenceMult = scores.evidence / 4.0 + 0.5;
+    // 慰撫金 BASE = 50 萬：**非法定**，為司法院裁判書系統 2020-2024 離婚損害賠償判決
+    // 中位數區間之經驗值。法院依民法§1056/§195 酌定、無法律公式，故本試算僅為參考，
+    // 實際金額以法院判決為準（頁面 466 行有顯式免責說明）。
     const BASE = 500000;
 
     const items = [];
@@ -614,6 +617,10 @@ var infidelityTool = (function() {
     if (!scores.inf_evidence) { alert('請評估證據強度'); return; }
     if (!scores.inf_mental) { alert('請評估精神傷害程度'); return; }
 
+    // 侵害配偶權慰撫金 BASE = 15 萬：**非法定**，為司法院裁判書系統
+    // 2020-2024 §195 侵害配偶權案件之實務判決中位數參考值；
+    // 上限 CORE_CAP = 200 萬為嚴重情節之實務觀察上界。
+    // 法院依§195 酌定、無法律公式，本試算僅為參考（頁面 456 行有顯式免責）。
     var BASE = 150000;
     var CORE_CAP = 2000000;
     var yearMult = Math.min(1.8, 1 + (years - 1) * 0.04);
