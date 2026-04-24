@@ -309,7 +309,9 @@
     if(state.perm){
       const age = v('victim_age') || 15;
       const workYears = Math.max(0, 65 - Math.max(age, 18));
-      const minWage = 28590;
+      // 基本工資（月薪）：2026-01-01 起 29,500 元（勞動部公告）；2025 年為 28,590
+      // 實務計算未成年人勞動能力損失以「起訴時之基本工資」為基準
+      const minWage = 29500;
       const rate = state.permRate==='low'?0.15:state.permRate==='mid'?0.35:0.65;
       laborLoss = Math.round(minWage * 12 * workYears * rate * 0.7);
     }

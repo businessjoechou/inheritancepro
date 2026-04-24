@@ -102,9 +102,20 @@
       <label>遺產總額（含保價金）<span class="label-hint">元，用於判斷是否課稅</span></label>
       <input type="number" id="totalEstate" placeholder="例：20000000" min="0" inputmode="numeric">
     </div>
+    <div class="input-group">
+      <label>是否有配偶繼承<span class="label-hint">影響配偶扣除額 553 萬</span></label>
+      <select id="hasSpouse">
+        <option value="1">有配偶</option>
+        <option value="0">無配偶</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label>直系卑親屬繼承人數<span class="label-hint">子女、孫子女等，每人扣除 56 萬</span></label>
+      <input type="number" id="childrenCount" placeholder="例：2" min="0" max="20" value="0" inputmode="numeric">
+    </div>
     <div class="input-group" style="margin-bottom:0">
-      <label>繼承人人數<span class="label-hint">影響遺產稅扣除額</span></label>
-      <input type="number" id="heirCount" placeholder="例：3" min="1" max="20" inputmode="numeric">
+      <label>父母繼承人數<span class="label-hint">最多 2 人，每人扣除 138 萬</span></label>
+      <input type="number" id="parentsCount" placeholder="例：0" min="0" max="2" value="0" inputmode="numeric">
     </div>
   </div>
 
@@ -141,28 +152,45 @@
     const remainYears=parseFloat(document.getElementById('remainYears').value)||0;
     const annualPremium=parseFloat(document.getElementById('annualPremium').value)||0;
     const totalEstate=parseFloat(document.getElementById('totalEstate').value)||0;
-    const heirCount=parseInt(document.getElementById('heirCount').value)||1;
+    const hasSpouse=document.getElementById('hasSpouse').value==='1';
+    const childrenCount=Math.max(0,parseInt(document.getElementById('childrenCount').value)||0);
+    const parentsCount=Math.max(0,Math.min(2,parseInt(document.getElementById('parentsCount').value)||0));
     const policyType=document.getElementById('policyType').value;
 
     if(!cashValue||!totalEstate){alert('請填入保價金與遺產總額');return;}
+    if(!hasSpouse && childrenCount===0 && parentsCount===0){
+      alert('請至少指定一位繼承人（配偶 / 卑親屬 / 父母）');
+      return;
+    }
 
-    // 遺產稅估算：免稅額 1333萬 + 配偶扣除 553萬（若繼承人含配偶，簡化為有配偶）+ 直系卑親屬每人 56 萬
-    // V2025 級距（財政部 113/11/28 公告，114/01/01 起適用）：
-    //   ≤ 5,621 萬 10%；5,621 萬 ~ 1 億 1,242 萬 15%；> 1 億 1,242 萬 20%
-    const baseExempt=13330000;
-    const heirDeduction=heirCount*560000;
-    const taxableEstate=Math.max(0,totalEstate-baseExempt-heirDeduction);
-    // 優先 bridge 到 core；fallback V2025 硬編
-    const estateTax=(function(net){
-      if(window.IP_CORE && typeof window.IP_CORE.calcEstateTax === 'function'){
-        return window.IP_CORE.calcEstateTax(net);
-      }
-      if(net<=0)return 0;
+    // 遺產稅估算：優先用 core calcEstateTaxFull（完整扣除額 = 免稅額 + 配偶 + 卑親屬每人 + 父母每人 + 喪葬費 + ...）
+    // V2025 基準（財政部 113/11/28 公告，114/01/01 起適用）：
+    //   免稅額 1,333 萬；配偶 553 萬；每位卑親屬 56 萬；每位父母 138 萬；喪葬費 138 萬
+    //   級距 ≤ 5,621 萬 10%；5,621 萬 ~ 1 億 1,242 萬 15%；> 1 億 1,242 萬 20%
+    let estateTax=0;
+    if(window.IP_CORE && typeof window.IP_CORE.calcEstateTaxFull==='function'){
+      const r=window.IP_CORE.calcEstateTaxFull({
+        totalAssets: totalEstate,
+        hasSpouse,
+        childrenCount,
+        parentsCount,
+      });
+      estateTax=r.tax;
+    }else{
+      // Fallback：core 未載入時用 V2025 硬編（喪葬費一律扣除）
+      const baseExempt=13330000;
+      const dSpouse=hasSpouse?5530000:0;
+      const dChildren=childrenCount*560000;
+      const dParents=parentsCount*1380000;
+      const dFuneral=1380000;
+      const totalDeduct=dSpouse+dChildren+dParents+dFuneral;
+      const net=Math.max(0,totalEstate-baseExempt-totalDeduct);
       const t1=56210000,t2=112420000;
-      if(net<=t1)return Math.round(net*0.10);
-      if(net<=t2)return Math.round(t1*0.10+(net-t1)*0.15);
-      return Math.round(t1*0.10+(t2-t1)*0.15+(net-t2)*0.20);
-    })(taxableEstate);
+      if(net<=0) estateTax=0;
+      else if(net<=t1) estateTax=Math.round(net*0.10);
+      else if(net<=t2) estateTax=Math.round(t1*0.10+(net-t1)*0.15);
+      else estateTax=Math.round(t1*0.10+(t2-t1)*0.15+(net-t2)*0.20);
+    }
     // 保價金佔遺產比例對應分擔的稅
     const policyTaxShare=totalEstate>0?Math.round(estateTax*(cashValue/totalEstate)):0;
 
