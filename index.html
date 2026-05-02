@@ -161,24 +161,53 @@
 
   .hero-title {
     font-family: 'Noto Serif TC', serif;
-    font-size: clamp(34px, 8vw, 52px);
-    font-weight: 700;
-    line-height: 1.22;
-    margin-bottom: 20px;
-    letter-spacing: 0.01em;
+    font-size: clamp(44px, 8vw, 80px);
+    font-weight: 500;
+    line-height: 1.05;
+    margin-bottom: 22px;
+    letter-spacing: -0.01em;
   }
   .hero-title em {
-    font-style: normal;
-    color: var(--gold);
+    font-style: italic;
+    font-weight: 400;
+    color: #fde68a;
+  }
+  .hero-title .accent {
+    color: #fde68a;
   }
 
   .hero-sub {
-    font-size: 14px;
+    font-size: clamp(15px, 1.4vw, 17px);
     color: var(--muted);
-    line-height: 1.85;
-    margin-bottom: 40px;
-    max-width: 440px;
+    line-height: 1.8;
+    margin-bottom: 28px;
+    max-width: 520px;
   }
+
+  .hero-cta-row {
+    display: inline-flex; gap: 12px; flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+  .hero-cta-row .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 22px;
+    border-radius: 999px;
+    font-size: 14px; font-weight: 500;
+    text-decoration: none;
+    transition: transform 0.3s, background 0.2s, border-color 0.2s, color 0.2s;
+  }
+  .hero-cta-row .btn-primary {
+    background: var(--paper);
+    color: var(--ink);
+    border: 1px solid transparent;
+  }
+  .hero-cta-row .btn-primary:hover { background: #fde68a; transform: translateY(-2px); }
+  .hero-cta-row .btn-ghost {
+    background: transparent;
+    color: var(--paper);
+    border: 1px solid rgba(245,240,232,0.22);
+  }
+  .hero-cta-row .btn-ghost:hover { border-color: #fde68a; color: #fde68a; transform: translateY(-2px); }
 
   /* ─────────── 免費承諾 Banner ─────────── */
   .free-banner {
@@ -1000,9 +1029,9 @@
     <button id="themeToggle" aria-label="切換深色/淺色模式"></button>
   </div>
 
-  <span class="eyebrow">中華民國民法 · 財產權益</span>
-  <h1 class="hero-title">讓每個權益<br>都被<em>精準計算</em></h1>
-  <p class="hero-sub">繼承、離婚、保險、損害賠償——30+ 個專業計算工具，依最新實務判例設計。</p>
+  <span class="eyebrow">民法 · 財產權益</span>
+  <h1 class="hero-title">中華民國<span class="accent">民法財產權益</span>計算平台</h1>
+  <p class="hero-sub">繼承、剩餘財產、贍養費、損害賠償——30+ 個依最新實務判例設計的計算工具。</p>
 
   <!-- 搜尋 -->
   <div class="search-bar">
