@@ -32,6 +32,30 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"贍養費試算","description":"依民法第1057條及司法院公告最低生活費標準，試算中華民國離婚贍養費參考範圍。","url":"https://inheritance.choulegal.com/alimony.html","applicationCategory":"FinanceApplication","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro","url":"https://inheritance.choulegal.com"}}
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "InheritancePro 首頁", "item": "https://inheritance.choulegal.com/"},
+    {"@type": "ListItem", "position": 2, "name": "贍養費試算", "item": "https://inheritance.choulegal.com/alimony.html"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "如何試算離婚贍養費參考範圍",
+  "description": "四步驟依民法第1057條與司法院公告最低生活費，估算離婚贍養費月額參考範圍與給付期間。",
+  "step": [
+    {"@type": "HowToStep", "position": 1, "name": "選擇居住縣市", "text": "選擇請求方居住縣市，工具會帶入司法院 114 年公告該縣市最低生活費，作為法院常見之生活基準參考值。"},
+    {"@type": "HowToStep", "position": 2, "name": "輸入請求方與負擔方收支", "text": "分別填入請求方與負擔方之每月收入與必要支出。請求方之收支缺口、負擔方之可支配所得，是法院裁量之重要參考。"},
+    {"@type": "HowToStep", "position": 3, "name": "勾選離婚類型與工作能力等加減項", "text": "選擇離婚原因（他方單方有過失／雙方均有過失）、請求方工作能力、是否為主要照顧者、年齡及婚姻年數。雙方均有過失依民法§1057 不符請求要件，工具會直接顯示不予請求之提醒。"},
+    {"@type": "HowToStep", "position": 4, "name": "查看月額範圍與給付期間", "text": "結果顯示每月參考範圍、影響因素分析與建議給付期間。中華民國贍養費無固定公式，實際金額由法院依民法§1057 個案裁量；本工具僅供參考。"}
+  ]
+}
+</script>
 <style>
   /* ── Tool-unique: alimony.html ── */
 
@@ -490,6 +514,15 @@ ${eligible
     exportPDF(html, 'InheritancePro-贍養費');
   }
 </script>
+<div class="faq-wrap" style="margin-top:32px">
+  <div class="faq-label">使用步驟</div>
+  <ol style="padding-left:20px;color:var(--ink);font-size:13px;line-height:1.9;margin:0 0 24px 0">
+    <li><strong>選擇居住縣市：</strong>工具帶入司法院 114 年公告該縣市最低生活費，作為法院生活基準參考。</li>
+    <li><strong>輸入請求方與負擔方收支：</strong>請求方收支缺口與負擔方可支配所得，是法院裁量之重要參考。</li>
+    <li><strong>勾選離婚類型與其他因素：</strong>離婚原因、工作能力、主要照顧者、年齡、婚姻年數。雙方均有過失者，依民法&sect;1057 不符請求要件。</li>
+    <li><strong>查看月額範圍與給付期間：</strong>中華民國贍養費無固定公式，實際金額由法院依民法&sect;1057 個案裁量。</li>
+  </ol>
+</div>
 <div class="faq-wrap">
   <div class="faq-label">常見問題</div>
   <div class="faq-item">

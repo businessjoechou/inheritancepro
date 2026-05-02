@@ -33,6 +33,44 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"消滅時效計算器","description":"依中華民國民法計算各類請求權消滅時效，涵蓋一般15年、定期給付5年、侵權行為2年，自動計算截止日。","url":"https://inheritance.choulegal.com/prescription.html","applicationCategory":"LegalService","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro","url":"https://inheritance.choulegal.com"}}
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "InheritancePro 首頁", "item": "https://inheritance.choulegal.com/"},
+    {"@type": "ListItem", "position": 2, "name": "消滅時效計算器", "item": "https://inheritance.choulegal.com/prescription.html"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "如何計算消滅時效截止日",
+  "description": "三步驟依民法規定計算各類請求權之消滅時效截止日與剩餘天數。",
+  "step": [
+    {"@type": "HowToStep", "position": 1, "name": "選擇請求權類型", "text": "從一般請求權（民法§125 十五年）、定期給付（§126 五年）、§127 二年特定職業報酬、侵權行為（§197 雙重時效）、繼承回復請求權（§1146）等類別中選擇對應之請求權。"},
+    {"@type": "HowToStep", "position": 2, "name": "輸入起算日期", "text": "依民法§128，消滅時效自請求權可行使時起算。一般請求權輸入「請求權可行使日」；侵權行為與繼承回復請求權則須分別輸入「主觀知悉日」（2 年）與「客觀事故發生日」（10 年）。"},
+    {"@type": "HowToStep", "position": 3, "name": "查看截止日與中斷選項", "text": "結果頁顯示時效截止日（民國年月日）、剩餘天數與時效時間軸。如已起訴、聲請調解或取得債務人書面承認（民法§129），可於下方輸入中斷日期重新計算。注意：催告依§130 須於 6 個月內起訴，否則視為未中斷。"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "民法消滅時效有哪幾種期間？", "acceptedAnswer": {"@type": "Answer", "text": "民法主要消滅時效期間為：①一般請求權 15 年（§125）；②定期給付（利息、紅利、租金、贍養費、退職金等一年或不及一年之定期給付）5 年（§126）；③§127 列舉之 8 款特定職業報酬與商品代價 2 年（旅館飲食店、運送費、動產租賃費、醫師藥師看護、律師會計師、技師承攬、商人製造人代價、診費藥費等）；④侵權行為損害賠償雙重時效：知悉起 2 年／侵權發生起 10 年（§197）。"}},
+    {"@type": "Question", "name": "侵權行為的 2 年和 10 年怎麼算？", "acceptedAnswer": {"@type": "Answer", "text": "依民法§197 第 1 項，侵權行為損害賠償請求權有雙重時效：自請求權人知有損害及賠償義務人時起 2 年（主觀時效），自有侵權行為時起逾 10 年者亦同（客觀時效），以先到期者為準。例如車禍當日即知加害人，2 年屆滿時 10 年仍未到，即以 2 年時效為準；若多年後才查出加害人，仍受 10 年絕對時效限制。"}},
+    {"@type": "Question", "name": "時效完成後債務人一定可以拒絕給付嗎？", "acceptedAnswer": {"@type": "Answer", "text": "依民法§144 第 1 項：時效完成後，債務人得拒絕給付。但此為「抗辯權」，須由債務人主動主張，法院不得依職權適用。同條第 2 項另規定：時效完成後所為之承認，不得以不知時效為理由請求返還；以契約承認該債務或提出擔保者亦同。換言之，債務人若已自願清償或書面承認，不得事後以時效完成為由請求返還。"}},
+    {"@type": "Question", "name": "如何中斷時效？哪些行為有效？", "acceptedAnswer": {"@type": "Answer", "text": "依民法§129，時效因下列事由而中斷：①請求（§130 催告須於 6 個月內起訴否則視為未中斷）；②承認（債務人書面承認最有力）；③起訴。與起訴有同一效力者包括：依督促程序聲請發支付命令、聲請調解或提付仲裁、申報和解債權或破產債權、告知訴訟、開始執行行為或聲請強制執行（§129 第 2 項）。中斷後重新起算（§137）。"}},
+    {"@type": "Question", "name": "催告（書面請求）真的可以中斷時效嗎？", "acceptedAnswer": {"@type": "Answer", "text": "可以暫時中斷，但效力有限。依民法§130：時效因請求而中斷者，若於請求後 6 個月內不起訴，視為不中斷。換言之，單純發存證信函催告，僅讓時效暫停 6 個月，仍須在 6 個月內起訴或聲請支付命令，否則中斷效力溯及消滅，時效仍依原期間計算。"}},
+    {"@type": "Question", "name": "繼承回復請求權的時效怎麼算？", "acceptedAnswer": {"@type": "Answer", "text": "依民法§1146 第 2 項，繼承回復請求權自知悉被侵害之時起 2 年不行使而消滅；自繼承開始時起逾 10 年者亦同。但司法院釋字第 771 號解釋（2018 年）已宣告「自繼承開始時起逾 10 年」部分違憲失效，認為違反憲法保障人民財產權之意旨。實務上目前改依一般消滅時效（§125 十五年）或依個案類推 10 年，見解分歧，請諮詢律師個案判斷。"}},
+    {"@type": "Question", "name": "勞工的薪資請求權時效是幾年？", "acceptedAnswer": {"@type": "Answer", "text": "工資、加班費、特休未休工資等屬定期給付，依民法§126 適用 5 年消滅時效。各期薪資自原應給付日起各自起算 5 年。例如 2020 年 3 月之加班費，至 2025 年 3 月時效屆滿。建議勞工保留出勤紀錄、薪資單，遇到欠薪儘速向勞工局申訴或起訴以中斷時效。"}}
+  ]
+}
+</script>
 <style>
   /* Tool-specific styles only (共用元件已移至 css/tool-page.css) */
   .progress-bar { height: 3px; background: var(--soft); }
@@ -284,6 +322,49 @@
     <p class="subtitle">依民法規定計算，以下為本案請求權之時效截止日與現況。</p>
     <div id="resultContent"></div>
     <div id="save-btn-container"></div>
+
+    <!-- HowTo — visible step list for HowTo schema -->
+    <section style="max-width:700px;margin:32px auto 24px;padding:0 4px">
+      <div style="font-family:'Noto Serif TC',serif;font-size:11px;color:var(--muted);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)">使用步驟</div>
+      <ol style="padding-left:20px;color:var(--ink);font-size:13px;line-height:1.9">
+        <li><strong>選擇請求權類型：</strong>一般請求權（&sect;125 十五年）、定期給付（&sect;126 五年）、&sect;127 二年特定職業報酬、侵權行為（&sect;197 雙重時效）、繼承回復請求權（&sect;1146）等。</li>
+        <li><strong>輸入起算日期：</strong>依民法&sect;128 自請求權可行使時起算；侵權行為與繼承回復請求權需分別輸入主觀知悉日（2 年）與客觀事故發生日（10 年）。</li>
+        <li><strong>查看截止日與中斷選項：</strong>結果顯示時效截止日與剩餘天數。如已起訴、聲請調解或取得書面承認（&sect;129），可輸入中斷日期重算；催告依&sect;130 須於 6 個月內起訴。</li>
+      </ol>
+    </section>
+
+    <!-- FAQ — visible content for FAQPage schema -->
+    <section style="max-width:700px;margin:0 auto 32px;padding:0 4px">
+      <div style="font-family:'Noto Serif TC',serif;font-size:11px;color:var(--muted);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)">常見問題</div>
+      <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+        <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">民法消滅時效有哪幾種期間？</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.8">①一般請求權 15 年（&sect;125）；②定期給付 5 年（&sect;126）；③&sect;127 列舉之 8 款特定職業報酬與商品代價 2 年；④侵權行為損害賠償雙重時效 2 年／10 年（&sect;197）。</div>
+      </div>
+      <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+        <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">侵權行為的 2 年和 10 年怎麼算？</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.8">依民法&sect;197 第 1 項，自知有損害及賠償義務人時起 2 年（主觀），自有侵權行為時起逾 10 年者亦同（客觀），以先到期者為準。</div>
+      </div>
+      <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+        <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">時效完成後債務人一定可以拒絕給付嗎？</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.8">依民法&sect;144，時效完成後債務人「得」拒絕給付，須由債務人主動主張，法院不得依職權適用。同條第 2 項：時效完成後所為之承認，不得以不知時效為理由請求返還。</div>
+      </div>
+      <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+        <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">如何中斷時效？哪些行為有效？</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.8">依民法&sect;129：①請求（&sect;130 催告須於 6 個月內起訴）；②承認（書面最有力）；③起訴。與起訴有同一效力者包括：聲請支付命令、聲請調解或提付仲裁、聲請強制執行等。中斷後重新起算（&sect;137）。</div>
+      </div>
+      <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+        <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">催告（書面請求）真的可以中斷時效嗎？</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.8">依&sect;130，請求中斷時效，若 6 個月內不起訴，視為不中斷。單純發存證信函催告僅讓時效暫停 6 個月，仍須在 6 個月內起訴或聲請支付命令。</div>
+      </div>
+      <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+        <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">繼承回復請求權的時效怎麼算？</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.8">依民法&sect;1146 第 2 項，自知悉被侵害起 2 年；自繼承開始起逾 10 年者亦同。但司法院釋字第 771 號（2018）已宣告「10 年」部分違憲失效，實務改依&sect;125 十五年或依個案類推 10 年，見解分歧。</div>
+      </div>
+      <div style="padding:14px 0">
+        <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">勞工的薪資請求權時效是幾年？</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.8">工資、加班費、特休未休工資等屬定期給付，依民法&sect;126 適用 5 年消滅時效，各期薪資自原應給付日起各自起算 5 年。</div>
+      </div>
+    </section>
 
     <div class="lawyer-only" style="background:#eef3fa;border:1.5px solid #3a5a80;border-radius:12px;padding:16px 20px;margin-top:16px">
       <div style="font-size:12px;font-weight:700;color:#1a3a5c;letter-spacing:0.04em;margin-bottom:10px">⚖ 律師時效策略備忘</div>
