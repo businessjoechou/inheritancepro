@@ -27,6 +27,9 @@
  *    module 載入失敗的少數使用者會看到舊稅率。
  */
 
+// Single source of truth：monorepo @choulegal/core-inheritance
+// Bundle 由 scripts/build-core-bundle.mjs 從 ~/Desktop/choulegal/packages/core-inheritance/
+// 編出，重生指令：`npm run build:core`。本地 js/core/ 目錄保留作 fallback 將逐步淘汰。
 import {
   calcEstateTax,
   getEstateTaxRate,
@@ -34,16 +37,13 @@ import {
   calcEstateTaxFull,
   ESTATE_TAX_VERSIONS,
   LATEST_TAX_YEAR,
-} from './core/estate-tax.js';
-
-import {
   calcGiftTax,
   getGiftTaxRate,
   calcGiftTaxFull,
   planGiftYears,
   GIFT_TAX_VERSIONS,
   LATEST_GIFT_YEAR,
-} from './core/gift-tax.js';
+} from './_generated/core-inheritance.bundle.js';
 
 /**
  * 薄 wrapper：把 core 的 getEstateTaxRate 輸出（`"10%"`）包成各頁期望的
