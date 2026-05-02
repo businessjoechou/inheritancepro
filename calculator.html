@@ -1927,16 +1927,68 @@ td{padding:5px 10px;border:1px solid #ddd;font-size:12px;vertical-align:top;}
 </div>
 
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {"@type": "Question", "name": "應繼分和特留分有什麼差別？", "acceptedAnswer": {"@type": "Answer", "text": "應繼分是各繼承人對遺產所應取得的比例；特留分則是法律保障繼承人最低應得的遺產比例，為應繼分的二分之一，即使遺囑也不能剝奪。"}},
-    {"@type": "Question", "name": "2026年中華民國遺產稅免稅額是多少？", "acceptedAnswer": {"@type": "Answer", "text": "2026年遺產稅免稅額為新台幣1,333萬元。配偶扣除額553萬元，直系血親卑親屬每人56萬元，父母每人138萬元。超過免稅額依10%至20%累進稅率課徵。"}},
-    {"@type": "Question", "name": "代位繼承是什麼意思？", "acceptedAnswer": {"@type": "Answer", "text": "代位繼承是指繼承人在被繼承人死亡前已先死亡，由其直系血親卑親屬代替繼承其應繼分。"}},
-    {"@type": "Question", "name": "拋棄繼承後還需要繳遺產稅嗎？", "acceptedAnswer": {"@type": "Answer", "text": "拋棄繼承後不繼承遺產也不負債務，但遺產稅申報義務仍由其他繼承人負責。"}}
-  ]
-}
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "應繼分和特留分有什麼差別？", "acceptedAnswer": {"@type": "Answer", "text": "應繼分是依法律規定，各繼承人對遺產所應取得的比例；特留分則是法律保障繼承人最低應得的遺產比例，即使被繼承人有遺囑也不能剝奪。特留分為應繼分的二分之一，若遺囑侵害特留分，繼承人可行使扣減權。"}},
+      {"@type": "Question", "name": "2026年中華民國遺產稅免稅額是多少？", "acceptedAnswer": {"@type": "Answer", "text": "2026年遺產稅免稅額為新台幣1,333萬元。配偶扣除額為553萬元，直系血親卑親屬扣除額每人56萬元，父母扣除額每人138萬元，身心障礙特別扣除額693萬元，喪葬費扣除額138萬元。超過免稅額的遺產依累進稅率課徵10%至20%。"}},
+      {"@type": "Question", "name": "代位繼承是什麼意思？", "acceptedAnswer": {"@type": "Answer", "text": "代位繼承是指繼承人在被繼承人死亡前已先死亡，或喪失繼承權時，由其直系血親卑親屬代替繼承其應繼分。例如兒子在父親前先過世，則孫子可代位繼承爺爺遺產中原本屬於父親的部分。"}},
+      {"@type": "Question", "name": "拋棄繼承後還需要繳遺產稅嗎？", "acceptedAnswer": {"@type": "Answer", "text": "拋棄繼承後，該繼承人不繼承遺產，也不需為被繼承人的債務負責。但遺產稅的申報義務仍由其他繼承人負責。若所有繼承人均拋棄繼承，遺產將由遺產管理人處理。"}},
+      {"@type": "Question", "name": "遺產中的不動產怎麼計算價值？", "acceptedAnswer": {"@type": "Answer", "text": "遺產稅計算時，不動產以「公告土地現值」及「房屋評定現值」為基準，而非市場行情。繼承後辦理移轉登記時，需依實際繼承取得的價值申報。建議取得最新公告現值後再進行計算。本計算器已整合不動產稅基計算，可直接輸入各筆不動產數值。"}}
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "遺產分配與遺產稅試算",
+    "alternateName": "繼承計算機｜InheritancePro",
+    "description": "依民法繼承編及遺產及贈與稅法計算應繼分、特留分、遺產稅與扣除額，整合不動產稅基計算與代位/拋棄繼承情境。免費使用。",
+    "url": "https://inheritance.choulegal.com/calculator.html",
+    "applicationCategory": "FinanceApplication",
+    "applicationSubCategory": "民法財產權計算工具",
+    "operatingSystem": "Web",
+    "browserRequirements": "Requires JavaScript",
+    "inLanguage": "zh-TW",
+    "isAccessibleForFree": true,
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "TWD"
+    },
+    "featureList": [
+      "應繼分與特留分試算",
+      "遺產稅免稅額及扣除額計算",
+      "不動產（公告土地現值／房屋評定現值）稅基整合",
+      "代位繼承及拋棄繼承情境支援",
+      "累進稅率自動套用"
+    ],
+    "publisher": {
+      "@type": "Organization",
+      "name": "周全法律科技 ChouLegal",
+      "url": "https://choulegal.com"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "InheritancePro 首頁",
+        "item": "https://inheritance.choulegal.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "遺產分配與遺產稅試算",
+        "item": "https://inheritance.choulegal.com/calculator.html"
+      }
+    ]
+  }
+]
 </script>
 
 <div class="disclaimer-bar"><strong>免責聲明</strong>：本平台之計算結果僅供初步參考，不構成法律意見或法律諮詢服務。</div>
