@@ -33,6 +33,46 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"不動產繼承稅務試算","url":"https://inheritance.choulegal.com/real-estate.html","applicationCategory":"FinanceApplication","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro"}}
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "InheritancePro 首頁", "item": "https://inheritance.choulegal.com/"},
+    {"@type": "ListItem", "position": 2, "name": "不動產繼承稅務試算", "item": "https://inheritance.choulegal.com/real-estate.html"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "如何使用不動產繼承稅務試算工具",
+  "description": "輸入土地公告現值與房屋評定現值，試算遺產稅基、應繼分與年度持有稅；亦可切換至「出售規劃」試算房地合一稅。",
+  "step": [
+    {"@type": "HowToStep", "position": 1, "name": "新增不動產明細", "text": "於「繼承稅務」分頁逐筆輸入土地公告現值、房屋評定現值，並勾選是否自用住宅。可新增多筆。"},
+    {"@type": "HowToStep", "position": 2, "name": "輸入繼承人總人數", "text": "填入應繼分人數，工具依民法規定以等分方式估算各繼承人就不動產部分之應繼分價值。"},
+    {"@type": "HowToStep", "position": 3, "name": "查看遺產稅基與年度持有稅", "text": "系統依遺贈稅法§10 以土地公告現值＋房屋評定現值認列遺產稅基，超過 1,333 萬免稅額部分依§13 三段累進稅率（10%／15%／20%）試算遺產稅，並推算年地價稅與房屋稅。"},
+    {"@type": "HowToStep", "position": 4, "name": "（選用）試算繼承後出售之房地合一稅", "text": "切換到「出售規劃」分頁，輸入被繼承人取得日、出售日與成本，依所得稅法§4-4、§14-4 房地合一稅 2.0 計算稅率與應納稅額；持有期間依§4-5 第 1 項第 5 款合併計算被繼承人持有年數。"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "遺產中的不動產如何認列價值？", "acceptedAnswer": {"@type": "Answer", "text": "依遺產及贈與稅法§10，遺產價值以被繼承人死亡時之時價估定。土地以「公告土地現值」、房屋以「房屋評定現值」計算，而非市場行情或實際成交價。此基準同時適用於遺產稅與不動產稅基認列。"}},
+    {"@type": "Question", "name": "繼承不動產要繳土地增值稅嗎？", "acceptedAnswer": {"@type": "Answer", "text": "不需要。依土地稅法§28-1，因繼承而移轉之土地免徵土地增值稅。但此免徵僅適用繼承當下；繼承人日後將該土地出售時，仍需依規定計算並繳納土地增值稅。"}},
+    {"@type": "Question", "name": "2026 年遺產稅免稅額是多少？超過要怎麼算？", "acceptedAnswer": {"@type": "Answer", "text": "2026 年遺產稅免稅額為 1,333 萬元（依遺贈稅法§12-1 物價指數調整後）。超過免稅額之課稅遺產淨額依§13 採三級累進稅率：10%、15%、20%；級距金額亦依§12-1 隨消費者物價指數調整，最新級距以財政部公告為準。本工具會自動套用現行累進級距試算。"}},
+    {"@type": "Question", "name": "自用住宅地價稅與房屋稅有什麼優惠？", "acceptedAnswer": {"@type": "Answer", "text": "依土地稅法§17，自用住宅用地之地價稅優惠稅率為 0.2%（一般用地§14 採累進稅率）。房屋稅依房屋稅條例之規定，自住住家用房屋有較低稅率，非自住住家用房屋稅率較高，具體稅率以最新房屋稅條例及地方政府公告為準。申請自住優惠須符合本人或配偶、直系親屬辦竣戶籍登記且無出租或營業使用等要件。"}},
+    {"@type": "Question", "name": "繼承後馬上賣掉不動產要繳房地合一稅嗎？", "acceptedAnswer": {"@type": "Answer", "text": "可能要。依所得稅法§4-4 及§14-4 房地合一稅 2.0（2021/7/1 起施行），個人出售房地，課稅所得乘以稅率。重要的是依§4-5 第 1 項第 5 款，繼承取得者「持有期間」可合併計算被繼承人持有年數，而非從繼承日重新起算，因此實際稅率可能比預期低。"}},
+    {"@type": "Question", "name": "房地合一稅 2.0 的稅率怎麼分？", "acceptedAnswer": {"@type": "Answer", "text": "依所得稅法§14-4，個人出售房地之稅率：持有未滿 2 年 45%；持有 2 年以上未滿 5 年 35%；持有 5 年以上未滿 10 年 20%；持有 10 年以上 15%。若符合自住要件（本人、配偶或未成年子女設籍且無出租、無營業使用，並連續滿 6 年）且課稅所得未超過 400 萬，免稅；超過部分稅率 10%。因繼承債務被迫出售等非自願因素，持有未滿 5 年者得適用 20%。"}},
+    {"@type": "Question", "name": "繼承人多人時，不動產要怎麼分割？", "acceptedAnswer": {"@type": "Answer", "text": "繼承開始時，繼承人有數人時，依民法§1151 在分割遺產前對遺產全部為公同共有。繼承人可依§1164 隨時請求分割遺產，分割方法可協議定之；協議不成者得聲請法院裁判分割。本工具僅就稅基與應繼分價值試算，實際分割方案應依繼承人協議或法院裁判為準。"}},
+    {"@type": "Question", "name": "本工具的稅額試算可以直接拿去報稅嗎？", "acceptedAnswer": {"@type": "Answer", "text": "本工具僅提供初步試算，不構成稅務或法律意見。實際應納稅額以國稅局、地方稅捐稽徵機關核定為準。涉及多筆不動產、農地、公設保留地、繼承債務、跨境財產或自住優惠申請者，建議諮詢專業律師、地政士或稅務代理人。"}}
+  ]
+}
+</script>
 <style>
   /* === real-estate.html — tool-unique overrides (shared CSS loaded via tool-page.css) === */
   .progress-bar { height: 3px; background: var(--soft); }
@@ -373,6 +413,54 @@
     </div>
 
   </div><!-- end sale panel -->
+
+  <!-- HowTo — visible step list -->
+  <section style="max-width:700px;margin:40px auto 24px;padding:0 4px">
+    <div style="font-family:'Noto Serif TC',serif;font-size:11px;color:var(--muted);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)">使用步驟</div>
+    <ol style="padding-left:20px;color:var(--ink);font-size:13px;line-height:1.9">
+      <li><strong>新增不動產明細：</strong>於「繼承稅務」分頁逐筆輸入土地公告現值、房屋評定現值，並勾選是否自用住宅。</li>
+      <li><strong>輸入繼承人總人數：</strong>系統依等分方式估算各繼承人就不動產部分之應繼分價值。</li>
+      <li><strong>查看遺產稅基與年度持有稅：</strong>系統依遺贈稅法&sect;10 以土地公告現值＋房屋評定現值認列遺產稅基，超過免稅額部分依&sect;13 三段累進稅率試算遺產稅，並推算年地價稅與房屋稅。</li>
+      <li><strong>（選用）試算房地合一稅：</strong>切換到「出售規劃」分頁，依所得稅法&sect;4-4、&sect;14-4 試算稅率與應納稅額；持有期間依&sect;4-5 第 1 項第 5 款合併計算被繼承人持有年數。</li>
+    </ol>
+  </section>
+
+  <!-- FAQ — visible content for FAQPage schema -->
+  <section style="max-width:700px;margin:0 auto 40px;padding:0 4px">
+    <div style="font-family:'Noto Serif TC',serif;font-size:11px;color:var(--muted);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)">常見問題</div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">遺產中的不動產如何認列價值？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">依遺產及贈與稅法&sect;10，遺產價值以被繼承人死亡時之時價估定。土地以「公告土地現值」、房屋以「房屋評定現值」計算，而非市場行情或實際成交價。此基準同時適用於遺產稅與不動產稅基認列。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">繼承不動產要繳土地增值稅嗎？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">不需要。依土地稅法&sect;28-1，因繼承而移轉之土地免徵土地增值稅。但此免徵僅適用繼承當下；繼承人日後將該土地出售時，仍需依規定計算並繳納土地增值稅。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">2026 年遺產稅免稅額是多少？超過要怎麼算？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">2026 年遺產稅免稅額為 1,333 萬元（依遺贈稅法&sect;12-1 物價指數調整後）。超過免稅額之課稅遺產淨額依&sect;13 採三級累進稅率：10%、15%、20%；級距金額亦依&sect;12-1 隨消費者物價指數調整，最新級距以財政部公告為準。本工具會自動套用現行累進級距試算。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">自用住宅地價稅與房屋稅有什麼優惠？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">依土地稅法&sect;17，自用住宅用地之地價稅優惠稅率為 0.2%（一般用地&sect;14 採累進稅率）。房屋稅依房屋稅條例之規定，自住住家用房屋有較低稅率，非自住住家用房屋稅率較高，具體稅率以最新房屋稅條例及地方政府公告為準。申請自住優惠須符合本人或配偶、直系親屬辦竣戶籍登記且無出租或營業使用等要件。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">繼承後馬上賣掉不動產要繳房地合一稅嗎？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">可能要。依所得稅法&sect;4-4 及&sect;14-4 房地合一稅 2.0（2021/7/1 起施行），個人出售房地，課稅所得乘以稅率。重要的是依&sect;4-5 第 1 項第 5 款，繼承取得者「持有期間」可合併計算被繼承人持有年數，而非從繼承日重新起算，因此實際稅率可能比預期低。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">房地合一稅 2.0 的稅率怎麼分？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">依所得稅法&sect;14-4，個人出售房地之稅率：持有未滿 2 年 45%；2 年以上未滿 5 年 35%；5 年以上未滿 10 年 20%；10 年以上 15%。若符合自住要件（本人、配偶或未成年子女設籍且無出租、無營業使用，並連續滿 6 年）且課稅所得未超過 400 萬，免稅；超過部分稅率 10%。因繼承債務被迫出售等非自願因素，持有未滿 5 年者得適用 20%。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">繼承人多人時，不動產要怎麼分割？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">依民法&sect;1151，繼承人有數人時，在分割遺產前對遺產全部為公同共有。繼承人可依&sect;1164 隨時請求分割遺產，分割方法可協議定之；協議不成者得聲請法院裁判分割。本工具僅就稅基與應繼分價值試算，實際分割方案應依繼承人協議或法院裁判為準。</div>
+    </div>
+    <div style="padding:14px 0">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">本工具的稅額試算可以直接拿去報稅嗎？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">本工具僅提供初步試算，不構成稅務或法律意見。實際應納稅額以國稅局、地方稅捐稽徵機關核定為準。涉及多筆不動產、農地、公設保留地、繼承債務、跨境財產或自住優惠申請者，建議諮詢專業律師、地政士或稅務代理人。</div>
+    </div>
+  </section>
 
 </main>
 

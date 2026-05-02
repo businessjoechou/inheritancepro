@@ -32,6 +32,32 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"遺囑效力評估","url":"https://inheritance.choulegal.com/will-validity.html","applicationCategory":"LegalService","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro","url":"https://inheritance.choulegal.com"}}
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "InheritancePro 首頁", "item": "https://inheritance.choulegal.com/"},
+    {"@type": "ListItem", "position": 2, "name": "遺囑效力評估", "item": "https://inheritance.choulegal.com/will-validity.html"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "中華民國民法承認哪幾種遺囑形式？", "acceptedAnswer": {"@type": "Answer", "text": "依民法§1189，遺囑應依下列方式之一為之：自書遺囑（§1190）、公證遺囑（§1191）、密封遺囑（§1192）、代筆遺囑（§1194）、口授遺囑（§1195）。共五種，未依法定方式作成者無效。"}},
+    {"@type": "Question", "name": "幾歲可以立遺囑？需要具備什麼能力？", "acceptedAnswer": {"@type": "Answer", "text": "依民法§1186 第 2 項，限制行為能力人無須經法定代理人之允許，得為遺囑，但「未滿十六歲者，不得為遺囑」。另同條第 1 項規定無行為能力人不得為遺囑，因此受監護宣告者不得立遺囑。"}},
+    {"@type": "Question", "name": "自書遺囑必須完全手寫嗎？可以打字列印嗎？", "acceptedAnswer": {"@type": "Answer", "text": "必須完全手寫。依民法§1190，自書遺囑應自書遺囑全文，記明年月日，並親自簽名。電腦打字、列印或他人代筆者均不符合「自書」要件，將導致遺囑無效。如有增減、塗改，須另行註明增減塗改之處所及字數，並另行簽名。"}},
+    {"@type": "Question", "name": "代筆遺囑需要幾位見證人？", "acceptedAnswer": {"@type": "Answer", "text": "至少 3 人。依民法§1194，代筆遺囑由遺囑人指定 3 人以上之見證人，由遺囑人口述遺囑意旨，使見證人中之 1 人筆記、宣讀、講解，經遺囑人認可後，記明年月日及代筆人之姓名，由見證人全體及遺囑人同行簽名，遺囑人不能簽名者，應按指印代之。"}},
+    {"@type": "Question", "name": "誰不能擔任遺囑見證人？", "acceptedAnswer": {"@type": "Answer", "text": "依民法§1198，下列之人不得為遺囑見證人：未成年人、受監護或輔助宣告之人、繼承人及其配偶或其直系血親、受遺贈人及其配偶或其直系血親、為公證人或代行公證職務人之同居人助理人或受僱人。違反者該見證資格欠缺，可能影響遺囑效力。"}},
+    {"@type": "Question", "name": "遺囑可以撤回或變更嗎？", "acceptedAnswer": {"@type": "Answer", "text": "可以。依民法§1219，遺囑人得隨時依遺囑之方式，撤回遺囑之全部或一部。另依§1220，前後遺囑有相牴觸者，其牴觸之部分，前遺囑視為撤回；§1221 規定遺囑人於為遺囑後所為之行為與遺囑有相牴觸者，其牴觸部分視為撤回；§1222 規定遺囑人故意破毀或塗銷遺囑，或在遺囑上記明廢棄之意思者，亦視為撤回。"}},
+    {"@type": "Question", "name": "遺囑內容可以剝奪法定繼承人的繼承權嗎？", "acceptedAnswer": {"@type": "Answer", "text": "原則上不可以，受特留分之限制。依民法§1187，遺囑人於不違反關於特留分規定之範圍內，得以遺囑自由處分遺產。各順序繼承人之特留分依§1223 定之（直系血親卑親屬、配偶、父母為應繼分之 1/2；兄弟姊妹、祖父母為應繼分之 1/3）。若遺囑侵害特留分，繼承人得依§1225 行使扣減權。"}},
+    {"@type": "Question", "name": "口授遺囑什麼時候才能用？", "acceptedAnswer": {"@type": "Answer", "text": "僅限緊急情況。依民法§1195，遺囑人因生命危急或其他特殊情形，不能依其他方式為遺囑者，得依該條規定之方式為口授遺囑。另依§1196，口授遺囑，自遺囑人能依其他方式為遺囑之時起，經過 3 個月而失其效力，因此非緊急情況下不應使用。"}}
+  ]
+}
+</script>
 <style>
   /* Will type selector */
   .type-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -342,6 +368,43 @@
 
     <button class="calc-btn" onclick="downloadPDF()" style="margin-top:16px">↓ 匯出 PDF 報告</button>
   </div>
+
+  <!-- FAQ — visible content for FAQPage schema -->
+  <section style="max-width:700px;margin:40px auto 24px;padding:0 4px">
+    <div style="font-family:'Noto Serif TC',serif;font-size:11px;color:var(--muted);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)">常見問題</div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">中華民國民法承認哪幾種遺囑形式？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">依民法&sect;1189，遺囑應依下列方式之一為之：自書遺囑（&sect;1190）、公證遺囑（&sect;1191）、密封遺囑（&sect;1192）、代筆遺囑（&sect;1194）、口授遺囑（&sect;1195）。共五種，未依法定方式作成者無效。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">幾歲可以立遺囑？需要具備什麼能力？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">依民法&sect;1186 第 2 項，限制行為能力人無須經法定代理人之允許，得為遺囑，但「未滿十六歲者，不得為遺囑」。另同條第 1 項規定無行為能力人不得為遺囑，因此受監護宣告者不得立遺囑。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">自書遺囑必須完全手寫嗎？可以打字列印嗎？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">必須完全手寫。依民法&sect;1190，自書遺囑應自書遺囑全文，記明年月日，並親自簽名。電腦打字、列印或他人代筆者均不符合「自書」要件，將導致遺囑無效。如有增減、塗改，須另行註明增減塗改之處所及字數，並另行簽名。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">代筆遺囑需要幾位見證人？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">至少 3 人。依民法&sect;1194，代筆遺囑由遺囑人指定 3 人以上之見證人，由遺囑人口述遺囑意旨，使見證人中之 1 人筆記、宣讀、講解，經遺囑人認可後，記明年月日及代筆人之姓名，由見證人全體及遺囑人同行簽名，遺囑人不能簽名者，應按指印代之。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">誰不能擔任遺囑見證人？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">依民法&sect;1198，下列之人不得為遺囑見證人：未成年人、受監護或輔助宣告之人、繼承人及其配偶或其直系血親、受遺贈人及其配偶或其直系血親、為公證人或代行公證職務人之同居人助理人或受僱人。違反者該見證資格欠缺，可能影響遺囑效力。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">遺囑可以撤回或變更嗎？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">可以。依民法&sect;1219，遺囑人得隨時依遺囑之方式，撤回遺囑之全部或一部。另依&sect;1220，前後遺囑有相牴觸者，其牴觸之部分，前遺囑視為撤回；&sect;1221 規定遺囑人於為遺囑後所為之行為與遺囑有相牴觸者，其牴觸部分視為撤回；&sect;1222 規定遺囑人故意破毀或塗銷遺囑，或在遺囑上記明廢棄之意思者，亦視為撤回。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">遺囑內容可以剝奪法定繼承人的繼承權嗎？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">原則上不可以，受特留分之限制。依民法&sect;1187，遺囑人於不違反關於特留分規定之範圍內，得以遺囑自由處分遺產。各順序繼承人之特留分依&sect;1223 定之（直系血親卑親屬、配偶、父母為應繼分之 1/2；兄弟姊妹、祖父母為應繼分之 1/3）。若遺囑侵害特留分，繼承人得依&sect;1225 行使扣減權。</div>
+    </div>
+    <div style="padding:14px 0">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">口授遺囑什麼時候才能用？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">僅限緊急情況。依民法&sect;1195，遺囑人因生命危急或其他特殊情形，不能依其他方式為遺囑者，得依該條規定之方式為口授遺囑。另依&sect;1196，口授遺囑，自遺囑人能依其他方式為遺囑之時起，經過 3 個月而失其效力，因此非緊急情況下不應使用。</div>
+    </div>
+  </section>
 </main>
 
 <script>
