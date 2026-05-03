@@ -32,6 +32,45 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"法定利率利息計算器","url":"https://inheritance.choulegal.com/interest-calc.html","applicationCategory":"LegalService","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro","url":"https://inheritance.choulegal.com"}}
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "InheritancePro 首頁", "item": "https://inheritance.choulegal.com/"},
+    {"@type": "ListItem", "position": 2, "name": "法定利率利息計算器", "item": "https://inheritance.choulegal.com/interest-calc.html"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "如何計算法定利率（年息 5%）利息金額",
+  "description": "依民法§203 法定利率年息 5%，計算自起算日（起訴日／請求日／事故日）至終止日之利息金額。",
+  "step": [
+    {"@type": "HowToStep", "position": 1, "name": "輸入本金與選擇利率類型", "text": "填入本金金額。利率預設為法定利率 5%（§203），亦可切換為自訂利率。約定利率超過年利率 16%（§205）時，工具會提示超過部分不得請求。"},
+    {"@type": "HowToStep", "position": 2, "name": "選擇起算日與終止日", "text": "起算日可選起訴日（最常用，自起訴狀繕本送達被告翌日起算）、請求日（須有書面催告證明）、事故發生日或自訂；終止日預設為今日。"},
+    {"@type": "HowToStep", "position": 3, "name": "選擇單利或複利計算方式", "text": "法院損害賠償實務以單利為標準計算方式，採「本金 × 年利率 × 天數 ÷ 365」。複利僅供參考，實務不採。"},
+    {"@type": "HowToStep", "position": 4, "name": "查看利息金額與逐年明細", "text": "系統顯示利息金額、本利合計與最多 10 年逐年累計明細，可作為訴之聲明利息計算依據。"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "法定利率是多少？依據哪一條？", "acceptedAnswer": {"@type": "Answer", "text": "依民法§203，應付利息之債務，其利率未經約定，亦無法律可據者，週年利率為 5%（百分之五）。此即所謂「法定利率」，適用於損害賠償、借貸糾紛、債務不履行等多數民事案件之利息計算基礎。實務上裁判主文「按年息 5% 計算之利息」即源於此。"}},
+    {"@type": "Question", "name": "約定利率最高可以多少？超過會怎樣？", "acceptedAnswer": {"@type": "Answer", "text": "依民法§205（2021/1/20 修正後），約定利率超過週年 16% 者，超過部分之約定無效。本工具於自訂利率超過 16% 時會提示警告。修法前舊條文上限為 20%，舊案件適用舊法。另地下錢莊年息常超過此標準，超過部分不得請求，且可能涉及刑法重利罪（§344）。"}},
+    {"@type": "Question", "name": "損害賠償的利息從什麼時候起算？", "acceptedAnswer": {"@type": "Answer", "text": "侵權行為損害賠償係屬「未定期限之債」，依民法§229 第 2 項，債權人得催告債務人為給付，債務人於催告期間屆滿時起負遲延責任；經債權人起訴而送達訴狀者，與催告有同一效力。實務上利息通常自「起訴狀繕本送達被告翌日」起算，亦得依個案以債權人催告日或知悉損害日為起算點。訴之聲明應明確記載起算日及年利率。"}},
+    {"@type": "Question", "name": "遲延利息和法定利率有什麼關係？", "acceptedAnswer": {"@type": "Answer", "text": "依民法§233 第 1 項，遲延之債務以支付金錢為標的者，債權人得請求依法定利率計算之遲延利息；但約定利率較高者，仍從其約定利率。同條第 2 項規定：對於利息，無須支付遲延利息（即「複利禁止」原則，避免利上加利）。第 3 項另規定，前二項情形，債權人證明有其他損害者，並得請求賠償。"}},
+    {"@type": "Question", "name": "單利和複利哪個對？法院實務怎麼算？", "acceptedAnswer": {"@type": "Answer", "text": "法院民事判決一律採「單利」計算遲延利息：利息 = 本金 × 年利率 × 天數 ÷ 365。複利（利上加利）為民法§233 第 2 項所禁止，僅在當事人有特別合意（如商業放款）且符合法令規定時才可能適用。本工具預設單利並標示為「法院標準」，複利選項僅供參考、不應直接用於訴之聲明。"}},
+    {"@type": "Question", "name": "本工具的計算結果可以直接寫進訴之聲明嗎？", "acceptedAnswer": {"@type": "Answer", "text": "可作為計算依據參考，但訴之聲明的標準格式為：「被告應給付原告新台幣○元，及自民國○年○月○日起至清償日止，按年息 5% 計算之利息。」訴之聲明不需自行算到清償日，只需載明利率與起算日，由法院於判決確定後或執行時換算。本工具產出的利息金額僅供您評估訴訟標的價值與裁判費（依民事訴訟費用法）之用。"}},
+    {"@type": "Question", "name": "請求權時效會影響利息計算嗎？", "acceptedAnswer": {"@type": "Answer", "text": "會。利息為定期給付之債，依民法§126，5 年間不行使而消滅（即「利息 5 年時效」）。意即請求過去利息時，超過起訴日起算前 5 年部分可能因時效消滅而無法請求。若對造提出時效抗辯，法院僅會判給訴前 5 年內之利息。本工具不自動套用時效限制，請依個案情況自行截算。"}}
+  ]
+}
+</script>
 <style>
   /* Tool-unique: select, date input, readonly, rate toggle, presets, method toggle, date-info, result-card dark, summary-row, year-table */
   input[type="date"], select {
@@ -224,6 +263,50 @@
 
     <button class="calc-btn" onclick="downloadPDF()" style="margin-top:16px">↓ 匯出 PDF 報告</button>
   </div>
+  <!-- HowTo — visible step list for HowTo schema -->
+  <section style="margin:32px auto 24px;padding:0 4px;max-width:680px">
+    <div style="font-family:'Noto Serif TC',serif;font-size:11px;color:var(--muted);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)">使用步驟</div>
+    <ol style="padding-left:20px;color:var(--ink);font-size:13px;line-height:1.9">
+      <li><strong>輸入本金與選擇利率類型：</strong>預設為法定利率 5%（§203），亦可切換自訂利率。超過 16% 會提示§205 上限警告。</li>
+      <li><strong>選擇起算日與終止日：</strong>起算日可選起訴日／請求日／事故發生日／自訂；終止日預設今日。</li>
+      <li><strong>選擇單利或複利：</strong>單利為法院標準（本金 × 年利率 × 天數 ÷ 365）；複利僅供參考，§233 II 禁止利上加利。</li>
+      <li><strong>查看利息明細：</strong>顯示利息金額、本利合計與最多 10 年逐年累計表，可作為訴之聲明利息計算依據。</li>
+    </ol>
+  </section>
+
+  <!-- FAQ — visible content for FAQPage schema -->
+  <section style="margin:0 auto 32px;padding:0 4px;max-width:680px">
+    <div style="font-family:'Noto Serif TC',serif;font-size:11px;color:var(--muted);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)">常見問題</div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">法定利率是多少？依據哪一條？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">依民法§203，應付利息之債務，其利率未經約定，亦無法律可據者，週年利率為 5%。此即「法定利率」，適用於損害賠償、借貸糾紛、債務不履行等多數民事案件。實務上裁判主文「按年息 5% 計算之利息」即源於此。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">約定利率最高可以多少？超過會怎樣？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">依民法§205（2021/1/20 修正後），約定利率超過週年 16% 者，超過部分之約定無效。本工具於自訂利率超過 16% 時會提示警告。修法前舊條文上限為 20%，舊案件適用舊法。地下錢莊年息常超過此標準，超過部分不得請求，且可能涉及刑法重利罪。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">損害賠償的利息從什麼時候起算？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">侵權行為損害賠償為「未定期限之債」，依民法§229 第 2 項，債權人得催告債務人為給付，債務人於催告期間屆滿時起負遲延責任；經債權人起訴而送達訴狀者，與催告有同一效力。實務上利息通常自「起訴狀繕本送達被告翌日」起算，亦得依個案以債權人催告日或知悉損害日為起算點。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">遲延利息和法定利率有什麼關係？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">依民法§233 第 1 項，遲延之債務以支付金錢為標的者，債權人得請求依法定利率計算之遲延利息；但約定利率較高者，仍從其約定利率。同條第 2 項規定：對於利息，無須支付遲延利息（「複利禁止」原則）。第 3 項：債權人證明有其他損害者，並得請求賠償。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">單利和複利哪個對？法院實務怎麼算？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">法院民事判決一律採「單利」計算遲延利息：利息 = 本金 × 年利率 × 天數 ÷ 365。複利為民法§233 第 2 項所禁止，僅在當事人有特別合意且符合法令規定時才可能適用。本工具預設單利並標示為「法院標準」，複利選項僅供參考、不應直接用於訴之聲明。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">本工具的計算結果可以直接寫進訴之聲明嗎？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">可作為計算依據參考，但訴之聲明標準格式為：「被告應給付原告新台幣○元，及自民國○年○月○日起至清償日止，按年息 5% 計算之利息。」訴之聲明不需自行算到清償日，只需載明利率與起算日，由法院於判決確定後或執行時換算。本工具產出之利息金額供評估訴訟標的價值與裁判費之用。</div>
+    </div>
+    <div style="padding:14px 0">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">請求權時效會影響利息計算嗎？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">會。利息為定期給付之債，依民法§126，5 年間不行使而消滅（即「利息 5 年時效」）。意即請求過去利息時，超過起訴日起算前 5 年部分可能因時效消滅而無法請求。若對造提出時效抗辯，法院僅會判給訴前 5 年內之利息。本工具不自動套用時效限制，請依個案情況自行截算。</div>
+    </div>
+  </section>
+
   <div class="disclaimer" style="font-size:11px;color:#aaa;text-align:center;padding:16px 0;line-height:1.6">
     本工具計算結果僅供參考，不構成法律意見。實際個案請諮詢執業律師或法律顧問。
   </div>
