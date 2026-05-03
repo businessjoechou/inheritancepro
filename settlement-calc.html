@@ -32,6 +32,45 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"和解金額試算","url":"https://inheritance.choulegal.com/settlement-calc.html","applicationCategory":"LegalService","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro"}}
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "InheritancePro 首頁", "item": "https://inheritance.choulegal.com/"},
+    {"@type": "ListItem", "position": 2, "name": "和解金額試算", "item": "https://inheritance.choulegal.com/settlement-calc.html"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "如何使用和解金額試算工具評估合理和解範圍",
+  "description": "依期望值模型計算合理和解範圍，提供開價策略，讓您做出有根據的和解決定。",
+  "step": [
+    {"@type": "HowToStep", "position": 1, "name": "輸入爭議基本資料", "text": "填入爭議金額（理論上可主張的最大金額）、訴訟強度（1–10 分，可參考訴訟強度評估頁面）、以及客戶可接受的最低金額（談判底線）。"},
+    {"@type": "HowToStep", "position": 2, "name": "評估訴訟成本", "text": "輸入預估律師費（含一二審）、預估訴訟期間（1–5 年）與精神時間成本（低/中/高）。系統將以年化 3% 折現計入時間成本。"},
+    {"@type": "HowToStep", "position": 3, "name": "分析對造條件", "text": "選擇對造和解意願、對造財務狀況（影響和解金額上下限約 ±15%）、對造是否有律師代理（影響談判效率）。"},
+    {"@type": "HowToStep", "position": 4, "name": "計算合理和解範圍與開價", "text": "系統以期望值模型（勝訴機率 × 爭議金額 − 訴訟成本）計算淨期望值，並產出建議和解範圍（floor–ceiling）與含讓步空間的建議開價。"},
+    {"@type": "HowToStep", "position": 5, "name": "依「和解 vs 訴訟」比較決策", "text": "比較表呈現和解（midpoint 預估值、數週數月）與訴訟（扣費後淨值、預估年數）兩種路徑。系統會依訴訟強度與對造意願給出策略建議：強優勢守住 ceiling、中弱勢優先和解、對造無意願先寄律師函。"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "民法第736條的「和解」是什麼？跟調解、仲裁有何不同？", "acceptedAnswer": {"@type": "Answer", "text": "依民法第736條，和解是「當事人約定，互相讓步，以終止爭執或防止爭執發生之契約」。其性質為當事人間之契約，由雙方自行協商簽訂。調解（如鄉鎮市調解委員會、法院調解）則由第三方主持斡旋；仲裁則由仲裁人作成具拘束力之判斷。和解契約成立後，依§737發生使當事人所拋棄之權利消滅、所承認之權利確定之效力，性質類似既判力。"}},
+    {"@type": "Question", "name": "和解契約簽了能反悔嗎？可以撤銷嗎？", "acceptedAnswer": {"@type": "Answer", "text": "原則上不能。依民法§737，和解有使當事人所讓步之權利消滅、所承認之權利確定之效力。但若有民法第738條所列三種情形，例如（1）和解所依據之文件事後發見為偽造或變造，且依該文件之內容和解者；（2）和解事件經法院確定判決，而為當事人雙方或一方於和解當時所不知者；（3）當事人之一方對於他方當事人之資格或對於重要之爭點有錯誤者，得撤銷之。"}},
+    {"@type": "Question", "name": "為什麼建議開價要比合理範圍上限再高一點？", "acceptedAnswer": {"@type": "Answer", "text": "談判心理學上的「錨定效應」：開價會成為對造心中的參考點，後續討價還價會圍繞此錨點上下。若一開始就喊出底線金額，對造仍會殺價，最終結果往往低於合理值。建議開價設在 ceiling × 1.2（但不超過爭議金額 95%），保留讓步空間，給對方「殺到一個好價格」的成就感，同時把實際成交價拉近合理區間。"}},
+    {"@type": "Question", "name": "對造完全不肯談，這工具還有用嗎？", "acceptedAnswer": {"@type": "Answer", "text": "工具會在判定「對造無和解意願」時直接顯示警示，建議優先以律師函施加壓力或申請調解（如鄉鎮市調解委員會、勞資爭議調解或法院調解）讓第三方介入創造和解空間，再回頭使用本工具設定合理金額。直接強談通常徒勞，反而暴露己方底牌。"}},
+    {"@type": "Question", "name": "「期望值模型」聽起來很理性，但訴訟結果真有那麼好預測嗎？", "acceptedAnswer": {"@type": "Answer", "text": "期望值是「理性決策的下限參考」，不是「精準預測」。實際訴訟結果受法官心證、舉證難度、對造抗辯策略、訴訟期間環境變化等多種因素影響，誤差通常 ±20% 起跳。本工具的勝訴機率採「訴訟強度 ÷ 10」為簡化估計，建議搭配執業律師評估的個案勝訴率調整輸入，並把試算結果視為談判錨點而非實際結果保證。"}},
+    {"@type": "Question", "name": "時間折現率為什麼設 3%？這合理嗎？", "acceptedAnswer": {"@type": "Answer", "text": "本工具採年化 3% 為簡化的時間成本估計，反映資金擱置在訴訟期間無法運用的機會成本。實際合理折現率因人而異：上市公司可能用 WACC、個人可能用定存利率或房貸利率。若您的資金有更高運用報酬（如創業、投資），應自行調高；保守者可採 2%。本工具僅作概念性參考，正式財務評估建議諮詢會計師或財務顧問。"}}
+  ]
+}
+</script>
 <style>
   /* Tool-unique: slider, result-card, result-row (dark bg), range display, compare table, verdict */
   .slider-wrap { margin-bottom: 6px; }
@@ -212,6 +251,47 @@
   <div class="disclaimer" style="font-size:11px;color:#aaa;text-align:center;padding:16px 0;line-height:1.6">
     本工具計算結果僅供參考，不構成法律意見。實際個案請諮詢執業律師或法律顧問。
   </div>
+
+  <!-- HowTo — visible step list for HowTo schema -->
+  <section style="margin:32px auto 24px;padding:0 4px">
+    <div style="font-family:'Noto Serif TC',serif;font-size:11px;color:var(--muted);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)">使用步驟</div>
+    <ol style="padding-left:20px;color:var(--ink);font-size:13px;line-height:1.9">
+      <li><strong>輸入爭議基本資料：</strong>填入爭議金額、訴訟強度（1–10 分）、客戶可接受的最低金額（談判底線）。</li>
+      <li><strong>評估訴訟成本：</strong>輸入律師費、預估訴訟期間（1–5 年）、精神時間成本（低/中/高），系統以年化 3% 折現計入時間成本。</li>
+      <li><strong>分析對造條件：</strong>選擇對造和解意願、財務狀況（影響和解金額 ±15%）、有無律師代理。</li>
+      <li><strong>取得合理和解範圍與開價：</strong>系統以期望值模型計算淨期望值，並產出建議和解範圍與含讓步空間的開價。</li>
+      <li><strong>依「和解 vs 訴訟」比較決策：</strong>強優勢守住 ceiling、中弱勢優先和解、對造無意願先寄律師函或申請調解。</li>
+    </ol>
+  </section>
+
+  <!-- FAQ — visible content for FAQPage schema -->
+  <section style="margin:0 auto 40px;padding:0 4px">
+    <div style="font-family:'Noto Serif TC',serif;font-size:11px;color:var(--muted);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)">常見問題</div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">民法第736條的「和解」是什麼？跟調解、仲裁有何不同？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">依民法第736條，和解是「當事人約定，互相讓步，以終止爭執或防止爭執發生之契約」。其性質為當事人間之契約，由雙方自行協商簽訂。調解（如鄉鎮市調解委員會、法院調解）則由第三方主持斡旋；仲裁則由仲裁人作成具拘束力之判斷。和解契約成立後，依§737發生使當事人所拋棄之權利消滅、所承認之權利確定之效力。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">和解契約簽了能反悔嗎？可以撤銷嗎？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">原則上不能。依民法§737，和解有使當事人所讓步之權利消滅、所承認之權利確定之效力。但若有§738所列三種情形（和解所依據文件偽造變造、和解事件已有確定判決而當事人雙方或一方不知、對重要爭點或對方資格有錯誤），得撤銷之。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">為什麼建議開價要比合理範圍上限再高一點？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">談判心理學上的「錨定效應」：開價會成為對造心中的參考點。若一開始就喊底線，對造仍會殺價，最終結果往往低於合理值。建議開價設在 ceiling × 1.2（但不超過爭議金額 95%），保留讓步空間，把實際成交價拉近合理區間。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">對造完全不肯談，這工具還有用嗎？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">工具會在判定「對造無和解意願」時直接顯示警示，建議優先以律師函施加壓力或申請調解（鄉鎮市調解委員會、勞資爭議調解或法院調解）讓第三方介入創造和解空間，再回頭使用本工具設定合理金額。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">「期望值模型」聽起來很理性，但訴訟結果真有那麼好預測嗎？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">期望值是「理性決策的下限參考」，不是「精準預測」。實際結果受法官心證、舉證難度、對造抗辯、訴訟期間環境變化影響，誤差通常 ±20% 起跳。本工具勝訴機率採「訴訟強度 ÷ 10」為簡化估計，建議搭配執業律師評估之個案勝訴率調整輸入。</div>
+    </div>
+    <div style="padding:14px 0">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">時間折現率為什麼設 3%？這合理嗎？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">本工具採年化 3% 為簡化的時間成本估計。實際合理折現率因人而異：上市公司可能用 WACC、個人可能用定存利率或房貸利率。若您的資金有更高運用報酬（創業、投資），應自行調高；保守者可採 2%。本工具僅作概念性參考。</div>
+    </div>
+  </section>
 </main>
 
 <script>

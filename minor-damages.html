@@ -32,6 +32,31 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"未成年損害賠償試算","description":"未成年霸凌、傷害損害賠償試算，含父母連帶責任與學校責任，依民法第184、187、195條。","url":"https://inheritance.choulegal.com/minor-damages.html","applicationCategory":"LegalService","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro","url":"https://inheritance.choulegal.com"}}
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "InheritancePro 首頁", "item": "https://inheritance.choulegal.com/"},
+    {"@type": "ListItem", "position": 2, "name": "未成年損害賠償試算", "item": "https://inheritance.choulegal.com/minor-damages.html"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "民法第187條「父母連帶責任」是怎麼運作？我能直接告父母嗎？", "acceptedAnswer": {"@type": "Answer", "text": "可以。依民法第187條第1項，未成年人或限制行為能力人不法侵害他人權利，行為時有識別能力者，與其法定代理人連帶負損害賠償責任；行為時無識別能力者，由法定代理人單獨負責。被害人得對加害未成年人與其父母一併或擇一起訴，請求全額賠償。第2項規定父母如能證明監督並未疏懈、或縱加以相當監督仍不免發生損害，得免責，但實務上舉證困難。"}},
+    {"@type": "Question", "name": "幾歲算「有識別能力」？7 歲以下一定無責任能力嗎？", "acceptedAnswer": {"@type": "Answer", "text": "民法以「行為時有無識別能力」為個案判斷標準，並無一刀切之年齡。不過依民法第13條，未滿7歲為無行為能力人，實務上多數認其無識別能力，由法定代理人依§187第1項後段單獨負責；7歲以上未滿18歲為限制行為能力人，原則上推定有識別能力，與父母連帶負責。最終由法院依事證認定。"}},
+    {"@type": "Question", "name": "民法第195條精神慰撫金可以針對哪些情形請求？", "acceptedAnswer": {"@type": "Answer", "text": "依民法第195條第1項，不法侵害他人之身體、健康、名譽、自由、信用、隱私、貞操，或不法侵害其他人格法益而情節重大者，被害人雖非財產上之損害，亦得請求賠償相當之金額；其名譽被侵害者，並得請求回復名譽之適當處分。慰撫金金額並無公式，由法院依加害情節、被害人痛苦程度、雙方身分地位及經濟狀況綜合裁量。"}},
+    {"@type": "Question", "name": "請求權有時效嗎？什麼時候會「過期」？", "acceptedAnswer": {"@type": "Answer", "text": "依民法第197條第1項，因侵權行為所生之損害賠償請求權，自請求權人知有損害及賠償義務人時起，2年間不行使而消滅；自有侵權行為時起，逾10年者亦同。兩段時效擇先到者為準。建議事件發生後儘速蒐證、提告，避免因拖延而喪失請求權。"}},
+    {"@type": "Question", "name": "網路霸凌也適用嗎？只是在 LINE 群組罵人也算？", "acceptedAnswer": {"@type": "Answer", "text": "適用。網路霸凌、群組辱罵、散布貼文截圖等，可能侵害名譽、隱私或人格法益，依民法第184條構成侵權行為，得依§195第1項請求精神慰撫金。情節重大者，亦可能構成刑法妨害名譽罪。建議第一時間截圖保存證據，包含發文者帳號、時間、內容、傳播範圍。"}},
+    {"@type": "Question", "name": "學校發生的霸凌，學校要不要負責？", "acceptedAnswer": {"@type": "Answer", "text": "視學校屬性與疏失程度而定。公立學校教職員執行職務之疏失，依國家賠償法第2條第2項由學校（國家）負國賠責任；私立學校得依民法第188條主張僱用人連帶責任。實務上會審查學校是否善盡監督管理義務、有無違反校園霸凌防制準則之通報處置程序。建議同步向學校提出霸凌調查申請，書面紀錄日後可作訴訟證據。"}},
+    {"@type": "Question", "name": "本工具的試算金額可以直接拿去談判或上法院嗎？", "acceptedAnswer": {"@type": "Answer", "text": "本工具依實際判決案例校準提供「參考範圍」，不構成法律意見或鑑定報告。精神慰撫金與勞動能力減損金額由法院依個案裁量，實際結果可能與試算有相當落差。建議將試算結果作為談判起點或委請律師評估時的參考素材，正式提告或調解前仍應諮詢執業律師依完整事證評估。"}}
+  ]
+}
+</script>
 <style>
   /* Tool-unique: extra tokens, back-link, input-prefix, toggle (accent-themed grid), warn-box (red), result breakdown, liability cards, disclaimer, buttons */
   :root { --accent:#1a3a5c; --warn:#b8600a; }
@@ -231,6 +256,39 @@
   <div class="disclaimer" style="font-size:11px;color:#aaa;text-align:center;padding:16px 0;line-height:1.6">
     本工具計算結果僅供參考，不構成法律意見。實際個案請諮詢執業律師或法律顧問。
   </div>
+
+  <!-- FAQ — visible content for FAQPage schema -->
+  <section style="margin:32px auto 24px;padding:0 4px">
+    <div style="font-family:'Noto Serif TC',serif;font-size:11px;color:var(--muted);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)">常見問題</div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">民法第187條「父母連帶責任」是怎麼運作？我能直接告父母嗎？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">可以。依民法第187條第1項，未成年人或限制行為能力人不法侵害他人權利，行為時有識別能力者，與其法定代理人連帶負損害賠償責任；行為時無識別能力者，由法定代理人單獨負責。被害人得對加害未成年人與其父母一併或擇一起訴。父母如能證明監督並未疏懈、或縱加以相當監督仍不免發生損害，得免責（§187 II），但實務上舉證困難。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">幾歲算「有識別能力」？7 歲以下一定無責任能力嗎？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">民法以「行為時有無識別能力」為個案判斷標準，並無一刀切之年齡。不過依民法第13條，未滿7歲為無行為能力人，實務上多數認其無識別能力，由法定代理人依§187第1項後段單獨負責；7歲以上未滿18歲為限制行為能力人，原則上推定有識別能力，與父母連帶負責。最終由法院依事證認定。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">民法第195條精神慰撫金可以針對哪些情形請求？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">依民法第195條第1項，不法侵害他人之身體、健康、名譽、自由、信用、隱私、貞操，或不法侵害其他人格法益而情節重大者，被害人雖非財產上之損害，亦得請求賠償相當之金額；其名譽被侵害者，並得請求回復名譽之適當處分。慰撫金金額並無公式，由法院依加害情節、被害人痛苦程度、雙方身分地位及經濟狀況綜合裁量。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">請求權有時效嗎？什麼時候會「過期」？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">依民法第197條第1項，因侵權行為所生之損害賠償請求權，自請求權人知有損害及賠償義務人時起，2年間不行使而消滅；自有侵權行為時起，逾10年者亦同。兩段時效擇先到者為準。建議事件發生後儘速蒐證、提告，避免因拖延而喪失請求權。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">網路霸凌也適用嗎？只是在 LINE 群組罵人也算？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">適用。網路霸凌、群組辱罵、散布貼文截圖等，可能侵害名譽、隱私或人格法益，依民法第184條構成侵權行為，得依§195第1項請求精神慰撫金。情節重大者，亦可能構成刑法妨害名譽罪。建議第一時間截圖保存證據，包含發文者帳號、時間、內容、傳播範圍。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">學校發生的霸凌，學校要不要負責？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">視學校屬性與疏失程度而定。公立學校教職員執行職務之疏失，依國家賠償法第2條第2項由學校（國家）負國賠責任；私立學校得依民法第188條主張僱用人連帶責任。實務上會審查學校是否善盡監督管理義務、有無違反校園霸凌防制準則之通報處置程序。建議同步向學校提出霸凌調查申請，書面紀錄日後可作訴訟證據。</div>
+    </div>
+    <div style="padding:14px 0">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">本工具的試算金額可以直接拿去談判或上法院嗎？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">本工具依實際判決案例校準提供「參考範圍」，不構成法律意見或鑑定報告。精神慰撫金與勞動能力減損金額由法院依個案裁量，實際結果可能與試算有相當落差。建議將試算結果作為談判起點或委請律師評估時的參考素材，正式提告或調解前仍應諮詢執業律師依完整事證評估。</div>
+    </div>
+  </section>
 </main>
 
 <script>
