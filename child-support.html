@@ -32,6 +32,44 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"子女扶養費計算","url":"https://inheritance.choulegal.com/child-support.html","applicationCategory":"LegalService","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro"}}
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "InheritancePro 首頁", "item": "https://inheritance.choulegal.com/"},
+    {"@type": "ListItem", "position": 2, "name": "子女扶養費計算", "item": "https://inheritance.choulegal.com/child-support.html"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "如何計算子女扶養費分擔",
+  "description": "三步驟依雙方稅後收入比例及親權歸屬，估算子女扶養費分擔金額。",
+  "step": [
+    {"@type": "HowToStep", "position": 1, "name": "輸入雙方稅後月收入並選擇親權歸屬", "text": "甲方為請求人，乙方為義務人；輸入各自稅後月收入。親權歸屬選擇主要照顧方，或共同監護（輪流）。"},
+    {"@type": "HowToStep", "position": 2, "name": "新增每位子女的年齡與每月基本需求", "text": "點選「新增子女」逐一輸入年齡與每月基本需求金額。可參考各縣市政府公告之每人每月最低生活費作為需求基準。"},
+    {"@type": "HowToStep", "position": 3, "name": "查看分擔結果與調整提醒", "text": "結果顯示收入比例、各子女明細與每月應給付金額。注意扶養費可隨物價、子女需求或雙方收入變動聲請法院酌定調整。"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "子女扶養費的法律依據是什麼？", "acceptedAnswer": {"@type": "Answer", "text": "依民法§1084第2項：父母對於未成年之子女，有保護及教養之權利義務。§1116-2：父母對於未成年子女之扶養義務，不因結婚經撤銷或離婚而受影響。父母對未成年子女之扶養義務不得因離婚或親權改定而免除，雙方應依各自經濟能力分擔。"}},
+    {"@type": "Question", "name": "扶養費分擔比例如何決定？", "acceptedAnswer": {"@type": "Answer", "text": "民法未明訂分擔比例。實務上法院通常依民法§1119「扶養之程度，應按受扶養權利者之需要，與負扶養義務者之經濟能力及身分定之」，並參考雙方稅後收入比例為主要分擔基礎。本工具採收入比例法為初步試算，法院實際裁定亦會考量子女實際需求、雙方生活水準及其他特殊狀況。"}},
+    {"@type": "Question", "name": "扶養費可以請求自何時起算？", "acceptedAnswer": {"@type": "Answer", "text": "實務見解多認為扶養費請求可自向法院起訴或聲請時起算；亦有判決允許自書面催告之日起算（如存證信函）。建議在離婚協議或起訴前以書面方式向對方提出請求並保留紀錄，以利日後主張溯及之扶養費。"}},
+    {"@type": "Question", "name": "子女成年後還可以請求扶養費嗎？", "acceptedAnswer": {"@type": "Answer", "text": "原則上父母對未成年子女之保護教養義務於子女成年（民法所定18歲）時終止。成年子女如不能維持生活而無謀生能力者，得依民法§1117請求父母扶養（成年子女之扶養請求）；若成年子女有謀生能力但仍在受教育中（如大學在學），實務見解分歧，通常需個案認定。"}},
+    {"@type": "Question", "name": "對方有隱匿收入時該怎麼辦？", "acceptedAnswer": {"@type": "Answer", "text": "可向法院聲請命對方提出財產及收入聲明（家事事件法第百條），或聲請法院調閱對方之所得稅申報資料、勞保投保紀錄、銀行帳戶等。若對方故意隱匿、虛報，法院得依職權調查並依顯較高之實際所得認定其經濟能力。"}},
+    {"@type": "Question", "name": "扶養費可以變更嗎？", "acceptedAnswer": {"@type": "Answer", "text": "可以。扶養費非永久固定。依實務見解，扶養費得隨物價變動、子女實際需求變化（如就讀私立學校、生病住院）或雙方收入大幅變動，由任一方聲請法院酌定調整。建議協議書中載明定期檢討或調整條款。"}},
+    {"@type": "Question", "name": "對方不付扶養費怎麼辦？", "acceptedAnswer": {"@type": "Answer", "text": "若有法院確定判決或經法院調解、和解之扶養費給付名義，可依強制執行法聲請強制執行（扣薪、扣款、查封財產）。如僅有私下協議無執行名義，建議先聲請法院為調解或裁定取得執行名義。長期未給付扶養費並情節重大者，子女成年後得依民法§1118-1主張減輕或免除對該方之扶養義務。"}}
+  ]
+}
+</script>
 <style>
   /* ── Tool-unique: child-support.html ── */
 
@@ -182,6 +220,49 @@
   <div class="disclaimer" style="font-size:11px;color:#aaa;text-align:center;padding:16px 0;line-height:1.6">
     本工具計算結果僅供參考，不構成法律意見。實際個案請諮詢執業律師或法律顧問。
   </div>
+
+  <!-- HowTo — visible step list for HowTo schema -->
+  <section style="max-width:700px;margin:40px auto 24px;padding:0 4px">
+    <div style="font-family:'Noto Serif TC',serif;font-size:11px;color:var(--muted);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)">使用步驟</div>
+    <ol style="padding-left:20px;color:var(--ink);font-size:13px;line-height:1.9">
+      <li><strong>輸入雙方稅後月收入並選擇親權歸屬：</strong>甲方為請求人、乙方為義務人；親權歸屬選擇主要照顧方或共同監護（輪流）。</li>
+      <li><strong>新增每位子女的年齡與每月基本需求：</strong>逐一輸入各子女年齡與每月基本需求金額；可參考各縣市政府公告之每人每月最低生活費。</li>
+      <li><strong>查看分擔結果與調整提醒：</strong>結果顯示收入比例、各子女明細與每月應給付金額；扶養費可隨物價、需求或收入變動聲請法院酌定調整。</li>
+    </ol>
+  </section>
+
+  <!-- FAQ — visible content for FAQPage schema -->
+  <section style="max-width:700px;margin:0 auto 40px;padding:0 4px">
+    <div style="font-family:'Noto Serif TC',serif;font-size:11px;color:var(--muted);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)">常見問題</div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">子女扶養費的法律依據是什麼？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">依民法&sect;1084第2項：父母對於未成年之子女，有保護及教養之權利義務。&sect;1116-2：父母對於未成年子女之扶養義務，不因結婚經撤銷或離婚而受影響。父母對未成年子女之扶養義務不得因離婚或親權改定而免除，雙方應依各自經濟能力分擔。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">扶養費分擔比例如何決定？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">民法未明訂分擔比例。實務上法院通常依民法&sect;1119「扶養之程度，應按受扶養權利者之需要，與負扶養義務者之經濟能力及身分定之」，並參考雙方稅後收入比例為主要分擔基礎。本工具採收入比例法為初步試算，法院實際裁定亦會考量子女實際需求、雙方生活水準及其他特殊狀況。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">扶養費可以請求自何時起算？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">實務見解多認為扶養費請求可自向法院起訴或聲請時起算；亦有判決允許自書面催告之日起算（如存證信函）。建議在離婚協議或起訴前以書面方式向對方提出請求並保留紀錄，以利日後主張溯及之扶養費。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">子女成年後還可以請求扶養費嗎？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">原則上父母對未成年子女之保護教養義務於子女成年（民法所定18歲）時終止。成年子女如不能維持生活而無謀生能力者，得依民法&sect;1117請求父母扶養；若成年子女有謀生能力但仍在受教育中（如大學在學），實務見解分歧，通常需個案認定。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">對方有隱匿收入時該怎麼辦？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">可向法院聲請命對方提出財產及收入聲明（家事事件法第百條），或聲請法院調閱對方之所得稅申報資料、勞保投保紀錄、銀行帳戶等。若對方故意隱匿、虛報，法院得依職權調查並依顯較高之實際所得認定其經濟能力。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">扶養費可以變更嗎？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">可以。扶養費非永久固定。依實務見解，扶養費得隨物價變動、子女實際需求變化（如就讀私立學校、生病住院）或雙方收入大幅變動，由任一方聲請法院酌定調整。建議協議書中載明定期檢討或調整條款。</div>
+    </div>
+    <div style="padding:14px 0">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">對方不付扶養費怎麼辦？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">若有法院確定判決或經法院調解、和解之扶養費給付名義，可依強制執行法聲請強制執行（扣薪、扣款、查封財產）。長期未給付扶養費並情節重大者，子女成年後得依民法&sect;1118-1主張減輕或免除對該方之扶養義務。</div>
+    </div>
+  </section>
 </main>
 
 <script>
