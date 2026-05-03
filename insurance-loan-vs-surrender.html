@@ -120,6 +120,17 @@
       <label>累計已繳保費<span class="label-hint">元，用於計算解約所得稅</span></label>
       <input type="number" id="totalPremium" placeholder="例：1500000" min="0" inputmode="numeric">
     </div>
+    <div class="input-group">
+      <label>個人綜所稅級距<span class="label-hint">解約所得屬「其他所得」，併入綜所稅依累進稅率課徵</span></label>
+      <select id="taxBracket" style="width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:8px;background:var(--paper);font-size:15px;font-family:'Noto Sans TC',sans-serif;color:var(--ink);">
+        <option value="5">5%（綜合所得淨額 590,000 元以下）</option>
+        <option value="12" selected>12%（590,001 ~ 1,330,000 元）</option>
+        <option value="20">20%（1,330,001 ~ 2,660,000 元）</option>
+        <option value="30">30%（2,660,001 ~ 4,980,000 元）</option>
+        <option value="40">40%（4,980,001 元以上）</option>
+      </select>
+      <div style="font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6">不確定自己的級距？依您年度綜合所得淨額（總所得 − 免稅額 − 扣除額）對照上方區間。級距金額為財政部 114 年度公告值（適用 114 年所得、115 年 5 月申報），每年可能依消費者物價指數調整，請以財政部最新公告為準。</div>
+    </div>
     <div class="input-group" style="margin-bottom:0">
       <label>預計保留保障<span class="label-hint">仍需壽險保障則選擇借款為宜</span></label>
       <select id="needProtection" style="width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:8px;background:var(--paper);font-size:15px;font-family:'Noto Sans TC',sans-serif;color:var(--ink);">
@@ -168,7 +179,7 @@
         <div class="opt-amount" id="r-surrenderNet">—</div>
         <div class="opt-row"><span>解約金</span><span class="val" id="r-surrenderAmt">—</span></div>
         <div class="opt-row"><span>解約所得</span><span class="val" id="r-gain">—</span></div>
-        <div class="opt-row"><span>所得稅 (估)</span><span class="val" id="r-incomeTax">—</span></div>
+        <div class="opt-row"><span>所得稅 (<span id="r-taxRate">12%</span>)</span><span class="val" id="r-incomeTax">—</span></div>
         <div class="opt-row"><span>保障狀態</span><span class="val" style="color:var(--accent)">失效</span></div>
       </div>
     </div>
@@ -190,7 +201,7 @@
 
     <div class="law-note">
       <strong>法律依據：</strong>保險法§120（保單借款）、§119（解約金）；所得稅法§14（其他所得）。<br>
-      <strong>重要提醒：</strong>① 保單借款積欠本息超過保價金時，保單將失效 ② 解約金超過已繳保費部分可能課所得稅，實際稅率依個人綜所稅級距 ③ 投資型保單與傳統型保單規則不同，請向保險公司確認 ④ 高額借款建議先與理財顧問討論。
+      <strong>重要提醒：</strong>① 保單借款積欠本息超過保價金時，保單將失效 ② 解約金超過已繳保費部分屬「其他所得」（所得稅法§14 I 第 10 類），併入綜所稅依個人累進稅率（5%／12%／20%／30%／40%）課徵，請依您實際所得淨額對應級距 ③ 投資型保單與傳統型保單規則不同，請向保險公司確認 ④ 高額借款建議先與理財顧問討論。
     </div>
 
     <button class="calc-btn" onclick="downloadPDF()" style="margin-top:16px">↓ 匯出 PDF 報告</button>
@@ -252,6 +263,7 @@
     const needAmount=parseFloat(document.getElementById('needAmount').value)||0;
     const repayYears=parseFloat(document.getElementById('repayYears').value)||1;
     const loanRate=parseFloat(document.getElementById('loanRate').value)/100||0.055;
+    const taxRate=(parseFloat(document.getElementById('taxBracket').value)||12)/100;
     const needProtection=document.getElementById('needProtection').value==='yes';
 
     if(!cashValue||!needAmount){alert('請填入保價金與資金需求');return;}
@@ -267,10 +279,9 @@
     const loanNet=actualLoan-totalInterest-loanShortfall; // 實際能用到手的現金，扣掉利息成本
 
     // 方案 2：解約
-    // 解約所得稅：超過已繳保費部分
+    // 解約所得稅：超過已繳保費部分（所得稅法§14 I 第 10 類「其他所得」），依個人綜所稅累進稅率課徵
     const gain=Math.max(0,surrender-totalPremium);
-    // 估算所得稅：簡化為 12% 級距
-    const incomeTax=Math.round(gain*0.12);
+    const incomeTax=Math.round(gain*taxRate);
     const surrenderNet=surrender-incomeTax;
     // 解約損失（保價金 - 解約金）記錄但不計入淨現金
     const surrenderLoss=cashValue-surrender;
@@ -316,6 +327,7 @@
     document.getElementById('r-surrenderAmt').textContent=FMT(surrender);
     document.getElementById('r-gain').textContent=FMT(gain);
     document.getElementById('r-incomeTax').textContent=FMT(incomeTax);
+    document.getElementById('r-taxRate').textContent=(taxRate*100).toFixed(0)+'%';
     document.getElementById('r-surrenderNet').textContent=FMT(surrenderNet);
     document.getElementById('r-surrenderNet').className='opt-amount';
 
