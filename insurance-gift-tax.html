@@ -30,6 +30,47 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"保單要保人變更贈與稅計算器","url":"https://inheritance.choulegal.com/insurance-gift-tax.html","applicationCategory":"FinanceApplication","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro","url":"https://inheritance.choulegal.com"}}
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "InheritancePro 首頁", "item": "https://inheritance.choulegal.com/"},
+    {"@type": "ListItem", "position": 2, "name": "保單要保人變更贈與稅計算器", "item": "https://inheritance.choulegal.com/insurance-gift-tax.html"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "如何計算保單要保人變更之贈與稅",
+  "description": "依財政部 75 年 9 月 5 日台財稅第 7556408 號函釋，保單要保人變更為他人時視為贈與，課徵標的為變更時之保單價值準備金。本工具引導逐張保單試算，並計算配偶免稅、年度免稅額後之應納贈與稅。",
+  "step": [
+    {"@type": "HowToStep", "position": 1, "name": "確認雙方關係", "text": "輸入原要保人（贈與人）與新要保人（受贈人）關係。配偶間贈與依遺贈稅法§20 第 1 項第 6 款「配偶相互贈與之財產」不計入贈與總額；其他親屬與第三人均適用一般贈與稅率（10%–20% 累進稅率，依§19）。"},
+    {"@type": "HowToStep", "position": 2, "name": "查詢保單價值準備金", "text": "向各保險公司索取「要保人變更基準日」當日之保單價值準備金證明（俗稱保價金）。財政部 75 年台財稅第 7556408 號函釋明定：要保人變更，係將要保人於保單上既得之利益（保單價值準備金）讓與新要保人，應以該保價金為贈與標的。"},
+    {"@type": "HowToStep", "position": 3, "name": "逐張保單輸入金額", "text": "若一次變更多張保單，逐張輸入保價金，系統累加為當年度之贈與總額。同一年度多次贈與依§22 累計計算。"},
+    {"@type": "HowToStep", "position": 4, "name": "扣除年度贈與免稅額", "text": "依遺贈稅法§22：「贈與稅納稅義務人，每年得自贈與總額中減除免稅額」（金額依§12-1 隨消費者物價指數調整）。本工具採當年度公告之免稅額自動扣除（現行 244 萬）。同一年度內贈與多人時，免稅額僅得扣除一次。"},
+    {"@type": "HowToStep", "position": 5, "name": "計算應納贈與稅", "text": "應納贈與稅 = (贈與總額 - 免稅額 - 扣除額) × 稅率 - 累進差額。稅率依§19 採 3 級累進：未達 2,500 萬部分 10%、2,500 萬至 5,000 萬部分 15%、超過 5,000 萬部分 20%。納稅義務人應於贈與行為發生後 30 日內依§24 申報（罰則§44 漏報處 2 倍以下罰鍰）。"},
+    {"@type": "HowToStep", "position": 6, "name": "檢視實質課稅風險", "text": "即使依保價金課贈與稅，國稅局得依實質課稅原則重新認定。財政部 109 年 7 月 1 日台財稅字第 10900520520 號函公布人壽保險被認定為遺產之 8 大態樣（重病投保、躉繳投保、高額投保、密集投保、舉債投保、短期投保、鉅額投保、高齡投保），實務上被援引否認保險受益人指定之節稅效果。本工具於輸入高保價金、短期投保等情形時提示風險。"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "保單要保人變更為什麼會被視為贈與？", "acceptedAnswer": {"@type": "Answer", "text": "依財政部 75 年 9 月 5 日台財稅第 7556408 號函釋：「要保人為被保險人本人時，要保人變更為他人，視同要保人讓與保險契約上之權利於他人，應依遺產及贈與稅法第 4 條第 2 項之規定課徵贈與稅。」原要保人對保單擁有解約金請求權、保單借款權等保單價值準備金所表彰之財產利益，將要保人變更為他人即等同無償移轉該財產利益，符合遺贈稅法§4 II「本法稱贈與，指財產所有人以自己之財產無償給予他人，經他人允受而生效力之行為。」課贈與稅之標的為「變更基準日當日之保單價值準備金」（即俗稱保價金）。"}},
+    {"@type": "Question", "name": "保單要保人變更的贈與標的金額怎麼算？是繳出去的保費嗎？", "acceptedAnswer": {"@type": "Answer", "text": "不是已繳保費，而是「變更基準日之保單價值準備金」。保單價值準備金（policy value reserve）是保險公司為履行未來給付義務所提存之準備金，反映保單於該日之解約金價值。實務作法：(1) 向保險公司書面申請「保單價值準備金證明」，註明變更基準日；(2) 保險公司核發證明書（多數於 1 至 2 週內出具）；(3) 以該金額為贈與標的金額申報贈與稅。已繳保費並不等於保價金（前期保費多用於支付業務員佣金與成本）；投資型保單以該日之投資帳戶價值為準。"}},
+    {"@type": "Question", "name": "配偶之間變更要保人不用課贈與稅，這是真的嗎？", "acceptedAnswer": {"@type": "Answer", "text": "是的。依遺產及贈與稅法§20 第 1 項第 6 款：「配偶相互贈與之財產，不計入贈與總額。」夫妻間互為要保人變更不論金額多寡，全額不計入贈與總額，亦不適用§22 免稅額或累進稅率。但須注意：(1) 仍應於 30 日內依§24 申報（雖免稅但須申報，否則違反§44 漏報罰則）；(2) 須提供結婚證明文件（戶籍謄本）；(3) 配偶死亡後之遺產仍須計入§20 不計入規定僅為「贈與不計入」，並非排除遺產稅；(4) 實質課稅原則仍可能介入（如重病移轉等態樣）。"}},
+    {"@type": "Question", "name": "贈與稅免稅額 244 萬是每年都有嗎？怎麼運用？", "acceptedAnswer": {"@type": "Answer", "text": "依遺贈稅法§22：「贈與稅納稅義務人，每年得自贈與總額中減除免稅額。」金額依§12-1 隨消費者物價指數調整公告，現行為 244 萬元。重點：(1) 「每年」指每曆年（1 月 1 日至 12 月 31 日）；(2) 「每位贈與人」每年享有一次免稅額（夫妻 2 人各享 244 萬，合計可贈與子女 488 萬免稅）；(3) 免稅額不分受贈人數量（贈與多人時免稅額仍只能扣一次）；(4) 跨年度贈與得累積運用（今年 244 萬、明年再 244 萬）。常見規劃：父母每年各贈與子女 244 萬之保單變更，10 年累計可移轉約 4,880 萬資產。"}},
+    {"@type": "Question", "name": "「實質課稅原則」8 大態樣是什麼？哪些情況保險金仍會被課遺產稅？", "acceptedAnswer": {"@type": "Answer", "text": "依財政部 109 年 7 月 1 日台財稅字第 10900520520 號函公布之保險課稅 8 大態樣：(1) 重病投保（被保險人投保時罹有重大疾病）；(2) 躉繳投保（一次繳清大額保費）；(3) 高齡投保；(4) 短期投保（投保不久即身故）；(5) 鉅額投保（保額過高與所得不相當）；(6) 密集投保（短期內密集投保多張保單）；(7) 舉債投保（向銀行借款購買保險）；(8) 保險費高於或等於保險給付金額（投資價值低於成本）。符合任一態樣者，國稅局得依實質課稅原則否認保險法§112 與遺贈稅法§16-9 之免稅效果，將保險金或保價金計入遺產課稅。最高行政法院 100 年度判字第 574 號判決確認此一做法之合法性。"}},
+    {"@type": "Question", "name": "如果沒申報要保人變更會怎樣？罰多少？", "acceptedAnswer": {"@type": "Answer", "text": "依遺贈稅法§24 第 1 項：「除第 20 條所規定之贈與外，贈與人在 1 年內贈與他人之財產總值超過贈與稅免稅額時，應於超過免稅額之贈與行為發生後 30 日內，向主管稽徵機關依本法規定辦理贈與稅申報。」未申報之罰則依§44：「納稅義務人違反第 23 條或第 24 條規定，未依限辦理遺產稅或贈與稅申報者，按核定應納稅額加處 2 倍以下之罰鍰。」即漏報贈與稅最高處應納稅額 2 倍罰鍰；若構成稅捐稽徵法§41 故意逃漏稅捐者，另涉刑責（5 年以下有期徒刑）。提醒：即使配偶間變更（依§20 不計入贈與總額）仍須依§24 申報。"}},
+    {"@type": "Question", "name": "保單要保人變更跟受益人變更，課稅效果一樣嗎？", "acceptedAnswer": {"@type": "Answer", "text": "不一樣。要保人變更涉及保單財產權之移轉（保價金）→ 課贈與稅；受益人變更僅為將來受領保險金之指定，原則上不課贈與稅。依保險法§111：「受益人經指定後，要保人對其保險利益，除聲明放棄處分權外，仍得以契約或遺囑處分之。」要保人變更受益人為單純之契約處分權行使，非財產權移轉。但須注意：(1) 受益人領取保險金時，依遺贈稅法§16 第 9 款不計入遺產（受益人為被保險人配偶或直系親屬時）；(2) 但仍受 8 大態樣實質課稅之檢視；(3) 若同時變更要保人與受益人，仍依要保人變更課贈與稅。本工具僅處理要保人變更場景，受益人變更請參考相關工具。"}}
+  ]
+}
+</script>
 <style>
   /* Tool-specific: progress bar */
   .progress-bar { height: 3px; background: var(--soft); }
@@ -255,6 +296,52 @@
       <a class="cross-link-btn" href="asset-detection.html">脫產偵測分析　2年內贈與可能計入遺產 <span>&rarr;</span></a>
     </div>
   </div>
+
+  <!-- HowTo — visible step list for HowTo schema -->
+  <section style="max-width:700px;margin:32px auto 16px;padding:0 4px">
+    <div style="font-family:'Noto Serif TC',serif;font-size:11px;color:var(--muted);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)">使用步驟</div>
+    <ol style="padding-left:20px;color:var(--ink);font-size:13px;line-height:1.9">
+      <li><strong>確認雙方關係：</strong>配偶間贈與依遺贈稅法§20 I 第 6 款不計入贈與總額；其他親屬與第三人均適用一般贈與稅（10%–20% 累進）。</li>
+      <li><strong>查詢保單價值準備金：</strong>向各保險公司索取「要保人變更基準日」當日之保價金證明（財政部 75 年台財稅第 7556408 號函）。</li>
+      <li><strong>逐張保單輸入金額：</strong>多張一起變更時系統累加為當年度贈與總額；同一年度多次贈與依§22 累計計算。</li>
+      <li><strong>扣除年度免稅額：</strong>依§22 現行免稅額 244 萬（依§12-1 隨 CPI 調整）。一年內贈與多人時免稅額僅扣一次。</li>
+      <li><strong>計算應納贈與稅：</strong>稅率依§19 採 3 級累進：未達 2,500 萬 10%、2,500 萬–5,000 萬 15%、超過 5,000 萬 20%。應於贈與後 30 日內依§24 申報；漏報依§44 處 2 倍以下罰鍰。</li>
+      <li><strong>檢視實質課稅風險：</strong>財政部 109/7/1 台財稅字第 10900520520 號函 8 大態樣（重病、躉繳、高齡、短期、鉅額、密集、舉債、保費高於保額）仍可能被認定為脫法行為。</li>
+    </ol>
+  </section>
+
+  <!-- FAQ — visible content for FAQPage schema -->
+  <section style="max-width:700px;margin:0 auto 32px;padding:0 4px">
+    <div style="font-family:'Noto Serif TC',serif;font-size:11px;color:var(--muted);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)">常見問題</div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">保單要保人變更為什麼會被視為贈與？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">依財政部 75/9/5 台財稅第 7556408 號函：要保人變更為他人，視同要保人讓與保險契約上之權利於他人，依遺贈稅法§4 II 課贈與稅。原要保人之解約金請求權、保單借款權等保價金所表彰之財產利益均無償移轉。課稅標的為「變更基準日當日之保單價值準備金」。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">贈與標的金額怎麼算？是繳出去的保費嗎？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">不是。是「變更基準日之保單價值準備金」（保險公司為履行給付義務所提存之準備金）。已繳保費不等於保價金（前期保費多支付業務員佣金與成本）。實務作法：向保險公司書面申請出具「保單價值準備金證明」（多 1–2 週）。投資型保單以該日投資帳戶價值為準。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">配偶之間變更要保人不用課贈與稅，這是真的嗎？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">是。依遺贈稅法§20 I-6「配偶相互贈與之財產不計入贈與總額」。但仍須依§24 申報（雖免稅）；應提供戶籍謄本。配偶死亡後之遺產仍須課遺產稅，且實質課稅原則仍可能介入（如重病移轉等）。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">贈與稅免稅額 244 萬怎麼運用？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">依§22 每位「贈與人」每曆年享一次免稅額，現行 244 萬（依§12-1 隨 CPI 調整）。夫妻 2 人各享 244 萬，合計贈與子女 488 萬免稅。免稅額不因受贈人數量而增加。常見規劃：父母每年各贈與子女 244 萬保單變更，10 年累計可移轉近 4,880 萬。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">「實質課稅原則」8 大態樣是什麼？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">財政部 109/7/1 台財稅字第 10900520520 號函公布：(1) 重病投保 (2) 躉繳投保 (3) 高齡投保 (4) 短期投保 (5) 鉅額投保 (6) 密集投保 (7) 舉債投保 (8) 保險費高於或等於保險給付金額。符合任一者得否認保險法§112 與遺贈稅法§16-9 之免稅效果，計入遺產課稅（最高行政法院 100 年判字第 574 號）。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">沒申報要保人變更會怎樣？罰多少？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">依§24 應於贈與後 30 日內申報；§44 未依限申報處應納稅額 2 倍以下罰鍰；構成稅捐稽徵法§41 故意逃漏者另涉 5 年以下有期徒刑。即使配偶間變更（依§20 不計入）仍須依§24 申報。</div>
+    </div>
+    <div style="padding:14px 0">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">要保人變更跟受益人變更，課稅效果一樣嗎？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">不一樣。要保人變更涉及保單財產權移轉（保價金）→ 課贈與稅；受益人變更僅為將來受領之指定（保險法§111）→ 原則不課贈與稅，但仍受 8 大態樣實質課稅之檢視。同時變更兩者時，仍依要保人變更課贈與稅。</div>
+    </div>
+  </section>
 
 </main>
 
