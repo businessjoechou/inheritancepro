@@ -29,6 +29,31 @@
 <script src="js/pdf-export.js"></script>
 <script src="js/persona.js"></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"保單受益人順位分配試算","url":"https://inheritance.choulegal.com/insurance-beneficiary-order.html","applicationCategory":"LegalService","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro","url":"https://inheritance.choulegal.com"}}</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "InheritancePro 首頁", "item": "https://inheritance.choulegal.com/"},
+    {"@type": "ListItem", "position": 2, "name": "保單受益人順位分配試算", "item": "https://inheritance.choulegal.com/insurance-beneficiary-order.html"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "受益人指定為「法定繼承人」時，依哪部法律分配？", "acceptedAnswer": {"@type": "Answer", "text": "依保險法§110 由要保人指定受益人；若指定為「法定繼承人」，多數實務見解認為應依民法§1138（繼承順位）及§1144（應繼分）比例分配，非平均分配。第一順位為直系血親卑親屬（配偶與子女同屬一級時依§1144 第 1 款均分），第二順位為父母（配偶得 1/2），第三順位為兄弟姊妹（配偶得 1/2），第四順位為祖父母（配偶得 2/3）。"}},
+    {"@type": "Question", "name": "未指定受益人時，保險金歸誰？", "acceptedAnswer": {"@type": "Answer", "text": "依保險法§113，死亡保險契約未指定受益人者，其保險金額作為被保險人之遺產，由其法定繼承人依民法繼承順位繼承。此時保險金須計入遺產總額，可能涉及遺產稅與債務清償順位（與已指定受益人時保險金不列入遺產之效果不同）。"}},
+    {"@type": "Question", "name": "第一順位受益人先於被保險人過世，保險金如何處理？", "acceptedAnswer": {"@type": "Answer", "text": "依保險法§110 第 2 項，受益人以於請求保險金額時生存者為限。若第一順位受益人先於被保險人過世且保單未約定代位領取條款，依保單其他順位約定（第二、第三順位）依序遞延；若所有順位受益人均先於被保險人過世，依§113 保險金作為被保險人遺產處理。建議檢視保單條款是否有「直系卑親屬代位領取」之約定。"}},
+    {"@type": "Question", "name": "受益人在被保險人之後才過世，保險金歸誰？", "acceptedAnswer": {"@type": "Answer", "text": "依保險法§112，保險金額約定於被保險人死亡時給付於其所指定之受益人者，其金額不得作為被保險人之遺產。若受益人在被保險人死亡之後才過世，該受益人已於被保險人死亡時取得保險金請求權，該請求權（或已領取之保險金）列入受益人之遺產，由受益人之繼承人繼承。"}},
+    {"@type": "Question", "name": "指定受益人的保險金，要不要計入遺產稅？", "acceptedAnswer": {"@type": "Answer", "text": "依保險法§112 與遺產及贈與稅法§16 第 9 款，被保險人死亡時，其指定受益人領取之人壽保險金額不列入遺產總額。但實務上國稅局對「實質課稅原則」要求嚴格，若投保動機、年齡、健康狀態、保費躉繳等情形顯示係規避遺產稅之安排，仍可能依個案核課。建議大額保單規劃前先諮詢會計師。"}},
+    {"@type": "Question", "name": "保險金分配可否被特留分扣減？", "acceptedAnswer": {"@type": "Answer", "text": "原則上指定受益人之保險金屬受益人之固有權利，不列入遺產，不受民法§1223 特留分規定限制。但若被保險人生前以躉繳鉅額保費規避特留分，部分法院實務見解認為其他繼承人仍得就「保費部分」主張歸扣或扣減（參最高法院 107 年度台上字第 1395 號裁判等實務見解）。涉及特留分爭議建議諮詢律師。"}},
+    {"@type": "Question", "name": "保單條款與本工具計算結果不同時，以何者為準？", "acceptedAnswer": {"@type": "Answer", "text": "以保單契約條款為優先。若保單明確約定「身故保險金給付予○○○，身故時如受益人先亡，由其直系卑親屬代位領取」或其他特殊分配方式，依契約自由原則優先適用該條款。本工具計算的是保單未特別約定時、依保險法與民法繼承順位之預設分配方式，僅供參考。"}}
+  ]
+}
+</script>
 <style>
   input[type="number"]{font-family:'Noto Serif TC',monospace;}
   .tier{background:var(--paper);border-radius:10px;padding:14px;margin-bottom:10px;border-left:3px solid var(--border);}
@@ -194,6 +219,38 @@
 
     <button class="calc-btn" onclick="downloadPDF()" style="margin-top:16px">↓ 匯出 PDF 報告</button>
   </div>
+  <!-- FAQ — visible content for FAQPage schema -->
+  <section style="max-width:700px;margin:40px auto 24px;padding:0 4px">
+    <div style="font-family:'Noto Serif TC',serif;font-size:11px;color:var(--muted);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)">常見問題</div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">受益人指定為「法定繼承人」時，依哪部法律分配？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">依保險法&sect;110 由要保人指定受益人；若指定為「法定繼承人」，多數實務見解認為應依民法&sect;1138（繼承順位）及&sect;1144（應繼分）比例分配，非平均分配。第一順位為直系血親卑親屬（配偶與子女同屬一級時依&sect;1144 第 1 款均分），第二順位為父母（配偶得 1/2），第三順位為兄弟姊妹（配偶得 1/2），第四順位為祖父母（配偶得 2/3）。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">未指定受益人時，保險金歸誰？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">依保險法&sect;113，死亡保險契約未指定受益人者，其保險金額作為被保險人之遺產，由其法定繼承人依民法繼承順位繼承。此時保險金須計入遺產總額，可能涉及遺產稅與債務清償順位（與已指定受益人時保險金不列入遺產之效果不同）。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">第一順位受益人先於被保險人過世，保險金如何處理？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">依保險法&sect;110 第 2 項，受益人以於請求保險金額時生存者為限。若第一順位受益人先於被保險人過世且保單未約定代位領取條款，依保單其他順位約定（第二、第三順位）依序遞延；若所有順位受益人均先於被保險人過世，依&sect;113 保險金作為被保險人遺產處理。建議檢視保單條款是否有「直系卑親屬代位領取」之約定。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">受益人在被保險人之後才過世，保險金歸誰？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">依保險法&sect;112，保險金額約定於被保險人死亡時給付於其所指定之受益人者，其金額不得作為被保險人之遺產。若受益人在被保險人死亡之後才過世，該受益人已於被保險人死亡時取得保險金請求權，該請求權（或已領取之保險金）列入受益人之遺產，由受益人之繼承人繼承。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">指定受益人的保險金，要不要計入遺產稅？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">依保險法&sect;112 與遺產及贈與稅法&sect;16 第 9 款，被保險人死亡時，其指定受益人領取之人壽保險金額不列入遺產總額。但實務上國稅局對「實質課稅原則」要求嚴格，若投保動機、年齡、健康狀態、保費躉繳等情形顯示係規避遺產稅之安排，仍可能依個案核課。建議大額保單規劃前先諮詢會計師。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">保險金分配可否被特留分扣減？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">原則上指定受益人之保險金屬受益人之固有權利，不列入遺產，不受民法&sect;1223 特留分規定限制。但若被保險人生前以躉繳鉅額保費規避特留分，部分法院實務見解認為其他繼承人仍得就「保費部分」主張歸扣或扣減（參最高法院 107 年度台上字第 1395 號裁判等實務見解）。涉及特留分爭議建議諮詢律師。</div>
+    </div>
+    <div style="padding:14px 0">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">保單條款與本工具計算結果不同時，以何者為準？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">以保單契約條款為優先。若保單明確約定「身故保險金給付予○○○，身故時如受益人先亡，由其直系卑親屬代位領取」或其他特殊分配方式，依契約自由原則優先適用該條款。本工具計算的是保單未特別約定時、依保險法與民法繼承順位之預設分配方式，僅供參考。</div>
+    </div>
+  </section>
   <div class="disclaimer" style="font-size:11px;color:#aaa;text-align:center;padding:16px 0;line-height:1.6">本工具計算結果僅供參考，不構成法律意見。</div>
 </main>
 <script>
