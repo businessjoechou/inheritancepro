@@ -32,6 +32,46 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"脫產偵測模組","description":"分析被繼承人生前財產異動風險，依民法第1148-1條及遺贈稅法第15條自動標記可疑移轉。","url":"https://inheritance.choulegal.com/asset-detection.html","applicationCategory":"FinanceApplication","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro","url":"https://inheritance.choulegal.com"}}
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "InheritancePro 首頁", "item": "https://inheritance.choulegal.com/"},
+    {"@type": "ListItem", "position": 2, "name": "脫產偵測分析", "item": "https://inheritance.choulegal.com/asset-detection.html"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "如何使用脫產偵測模組分析被繼承人生前財產異動",
+  "description": "依遺贈稅法§15、民法§1148-1、民法§244 評估死亡前 2 年內與 2–10 年間之可疑財產移轉。",
+  "step": [
+    {"@type": "HowToStep", "position": 1, "name": "選擇輸入方式", "text": "依手中資料選擇手動輸入、貼上文字或上傳 CSV 三種方式之一。建議先從金融機構帳戶交易明細、地政事務所異動歷程謄本、贈與稅申報紀錄整理。"},
+    {"@type": "HowToStep", "position": 2, "name": "填入交易紀錄", "text": "逐筆輸入日期、金額、類型（現金贈與／不動產贈與／低價出售／大額提款／壽險保費等）與受贈人身分（繼承人／繼承人配偶／第三人／不明）。受贈人身分會影響遺贈稅§15 是否擬制為遺產。"},
+    {"@type": "HowToStep", "position": 3, "name": "輸入死亡日期與遺產申報總額", "text": "死亡日期用於計算每筆異動的「死亡前天數」，自動歸入 2 年內、2–10 年、10 年以前三個追溯區間；申報總額用於差距分析（申報 vs 發現）。"},
+    {"@type": "HowToStep", "position": 4, "name": "執行分析並檢視風險評級", "text": "系統依日期、金額、類型、受贈人四項給分，產出每筆 LOW/MEDIUM/HIGH/CRITICAL 評級與整體分數。2 年內走遺贈稅§15+民法§1148-1 雙軌；2–10 年僅民法§244 詐害撤銷可追溯。"},
+    {"@type": "HowToStep", "position": 5, "name": "依後續調查清單蒐證", "text": "高風險者建議向國稅局申請被繼承人歷年贈與稅申報紀錄、地政事務所申請近 10 年不動產異動歷程，必要時聲請假扣押凍結受讓人財產。情節重大者得依刑法§356 損害債權罪提告。"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "遺贈稅法§15「死亡前 2 年內贈與」適用對象有哪些？", "acceptedAnswer": {"@type": "Answer", "text": "依遺產及贈與稅法第 15 條，被繼承人死亡前 2 年內贈與下列三類對象之財產，應併入遺產總額課徵遺產稅：(1) 配偶；(2) 民法§1138 及§1140 規定之各順序繼承人；(3) 前款各順序繼承人之配偶。贈與第三人（非上述親屬）不受 2 年擬制規定拘束，但仍應檢視是否已申報贈與稅。"}},
+    {"@type": "Question", "name": "民法§1148-1 與遺贈稅法§15 都是「2 年」，差別在哪？", "acceptedAnswer": {"@type": "Answer", "text": "兩條時間軸相同（繼承開始前 2 年內），但作用面不同：§15 是稅面，把擬制贈與併入遺產總額對國稅局課稅；§1148-1 是限定繼承責任面，僅讓被繼承人之債權人主張該等贈與「視為所得遺產」以擴張清償基礎，不擴張遺產稅基、也不等於民法特留分加回。實務上 2 年內贈與會同時觸發雙軌，2 年外則只剩民法§244 詐害撤銷可追溯。"}},
+    {"@type": "Question", "name": "超過 2 年的贈與還能追回來嗎？", "acceptedAnswer": {"@type": "Answer", "text": "可能。民法§244 規定債務人所為有害及債權之行為，債權人得聲請法院撤銷之；§245 規定該撤銷權自債權人知有撤銷原因時起 1 年、自行為時起 10 年內消滅（除斥期間）。因此 2–10 年區間內的可疑移轉仍可由債權人聲請撤銷，但須證明被繼承人當時有詐害債權人之主觀意圖；逾 10 年則法律上幾乎無從追溯。"}},
+    {"@type": "Question", "name": "被繼承人把房子用「遠低於市價」賣給子女算贈與嗎？", "acceptedAnswer": {"@type": "Answer", "text": "可能構成實質贈與。依遺產及贈與稅法第 5 條（視同贈與），二親等以內親屬間財產之買賣、或以顯著不相當之代價讓與財產，差額部分視為贈與並課徵贈與稅。國稅局實務上以公告現值或鑑定價作為市價認定基準，明顯低於市價的親屬交易很容易被認定為贈與。"}},
+    {"@type": "Question", "name": "被繼承人生前大額提現但去向不明，要怎麼處理？", "acceptedAnswer": {"@type": "Answer", "text": "繼承人應蒐集死亡前 2 年內銀行交易明細，對每筆大額提現要求合理說明：用於醫療、生活費屬正常支出可附憑證；無法說明者，國稅局實務上常推定為對繼承人之贈與而併入遺產總額（遺贈稅§15）。如懷疑款項由特定繼承人持有或代管，得另循民法不當得利、繼承回復請求權主張。"}},
+    {"@type": "Question", "name": "拋棄繼承後還會被§1148-1 追究嗎？", "acceptedAnswer": {"@type": "Answer", "text": "拋棄繼承（民法§1174）一經法院核備生效後，當事人即非繼承人，原則上不再依§1148-1 對被繼承人之債權人負「視為所得遺產」之清償責任。但拋棄前已受贈之財產若構成遺贈稅§15 範圍，仍應併入遺產總額由其他繼承人負擔遺產稅；且若係為脫免債務之拋棄行為，債權人仍得依民法§244 主張撤銷。"}},
+    {"@type": "Question", "name": "本工具的風險評級可以直接拿來告人嗎？", "acceptedAnswer": {"@type": "Answer", "text": "不能。本工具為依遺贈稅§15、民法§1148-1、§244 進行的初步篩查，產出風險分數與追溯區間彙總，不構成法律意見或鑑定報告。發現高風險異動後，應向國稅局申請被繼承人歷年贈與稅申報紀錄、向地政事務所申請不動產異動謄本，並委請執業律師依個案事實判斷是否提起撤銷詐害債權之訴或刑法§356 損害債權告訴。"}}
+  ]
+}
+</script>
 <style>
   /* Tool-unique: extra token, wider main, module-badge, back-link, page-title, law-tag, tabs, card-title, tx-table, upload, paste, analyze, risk, gap, law-summary */
   :root { --warn: #d4691e; }
@@ -421,6 +461,51 @@
       <a class="cross-link-btn" href="caregiver.html">🤝 照顧者繼承貢獻　部分贈與可能屬照顧補償 <span>→</span></a>
     </div>
   </div>
+
+  <!-- HowTo — visible step list for HowTo schema -->
+  <section style="margin:40px auto 24px;padding:0 4px">
+    <div style="font-family:'Noto Serif TC',serif;font-size:11px;color:var(--muted);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)">使用步驟</div>
+    <ol style="padding-left:20px;color:var(--ink);font-size:13px;line-height:1.9">
+      <li><strong>選擇輸入方式：</strong>手動輸入、貼上文字或上傳 CSV 三擇一。建議從金融帳戶交易明細、地政異動歷程謄本、贈與稅申報紀錄整理。</li>
+      <li><strong>填入交易紀錄：</strong>逐筆輸入日期、金額、類型與受贈人身分（繼承人／繼承人配偶／第三人／不明）。受贈人身分會影響遺贈稅§15 是否擬制為遺產。</li>
+      <li><strong>輸入死亡日期與遺產申報總額：</strong>死亡日期用於計算每筆異動的「死亡前天數」並歸入 2 年內、2–10 年、10 年以前三個追溯區間；申報總額用於差距分析。</li>
+      <li><strong>執行分析並檢視風險評級：</strong>依日期、金額、類型、受贈人四項給分，產出 LOW/MEDIUM/HIGH/CRITICAL 評級。2 年內走遺贈稅§15 + 民法§1148-1 雙軌；2–10 年僅§244 詐害撤銷可追溯。</li>
+      <li><strong>依後續調查清單蒐證：</strong>高風險者向國稅局申請歷年贈與稅申報紀錄、向地政事務所申請近 10 年不動產異動歷程；必要時聲請假扣押，情節重大者依刑法§356 損害債權罪提告。</li>
+    </ol>
+  </section>
+
+  <!-- FAQ — visible content for FAQPage schema -->
+  <section style="margin:0 auto 40px;padding:0 4px">
+    <div style="font-family:'Noto Serif TC',serif;font-size:11px;color:var(--muted);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)">常見問題</div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">遺贈稅法§15「死亡前 2 年內贈與」適用對象有哪些？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">依遺產及贈與稅法第 15 條，被繼承人死亡前 2 年內贈與下列三類對象之財產，應併入遺產總額課徵遺產稅：(1) 配偶；(2) 民法§1138 及§1140 規定之各順序繼承人；(3) 前款各順序繼承人之配偶。贈與第三人（非上述親屬）不受 2 年擬制規定拘束，但仍應檢視是否已申報贈與稅。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">民法§1148-1 與遺贈稅法§15 都是「2 年」，差別在哪？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">兩條時間軸相同（繼承開始前 2 年內），但作用面不同：§15 是稅面，把擬制贈與併入遺產總額對國稅局課稅；§1148-1 是限定繼承責任面，僅讓被繼承人之債權人主張該等贈與「視為所得遺產」以擴張清償基礎，不擴張遺產稅基、也不等於民法特留分加回。2 年外則只剩民法§244 詐害撤銷可追溯。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">超過 2 年的贈與還能追回來嗎？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">可能。民法§244 規定債務人所為有害及債權之行為，債權人得聲請法院撤銷之；§245 規定該撤銷權自債權人知有撤銷原因時起 1 年、自行為時起 10 年內消滅（除斥期間）。2–10 年區間仍可由債權人聲請撤銷，但須證明被繼承人有詐害意圖；逾 10 年則幾乎無從追溯。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">被繼承人把房子用「遠低於市價」賣給子女算贈與嗎？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">可能構成實質贈與。依遺產及贈與稅法第 5 條（視同贈與），二親等以內親屬間財產之買賣、或以顯著不相當之代價讓與財產，差額部分視為贈與並課徵贈與稅。國稅局實務上以公告現值或鑑定價作為市價認定基準。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">被繼承人生前大額提現但去向不明，要怎麼處理？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">繼承人應蒐集死亡前 2 年內銀行交易明細，對每筆大額提現要求合理說明：用於醫療、生活費屬正常支出可附憑證；無法說明者，國稅局實務上常推定為對繼承人之贈與而併入遺產總額。如懷疑款項由特定繼承人持有或代管，得另循民法不當得利、繼承回復請求權主張。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">拋棄繼承後還會被§1148-1 追究嗎？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">拋棄繼承（民法§1174）一經法院核備生效後，當事人即非繼承人，原則上不再依§1148-1 對被繼承人之債權人負「視為所得遺產」之清償責任。但拋棄前已受贈之財產若屬遺贈稅§15 範圍，仍應併入遺產總額由其他繼承人負擔遺產稅；若係為脫免債務之拋棄行為，債權人仍得依民法§244 主張撤銷。</div>
+    </div>
+    <div style="padding:14px 0">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">本工具的風險評級可以直接拿來告人嗎？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">不能。本工具為依遺贈稅§15、民法§1148-1、§244 進行的初步篩查，產出風險分數與追溯區間彙總，不構成法律意見或鑑定報告。發現高風險異動後，應向國稅局申請歷年贈與稅申報紀錄、向地政事務所申請不動產異動謄本，並委請執業律師依個案事實判斷是否提起撤銷詐害債權之訴或刑法§356 損害債權告訴。</div>
+    </div>
+  </section>
 </main>
 
 <script>

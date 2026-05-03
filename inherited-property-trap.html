@@ -33,6 +33,46 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"繼承房貸陷阱試算","url":"https://inheritance.choulegal.com/inherited-property-trap.html","applicationCategory":"FinanceApplication","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro","url":"https://inheritance.choulegal.com"}}
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "InheritancePro 首頁", "item": "https://inheritance.choulegal.com/"},
+    {"@type": "ListItem", "position": 2, "name": "繼承房貸陷阱試算", "item": "https://inheritance.choulegal.com/inherited-property-trap.html"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "如何試算繼承有房貸的房屋出售之房地合一稅",
+  "description": "依所得稅法§4-4、§4-5、§14-4 並套用財政部 110/06/11 台財稅字第 11004561660 號函「額外負擔扣除」與非自願出售 20% 稅率，比較憑直覺申報與套用優惠的稅額差異。",
+  "step": [
+    {"@type": "HowToStep", "position": 1, "name": "輸入房屋與房貸資訊", "text": "填入預計出售價格、繼承時房貸餘額、繼承時房屋公告現值（土地公告現值＋房屋評定現值）。公告現值即國稅局認定的「取得成本」，可在地政事務所或財政部地方稅網路申報查詢。"},
+    {"@type": "HowToStep", "position": 2, "name": "輸入持有期間", "text": "填入繼承後持有年數。依所§4-5，繼承取得不動產者，持有期間可併計被繼承人持有年數；本工具為保守估算，預設從繼承日起算。"},
+    {"@type": "HowToStep", "position": 3, "name": "勾選非自願出售與其他條件", "text": "若因無力負擔繼承之房貸而被迫出售，勾選「非自願因素」並準備金融機構債務清償證明、財力不足證明等文件。物價調整係數預設 1.08、可列舉費用率預設 3%（所§14-4 法定必要費用）。"},
+    {"@type": "HowToStep", "position": 4, "name": "執行對比試算", "text": "點擊「開始對比試算」，系統並排顯示憑直覺申報 vs 套用所有優惠的取得成本、可列舉費用、額外負擔扣除、課稅所得、適用稅率與應納稅額，並計算差額。"},
+    {"@type": "HowToStep", "position": 5, "name": "依優惠拆解規劃申報", "text": "查看四項優惠（物價調整／可列舉費用／額外負擔扣除／非自願出售 20% 稅率）各別貢獻金額。主張「非自願出售」前建議諮詢地政士或會計師，並備齊憑證。實際稅額以國稅局核定為準。"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "繼承的房子賣掉，為什麼會被課房地合一稅？", "acceptedAnswer": {"@type": "Answer", "text": "依所得稅法§4-4、§4-5（房地合一稅 2.0），個人因繼承取得房地後再出售者，仍應就房地交易所得申報課徵房地合一所得稅。國稅局以「繼承時房地公告現值」為取得成本，再以實際成交價扣除取得成本、可列舉費用後，按持有期間適用 45%／35%／20%／15% 累退稅率。由於公告現值通常遠低於市價，課稅所得往往很高，繼承後立刻賣容易踩到 35% 稅率。"}},
+    {"@type": "Question", "name": "「額外負擔扣除」是什麼？怎麼適用？", "acceptedAnswer": {"@type": "Answer", "text": "依財政部 110 年 6 月 11 日台財稅字第 11004561660 號函釋，繼承之房地若於繼承時房屋貸款餘額超過房地繼承現值（即公告現值）部分，得自房地交易所得中減除。例如：繼承時公告現值 400 萬、房貸餘額 700 萬，超過部分 300 萬可作為額外扣除項目，大幅降低課稅所得。這是繼承房貸案件最關鍵的節稅工具。"}},
+    {"@type": "Question", "name": "什麼是「非自願出售 20% 稅率」？我能用嗎？", "acceptedAnswer": {"@type": "Answer", "text": "依所得稅法§14-4 第 3 項第 1 款及財政部公告「個人及營利事業非自願交易持有期間在 5 年以下之房屋、土地，得按 20% 稅率課徵房地合一所得稅情形」，符合特定非自願因素（如無力清償繼承之債務、調職、重大疾病等）出售之房地，持有未滿 5 年得適用 20% 稅率（一般為 35% 或 45%）。主張時須檢附金融機構債務清償證明、財力不足證明等文件，並由國稅局審核。"}},
+    {"@type": "Question", "name": "繼承後馬上賣，持有期間怎麼算？", "acceptedAnswer": {"@type": "Answer", "text": "依所得稅法§4-5 規定，個人繼承取得之房地，其持有期間得併計被繼承人持有期間。例如：被繼承人已持有 12 年，繼承人繼承後 1 年內出售，合併持有期間達 13 年，可適用持有 10 年以上之 15% 稅率，而非繼承日起算的短期 35%／45% 高稅率。本工具為保守估算，預設從繼承日起算；實際申報時可主張併計。"}},
+    {"@type": "Question", "name": "公告現值跟市價差很多，可以用市價當取得成本嗎？", "acceptedAnswer": {"@type": "Answer", "text": "原則不可。所得稅法§14-4 規定繼承取得之房地，以「繼承時之房屋評定現值及土地公告現值」按消費者物價指數調整後計算取得成本。雖然公告現值通常遠低於市價（造成課稅所得偏高），但這是法定計算基礎，無法以鑑定市價取代。額外負擔扣除與非自願出售 20% 稅率即為立法/行政上對此設計的緩衝機制。"}},
+    {"@type": "Question", "name": "繼承前父母自住超過 6 年，繼承後賣可以用自住優惠嗎？", "acceptedAnswer": {"@type": "Answer", "text": "需符合自住要件方可。所得稅法§4-5 第 1 項第 1 款自住房地優惠（課稅所得 400 萬以下免稅、超過部分 10% 稅率）要求出售前 6 年內，本人、配偶或未成年子女於該房屋辦竣戶籍登記、持有並居住，無出租或營業使用。繼承人若繼承後未實際遷入並設籍滿一定期間，無法直接適用；建議諮詢地政士或會計師評估個案。"}},
+    {"@type": "Question", "name": "本試算結果可以直接拿去申報嗎？", "acceptedAnswer": {"@type": "Answer", "text": "不行。本工具為參考性質試算，主要呈現「憑直覺申報 vs 套用優惠」的稅額差距，提醒使用者重要節稅項目存在。實際申報時須備齊繼承登記資料、房貸清償證明、非自願事由證明等文件，並由國稅局核定。建議申報前諮詢地政士、會計師或稅務專業人員，避免因主張不當被補稅加罰。"}}
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -185,6 +225,51 @@
   <div class="ip-disclaimer">
     本工具計算結果僅供參考，不構成稅務或法律意見。實際個案請諮詢地政士、會計師或稅務專業人員。
   </div>
+
+  <!-- HowTo — visible step list for HowTo schema -->
+  <section style="max-width:700px;margin:40px auto 24px;padding:0 4px">
+    <div style="font-family:'Noto Serif TC',serif;font-size:11px;color:#7a6f62;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #c8bfb0">使用步驟</div>
+    <ol style="padding-left:20px;color:#1a1410;font-size:13px;line-height:1.9">
+      <li><strong>輸入房屋與房貸資訊：</strong>填入預計出售價格、繼承時房貸餘額、繼承時房屋公告現值（土地公告現值＋房屋評定現值）。公告現值即國稅局認定的「取得成本」。</li>
+      <li><strong>輸入持有期間：</strong>填入繼承後持有年數。依所§4-5，繼承取得不動產者持有期間可併計被繼承人持有年數；本工具預設從繼承日起算。</li>
+      <li><strong>勾選非自願出售與其他條件：</strong>因無力負擔繼承房貸而被迫出售者勾選非自願因素，並備齊金融機構債務清償證明。物價調整係數預設 1.08、可列舉費用率預設 3%。</li>
+      <li><strong>執行對比試算：</strong>並排顯示憑直覺申報 vs 套用所有優惠的取得成本、可列舉費用、額外負擔扣除、課稅所得、適用稅率與應納稅額。</li>
+      <li><strong>依優惠拆解規劃申報：</strong>查看物價調整／可列舉費用／額外負擔扣除／非自願出售 20% 稅率四項優惠各別貢獻，主張前建議諮詢地政士或會計師。</li>
+    </ol>
+  </section>
+
+  <!-- FAQ — visible content for FAQPage schema -->
+  <section style="max-width:700px;margin:0 auto 40px;padding:0 4px">
+    <div style="font-family:'Noto Serif TC',serif;font-size:11px;color:#7a6f62;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #c8bfb0">常見問題</div>
+    <div style="padding:14px 0;border-bottom:1px solid #e8e0d0">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:#1a1410;margin-bottom:8px">繼承的房子賣掉，為什麼會被課房地合一稅？</div>
+      <div style="font-size:13px;color:#7a6f62;line-height:1.8">依所得稅法§4-4、§4-5（房地合一稅 2.0），個人因繼承取得房地後再出售者，仍應就房地交易所得申報課稅。國稅局以「繼承時房地公告現值」為取得成本，再扣除可列舉費用後按持有期間適用 45%／35%／20%／15% 稅率。由於公告現值通常遠低於市價，課稅所得往往很高，繼承後立刻賣容易踩到 35% 稅率。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid #e8e0d0">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:#1a1410;margin-bottom:8px">「額外負擔扣除」是什麼？怎麼適用？</div>
+      <div style="font-size:13px;color:#7a6f62;line-height:1.8">依財政部 110 年 6 月 11 日台財稅字第 11004561660 號函，繼承之房地若於繼承時房屋貸款餘額超過房地繼承現值（即公告現值）部分，得自房地交易所得中減除。例如：繼承時公告現值 400 萬、房貸餘額 700 萬，超過部分 300 萬可作為額外扣除項目，大幅降低課稅所得。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid #e8e0d0">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:#1a1410;margin-bottom:8px">什麼是「非自願出售 20% 稅率」？我能用嗎？</div>
+      <div style="font-size:13px;color:#7a6f62;line-height:1.8">依所得稅法§14-4 第 3 項第 1 款及財政部公告之非自願交易情形，符合特定非自願因素（如無力清償繼承之債務、調職、重大疾病等）出售之房地，持有未滿 5 年得適用 20% 稅率（一般為 35% 或 45%）。主張時須檢附金融機構債務清償證明、財力不足證明等文件。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid #e8e0d0">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:#1a1410;margin-bottom:8px">繼承後馬上賣，持有期間怎麼算？</div>
+      <div style="font-size:13px;color:#7a6f62;line-height:1.8">依所得稅法§4-5 規定，個人繼承取得之房地，持有期間得併計被繼承人持有期間。例如：被繼承人已持有 12 年，繼承人繼承後 1 年內出售，合併持有期間達 13 年，可適用持有 10 年以上之 15% 稅率。本工具為保守估算，預設從繼承日起算；實際申報時可主張併計。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid #e8e0d0">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:#1a1410;margin-bottom:8px">公告現值跟市價差很多，可以用市價當取得成本嗎？</div>
+      <div style="font-size:13px;color:#7a6f62;line-height:1.8">原則不可。所得稅法§14-4 規定繼承取得之房地，以「繼承時之房屋評定現值及土地公告現值」按消費者物價指數調整後計算取得成本。雖然公告現值通常遠低於市價，但這是法定計算基礎，無法以鑑定市價取代。額外負擔扣除與非自願出售 20% 稅率即為立法/行政上對此設計的緩衝機制。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid #e8e0d0">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:#1a1410;margin-bottom:8px">繼承前父母自住超過 6 年，繼承後賣可以用自住優惠嗎？</div>
+      <div style="font-size:13px;color:#7a6f62;line-height:1.8">需符合自住要件方可。所得稅法§4-5 第 1 項第 1 款自住房地優惠要求出售前 6 年內，本人、配偶或未成年子女於該房屋辦竣戶籍登記、持有並居住，無出租或營業使用。繼承人若繼承後未實際遷入並設籍，無法直接適用；建議諮詢地政士或會計師評估個案。</div>
+    </div>
+    <div style="padding:14px 0">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:#1a1410;margin-bottom:8px">本試算結果可以直接拿去申報嗎？</div>
+      <div style="font-size:13px;color:#7a6f62;line-height:1.8">不行。本工具為參考性質試算，主要呈現「憑直覺申報 vs 套用優惠」的稅額差距。實際申報時須備齊繼承登記資料、房貸清償證明、非自願事由證明等文件，並由國稅局核定。建議申報前諮詢地政士、會計師或稅務專業人員，避免因主張不當被補稅加罰。</div>
+    </div>
+  </section>
 </main>
 
 <script type="module">

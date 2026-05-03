@@ -28,6 +28,46 @@
 <script src="js/pdf-export.js"></script>
 <script src="js/persona.js"></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"要保人過世保單處理決策器","url":"https://inheritance.choulegal.com/insurance-policyholder-death.html","applicationCategory":"FinanceApplication","operatingSystem":"Web","inLanguage":"zh-TW","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"InheritancePro","url":"https://inheritance.choulegal.com"}}</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "InheritancePro 首頁", "item": "https://inheritance.choulegal.com/"},
+    {"@type": "ListItem", "position": 2, "name": "要保人過世保單處理決策器", "item": "https://inheritance.choulegal.com/insurance-policyholder-death.html"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "如何使用要保人過世保單處理決策器評估四種處理方案",
+  "description": "比較續繳保費、解約、變更要保人、保單借款四種方案的稅務與現金流。",
+  "step": [
+    {"@type": "HowToStep", "position": 1, "name": "輸入保單資訊", "text": "選擇保單類型（終身壽險／年金險／投資型／儲蓄型養老險），輸入保單價值準備金（保價金）、解約金、累計已繳保費、剩餘年限與每年保費。保價金須向保險公司書面查詢取得。"},
+    {"@type": "HowToStep", "position": 2, "name": "輸入繼承人結構", "text": "填入遺產總額（含保價金）、是否有配偶、直系卑親屬人數、父母人數。系統依 V2025 遺產稅基準（免稅額 1,333 萬、配偶扣除額 553 萬、卑親屬每人 56 萬、父母每人 138 萬、喪葬費 138 萬）估算遺產稅。"},
+    {"@type": "HowToStep", "position": 3, "name": "執行四方案比較", "text": "點擊「四方案對比試算」，並排比較續繳、解約、變更要保人、保單借款四方案的可得金額、遺產稅分擔、所得稅／利息／續繳成本與淨現金流，系統標註淨現金最大者為推薦方案。"},
+    {"@type": "HowToStep", "position": 4, "name": "確認法定期限", "text": "死亡後 5 日內通知保險公司、6 個月內申報遺產稅、3 個月內辦理拋棄繼承（若選擇）。逾期未申報遺產稅將被處 1 倍以下罰鍰（遺贈稅§44）。"},
+    {"@type": "HowToStep", "position": 5, "name": "辦理保單變更或解約", "text": "決定方案後備齊死亡證明、繼承系統表、繼承人身分證明、保單正本，向保險公司申請。變更要保人案件建議併同遺產稅申報後辦理；後續若再變更或解約可能涉及贈與稅，宜諮詢稅務專業人員。"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "要保人死亡時，保單為什麼是「遺產」？", "acceptedAnswer": {"@type": "Answer", "text": "保單之要保人享有保單上一切財產上權利（保險法§3、§116、§119），包括解約金請求權、保單借款權、變更受益人權等，本身具財產價值。要保人死亡時，該等權利及其表彰之「保單價值準備金」（保價金）依民法§1148 為遺產之一部分，由全體繼承人繼承，並應於遺產稅申報書中列入遺產總額。"}},
+    {"@type": "Question", "name": "「保單價值準備金」與「身故保險金」一樣嗎？", "acceptedAnswer": {"@type": "Answer", "text": "不一樣，兩者必須分清楚。保單價值準備金（保價金）是要保人對保險公司之財產權利，要保人死亡時屬其遺產，須課遺產稅。身故保險金（死亡給付）則是被保險人死亡時依保險契約給付給指定受益人之保險金，原則上不屬於被保險人遺產（保險法§112、遺贈稅§16 第 9 款）。本工具處理的情境是「要保人」死亡（不一定是被保險人），所以保價金是遺產；如果是「被保險人」死亡且有指定受益人，受益人領的死亡給付通常不算遺產。"}},
+    {"@type": "Question", "name": "繼承人都不想處理，可以放著不管嗎？", "acceptedAnswer": {"@type": "Answer", "text": "不建議。要保人死亡後保單仍持續扣繳保費，若帳戶餘額不足將被自動墊繳保費或停效；保價金未申報為遺產可能被國稅局查獲補稅加罰（遺贈稅§44）。實務上保險公司知悉要保人死亡後 5 日內應通知（保險法§108 III），繼承人最遲應在死亡後 6 個月內遺產稅申報期間決定處理方式。"}},
+    {"@type": "Question", "name": "變更要保人後，未來再變更或解約會課贈與稅嗎？", "acceptedAnswer": {"@type": "Answer", "text": "可能會。國稅局實務上認為，要保人變更後，保單財產權即移轉給新要保人；若該變更非因繼承（例如父母在世時把保單要保人改為子女），變更時點之保價金通常被認定為對新要保人之贈與，依遺贈稅§4 課徵贈與稅。本案因要保人死亡而由繼承人變更，屬繼承行為非贈與；但繼承後再次變更（如多位繼承人協議由其中一人承接），仍可能觸發贈與稅爭議，宜諮詢稅務專業人員。"}},
+    {"@type": "Question", "name": "解約金有沒有所得稅？", "acceptedAnswer": {"@type": "Answer", "text": "可能有。依所得稅法及財政部相關函釋，保單解約金超過已繳保費部分屬「其他所得」，應併入綜合所得課稅；最低稅負制亦可能適用（特定保險給付）。本工具預設以 5% 保守估算，實際稅率依個人綜合所得適用級距而異。投資型保單之投資帳戶價值若有資本利得，課稅方式更複雜，建議向會計師確認。"}},
+    {"@type": "Question", "name": "保單借款利息可以扣除遺產稅嗎？", "acceptedAnswer": {"@type": "Answer", "text": "本身不能。遺產稅之扣除項目限於遺贈稅§17 列舉者（配偶扣除、直系卑親屬扣除、父母扣除、重度身障扣除、未成年扣除、繼承農地、繼承事業、被繼承人之喪葬費及未償債務等）。要保人生前以保單借款所生未償本金及利息屬「被繼承人死亡前之未償債務」，依遺贈稅§17 第 1 項第 9 款得自遺產總額中扣除；繼承後新增之保單借款則否。"}},
+    {"@type": "Question", "name": "本工具給的「推薦」方案就是最好的嗎？", "acceptedAnswer": {"@type": "Answer", "text": "不一定。本工具以「1 年期間之淨現金流」為單一比較基準，未納入長期保險保障價值、未來身故保險金潛在收益、家族稅務規劃整體效果。例如續繳方案在工具中可能因短期現金流為負而被低估，但若被繼承人預期壽命長且保險金額遠大於累計保費，長期報酬可能優於解約。建議結合家族財務規劃整體評估，並諮詢保險業務員、地政士或會計師。"}}
+  ]
+}
+</script>
 <style>
   .alert{background:#8b1a1a;color:#fff;border-radius:12px;padding:14px 18px;margin-bottom:20px;border:2px solid #ff6b4a;font-size:12px;line-height:1.7;}
   .alert strong{color:#ffd6cc;}
@@ -141,6 +181,51 @@
     <button class="calc-btn" onclick="downloadPDF()" style="margin-top:16px">↓ 匯出 PDF 報告</button>
   </div>
   <div class="disclaimer" style="font-size:11px;color:#aaa;text-align:center;padding:16px 0;line-height:1.6">本工具計算結果僅供參考，不構成稅務或法律意見。</div>
+
+  <!-- HowTo — visible step list for HowTo schema -->
+  <section style="max-width:700px;margin:40px auto 24px;padding:0 4px">
+    <div style="font-family:'Noto Serif TC',serif;font-size:11px;color:var(--muted);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)">使用步驟</div>
+    <ol style="padding-left:20px;color:var(--ink);font-size:13px;line-height:1.9">
+      <li><strong>輸入保單資訊：</strong>選擇保單類型，輸入保單價值準備金（保價金）、解約金、累計已繳保費、剩餘年限與每年保費。保價金須向保險公司書面查詢取得。</li>
+      <li><strong>輸入繼承人結構：</strong>填入遺產總額（含保價金）、是否有配偶、直系卑親屬人數、父母人數。系統依 V2025 遺產稅基準估算遺產稅。</li>
+      <li><strong>執行四方案比較：</strong>並排比較續繳、解約、變更要保人、保單借款四方案的稅務分擔與淨現金流，標註淨現金最大者為推薦方案。</li>
+      <li><strong>確認法定期限：</strong>死亡後 5 日內通知保險公司、6 個月內申報遺產稅、3 個月內辦理拋棄繼承（若選擇）。逾期可能依遺贈稅§44 受罰。</li>
+      <li><strong>辦理保單變更或解約：</strong>備齊死亡證明、繼承系統表、繼承人身分證明、保單正本辦理。後續若再變更或解約可能涉及贈與稅，宜諮詢稅務專業人員。</li>
+    </ol>
+  </section>
+
+  <!-- FAQ — visible content for FAQPage schema -->
+  <section style="max-width:700px;margin:0 auto 40px;padding:0 4px">
+    <div style="font-family:'Noto Serif TC',serif;font-size:11px;color:var(--muted);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)">常見問題</div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">要保人死亡時，保單為什麼是「遺產」？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">保單之要保人享有保單上一切財產上權利（保險法§3、§116、§119），包括解約金請求權、保單借款權、變更受益人權等，本身具財產價值。要保人死亡時，該等權利及其表彰之「保單價值準備金」（保價金）依民法§1148 為遺產之一部分，由全體繼承人繼承，並應於遺產稅申報書中列入遺產總額。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">「保單價值準備金」與「身故保險金」一樣嗎？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">不一樣，兩者必須分清楚。保單價值準備金（保價金）是要保人對保險公司之財產權利，要保人死亡時屬其遺產，須課遺產稅。身故保險金（死亡給付）則是被保險人死亡時依保險契約給付給指定受益人之保險金，原則上不屬於被保險人遺產（保險法§112、遺贈稅§16 第 9 款）。本工具處理的是「要保人」死亡情境，所以保價金是遺產；如為「被保險人」死亡且有指定受益人，受益人領的死亡給付通常不算遺產。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">繼承人都不想處理，可以放著不管嗎？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">不建議。要保人死亡後保單仍持續扣繳保費，若帳戶餘額不足將被自動墊繳保費或停效；保價金未申報為遺產可能被國稅局查獲補稅加罰（遺贈稅§44）。實務上保險公司知悉後 5 日內應通知，繼承人最遲應在死亡後 6 個月內遺產稅申報期間決定處理方式。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">變更要保人後，未來再變更或解約會課贈與稅嗎？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">可能會。國稅局實務上認為，要保人變更後，保單財產權即移轉給新要保人；若該變更非因繼承（例如父母在世時把保單要保人改為子女），變更時點之保價金通常被認定為對新要保人之贈與，依遺贈稅§4 課徵贈與稅。本案因要保人死亡而由繼承人變更屬繼承行為非贈與；但繼承後再次變更（如多位繼承人協議由其中一人承接），仍可能觸發贈與稅爭議。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">解約金有沒有所得稅？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">可能有。依所得稅法及財政部相關函釋，保單解約金超過已繳保費部分屬「其他所得」，應併入綜合所得課稅；最低稅負制亦可能適用。本工具預設以 5% 保守估算，實際稅率依個人綜合所得適用級距而異。投資型保單之投資帳戶價值若有資本利得，課稅方式更複雜，建議向會計師確認。</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">保單借款利息可以扣除遺產稅嗎？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">本身不能。遺產稅扣除項目限於遺贈稅§17 列舉者。要保人生前以保單借款所生未償本金及利息屬「被繼承人死亡前之未償債務」，依遺贈稅§17 第 1 項第 9 款得自遺產總額中扣除；繼承後新增之保單借款則否。</div>
+    </div>
+    <div style="padding:14px 0">
+      <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">本工具給的「推薦」方案就是最好的嗎？</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">不一定。本工具以「1 年期間之淨現金流」為單一比較基準，未納入長期保險保障價值、未來身故保險金潛在收益、家族稅務規劃整體效果。例如續繳方案在工具中可能因短期現金流為負而被低估，但若預期壽命長且保險金額遠大於累計保費，長期報酬可能優於解約。建議結合整體財務規劃並諮詢專業人員。</div>
+    </div>
+  </section>
 </main>
 <script>
   const FMT=v=>'NT$ '+Math.round(v).toLocaleString('zh-TW');
