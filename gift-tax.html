@@ -754,7 +754,8 @@
     // 繼承比較
     if (estateValue > 0) {
       document.getElementById('compareCard').style.display = 'block';
-      var ESTATE_EXEMPT = 13330000;
+      // SSOT：免稅額自 core 取得（遺贈稅法§18 公告）
+      var ESTATE_EXEMPT = (window.IP_CORE && window.IP_CORE.ESTATE_EXEMPTION) || 13330000;
       var estateNetFull = Math.max(0, estateValue - ESTATE_EXEMPT);
       var estateNetAfterGift = Math.max(0, estateValue - totalGiftPlan - ESTATE_EXEMPT);
       var taxFull = calcEstateTax(estateNetFull);
@@ -843,7 +844,8 @@
     var totalFreeN = annualFree * years;
     var remaining = Math.max(0, total - totalFreeN);
 
-    var EXEMPTION = 13330000;
+    // SSOT：免稅額自 core 取得（遺贈稅法§18 公告）
+    var EXEMPTION = (window.IP_CORE && window.IP_CORE.ESTATE_EXEMPTION) || 13330000;
     var taxA = plannerEstateTax(Math.max(0, total - EXEMPTION));
 
     var giftTaxTotal = 0;

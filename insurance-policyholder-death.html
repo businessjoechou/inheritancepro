@@ -262,8 +262,8 @@
       });
       estateTax=r.tax;
     }else{
-      // Fallback：core 未載入時用 V2025 硬編（喪葬費一律扣除）
-      const baseExempt=13330000;
+      // Fallback：core 未載入時用 SSOT 常數（遺贈稅法§18 公告）；最終 fallback 為 V2025 硬編
+      const baseExempt=(window.IP_CORE && window.IP_CORE.ESTATE_EXEMPTION) || 13330000;
       const dSpouse=hasSpouse?5530000:0;
       const dChildren=childrenCount*560000;
       const dParents=parentsCount*1380000;

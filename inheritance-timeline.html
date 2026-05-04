@@ -7,7 +7,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>繼承流程時間軸｜InheritancePro</title>
-<meta name="description" content="輸入被繼承人死亡日期，自動計算中華民國繼承法各項法定期限：死亡登記30天、拋棄繼承90天、遺產稅申報6個月，並依遺產狀況產生個人化待辦清單。">
+<meta name="description" content="輸入被繼承人死亡日期，自動計算中華民國繼承法各項法定期限：死亡登記30天、拋棄繼承3個月、遺產稅申報6個月，並依遺產狀況產生個人化待辦清單。">
 <meta name="keywords" content="繼承期限,拋棄繼承期限,遺產稅申報期限,繼承流程,死亡登記,限定繼承,繼承待辦">
 <meta name="robots" content="index, follow">
 <meta property="og:title" content="繼承流程時間軸｜InheritancePro">
@@ -185,6 +185,16 @@
   </div>
 
   <div class="card">
+    <div class="card-title"><span class="icon">🔔</span>知悉得繼承之日（拋棄/限定繼承期限起算）</div>
+    <div class="input-prefix">
+      <input type="date" id="knowDate" max="">
+    </div>
+    <div style="font-size:12px;color:var(--muted);line-height:1.7;margin-top:8px">
+      依民法§1174 II，拋棄繼承 3 個月期限自<strong>「知悉其得繼承之時」</strong>起算，非一律以死亡日起算。若不確定或為一般情形，可留空，系統將以死亡日為起算日。
+    </div>
+  </div>
+
+  <div class="card">
     <div class="card-title"><span class="icon">📋</span>遺產狀況（可多選）</div>
     <div class="toggle-grid">
       <div class="toggle-item">
@@ -250,7 +260,7 @@
       <div style="font-size:12px;font-weight:700;color:#1a3a5c;letter-spacing:0.04em;margin-bottom:10px">⚖ 律師策略備忘</div>
       <div style="font-size:12px;color:#1a2a3a;line-height:1.9">
         <strong>遺囑效力</strong>：若遺囑效力有爭議（形式不符、受脅迫），應於繼承開始後盡早提出確認訴訟，拖延越久越不利。<br>
-        <strong>拋棄繼承決策</strong>：90 天期限緊迫，若遺產中有不明債務，建議先陳報遺產清冊（§1156）做限定繼承，而非倉促拋棄。<br>
+        <strong>拋棄繼承決策</strong>：3 個月期限緊迫（自知悉得繼承之時起算，§1174 II），若遺產中有不明債務，建議先陳報遺產清冊（§1156）做限定繼承，而非倉促拋棄。<br>
         <strong>特留分侵害</strong>：扣減請求權行使期限民法未明文，實務及學說分別援用§1146（繼承回復請求權，知悉起 2 年／繼承開始起 10 年）或§197 之 2（侵權請求權，知悉起 2 年／行為起 10 年），見解分歧，應及早清查遺囑及生前贈與並諮詢律師。<br>
         <strong>遺產分割訴訟</strong>：若繼承人意見不一致，可提起遺產分割之訴（家事事件法），法院得斟酌各繼承人需求決定分割方法，非必然均分現金。
       </div>
@@ -312,6 +322,14 @@
     return d;
   }
 
+  function addMonths(date, months){
+    // 依日曆月推算（與民法/稅法「月」同義），保留同日；若該月無同日則自動退到月底
+    const d = new Date(date);
+    const targetMonth = d.getMonth() + months;
+    d.setMonth(targetMonth);
+    return d;
+  }
+
   function addYears(date, years){
     const d = new Date(date);
     d.setFullYear(d.getFullYear() + years);
@@ -354,6 +372,11 @@
     const death = new Date(val);
     death.setHours(0,0,0,0);
 
+    // 知悉日（拋棄/限定繼承期限起算日，民法§1174 II）；未填則退回死亡日
+    const knowVal = document.getElementById('knowDate').value;
+    const knowDate = knowVal ? new Date(knowVal) : new Date(death);
+    knowDate.setHours(0,0,0,0);
+
     const hasWill    = document.getElementById('hasWill').checked;
     const hasProp    = document.getElementById('hasProperty').checked;
     const hasIns     = document.getElementById('hasInsurance').checked;
@@ -381,35 +404,42 @@
       },
       {
         title: '拋棄繼承期限',
-        deadline: addDays(death, 90),
-        desc: '繼承人若不願繼承（例如遺產為負債），須在知悉繼承後3個月內向法院聲請拋棄繼承。逾期視為概括承受，包含債務。<div class="warn-box">⚠️ 注意：依民法§1174，拋棄繼承3個月期限係自<strong>繼承人知悉其得繼承之時</strong>起算，而非一律以死亡日起算。若繼承人晚於死亡日才獲知，期限相應延後，請以實際知悉日計算。</div>',
+        deadline: addMonths(knowDate, 3),
+        desc: `繼承人若不願繼承（例如遺產為負債），須在知悉得繼承之時起 3 個月內向法院聲請拋棄繼承。逾期視為概括承受，包含債務。<div class="warn-box">⚠️ 依民法§1174 II，3 個月期限自<strong>「知悉其得繼承之時」</strong>起算（${knowVal ? '以你輸入的知悉日 ' + formatDateShort(knowDate) + ' 推算' : '未輸入知悉日，暫以死亡日為起算日；若實際知悉日晚於死亡日，請回上方填入'}）。</div>`,
         where: '📍 管轄地方法院',
         law: '民法第1174條',
         optional: false
       },
       {
         title: '限定繼承清冊陳報',
-        deadline: addDays(death, 90),
-        desc: '選擇「限定繼承」的繼承人，應於繼承後3個月內開具遺產清冊陳報法院。限定繼承人僅以繼承所得財產為限，對被繼承人之債務負清償責任，可有效避免以自有財產清償超額負債。',
+        deadline: addMonths(knowDate, 3),
+        desc: '選擇「限定繼承」的繼承人，應於知悉得繼承之時起 3 個月內開具遺產清冊陳報法院。限定繼承人僅以繼承所得財產為限，對被繼承人之債務負清償責任，可有效避免以自有財產清償超額負債。',
         where: '📍 管轄地方法院',
         law: '民法第1156條',
         optional: false
       },
       {
         title: '遺產稅申報',
-        deadline: addDays(death, 183),
-        desc: '應於被繼承人死亡後6個月內向國稅局辦理遺產稅申報。未申報或逾期申報將加徵罰鍰。可申請延期申報，但須於期限前提出申請。',
+        deadline: addMonths(death, 6),
+        desc: '應於被繼承人死亡後 6 個月內向國稅局辦理遺產稅申報（遺產及贈與稅法§23）。未申報或逾期申報將加徵罰鍰。可申請延期申報，但須於期限前提出申請。',
         where: '📍 國稅局（依被繼承人戶籍地管轄）',
         law: '遺產及贈與稅法第23條',
         optional: false,
         isMain: true
       },
+      // 驗證來源：law.moj.gov.tw/LawClass/LawAll.aspx?pcode=G0340003 §71-1 I（查核日 2026-05-03）
+      // 原文：「中華民國境內居住之個人於年度中死亡，其死亡及以前年度依本法規定應申報課稅之所得，
+      //        除依第七十一條規定免辦結算申報者外，應由遺囑執行人、繼承人或遺產管理人於死亡人
+      //        死亡之日起三個月內，依本法之規定辦理結算申報，並就其遺產範圍內代負一切有關申報
+      //        納稅之義務。但遺有配偶為中華民國境內居住之個人者，仍應由其配偶依第七十一條之規定，
+      //        合併辦理結算申報納稅。」
+      // 起算日 = 死亡之日（非次月起）；期限 = 3 個月；§71-1 並無「結算申報期內死亡」之特殊分流規定。
       {
         title: `${death.getFullYear()}年度所得稅申報（代申報）`,
-        deadline: new Date(death.getFullYear() + 1, 4, 31),
-        desc: `被繼承人當年度（${death.getFullYear()}年）的所得稅，由繼承人代為申報，期限為次年（${death.getFullYear()+1}年）5月31日前。需備妥被繼承人當年度各項所得資料。`,
+        deadline: addMonths(death, 3),
+        desc: `被繼承人當年度（${death.getFullYear()}年）的綜合所得稅，由繼承人代為申報。依所得稅法§71-1 第 1 項，遺囑執行人、繼承人或遺產管理人應於<strong>被繼承人死亡之日起 3 個月內</strong>辦理結算申報，並就遺產範圍內代負一切申報納稅義務（必要時得申請延期）。<br><br><strong>例外：</strong>若被繼承人遺有配偶且配偶為中華民國境內居住之個人，依§71-1 第 1 項但書，仍應由其配偶依§71 規定合併辦理結算申報納稅（即併入次年 5 月一般申報期，毋須提前 3 個月內申報）。需備妥被繼承人當年度各項所得資料。`,
         where: '📍 國稅局或線上申報（財政部電子申報系統）',
-        law: '所得稅法第71條',
+        law: '所得稅法第71-1條',
         optional: false
       }
     ];
@@ -650,6 +680,7 @@ td{padding:9px 12px;border-bottom:1px solid #e8e0d0;vertical-align:top;}
 
   // Set max date to today
   document.getElementById('deathDate').max = new Date().toISOString().split('T')[0];
+  document.getElementById('knowDate').max = new Date().toISOString().split('T')[0];
 </script>
 <div class="disclaimer-bar"><strong>免責聲明</strong>：本平台之計算結果僅供初步參考，不構成法律意見或法律諮詢服務。</div>
 <script type="module" src="js/components/save-button.js"></script>

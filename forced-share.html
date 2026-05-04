@@ -124,19 +124,19 @@
       <label for="hasSpouse">配偶存活（配偶為當然繼承人）</label>
     </div>
     <div class="input-group">
-      <label>直系血親卑親屬人數<span class="label-hint">子女、已故子女之代位繼承人，§1138①</span></label>
+      <label for="children">直系血親卑親屬人數<span class="label-hint">子女、已故子女之代位繼承人，§1138①</span></label>
       <input type="number" id="children" placeholder="0" min="0" max="20" oninput="autoCalc()">
     </div>
     <div class="input-group">
-      <label>父母存活人數<span class="label-hint">無直系血親卑親屬時繼承，§1138②，最多 2</span></label>
+      <label for="parents">父母存活人數<span class="label-hint">無直系血親卑親屬時繼承，§1138②，最多 2</span></label>
       <input type="number" id="parents" placeholder="0" min="0" max="2" oninput="autoCalc()">
     </div>
     <div class="input-group">
-      <label>兄弟姊妹人數<span class="label-hint">第三順位，§1138③</span></label>
+      <label for="siblings">兄弟姊妹人數<span class="label-hint">第三順位，§1138③</span></label>
       <input type="number" id="siblings" placeholder="0" min="0" max="20" oninput="autoCalc()">
     </div>
     <div class="input-group">
-      <label>祖父母存活人數<span class="label-hint">第四順位，§1138④，最多 4</span></label>
+      <label for="grandparents">祖父母存活人數<span class="label-hint">第四順位，§1138④，最多 4</span></label>
       <input type="number" id="grandparents" placeholder="0" min="0" max="4" oninput="autoCalc()">
     </div>
   </div>
@@ -145,19 +145,19 @@
   <div class="card">
     <div class="section-title">B · 遺產與分配</div>
     <div class="input-group">
-      <label>遺產總額（積極遺產）<span class="label-hint">元</span></label>
+      <label for="grossEstate">遺產總額（積極遺產）<span class="label-hint">元</span></label>
       <input type="number" id="grossEstate" placeholder="0" min="0" max="9999999999" oninput="autoCalc()">
     </div>
     <div class="input-group">
-      <label>死亡前贈與應加回金額<span class="label-hint">元，民法§1173 生前特種贈與（結婚、分居、營業）之歸扣；非特種贈與由法官裁量</span></label>
+      <label for="addBackGifts">死亡前贈與應加回金額<span class="label-hint">元，民法§1173 生前特種贈與（結婚、分居、營業）之歸扣；非特種贈與由法官裁量</span></label>
       <input type="number" id="addBackGifts" placeholder="0" min="0" max="9999999999" oninput="autoCalc()">
     </div>
     <div class="input-group">
-      <label>遺囑指定給特定繼承人之金額<span class="label-hint">元；<strong>本欄僅作紀錄，不進入自動計算</strong>（工具未問指定對象，無法正確分配）</span></label>
+      <label for="willedToHeirs">遺囑指定給特定繼承人之金額<span class="label-hint" style="color:#b03030"><strong>⚠ 本欄僅作紀錄，不進入自動計算</strong>（工具未問指定對象，無法正確分配；如需精算請諮詢律師）</span></label>
       <input type="number" id="willedToHeirs" placeholder="0" min="0" max="9999999999" oninput="autoCalc()">
     </div>
     <div class="input-group">
-      <label>遺囑捐贈或贈予第三人之金額<span class="label-hint">元</span></label>
+      <label for="willedToThird">遺囑捐贈或贈予第三人之金額<span class="label-hint">元</span></label>
       <input type="number" id="willedToThird" placeholder="0" min="0" max="9999999999" oninput="autoCalc()">
     </div>
   </div>

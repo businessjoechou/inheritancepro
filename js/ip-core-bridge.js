@@ -36,6 +36,7 @@ import {
   getEstateTaxBreakdown,
   calcEstateTaxFull,
   ESTATE_TAX_VERSIONS,
+  ESTATE_EXEMPTION,
   LATEST_TAX_YEAR,
   calcGiftTax,
   getGiftTaxRate,
@@ -90,6 +91,7 @@ const IP_CORE = Object.freeze({
   calcEstateTaxFull,
   estateTaxRateLabel,
   ESTATE_TAX_VERSIONS,
+  ESTATE_EXEMPTION,  // 遺產稅免稅額（依遺贈稅法§18 公告，目前 V2025 = 13,330,000）
   LATEST_TAX_YEAR,
 
   // 贈與稅

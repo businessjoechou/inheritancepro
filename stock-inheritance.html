@@ -322,7 +322,8 @@
 
   function calculate() {
     const heirCount = Math.max(1, parseInt(document.getElementById('heirCount').value) || 1);
-    const EXEMPTION = 13330000;
+    // SSOT：免稅額自 core 取得（遺贈稅法§18 公告）
+    const EXEMPTION = (window.IP_CORE && window.IP_CORE.ESTATE_EXEMPTION) || 13330000;
 
     const rows = document.querySelectorAll('.stock-row');
     if (rows.length === 0) { alert('請至少新增一筆股票'); return; }
