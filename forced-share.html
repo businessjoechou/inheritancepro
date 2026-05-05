@@ -205,8 +205,14 @@
     </div>
 
     <button class="calc-btn" onclick="downloadPDF()" style="margin-top:16px">↓ 匯出 PDF 報告</button>
+
+    <!-- 即時：本計算依據條文 -->
+    <div data-law-basis style="margin-top:24px"
+         data-formula-ids="core-inheritance.inheritance.calcReservedPortion,core-inheritance.inheritance.calcShares,core-inheritance.inheritance.heirOrder"></div>
   </div>
 </main>
+
+<script src="js/law-basis.js" defer></script>
 
 <script>
   const FMT = v => '$ ' + Math.round(v).toLocaleString('zh-TW');
