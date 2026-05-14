@@ -1,4 +1,42 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="6" fill="#1a1410"/>
-  <text x="16" y="22" font-family="serif" font-size="18" font-weight="700" fill="#c4932a" text-anchor="middle">民</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- v14 = v3 三道弧線 + 中央精緻天秤 -->
+  <defs>
+    <linearGradient id="abs-bg-14" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FAFAF7"/>
+      <stop offset="100%" stop-color="#EFEAE0"/>
+    </linearGradient>
+  </defs>
+  <circle cx="256" cy="256" r="248" fill="url(#abs-bg-14)"/>
+
+  <!-- 三道弧線（三條產品線） -->
+  <g fill="none" stroke="#1B2A4E" stroke-linecap="round">
+    <path d="M 256 80 A 176 176 0 0 1 432 256" stroke-width="32"/>
+    <path d="M 432 256 A 176 176 0 0 1 256 432" stroke-width="32" opacity="0.75"/>
+    <path d="M 256 432 A 176 176 0 0 1 80 256" stroke-width="32" opacity="0.5"/>
+  </g>
+  <!-- 缺口處的金點 -->
+  <circle cx="80" cy="256" r="22" fill="#C9A24A"/>
+  <circle cx="80" cy="256" r="10" fill="#1B2A4E"/>
+
+  <!-- 中央精緻天秤 -->
+  <g stroke="#1B2A4E" stroke-linecap="round" fill="none">
+    <!-- 縱柱 -->
+    <line x1="256" y1="200" x2="256" y2="324" stroke-width="5"/>
+    <!-- 橫梁 -->
+    <line x1="192" y1="222" x2="320" y2="222" stroke-width="5"/>
+    <!-- 左懸鏈 -->
+    <line x1="192" y1="226" x2="192" y2="244" stroke-width="2.5"/>
+    <!-- 右懸鏈 -->
+    <line x1="320" y1="226" x2="320" y2="244" stroke-width="2.5"/>
+    <!-- 左秤盤（淺碗） -->
+    <path d="M 170 248 Q 192 272 214 248" stroke-width="4"/>
+    <!-- 右秤盤 -->
+    <path d="M 298 248 Q 320 272 342 248" stroke-width="4"/>
+    <!-- 底座（兩層）-->
+    <line x1="228" y1="328" x2="284" y2="328" stroke-width="5"/>
+    <line x1="240" y1="338" x2="272" y2="338" stroke-width="4"/>
+  </g>
+  <!-- 頂端金支點 -->
+  <circle cx="256" cy="196" r="8" fill="#C9A24A"/>
+  <circle cx="256" cy="196" r="3" fill="#1B2A4E"/>
 </svg>
