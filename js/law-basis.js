@@ -54,8 +54,10 @@
 
   function render(host, articles) {
     if (!articles.length) {
-      host.innerHTML = `<div class="law-basis"><div class="law-basis__title">本計算依據條文</div>
-        <div class="law-basis__empty">尚未建立依據對照</div></div>`;
+      // 0 articles = SEEDS 還沒 apply 到 prod（待 F1 完成）或暫時 endpoint 缺資料；
+      // 隱藏 widget 避免顯示「尚未建立依據對照」的 dead UI。F1 落地後自動顯示。
+      host.innerHTML = '';
+      host.style.display = 'none';
       return;
     }
     const items = articles
