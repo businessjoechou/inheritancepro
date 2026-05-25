@@ -159,21 +159,22 @@
     display: block;
   }
 
+  /* 2026-05-24: hero-title 對齊 laborpro/consumerpro
+     原版 80px / italic em / 淡金 #fde68a 與兩個兄弟站不一致，老闆抓包 */
   .hero-title {
     font-family: 'Noto Serif TC', serif;
-    font-size: clamp(44px, 8vw, 80px);
-    font-weight: 500;
-    line-height: 1.05;
-    margin-bottom: 22px;
-    letter-spacing: -0.01em;
+    font-size: clamp(36px, 8vw, 60px);
+    font-weight: 700;
+    line-height: 1.22;
+    margin-bottom: 20px;
+    letter-spacing: 0.01em;
   }
   .hero-title em {
-    font-style: italic;
-    font-weight: 400;
-    color: #fde68a;
+    font-style: normal;
+    color: var(--gold);
   }
   .hero-title .accent {
-    color: #fde68a;
+    color: var(--gold);
   }
 
   .hero-sub {
