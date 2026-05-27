@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
+<script src="js/theme-boot.js"></script>
 <script src="js/ga.js" defer></script>
 <meta charset="UTF-8">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -122,7 +123,10 @@
     <div class="logo">Inheritance<span>Pro</span></div>
     <div class="page-sub">照顧者繼承特別貢獻</div>
   </a>
-  <a class="home-link" href="index.html">← 首頁</a>
+  <div style="display:flex;align-items:center;gap:8px">
+    <a class="home-link" href="index.html">← 首頁</a>
+    <button id="themeToggle" type="button" aria-label="切換深色/淺色模式">☀</button>
+  </div>
 </header>
 <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:50%"></div></div>
 

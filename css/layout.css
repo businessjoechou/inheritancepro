@@ -74,6 +74,54 @@ header.ip-header {
   color: var(--ip-gold);
 }
 
+/* === Light Mode 對齊（header 翻白，body 已經是 cream，2026-05-27） === */
+[data-theme="light"] header,
+[data-theme="light"] .ip-header {
+  background: #ffffff;
+  color: var(--ip-ink);
+  border-bottom: 1px solid var(--ip-border);
+}
+[data-theme="light"] .parent-brand,
+[data-theme="light"] .ip-parent-brand { color: rgba(0, 0, 0, 0.45); }
+[data-theme="light"] .page-sub,
+[data-theme="light"] .ip-page-sub { color: rgba(0, 0, 0, 0.5); }
+[data-theme="light"] .logo,
+[data-theme="light"] .ip-logo { color: var(--ip-ink); }
+
+#themeToggle {
+  background: none;
+  border: 1px solid var(--ip-border);
+  color: var(--ip-muted);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s, border-color 0.15s;
+  margin-left: 12px;
+  flex-shrink: 0;
+  padding: 0;
+}
+#themeToggle:hover { color: var(--ip-gold); border-color: var(--ip-gold); }
+
+#themeToggle.theme-toggle-floating {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  margin: 0;
+  background: var(--ip-card, #ffffff);
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.theme-transitioning,
+.theme-transitioning * {
+  transition: background-color 350ms ease, color 350ms ease, border-color 350ms ease !important;
+}
+
 /* === Main container === */
 main,
 .ip-main,
