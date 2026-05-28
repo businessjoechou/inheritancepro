@@ -64,7 +64,7 @@
   "mainEntity": [
     {"@type": "Question", "name": "車禍損害賠償的法律依據是什麼？", "acceptedAnswer": {"@type": "Answer", "text": "依民法§184 第 1 項：因故意或過失，不法侵害他人之權利者，負損害賠償責任。傷害情形依§193 請求醫療費、勞動能力減損與增加生活上需要之費用；死亡情形依§192 請求殯葬費及對受扶養人之扶養費；非財產上之精神慰撫金，致死案件依§194 由父母、子女、配偶請求，身體健康受侵害案件則依§195 由被害人本人請求。"}},
     {"@type": "Question", "name": "車禍損害賠償的請求權時效是多久？", "acceptedAnswer": {"@type": "Answer", "text": "依民法§197 第 1 項，侵權行為損害賠償請求權有「雙重時效」：自請求權人知有損害及賠償義務人時起 2 年不行使而消滅；自有侵權行為時起，逾 10 年者亦同。以先到期者為準。請及早起訴、聲請調解或取得對方書面承認以中斷時效（民法§129）。"}},
-    {"@type": "Question", "name": "強制汽車責任保險可以抵扣多少？", "acceptedAnswer": {"@type": "Answer", "text": "依強制汽車責任保險給付標準：傷害醫療給付上限 20 萬元（§2，僅抵扣醫療費用部分，慰撫金及工作損失不在強制險補償範圍）；死亡或第 1 級永久失能給付上限 200 萬元（§6，自 2026/7/1 起調升為 300 萬元）；其他失能等級依§3 對照表給付。死亡案件強制險就全部賠償金額扣除，傷害案件僅限抵扣醫療費用。"}},
+    {"@type": "Question", "name": "強制汽車責任保險可以抵扣多少？", "acceptedAnswer": {"@type": "Answer", "text": "依強制汽車責任保險給付標準：傷害醫療給付上限 20 萬元（§2，僅抵扣醫療費用部分，慰撫金及工作損失不在強制險補償範圍）；死亡或第 1 級永久失能給付上限 200 萬元（§6，金管會預告擬自 2026/7/1 調升為 300 萬元，尚未發布生效）；其他失能等級依§3 對照表給付。死亡案件強制險就全部賠償金額扣除，傷害案件僅限抵扣醫療費用。"}},
     {"@type": "Question", "name": "對方有過失時，賠償金額會如何計算？", "acceptedAnswer": {"@type": "Answer", "text": "依民法§184 與§217（與有過失），法院按雙方過失比例分擔損害。若雙方均有過失，被害人之賠償請求依其過失比例酌減。本工具以對方過失比例（百分比）乘上扣除強制險後之損害金額，估算對方應賠金額；實際比例由法院依具體事證認定。"}},
     {"@type": "Question", "name": "看護費可以請求嗎？每日金額多少？", "acceptedAnswer": {"@type": "Answer", "text": "可以。看護費屬民法§193 第 1 項「增加生活上之需要」所生費用，無論由親屬無償看護或聘僱看護工，依實務見解均得請求。法院實務常見每日 NT$2,000–3,000 區間，本工具預設 NT$2,400／日，實際金額由法院依鑑定報告、診斷證明及看護期間綜合認定。"}},
     {"@type": "Question", "name": "勞動能力減損（永久失能）怎麼計算？", "acceptedAnswer": {"@type": "Answer", "text": "依民法§193 第 1 項，身體健康受侵害致勞動能力減少者，加害人應負損害賠償責任。實務計算公式：月薪 × 12 × 剩餘工作年數（通常算至 65 歲）× 失能比率。失能比率由醫審會或法醫鑑定報告認定，法院實務參照「勞工保險失能給付標準表」（第 1–15 級）作為換算基礎。本工具僅提供初值，訴訟時以鑑定報告為準。"}},
@@ -307,6 +307,10 @@
             </div>
           </div>
         </div>
+        <div class="input-group">
+          <label>已領強制險死亡給付（元）<span style="font-weight:400;color:var(--muted);font-size:12px">依強制險法§32 以實際領得為限抵扣；未領得（如肇事者未投保、未申請）請填 0，上限 200 萬</span></label>
+          <input type="number" id="compulsoryDeath" placeholder="例如：2000000" min="0" max="2000000" value="2000000">
+        </div>
       </div>
     </div>
 
@@ -350,7 +354,7 @@
     </div>
     <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
       <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">強制汽車責任保險可以抵扣多少？</div>
-      <div style="font-size:13px;color:var(--muted);line-height:1.8">依強制汽車責任保險給付標準：傷害醫療給付上限 20 萬元（&sect;2，僅抵扣醫療費用部分，慰撫金及工作損失不在強制險補償範圍）；死亡或第 1 級永久失能給付上限 200 萬元（&sect;6，自 2026/7/1 起調升為 300 萬元）；其他失能等級依&sect;3 對照表給付。</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">依強制汽車責任保險給付標準：傷害醫療給付上限 20 萬元（&sect;2，僅抵扣醫療費用部分，慰撫金及工作損失不在強制險補償範圍）；死亡或第 1 級永久失能給付上限 200 萬元（&sect;6，金管會預告擬自 2026/7/1 調升為 300 萬元，尚未發布生效）；其他失能等級依&sect;3 對照表給付。</div>
     </div>
     <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
       <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">對方有過失時，賠償金額會如何計算？</div>
@@ -580,9 +584,12 @@
       ];
       subtotal = funeral + maintenance + solatium;
 
-      // 強制險：死亡給付200萬，抵扣全部損害
-      compulsoryInsurance = 2000000;
-      compulsoryLabel = `強制險死亡給付（固定200萬）`;
+      // 強制險：依強制汽車責任保險法§32，以實際領得之死亡給付為限抵扣（上限200萬）；未領得則不扣
+      const compulsoryRaw = parseFloat(document.getElementById('compulsoryDeath').value) || 0;
+      compulsoryInsurance = Math.min(Math.max(0, compulsoryRaw), 2000000);
+      compulsoryLabel = compulsoryInsurance > 0
+        ? `強制險死亡給付抵扣（依實領，上限200萬）`
+        : `強制險死亡給付抵扣（未領得，不扣抵）`;
     }
 
     const faultShare = subtotal * faultPct;
@@ -596,7 +603,7 @@
       <div class="result-hero">
         <div class="result-hero-label">對方應賠金額（估算）</div>
         <div class="result-hero-amount">${fmt(netAmount)}</div>
-        <div class="result-hero-sub">強制險死亡給付已扣除｜對方過失比例 ${Math.round(faultPct * 100)}%</div>
+        <div class="result-hero-sub">${compulsoryInsurance > 0 ? '強制險死亡給付已扣除' : '未扣強制險（未領得）'}｜對方過失比例 ${Math.round(faultPct * 100)}%</div>
       </div>
 
       ${netAmount <= 0 ? `<div class="success-box">強制險死亡給付已足以涵蓋本案損害，對方額外應賠金額為零或須另行確認。</div>` : ''}
@@ -642,7 +649,7 @@
           <strong>民法§193</strong>：不法侵害他人之身體或健康者，對於被害人因此喪失或減少勞動能力或增加生活上需要時，應負損害賠償責任。<br><br>
           <strong>民法§192</strong>：不法侵害他人致死者，對於支出殯葬費之人，及依法應受被害人扶養之人，負損害賠償責任。<br><br>
           <strong>民法§194</strong>：不法侵害他人致死者，被害人之父、母、子、女及配偶，雖非財產上之損害，亦得請求賠償相當之金額（精神慰撫金）。<br><br>
-          <strong>強制汽車責任保險給付標準§2、§6</strong>：傷害醫療給付上限新台幣20萬元（§2）；死亡或第1級永久失能給付上限200萬元（§6，<strong>2026/7/1 起升為 300 萬</strong>）。死亡給付係就全部賠償金額扣除，傷害案件之強制險則<strong>僅限抵扣醫療費用部分</strong>。
+          <strong>強制汽車責任保險給付標準§2、§6</strong>：傷害醫療給付上限新台幣20萬元（§2）；死亡或第1級永久失能給付上限200萬元（§6，<strong>金管會預告擬自 2026/7/1 調升為 300 萬，尚未發布生效</strong>）。死亡給付係就全部賠償金額扣除，傷害案件之強制險則<strong>僅限抵扣醫療費用部分</strong>。
         </div>
       </div>
     `;
@@ -750,7 +757,7 @@
         <div class="law-note">
           <strong>民法§193</strong>：不法侵害他人之身體或健康者，對於被害人因此喪失或減少勞動能力或增加生活上需要時，應負損害賠償責任。<br><br>
           <strong>民法§194</strong>：精神慰撫金請求（失能情形類推適用）。<br><br>
-          <strong>強制汽車責任保險給付標準§3</strong>：永久失能給付依等級最高200萬元（第1級，<strong>2026/7/1 起升為 300 萬</strong>）；強制險殘廢給付抵扣醫療費用部分，慰撫金及勞動力喪失不在強制險補償範圍。
+          <strong>強制汽車責任保險給付標準§3</strong>：永久失能給付依等級最高200萬元（第1級，<strong>金管會預告擬自 2026/7/1 調升為 300 萬，尚未發布生效</strong>）；強制險殘廢給付抵扣醫療費用部分，慰撫金及勞動力喪失不在強制險補償範圍。
         </div>
       </div>
     `;

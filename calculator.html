@@ -429,6 +429,12 @@
       <div id="childDeductAmt" style="font-size:12px;color:var(--success);margin-top:6px;font-family:'Noto Serif TC',monospace"></div>
     </div>
     <div class="input-group">
+      <label>未成年子女加扣 <span style="font-weight:400;color:var(--muted);font-size:12px">每名未成年子女除上方每人 56 萬外，另按距滿 18 歲年數每年加扣 56 萬（遺贈稅法§17-I-2 但書）</span></label>
+      <div id="minorChildrenRows"></div>
+      <button type="button" onclick="addMinorChild()" style="margin-top:2px;background:var(--soft);border:1px dashed var(--gold);color:var(--ink);border-radius:8px;padding:8px 14px;font-size:13px;cursor:pointer">＋ 新增未成年子女</button>
+      <div id="minorAddonAmt" style="font-size:12px;color:var(--success);margin-top:6px;font-family:'Noto Serif TC',monospace"></div>
+    </div>
+    <div class="input-group">
       <label>父母扣除額 <span style="font-weight:400;color:var(--muted);font-size:12px">每人 138萬，填人數</span></label>
       <div class="input-prefix">
         <span class="prefix-text">人數</span>
@@ -1159,6 +1165,28 @@
 
   /* ─── Deduction helpers ─── */
   function updateChildDeduct() { const n = parseInt(document.getElementById('deduct_children_count').value) || 0; document.getElementById('childDeductAmt').textContent = n > 0 ? `= NT$ ${(n * 560000).toLocaleString('zh-TW')}` : ''; }
+  // §17-I-2 但書：未成年直系血親卑親屬，按距屆滿成年（18 歲）之年數，每年加扣每人扣除額 56 萬
+  function addMinorChild() {
+    const wrap = document.getElementById('minorChildrenRows');
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:center;gap:8px;margin-bottom:8px';
+    row.innerHTML = '<div class="input-prefix" style="flex:1;margin:0"><span class="prefix-text">年齡</span><input type="number" class="minor-age" min="0" max="17" placeholder="0–17 歲" inputmode="numeric" oninput="updateMinorAddon()"></div><button type="button" aria-label="移除此未成年子女" onclick="this.closest(\'div\').remove();updateMinorAddon()" style="background:none;border:1px solid var(--border, #ddd);color:var(--muted);border-radius:8px;padding:8px 10px;font-size:13px;cursor:pointer">移除</button>';
+    wrap.appendChild(row);
+    row.querySelector('.minor-age').focus();
+  }
+  function getMinorChildYears() {
+    let years = 0;
+    document.querySelectorAll('#minorChildrenRows .minor-age').forEach(el => {
+      const age = parseInt(el.value);
+      if (!isNaN(age) && age >= 0 && age < 18) years += (18 - age);
+    });
+    return years;
+  }
+  function updateMinorAddon() {
+    const years = getMinorChildYears();
+    const amt = years * 560000;
+    document.getElementById('minorAddonAmt').textContent = amt > 0 ? `加扣合計 = NT$ ${amt.toLocaleString('zh-TW')}（距成年 ${years} 年 × 56萬）` : '';
+  }
   function updateParentDeduct() { const n = parseInt(document.getElementById('deduct_parents_count').value) || 0; document.getElementById('parentDeductAmt').textContent = n > 0 ? `= NT$ ${(n * 1380000).toLocaleString('zh-TW')}` : ''; }
   function updateDisabledDeduct() { const n = parseInt(document.getElementById('deduct_disabled_count').value) || 0; document.getElementById('disabledDeductAmt').textContent = n > 0 ? `= NT$ ${(n * 6930000).toLocaleString('zh-TW')}` : ''; }
   function updateAgriDeduct() { const v = parseFloat(document.getElementById('deduct_agri').value) || 0; document.getElementById('deductAgriDisplay').textContent = 'NT$ ' + v.toLocaleString('zh-TW'); }
@@ -1396,10 +1424,11 @@
     const dSpouse = state.hasSpouse ? 5530000 : 0;
     const dFuneral = 1380000;
     const dChildren = (parseInt(document.getElementById('deduct_children_count').value) || 0) * 560000;
+    const dMinorAddon = getMinorChildYears() * 560000; // §17-I-2 但書：未成年直系血親卑親屬按距成年年數每年加扣 56 萬
     const dParents = (parseInt(document.getElementById('deduct_parents_count').value) || 0) * 1380000;
     const dDisabled = (parseInt(document.getElementById('deduct_disabled_count').value) || 0) * 6930000;
     const dOther = parseFloat(document.getElementById('deduct_other').value) || 0;
-    const totalDeduct = dSpouse + dFuneral + dChildren + dParents + dDisabled + dOther
+    const totalDeduct = dSpouse + dFuneral + dChildren + dMinorAddon + dParents + dDisabled + dOther
                       + agriDeduct + retaxDeduct + dSiblings + publicLandDeduct
                       + spouseRemaining + section16Total;
     const netEstate = Math.max(0, adjustedTotal - exemption - totalDeduct);
@@ -1744,7 +1773,7 @@ ${realEstateHTML ? `<div class="section-title">不動產持有稅務</div>${real
 ${stockHTML ? `<div class="section-title">股票估值明細</div>${stockHTML}` : ''}
 <div class="pdf-footer">© ${new Date().getFullYear()} InheritancePro &nbsp;·&nbsp; inheritance.choulegal.com
 <div class="disclaimer">本報告僅供參考，不構成法律意見。實際繼承事宜請諮詢專業律師或法律顧問。</div></div>
-<script defer src="js/coffee-button.js"></script>
+<script defer src="js/coffee-button.js"><\/script>
 </body></html>`;
   }
 
@@ -1771,12 +1800,13 @@ ${stockHTML ? `<div class="section-title">股票估值明細</div>${stockHTML}` 
     const dSpouse = state.hasSpouse ? 5530000 : 0;
     const dFuneral = 1380000;
     const dChildren = (parseInt(document.getElementById('deduct_children_count')?.value) || 0) * 560000;
+    const dMinorAddon = getMinorChildYears() * 560000; // §17-I-2 但書：未成年加扣
     const dParents = (parseInt(document.getElementById('deduct_parents_count')?.value) || 0) * 1380000;
     const dDisabled = (parseInt(document.getElementById('deduct_disabled_count')?.value) || 0) * 6930000;
     const dOther = parseFloat(document.getElementById('deduct_other')?.value) || 0;
     const agriDeduct = parseFloat(document.getElementById('deduct_agri')?.value) || 0;
     const retaxDeduct = parseFloat(document.getElementById('deduct_retax')?.value) || 0;
-    const totalDeduct = dSpouse + dFuneral + dChildren + dParents + dDisabled + dOther + agriDeduct + retaxDeduct;
+    const totalDeduct = dSpouse + dFuneral + dChildren + dMinorAddon + dParents + dDisabled + dOther + agriDeduct + retaxDeduct;
     const netEstate = Math.max(0, adjustedTotal - exemption - totalDeduct);
     const tax = calcEstateTax(netEstate);
     const fmtN = n => Math.round(n).toLocaleString('zh-TW');
@@ -1870,7 +1900,7 @@ td{padding:5px 10px;border:1px solid #ddd;font-size:12px;vertical-align:top;}
   本工作底稿由 InheritancePro 系統產出，僅供申報前初步試算參考。實際申報數字應以國稅局核定及原始憑證為準。<br>
   稅法依據：遺產及贈與稅法（2026年）。申報期限：被繼承人死亡後6個月內。
 </div>
-<script defer src="js/coffee-button.js"></script>
+<script defer src="js/coffee-button.js"><\/script>
 </body></html>`;
   }
 
@@ -1886,6 +1916,7 @@ td{padding:5px 10px;border:1px solid #ddd;font-size:12px;vertical-align:top;}
     ['children', 'parents', 'siblings', 'grandparents'].forEach(k => { const el = document.getElementById('renounce_' + k); if (el) el.textContent = '0'; const ex = document.getElementById(k + 'Extra'); if (ex) ex.style.display = 'none'; });
     ['deduct_children_count', 'deduct_parents_count', 'deduct_disabled_count', 'deduct_other', 'deduct_agri', 'deduct_insurance', 'deduct_labor_ins', 'deduct_retax', 'deduct_addback_gifts', 'deduct_siblings_count', 'deduct_public_land', 'cash', 'otherAssets'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
     document.getElementById('childDeductAmt').textContent = '';
+    { const mc = document.getElementById('minorChildrenRows'); if (mc) mc.innerHTML = ''; const ma = document.getElementById('minorAddonAmt'); if (ma) ma.textContent = ''; }
     document.getElementById('parentDeductAmt').textContent = '';
     document.getElementById('disabledDeductAmt').textContent = '';
     document.getElementById('deductAgriDisplay').textContent = 'NT$ 0';
