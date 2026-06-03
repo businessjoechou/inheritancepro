@@ -1387,6 +1387,9 @@ async function handleUnsubscribe() {
     calculator:           { href: 'calculator.html', featured: true,
       name: { all: '遺產繼承計算器' },
       desc: { all: '應繼分、特留分、遺產稅一次計算，支援代位繼承與拋棄繼承' } },
+    'inheritance-agreement': { href: 'inheritance-agreement.html', featured: true,
+      name: { all: '遺產分割協議書產生器' },
+      desc: { all: '全體繼承人協議分割遺產，依民§1164 產出協議書骨架，含逐繼承人用印欄' } },
     'inheritance-timeline': { href: 'inheritance-timeline.html',
       name: { all: '繼承流程時間軸' },
       desc: { all: '死亡登記、拋棄繼承、遺產稅申報各項期限倒數' } },
@@ -1411,6 +1414,9 @@ async function handleUnsubscribe() {
     'stock-inheritance':  { href: 'stock-inheritance.html',
       name: { all: '股票繼承估算' },
       desc: { all: '上市收盤價、未上市資產淨值法（獨立版）' } },
+    'self-help': { href: 'self-help.html', badge: 'new',
+      name: { all: '繼承財產權自救指南' },
+      desc: { all: '遺產被霸占不分／特留分被侵害／被要求拋棄／繼承到債務 — 情境式法律依據與行動步驟、求助管道' } },
     'limited-inheritance': { href: 'limited-inheritance.html',
       name: { all: '限定繼承精算' },
       desc: { all: '§1148 資不抵債分析・清償順序模擬・拋棄繼承時機建議' } },
@@ -1506,6 +1512,9 @@ async function handleUnsubscribe() {
   // FEATURED_LATEST — 置頂精選橫向滑動區（7 張）
   // ═════════════════════════════════════════════════════════════
   const FEATURED_LATEST = [
+    { id: 'inheritance-agreement', label: '範本', cls: 'new',
+      title: '遺產分割協議書產生器',
+      desc: '全體繼承人協議分割遺產，填欄位即產出可複製的協議書骨架（民§1164），含逐人用印欄。' },
     { id: 'inherited-property-trap', label: '真實案例', cls: 'case',
       title: '繼承房貸陷阱試算',
       desc: '不懂規則被課 175 萬，懂規則只要 28.6 萬，差 146 萬。真實新聞案例。' },
@@ -1535,7 +1544,7 @@ async function handleUnsubscribe() {
   const TABS = [
     { id: 'death', label: '繼承相關',
       subtitle: '繼承流程、遺產分配、稅務申報一次搞定。',
-      tools: ['calculator','inheritance-timeline','deadline-dashboard','caregiver',
+      tools: ['self-help','calculator','inheritance-timeline','deadline-dashboard','caregiver',
               'real-estate','stock-inheritance','inherited-property-trap',
               'limited-inheritance','will-validity','estate-tax-detail',
               'forced-share','case-manager'] },

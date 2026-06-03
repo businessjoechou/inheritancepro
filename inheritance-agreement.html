@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>遺產分割協議書產生器（通用骨架）｜InheritancePro</title>
+<meta name="description" content="免費產生遺產分割協議書通用骨架：填入被繼承人、全體繼承人、遺產標的與分割方法，依民法第1164條至第1167條產出可複製文字，含逐繼承人用印欄與法律依據。在遺產計算機算完應繼分後也可一鍵帶入。">
+<meta name="keywords" content="遺產分割協議書,分割協議書範本,民法第1164條,民法第1167條,繼承協議,遺產分割,繼承登記">
+<link rel="canonical" href="https://inheritance.choulegal.com/inheritance-agreement.html">
+<link rel="icon" type="image/svg+xml" href="img/choulegal-icon.svg">
+<script src="js/theme-boot.js"></script>
+<script src="js/ga.js" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tool-page.css">
+<script src="js/doc-generator.js"></script>
+<style>
+  main { max-width: 760px; margin: 0 auto; padding: 24px 18px 60px; }
+  .page-head .eyebrow { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .14em; color: var(--accent); text-transform: uppercase; }
+  .page-head h1 { font-family: 'Noto Serif TC', serif; font-size: 26px; margin: 8px 0; color: var(--ink); }
+  .page-head p { font-size: 14px; color: var(--muted); line-height: 1.8; }
+  .doc-item { border: 1.5px solid var(--border); border-radius: 14px; padding: 20px 22px; background: var(--card); margin-top: 16px; }
+  .doc-item h3 { margin: 0 0 6px; font-family: 'Noto Serif TC', serif; font-size: 17px; color: var(--ink); }
+  .doc-item p { margin: 0 0 8px; font-size: 13px; color: var(--muted); line-height: 1.7; }
+  .doc-item .doc-law { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: .04em; }
+  .selfhelp-note { margin-top: 18px; font-size: 13px; color: var(--muted); line-height: 1.8; border:1.5px solid var(--border); border-radius:12px; padding:14px 18px; }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" style="text-decoration:none;color:inherit">
+    <div class="parent-brand"><img class="cl-icon" src="img/choulegal-icon.svg" alt="周全法律科技">周全 <span>ChouLegal</span></div>
+    <div class="logo">Inheritance<span>Pro</span></div>
+    <div class="badge">遺產分割協議書</div>
+  </a>
+  <div style="display:flex;align-items:center;gap:8px">
+    <a class="home-link" href="index.html">← 首頁</a>
+    <button id="themeToggle" type="button" aria-label="切換深色/淺色模式">☀</button>
+  </div>
+</header>
+
+<main>
+  <div class="page-head">
+    <div class="eyebrow">協議書 · 通用骨架</div>
+    <h1>遺產分割協議書產生器</h1>
+    <p>全體繼承人就遺產協議分割時使用。填入被繼承人、全體繼承人、遺產標的與分割方法，依民法第1164條產出可複製的協議書骨架，含逐繼承人用印欄。所有內容都在你的瀏覽器產生，不會上傳。想先知道法定應繼分比例，可到「遺產計算機」試算，算完後也會就地出現本協議書按鈕並帶入繼承人與應繼分參考。</p>
+  </div>
+
+  <div class="doc-item">
+    <h3>遺產分割協議書</h3>
+    <p>立協議書人即被繼承人之全體繼承人，就所遺財產協議分割。產出後請全體繼承人簽名（蓋章）；未成年人由法定代理人代理簽章。不動產另須持本協議書辦理繼承登記（建議洽地政士）。</p>
+    <span class="doc-law">民法 §1151／§1164／§1165／§1167</span>
+    <div id="m-agreement"></div>
+  </div>
+
+  <div class="selfhelp-note">
+    提醒：拋棄繼承者須先於知悉得繼承時起 3 個月內以書面向法院為之（民法§1174 II），已拋棄者不列入本協議；遺產稅可先用本站「遺產稅試算」工具估算。本範本為一般情形之文字協助，非法律意見；涉及特留分、債務分擔等爭議宜先諮詢執業律師。
+  </div>
+</main>
+
+<footer>
+  <div class="footer-logo">Inheritance<span>Pro</span></div>
+  <div>© 2026 InheritancePro. All rights reserved.</div>
+  <div class="disclaimer">
+    本工具僅供參考，不構成法律意見。<br>
+    實際繼承事宜請諮詢專業律師或法律顧問。<br>
+    法律依據：中華民國《民法》繼承編。
+  </div>
+</footer>
+
+<script type="module" src="js/ip-core-bridge.js"></script>
+<script>
+(function () {
+  function init() {
+    if (!window.DocGen || !(window.IP_CORE && window.IP_CORE.buildInheritanceAgreement)) {
+      return setTimeout(init, 120); // 等 ip-core-bridge（module，延後執行）掛上 IP_CORE
+    }
+    window.DocGen.create({
+      docLabel: '遺產分割協議書', filenamePrefix: '遺產分割協議書',
+      subtitle: '全體繼承人協議分割遺產之用。填寫繼承人、遺產標的與分割方式後可複製／下載／列印。',
+      fields: [
+        { id: 'decedentName', label: '被繼承人姓名', placeholder: '例如：陳大明' },
+        { id: 'deathDate', label: '死亡日期', placeholder: '例如：115年3月10日' },
+        { id: 'heirsText', label: '繼承人（一行一位，可寫「姓名｜關係」）', type: 'textarea', rows: 3, placeholder: '例如：\n陳配偶｜配偶\n陳長子｜長子\n陳次女｜次女' },
+        { id: 'assetsText', label: '遺產標的（逐項列明）', type: 'textarea', rows: 3, placeholder: '不動產坐落地號建號、存款銀行帳號、股票、車輛等' },
+        { id: 'divisionText', label: '分割方法（全體協議）', type: 'textarea', rows: 3, placeholder: '各項遺產由何繼承人取得、有無找補金額' },
+      ],
+      build: function (v) {
+        return window.IP_CORE.buildInheritanceAgreement({
+          decedentName: v.decedentName, deathDate: v.deathDate, heirsText: v.heirsText,
+          assetsText: v.assetsText, divisionText: v.divisionText,
+        });
+      },
+    }).mountButton(document.getElementById('m-agreement'), function () { return {}; }, '產生「遺產分割協議書」（通用骨架）');
+  }
+  init();
+})();
+</script>
+
+</body>
+</html>
