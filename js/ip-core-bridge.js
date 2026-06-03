@@ -44,6 +44,7 @@ import {
   planGiftYears,
   GIFT_TAX_VERSIONS,
   LATEST_GIFT_YEAR,
+  buildInheritanceAgreement,
 } from './_generated/core-inheritance.bundle.js';
 
 /**
@@ -102,6 +103,9 @@ const IP_CORE = Object.freeze({
   planGiftYears,
   GIFT_TAX_VERSIONS,
   LATEST_GIFT_YEAR,
+
+  // 遺產分割協議書（通用骨架）
+  buildInheritanceAgreement,
 
   // 自我識別（讓 legacy 程式可 `if (window.IP_CORE?.version)` 偵測）
   version: '1.0.0',

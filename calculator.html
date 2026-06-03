@@ -687,6 +687,7 @@
   <h2>應繼分分配</h2>
   <p class="subtitle">依中華民國《民法》計算各繼承人應繼分如下。</p>
   <div id="resultContainer"></div>
+  <div id="letterMount"></div>
   <div class="law-note" id="lawNote"></div>
   <div id="taxContainer"></div>
   <div id="realEstateContainer"></div>
@@ -1389,6 +1390,52 @@
     IP_renderCaseLaw('inheritance', total, 'resultContainer');
     document.getElementById('lawNote').innerHTML = '⚖️ 法律依據：' + lawText;
 
+    // 遺產分割協議書（通用骨架）— 帶入法定應繼分參考與繼承人欄位
+    try {
+      var shareParts = [];
+      if (state.hasSpouse) shareParts.push('配偶 ' + spouseFrac + '（' + fmt(spouseAmount) + '）');
+      heirGroups.forEach(function (h) { shareParts.push(h.label + ' ' + fmt(h.amount)); });
+      var heirLines = [];
+      if (state.hasSpouse) heirLines.push('〔配偶姓名〕｜配偶');
+      heirGroups.forEach(function (h) { heirLines.push('〔' + h.label + '姓名〕｜' + h.label); });
+      var heirsTextPrefill = heirLines.join('\n');
+      window.__ipShareRef = shareParts.join('、');
+
+      if (!window.__ipAgreementGen && window.DocGen) {
+        window.__ipAgreementGen = window.DocGen.create({
+          docLabel: '遺產分割協議書',
+          subtitle: '全體繼承人協議分割遺產之用。填寫繼承人、遺產標的與分割方式後可複製／下載／列印。',
+          filenamePrefix: '遺產分割協議書',
+          fields: [
+            { id: 'decedentName', label: '被繼承人姓名', placeholder: '例如：陳大明' },
+            { id: 'deathDate', label: '死亡日期', placeholder: '例如：115年3月10日' },
+            { id: 'heirsText', label: '繼承人（一行一位，可寫「姓名｜關係」）', type: 'textarea', rows: 3,
+              placeholder: '例如：\n陳配偶｜配偶\n陳長子｜長子' },
+            { id: 'assetsText', label: '遺產標的（逐項列明）', type: 'textarea', rows: 3,
+              placeholder: '不動產坐落地號建號、存款銀行帳號、股票、車輛等' },
+            { id: 'divisionText', label: '分割方法（全體協議）', type: 'textarea', rows: 3,
+              placeholder: '各項遺產由何繼承人取得、有無找補金額' },
+          ],
+          build: function (v) {
+            return window.IP_CORE.buildInheritanceAgreement({
+              decedentName: v.decedentName, deathDate: v.deathDate, heirsText: v.heirsText,
+              assetsText: v.assetsText, divisionText: v.divisionText,
+              shareReference: window.__ipShareRef || '',
+            });
+          },
+        });
+      }
+      var ipLm = document.getElementById('letterMount');
+      if (ipLm) {
+        ipLm.innerHTML = '';
+        if (window.__ipAgreementGen) {
+          window.__ipAgreementGen.mountButton(ipLm, (function (pf) {
+            return function () { return { heirsText: pf }; };
+          })(heirsTextPrefill), '產生「遺產分割協議書」（通用骨架，可複製／下載／列印）');
+        }
+      }
+    } catch (e) { /* 協議書產生器為加值功能，失敗不影響試算 */ }
+
     // Estate tax
     const insurancePaid = parseFloat(document.getElementById('deduct_insurance').value) || 0;
     // 3,740 萬：AMT 免稅額借為實質課稅原則警示門檻（見上方 updateInsDeduct 說明）
@@ -2035,6 +2082,7 @@ td{padding:5px 10px;border:1px solid #ddd;font-size:12px;vertical-align:top;}
 </script>
 
 <div class="disclaimer-bar"><strong>免責聲明</strong>：本平台之計算結果僅供初步參考，不構成法律意見或法律諮詢服務。</div>
+<script src="js/doc-generator.js"></script>
 <script type="module" src="js/ip-core-bridge.js"></script>
 <script type="module" src="js/components/save-button.js"></script>
 <script src="js/law-basis.js" defer></script>
