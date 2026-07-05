@@ -1,1846 +1,679 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-<script src="js/ga.js" defer></script>
 <meta charset="UTF-8">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180">
-<link rel="manifest" href="/manifest.json">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="InheritancePro">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>InheritancePro｜中華民國民法財產權益計算平台</title>
-<meta name="description" content="中華民國最專業的民法財產權益計算平台，免費提供遺產繼承、應繼分、特留分、贍養費、剩餘財產分配、脫產偵測等計算工具，依中華民國民法設計。">
-<meta name="keywords" content="遺產計算,繼承計算器,應繼分,特留分,贍養費試算,剩餘財產分配,脫產偵測,中華民國民法,遺產稅試算,離婚財產">
+<title>InheritancePro｜民法財產權事件包與工具</title>
+<meta name="description" content="InheritancePro 從親人過世、遺囑特留分、離婚財產、不動產與保險事件出發，整理期限、文件、權益查詢與必要試算。">
 <meta name="robots" content="index, follow">
-<meta name="google-site-verification" content="qarDCEGO0PsCAKscKd5OEBc2Susb0ZQ_2iAcsC2p5lw" />
-<meta name="author" content="InheritancePro">
-<meta property="og:title" content="InheritancePro｜中華民國民法財產權益計算平台">
-<meta property="og:description" content="免費計算遺產繼承、贍養費、剩餘財產分配。依中華民國民法設計，支援PDF報告輸出。">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://inheritance.choulegal.com/">
-<meta property="og:site_name" content="InheritancePro">
-<meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://inheritance.choulegal.com/og-image.png">
-<meta property="og:image:type" content="image/png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="InheritancePro 中華民國民法財產權益計算平台">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="InheritancePro｜中華民國民法財產權益計算平台">
-<meta name="twitter:description" content="免費計算遺產繼承、贍養費、剩餘財產分配。依中華民國民法設計。">
-<meta name="twitter:image" content="https://inheritance.choulegal.com/og-image.png">
 <link rel="canonical" href="https://inheritance.choulegal.com/">
+<meta property="og:title" content="InheritancePro｜民法財產權事件包與工具">
+<meta property="og:description" content="InheritancePro 從親人過世、遺囑特留分、離婚財產、不動產與保險事件出發，整理期限、文件、權益查詢與必要試算。">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700&family=Noto+Sans+TC:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <style>
-  *:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
   :root {
-    --ink: #1a1410;
-    --ink-2: #221d18;
-    --paper: #f5f0e8;
-    --gold: #c4932a;
-    --gold-soft: #d4a742;
-    --muted: #7a6f62;
-    --muted-2: #4a4540;
-    --border: #2a2520;
-    --border-2: #3a3530;
-    --card: #1e1916;
-    --accent: #8b2020;
-    --badge-new: #2a6b4a;
-    --badge-case: #8b2020;
-    --badge-hot: #c4932a;
+    --paper: #f7f7f1;
+    --paper-strong: #ffffff;
+    --ink: #18211f;
+    --muted: #65716d;
+    --line: #d9ded5;
+    --line-strong: #b9c2bb;
+    --teal: #176b63;
+    --clay: #a6422b;
+    --gold: #b6821f;
+    --plum: #6e4b72;
+    --green: #58734d;
+    --shadow: 0 18px 48px rgba(24, 33, 31, 0.11);
+    --radius: 8px;
+    --sans: 'Noto Sans TC', system-ui, sans-serif;
+    --serif: 'Noto Serif TC', serif;
+    --mono: 'DM Mono', ui-monospace, monospace;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body {
-    background: var(--ink);
-    color: var(--paper);
-    font-family: 'Noto Sans TC', sans-serif;
-    min-height: 100vh;
+    background:
+      linear-gradient(90deg, rgba(24,33,31,0.035) 1px, transparent 1px),
+      linear-gradient(rgba(24,33,31,0.025) 1px, transparent 1px),
+      var(--paper);
+    background-size: 34px 34px, 34px 34px, auto;
+    color: var(--ink);
+    font-family: var(--sans);
     font-size: 15px;
-    line-height: 1.6;
+    line-height: 1.7;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
 
-  /* ─────────── HERO ─────────── */
-  .hero {
-    padding: 48px 24px 16px;
-    max-width: 620px;
-    margin: 0 auto;
+  a { color: inherit; text-decoration: none; }
+  *:focus-visible { outline: 3px solid rgba(23, 107, 99, 0.38); outline-offset: 3px; border-radius: 4px; }
+
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 18px clamp(18px, 4vw, 42px);
+    background: rgba(247, 247, 241, 0.86);
+    border-bottom: 1px solid var(--line);
+    backdrop-filter: blur(16px);
   }
 
-  .hero-top {
-    margin-bottom: 56px;
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
   }
 
-  .logo {
-    font-family: 'Noto Serif TC', serif;
+  .brand-mark {
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--ink);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-family: var(--serif);
+    font-weight: 700;
+    color: var(--paper);
+    background: var(--ink);
+    flex: 0 0 auto;
+  }
+
+  .brand-text {
+    display: grid;
+    gap: 0;
+  }
+
+  .brand-parent {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .brand-child {
+    font-family: var(--serif);
     font-size: 17px;
     font-weight: 700;
     letter-spacing: 0.04em;
-    color: var(--paper);
-    text-decoration: none;
   }
-  .logo span { color: var(--gold); }
 
-  /* ── Brand Header: icon left + 2 lines right ── */
-  .brand-header {
+  .site-header nav {
     display: flex;
     align-items: center;
-    gap: 12px;
-    text-decoration: none;
-    margin-bottom: 10px;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
   }
-  .brand-header .cl-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
-    flex-shrink: 0;
-  }
-  .brand-header .brand-text {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-  .brand-header .brand-parent {
-    font-family: 'Noto Serif TC', serif;
-    font-size: 11px;
-    color: rgba(255, 255, 255, 0.45);
-    letter-spacing: 0.14em;
-  }
-  .brand-header .brand-parent span {
-    text-transform: uppercase;
-    letter-spacing: 0.18em;
-  }
-  .brand-header .brand-child {
-    font-family: 'Noto Serif TC', serif;
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--paper);
-    letter-spacing: 0.02em;
-  }
-  .brand-header .brand-child em {
-    color: var(--gold);
-    font-style: normal;
-  }
-  .brand-header .brand-child .tag {
-    font-size: 9px;
-    vertical-align: middle;
-    margin-left: 6px;
-  }
-  .brand-header:hover .brand-parent { color: rgba(255, 255, 255, 0.7); }
-  .brand-header:hover .brand-child { color: #fff; }
 
-  /* hide old separate elements */
-  .parent-brand { display: none !important; }
-
-  .tag {
-    display: inline-block;
-    font-family: 'Noto Serif TC', serif;
-    font-size: 10px;
+  .site-header nav a,
+  .nav-pill {
+    border: 1px solid transparent;
+    border-radius: 999px;
+    padding: 8px 12px;
     color: var(--muted);
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    border: 1px solid #333;
-    padding: 3px 10px;
-    border-radius: 20px;
-    margin-left: 12px;
-    vertical-align: middle;
+    font-size: 13px;
+    line-height: 1;
+  }
+
+  .site-header nav a:hover,
+  .nav-pill:hover {
+    color: var(--ink);
+    border-color: var(--line-strong);
+    background: rgba(255, 255, 255, 0.58);
+  }
+
+  .nav-primary {
+    color: #fff !important;
+    background: var(--teal);
+    border-color: var(--teal) !important;
+  }
+
+  main { overflow: hidden; }
+
+  .hero {
+    position: relative;
+    min-height: min(760px, calc(100vh - 72px));
+    display: grid;
+    align-items: end;
+    padding: clamp(56px, 8vw, 96px) clamp(18px, 4vw, 42px) 34px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(120deg, rgba(23,107,99,0.14), transparent 36%),
+      linear-gradient(295deg, rgba(166,66,43,0.12), transparent 42%);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    position: relative;
+    width: min(1180px, 100%);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+    gap: clamp(28px, 5vw, 72px);
+    align-items: end;
   }
 
   .eyebrow {
-    font-family: 'Noto Serif TC', serif;
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    color: var(--gold);
+    font-family: var(--mono);
+    color: var(--clay);
     text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 11px;
     margin-bottom: 18px;
-    display: block;
   }
 
-  /* 2026-05-24: hero-title 對齊 laborpro/consumerpro
-     原版 80px / italic em / 淡金 #fde68a 與兩個兄弟站不一致，老闆抓包 */
-  .hero-title {
-    font-family: 'Noto Serif TC', serif;
-    font-size: clamp(36px, 8vw, 60px);
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(42px, 7.5vw, 92px);
+    line-height: 1.02;
+    letter-spacing: 0;
     font-weight: 700;
-    line-height: 1.22;
-    margin-bottom: 20px;
-    letter-spacing: 0.01em;
-  }
-  .hero-title em {
-    font-style: normal;
-    color: var(--gold);
-  }
-  .hero-title .accent {
-    color: var(--gold);
+    max-width: 900px;
   }
 
-  .hero-sub {
-    font-size: clamp(15px, 1.4vw, 17px);
-    color: var(--muted);
-    line-height: 1.8;
-    margin-bottom: 28px;
-    max-width: 520px;
+  h1 span { color: var(--teal); }
+  .mobile-break { display: none; }
+
+  .lead {
+    max-width: 650px;
+    margin-top: 22px;
+    color: #44514d;
+    font-size: clamp(16px, 1.5vw, 19px);
+    line-height: 1.9;
   }
 
-  .hero-cta-row {
-    display: inline-flex; gap: 12px; flex-wrap: wrap;
-    margin-bottom: 40px;
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 30px;
   }
-  .hero-cta-row .btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 12px 22px;
+
+  .button {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     border-radius: 999px;
-    font-size: 14px; font-weight: 500;
-    text-decoration: none;
-    transition: transform 0.3s, background 0.2s, border-color 0.2s, color 0.2s;
-  }
-  .hero-cta-row .btn-primary {
-    background: var(--paper);
-    color: var(--ink);
-    border: 1px solid transparent;
-  }
-  .hero-cta-row .btn-primary:hover { background: #fde68a; transform: translateY(-2px); }
-  .hero-cta-row .btn-ghost {
-    background: transparent;
-    color: var(--paper);
-    border: 1px solid rgba(245,240,232,0.22);
-  }
-  .hero-cta-row .btn-ghost:hover { border-color: #fde68a; color: #fde68a; transform: translateY(-2px); }
-
-  /* ─────────── 免費承諾 Banner ─────────── */
-  .free-banner {
-    border: 1.5px solid rgba(196, 147, 42, 0.35);
-    background:
-      linear-gradient(135deg, rgba(196, 147, 42, 0.12) 0%, rgba(196, 147, 42, 0.04) 100%);
-    border-radius: 16px;
-    padding: 26px 24px;
-    margin-bottom: 40px;
-    position: relative;
-    overflow: hidden;
-  }
-  .free-banner::before {
-    content: '';
-    position: absolute;
-    top: -50%; right: -30%;
-    width: 320px; height: 320px;
-    background: radial-gradient(circle, rgba(196, 147, 42, 0.15) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .free-banner-label {
-    font-family: 'Noto Serif TC', serif;
-    font-size: 10px;
-    color: var(--gold);
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-    position: relative;
-  }
-  .free-banner-title {
-    font-family: 'Noto Serif TC', serif;
-    font-size: 22px;
+    padding: 11px 18px;
     font-weight: 700;
-    color: var(--paper);
-    line-height: 1.35;
-    margin-bottom: 10px;
-    position: relative;
-  }
-  .free-banner-title em {
-    font-style: normal;
-    color: var(--gold);
-    border-bottom: 2px solid var(--gold);
-    padding-bottom: 2px;
-  }
-  .free-banner-desc {
-    font-size: 13px;
-    color: rgba(245, 240, 232, 0.72);
-    line-height: 1.75;
-    position: relative;
-  }
-  .free-banner-desc strong {
-    color: var(--paper);
-    font-weight: 600;
+    border: 1px solid var(--line-strong);
+    background: var(--paper-strong);
+    transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
   }
 
-  /* ─────────── 搜尋 ─────────── */
-  .search-bar {
-    position: relative;
-    margin-bottom: 40px;
-  }
-  .search-bar input {
-    width: 100%;
-    padding: 14px 16px 14px 44px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1.5px solid var(--border);
-    border-radius: 12px;
-    color: var(--paper);
-    font-family: 'Noto Sans TC', sans-serif;
-    font-size: 14px;
-    -webkit-appearance: none;
-    transition: border-color 0.18s, background 0.18s;
-  }
-  .search-bar input::placeholder { color: var(--muted-2); }
-  .search-bar input:focus {
-    border-color: var(--gold);
-    background: rgba(196, 147, 42, 0.04);
-    outline: none;
-  }
-  .search-bar .search-icon {
-    position: absolute;
-    left: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--muted-2);
-    font-size: 15px;
-    pointer-events: none;
-  }
-  .search-bar .search-clear {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: var(--muted);
-    font-size: 18px;
-    cursor: pointer;
-    display: none;
-    padding: 4px 8px;
-    line-height: 1;
+  .button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+    border-color: var(--teal);
   }
 
-  /* ─────────── 精選最新 橫向滑動 ─────────── */
-  .section-header {
+  .button.primary {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #fff;
+  }
+
+  .docket {
+    align-self: stretch;
+    display: grid;
+    gap: 12px;
+    padding: 18px;
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  .docket-title {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     justify-content: space-between;
-    margin-bottom: 16px;
-  }
-  .section-title {
-    font-family: 'Noto Serif TC', serif;
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--paper);
-    letter-spacing: 0.02em;
-  }
-  .section-eyebrow {
-    font-family: 'Noto Serif TC', serif;
-    font-size: 10px;
-    letter-spacing: 0.16em;
+    gap: 12px;
+    font-family: var(--mono);
     color: var(--muted);
-    text-transform: uppercase;
-  }
-
-  .featured-strip {
-    display: flex;
-    gap: 14px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory;
-    scroll-padding-left: 24px;
-    -webkit-overflow-scrolling: touch;
-    margin: 0 -24px 48px;
-    padding: 4px 24px 24px;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(120, 120, 120, 0.35) transparent;
-  }
-  .featured-strip::-webkit-scrollbar { height: 8px; }
-  .featured-strip::-webkit-scrollbar-track { background: transparent; }
-  .featured-strip::-webkit-scrollbar-thumb {
-    background: rgba(120, 120, 120, 0.35);
-    border-radius: 4px;
-  }
-  .featured-strip::-webkit-scrollbar-thumb:hover {
-    background: rgba(120, 120, 120, 0.65);
-  }
-
-  .featured-card {
-    flex: 0 0 280px;
-    scroll-snap-align: start;
-    background: var(--card);
-    border: 1.5px solid var(--border);
-    border-radius: 14px;
-    padding: 22px 22px 20px;
-    text-decoration: none;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    min-height: 196px;
-    /* transition moved to animation section */
-  }
-  .featured-card:hover {
-    border-color: var(--gold);
-    /* transform + box-shadow handled in animation section */
-  }
-  .featured-card.case {
-    background: linear-gradient(145deg, rgba(139, 32, 32, 0.12) 0%, var(--card) 60%);
-    border-color: rgba(139, 32, 32, 0.45);
-  }
-  .featured-card.case:hover {
-    border-color: #d4484a;
-  }
-  .featured-card.new {
-    background: linear-gradient(145deg, rgba(42, 107, 74, 0.12) 0%, var(--card) 60%);
-    border-color: rgba(42, 107, 74, 0.45);
-  }
-  .featured-card.new:hover {
-    border-color: #6abf8a;
-  }
-
-  .featured-badge {
-    font-family: 'Noto Serif TC', serif;
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    padding: 4px 10px;
-    border-radius: 4px;
-    width: fit-content;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
   }
-  .featured-badge.case { background: rgba(139, 32, 32, 0.2); color: #f28b6e; }
-  .featured-badge.new { background: rgba(42, 107, 74, 0.2); color: #7cd4a3; }
-  .featured-badge.hot { background: rgba(196, 147, 42, 0.2); color: var(--gold); }
 
-  .featured-card-title {
-    font-family: 'Noto Serif TC', serif;
-    font-size: 17px;
-    font-weight: 700;
-    color: var(--paper);
-    line-height: 1.4;
-    margin-top: 4px;
+  .triage-row {
+    display: grid;
+    grid-template-columns: 92px 1fr;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
   }
-  .featured-card-desc {
-    font-size: 12px;
-    color: rgba(245, 240, 232, 0.55);
-    line-height: 1.65;
-    flex: 1;
-  }
-  .featured-card-arrow {
-    font-family: 'Noto Serif TC', serif;
+
+  .triage-row:last-child { border-bottom: 0; }
+  .triage-tag {
+    color: var(--teal);
+    font-family: var(--mono);
     font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .triage-row strong {
+    display: block;
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.35;
+    margin-bottom: 3px;
+  }
+  .triage-row p { color: var(--muted); font-size: 13px; line-height: 1.55; }
+
+  .band {
+    padding: clamp(54px, 7vw, 92px) clamp(18px, 4vw, 42px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .band.alt { background: rgba(255, 255, 255, 0.45); }
+
+  .section-inner {
+    width: min(1180px, 100%);
+    margin: 0 auto;
+  }
+
+  .section-head {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding-top: 10px;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    align-items: end;
+    gap: 24px;
+    margin-bottom: 24px;
   }
-  .featured-card-arrow span:last-child {
-    font-size: 14px;
-    color: var(--gold);
-    transition: transform 0.2s;
-  }
-  .featured-card:hover .featured-card-arrow span:last-child { transform: translateX(4px); }
 
-  /* ─────────── Tab Nav ─────────── */
-  .tab-scroll-wrap {
-    margin: 0 -24px 12px;
-    padding: 0 24px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+  h2 {
+    font-family: var(--serif);
+    font-size: clamp(28px, 4vw, 48px);
+    line-height: 1.14;
+    letter-spacing: 0;
   }
-  .tab-scroll-wrap::-webkit-scrollbar { display: none; }
-  .tab-scroll-wrap { scrollbar-width: none; }
 
-  .tab-nav {
-    display: flex;
-    gap: 8px;
-    white-space: nowrap;
-  }
-  .tab-btn {
-    font-family: 'Noto Sans TC', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.02em;
+  .section-note {
+    max-width: 430px;
     color: var(--muted);
-    background: none;
-    border: 1.5px solid var(--border);
-    border-radius: 22px;
-    padding: 9px 18px;
-    cursor: pointer;
-    transition: all 0.18s;
-    flex-shrink: 0;
-  }
-  .tab-btn:hover {
-    color: var(--paper);
-    border-color: var(--border-2);
-  }
-  .tab-btn.active {
-    color: var(--ink);
-    background: var(--paper);
-    border-color: var(--paper);
-    font-weight: 600;
+    line-height: 1.8;
   }
 
-  .tab-subtitle {
-    font-family: 'Noto Serif TC', serif;
-    font-size: 14px;
-    color: var(--muted);
-    line-height: 1.7;
-    margin-bottom: 22px;
-    padding-left: 2px;
-    font-style: italic;
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
   }
 
-  /* ─────────── Tool Cards ─────────── */
-  .tools {
+  .grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+  .card {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-bottom: 56px;
+    gap: 14px;
+    min-height: 210px;
+    padding: 20px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.72);
+    transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
   }
 
-  .tool-card {
-    display: block;
-    text-decoration: none;
-    background: transparent;
-    border: 1.5px solid var(--border);
-    border-radius: 12px;
-    padding: 20px 22px;
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-    /* transition handled in animation section */
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+    border-color: var(--line-strong);
   }
-  .tool-card:hover {
-    border-color: var(--gold);
-    background: rgba(196, 147, 42, 0.04);
-    /* transform + box-shadow handled in animation section */
-  }
-  .tool-card-inner {
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-  }
-  .tool-info { flex: 1; min-width: 0; }
-  .tool-name {
-    font-family: 'Noto Serif TC', serif;
-    font-size: 17px;
-    font-weight: 600;
-    color: var(--paper);
-    margin-bottom: 6px;
-    line-height: 1.4;
+
+  .card.kit { border-top: 5px solid var(--teal); }
+  .card.calc { border-top: 5px solid var(--clay); }
+  .card.rights { border-top: 5px solid var(--plum); }
+  .card.doc { border-top: 5px solid var(--gold); }
+  .card.labor { border-top-color: var(--green); }
+
+  .card-topline {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 10px;
-    flex-wrap: wrap;
-  }
-  .tool-desc {
-    font-size: 12.5px;
     color: var(--muted);
-    line-height: 1.7;
-  }
-  .tool-arrow {
-    color: var(--muted);
-    font-size: 18px;
-    transition: transform 0.2s, color 0.2s;
-    flex-shrink: 0;
-    padding-top: 2px;
-  }
-  .tool-card:hover .tool-arrow {
-    transform: translateX(4px);
-    color: var(--gold);
-  }
-
-  /* Featured variant */
-  .tool-card.featured {
-    background: linear-gradient(135deg, #1e1916 0%, #221e1a 100%);
-    border-color: rgba(196, 147, 42, 0.3);
-    padding: 24px 24px;
-  }
-  .tool-card.featured .tool-name { font-size: 19px; }
-  .tool-card.featured:hover { border-color: var(--gold); }
-
-  /* Tool badge (右上角 inline 旁邊) */
-  .tool-badge {
-    display: inline-block;
-    font-family: 'Noto Serif TC', serif;
-    font-size: 9px;
+    font-family: var(--mono);
+    font-size: 11px;
     letter-spacing: 0.12em;
-    padding: 3px 7px;
-    border-radius: 4px;
     text-transform: uppercase;
-    font-weight: 500;
-    white-space: nowrap;
-    vertical-align: middle;
-  }
-  .tool-badge.new {
-    background: rgba(42, 107, 74, 0.2);
-    color: #7cd4a3;
-    border: 1px solid rgba(42, 107, 74, 0.4);
-  }
-  .tool-badge.case {
-    background: rgba(139, 32, 32, 0.2);
-    color: #f28b6e;
-    border: 1px solid rgba(139, 32, 32, 0.4);
-  }
-  .tool-badge.hot {
-    background: rgba(196, 147, 42, 0.2);
-    color: var(--gold);
-    border: 1px solid rgba(196, 147, 42, 0.4);
   }
 
-  /* ─────────── Search Fallback ─────────── */
-  .search-fallback {
-    text-align: center;
-    padding: 40px 20px;
-    border: 1px dashed var(--border);
-    border-radius: 12px;
+  .card h3 {
+    font-family: var(--serif);
+    font-size: 21px;
+    line-height: 1.35;
+    letter-spacing: 0;
   }
-  .search-fallback-title {
-    font-family: 'Noto Serif TC', serif;
-    font-size: 16px;
-    color: var(--paper);
-    margin-bottom: 8px;
-  }
-  .search-fallback-title strong {
-    color: var(--gold);
-  }
-  .search-fallback-hint {
-    font-size: 12px;
+
+  .card p {
     color: var(--muted);
-    margin-bottom: 18px;
-  }
-  .search-fallback-chips {
-    display: flex;
-    gap: 8px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: 14px;
-  }
-  .search-chip {
-    font-family: 'Noto Sans TC', sans-serif;
-    font-size: 12px;
-    color: var(--paper);
-    background: rgba(196, 147, 42, 0.08);
-    border: 1px solid rgba(196, 147, 42, 0.3);
-    border-radius: 20px;
-    padding: 6px 14px;
-    cursor: pointer;
-    transition: all 0.18s;
-  }
-  .search-chip:hover {
-    background: rgba(196, 147, 42, 0.16);
-    border-color: var(--gold);
-  }
-  .search-fallback-contact {
-    font-size: 11px;
-    color: var(--muted);
-    margin-top: 12px;
-  }
-  .search-fallback-contact a {
-    color: var(--gold);
-    text-decoration: underline;
+    font-size: 14px;
+    line-height: 1.72;
   }
 
-  /* ─────────── Section Divider ─────────── */
-  .section-divider {
-    height: 1px;
-    background: var(--border);
-    margin: 0 auto 36px;
-    max-width: 60px;
-  }
-
-  /* ─────────── Footer ─────────── */
-  .hero-footer {
-    font-family: 'Noto Serif TC', serif;
-    font-size: 11px;
-    color: rgba(245, 240, 232, 0.35);
-    letter-spacing: 0.08em;
-    padding-bottom: 24px;
-    line-height: 2;
-  }
-  .hero-footer a { color: rgba(245, 240, 232, 0.35); text-decoration: none; }
-
-  /* ─────────── FAQ ─────────── */
-  .faq-section { padding: 0 24px 64px; max-width: 620px; margin: 0 auto; }
-  .faq-heading {
-    font-family: 'Noto Serif TC', serif;
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-  }
-  .faq-item { border-top: 1px solid var(--border); }
-  .faq-q {
+  .card-footer {
+    margin-top: auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    font-family: 'Noto Serif TC', serif;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--paper);
-    line-height: 1.5;
-    padding: 18px 0;
-    cursor: pointer;
-    user-select: none;
-  }
-  .faq-q:hover { color: var(--gold); }
-  .faq-chevron {
-    flex-shrink: 0;
-    width: 16px;
-    height: 16px;
-    opacity: 0.5;
-    transition: transform 0.25s ease;
-  }
-  .faq-item.open .faq-chevron { transform: rotate(180deg); }
-  .faq-a {
+    gap: 10px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+    color: var(--teal);
+    font-weight: 700;
     font-size: 13px;
-    color: var(--muted);
-    line-height: 1.85;
-    display: none;
-    padding-bottom: 18px;
-  }
-  .faq-item.open .faq-a { display: block; }
-  .faq-a a { color: var(--gold); text-decoration: none; }
-
-  .disclaimer-bar {
-    max-width: 620px;
-    margin: 0 auto;
-    padding: 16px 24px 40px;
-    font-size: 11.5px;
-    color: rgba(255, 255, 255, 0.55);
-    line-height: 1.75;
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
-  }
-  .disclaimer-bar strong { color: rgba(255, 255, 255, 0.8); }
-
-  /* ─────────── 動畫 ─────────── */
-  @keyframes ipFadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes ipFadeScale {
-    from { opacity: 0; transform: scale(0.97) translateY(8px); }
-    to   { opacity: 1; transform: scale(1) translateY(0); }
-  }
-  @keyframes ipBadgePulse {
-    0%, 100% { opacity: 1; }
-    50%      { opacity: 0.55; }
   }
 
-  /* Hero entrance sequence */
-  .hero-title {
-    animation: ipFadeUp 600ms cubic-bezier(0.16, 1, 0.3, 1) both;
-    will-change: opacity, transform;
-  }
-  .hero-sub {
-    animation: ipFadeUp 600ms 200ms cubic-bezier(0.16, 1, 0.3, 1) both;
-    will-change: opacity, transform;
-  }
-  .free-banner {
-    animation: ipFadeUp 600ms 300ms cubic-bezier(0.16, 1, 0.3, 1) both;
-    will-change: opacity, transform;
-  }
-  .search-bar {
-    animation: ipFadeScale 600ms 400ms cubic-bezier(0.16, 1, 0.3, 1) both;
-    will-change: opacity, transform;
+  .rail {
+    display: grid;
+    grid-template-columns: 0.95fr 1.05fr;
+    gap: 18px;
+    align-items: start;
   }
 
-  /* Featured card hover: lift + warm gold shadow glow */
-  .featured-card {
-    transition: border-color 0.25s, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s;
-  }
-  .featured-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 28px rgba(196, 147, 42, 0.18), 0 2px 8px rgba(0,0,0,0.12);
+  .route-list,
+  .tool-list {
+    display: grid;
+    gap: 10px;
   }
 
-  /* NEW badge pulse */
-  .featured-badge.new,
-  .tool-badge.new {
-    animation: ipBadgePulse 2.8s ease-in-out infinite;
+  .route-item,
+  .tool-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 18px;
+    align-items: center;
+    min-height: 72px;
+    padding: 16px 18px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.74);
   }
 
-  /* Tool card hover: lift + shadow + gold border shimmer */
-  .tool-card {
-    transition: border-color 0.25s, background 0.25s, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s;
-  }
-  .tool-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(196, 147, 42, 0.12), 0 2px 6px rgba(0,0,0,0.08);
+  .route-item:hover,
+  .tool-item:hover {
+    border-color: var(--teal);
+    box-shadow: 0 10px 26px rgba(24, 33, 31, 0.08);
   }
 
-  /* Scroll reveal: elements start hidden, revealed by IntersectionObserver */
-  .ip-reveal {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
-                transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: opacity, transform;
-  }
-  .ip-reveal.ip-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* Tab content crossfade */
-  .tools {
-    transition: opacity 250ms ease;
-  }
-  .tools.ip-tab-fading {
-    opacity: 0;
-  }
-
-  /* Tool cards stagger entrance */
-  .tool-card.ip-stagger-in {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  .tool-card.ip-stagger-visible {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 400ms cubic-bezier(0.16, 1, 0.3, 1),
-                transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  /* Tab underline slide indicator */
-  .tab-nav {
-    position: relative;
-  }
-  .tab-indicator {
-    position: absolute;
-    bottom: -2px;
-    height: 2px;
-    background: var(--gold);
-    border-radius: 1px;
-    transition: left 350ms cubic-bezier(0.16, 1, 0.3, 1),
-                width 350ms cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: left, width;
-  }
-
-  /* prefers-reduced-motion: disable all animations */
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
-    .ip-reveal { opacity: 1; transform: none; }
-    .tool-card.ip-stagger-in { opacity: 1; transform: none; }
-    .tools.ip-tab-fading { opacity: 1; }
-  }
-
-  /* ─────────── 桌機放大 ─────────── */
-  @media (min-width: 720px) {
-    .hero { padding: 64px 32px 24px; max-width: 780px; }
-    .featured-card { flex: 0 0 320px; }
-    .featured-strip { margin: 0 -32px 56px; padding: 4px 32px 28px; }
-    .tab-scroll-wrap { margin: 0 -32px 16px; padding: 0 32px; }
-    .faq-section { max-width: 780px; padding: 0 32px 80px; }
-    .disclaimer-bar { max-width: 780px; padding: 16px 32px 72px; }
-  }
-
-  /* ─────────── Light Mode ─────────── */
-  [data-theme="light"] {
-    --ink: #faf8f4;
-    --ink-2: #f2efe8;
-    --paper: #1a1814;
-    --gold: #a07820;
-    --gold-soft: #b88e2e;
-    --muted: #7a7068;
-    --muted-2: #a09890;
-    --border: #ddd8d0;
-    --border-2: #ccc6bc;
-    --card: #ffffff;
-    --accent: #a82828;
-    --badge-new: #1a8a4a;
-    --badge-case: #a82828;
-    --badge-hot: #a07820;
-  }
-
-  [data-theme="light"] .brand-header .brand-parent {
-    color: rgba(0, 0, 0, 0.45);
-  }
-  [data-theme="light"] .brand-header .brand-child {
-    color: #1a1a1a;
-  }
-  [data-theme="light"] .brand-header:hover .brand-parent {
-    color: rgba(0, 0, 0, 0.7);
-  }
-  [data-theme="light"] .tag {
-    border-color: #bbb;
-  }
-  [data-theme="light"] .search-bar input {
-    background: rgba(0, 0, 0, 0.03);
-  }
-  [data-theme="light"] .search-bar input::placeholder {
-    color: #a09890;
-  }
-  [data-theme="light"] .search-bar input:focus {
-    background: rgba(168, 122, 26, 0.05);
-  }
-
-  [data-theme="light"] .featured-card {
-    background: var(--card);
-    border-color: var(--border);
-  }
-  [data-theme="light"] .featured-card.case {
-    background: linear-gradient(145deg, rgba(168, 40, 40, 0.06) 0%, var(--card) 60%);
-    border-color: rgba(168, 40, 40, 0.3);
-  }
-  [data-theme="light"] .featured-card.new {
-    background: linear-gradient(145deg, rgba(26, 138, 74, 0.06) 0%, var(--card) 60%);
-    border-color: rgba(26, 138, 74, 0.3);
-  }
-  [data-theme="light"] .featured-badge.case { background: rgba(168, 40, 40, 0.1); color: #a82828; }
-  [data-theme="light"] .featured-badge.new { background: rgba(26, 138, 74, 0.1); color: #1a8a4a; }
-  [data-theme="light"] .featured-badge.hot { background: rgba(160, 120, 32, 0.1); color: var(--gold); }
-  [data-theme="light"] .featured-card-desc { color: rgba(26, 24, 20, 0.55); }
-  [data-theme="light"] .featured-card-arrow { border-top-color: rgba(0, 0, 0, 0.06); }
-
-  [data-theme="light"] .tab-btn.active {
-    color: #fff;
-    background: var(--paper);
-    border-color: var(--paper);
-  }
-
-  [data-theme="light"] .tool-card.featured {
-    background: linear-gradient(135deg, #fff 0%, #f8f5f0 100%);
-    border-color: rgba(160, 120, 32, 0.3);
-  }
-  [data-theme="light"] .tool-badge.new {
-    background: rgba(26, 138, 74, 0.1);
-    color: #1a8a4a;
-    border-color: rgba(26, 138, 74, 0.3);
-  }
-  [data-theme="light"] .tool-badge.case {
-    background: rgba(168, 40, 40, 0.1);
-    color: #a82828;
-    border-color: rgba(168, 40, 40, 0.3);
-  }
-  [data-theme="light"] .tool-badge.hot {
-    background: rgba(160, 120, 32, 0.1);
-    color: var(--gold);
-    border-color: rgba(160, 120, 32, 0.3);
-  }
-
-  [data-theme="light"] .search-chip {
-    background: rgba(160, 120, 32, 0.06);
-    border-color: rgba(160, 120, 32, 0.25);
-  }
-
-  [data-theme="light"] .free-banner {
-    border-color: rgba(160, 120, 32, 0.3);
-    background: linear-gradient(135deg, rgba(160, 120, 32, 0.08) 0%, rgba(160, 120, 32, 0.02) 100%);
-  }
-  [data-theme="light"] .free-banner-desc {
-    color: rgba(26, 24, 20, 0.65);
-  }
-
-  [data-theme="light"] .hero-footer {
-    color: rgba(26, 24, 20, 0.35);
-  }
-  [data-theme="light"] .hero-footer a { color: rgba(26, 24, 20, 0.35); }
-
-  [data-theme="light"] .disclaimer-bar {
-    color: rgba(0, 0, 0, 0.5);
-    border-top-color: rgba(0, 0, 0, 0.1);
-  }
-  [data-theme="light"] .disclaimer-bar strong { color: rgba(0, 0, 0, 0.7); }
-
-  /* ─── Theme Toggle Button ─── */
-  #themeToggle {
-    position: absolute;
-    top: 48px;
-    right: 24px;
-    z-index: 1000;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: 1px solid var(--border);
-    background: rgba(128,128,128,0.12);
-    color: var(--paper);
+  .route-item strong,
+  .tool-item strong {
+    display: block;
+    font-family: var(--serif);
     font-size: 18px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s, border-color 0.2s, transform 0.2s;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    line-height: 1;
-    padding: 0;
-  }
-  #themeToggle:hover {
-    background: rgba(128,128,128,0.22);
-    border-color: var(--gold);
-    transform: scale(1.08);
-  }
-  @media (min-width: 720px) {
-    #themeToggle { right: calc(50% - 390px + 32px); }
+    line-height: 1.35;
+    margin-bottom: 3px;
   }
 
-  /* ─── Theme Transition ─── */
-  html.theme-transitioning,
-  html.theme-transitioning *,
-  html.theme-transitioning *::before,
-  html.theme-transitioning *::after {
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
-  }
-
-  /* ===== 三站對齊 — site-header / site-footer / brand 結構（index inline 版） ===== */
-  .site-header {
-    background: var(--ink);
-    border-bottom: 1px solid var(--border);
-    padding: 14px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    backdrop-filter: blur(8px);
-  }
-  .site-header .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-  .site-header .brand .brand-icon { width: 26px; height: 26px; border-radius: 5px; flex-shrink: 0; }
-  .site-header .brand .brand-text { display: flex; flex-direction: column; line-height: 1.15; }
-  .site-header .brand .brand-parent {
-    font-family: 'DM Mono', ui-monospace, monospace;
-    font-size: 9px;
-    color: rgba(245, 240, 232, 0.45);
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-  }
-  .site-header .brand .brand-child {
-    font-family: 'Noto Serif TC', serif;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--paper);
-    letter-spacing: 0.03em;
-  }
-  .site-header .brand .brand-child em { font-style: normal; color: var(--gold); }
-  .site-header nav { display: flex; gap: 18px; flex-wrap: nowrap; align-items: center; }
-  .site-header nav a {
-    color: rgba(245, 240, 232, 0.65);
-    font-size: 12px;
-    font-family: 'Noto Serif TC', serif;
-    letter-spacing: 0.05em;
-    transition: color 0.15s;
-    white-space: nowrap;
-    text-decoration: none;
-  }
-  .site-header nav a:hover { color: var(--gold); }
-  .site-header .theme-toggle-btn {
-    background: none;
-    border: none;
+  .route-item span,
+  .tool-item span {
     color: var(--muted);
-    font-size: 14px;
-    cursor: pointer;
-    padding: 4px 6px;
-    transition: color 0.15s;
-  }
-  .site-header .theme-toggle-btn:hover { color: var(--gold); }
-  @media (max-width: 640px) {
-    .site-header { padding: 12px 18px; }
-    .site-header nav { gap: 12px; }
-    .site-header nav a { font-size: 11px; }
-    .site-header .brand .brand-icon { width: 22px; height: 22px; }
-    .site-header .brand .brand-child { font-size: 13px; }
+    font-size: 13px;
   }
 
-  .site-footer {
-    background: var(--ink);
-    color: rgba(245, 240, 232, 0.45);
-    border-top: 1px solid var(--border);
-    padding: 36px 24px 48px;
-    font-size: 12px;
-    text-align: center;
-    line-height: 1.85;
-    font-family: 'Noto Serif TC', serif;
-    letter-spacing: 0.04em;
+  .type-label {
+    color: var(--clay);
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
   }
-  .site-footer a { color: rgba(245, 240, 232, 0.65); text-decoration: none; }
-  .site-footer a:hover { color: var(--gold); }
-  .site-footer .footer-mark {
-    font-family: 'Noto Serif TC', serif;
-    font-size: 14px;
-    letter-spacing: 0.06em;
-    color: var(--paper);
+
+  .split-note {
+    border-left: 4px solid var(--teal);
+    padding: 18px 20px;
+    background: rgba(23, 107, 99, 0.08);
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+
+  .split-note strong {
+    display: block;
+    font-family: var(--serif);
+    font-size: 22px;
     margin-bottom: 8px;
   }
-  .site-footer .footer-mark em { font-style: normal; color: var(--gold); }
-  .site-footer .footer-links { margin-top: 10px; }
-  .site-footer .footer-links a { margin: 0 8px; }
+
+  .split-note p { color: #44514d; }
+
+  .footer {
+    padding: 36px clamp(18px, 4vw, 42px);
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .footer-inner {
+    width: min(1180px, 100%);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .footer a { color: var(--teal); font-weight: 700; }
+
+  @media (max-width: 920px) {
+    .hero { min-height: auto; }
+    .hero-inner,
+    .rail { grid-template-columns: 1fr; }
+    .grid,
+    .grid.two,
+    .grid.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .docket { margin-top: 10px; }
+  }
+
+  @media (max-width: 640px) {
+    .site-header { align-items: flex-start; flex-direction: column; }
+    .site-header nav { justify-content: flex-start; }
+    .hero { padding-top: 44px; }
+    h1 { font-size: 38px; line-height: 1.08; }
+    .mobile-break { display: block; }
+    .grid,
+    .grid.two,
+    .grid.four { grid-template-columns: 1fr; }
+    .section-head { display: block; }
+    .section-note { margin-top: 10px; }
+    .triage-row { grid-template-columns: 1fr; gap: 6px; }
+    .route-item,
+    .tool-item { grid-template-columns: 1fr; gap: 8px; }
+    .type-label { white-space: normal; }
+  }
 </style>
+<script src="js/ga.js" defer></script>
 </head>
 <body>
-<script>
-(function(){
-  var html = document.documentElement;
-  var stored = localStorage.getItem('theme');
-  var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  var theme = stored || (prefersDark ? 'dark' : 'light');
-  if (theme === 'light') html.setAttribute('data-theme', 'light');
-
-  function updateIcon(t) {
-    var btn = document.getElementById('themeToggle');
-    if (btn) btn.textContent = t === 'light' ? '\u263E' : '\u2600';
-  }
-
-  document.addEventListener('DOMContentLoaded', function() {
-    var btn = document.getElementById('themeToggle');
-    if (!btn) return;
-    updateIcon(theme);
-    btn.addEventListener('click', function() {
-      html.classList.add('theme-transitioning');
-      var current = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-      if (current === 'light') html.setAttribute('data-theme', 'light');
-      else html.removeAttribute('data-theme');
-      localStorage.setItem('theme', current);
-      updateIcon(current);
-      setTimeout(function(){ html.classList.remove('theme-transitioning'); }, 350);
-    });
-  });
-})();
-</script>
 
 <header class="site-header">
-  <a href="/" class="brand" aria-label="InheritancePro 首頁">
-    <img class="brand-icon" src="img/choulegal-icon.svg" alt="周全法律科技">
-    <div class="brand-text">
+  <a class="brand" href="https://people.choulegal.com/">
+    <span class="brand-mark">周</span>
+    <span class="brand-text">
       <span class="brand-parent">周全 · CHOULEGAL</span>
-      <span class="brand-child">Inheritance<em>Pro</em></span>
-    </div>
+      <span class="brand-child">InheritancePro</span>
+    </span>
   </a>
   <nav>
-    <a href="#featuredSection">精選</a>
-    <a href="#browseHeader">工具</a>
-    <button id="themeToggle" class="theme-toggle-btn" aria-label="切換深色/淺色模式"></button>
+    <a class="nav-primary" href="#events">事件入口</a>
+    <a class="" href="#calculators">計算工具</a>
+    <a class="" href="#rights">權益查詢</a>
   </nav>
 </header>
-
-<div class="hero">
-  <span class="eyebrow">民法 · 財產權益</span>
-  <h1 class="hero-title">中華民國<span class="accent">民法財產權益</span>計算平台</h1>
-  <p class="hero-sub">繼承、剩餘財產、贍養費、損害賠償——30+ 個依最新實務判例設計的計算工具。</p>
-
-  <!-- 搜尋 -->
-  <div class="search-bar">
-    <span class="search-icon">&#x1F50D;</span>
-    <input type="text" id="toolSearch" placeholder="搜尋工具（例：車禍、贍養費、遺囑、出軌）" autocomplete="off">
-    <button class="search-clear" id="searchClear" onclick="clearSearch()">&times;</button>
-  </div>
-
-  <!-- 精選最新 橫向滑動 -->
-  <div id="featuredSection">
-    <div class="section-header">
-      <span class="section-title">最新上線</span>
-      <span class="section-eyebrow">← 左右滑動 →</span>
-    </div>
-    <div class="featured-strip" id="featuredStrip"></div>
-  </div>
-
-  <!-- Tab 導覽 -->
-  <div class="section-header" id="browseHeader">
-    <span class="section-title">分類瀏覽</span>
-    <span class="section-eyebrow">30+ 個工具</span>
-  </div>
-  <div class="tab-scroll-wrap" id="tabScrollWrap">
-    <div id="tabNav" class="tab-nav"></div>
-  </div>
-  <div class="tab-subtitle" id="tabSubtitle"></div>
-
-  <!-- 工具卡片 -->
-  <div class="tools" id="toolsContainer"></div>
-
-  <div class="section-divider"></div>
-
-  <div class="sister-sites" style="max-width: 720px; margin: 0 auto 28px; padding: 26px 28px; border: 1px solid var(--border); border-radius: 14px;">
-    <div style="font-family: 'Noto Serif TC', serif; font-size: 11px; letter-spacing: 0.18em; color: var(--gold); text-transform: uppercase; margin-bottom: 14px;">周全｜民眾版 · 兄弟站</div>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; font-family: 'Noto Serif TC', serif;">
-      <a href="https://labor.choulegal.com" style="display: block; padding: 14px 16px; border: 1px solid var(--border); border-radius: 10px; text-decoration: none; color: inherit;">
-        <div style="font-size: 11px; color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 6px;">LaborPro</div>
-        <div style="font-size: 14px; font-weight: 600; color: var(--paper); margin-bottom: 4px;">勞動</div>
-        <div style="font-size: 12px; color: var(--muted); line-height: 1.6;">資遣費、加班費、職災 ── 20+ 工具</div>
-      </a>
-      <a href="https://consumer.choulegal.com" style="display: block; padding: 14px 16px; border: 1px solid var(--border); border-radius: 10px; text-decoration: none; color: inherit;">
-        <div style="font-size: 11px; color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 6px;">ConsumerPro</div>
-        <div style="font-size: 14px; font-weight: 600; color: var(--paper); margin-bottom: 4px;">消費爭議</div>
-        <div style="font-size: 12px; color: var(--muted); line-height: 1.6;">懲罰賠償、瑕疵時效、廣告不實 ── 14+ 工具</div>
-      </a>
-      <a href="https://rental.choulegal.com" style="display: block; padding: 14px 16px; border: 1px solid var(--border); border-radius: 10px; text-decoration: none; color: inherit;">
-        <div style="font-size: 11px; color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 6px;">RentalPro</div>
-        <div style="font-size: 14px; font-weight: 600; color: var(--paper); margin-bottom: 4px;">租屋權益</div>
-        <div style="font-size: 12px; color: var(--muted); line-height: 1.6;">押金、修繕、提前解約、房東趕人 ── 8 工具</div>
-      </a>
-    </div>
-  </div>
-
-  <div class="hero-footer">
-    © 2026 InheritancePro. All rights reserved.<br>
-    本平台僅供參考，不構成法律意見。實際案件請諮詢專業律師。
-  </div>
-</div>
-
-<section class="faq-section" aria-label="常見問題">
-  <div class="faq-heading">常見問題 FAQ</div>
-
-  <div class="faq-item">
-    <div class="faq-q">中華民國遺產繼承順序是什麼？<svg class="faq-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="4,6 8,10 12,6"/></svg></div>
-    <div class="faq-a">依民法規定，繼承順位為：第一順位是直系血親卑親屬（子女、孫子女），第二順位是父母，第三順位是兄弟姊妹，第四順位是祖父母。配偶則與各順位繼承人共同繼承。可使用<a href="calculator.html">遺產繼承計算器</a>計算各繼承人的應繼分與特留分。</div>
-  </div>
-
-  <div class="faq-item">
-    <div class="faq-q">離婚後可以請求多少財產分配？<svg class="faq-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="4,6 8,10 12,6"/></svg></div>
-    <div class="faq-a">依民法第1030-1條，法定財產制下，婚姻消滅時財產較少的一方可向另一方請求剩餘財產差額的二分之一。計算基礎為婚後各自取得的財產，婚前財產、繼承及受贈財產須排除。可使用<a href="property-split.html">剩餘財產差額分配計算器</a>快速試算。</div>
-  </div>
-
-  <div class="faq-item">
-    <div class="faq-q">拋棄繼承的期限是幾天？<svg class="faq-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="4,6 8,10 12,6"/></svg></div>
-    <div class="faq-a">依民法第1174條，繼承人應於知悉其得繼承之時起3個月內，以書面向法院聲請拋棄繼承。逾期未辦理則視為概括承受，包含被繼承人的所有債務。使用<a href="inheritance-timeline.html">繼承流程時間軸</a>可自動計算各項期限倒數。</div>
-  </div>
-
-  <div class="faq-item">
-    <div class="faq-q">中華民國贍養費怎麼計算？<svg class="faq-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="4,6 8,10 12,6"/></svg></div>
-    <div class="faq-a">依民法第1057條，離婚後無法維持生活且非因自己過失者，得向他方請求贍養費。金額由法院依雙方經濟能力、婚姻年數、年齡、工作能力等因素決定，通常以司法院公布的最低生活費為基準。可使用<a href="alimony.html">贍養費試算工具</a>參考估算範圍。</div>
-  </div>
-
-  <div class="faq-item">
-    <div class="faq-q">遺產稅申報期限是多久？<svg class="faq-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="4,6 8,10 12,6"/></svg></div>
-    <div class="faq-a">依遺產及贈與稅法第23條，繼承人應於被繼承人死亡後6個月內，向被繼承人戶籍所在地的國稅局辦理遺產稅申報。逾期申報除補稅外，還會加徵罰鍰。2026年遺產稅免稅額為新台幣1,333萬元。</div>
-  </div>
-
-  <div class="faq-item">
-    <div class="faq-q">什麼是脫產？繼承人怎麼應對？<svg class="faq-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="4,6 8,10 12,6"/></svg></div>
-    <div class="faq-a">脫產是指被繼承人或債務人在死亡或訴訟前，將財產轉移給他人以規避繼承或債務清償的行為。依遺產及贈與稅法第 15 條，死亡前 <strong>2 年</strong>內贈與配偶、繼承人或繼承人配偶的財產，須併入遺產總額課稅；民法第 1148-1 條同步規定繼承人於繼承開始前 2 年內受贈之財產，視為所得遺產（僅供被繼承人債權人於限定繼承責任範圍主張）。超過 2 年但在 10 年內的詐害行為，仍可依民法第 244 條聲請撤銷。<br><br><em>📢 法規預告：§15 第 1 項第 1 款「配偶受贈」部分經憲法法庭 113 憲判 11 號宣告部分違憲，立法院須於 2026/10/28 前修法，屆時計算規則可能調整。</em><br><br>使用<a href="asset-detection.html">脫產偵測工具</a>可分析財產異動風險。</div>
-  </div>
-</section>
-
-<section style="max-width:620px;margin:0 auto;padding:28px 24px 0;">
-  <div style="background:rgba(196,147,42,0.06);border:1px solid rgba(196,147,42,0.15);border-radius:14px;padding:24px 20px;text-align:center;">
-    <div style="font-family:'Noto Serif TC',serif;font-size:16px;font-weight:700;color:var(--paper);margin-bottom:6px;">更新推播通知</div>
-    <div style="font-size:12px;color:rgba(245,240,232,0.45);margin-bottom:16px;line-height:1.6;">訂閱後，當法規修正、新功能上線或工具重大更新時，我們會寄信通知您。</div>
-    <div id="subscribe-form" style="display:flex;gap:8px;flex-wrap:wrap;">
-      <input type="email" id="subscribe-email" placeholder="your@email.com" style="flex:1;min-width:180px;padding:10px 14px;background:rgba(255,255,255,0.05);border:1.5px solid rgba(200,191,176,0.2);border-radius:8px;color:var(--paper);font-family:'Noto Sans TC',sans-serif;font-size:13px;-webkit-appearance:none;">
-      <button id="subscribe-btn" onclick="handleSubscribe()" style="padding:10px 20px;background:var(--gold);border:none;border-radius:8px;color:var(--ink);font-family:'Noto Sans TC',sans-serif;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;">訂閱</button>
-    </div>
-    <div id="subscribe-msg" style="display:none;margin-top:10px;font-size:12px;line-height:1.6;"></div>
-    <div id="subscribed-state" style="display:none;">
-      <div style="font-size:14px;color:#a8d8bc;font-weight:600;margin-bottom:8px;">✓ 已訂閱更新推播</div>
-      <button onclick="handleUnsubscribe()" style="background:none;border:none;color:rgba(245,240,232,0.35);font-size:11px;font-family:'Noto Sans TC',sans-serif;cursor:pointer;text-decoration:underline;padding:0;">要取消訂閱嗎？</button>
-    </div>
-  </div>
-</section>
-
-<!-- 商業合作 -->
-<section style="max-width:620px;margin:0 auto;padding:20px 24px 40px;">
-  <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(200,191,176,0.18);border-radius:14px;padding:26px 22px;text-align:center;">
-    <div style="font-family:'Noto Serif TC',serif;font-size:10px;letter-spacing:0.2em;color:rgba(196,147,42,0.8);text-transform:uppercase;margin-bottom:10px;">✦ Business</div>
-    <div style="font-family:'Noto Serif TC',serif;font-size:17px;font-weight:700;color:var(--paper);margin-bottom:8px;">商業合作？</div>
-    <div style="font-size:12.5px;color:rgba(245,240,232,0.55);line-height:1.75;margin-bottom:16px;">事務所白標、法律科技導入、工具客製、教育合作、媒體採訪，歡迎來信討論。</div>
-    <a href="mailto:businessjoechou@gmail.com" style="display:inline-block;padding:11px 22px;background:var(--gold);color:var(--ink);text-decoration:none;border-radius:10px;font-family:'Noto Serif TC',serif;font-size:13px;font-weight:600;letter-spacing:0.05em;">businessjoechou@gmail.com</a>
-  </div>
-</section>
-
-<script>
-(function initSubscribeState() {
-  const savedEmail = localStorage.getItem('subscribed_email');
-  if (savedEmail) {
-    document.getElementById('subscribe-form').style.display = 'none';
-    document.getElementById('subscribed-state').style.display = 'block';
-  }
-})();
-
-async function handleSubscribe() {
-  const email = document.getElementById('subscribe-email').value.trim();
-  const btn = document.getElementById('subscribe-btn');
-  const msg = document.getElementById('subscribe-msg');
-  msg.style.display = 'none';
-  if (!email || !email.includes('@')) {
-    msg.style.display = 'block';
-    msg.style.color = '#e8a0a0';
-    msg.textContent = '請輸入有效的電子信箱';
-    return;
-  }
-  btn.disabled = true;
-  btn.textContent = '訂閱中…';
-  try {
-    const r = await fetch('/api/subscribe', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email })
-    });
-    const data = await r.json();
-    if (r.ok) {
-      localStorage.setItem('subscribed_email', email);
-      document.getElementById('subscribe-form').style.display = 'none';
-      msg.style.display = 'none';
-      document.getElementById('subscribed-state').style.display = 'block';
-    } else {
-      msg.style.display = 'block';
-      msg.style.color = '#e8a0a0';
-      msg.textContent = data.error || '訂閱失敗';
-      btn.disabled = false;
-      btn.textContent = '訂閱';
-    }
-  } catch(e) {
-    msg.style.display = 'block';
-    msg.style.color = '#e8a0a0';
-    msg.textContent = '網路錯誤，請稍後再試';
-    btn.disabled = false;
-    btn.textContent = '訂閱';
-  }
-}
-
-async function handleUnsubscribe() {
-  const email = localStorage.getItem('subscribed_email');
-  if (!email) return;
-  try {
-    await fetch('/api/unsubscribe', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email })
-    });
-  } catch(e) {}
-  localStorage.removeItem('subscribed_email');
-  document.getElementById('subscribed-state').style.display = 'none';
-  document.getElementById('subscribe-form').style.display = 'flex';
-  document.getElementById('subscribe-email').value = '';
-}
-</script>
-
-<section aria-label="支持開發者" style="max-width:780px;margin:48px auto 0;padding:24px 28px;border:1px solid rgba(212,175,55,0.35);border-radius:10px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;background:rgba(212,175,55,0.04);">
-  <div style="flex:1;min-width:240px;font-family:'Noto Sans TC',sans-serif;font-size:14px;line-height:1.7;color:inherit;opacity:0.92;">
-    <strong style="font-weight:500;">周全所有工具永久免費</strong>　·　如果這些工具對你有幫助，歡迎請開發者喝杯咖啡。
-  </div>
-  <a href="https://choulegal.com/sponsor.html" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;background:#fde68a;color:#06080d;padding:10px 20px;border-radius:999px;font-family:'Noto Sans TC',sans-serif;font-size:13px;font-weight:500;text-decoration:none;letter-spacing:0.04em;transition:background 0.2s,transform 0.2s;white-space:nowrap;">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2v2"/><path d="M14 2v2"/><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"/><path d="M6 2v2"/></svg>
-    請我們喝杯咖啡 ›
-  </a>
-</section>
-
-<div class="disclaimer-bar"><strong>免責聲明</strong>：本平台之計算結果僅供初步參考，不構成法律意見或法律諮詢服務。實際案件因個案事實、適用法規及法院見解不同，結果可能有所差異，建議諮詢具執照之律師或相關法律專業人員。</div>
-
-<footer class="site-footer">
-  <div class="footer-mark">周全｜<em>InheritancePro</em><br>民法財產權益計算平台</div>
-  <div>© 2026 周全法律科技 · ChouLegal</div>
-  <div class="footer-links">
-    <a href="terms.html">使用條款</a> ·
-    <a href="privacy.html">隱私政策</a> ·
-    <a href="https://choulegal.com">回周全首頁</a> ·
-    <a href="https://choulegal.com/sponsor.html">請我們喝咖啡</a>
-  </div>
-</footer>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "InheritancePro",
-  "url": "https://inheritance.choulegal.com",
-  "description": "中華民國民法財產權益計算平台，提供遺產繼承、贍養費、剩餘財產分配、脫產偵測等免費計算工具。",
-  "applicationCategory": "LegalApplication",
-  "operatingSystem": "Any",
-  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "TWD"},
-  "inLanguage": "zh-TW",
-  "author": {"@type": "Organization", "name": "InheritancePro", "url": "https://inheritance.choulegal.com"}
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "中華民國遺產繼承順序是什麼？",
-      "acceptedAnswer": {"@type": "Answer", "text": "依民法規定，繼承順位為：第一順位是直系血親卑親屬（子女、孫子女），第二順位是父母，第三順位是兄弟姊妹，第四順位是祖父母。配偶則與各順位繼承人共同繼承。"}
-    },
-    {
-      "@type": "Question",
-      "name": "離婚後可以請求多少財產分配？",
-      "acceptedAnswer": {"@type": "Answer", "text": "依民法第1030-1條，法定財產制下，婚姻消滅時財產較少的一方可向另一方請求剩餘財產差額的二分之一。計算基礎為婚後各自取得的財產，婚前財產、繼承及受贈財產須排除。"}
-    },
-    {
-      "@type": "Question",
-      "name": "拋棄繼承的期限是幾天？",
-      "acceptedAnswer": {"@type": "Answer", "text": "依民法第1174條，繼承人應於知悉其得繼承之時起3個月（90天）內，以書面向法院聲請拋棄繼承。逾期未辦理則視為概括承受，包含被繼承人的所有債務。"}
-    },
-    {
-      "@type": "Question",
-      "name": "遺產稅申報期限是多久？",
-      "acceptedAnswer": {"@type": "Answer", "text": "依遺產及贈與稅法第23條，繼承人應於被繼承人死亡後6個月內，向國稅局辦理遺產稅申報。逾期申報除補稅外，還會加徵罰鍰。"}
-    },
-    {
-      "@type": "Question",
-      "name": "中華民國贍養費怎麼計算？",
-      "acceptedAnswer": {"@type": "Answer", "text": "依民法第1057條，離婚後無法維持生活且非因自己過失者，得向他方請求贍養費。金額由法院依雙方經濟能力、婚姻年數、年齡、工作能力等因素決定。"}
-    },
-    {
-      "@type": "Question",
-      "name": "什麼是脫產？",
-      "acceptedAnswer": {"@type": "Answer", "text": "脫產是指被繼承人在死亡前將財產轉移給他人以規避繼承或債務的行為。依遺產及贈與稅法第 15 條，死亡前 2 年內贈與配偶、繼承人或繼承人配偶之財產，須併入遺產總額課稅；民法第 1148-1 條規定繼承人於繼承前 2 年內受贈之財產，視為所得遺產（僅供被繼承人債權人於限定繼承責任範圍主張）。超過 2 年者，可依民法第 244 條於知悉起 1 年、行為起 10 年內聲請撤銷詐害行為。"}
-    }
-  ]
-}
-</script>
-<script src="js/supabase-config.js"></script>
-<script type="module" src="js/auth-bar.js"></script>
-<script>
-  // ═════════════════════════════════════════════════════════════
-  // ALL TOOLS — 工具資料庫（v2：使用 'all' persona 統一讀取）
-  // ═════════════════════════════════════════════════════════════
-  const ALL_TOOLS = {
-    calculator:           { href: 'calculator.html', featured: true,
-      name: { all: '遺產繼承計算器' },
-      desc: { all: '應繼分、特留分、遺產稅一次計算，支援代位繼承與拋棄繼承' } },
-    'inheritance-agreement': { href: 'inheritance-agreement.html', featured: true,
-      name: { all: '遺產分割協議書產生器' },
-      desc: { all: '全體繼承人協議分割遺產，依民§1164 產出協議書骨架，含逐繼承人用印欄' } },
-    'inheritance-timeline': { href: 'inheritance-timeline.html',
-      name: { all: '繼承流程時間軸' },
-      desc: { all: '死亡登記、拋棄繼承、遺產稅申報各項期限倒數' } },
-    'deadline-dashboard': { href: 'deadline-dashboard.html',
-      name: { all: '期限管理儀表板' },
-      desc: { all: '多案件並排追蹤，六項法定期限自動倒數，可勾選完成' } },
-    caregiver:            { href: 'caregiver.html',
-      name: { all: '照顧者特別貢獻' },
-      desc: { all: '民法§1149，照顧貢獻估值、主張策略、酌給遺產請求' } },
-    'gift-tax':           { href: 'gift-tax.html',
-      name: { all: '贈與稅試算' },
-      desc: { all: '244 萬年度免稅額、分年規劃節稅、vs 繼承稅負比較' } },
-    'property-sale-tax':  { href: 'real-estate.html?tab=sale',
-      name: { all: '房地合一稅試算' },
-      desc: { all: '繼承後出售稅率、自住優惠、持有年數計算' } },
-    'inherited-property-trap': { href: 'inherited-property-trap.html', featured: true, badge: 'case',
-      name: { all: '繼承房貸陷阱試算' },
-      desc: { all: '真實案例：不懂規則被課 175 萬，懂規則只要 28.6 萬，差 146 萬' } },
-    'real-estate':        { href: 'real-estate.html',
-      name: { all: '不動產繼承試算' },
-      desc: { all: '地價稅、房屋稅、土地增值稅免徵（獨立版）' } },
-    'stock-inheritance':  { href: 'stock-inheritance.html',
-      name: { all: '股票繼承估算' },
-      desc: { all: '上市收盤價、未上市資產淨值法（獨立版）' } },
-    'self-help': { href: 'self-help.html', badge: 'new',
-      name: { all: '繼承財產權自救指南' },
-      desc: { all: '遺產被霸占不分／特留分被侵害／被要求拋棄／繼承到債務 — 情境式法律依據與行動步驟、求助管道' } },
-    'limited-inheritance': { href: 'limited-inheritance.html',
-      name: { all: '限定繼承精算' },
-      desc: { all: '§1148 資不抵債分析・清償順序模擬・拋棄繼承時機建議' } },
-    'will-validity':      { href: 'will-validity.html',
-      name: { all: '遺囑效力鑑定' },
-      desc: { all: '五種遺囑逐條檢核・法定要件比對・效力瑕疵分析' } },
-    'estate-tax-detail':  { href: 'calculator.html',
-      name: { all: '遺產稅精算工作底稿' },
-      desc: { all: '17 項扣除額逐筆精算・自動產出工作底稿・可列印存檔' } },
-    'insurance-estate-risk': { href: 'insurance-estate-risk.html',
-      name: { all: '壽險保單遺產稅風險評估' },
-      desc: { all: '依國稅局八大態樣評估保單被課遺產稅風險，含補稅金額試算' } },
-    'insurance-gift-tax': { href: 'insurance-gift-tax.html',
-      name: { all: '保單要保人變更贈與稅' },
-      desc: { all: '§5-1 要保人變更贈與稅精算，含保價金查詢指引' } },
-    'gift-planner':       { href: 'gift-tax.html?tab=planner',
-      name: { all: '贈與節稅規劃模擬' },
-      desc: { all: '分年贈與 vs 一次繼承稅負比較・自動推算最省稅年數' } },
-    'case-manager':       { href: 'deadline-dashboard.html',
-      name: { all: '多案件管理系統' },
-      desc: { all: '六項法定期限自動倒數・案件緊急度排序・備註紀錄' } },
-    'property-split':     { href: 'property-split.html',
-      name: { all: '剩餘財產差額分配' },
-      desc: { all: '民法§1030-1，法定財產制下配偶可請求之差額計算' } },
-    alimony:              { href: 'alimony.html',
-      name: { all: '贍養費試算' },
-      desc: { all: '民法§1057，雙方收入、婚姻年數、給付期間估算' } },
-    'insurance-divorce':  { href: 'insurance-divorce.html',
-      name: { all: '保價金離婚財產分配' },
-      desc: { all: '壽險保價金納入婚後財產計算，含婚前/婚後拆分' } },
-    'child-support':      { href: 'child-support.html',
-      name: { all: '子女扶養費計算' },
-      desc: { all: '依雙方收入比例分擔，支援多名子女，含親權歸屬情境' } },
-    'divorce-damages':    { href: 'divorce-damages.html',
-      name: { all: '離婚損害賠償精算' },
-      desc: { all: '§1056、§195 逐項估算，含被告對象分析與時效提醒' } },
-    'infidelity-damages': { href: 'divorce-damages.html?tab=infidelity', badge: 'new',
-      name: { all: '侵害配偶權損害賠償（出軌）' },
-      desc: { all: '不用離婚也能告！外遇、小三求償金額試算，含被告策略' } },
-    'asset-detection':    { href: 'asset-detection.html',
-      name: { all: '脫產偵測分析' },
-      desc: { all: '財產異動風險評估，依法律規定自動標記，支援 CSV 上傳' } },
-    'interest-calc':      { href: 'interest-calc.html',
-      name: { all: '法定利率利息計算器' },
-      desc: { all: '依民法§203 年利率 5% 計算損害賠償或借貸糾紛利息' } },
-    'minor-damages':      { href: 'minor-damages.html',
-      name: { all: '未成年損害賠償試算' },
-      desc: { all: '霸凌、傷害事件，含父母連帶責任、精神慰撫金' } },
-    accident:             { href: 'accident.html',
-      name: { all: '車禍損害賠償分析' },
-      desc: { all: '傷害／死亡賠償明細，自動扣除強制責任險給付' } },
-    prescription:         { href: 'prescription.html',
-      name: { all: '消滅時效計算機' },
-      desc: { all: '§125–127、§197 各類請求權時效，含時效中斷提醒' } },
-    'forced-share':       { href: 'forced-share.html',
-      name: { all: '特留分侵害精算' },
-      desc: { all: '§1223 逐人精算特留分・侵害金額計算・扣減權時效提醒' } },
-    'litigation-strength': { href: 'litigation-strength.html',
-      name: { all: '訴訟強度分析報告' },
-      desc: { all: '11 項因素系統評分・勝訴率預估・弱點分析・策略建議' } },
-    'settlement-calc':    { href: 'settlement-calc.html',
-      name: { all: '和解談判模擬器' },
-      desc: { all: '期望值模型・最佳開價策略・底線計算・談判區間圖表' } },
-    'legal-basis':        { href: 'legal-basis.html',
-      name: { all: '試算分析依據' },
-      desc: { all: '各工具法律依據、民法條文、法院判例與計算模型完整說明' } },
-    // 保險專區
-    'insurance-forced-share': { href: 'insurance-estate-risk.html?tab=forced', badge: 'new',
-      name: { all: '保單 vs 特留分侵害' },
-      desc: { all: '107 台上 1395 號・保費顯失公平五項風險指標・扣減金額試算' } },
-    'insurance-policyholder-death': { href: 'insurance-policyholder-death.html', badge: 'new',
-      name: { all: '要保人過世保單處理' },
-      desc: { all: '續繳／解約／變更／借款四方案稅務與現金流對比' } },
-    'insurance-amt': { href: 'insurance-estate-risk.html?tab=amt', badge: 'new',
-      name: { all: '最低稅負制保單 (AMT)' },
-      desc: { all: '3,740 萬免稅門檻・多保單合計・基本所得額精算' } },
-    'insurance-loan-vs-surrender': { href: 'insurance-loan-vs-surrender.html', badge: 'new',
-      name: { all: '保單借款 vs 解約' },
-      desc: { all: '淨現金對比・保單失效臨界年數計算・實務判決' } },
-    'insurance-accident-combined': { href: 'insurance-accident-combined.html', badge: 'new',
-      name: { all: '意外事故保險金合計' },
-      desc: { all: '12 項險種盤點・申請順序・所需文件清單（常被遺漏數十萬）' } },
-    'insurance-beneficiary-order': { href: 'insurance-beneficiary-order.html', badge: 'new',
-      name: { all: '受益人順位分配' },
-      desc: { all: '§113 + 民法§1138/§1144 自動判定保險金歸屬' } },
-  };
-
-  function getName(tool) { return tool.name.all; }
-  function getDesc(tool) { return tool.desc.all; }
-  function ref(id) { return { ...ALL_TOOLS[id], _id: id }; }
-
-  // ═════════════════════════════════════════════════════════════
-  // FEATURED_LATEST — 置頂精選橫向滑動區（7 張）
-  // ═════════════════════════════════════════════════════════════
-  const FEATURED_LATEST = [
-    { id: 'inheritance-agreement', label: '範本', cls: 'new',
-      title: '遺產分割協議書產生器',
-      desc: '全體繼承人協議分割遺產，填欄位即產出可複製的協議書骨架（民§1164），含逐人用印欄。' },
-    { id: 'inherited-property-trap', label: '真實案例', cls: 'case',
-      title: '繼承房貸陷阱試算',
-      desc: '不懂規則被課 175 萬，懂規則只要 28.6 萬，差 146 萬。真實新聞案例。' },
-    { id: 'infidelity-damages', label: '新上線', cls: 'new',
-      title: '侵害配偶權損害賠償',
-      desc: '不用離婚也能告！對配偶與第三人同時求償，含訴訟策略。' },
-    { id: 'insurance-accident-combined', label: '新上線', cls: 'new',
-      title: '意外事故保險金合計',
-      desc: '12 項險種一次盤點，常被遺漏數十萬理賠金。' },
-    { id: 'insurance-forced-share', label: '新上線', cls: 'new',
-      title: '保單 vs 特留分侵害',
-      desc: '107 台上 1395 號實務見解，計算可扣減金額。' },
-    { id: 'insurance-amt', label: '新上線', cls: 'new',
-      title: '最低稅負制保單 (AMT)',
-      desc: '3,740 萬免稅門檻自動判定，多保單合計精算。' },
-    { id: 'insurance-beneficiary-order', label: '新上線', cls: 'new',
-      title: '受益人順位分配',
-      desc: '§113 + §1138/§1144 自動判定保險金歸屬。' },
-    { id: 'insurance-policyholder-death', label: '新上線', cls: 'new',
-      title: '要保人過世保單處理',
-      desc: '四方案決策比較，繼承人必看。' },
-  ];
-
-  // ═════════════════════════════════════════════════════════════
-  // TABS — 6 個情境分類（合併 v1 TABS_PUBLIC 與 TABS_PRO）
-  // ═════════════════════════════════════════════════════════════
-  const TABS = [
-    { id: 'death', label: '繼承相關',
-      subtitle: '繼承流程、遺產分配、稅務申報一次搞定。',
-      tools: ['self-help','calculator','inheritance-timeline','deadline-dashboard','caregiver',
-              'real-estate','stock-inheritance','inherited-property-trap',
-              'limited-inheritance','will-validity','estate-tax-detail',
-              'forced-share','case-manager'] },
-    { id: 'insurance', label: '保險規劃',
-      subtitle: '保單遺產、受益人、理賠、最低稅負一次搞懂。',
-      tools: ['insurance-estate-risk','insurance-gift-tax','insurance-policyholder-death',
-              'insurance-amt','insurance-forced-share','insurance-beneficiary-order',
-              'insurance-loan-vs-surrender','insurance-accident-combined','insurance-divorce'] },
-    { id: 'divorce', label: '要離婚了',
-      subtitle: '財產分配、扶養費、出軌求償一起算。',
-      tools: ['property-split','alimony','child-support','infidelity-damages',
-              'divorce-damages','insurance-divorce'] },
-    { id: 'gift', label: '送財產給家人',
-      subtitle: '贈與節稅、保單規劃、房產移轉。',
-      tools: ['gift-tax','gift-planner','insurance-gift-tax','property-sale-tax'] },
-    { id: 'accident', label: '發生事故了',
-      subtitle: '車禍、霸凌、意外賠償一次盤點。',
-      tools: ['accident','insurance-accident-combined','minor-damages'] },
-    { id: 'debt', label: '有債權糾紛',
-      subtitle: '欠款追討、時效查詢、脫產偵測。',
-      tools: ['interest-calc','prescription','asset-detection','litigation-strength','settlement-calc','legal-basis'] },
-  ];
-
-  // ═════════════════════════════════════════════════════════════
-  // Render
-  // ═════════════════════════════════════════════════════════════
-  let activeTab = 'death';
-  let searchQuery = '';
-
-  function renderToolCard(tool) {
-    const name = getName(tool);
-    const desc = getDesc(tool);
-    const badge = tool.badge ? `<span class="tool-badge ${tool.badge}">${tool.badge}</span>` : '';
-    return `<a class="tool-card ${tool.featured ? 'featured' : ''}" href="${tool.href}">
-      <div class="tool-card-inner">
-        <div class="tool-info">
-          <div class="tool-name">${name}${badge}</div>
-          <div class="tool-desc">${desc}</div>
+<main>
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="eyebrow">民法財產 · Public product</div>
+        <h1>InheritancePro<br class="mobile-break">民法財產權</h1>
+        <p class="lead">繼承、離婚、不動產和保險不是一開始就要算。新版首頁先把事件、期限、債務、文件和爭議順序整理好，需要金額或比例時再進入工具。</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#events">先看事件入口 <span>→</span></a>
+          <a class="button" href="#calculators">直接找計算工具</a>
         </div>
-        <span class="tool-arrow">→</span>
       </div>
-    </a>`;
-  }
+      <div class="docket" aria-label="InheritancePro 使用路線">
+        <div class="docket-title"><span>Start here</span><span>民法財產</span></div>
+        <div class="triage-row"><span class="triage-tag">親人過世</span><div><strong>親人過世</strong><p>先看三個月拋棄或限定繼承、六個月遺產稅和債務風險。</p></div></div><div class="triage-row"><span class="triage-tag">遺囑與特留分</span><div><strong>遺囑與特留分</strong><p>先看遺囑形式和財產移轉，再計算特留分是否受侵害。</p></div></div><div class="triage-row"><span class="triage-tag">離婚財產</span><div><strong>離婚財產</strong><p>先列婚後財產、債務和子女支出，再看分配與協議。</p></div></div>
+      </div>
+    </div>
+  </section>
 
-  function renderFeatured() {
-    const html = FEATURED_LATEST.map(item => {
-      const tool = ALL_TOOLS[item.id];
-      if (!tool) return '';
-      return `<a class="featured-card ${item.cls}" href="${tool.href}">
-        <span class="featured-badge ${item.cls}">${item.label}</span>
-        <div class="featured-card-title">${item.title}</div>
-        <div class="featured-card-desc">${item.desc}</div>
-        <div class="featured-card-arrow">
-          <span>開始試算</span>
-          <span>→</span>
-        </div>
-      </a>`;
-    }).join('');
-    document.getElementById('featuredStrip').innerHTML = html;
-  }
+  <section id="events" class="band">
+    <div class="section-inner">
+      <div class="section-head">
+        <h2>先從事件開始</h2>
+        <p class="section-note">這一區放處理路線。頁面會先提醒期限、證據和下一步，再帶到需要的工具。</p>
+      </div>
+      <div class="grid">
+      <a class="card kit" href="inheritance-timeline.html">
+        <div class="card-topline"><span>事件</span><span>期限</span></div>
+        <h3>親人過世後的繼承處理</h3>
+        <p>死亡登記、拋棄或限定繼承、遺產稅、分割和過戶照順序處理。</p>
+        <div class="card-footer"><span>開始</span><span>→</span></div>
+      </a>
+      <a class="card rights" href="limited-inheritance.html">
+        <div class="card-topline"><span>事件</span><span>債務</span></div>
+        <h3>要不要拋棄或限定繼承</h3>
+        <p>債務不明或可能大於財產時，先保留選擇，不要急著處分遺產。</p>
+        <div class="card-footer"><span>開始</span><span>→</span></div>
+      </a>
+      <a class="card rights" href="will-validity.html">
+        <div class="card-topline"><span>事件</span><span>遺囑</span></div>
+        <h3>遺囑與特留分爭議</h3>
+        <p>確認遺囑形式、生前贈與、保單安排和扣減方向。</p>
+        <div class="card-footer"><span>開始</span><span>→</span></div>
+      </a>
+      <a class="card kit" href="divorce-agreement.html">
+        <div class="card-topline"><span>事件</span><span>家事</span></div>
+        <h3>離婚、財產與子女安排</h3>
+        <p>把協議、扶養費、剩餘財產和損害賠償拆開檢查。</p>
+        <div class="card-footer"><span>開始</span><span>→</span></div>
+      </a>
+      <a class="card kit" href="real-estate.html">
+        <div class="card-topline"><span>事件</span><span>不動產</span></div>
+        <h3>繼承或移轉不動產</h3>
+        <p>先看謄本、抵押、共有、稅費和過戶資料。</p>
+        <div class="card-footer"><span>開始</span><span>→</span></div>
+      </a>
+      <a class="card kit" href="insurance-policyholder-death.html">
+        <div class="card-topline"><span>事件</span><span>保險</span></div>
+        <h3>保單、受益人與遺產稅風險</h3>
+        <p>區分要保人、被保險人、受益人和是否列入遺產。</p>
+        <div class="card-footer"><span>開始</span><span>→</span></div>
+      </a></div>
+    </div>
+  </section>
 
-  function renderSearch() {
-    const q = searchQuery.toLowerCase();
-    const allToolIds = Object.keys(ALL_TOOLS);
-    const matches = allToolIds
-      .map(id => ref(id))
-      .filter(tool => {
-        const name = getName(tool).toLowerCase();
-        const desc = getDesc(tool).toLowerCase();
-        return name.includes(q) || desc.includes(q);
-      });
+  <section id="calculators" class="band alt">
+    <div class="section-inner rail">
+      <div class="split-note">
+        <strong>真正需要計算的項目</strong>
+        <p>這些項目有明確輸入與輸出，例如金額、日期、比例或級距。它們保留為工具，但不再是首頁唯一入口。</p>
+      </div>
+      <div class="tool-list">
+      <a class="tool-item" href="calculator.html">
+        <span>
+          <strong>遺產繼承計算</strong>
+          <span>應繼分、繼承順位與分配比例。</span>
+        </span>
+        <span class="type-label">CALC</span>
+      </a>
+      <a class="tool-item" href="forced-share.html">
+        <span>
+          <strong>特留分扣減</strong>
+          <span>遺囑或贈與侵害特留分時的扣減試算。</span>
+        </span>
+        <span class="type-label">CALC</span>
+      </a>
+      <a class="tool-item" href="estate-tax-detail.html">
+        <span>
+          <strong>遺產稅試算</strong>
+          <span>免稅額、扣除額與累進稅率。</span>
+        </span>
+        <span class="type-label">CALC</span>
+      </a>
+      <a class="tool-item" href="property-split.html">
+        <span>
+          <strong>剩餘財產分配</strong>
+          <span>婚後財產差額分配。</span>
+        </span>
+        <span class="type-label">CALC</span>
+      </a>
+      <a class="tool-item" href="child-support.html">
+        <span>
+          <strong>子女扶養費</strong>
+          <span>依支出基準估算扶養費。</span>
+        </span>
+        <span class="type-label">CALC</span>
+      </a>
+      <a class="tool-item" href="gift-tax.html">
+        <span>
+          <strong>贈與稅試算</strong>
+          <span>年度免稅額與累進稅率。</span>
+        </span>
+        <span class="type-label">CALC</span>
+      </a></div>
+    </div>
+  </section>
 
-    const container = document.getElementById('toolsContainer');
-    document.getElementById('featuredSection').style.display = 'none';
-    document.getElementById('browseHeader').style.display = 'none';
-    document.getElementById('tabScrollWrap').style.display = 'none';
-    document.getElementById('tabSubtitle').style.display = 'none';
-
-    if (matches.length === 0) {
-      container.innerHTML = `
-        <div class="search-fallback">
-          <div class="search-fallback-title">找不到「<strong>${searchQuery}</strong>」相關工具</div>
-          <div class="search-fallback-hint">你可能想找：</div>
-          <div class="search-fallback-chips">
-            <button class="search-chip" onclick="searchFor('遺產')">遺產</button>
-            <button class="search-chip" onclick="searchFor('贍養費')">贍養費</button>
-            <button class="search-chip" onclick="searchFor('車禍')">車禍</button>
-            <button class="search-chip" onclick="searchFor('保單')">保單</button>
-            <button class="search-chip" onclick="searchFor('出軌')">出軌</button>
-          </div>
-          <div class="search-fallback-contact">
-            還是找不到？<a href="mailto:hello@inheritance.choulegal.com">告訴我們你需要什麼</a>
-          </div>
-        </div>`;
-    } else {
-      container.innerHTML = matches.map(t => renderToolCard(t)).join('');
-    }
-  }
-
-  function renderTabs(animate) {
-    // Restore sections
-    document.getElementById('featuredSection').style.display = '';
-    document.getElementById('browseHeader').style.display = '';
-    document.getElementById('tabScrollWrap').style.display = '';
-    document.getElementById('tabSubtitle').style.display = '';
-
-    // Tab buttons
-    document.getElementById('tabNav').innerHTML = TABS.map(tab =>
-      `<button class="tab-btn ${tab.id === activeTab ? 'active' : ''}" onclick="setTab('${tab.id}')">${tab.label}</button>`
-    ).join('');
-
-    // Update sliding tab indicator
-    requestAnimationFrame(() => { updateTabIndicator(); });
-
-    // Subtitle
-    const current = TABS.find(t => t.id === activeTab) || TABS[0];
-    document.getElementById('tabSubtitle').textContent = current.subtitle;
-
-    // Tools
-    const toolsHtml = current.tools
-      .map(id => ALL_TOOLS[id] ? ref(id) : null)
-      .filter(Boolean)
-      .map(t => renderToolCard(t))
-      .join('');
-    document.getElementById('toolsContainer').innerHTML = toolsHtml;
-
-    // Staggered card entrance
-    if (animate) {
-      staggerToolCards();
-    }
-  }
-
-  function render(animate) {
-    if (searchQuery) { renderSearch(); return; }
-    renderTabs(animate);
-  }
-
-  function setTab(id) {
-    if (id === activeTab) return;
-    const container = document.getElementById('toolsContainer');
-    // Crossfade out
-    container.classList.add('ip-tab-fading');
-    setTimeout(() => {
-      activeTab = id;
-      render(true);
-      // Crossfade in
-      requestAnimationFrame(() => {
-        container.classList.remove('ip-tab-fading');
-      });
-      // Scroll active tab into view
-      const activeBtn = document.querySelector('.tab-btn.active');
-      if (activeBtn && activeBtn.scrollIntoView) {
-        activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-      }
-    }, 250);
-  }
-
-  /* Tab underline indicator positioning */
-  function updateTabIndicator() {
-    const nav = document.getElementById('tabNav');
-    if (!nav) return;
-    let indicator = nav.querySelector('.tab-indicator');
-    if (!indicator) {
-      indicator = document.createElement('div');
-      indicator.className = 'tab-indicator';
-      nav.appendChild(indicator);
-    }
-    const activeBtn = nav.querySelector('.tab-btn.active');
-    if (activeBtn) {
-      const navRect = nav.getBoundingClientRect();
-      const btnRect = activeBtn.getBoundingClientRect();
-      indicator.style.left = (btnRect.left - navRect.left) + 'px';
-      indicator.style.width = btnRect.width + 'px';
-    }
-  }
-
-  /* Stagger tool card entrance animation */
-  function staggerToolCards() {
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced) return;
-    const cards = document.querySelectorAll('#toolsContainer .tool-card');
-    cards.forEach((card, i) => {
-      card.classList.add('ip-stagger-in');
-      setTimeout(() => {
-        card.classList.add('ip-stagger-visible');
-      }, 50 * i + 30);
-    });
-  }
-
-  function searchFor(q) {
-    document.getElementById('toolSearch').value = q;
-    searchQuery = q;
-    document.getElementById('searchClear').style.display = 'block';
-    render();
-  }
-
-  // ── Search ────────────────────────────────────────────────────
-  function clearSearch() {
-    document.getElementById('toolSearch').value = '';
-    searchQuery = '';
-    document.getElementById('searchClear').style.display = 'none';
-    render();
-  }
-
-  document.getElementById('toolSearch').addEventListener('input', function(e) {
-    searchQuery = e.target.value.trim();
-    document.getElementById('searchClear').style.display = searchQuery ? 'block' : 'none';
-    render();
-  });
-
-  // ═════════════════════════════════════════════════════════════
-  // Init — 先渲染 UI，再背景載入 auth（不阻塞畫面）
-  // ═════════════════════════════════════════════════════════════
-  if (!localStorage.getItem('ip_persona')) {
-    localStorage.setItem('ip_persona', 'all');
-  }
-
-  // 立刻渲染卡片（不等 Supabase）
-  renderFeatured();
-  render(true);
-
-  // Auth 狀態背景載入（不阻塞 UI，由 auth-bar.js 處理）
-
-  document.querySelectorAll('.faq-q').forEach(q => {
-    q.addEventListener('click', () => {
-      const item = q.closest('.faq-item');
-      item.classList.toggle('open');
-    });
-  });
-
-  // ═════════════════════════════════════════════════════════════
-  // Scroll Reveal — IntersectionObserver for all major sections
-  // ═════════════════════════════════════════════════════════════
-  (function initScrollReveal() {
-    var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced) return;
-
-    // Mark sections for reveal
-    var revealTargets = [
-      '#featuredSection',
-      '#browseHeader',
-      '#tabScrollWrap',
-      '.faq-section',
-      '.disclaimer-bar'
-    ];
-    revealTargets.forEach(function(sel) {
-      var el = document.querySelector(sel);
-      if (el) el.classList.add('ip-reveal');
-    });
-
-    // FAQ items get stagger
-    document.querySelectorAll('.faq-item').forEach(function(el) {
-      el.classList.add('ip-reveal');
-    });
-
-    // Inline sections (subscribe, business)
-    document.querySelectorAll('section[style]').forEach(function(el) {
-      el.classList.add('ip-reveal');
-    });
-
-    var observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          // Stagger siblings
-          var parent = entry.target.parentElement;
-          var siblings = parent ? Array.from(parent.querySelectorAll(':scope > .ip-reveal')) : [];
-          var idx = siblings.indexOf(entry.target);
-          var delay = idx > 0 ? idx * 80 : 0;
-          setTimeout(function() {
-            entry.target.classList.add('ip-visible');
-          }, delay);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15 });
-
-    document.querySelectorAll('.ip-reveal').forEach(function(el) {
-      observer.observe(el);
-    });
-  })();
-
-  // 滑鼠滾輪 → 水平滾動（解決桌機卡片列只能拖的問題；觸控/觸控板水平手勢照常）
-  document.querySelectorAll('.featured-strip').forEach(function(strip){
-    strip.addEventListener('wheel', function(e){
-      if (Math.abs(e.deltaX) > 0) return;
-      if (!e.deltaY) return;
-      e.preventDefault();
-      strip.scrollLeft += e.deltaY;
-    }, { passive: false });
-  });
-</script>
-<script defer src="js/coffee-button.js"></script>
+  <section id="rights" class="band">
+    <div class="section-inner">
+      <div class="section-head">
+        <h2>權益查詢與文件</h2>
+        <p class="section-note">不需要硬算的內容，改用查詢、流程、檢核或文件型態呈現。</p>
+      </div>
+      <div class="grid two">
+      <a class="card rights" href="insurance-beneficiary-order.html">
+        <div class="card-topline"><span>RIGHTS</span><span>→</span></div>
+        <h3>受益人順序</h3>
+        <p>指定、法定與變更的判斷。</p>
+        <div class="card-footer"><span>查看</span><span>→</span></div>
+      </a>
+      <a class="card rights" href="property-check.html">
+        <div class="card-topline"><span>CHECK</span><span>→</span></div>
+        <h3>產權檢核</h3>
+        <p>謄本、抵押、限制登記與共有。</p>
+        <div class="card-footer"><span>查看</span><span>→</span></div>
+      </a>
+      <a class="card rights" href="deadline-dashboard.html">
+        <div class="card-topline"><span>CHECKLIST</span><span>→</span></div>
+        <h3>期限儀表板</h3>
+        <p>民法重要期限總覽。</p>
+        <div class="card-footer"><span>查看</span><span>→</span></div>
+      </a>
+      <a class="card doc" href="inheritance-agreement.html">
+        <div class="card-topline"><span>DOCUMENT</span><span>→</span></div>
+        <h3>遺產分割協議書</h3>
+        <p>整理可編修的協議文字。</p>
+        <div class="card-footer"><span>查看</span><span>→</span></div>
+      </a></div>
+    </div>
+  </section>
+</main>
+<footer class="footer"><div class="footer-inner"><span>周全法律科技 ChouLegal · InheritancePro</span><span><a href="https://people.choulegal.com/">民眾版入口</a> · <a href="privacy.html">隱私權</a> · <a href="terms.html">使用條款</a></span></div></footer>
 </body>
 </html>
