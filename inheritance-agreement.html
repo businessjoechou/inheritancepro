@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>遺產分割協議書產生器（通用骨架）｜InheritancePro</title>
-<meta name="description" content="免費產生遺產分割協議書通用骨架：填入被繼承人、全體繼承人、遺產標的與分割方法，依民法第1164條至第1167條產出可複製文字，含逐繼承人用印欄與法律依據。在遺產計算機算完應繼分後也可一鍵帶入。">
-<meta name="keywords" content="遺產分割協議書,分割協議書範本,民法第1164條,民法第1167條,繼承協議,遺產分割,繼承登記">
+<meta name="description" content="免費產生遺產分割協議書通用骨架：填入被繼承人、全體繼承人、遺產標的與分割方法，依民法第1164條、第1165條產出可複製文字，含逐繼承人用印欄與法律依據。在遺產計算機算完應繼分後也可一鍵帶入。">
+<meta name="keywords" content="遺產分割協議書,分割協議書範本,民法第1164條,民法第1165條,繼承協議,遺產分割,繼承登記">
 <link rel="canonical" href="https://inheritance.choulegal.com/inheritance-agreement.html">
 <link rel="icon" type="image/svg+xml" href="img/choulegal-icon.svg">
 <script src="js/theme-boot.js"></script>
@@ -24,6 +24,7 @@
   .doc-item .doc-law { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: .04em; }
   .selfhelp-note { margin-top: 18px; font-size: 13px; color: var(--muted); line-height: 1.8; border:1.5px solid var(--border); border-radius:12px; padding:14px 18px; }
 </style>
+<script src="js/supabase-config.js"></script>
 </head>
 <body>
 
@@ -49,7 +50,7 @@
   <div class="doc-item">
     <h3>遺產分割協議書</h3>
     <p>立協議書人即被繼承人之全體繼承人，就所遺財產協議分割。產出後請全體繼承人簽名（蓋章）；未成年人由法定代理人代理簽章。不動產另須持本協議書辦理繼承登記（建議洽地政士）。</p>
-    <span class="doc-law">民法 §1151／§1164／§1165／§1167</span>
+    <span class="doc-law">民法 §1151／§1164／§1165</span>
     <div id="m-agreement"></div>
   </div>
 
@@ -97,5 +98,6 @@
 })();
 </script>
 
+<script type="module" src="js/auth-bar.js"></script>
 </body>
 </html>

@@ -277,7 +277,7 @@
       ③ <strong>顯著不相當代價讓與財產</strong>：以顯著低於市價之代價讓與財產、免除或承擔債務者，其差額部分視為贈與。<br>
       ④ <strong>限制或無行為能力人購置財產</strong>：由其<strong>法定代理人</strong>贈與論（但能證明資金屬購買人所有者除外）。<br>
       ⑤ <strong>二親等以內親屬間財產買賣</strong>：視為贈與（但能提出已支付價款證明，且該價款<strong>非由出賣人貸與或提供擔保</strong>者除外）。<br>
-      ⑥ <strong>信託利益</strong>：信託行為明定信託利益全部或一部之受益人為<strong>非委託人</strong>者，視為委託人將享有信託利益之權利贈與該受益人（§5-1）。<br>
+      ⑥ <strong>信託利益</strong>：信託行為明定信託利益全部或一部之受益人為<strong>非委託人</strong>者，視為委託人將享有信託利益之權利贈與該受益人（遺贈稅法§5-1）。<br>
       <span style="color:#888;font-size:11px">⚠️ 以上 6 款均須申報贈與稅；若有疑義請諮詢會計師或稅務代理人。二親等買賣（第 5 款）最常見於父母→子女不動產轉讓，需備齊金流證明</span>
     </div>
 
@@ -514,7 +514,7 @@
     </div>
 
     <div class="info-box">
-      <strong>計算邏輯</strong>：每位贈與人每年免稅額 244 萬（&sect;22）；夫妻雙贈與 = 2 &times; 244 萬；婚嫁贈與可額外加碼 100 萬（&sect;20-1，子女結婚年度適用）。日曆自動排列至全數移轉完畢。
+      <strong>計算邏輯</strong>：每位贈與人每年免稅額 244 萬（遺贈稅法&sect;22）；夫妻雙贈與 = 2 &times; 244 萬；婚嫁贈與可額外加碼 100 萬（遺贈稅法&sect;20-1，子女結婚年度適用）。日曆自動排列至全數移轉完畢。
     </div>
 
     <button class="calc-btn" onclick="calendarCalculate()">產生分年日曆</button>
@@ -721,7 +721,7 @@
     var usedExempt = isSpouseGift ? Math.min(priorGifts, annualExempt) : Math.min(totalThisYear, annualExempt);
     var remainingExempt = Math.max(0, annualExempt - priorGifts);
 
-    document.getElementById('r_exemption').textContent = isSpouseGift ? '配偶贈與免稅（§20）' : fmt(annualExempt);
+    document.getElementById('r_exemption').textContent = isSpouseGift ? '配偶贈與免稅（遺贈稅法§20）' : fmt(annualExempt);
     document.getElementById('r_prior').textContent = fmt(priorGifts);
     document.getElementById('r_current').textContent = fmt(currentGift);
     document.getElementById('r_total_gifts').textContent = fmt(totalThisYear);

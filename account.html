@@ -868,8 +868,15 @@
       const btn = document.getElementById('btn-confirm-delete');
       btn.disabled = true;
       btn.textContent = '刪除中…';
-      await supabase.from('calculations').delete().eq('user_id', user.id);
-      await supabase.from('profiles').delete().eq('id', user.id);
+      await supabase
+        .from('choulegal_account_data')
+        .delete()
+        .eq('account_id', user.id)
+        .eq('product_key', 'people');
+      await supabase
+        .from('choulegal_accounts')
+        .update({ display_name: null, avatar_url: null, default_workspace_id: null })
+        .eq('id', user.id);
       await supabase.auth.signOut();
       localStorage.removeItem('ip_persona');
       ipClearAllDrafts();

@@ -9,20 +9,20 @@
 
 :root {
   /* === 核心品牌色 === */
-  --ip-ink:        #1a1410;   /* 主文字、深色背景 */
-  --ip-paper:      #f5f0e8;   /* 頁面底色 */
-  --ip-accent:     #8b2020;   /* 強調紅（警示、負面數字） */
-  --ip-gold:       #c4932a;   /* 金色（logo、重要數字） */
-  --ip-soft:       #e8e0d0;   /* 淡底色、分隔線 */
-  --ip-muted:      #7a6f62;   /* 輔助文字 */
-  --ip-success:    #2a6b4a;   /* 成功綠 */
-  --ip-danger:     #8b2020;   /* 危險紅（同 accent） */
-  --ip-border:     #c8bfb0;   /* 邊框 */
+  --ip-ink:        #081220;   /* 主文字、深色背景 */
+  --ip-paper:      #f7f5f0;   /* 頁面底色 */
+  --ip-accent:     #8b2332;   /* 強調紅（警示、負面數字） */
+  --ip-gold:       #d4af37;   /* 金色（logo、重要數字） */
+  --ip-soft:       #eeeae0;   /* 淡底色、分隔線 */
+  --ip-muted:      #47628f;   /* 輔助文字 */
+  --ip-success:    #2d5a3d;   /* 成功綠 */
+  --ip-danger:     #8b2332;   /* 危險紅（同 accent） */
+  --ip-border:     #c2cfe0;   /* 邊框 */
   --ip-danger-bg:  #fff3f0;
   --ip-success-bg: #f0f8f3;
 
   /* === 次要色（compare card、trap alert 用） === */
-  --ip-ink-hover:         #2a2420;   /* calc-btn hover */
+  --ip-ink-hover:         #0e1e35;   /* calc-btn hover */
   --ip-naive-bg:          #5a1f1f;   /* compare 憑直覺欄背景（深紅） */
   --ip-smart-bg:          #1d4a31;   /* compare 套用優惠欄背景（深綠） */
   --ip-alert-red-bg:      #8b1a1a;   /* trap alert 背景 */

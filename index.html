@@ -504,8 +504,61 @@
     .tool-item { grid-template-columns: 1fr; gap: 8px; }
     .type-label { white-space: normal; }
   }
+  /* ===== ChouLegal unified product-line polish ===== */
+  :root {
+    --paper: #f7f5f0;
+    --paper-strong: #ffffff;
+    --ink: #081220;
+    --muted: #47628f;
+    --line: #c2cfe0;
+    --line-strong: rgba(212, 175, 55, 0.42);
+    --teal: #2e4a78;
+    --clay: #8b2332;
+    --gold: #d4af37;
+    --plum: #142a4a;
+    --green: #2d5a3d;
+    --shadow: 0 1px 2px rgba(20, 42, 74, 0.04), 0 16px 34px -24px rgba(20, 42, 74, 0.3);
+    --radius: 6px;
+  }
+  body {
+    background:
+      linear-gradient(90deg, rgba(20, 42, 74, 0.035) 1px, transparent 1px),
+      linear-gradient(rgba(20, 42, 74, 0.025) 1px, transparent 1px),
+      var(--paper);
+  }
+  *:focus-visible { outline-color: rgba(212, 175, 55, 0.5); }
+  .site-header {
+    background: rgba(8, 18, 32, 0.96);
+    border-bottom-color: rgba(212, 175, 55, 0.16);
+  }
+  .brand-mark {
+    background: linear-gradient(135deg, #e5c45f, #d4af37 55%, #b8941f);
+    color: #081220;
+  }
+  .brand-parent { color: rgba(229, 196, 95, 0.7); }
+  .brand-name,
+  .site-header nav a,
+  .nav-primary { color: rgba(251, 250, 246, 0.88); }
+  .site-header nav a:hover,
+  .nav-primary:hover { color: #e5c45f; }
+  .nav-primary {
+    background: rgba(212, 175, 55, 0.12);
+    border-color: rgba(212, 175, 55, 0.3);
+  }
+  .button.primary {
+    background: linear-gradient(135deg, #e5c45f, #d4af37 55%, #b8941f);
+    color: #081220;
+  }
+  .button.secondary,
+  .card,
+  .case-docket,
+  .stat {
+    border-color: rgba(194, 207, 224, 0.8);
+    border-radius: 6px;
+  }
 </style>
 <script src="js/ga.js" defer></script>
+<script src="js/supabase-config.js"></script>
 </head>
 <body>
 
@@ -675,5 +728,6 @@
   </section>
 </main>
 <footer class="footer"><div class="footer-inner"><span>周全法律科技 ChouLegal · InheritancePro</span><span><a href="https://people.choulegal.com/">民眾版入口</a> · <a href="privacy.html">隱私權</a> · <a href="terms.html">使用條款</a></span></div></footer>
+<script type="module" src="js/auth-bar.js"></script>
 </body>
 </html>

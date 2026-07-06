@@ -1,7 +1,7 @@
-// Vercel Serverless Function: delete user account (auth.users + profiles + calculations)
+// Vercel Serverless Function: delete user account (auth.users + ChouLegal account data)
 // 取代 account.html 前端的刪除邏輯：前端 anon key 無權刪 auth.users row，
 // 只能透過 server-side 的 service key + supabase.auth.admin.deleteUser() 實刪。
-// DB schema 已設 ON DELETE CASCADE（profiles/calculations 參照 auth.users），
+// DB schema 已設 ON DELETE CASCADE（choulegal_accounts/account_data 參照 auth.users），
 // 所以顯式刪業務表是 no-op，但保留以備 schema 變動（且能取 error log）。
 
 import { createClient } from '@supabase/supabase-js';
@@ -34,13 +34,17 @@ export default async function handler(req, res) {
 
   try {
     // 3. 顯式刪業務表（CASCADE 存在時是 no-op，安全）
-    const { error: calcErr } = await supabase
-      .from('calculations').delete().eq('user_id', userId);
-    if (calcErr) throw new Error(`calculations: ${calcErr.message}`);
+    const { error: dataErr } = await supabase
+      .from('choulegal_account_data')
+      .delete()
+      .eq('account_id', userId);
+    if (dataErr) throw new Error(`choulegal_account_data: ${dataErr.message}`);
 
-    const { error: profErr } = await supabase
-      .from('profiles').delete().eq('id', userId);
-    if (profErr) throw new Error(`profiles: ${profErr.message}`);
+    const { error: accountErr } = await supabase
+      .from('choulegal_accounts')
+      .delete()
+      .eq('id', userId);
+    if (accountErr) throw new Error(`choulegal_accounts: ${accountErr.message}`);
 
     // 4. 刪 auth.users（需 service_role key）
     const { error: authDelErr } = await supabase.auth.admin.deleteUser(userId);

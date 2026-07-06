@@ -59,7 +59,7 @@
   "mainEntity": [
     {"@type": "Question", "name": "六項法定期限的法源依據是什麼？", "acceptedAnswer": {"@type": "Answer", "text": "本儀表板追蹤的六項期限分別為：（1）死亡登記 30 日（依戶籍法規定須在死亡發生後 30 日內辦理）；（2）拋棄繼承 90 日（民法第 1174 條，自知悉得繼承之時起 3 個月內向法院為之）；（3）遺產清冊陳報 90 日（民法第 1156 條）；（4）遺產稅申報 183 日（遺產及贈與稅法第 23 條，自被繼承人死亡之日起 6 個月內，得申請延長 3 個月）；（5）限定繼承（同 1156 條程序）；（6）債權人公告催告期滿 180 日（民法第 1157 條，期間不得少於 3 個月）。儀表板以「死亡日 + N 天」簡化計算，實際日數請以官方公告為準。"}},
     {"@type": "Question", "name": "錯過 90 天拋棄繼承期限會怎樣？還能補救嗎？", "acceptedAnswer": {"@type": "Answer", "text": "原則上會視為「概括承受」被繼承人之財產與債務。但 2009 年民法修正後，繼承人原則上對被繼承人之債務僅以所得遺產為限負清償責任（民法§1148 II 之法定限定責任），因此就算錯過拋棄繼承期限，繼承人之固有財產通常仍受保護。但若被繼承人死亡前 2 年內有可疑贈與，可能被§1148-1 視為遺產追加。建議仍儘速於 90 日內聲請拋棄，避免額外舉證爭議。"}},
-    {"@type": "Question", "name": "遺產稅 183 天可以延長嗎？逾期申報罰多少？", "acceptedAnswer": {"@type": "Answer", "text": "依遺贈稅法第 26 條，納稅義務人於申報期限內得申請延長 3 個月（以一次為限）。逾期未申報依§44，處應納稅額 2 倍以下罰鍰；故意以詐術逃漏稅依§46 移送刑責。建議在 183 日期限將屆時，至少先依現有資料申報，避免逾期；後續再以更正申報補正細節。"}},
+    {"@type": "Question", "name": "遺產稅 183 天可以延長嗎？逾期申報罰多少？", "acceptedAnswer": {"@type": "Answer", "text": "依遺贈稅法第 26 條，納稅義務人於申報期限內得申請延長 3 個月（以一次為限）。逾期未申報依遺贈稅法§44，處應納稅額 2 倍以下罰鍰；故意以詐術逃漏稅依遺贈稅法§46 移送刑責。建議在 183 日期限將屆時，至少先依現有資料申報，避免逾期；後續再以更正申報補正細節。"}},
     {"@type": "Question", "name": "資料存在哪裡？換手機或清除瀏覽器資料會不會不見？", "acceptedAnswer": {"@type": "Answer", "text": "資料儲存於您裝置的 localStorage（瀏覽器本機儲存），完全在本機運作，不上傳至任何伺服器，亦不會與他人共享。但代價是：清除瀏覽器資料、換瀏覽器、換手機都會消失。若需跨裝置同步或長期保存，請登入帳號使用儲存功能，或自行另行備份案件資料。"}},
     {"@type": "Question", "name": "本工具適合律師管理多案件嗎？", "acceptedAnswer": {"@type": "Answer", "text": "民眾版工具設計給家屬自行追蹤單一或少量案件使用，介面簡化、無多人協作功能。若您是專業人員需管理大量案件、團隊共用、稽核軌跡、客戶報表等專業需求，請另洽周全專業版（HR、勞資爭議、消費爭議三系統，企業洽詢）。"}},
     {"@type": "Question", "name": "倒數顯示「逾期 N 天」但我已經辦完了，怎麼移除？", "acceptedAnswer": {"@type": "Answer", "text": "請展開該案件，找到對應的期限列，點選最左側的勾選框標記為「已完成」，倒數即會變為「已完成」並從統計移除。若整個案件已結案，可將案件狀態改為「已完成」，整張卡片會收進已完成統計，不再列入逾期警示。"}}
@@ -154,6 +154,7 @@
     .stats-bar { grid-template-columns: repeat(3, 1fr); }
   }
 </style>
+<script src="js/supabase-config.js"></script>
 </head>
 <body>
 
@@ -212,7 +213,7 @@
     </div>
     <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
       <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">遺產稅 183 天可以延長嗎？逾期申報罰多少？</div>
-      <div style="font-size:13px;color:var(--muted);line-height:1.8">依遺贈稅法第 26 條，納稅義務人於申報期限內得申請延長 3 個月（以一次為限）。逾期未申報依§44，處應納稅額 2 倍以下罰鍰；故意以詐術逃漏稅依§46 移送刑責。建議至少先依現有資料申報，避免逾期；後續再以更正申報補正細節。</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">依遺贈稅法第 26 條，納稅義務人於申報期限內得申請延長 3 個月（以一次為限）。逾期未申報依遺贈稅法§44，處應納稅額 2 倍以下罰鍰；故意以詐術逃漏稅依遺贈稅法§46 移送刑責。建議至少先依現有資料申報，避免逾期；後續再以更正申報補正細節。</div>
     </div>
     <div style="padding:14px 0;border-bottom:1px solid var(--soft)">
       <div style="font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">資料存在哪裡？換手機或清除瀏覽器資料會不會不見？</div>
@@ -460,5 +461,6 @@
   render();
 </script>
 <script defer src="js/coffee-button.js"></script>
+<script type="module" src="js/auth-bar.js"></script>
 </body>
 </html>

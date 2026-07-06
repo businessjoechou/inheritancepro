@@ -429,7 +429,7 @@
       <div id="childDeductAmt" style="font-size:12px;color:var(--success);margin-top:6px;font-family:'Noto Serif TC',monospace"></div>
     </div>
     <div class="input-group">
-      <label>未成年子女加扣 <span style="font-weight:400;color:var(--muted);font-size:12px">每名未成年子女除上方每人 56 萬外，另按距滿 18 歲年數每年加扣 56 萬（遺贈稅法§17-I-2 但書）</span></label>
+      <label>未成年子女加扣 <span style="font-weight:400;color:var(--muted);font-size:12px">每名未成年子女除上方每人 56 萬外，另按距滿 18 歲年數每年加扣 56 萬（遺贈稅法§17第1項第2款 但書）</span></label>
       <div id="minorChildrenRows"></div>
       <button type="button" onclick="addMinorChild()" style="margin-top:2px;background:var(--soft);border:1px dashed var(--gold);color:var(--ink);border-radius:8px;padding:8px 14px;font-size:13px;cursor:pointer">＋ 新增未成年子女</button>
       <div id="minorAddonAmt" style="font-size:12px;color:var(--success);margin-top:6px;font-family:'Noto Serif TC',monospace"></div>
@@ -496,7 +496,7 @@
       </div>
       <div style="font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6">
         法定財產制下，生存配偶依民法§1030-1 可請求「婚後財產差額 ÷ 2」；依遺贈稅§17-1 此金額得自遺產總額扣除，但須於 1 年內實際給付，否則 5 年內追繳。<br>
-        <strong style="color:var(--accent)">⚠️ 憲法法庭 113 憲判 11 號（2024/10/29）</strong>：§15-I-1 配偶受贈部分部分違憲，須於 2026/10/28 前修法；修法後本欄計算規則可能調整。
+        <strong style="color:var(--accent)">⚠️ 憲法法庭 113 憲判 11 號（2024/10/29）</strong>：遺贈稅法§15第1項第1款 配偶受贈部分部分違憲，須於 2026/10/28 前修法；修法後本欄計算規則可能調整。
       </div>
     </div>
 
@@ -515,7 +515,7 @@
           <div style="font-size:11px;color:var(--accent);margin-top:4px">⚠ 此金額將加入遺產總額計算，不是扣除</div>
         </div>
         <div class="input-group">
-          <label>受撫養兄弟姊妹、祖父母扣除 <span style="font-weight:400;color:var(--muted);font-size:12px">每人 56萬，§17④⑤，填人數</span></label>
+          <label>受撫養兄弟姊妹、祖父母扣除 <span style="font-weight:400;color:var(--muted);font-size:12px">每人 56萬，遺贈稅法§17第4、5款，填人數</span></label>
           <div class="input-prefix">
             <span class="prefix-text">人數</span>
             <input type="number" id="deduct_siblings_count" placeholder="0" min="0" max="20" inputmode="numeric" oninput="updateSiblingsDeduct()">
@@ -523,19 +523,19 @@
           <div id="siblingsDeductAmt" style="font-size:12px;color:var(--success);margin-top:6px;font-family:'Noto Serif TC',monospace"></div>
         </div>
         <div class="input-group">
-          <label>公共設施保留地扣除（元）<span style="font-weight:400;color:var(--muted);font-size:12px">全額扣除，§17⑦</span></label>
+          <label>公共設施保留地扣除（元）<span style="font-weight:400;color:var(--muted);font-size:12px">全額扣除，遺贈稅法§17第7款</span></label>
           <div style="display:flex;align-items:center;gap:12px">
             <input type="number" id="deduct_public_land" placeholder="0" min="0" inputmode="numeric" oninput="updatePublicLandDisplay()" style="flex:1">
             <span class="counter-display" id="deductPublicDisplay">NT$ 0</span>
           </div>
         </div>
 
-        <!-- §16 其他不計入遺產總額 10 款（完整覆蓋） -->
+        <!-- 遺贈稅法§16 其他不計入遺產總額 10 款（完整覆蓋） -->
         <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--soft)">
-          <div style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:10px">§16 其他不計入遺產總額（第 1-8、11-13 款）</div>
+          <div style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:10px">遺贈稅法§16 其他不計入遺產總額（第 1-8、11-13 款）</div>
 
           <div class="input-group">
-            <label>公益捐贈扣除（§16-1~3）<span style="font-weight:400;color:var(--muted);font-size:12px">捐贈政府／公營事業／符合標準之財團法人</span></label>
+            <label>公益捐贈扣除（遺贈稅法§16第1至3款）<span style="font-weight:400;color:var(--muted);font-size:12px">捐贈政府／公營事業／符合標準之財團法人</span></label>
             <div style="display:flex;align-items:center;gap:12px">
               <input type="number" id="deduct_charity" placeholder="0" min="0" inputmode="numeric" oninput="updateCharityDeduct()" style="flex:1">
               <span class="counter-display" id="deductCharityDisplay">NT$ 0</span>
@@ -543,7 +543,7 @@
           </div>
 
           <div class="input-group">
-            <label>文化、歷史、美術圖書物品（§16-4）<span style="font-weight:400;color:var(--muted);font-size:12px">需向稽徵機關聲明登記</span></label>
+            <label>文化、歷史、美術圖書物品（遺贈稅法§16第4款）<span style="font-weight:400;color:var(--muted);font-size:12px">需向稽徵機關聲明登記</span></label>
             <div style="display:flex;align-items:center;gap:12px">
               <input type="number" id="deduct_culture" placeholder="0" min="0" inputmode="numeric" oninput="updateCultureDeduct()" style="flex:1">
               <span class="counter-display" id="deductCultureDisplay">NT$ 0</span>
@@ -551,7 +551,7 @@
           </div>
 
           <div class="input-group">
-            <label>被繼承人自創著作權／發明專利／藝術品（§16-5）<span style="font-weight:400;color:var(--muted);font-size:12px">全額不計入</span></label>
+            <label>被繼承人自創著作權／發明專利／藝術品（遺贈稅法§16第5款）<span style="font-weight:400;color:var(--muted);font-size:12px">全額不計入</span></label>
             <div style="display:flex;align-items:center;gap:12px">
               <input type="number" id="deduct_ip" placeholder="0" min="0" inputmode="numeric" oninput="updateIpDeduct()" style="flex:1">
               <span class="counter-display" id="deductIpDisplay">NT$ 0</span>
@@ -559,7 +559,7 @@
           </div>
 
           <div class="input-group">
-            <label>日常生活必需器具（§16-6）<span style="font-weight:400;color:var(--muted);font-size:12px">上限 100 萬（2026 適用，財政部 113/11/28 公告）</span></label>
+            <label>日常生活必需器具（遺贈稅法§16第6款）<span style="font-weight:400;color:var(--muted);font-size:12px">上限 100 萬（2026 適用，財政部 113/11/28 公告）</span></label>
             <div style="display:flex;align-items:center;gap:12px">
               <input type="number" id="deduct_dailyItems" placeholder="0" min="0" max="1000000" inputmode="numeric" oninput="updateDailyItemsDeduct()" style="flex:1">
               <span class="counter-display" id="deductDailyItemsDisplay">NT$ 0</span>
@@ -568,7 +568,7 @@
           </div>
 
           <div class="input-group">
-            <label>職業上工具（§16-7）<span style="font-weight:400;color:var(--muted);font-size:12px">上限 56 萬（2026 適用）</span></label>
+            <label>職業上工具（遺贈稅法§16第7款）<span style="font-weight:400;color:var(--muted);font-size:12px">上限 56 萬（2026 適用）</span></label>
             <div style="display:flex;align-items:center;gap:12px">
               <input type="number" id="deduct_profTools" placeholder="0" min="0" max="560000" inputmode="numeric" oninput="updateProfToolsDeduct()" style="flex:1">
               <span class="counter-display" id="deductProfToolsDisplay">NT$ 0</span>
@@ -577,7 +577,7 @@
           </div>
 
           <div class="input-group">
-            <label>禁伐林地（§16-8）<span style="font-weight:400;color:var(--muted);font-size:12px">全額不計入，解禁後需補稅</span></label>
+            <label>禁伐林地（遺贈稅法§16第8款）<span style="font-weight:400;color:var(--muted);font-size:12px">全額不計入，解禁後需補稅</span></label>
             <div style="display:flex;align-items:center;gap:12px">
               <input type="number" id="deduct_forest" placeholder="0" min="0" inputmode="numeric" oninput="updateForestDeduct()" style="flex:1">
               <span class="counter-display" id="deductForestDisplay">NT$ 0</span>
@@ -585,7 +585,7 @@
           </div>
 
           <div class="input-group">
-            <label>配偶／子女原有財產（§16-11）<span style="font-weight:400;color:var(--muted);font-size:12px">可證明屬其原有或特有財產者</span></label>
+            <label>配偶／子女原有財產（遺贈稅法§16第11款）<span style="font-weight:400;color:var(--muted);font-size:12px">可證明屬其原有或特有財產者</span></label>
             <div style="display:flex;align-items:center;gap:12px">
               <input type="number" id="deduct_spouseChildOwn" placeholder="0" min="0" inputmode="numeric" oninput="updateSpouseChildOwnDeduct()" style="flex:1">
               <span class="counter-display" id="deductSpouseChildOwnDisplay">NT$ 0</span>
@@ -593,7 +593,7 @@
           </div>
 
           <div class="input-group">
-            <label>公共設施保留地已開闢為公眾通行道路（§16-12）<span style="font-weight:400;color:var(--muted);font-size:12px">全額不計入</span></label>
+            <label>公共設施保留地已開闢為公眾通行道路（遺贈稅法§16第12款）<span style="font-weight:400;color:var(--muted);font-size:12px">全額不計入</span></label>
             <div style="display:flex;align-items:center;gap:12px">
               <input type="number" id="deduct_publicRoad" placeholder="0" min="0" inputmode="numeric" oninput="updatePublicRoadDeduct()" style="flex:1">
               <span class="counter-display" id="deductPublicRoadDisplay">NT$ 0</span>
@@ -601,7 +601,7 @@
           </div>
 
           <div class="input-group" style="margin-bottom:0">
-            <label>無法收取之債權及請求權（§16-13）<span style="font-weight:400;color:var(--muted);font-size:12px">需證明確實無法收回</span></label>
+            <label>無法收取之債權及請求權（遺贈稅法§16第13款）<span style="font-weight:400;color:var(--muted);font-size:12px">需證明確實無法收回</span></label>
             <div style="display:flex;align-items:center;gap:12px">
               <input type="number" id="deduct_uncollectible" placeholder="0" min="0" inputmode="numeric" oninput="updateUncollectibleDeduct()" style="flex:1">
               <span class="counter-display" id="deductUncollectibleDisplay">NT$ 0</span>
@@ -1166,7 +1166,7 @@
 
   /* ─── Deduction helpers ─── */
   function updateChildDeduct() { const n = parseInt(document.getElementById('deduct_children_count').value) || 0; document.getElementById('childDeductAmt').textContent = n > 0 ? `= NT$ ${(n * 560000).toLocaleString('zh-TW')}` : ''; }
-  // §17-I-2 但書：未成年直系血親卑親屬，按距屆滿成年（18 歲）之年數，每年加扣每人扣除額 56 萬
+  // 遺贈稅法§17第1項第2款 但書：未成年直系血親卑親屬，按距屆滿成年（18 歲）之年數，每年加扣每人扣除額 56 萬
   function addMinorChild() {
     const wrap = document.getElementById('minorChildrenRows');
     const row = document.createElement('div');
@@ -1214,7 +1214,7 @@
   // §17-1 配偶剩餘財產差額分配請求權（憲判 113 憲判 11 號重點）
   function updateSpouseRemainingDeduct() { const v = parseFloat(document.getElementById('deduct_spouseRemaining').value) || 0; document.getElementById('deductSpouseRemainingDisplay').textContent = 'NT$ ' + v.toLocaleString('zh-TW'); }
 
-  // §16 第 1-8、11-13 款 — 以 cap 自動套上限
+  // 遺贈稅法§16 第 1-8、11-13 款 — 以 cap 自動套上限
   function updateCharityDeduct() { const v = parseFloat(document.getElementById('deduct_charity').value) || 0; document.getElementById('deductCharityDisplay').textContent = 'NT$ ' + v.toLocaleString('zh-TW'); }
   function updateCultureDeduct() { const v = parseFloat(document.getElementById('deduct_culture').value) || 0; document.getElementById('deductCultureDisplay').textContent = 'NT$ ' + v.toLocaleString('zh-TW'); }
   function updateIpDeduct() { const v = parseFloat(document.getElementById('deduct_ip').value) || 0; document.getElementById('deductIpDisplay').textContent = 'NT$ ' + v.toLocaleString('zh-TW'); }
@@ -1451,14 +1451,14 @@
     // §17-1 配偶剩餘財產差額分配請求權扣除（憲判 113 憲判 11 號重點）
     const spouseRemaining = parseFloat(document.getElementById('deduct_spouseRemaining')?.value) || 0;
 
-    // §16 第 1-8、11-13 款：不計入遺產總額（視同從遺產盤扣除，本工具採「加進 totalDeduct」作法）
+    // 遺贈稅法§16 第 1-8、11-13 款：不計入遺產總額（視同從遺產盤扣除，本工具採「加進 totalDeduct」作法）
     // 注意：法律上這類財產「不計入遺產總額」（從分子扣），與扣除額（從分母扣）邏輯上略異，
     //       但最終稅基計算結果相同，為使 UI 一致均計入 totalDeduct 處理
     const dCharity        = parseFloat(document.getElementById('deduct_charity')?.value) || 0;
     const dCulture        = parseFloat(document.getElementById('deduct_culture')?.value) || 0;
     const dIp             = parseFloat(document.getElementById('deduct_ip')?.value) || 0;
-    const dDailyItems     = Math.min(parseFloat(document.getElementById('deduct_dailyItems')?.value) || 0, 1000000);  // §16-6 上限 100 萬
-    const dProfTools      = Math.min(parseFloat(document.getElementById('deduct_profTools')?.value) || 0, 560000);    // §16-7 上限 56 萬
+    const dDailyItems     = Math.min(parseFloat(document.getElementById('deduct_dailyItems')?.value) || 0, 1000000);  // 遺贈稅法§16第6款 上限 100 萬
+    const dProfTools      = Math.min(parseFloat(document.getElementById('deduct_profTools')?.value) || 0, 560000);    // 遺贈稅法§16第7款 上限 56 萬
     const dForest         = parseFloat(document.getElementById('deduct_forest')?.value) || 0;
     const dSpouseChildOwn = parseFloat(document.getElementById('deduct_spouseChildOwn')?.value) || 0;
     const dPublicRoad     = parseFloat(document.getElementById('deduct_publicRoad')?.value) || 0;
@@ -1471,7 +1471,7 @@
     const dSpouse = state.hasSpouse ? 5530000 : 0;
     const dFuneral = 1380000;
     const dChildren = (parseInt(document.getElementById('deduct_children_count').value) || 0) * 560000;
-    const dMinorAddon = getMinorChildYears() * 560000; // §17-I-2 但書：未成年直系血親卑親屬按距成年年數每年加扣 56 萬
+    const dMinorAddon = getMinorChildYears() * 560000; // 遺贈稅法§17第1項第2款 但書：未成年直系血親卑親屬按距成年年數每年加扣 56 萬
     const dParents = (parseInt(document.getElementById('deduct_parents_count').value) || 0) * 1380000;
     const dDisabled = (parseInt(document.getElementById('deduct_disabled_count').value) || 0) * 6930000;
     const dOther = parseFloat(document.getElementById('deduct_other').value) || 0;
@@ -1534,7 +1534,7 @@
           </div>` : ''}
         </div>
       </div>
-      <div class="law-note" style="margin-top:10px">⚖️ 依《遺產及贈與稅法》第13條（自 114/01/01 起級距：5,621 萬以下 10%、5,621 萬～1 億 1,242 萬 15%、超過 1 億 1,242 萬 20%；依§12-1 物價連動，財政部 113/11/28 公告）。本試算僅供參考，實際稅額以國稅局核定為準。申報期限：被繼承人死亡後 6 個月內。</div>
+      <div class="law-note" style="margin-top:10px">⚖️ 依《遺產及贈與稅法》第13條（自 114/01/01 起級距：5,621 萬以下 10%、5,621 萬～1 億 1,242 萬 15%、超過 1 億 1,242 萬 20%；依遺贈稅法§12-1 物價連動，財政部 113/11/28 公告）。本試算僅供參考，實際稅額以國稅局核定為準。申報期限：被繼承人死亡後 6 個月內。</div>
     </div>`;
 
     // Real estate section
@@ -1847,7 +1847,7 @@ ${stockHTML ? `<div class="section-title">股票估值明細</div>${stockHTML}` 
     const dSpouse = state.hasSpouse ? 5530000 : 0;
     const dFuneral = 1380000;
     const dChildren = (parseInt(document.getElementById('deduct_children_count')?.value) || 0) * 560000;
-    const dMinorAddon = getMinorChildYears() * 560000; // §17-I-2 但書：未成年加扣
+    const dMinorAddon = getMinorChildYears() * 560000; // 遺贈稅法§17第1項第2款 但書：未成年加扣
     const dParents = (parseInt(document.getElementById('deduct_parents_count')?.value) || 0) * 1380000;
     const dDisabled = (parseInt(document.getElementById('deduct_disabled_count')?.value) || 0) * 6930000;
     const dOther = parseFloat(document.getElementById('deduct_other')?.value) || 0;

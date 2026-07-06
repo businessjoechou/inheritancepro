@@ -463,6 +463,22 @@
   letter-spacing: 0.06em;
 }
 
+.cl-source, .ip-cl-source {
+  display: inline-block;
+  margin-top: 10px;
+  font-family: var(--ip-font-mono);
+  font-size: 10px;
+  color: var(--ip-gold);
+  text-underline-offset: 3px;
+}
+
+.cl-finality, .ip-cl-finality {
+  margin-top: 8px;
+  font-size: 10px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.5);
+}
+
 /* ============================================================
  * Compare card — A/B 對比表
  * ============================================================ */
@@ -1200,3 +1216,36 @@
 .site-footer .footer-mark em { font-style: normal; color: var(--ip-gold, var(--gold)); }
 .site-footer .footer-links { margin-top: 10px; }
 .site-footer .footer-links a { margin: 0 8px; }
+
+/* ===== ChouLegal unified brand polish ===== */
+.site-header {
+  background: rgba(8, 18, 32, 0.96);
+  border-bottom-color: rgba(212, 175, 55, 0.16);
+}
+.site-header .brand .brand-parent {
+  color: rgba(229, 196, 95, 0.68);
+}
+.site-header .brand .brand-child {
+  color: #fbfaf6;
+}
+.site-header nav a {
+  color: rgba(251, 250, 246, 0.66);
+}
+.site-footer {
+  background: #081220;
+  color: rgba(251, 250, 246, 0.58);
+  border-top-color: rgba(212, 175, 55, 0.14);
+}
+.card,
+.ip-card,
+.result-card,
+.action-card,
+.compare-card,
+.ip-compare-card {
+  border-radius: 6px;
+}
+.ip-btn-primary,
+.btn-primary {
+  background: linear-gradient(135deg, #e5c45f, #d4af37 55%, #b8941f);
+  color: #081220;
+}

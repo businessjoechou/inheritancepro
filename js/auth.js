@@ -1,37 +1,60 @@
-// auth.js — Supabase Auth helper module
-// @ts-ignore — CDN ESM import; types not available in this browser-only build
+// ChouLegal account helper for static public tools.
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-// registerPlugin loaded dynamically only when needed (Capacitor native)
+
+const PRODUCT_KEY = 'people';
 
 export const supabase = createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY, {
   auth: {
-    flowType: 'implicit'
+    flowType: 'implicit',
+    persistSession: true,
+    autoRefreshToken: true
   }
 });
 
-// Get current user
 export async function getUser() {
   const { data: { user } } = await supabase.auth.getUser();
   return user;
 }
 
-// Get user profile
+export async function ensureChouLegalAccount(productKey = PRODUCT_KEY) {
+  const user = await getUser();
+  if (!user) return null;
+
+  const { data, error } = await supabase.rpc('ensure_choulegal_account', {
+    p_product_key: productKey
+  });
+  if (error) {
+    console.error('ensure_choulegal_account failed:', error);
+    return user.id;
+  }
+  return data || user.id;
+}
+
 export async function getProfile() {
   const user = await getUser();
   if (!user) return null;
-  const { data } = await supabase
-    .from('profiles')
+
+  await ensureChouLegalAccount();
+  const { data, error } = await supabase
+    .from('choulegal_accounts')
     .select('*')
     .eq('id', user.id)
-    .single();
-  return data || null;
+    .maybeSingle();
+
+  if (error) {
+    console.error('getProfile failed:', error);
+    return null;
+  }
+  return data || {
+    id: user.id,
+    email: user.email,
+    display_name: user.user_metadata?.name || user.email?.split('@')[0] || null,
+    created_at: user.created_at
+  };
 }
 
-// Sign in with Apple
 export async function signInWithApple() {
-  // In Capacitor native app: use native Apple Sign In
   if (window.Capacitor?.isNativePlatform()) {
-    // @ts-ignore — CDN ESM import; loaded lazily only in Capacitor native
     const { registerPlugin } = await import('https://cdn.jsdelivr.net/npm/@capacitor/core@8/+esm');
     const AppleSignIn = registerPlugin('AppleSignIn');
     const result = await AppleSignIn.signIn();
@@ -42,26 +65,19 @@ export async function signInWithApple() {
       nonce: result.nonce
     });
 
-    if (!error) {
-      window.location.href = '/account.html';
-    } else {
-      throw new Error(error.message);
-    }
+    if (error) throw new Error(error.message);
+    await ensureChouLegalAccount();
+    window.location.href = '/account.html';
     return;
   }
 
-  // Web: OAuth redirect
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'apple',
     options: { redirectTo: window.location.origin + '/account.html' }
   });
-  
-  if (error) {
-    throw error;
-  }
+  if (error) throw error;
 }
 
-// Sign in with magic link (email OTP)
 export async function signInWithEmail(email) {
   const { error } = await supabase.auth.signInWithOtp({
     email,
@@ -70,30 +86,29 @@ export async function signInWithEmail(email) {
   return error;
 }
 
-// Sign out
 export async function signOut() {
-  // 登出時立即清除所有 localStorage 草稿（敏感計算資料），避免殘留在共用裝置
   try {
     for (let i = localStorage.length - 1; i >= 0; i--) {
-      const k = localStorage.key(i);
-      if (k && k.startsWith('ip_draft_')) localStorage.removeItem(k);
+      const key = localStorage.key(i);
+      if (key && (key.startsWith('ip_draft_') || key.startsWith('choulegal_draft_'))) {
+        localStorage.removeItem(key);
+      }
     }
   } catch (_) {}
   await supabase.auth.signOut();
   window.location.reload();
 }
 
-// Redeem a Pro activation code
-// Uses security definer RPC to prevent direct table access and race conditions
 export async function redeemCode(code) {
   const user = await getUser();
   if (!user) return { error: '請先登入' };
 
+  await ensureChouLegalAccount();
   const { data, error } = await supabase.rpc('redeem_code', {
     p_code: code.toUpperCase().trim()
   });
 
-  if (error) return { error: '兌換失敗，請稍後再試' };
+  if (error) return { error: '兌換功能尚未啟用，請稍後再試' };
   if (data?.error) return { error: data.error };
-  return { success: true, tier: data.tier };
+  return { success: true, tier: data?.tier || 'pro' };
 }

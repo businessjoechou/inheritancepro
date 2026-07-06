@@ -1,2 +1,3 @@
-window.SUPABASE_URL = 'https://nayqgpvwxzourigvjqxj.supabase.co';
-window.SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5heXFncHZ3eHpvdXJpZ3ZqcXhqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2MDAwMzYsImV4cCI6MjA5MDE3NjAzNn0.KmrFOUhIz8exLoguMkSa4azHagsXilkHDHQXt5gBkik';
+// ChouLegal central account project.
+window.SUPABASE_URL = 'https://brbznudnufaeptdpyvib.supabase.co';
+window.SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJicmJ6bnVkbnVmYWVwdGRweXZpYiIsInJvbGUiOiJhbm9uIiwiaWF0IjoxNzc2OTQzODA5LCJleHAiOjIwOTI1MTk4MDl9.wVLRVnHwlQUsMxhfDs1jua2bJvSrv0xa7WKP5Y4RRsE';
