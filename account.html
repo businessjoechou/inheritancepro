@@ -761,6 +761,18 @@
       return;
     }
 
+    // 檢查是否有未完成的律師媒合申請
+    const pendingRaw = localStorage.getItem('choulegal_pending_match');
+    if (pendingRaw) {
+      try {
+        const pending = JSON.parse(pendingRaw);
+        if (pending && pending.pageUrl) {
+          window.location.href = pending.pageUrl;
+          return;
+        }
+      } catch (_) {}
+    }
+
     contentEl.classList.remove('hidden');
 
     // Load calculation history

@@ -487,7 +487,7 @@
       </div>
     </div>
 
-    <!-- ⭐ §17-1 配偶剩餘財產差額分配請求權獨立扣除欄（憲判 113 憲判 11 號重點）-->
+    <!-- ⭐ 遺贈稅法§17-1 配偶剩餘財產差額分配請求權獨立扣除欄（憲判 113 憲判 11 號重點）-->
     <div class="input-group" style="background:#fff8e1;border-left:3px solid var(--gold);padding:12px 14px;border-radius:6px">
       <label>📍 配偶剩餘財產差額分配請求權扣除（元）<span style="font-weight:400;color:var(--muted);font-size:12px">遺贈稅§17-1，民法§1030-1</span></label>
       <div style="display:flex;align-items:center;gap:12px">
@@ -1211,7 +1211,7 @@
   function updateSiblingsDeduct() { const c = parseInt(document.getElementById('deduct_siblings_count').value) || 0; document.getElementById('siblingsDeductAmt').textContent = c > 0 ? '= NT$ ' + (c * 560000).toLocaleString('zh-TW') : ''; }
   function updatePublicLandDisplay() { const v = parseFloat(document.getElementById('deduct_public_land').value) || 0; document.getElementById('deductPublicDisplay').textContent = 'NT$ ' + v.toLocaleString('zh-TW'); }
 
-  // §17-1 配偶剩餘財產差額分配請求權（憲判 113 憲判 11 號重點）
+  // 遺贈稅法§17-1 配偶剩餘財產差額分配請求權（憲判 113 憲判 11 號重點）
   function updateSpouseRemainingDeduct() { const v = parseFloat(document.getElementById('deduct_spouseRemaining').value) || 0; document.getElementById('deductSpouseRemainingDisplay').textContent = 'NT$ ' + v.toLocaleString('zh-TW'); }
 
   // 遺贈稅法§16 第 1-8、11-13 款 — 以 cap 自動套上限
@@ -1448,7 +1448,7 @@
     const dSiblings = (parseInt(document.getElementById('deduct_siblings_count')?.value) || 0) * 560000;
     const publicLandDeduct = parseFloat(document.getElementById('deduct_public_land')?.value) || 0;
 
-    // §17-1 配偶剩餘財產差額分配請求權扣除（憲判 113 憲判 11 號重點）
+    // 遺贈稅法§17-1 配偶剩餘財產差額分配請求權扣除（憲判 113 憲判 11 號重點）
     const spouseRemaining = parseFloat(document.getElementById('deduct_spouseRemaining')?.value) || 0;
 
     // 遺贈稅法§16 第 1-8、11-13 款：不計入遺產總額（視同從遺產盤扣除，本工具採「加進 totalDeduct」作法）

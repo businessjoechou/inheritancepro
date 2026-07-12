@@ -6,7 +6,13 @@
     "target": "ES2022",
     "lib": ["ES2022", "DOM"],
     "module": "ES2022",
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "baseUrl": ".",
+    "ignoreDeprecations": "6.0",
+    "paths": {
+      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm": ["./node_modules/@supabase/supabase-js"],
+      "https://cdn.jsdelivr.net/npm/@capacitor/core@8/+esm": ["./node_modules/@capacitor/core"]
+    }
   },
   "include": ["js/global.d.ts", "js/core/**/*.js", "js/utils/**/*.js", "js/pdf/**/*.js", "js/components/**/*.js"],
   "exclude": ["node_modules"]
