@@ -4,8 +4,14 @@
   "description": "InheritancePro — 中華民國民法財產權計算機",
   "private": true,
   "scripts": {
+    "prepare": "npm run verify:cases",
+    "verify": "npm run verify:cases",
+    "test": "npm run verify",
+    "build": "npm run verify:cases:live",
     "typecheck": "tsc --noEmit --project jsconfig.json",
-    "build:core": "node scripts/build-core-bundle.mjs"
+    "build:core": "node scripts/build-core-bundle.mjs",
+    "verify:cases": "node verify-cases.js",
+    "verify:cases:live": "node verify-cases.js --refresh"
   },
   "dependencies": {
     "@capacitor/app": "^8.1.0",
@@ -13,7 +19,8 @@
     "@capacitor/core": "^8.3.0",
     "@capacitor/ios": "^8.3.0",
     "@capacitor/status-bar": "^8.0.2",
-    "@supabase/supabase-js": "^2.101.1",
+    "@supabase/supabase-js": "^2.110.0",
+    "avs": "file:third_party/avs-1.1.0.tgz",
     "jsonwebtoken": "^9.0.3",
     "pdfkit": "^0.18.0"
   },

@@ -551,9 +551,11 @@ function parseDateTW(s) {
 
 // ../../packages/core-inheritance/src/damages.js
 var SOLATIUM_INJURY = {
-  light: { low: 1e5, high: 5e5, mid: 2e5 },
-  serious: { low: 5e5, high: 2e6, mid: 1e6 },
-  severe: { low: 15e5, high: 3e6, mid: 2e6 }
+  none: { low: 0, high: 0, mid: 0 },
+  minor: { low: 3e4, high: 8e4, mid: 5e4 },
+  light: { low: 8e4, high: 3e5, mid: 15e4 },
+  serious: { low: 3e5, high: 12e5, mid: 6e5 },
+  severe: { low: 12e5, high: 25e5, mid: 18e5 }
 };
 var SOLATIUM_DEATH = {
   low: { low: 1e6, high: 25e5, mid: 15e5 },
@@ -570,11 +572,11 @@ function calcInjuryDamages(p) {
     careRate = 2400,
     workLossDays = 0,
     monthlySalary = 0,
-    solatiumLevel = "light",
+    solatiumLevel = "minor",
     faultPct = 1
   } = p;
   const safeFault = Math.max(0, Math.min(1, faultPct));
-  const safeLevel = SOLATIUM_INJURY[solatiumLevel] ? solatiumLevel : "light";
+  const safeLevel = SOLATIUM_INJURY[solatiumLevel] ? solatiumLevel : "minor";
   const careTotal = careDays * careRate;
   const workLoss = monthlySalary / 30 * workLossDays;
   const solatium = SOLATIUM_INJURY[safeLevel].mid;
@@ -624,7 +626,7 @@ function calcDeathDamages(p) {
     insuranceOffset,
     faultPct,
     netAmount,
-    law: "\u6C11\u6CD5\xA7184, \xA7192, \xA7194, \xA7197\uFF1B\u5F37\u5236\u6C7D\u8ECA\u8CAC\u4EFB\u4FDD\u96AA\u6CD5\xA732\u3001\u7D66\u4ED8\u6A19\u6E96\xA76\uFF08\u6B7B\u4EA1\u7D66\u4ED8\u4E0A\u9650 200 \u842C\uFF0C\u91D1\u7BA1\u6703\u9810\u544A\u64EC\u81EA 2026/7/1 \u8ABF\u5347\u81F3 300 \u842C\uFF0C\u5C1A\u672A\u767C\u5E03\u751F\u6548\uFF1B\u5F37\u5236\u96AA\u4EE5\u5BE6\u969B\u9818\u5F97\u7D66\u4ED8\u70BA\u9650\u62B5\u6263\uFF09"
+    law: "\u6C11\u6CD5\xA7184, \xA7192, \xA7194, \xA7197\uFF1B\u5F37\u5236\u6C7D\u8ECA\u8CAC\u4EFB\u4FDD\u96AA\u6CD5\xA732\u3001\u7D66\u4ED8\u6A19\u6E96\xA76\u3001\xA77\uFF08\u6B7B\u4EA1\u7D66\u4ED8 300 \u842C\uFF1B\u6B7B\u4EA1\u3001\u5931\u80FD\u53CA\u50B7\u5BB3\u91AB\u7642\u8CBB\u7528\u5408\u8A08\u6700\u9AD8 320 \u842C\uFF1B\u5F37\u5236\u96AA\u4EE5\u5BE6\u969B\u9818\u5F97\u7D66\u4ED8\u70BA\u9650\u62B5\u6263\uFF09"
   };
 }
 function calcDamageDeadline(eventDate, knownDate, today = /* @__PURE__ */ new Date()) {

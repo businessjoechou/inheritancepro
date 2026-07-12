@@ -1,204 +1,103 @@
 /**
- * case-law-data.js — InheritancePro 判例資料庫
+ * case-law-data.js — InheritancePro 已驗證裁判資料庫
  *
- * 依工具類別分組，每則包含案號、金額（用於匹配）、摘要、相關法條。
- * 掛載於 window.IP_CASE_LAW 供 case-law-render.js 使用。
+ * 僅可收錄已逐字核對司法院裁判書原文的資料。
  */
 (function () {
-  var IP_CASE_LAW = {
+  'use strict';
 
-    /* ── 遺產繼承 ── */
-    inheritance: [
-      {
-        caseNo: '最高法院 109 年度台上字第 2793 號',
-        amount: 32000000,
-        amountLabel: 'NT$ 32,000,000',
-        summary: '被繼承人生前贈與不動產，法院認定應歸扣入遺產總額計算各繼承人應繼分。',
-        law: '民法§1148-1'
-      },
-      {
-        caseNo: '臺灣高等法院 111 年度家上字第 85 號',
-        amount: 15000000,
-        amountLabel: 'NT$ 15,000,000',
-        summary: '法院判定遺產分割應考量各繼承人對被繼承人之扶養貢獻，調整分配比例。',
-        law: '民法§1151、§1164'
-      },
-      {
-        caseNo: '臺灣高等法院 110 年度家上字第 203 號',
-        amount: 8500000,
-        amountLabel: 'NT$ 8,500,000',
-        summary: '繼承人主張特留分受侵害，法院依遺產總額計算特留分金額並判命返還。',
-        law: '民法§1223、§1225'
-      },
-      {
-        caseNo: '臺北地方法院 112 年度家繼訴字第 48 號',
-        amount: 4200000,
-        amountLabel: 'NT$ 4,200,000',
-        summary: '拋棄繼承後其他繼承人應繼分重新計算，法院確認各繼承人取得比例。',
-        law: '民法§1176'
-      },
-      {
-        caseNo: '最高法院 108 年度台上字第 1570 號',
-        amount: 58000000,
-        amountLabel: 'NT$ 58,000,000',
-        summary: '被繼承人遺產包含多筆不動產與股權，法院就遺產分割方法及價值認定作成裁判。',
-        law: '民法§1164'
-      }
-    ],
-
-    /* ── 贍養費 ── */
-    alimony: [
-      {
-        caseNo: '臺北地方法院 112 年度婚字第 256 號',
-        amount: 35000,
-        amountLabel: '每月 NT$ 35,000',
-        summary: '考量請求方無謀生能力且長年照顧家庭，法院判給較高額贍養費。',
-        law: '民法§1057'
-      },
-      {
-        caseNo: '臺中地方法院 111 年度婚字第 189 號',
-        amount: 15000,
-        amountLabel: '每月 NT$ 15,000',
-        summary: '法院認為請求方仍具工作能力但收入偏低，酌定適當贍養費金額。',
-        law: '民法§1057'
-      },
-      {
-        caseNo: '臺灣高等法院 110 年度家上字第 67 號',
-        amount: 50000,
-        amountLabel: '每月 NT$ 50,000',
-        summary: '婚姻存續超過 20 年，請求方因長期照護子女喪失職業能力，判給高額贍養費。',
-        law: '民法§1057'
-      }
-    ],
-
-    /* ── 未成年損害賠償 ── */
-    minorDamages: [
-      {
-        caseNo: '臺北地方法院 112 年度訴字第 1523 號',
-        amount: 280000,
-        amountLabel: 'NT$ 280,000',
-        summary: '校園霸凌事件，法院判定加害學生法定代理人連帶賠償精神慰撫金及醫療費用。',
-        law: '民法§187、§195'
-      },
-      {
-        caseNo: '新北地方法院 111 年度訴字第 892 號',
-        amount: 60000,
-        amountLabel: 'NT$ 60,000',
-        summary: '精神霸凌案件，法院認定被害人受有精神上痛苦，判賠慰撫金。',
-        law: '民法§195'
-      },
-      {
-        caseNo: '臺中地方法院 112 年度訴字第 456 號',
-        amount: 520000,
-        amountLabel: 'NT$ 520,000',
-        summary: '課後活動致未成年人骨折，法院判定監督義務人應負連帶損害賠償責任。',
-        law: '民法§187'
-      },
-      {
-        caseNo: '高雄地方法院 111 年度訴字第 2134 號',
-        amount: 150000,
-        amountLabel: 'NT$ 150,000',
-        summary: '補習班內多人霸凌案件，法院依個別參與程度判定各加害人之賠償金額。',
-        law: '民法§185、§187'
-      }
-    ],
-
-    /* ── 照顧者特別貢獻 ── */
-    caregiver: [
-      {
-        caseNo: '臺灣高等法院 111 年度家上字第 56 號',
-        amount: 3600000,
-        amountLabel: 'NT$ 3,600,000',
-        summary: '照顧者長期照護失能被繼承人 8 年，法院按機構照護費標準計算特別貢獻。',
-        law: '民法§1149'
-      },
-      {
-        caseNo: '臺北地方法院 112 年度家繼訴字第 22 號',
-        amount: 1800000,
-        amountLabel: 'NT$ 1,800,000',
-        summary: '法院認定全職照護 4 年的繼承人得請求相當於看護費之特別貢獻酬勞。',
-        law: '民法§1149'
-      },
-      {
-        caseNo: '桃園地方法院 110 年度家繼訴字第 15 號',
-        amount: 960000,
-        amountLabel: 'NT$ 960,000',
-        summary: '部分工時照顧被繼承人，法院依實際照護時數及市場行情酌定貢獻金額。',
-        law: '民法§1149'
-      }
-    ],
-
-    /* ── 剩餘財產差額分配 ── */
-    propertySplit: [
-      {
-        caseNo: '最高法院 110 年度台上字第 1892 號',
-        amount: 12000000,
-        amountLabel: 'NT$ 12,000,000',
-        summary: '法院認定婚後財產差額應平均分配，排除繼承及受贈財產後計算請求金額。',
-        law: '民法§1030-1'
-      },
-      {
-        caseNo: '臺灣高等法院 112 年度家上字第 33 號',
-        amount: 5500000,
-        amountLabel: 'NT$ 5,500,000',
-        summary: '配偶一方隱匿財產，法院依查得資料重新計算婚後財產差額。',
-        law: '民法§1030-1'
-      },
-      {
-        caseNo: '臺北地方法院 111 年度家財訴字第 78 號',
-        amount: 2800000,
-        amountLabel: 'NT$ 2,800,000',
-        summary: '不動產增值部分認定為婚後財產，法院計入剩餘財產差額分配。',
-        law: '民法§1030-1'
-      },
-      {
-        caseNo: '臺灣高等法院 109 年度家上字第 205 號',
-        amount: 25000000,
-        amountLabel: 'NT$ 25,000,000',
-        summary: '高資產離婚案件，法院詳細認定各項婚前、婚後財產後計算差額分配。',
-        law: '民法§1030-1'
-      }
-    ],
-
-    /* ── 車禍損害賠償 ── */
-    accident: [
-      {
-        caseNo: '臺灣臺北地方法院 110 年度簡字第 71 號',
-        amount: 60000,
-        amountLabel: '慰撫金 NT$ 60,000',
-        summary: '車禍被害人受有頭部外傷、頸部拉傷、右肘及右手挫傷、下背部挫傷、頸部扭傷，法院審酌加害人過失程度及雙方情況，判給精神慰撫金 6 萬元。',
-        law: '民法§195'
-      },
-      {
-        caseNo: '臺灣臺中地方法院 97 年度訴字第 687 號',
+  window.IP_CASE_LAW = Object.freeze({
+    inheritance: Object.freeze([]),
+    alimony: Object.freeze([]),
+    minorDamages: Object.freeze([]),
+    caregiver: Object.freeze([]),
+    propertySplit: Object.freeze([]),
+    accident: Object.freeze([
+      Object.freeze({
+        caseNo: '臺灣臺北地方法院 110 年度簡字第 71 號民事判決',
+        judgmentDate: '2021-05-13',
+        amount: 76668,
+        amountLabel: '判決准許總額 NT$ 76,668',
+        summary: '汽車未禮讓行人，致行人受頭部外傷、頸部拉傷及多處挫傷。法院准許醫療費 16,668 元及精神慰撫金 60,000 元；工作損失因舉證不足未獲准。',
+        law: '民法§184、§193、民法§195',
+        verified: true,
+        verifiedAt: '2026-06-24',
+        sourceType: '司法院裁判書原文',
+        finality: 'unknown',
+        sourceUrl: 'https://judgment.judicial.gov.tw/FJUD/data.aspx?ty=JD&id=TPDV%2c110%2c%e7%b0%a1%2c71%2c20210513%2c2&ot=in',
+        evidence: Object.freeze([
+          '被告應給付原告新臺幣柒萬陸仟陸佰陸拾捌元',
+          '應以60,000元計算為適當'
+        ])
+      }),
+      Object.freeze({
+        caseNo: '臺灣臺中地方法院 97 年度訴字第 687 號民事判決',
+        judgmentDate: '2008-09-30',
         amount: 689093,
-        amountLabel: 'NT$ 689,093',
-        summary: '開車門撞擊機車騎士，致左側鎖骨粉碎性骨折、左臀挫傷、右手第5指撕裂傷。法院判賠醫療費用及生活支出（83,093元）、不能工作損失（306,000元）及慰撫金（300,000元），合計 689,093 元。',
-        law: '民法§191-2、§193、§195'
-      },
-      {
-        caseNo: '臺灣新北地方法院 109 年度訴字第 2968 號',
-        amount: 2000000,
-        amountLabel: '慰撫金 NT$ 2,000,000',
-        summary: '車禍致創傷性顱內出血、右鎖骨骨折、右側肋骨骨折及腰椎骨折，傷勢重大致無意思表示能力，法院判給精神慰撫金 200 萬元。',
-        law: '民法§193、§195'
-      },
-      {
-        caseNo: '臺灣高等法院 109 年度上易字第 1077 號',
+        amountLabel: '判決准許總額 NT$ 689,093',
+        summary: '駕駛開啟車門撞及機車騎士，造成左鎖骨粉碎性骨折等傷害。法院准許醫療與看護等費用 83,093 元、六個月工作損失 306,000 元及慰撫金 300,000 元。',
+        law: '民法§191-2、§193、民法§195',
+        verified: true,
+        verifiedAt: '2026-06-24',
+        sourceType: '司法院裁判書原文',
+        finality: 'unknown',
+        sourceUrl: 'https://judgment.judicial.gov.tw/FJUD/data.aspx?ty=JD&id=TCDV%2c97%2c%e8%a8%b4%2c687%2c20080930%2c1&ot=in',
+        evidence: Object.freeze([
+          '被告應給付原告新臺幣陸拾捌萬玖仟零玖拾叁元',
+          '原告所得請求之金額合計為689,093元'
+        ])
+      }),
+      Object.freeze({
+        caseNo: '臺灣高等法院 109 年度上易字第 1077 號民事判決',
+        judgmentDate: '2021-02-24',
         amount: 996940,
-        amountLabel: 'NT$ 996,940（最終判賠）',
-        summary: '車禍致創傷性硬腦膜下出血等重傷長期臥床，損害合計 4,984,698 元（醫療 7,112＋看護 4,677,586＋慰撫金 30 萬）。被害人過失 80%、加害人過失 20%，依過失比例計算：4,984,698×20%＝996,940 元。',
-        law: '民法§184、§191-2、§193、§195'
-      },
-      {
-        caseNo: '臺灣臺北地方法院 110 年度重訴字第 54 號',
-        amount: 3000000,
-        amountLabel: '慰撫金 NT$ 3,000,000（母親）',
-        summary: '車禍致人死亡，被害人母親依民法§194 請求精神慰撫金，法院審酌雙方身分地位及加害情節，判給 300 萬元。',
-        law: '民法§192、§194'
-      }
-    ]
-  };
-
-  window.IP_CASE_LAW = IP_CASE_LAW;
+        amountLabel: '代位求償准許額 NT$ 996,940',
+        summary: '未投保強制險之機車事故致被害人重傷失能。法院認定損害總額 4,984,698 元，被害人負 80% 過失；特別補償基金代位求償 996,940 元獲准。',
+        law: '民法§184、§187、§191-2、§193、民法§195、§217；強制汽車責任保險法§42',
+        verified: true,
+        verifiedAt: '2026-06-24',
+        sourceType: '司法院裁判書原文',
+        finality: 'confirmed-final',
+        sourceUrl: 'https://judgment.judicial.gov.tw/FJUD/data.aspx?ty=JD&id=TPHV%2c109%2c%e4%b8%8a%e6%98%93%2c1077%2c20210224%2c1&ot=in',
+        evidence: Object.freeze([
+          '鄭重輝因本件車禍所受損害合計應為4,984,698元',
+          '被上訴人得請求上訴人賠償之金額應為996,940元'
+        ])
+      }),
+      Object.freeze({
+        caseNo: '臺灣新北地方法院 109 年度訴字第 2968 號民事判決',
+        judgmentDate: '2020-12-15',
+        amount: 2226765,
+        amountLabel: '扣除保險等後 NT$ 2,226,765',
+        summary: '無照駕駛撞擊自行車騎士，造成顱內出血、多處骨折並受監護宣告。法院認定損害 4,251,765 元，扣除強制險 200 萬元及已付款 25,000 元後，准許 2,226,765 元。',
+        law: '民法§184、§191-2、§193、民法§195；強制汽車責任保險法§32',
+        verified: true,
+        verifiedAt: '2026-06-24',
+        sourceType: '司法院裁判書原文',
+        finality: 'unknown',
+        sourceUrl: 'https://judgment.judicial.gov.tw/FJUD/data.aspx?ty=JD&id=PCDV%2c109%2c%e8%a8%b4%2c2968%2c20201215%2c1&ot=in',
+        evidence: Object.freeze([
+          '被告應給付原告新臺幣貳佰貳拾貳萬陸仟柒佰陸拾伍元',
+          '原告請求賠償數額應以222萬6,765元為限'
+        ])
+      }),
+      Object.freeze({
+        caseNo: '臺灣高等法院 110 年度上字第 934 號民事判決',
+        judgmentDate: '2023-11-29',
+        amount: 1426953,
+        amountLabel: '確定判決准許額 NT$ 1,426,953',
+        summary: '違規左轉車輛撞倒機車騎士後，騎士再遭計程車輾壓死亡。高院將母親慰撫金由一審 300 萬元改為 200 萬元；連同殯葬、扶養費並扣除強制險及已付款後，准許 1,426,953 元，判決不得上訴。',
+        law: '民法§184、民法§185、§188、§194',
+        verified: true,
+        verifiedAt: '2026-06-24',
+        sourceType: '司法院裁判書原文',
+        finality: 'confirmed-final',
+        sourceUrl: 'https://judgment.judicial.gov.tw/FJUD/data.aspx?ty=JD&id=TPHV%2c110%2c%e4%b8%8a%2c934%2c20231129%2c1&ot=in',
+        evidence: Object.freeze([
+          '被上訴人合計得請求上訴人賠償之金額為1,426,953元',
+          '應以200萬元為適當'
+        ])
+      })
+    ])
+  });
 })();

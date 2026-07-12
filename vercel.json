@@ -1,4 +1,6 @@
 {
+  "installCommand": "npm install --no-package-lock",
+  "buildCommand": "npm run build",
   "redirects": [
     { "source": "/gift-planner.html", "destination": "/gift-tax.html?tab=planner", "statusCode": 301 },
     { "source": "/infidelity-damages.html", "destination": "/divorce-damages.html?tab=infidelity", "statusCode": 301 },
