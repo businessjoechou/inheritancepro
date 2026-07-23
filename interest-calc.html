@@ -248,17 +248,17 @@
       <div class="more-note" id="more-note" style="display:none">（僅顯示前10年，以下類推）</div>
     </div>
 
-    <!-- 律師備忘 -->
-    <div class="lawyer-only" style="background:#eef3fa;border:1.5px solid #3a5a80;border-radius:12px;padding:16px 20px;margin-top:16px">
-      <div style="font-size:12px;font-weight:700;color:#1a3a5c;margin-bottom:8px;letter-spacing:0.04em">⚖ 律師訴訟策略備忘</div>
+    <!-- 利息請求補充說明 -->
+    <div style="background:#eef3fa;border:1.5px solid #3a5a80;border-radius:12px;padding:16px 20px;margin-top:16px">
+      <div style="font-size:12px;font-weight:700;color:#1a3a5c;margin-bottom:8px;letter-spacing:0.04em">📋 請求利息時要知道的事</div>
       <div style="font-size:12px;color:#1a2a3a;line-height:1.9">
-        <strong>損害賠償利息起算（§233）：</strong>侵權行為損害賠償，利息通常自<em>起訴狀繕本送達被告翌日</em>起算；或依判決內容以請求日或知悉損害日為準，應在訴之聲明中明確載明。<br>
-        <strong>§233遲延利息：</strong>債務人遲延給付時，債權人得請求遲延利息；若原約定利率低於法定利率，仍得請求法定利率之遲延利息。<br>
-        <strong>訴之聲明格式：</strong>「被告應給付原告新台幣○元，及自民國○年○月○日起至清償日止，按年息5%計算之利息。」<br>
-        <strong>注意：</strong>民事訴訟費用（裁判費、律師費）另計，不含於本試算結果。
+        <strong>利息從哪天開始算（§233）：</strong>如果是打官司求償，利息通常從<em>法院把起訴狀送達對方的隔天</em>開始算；也可能依判決以其他日期為準，起訴時要在訴之聲明裡寫清楚。<br>
+        <strong>遲延利息（§233）：</strong>對方遲遲不付錢時，您可以要求遲延利息；就算原本約定的利率比法定利率低，仍可以按法定利率（年息 5%）請求。<br>
+        <strong>起訴時怎麼寫：</strong>訴之聲明的利息部分通常寫成：「被告應給付原告新台幣○元，及自民國○年○月○日起至清償日止，按年息5%計算之利息。」<br>
+        <strong>注意：</strong>打官司的費用（裁判費、律師費）是另外計算的，不包含在本試算結果中。
       </div>
       <div style="font-size:11px;color:#999;margin-top:6px">
-        💡 提示：「自起訴狀繕本送達翌日」為實務最常用起算點；「自催告翌日」需有書面催告證明。
+        提示：「自起訴狀繕本送達翌日」是法院最常用的利息起算日；如果您選「自催告翌日」，要有書面催告的證明（例如存證信函）。
       </div>
     </div>
 
@@ -507,7 +507,6 @@
     const today = new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' });
     const resultsHTML = document.getElementById('results').innerHTML;
     const html = `<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>InheritancePro 計算報告</title><style>@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap');*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans TC',sans-serif;background:#fff;color:#1a1410;font-size:13px;padding:40px;max-width:700px;margin:0 auto;}.pdf-header{border-bottom:3px solid #1a1410;padding-bottom:20px;margin-bottom:28px;display:flex;justify-content:space-between;align-items:flex-end;}.pdf-logo{font-family:'Noto Serif TC',serif;font-size:24px;font-weight:700;}.pdf-logo span{color:#c4932a;}.pdf-meta{font-size:11px;color:#7a6f62;text-align:right;line-height:1.8;font-family:'Noto Serif TC',monospace;}.result-card{background:#1a1410;color:#f5f0e8;border-radius:12px;padding:24px;margin-bottom:14px;break-inside:avoid;}.result-title{font-family:'Noto Serif TC',monospace;font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:16px;}.result-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.07);}.result-row:last-child{border-bottom:none;}.lbl{font-size:13px;color:rgba(245,240,232,0.65);}.val{font-family:'Noto Serif TC',monospace;font-size:14px;font-weight:500;color:#f5f0e8;}.val.red{color:#e8a0a0;}.val.green{color:#a8d8bc;}.val.big{font-size:18px;color:#c4932a;}.total-band{background:rgba(196,147,42,0.15);border-radius:8px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;margin-top:8px;}.law-note{background:#f8f8f8;border-left:3px solid #c4932a;border-radius:0 8px 8px 0;padding:10px 14px;font-size:11px;color:#7a6f62;line-height:1.7;margin:14px 0;}.pdf-footer{margin-top:40px;padding-top:16px;border-top:1px solid #c8bfb0;font-size:11px;color:#7a6f62;line-height:1.8;text-align:center;}.pdf-disc{font-size:10px;color:#aaa;margin-top:8px;}button{display:none!important;}@media print{body{padding:20px;}}</style></head><body><div class="pdf-header"><div><div class="pdf-logo">Inheritance<span>Pro</span></div><div style="font-size:12px;color:#7a6f62;margin-top:4px">利息計算</div></div><div class="pdf-meta">產出日期：${today}</div></div>${resultsHTML}<div class="pdf-footer">© ${new Date().getFullYear()} InheritancePro · inheritance.choulegal.com<div class="pdf-disc">本報告僅供參考，不構成法律意見。實際個案請諮詢執業律師或法律顧問。</div></div><script defer src="js/coffee-button.js"><\/script>
-<script type="module" src="js/auth-bar.js"></script>
 </body></html>`;
     exportPDF(html, 'InheritancePro-利息計算');
   }

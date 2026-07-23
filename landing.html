@@ -78,7 +78,7 @@
   .persona-card {
     background: #100e0c;
     border: 1.5px solid var(--border);
-    border-radius: 16px;
+    border-radius: 8px;
     padding: 28px 24px 24px;
     cursor: pointer;
     text-decoration: none;
@@ -100,7 +100,7 @@
 
   /* 民眾 */
   .card-public { border-color: #3a3020; }
-  .card-public::before { background: radial-gradient(circle at 50% 0%, rgba(196,147,42,0.08), transparent 70%); }
+  .card-public::before { background: none; }
   .card-public:hover { border-color: var(--gold); }
   .card-public::before { opacity: 1; }
   .card-public .card-icon-bg { background: rgba(196,147,42,0.1); color: var(--gold); }
@@ -109,7 +109,7 @@
 
   /* 會計師 */
   .card-accountant { border-color: #1e2e40; }
-  .card-accountant::before { background: radial-gradient(circle at 50% 0%, rgba(60,120,200,0.08), transparent 70%); opacity: 1; }
+  .card-accountant::before { background: none; opacity: 1; }
   .card-accountant:hover { border-color: #4a7ab0; }
   .card-accountant .card-icon-bg { background: rgba(60,120,200,0.12); color: #6a9fd0; }
   .card-accountant .cta { background: #1a3a5c; color: #e8f0ff; }
@@ -117,7 +117,7 @@
 
   /* 律師 */
   .card-lawyer { border-color: #1e2e20; }
-  .card-lawyer::before { background: radial-gradient(circle at 50% 0%, rgba(42,107,74,0.1), transparent 70%); opacity: 1; }
+  .card-lawyer::before { background: none; opacity: 1; }
   .card-lawyer:hover { border-color: #3a7a50; }
   .card-lawyer .card-icon-bg { background: rgba(42,107,74,0.15); color: #5aaf7a; }
   .card-lawyer .cta { background: #1a3a28; color: #c0f0d8; }
@@ -217,6 +217,7 @@
 </head>
 <body>
 
+<main>
 <div class="parent-brand"><img class="cl-icon" src="img/choulegal-icon.svg" alt="周全法律科技">周全 <span>ChouLegal</span></div>
 <div class="logo">Inheritance<span>Pro</span></div>
 
@@ -251,15 +252,15 @@
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
       </div>
       <div class="card-role">Tax & Accounting</div>
-      <div class="card-title">進階稅務功能</div>
+      <div class="card-title">稅務模式</div>
       <div class="card-desc">遺產稅精算、節稅規劃、贈與策略試算，含多案件期限管理。</div>
       <ul class="card-features">
-        <li>遺產稅申報工作底稿匯出</li>
+        <li>遺產稅計算明細匯出</li>
         <li>生前贈與 vs 繼承節稅比較</li>
         <li>未上市股票資產淨值法</li>
         <li>多案件期限管理儀表板</li>
       </ul>
-      <button class="cta">啟用進階稅務功能 →</button>
+      <button class="cta">切換至稅務模式</button>
     </div>
   </div>
 
@@ -270,7 +271,7 @@
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
       </div>
       <div class="card-role">Legal Strategy</div>
-      <div class="card-title">進階法律功能</div>
+      <div class="card-title">法律模式</div>
       <div class="card-desc">財產爭議分析、訴訟強度評估、脫產偵測與和解金額試算。</div>
       <ul class="card-features">
         <li>脫產偵測與財產異動分析</li>
@@ -278,7 +279,7 @@
         <li>損害賠償試算（車禍、未成年）</li>
         <li>訴訟強度評估與和解試算</li>
       </ul>
-      <button class="cta">啟用進階法律功能 →</button>
+      <button class="cta">切換至法律模式</button>
     </div>
   </div>
 
@@ -289,6 +290,7 @@
   <span id="login-sep" style="margin:0 10px;opacity:0.3">·</span>
   © 2026 InheritancePro · 本平台僅供參考，不構成法律意見
 </div>
+</main>
 
 <script src="js/supabase-config.js"></script>
 <script type="module">

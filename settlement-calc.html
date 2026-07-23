@@ -50,7 +50,7 @@
   "name": "如何使用和解金額試算工具評估合理和解範圍",
   "description": "依期望值模型計算合理和解範圍，提供開價策略，讓您做出有根據的和解決定。",
   "step": [
-    {"@type": "HowToStep", "position": 1, "name": "輸入爭議基本資料", "text": "填入爭議金額（理論上可主張的最大金額）、訴訟強度（1–10 分，可參考訴訟強度評估頁面）、以及客戶可接受的最低金額（談判底線）。"},
+    {"@type": "HowToStep", "position": 1, "name": "輸入爭議基本資料", "text": "填入爭議金額（理論上可主張的最大金額）、訴訟強度（1–10 分，可參考訴訟強度評估頁面）、以及您可接受的最低金額（談判底線）。"},
     {"@type": "HowToStep", "position": 2, "name": "評估訴訟成本", "text": "輸入預估律師費（含一二審）、預估訴訟期間（1–5 年）與精神時間成本（低/中/高）。系統將以年化 3% 折現計入時間成本。"},
     {"@type": "HowToStep", "position": 3, "name": "分析對造條件", "text": "選擇對造和解意願、對造財務狀況（影響和解金額上下限約 ±15%）、對造是否有律師代理（影響談判效率）。"},
     {"@type": "HowToStep", "position": 4, "name": "計算合理和解範圍與開價", "text": "系統以期望值模型（勝訴機率 × 爭議金額 − 訴訟成本）計算淨期望值，並產出建議和解範圍（floor–ceiling）與含讓步空間的建議開價。"},
@@ -131,7 +131,7 @@
 
 <main>
   <h1>和解金額試算</h1>
-  <p class="subtitle">以期望值模型計算合理和解範圍，提供最佳開價策略，讓客戶做出有根據的和解決定。</p>
+  <p class="subtitle">以期望值模型計算合理和解範圍，提供最佳開價策略，讓您做出有根據的和解決定。</p>
 
   <div class="card">
     <div class="section-title">A · 爭議基本資料</div>
@@ -148,7 +148,7 @@
       </div>
     </div>
     <div class="input-group">
-      <label>客戶可接受的最低金額<span class="label-hint">元</span></label>
+      <label>您可接受的最低金額<span class="label-hint">元</span></label>
       <input type="number" id="minAccept" placeholder="0" min="0" oninput="autoCalc()">
     </div>
   </div>
@@ -239,7 +239,7 @@
         <div class="opening-label">建議開價（含談判讓步空間）</div>
         <div class="opening-num" id="r-opening">—</div>
       </div>
-      <div class="result-row" style="margin-top:12px"><span class="lbl">客戶最低接受</span><span class="val" id="r-min">—</span></div>
+      <div class="result-row" style="margin-top:12px"><span class="lbl">您的最低接受金額</span><span class="val" id="r-min">—</span></div>
     </div>
 
     <div class="result-card">
@@ -261,7 +261,7 @@
   <section style="margin:32px auto 24px;padding:0 4px">
     <div style="font-family:'Noto Serif TC',serif;font-size:11px;color:var(--muted);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)">使用步驟</div>
     <ol style="padding-left:20px;color:var(--ink);font-size:13px;line-height:1.9">
-      <li><strong>輸入爭議基本資料：</strong>填入爭議金額、訴訟強度（1–10 分）、客戶可接受的最低金額（談判底線）。</li>
+      <li><strong>輸入爭議基本資料：</strong>填入爭議金額、訴訟強度（1–10 分）、您可接受的最低金額（談判底線）。</li>
       <li><strong>評估訴訟成本：</strong>輸入律師費、預估訴訟期間（1–5 年）、精神時間成本（低/中/高），系統以年化 3% 折現計入時間成本。</li>
       <li><strong>分析對造條件：</strong>選擇對造和解意願、財務狀況（影響和解金額 ±15%）、有無律師代理。</li>
       <li><strong>取得合理和解範圍與開價：</strong>系統以期望值模型計算淨期望值，並產出建議和解範圍與含讓步空間的開價。</li>
@@ -416,7 +416,6 @@
     const today = new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' });
     const resultsHTML = document.getElementById('results').innerHTML;
     const html = `<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>InheritancePro 計算報告</title><style>@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap');*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans TC',sans-serif;background:#fff;color:#1a1410;font-size:13px;padding:40px;max-width:700px;margin:0 auto;}.pdf-header{border-bottom:3px solid #1a1410;padding-bottom:20px;margin-bottom:28px;display:flex;justify-content:space-between;align-items:flex-end;}.pdf-logo{font-family:'Noto Serif TC',serif;font-size:24px;font-weight:700;}.pdf-logo span{color:#c4932a;}.pdf-meta{font-size:11px;color:#7a6f62;text-align:right;line-height:1.8;font-family:'Noto Serif TC',monospace;}.result-card{background:#1a1410;color:#f5f0e8;border-radius:12px;padding:24px;margin-bottom:14px;break-inside:avoid;}.result-title{font-family:'Noto Serif TC',monospace;font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:16px;}.result-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.07);}.result-row:last-child{border-bottom:none;}.lbl{font-size:13px;color:rgba(245,240,232,0.65);}.val{font-family:'Noto Serif TC',monospace;font-size:14px;font-weight:500;color:#f5f0e8;}.val.red{color:#e8a0a0;}.val.green{color:#a8d8bc;}.val.big{font-size:18px;color:#c4932a;}.range-display{background:rgba(196,147,42,0.1);border-radius:10px;padding:16px;text-align:center;margin:12px 0;}.range-numbers{display:flex;align-items:center;justify-content:center;gap:12px;font-family:'Noto Serif TC',monospace;font-size:20px;font-weight:700;color:#c4932a;}.compare-table{width:100%;border-collapse:collapse;font-size:12px;}.compare-table th{background:rgba(255,255,255,0.1);padding:8px;text-align:left;}.compare-table td{padding:8px;border-bottom:1px solid rgba(255,255,255,0.07);}.verdict-box{margin-top:12px;padding:10px 14px;border-radius:8px;font-size:12px;line-height:1.6;}.law-note{background:#f8f8f8;border-left:3px solid #c4932a;border-radius:0 8px 8px 0;padding:10px 14px;font-size:11px;color:#7a6f62;line-height:1.7;margin:14px 0;}.pdf-footer{margin-top:40px;padding-top:16px;border-top:1px solid #c8bfb0;font-size:11px;color:#7a6f62;line-height:1.8;text-align:center;}.pdf-disc{font-size:10px;color:#aaa;margin-top:8px;}button{display:none!important;}@media print{body{padding:20px;}}</style></head><body><div class="pdf-header"><div><div class="pdf-logo">Inheritance<span>Pro</span></div><div style="font-size:12px;color:#7a6f62;margin-top:4px">和解金額試算</div></div><div class="pdf-meta">產出日期：${today}</div></div>${resultsHTML}<div class="pdf-footer">© ${new Date().getFullYear()} InheritancePro · inheritance.choulegal.com<div class="pdf-disc">本報告僅供參考，不構成法律意見。實際個案請諮詢執業律師或法律顧問。</div></div><script defer src="js/coffee-button.js"><\/script>
-<script type="module" src="js/auth-bar.js"></script>
 </body></html>`;
     exportPDF(html, 'InheritancePro-和解金');
   }

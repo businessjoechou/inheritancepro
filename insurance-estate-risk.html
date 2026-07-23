@@ -127,6 +127,10 @@
   .policy-row .del-btn{background:none;border:1.5px solid var(--border);border-radius:6px;color:var(--muted);cursor:pointer;font-size:16px;padding:0;height:38px;}
   .policy-row .del-btn:hover{border-color:var(--accent);color:var(--accent);}
   .policy-row label{font-size:10px;color:var(--muted);margin-bottom:3px;display:block;}
+  @media (max-width: 560px) {
+    .policy-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 28px; gap: 6px; padding: 8px; }
+    .policy-row .del-btn { width: 28px; min-width: 28px; }
+  }
   .add-btn{width:100%;padding:10px;border:1.5px dashed var(--border);border-radius:8px;background:none;color:var(--muted);font-size:13px;cursor:pointer;margin-top:4px;}
   .add-btn:hover{border-color:var(--gold);color:var(--gold);}
   .result-card{background:var(--ink);color:var(--paper);border-radius:12px;padding:24px;margin-bottom:14px;}
@@ -136,13 +140,13 @@
   .result-row .lbl{color:rgba(255,255,255,0.65);}
   .result-row .val{font-family:'Noto Serif TC',monospace;}
   .big-val{font-size:32px;font-weight:700;color:var(--gold);font-family:'Noto Serif TC',monospace;text-align:center;margin:8px 0;}
-  .status-badge{display:inline-block;padding:8px 20px;border-radius:24px;font-size:13px;font-weight:600;letter-spacing:0.04em;margin:0 auto;display:block;width:fit-content;}
+  .status-badge{display:inline-block;padding:8px 20px;border-radius:8px;font-size:13px;font-weight:600;letter-spacing:0.04em;margin:0 auto;display:block;width:fit-content;}
   .status-safe{background:rgba(42,107,74,0.15);color:#7cd4a3;border:1px solid rgba(42,107,74,0.4);}
   .status-alert{background:rgba(139,32,32,0.25);color:#f28b6e;border:1px solid rgba(139,32,32,0.5);}
   .amt-progress-bar{height:8px;background:rgba(255,255,255,0.1);border-radius:4px;overflow:hidden;margin-top:12px;}
-  .amt-progress-fill{height:100%;background:linear-gradient(90deg,var(--success),var(--gold),var(--accent));transition:width 0.4s;}
+  .amt-progress-fill{height:100%;background:var(--gold);transition:width 0.4s;}
   .amt-progress-label{display:flex;justify-content:space-between;font-size:10px;font-family:'Noto Serif TC',monospace;color:rgba(255,255,255,0.5);margin-top:6px;}
-  .accountant-only .panel-title{font-family:'Noto Serif TC',monospace;font-size:10px;color:var(--muted);letter-spacing:0.12em;margin-bottom:10px;}
+  .panel-title{font-family:'Noto Serif TC',monospace;font-size:10px;color:var(--muted);letter-spacing:0.12em;margin-bottom:10px;}
   .tip-item{font-size:12px;color:var(--muted);padding:7px 0;border-bottom:1px solid var(--soft);line-height:1.6;}
   .tip-item:last-child{border-bottom:none;}
   .tip-tag{display:inline-block;border-radius:4px;padding:1px 7px;font-size:10px;font-family:'Noto Serif TC',monospace;margin-right:6px;}
@@ -153,14 +157,14 @@
   .intro{background:rgba(196,147,42,0.08);border-left:3px solid var(--gold);padding:12px 14px;border-radius:0 8px 8px 0;font-size:12px;color:#666;line-height:1.75;margin-bottom:20px;}
   .intro strong{color:var(--ink);}
   .checkbox-row:last-child{margin-bottom:0;}
-  .risk-badge{display:inline-block;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;letter-spacing:0.04em;margin-top:10px;}
+  .risk-badge{display:inline-block;padding:6px 14px;border-radius:8px;font-size:12px;font-weight:600;letter-spacing:0.04em;margin-top:10px;}
   .risk-low{background:rgba(42,107,74,0.15);color:#7cd4a3;border:1px solid rgba(42,107,74,0.4);}
   .risk-mid{background:rgba(196,147,42,0.15);color:var(--gold);border:1px solid rgba(196,147,42,0.4);}
   .risk-high{background:rgba(139,32,32,0.25);color:#f28b6e;border:1px solid rgba(139,32,32,0.5);}
   .total-highlight{background:rgba(196,147,42,0.15);border:1px solid rgba(196,147,42,0.3);border-radius:8px;padding:16px;margin-top:12px;display:flex;justify-content:space-between;align-items:center;}
   .total-highlight .lbl{color:rgba(255,255,255,0.8);font-size:13px;}
   .total-highlight .val{font-family:'Noto Serif TC',monospace;font-size:22px;font-weight:700;color:var(--gold);}
-  .lawyer-only .panel-title{font-family:'Noto Serif TC',monospace;font-size:10px;color:var(--muted);letter-spacing:0.12em;margin-bottom:10px;}
+  /* panel-title already styled above */
 </style>
 </head>
 <body>
@@ -339,39 +343,37 @@
         </div>
       </div>
 
-      <!-- Pro: Lawyer -->
-      <div class="lawyer-only" style="background:#eef3fa;border:1.5px solid #3a5a80;border-radius:12px;padding:16px 20px;margin-top:16px">
-        <div style="font-family:'Noto Serif TC',monospace;font-size:10px;color:#3a5a80;letter-spacing:0.12em;margin-bottom:10px">LAWYER MEMO</div>
-        <div style="font-family:'Noto Serif TC',serif;font-size:15px;font-weight:700;color:#1a3a5c;margin-bottom:10px">訴訟策略備忘</div>
+      <!-- 不服課稅時怎麼做 -->
+      <div style="background:#eef3fa;border:1.5px solid #3a5a80;border-radius:12px;padding:16px 20px;margin-top:16px">
+        <div style="font-size:15px;font-weight:700;color:#1a3a5c;margin-bottom:10px">📋 如果不服國稅局的課稅決定</div>
         <div style="font-size:13px;color:#2a4a6c;line-height:1.8">
-          <strong>行政救濟要點：</strong><br>
-          1. 確認國稅局是否已踐行「實質課稅」之舉證義務（納稅者權利保護法§7第3項）<br>
-          2. 爭點：投保目的是否確有保障需求，非僅為規避遺產稅<br>
-          3. 審酌保單投保時點與被繼承人健康狀態之關聯性<br>
-          4. 復查 → 訴願 → 行政訴訟之期限管控（復查30日、訴願30日）<br><br>
-          <strong>舉證責任分配：</strong><br>
-          1. 國稅局應就「規避稅捐之主觀意圖」負舉證責任<br>
-          2. 納稅義務人可提出：投保動機說明、家庭保障需求、財務規劃紀錄<br>
-          3. 裁判依據應以已取得並核對的最高行政法院裁判書原文為準，本工具不提供待確認案號<br>
-          4. 若僅符合1-2項態樣且有合理說明，爭訟成功機率較高
+          <strong>可以走行政救濟：</strong><br>
+          1. 確認國稅局是否有充分說明為什麼認定您是「規避遺產稅」（依納稅者權利保護法§7第3項，舉證責任在國稅局）<br>
+          2. 重點在於：投保當時是否確實有保障需求，而不只是為了節稅<br>
+          3. 投保的時間點和被繼承人當時的健康狀況會是關鍵<br>
+          4. 救濟期限要注意：收到處分書後 30 日內申請復查 → 復查決定後 30 日內提訴願 → 再不服可提行政訴訟<br><br>
+          <strong>您可以準備的有利證據：</strong><br>
+          1. 當初投保的動機說明（例如家庭保障需求）<br>
+          2. 財務規劃紀錄、家庭經濟狀況<br>
+          3. 如果只符合 1-2 項實質課稅態樣且有合理說明，爭取成功的機會較高<br>
+          4. 如需引用法院判決，應取得司法院裁判書原文核對，不要只靠二手摘要
         </div>
       </div>
 
-      <!-- Pro: Accountant -->
-      <div class="accountant-only" style="background:#eef8f2;border:1.5px solid #2a6b4a;border-radius:12px;padding:16px 20px;margin-top:16px">
-        <div style="font-family:'Noto Serif TC',monospace;font-size:10px;color:#2a6b4a;letter-spacing:0.12em;margin-bottom:10px">ACCOUNTANT MEMO</div>
-        <div style="font-family:'Noto Serif TC',serif;font-size:15px;font-weight:700;color:#1a4a3c;margin-bottom:10px">申報實務備忘</div>
+      <!-- 申報時的注意事項 -->
+      <div style="background:#eef8f2;border:1.5px solid #2a6b4a;border-radius:12px;padding:16px 20px;margin-top:16px">
+        <div style="font-size:15px;font-weight:700;color:#1a4a3c;margin-bottom:10px">📊 遺產稅申報注意事項</div>
         <div style="font-size:13px;color:#2a5a4c;line-height:1.8">
-          <strong>遺產稅申報注意事項：</strong><br>
-          1. 死亡前投保之壽險保單，若符合實質課稅態樣，建議主動申報並附說明<br>
-          2. 保費列舉扣除額：每人每年2.4萬（所得稅），與遺產稅不同體系<br>
-          3. 保險給付若被計入遺產，應確認是否已從保險公司取得完整給付明細<br>
-          4. 多張保單應逐張評估，個別判斷是否符合態樣<br><br>
-          <strong>保費列舉扣除額提醒：</strong><br>
-          1. 人身保險費每人每年最高2.4萬（綜所稅列舉扣除）<br>
-          2. 全民健保費不受2.4萬上限限制，可全額扣除<br>
-          3. 要保人與被保險人須在同一申報戶<br>
-          4. 躉繳保費可分年攤提列報（依保單年限平均分攤）
+          <strong>保單可能被計入遺產時：</strong><br>
+          1. 過世前投保的壽險保單，如果符合實質課稅態樣，建議主動申報並附上說明<br>
+          2. 保險給付如果被計入遺產，要先向保險公司取得完整的給付明細<br>
+          3. 有多張保單的話，要逐張評估是否符合態樣<br>
+          4. 所得稅的保費列舉扣除（每人每年 2.4 萬）和遺產稅是不同體系，不要混淆<br><br>
+          <strong>保費扣除額小知識：</strong><br>
+          1. 人身保險費每人每年最高扣除 2.4 萬（綜合所得稅列舉扣除）<br>
+          2. 全民健保費不受 2.4 萬上限限制，可以全額扣除<br>
+          3. 要保人與被保險人必須在同一申報戶<br>
+          4. 一次繳清的保費（躉繳）可以按保單年限分年扣除
         </div>
       </div>
 
@@ -443,13 +445,13 @@
       </div>
     </div>
 
-    <div class="card accountant-only">
-      <div class="panel-title">📊 會計師備忘</div>
-      <div class="tip-item"><span class="tip-tag tip-tag-green">依據</span>所得基本稅額條例§12：保險死亡給付每一申報戶全年合計 3,740 萬元以下免計入。</div>
-      <div class="tip-item"><span class="tip-tag tip-tag-green">§13</span>基本所得額 = 綜所淨額 + 保險 + 海外 + 未上市櫃 + 私募基金；扣除 750 萬免稅額後適用 20% 稅率。</div>
-      <div class="tip-item"><span class="tip-tag tip-tag-green">比較</span>基本稅額 vs 一般所得稅額取高者繳納（所得基本稅額條例§4）。</div>
-      <div class="tip-item"><span class="tip-tag tip-tag-green">實務</span>高資產客戶常忽略多張大額保單累加效應；建議申報前做 AMT 模擬。</div>
-      <div class="tip-item"><span class="tip-tag tip-tag-green">時效</span>若短漏報，核課期間 5 年（稅捐稽徵法§21）。</div>
+    <div class="card">
+      <div class="panel-title">📊 最低稅負制重點提醒</div>
+      <div class="tip-item"><span class="tip-tag tip-tag-green">門檻</span>所得基本稅額條例§12：保險死亡給付每一申報戶全年合計 3,740 萬元以下免計入。</div>
+      <div class="tip-item"><span class="tip-tag tip-tag-green">算法</span>基本所得額 = 綜所淨額 + 保險 + 海外 + 未上市櫃 + 私募基金；扣除 750 萬免稅額後適用 20% 稅率（§13）。</div>
+      <div class="tip-item"><span class="tip-tag tip-tag-green">比較</span>最低稅負和一般所得稅取較高的那個繳納（所得基本稅額條例§4）。</div>
+      <div class="tip-item"><span class="tip-tag tip-tag-green">留意</span>如果有多張大額保單，要注意累加後可能超過 3,740 萬門檻；建議申報前先用本工具試算。</div>
+      <div class="tip-item"><span class="tip-tag tip-tag-green">時效</span>如果少報或漏報，國稅局可在 5 年內追繳（稅捐稽徵法§21）。</div>
     </div>
 
     <button class="calc-btn" onclick="amtCalculate()">計算 AMT 應納稅額</button>
@@ -567,14 +569,14 @@
       </div>
     </div>
 
-    <div class="card lawyer-only">
-      <div class="panel-title">⚖ 訴訟策略提示</div>
-      <div class="tip-item"><span class="tip-tag tip-tag-red">§1173</span>生前特種贈與歸扣（結婚、分居、營業）— 學說多數見解主張類推適用於「顯失公平」之保費支出，將之計入應繼遺產供特留分計算。<br><span style="color:#888;font-size:11px">⚠️ 本工具先前版本曾誤引§1187（該條為「遺囑自由」條，非扣減權條），已更正為§1173 + §1225</span></div>
-      <div class="tip-item"><span class="tip-tag tip-tag-red">§1225</span>特留分扣減權（本體條）— 少數見解認為可直接類推適用於保險金（將身故給付視為遺贈性質進行扣減）。</div>
-      <div class="tip-item"><span class="tip-tag tip-tag-red">保險法§112</span>受益人經指定者，保險金不列入遺產；惟實務承認「顯失公平時」得透過上列途徑調整，尚未達通說統一見解。</div>
-      <div class="tip-item"><span class="tip-tag tip-tag-red">裁判來源</span>提出個案主張前，應取得司法院裁判書原文並核對案由、事實、法律爭點與結論，不得僅依二手摘要引用。</div>
-      <div class="tip-item"><span class="tip-tag tip-tag-red">時效</span>民法§1146 繼承回復請求權：自知悉被侵害時起 <strong>2 年</strong>；自繼承開始時起 <strong>10 年</strong>。</div>
-      <div class="tip-item"><span class="tip-tag tip-tag-red">舉證</span>檢附被繼承人投保當時健康狀態、保費來源、投保時點，證明構成顯失公平。</div>
+    <div class="card">
+      <div class="panel-title">📋 特留分被侵害時可以怎麼主張</div>
+      <div class="tip-item"><span class="tip-tag tip-tag-red">§1173</span>如果過世者生前替某位繼承人繳了大額保費，其他繼承人可以主張這筆保費屬於「生前特種贈與」，應該算回遺產再分配（歸扣）。</div>
+      <div class="tip-item"><span class="tip-tag tip-tag-red">§1225</span>特留分扣減權 — 如果保險金的安排讓您的特留分被侵害，可以主張扣減。</div>
+      <div class="tip-item"><span class="tip-tag tip-tag-red">保險法§112</span>原則上受益人經指定的保險金不算遺產；但如果安排「顯失公平」，法院可能透過上面的條文進行調整。目前法院見解尚未完全統一。</div>
+      <div class="tip-item"><span class="tip-tag tip-tag-red">引用判決</span>如果要在訴訟中引用法院判決，一定要從司法院取得裁判書原文並核對，不要只靠網路上的摘要。</div>
+      <div class="tip-item"><span class="tip-tag tip-tag-red">時效</span>民法§1146 繼承回復請求權：知道被侵害後 <strong>2 年</strong>內要提出；繼承開始後超過 <strong>10 年</strong>就不能再請求。</div>
+      <div class="tip-item"><span class="tip-tag tip-tag-red">要準備的證據</span>被繼承人投保時的健康狀況、保費是誰出的、投保時間點，用來證明這個安排對其他繼承人顯失公平。</div>
     </div>
 
     <button class="calc-btn" onclick="forcedShareAssess()">計算特留分侵害</button>
@@ -934,8 +936,7 @@
   window.amtDownloadPDF = async function(){
     const today = new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' });
     const resultsHTML = document.getElementById('amt_results').innerHTML;
-    const html = '<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>InheritancePro</title><style>@import url(\'https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap\');*{box-sizing:border-box;margin:0;padding:0;}body{font-family:\'Noto Sans TC\',sans-serif;color:#1a1410;font-size:13px;padding:40px;max-width:700px;margin:0 auto;}.pdf-header{border-bottom:3px solid #1a1410;padding-bottom:20px;margin-bottom:28px;display:flex;justify-content:space-between;}.pdf-logo{font-family:\'Noto Serif TC\',serif;font-size:24px;font-weight:700;}.pdf-logo span{color:#c4932a;}.result-card{background:#1a1410;color:#f5f0e8;border-radius:12px;padding:24px;margin-bottom:14px;}.result-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.07);}.lbl{color:rgba(255,255,255,0.6);}.val{font-family:\'Noto Serif TC\',monospace;}.big-val{font-size:28px;font-weight:700;color:#c4932a;text-align:center;margin:8px 0;font-family:\'Noto Serif TC\',monospace;}.law-note{background:#f8f5e8;border-left:3px solid #c4932a;padding:12px 14px;font-size:11px;color:#7a6f62;margin:14px 0;line-height:1.7;}button{display:none!important;}@media print{body{padding:20px;}}</style></head><body><div class="pdf-header"><div><div class="pdf-logo">Inheritance<span>Pro</span></div><div style="font-size:12px;color:#7a6f62">最低稅負制保單試算</div></div><div style="font-size:11px;color:#7a6f62">產出日期：' + today + '</div></div>' + resultsHTML + '<div style="margin-top:40px;padding-top:16px;border-top:1px solid #c8bfb0;font-size:11px;color:#7a6f62;text-align:center">\u00a9 ' + new Date().getFullYear() + ' InheritancePro \u00b7 inheritance.choulegal.com</div><script defer src="js/coffee-button.js"></script>
-</body></html>';
+    const html = '<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>InheritancePro</title><style>@import url(\'https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap\');*{box-sizing:border-box;margin:0;padding:0;}body{font-family:\'Noto Sans TC\',sans-serif;color:#1a1410;font-size:13px;padding:40px;max-width:700px;margin:0 auto;}.pdf-header{border-bottom:3px solid #1a1410;padding-bottom:20px;margin-bottom:28px;display:flex;justify-content:space-between;}.pdf-logo{font-family:\'Noto Serif TC\',serif;font-size:24px;font-weight:700;}.pdf-logo span{color:#c4932a;}.result-card{background:#1a1410;color:#f5f0e8;border-radius:12px;padding:24px;margin-bottom:14px;}.result-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.07);}.lbl{color:rgba(255,255,255,0.6);}.val{font-family:\'Noto Serif TC\',monospace;}.big-val{font-size:28px;font-weight:700;color:#c4932a;text-align:center;margin:8px 0;font-family:\'Noto Serif TC\',monospace;}.law-note{background:#f8f5e8;border-left:3px solid #c4932a;padding:12px 14px;font-size:11px;color:#7a6f62;margin:14px 0;line-height:1.7;}button{display:none!important;}@media print{body{padding:20px;}}</style></head><body><div class="pdf-header"><div><div class="pdf-logo">Inheritance<span>Pro</span></div><div style="font-size:12px;color:#7a6f62">最低稅負制保單試算</div></div><div style="font-size:11px;color:#7a6f62">產出日期：' + today + '</div></div>' + resultsHTML + '<div style="margin-top:40px;padding-top:16px;border-top:1px solid #c8bfb0;font-size:11px;color:#7a6f62;text-align:center">\u00a9 ' + new Date().getFullYear() + ' InheritancePro \u00b7 inheritance.choulegal.com</div></body></html>';
     exportPDF(html, 'InheritancePro-AMT保單');
   };
 })();
@@ -1000,8 +1001,7 @@
   window.fsDownloadPDF = async function(){
     const today = new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' });
     const resultsHTML = document.getElementById('fs_results').innerHTML;
-    const html = '<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>InheritancePro 計算報告</title><style>@import url(\'https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap\');*{box-sizing:border-box;margin:0;padding:0;}body{font-family:\'Noto Sans TC\',sans-serif;background:#fff;color:#1a1410;font-size:13px;padding:40px;max-width:700px;margin:0 auto;}.pdf-header{border-bottom:3px solid #1a1410;padding-bottom:20px;margin-bottom:28px;display:flex;justify-content:space-between;align-items:flex-end;}.pdf-logo{font-family:\'Noto Serif TC\',serif;font-size:24px;font-weight:700;}.pdf-logo span{color:#c4932a;}.result-card{background:#1a1410;color:#f5f0e8;border-radius:12px;padding:24px;margin-bottom:14px;}.result-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.07);}.lbl{font-size:13px;color:rgba(245,240,232,0.65);}.val{font-family:\'Noto Serif TC\',monospace;font-size:14px;color:#f5f0e8;}.total-highlight{background:rgba(196,147,42,0.15);border-radius:8px;padding:12px 16px;display:flex;justify-content:space-between;margin-top:8px;}.law-note{background:#f8f5e8;border-left:3px solid #c4932a;padding:12px 14px;font-size:11px;color:#7a6f62;line-height:1.75;margin:14px 0;}button{display:none!important;}.risk-badge{display:inline-block;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;}@media print{body{padding:20px;}}</style></head><body><div class="pdf-header"><div><div class="pdf-logo">Inheritance<span>Pro</span></div><div style="font-size:12px;color:#7a6f62;margin-top:4px">保單受益人 vs 特留分侵害試算</div></div><div style="font-size:11px;color:#7a6f62">產出日期：' + today + '</div></div>' + resultsHTML + '<div style="margin-top:40px;padding-top:16px;border-top:1px solid #c8bfb0;font-size:11px;color:#7a6f62;text-align:center">\u00a9 ' + new Date().getFullYear() + ' InheritancePro \u00b7 inheritance.choulegal.com<div style="font-size:10px;color:#aaa;margin-top:8px">本報告僅供參考，不構成法律意見。</div></div><script defer src="js/coffee-button.js"></script>
-</body></html>';
+    const html = '<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>InheritancePro 計算報告</title><style>@import url(\'https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap\');*{box-sizing:border-box;margin:0;padding:0;}body{font-family:\'Noto Sans TC\',sans-serif;background:#fff;color:#1a1410;font-size:13px;padding:40px;max-width:700px;margin:0 auto;}.pdf-header{border-bottom:3px solid #1a1410;padding-bottom:20px;margin-bottom:28px;display:flex;justify-content:space-between;align-items:flex-end;}.pdf-logo{font-family:\'Noto Serif TC\',serif;font-size:24px;font-weight:700;}.pdf-logo span{color:#c4932a;}.result-card{background:#1a1410;color:#f5f0e8;border-radius:12px;padding:24px;margin-bottom:14px;}.result-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.07);}.lbl{font-size:13px;color:rgba(245,240,232,0.65);}.val{font-family:\'Noto Serif TC\',monospace;font-size:14px;color:#f5f0e8;}.total-highlight{background:rgba(196,147,42,0.15);border-radius:8px;padding:12px 16px;display:flex;justify-content:space-between;margin-top:8px;}.law-note{background:#f8f5e8;border-left:3px solid #c4932a;padding:12px 14px;font-size:11px;color:#7a6f62;line-height:1.75;margin:14px 0;}button{display:none!important;}.risk-badge{display:inline-block;padding:6px 14px;border-radius:8px;font-size:12px;font-weight:600;}@media print{body{padding:20px;}}</style></head><body><div class="pdf-header"><div><div class="pdf-logo">Inheritance<span>Pro</span></div><div style="font-size:12px;color:#7a6f62;margin-top:4px">保單受益人 vs 特留分侵害試算</div></div><div style="font-size:11px;color:#7a6f62">產出日期：' + today + '</div></div>' + resultsHTML + '<div style="margin-top:40px;padding-top:16px;border-top:1px solid #c8bfb0;font-size:11px;color:#7a6f62;text-align:center">\u00a9 ' + new Date().getFullYear() + ' InheritancePro \u00b7 inheritance.choulegal.com<div style="font-size:10px;color:#aaa;margin-top:8px">本報告僅供參考，不構成法律意見。</div></div></body></html>';
     exportPDF(html, 'InheritancePro-保單特留分');
   };
 })();

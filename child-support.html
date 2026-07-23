@@ -75,7 +75,7 @@
   /* ── Tool-unique: child-support.html ── */
 
   .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .person-label { font-family: 'Noto Serif TC', serif; font-size: 10px; letter-spacing: 0.1em; margin-bottom: 10px; padding: 5px 10px; border-radius: 20px; display: inline-block; }
+  .person-label { font-family: 'Noto Serif TC', serif; font-size: 10px; letter-spacing: 0.1em; margin-bottom: 10px; padding: 5px 10px; border-radius: 8px; display: inline-block; }
   .label-a { background: rgba(139,32,32,0.1); color: var(--danger); }
   .label-b { background: rgba(42,107,74,0.1); color: var(--success); }
 
@@ -124,8 +124,8 @@
   .total-band .lbl { font-size: 13px; color: rgba(255,255,255,0.8); }
   .total-band .val { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; color: var(--gold); }
 
-  /* Lawyer panel */
-  .lawyer-only .panel-title { font-family: 'Noto Serif TC', serif; font-size: 10px; color: var(--muted); letter-spacing: 0.12em; margin-bottom: 10px; }
+  /* Self-help tips panel */
+  .panel-title { font-family: 'Noto Serif TC', serif; font-size: 10px; color: var(--muted); letter-spacing: 0.12em; margin-bottom: 10px; }
   .tip-item { font-size: 12px; color: var(--muted); padding: 7px 0; border-bottom: 1px solid var(--soft); line-height: 1.6; }
   .tip-item:last-child { border-bottom: none; }
   .tip-tag { display: inline-block; background: rgba(139,32,32,0.1); color: var(--danger); border-radius: 4px; padding: 1px 7px; font-size: 10px; font-family: 'Noto Serif TC', serif; margin-right: 6px; }
@@ -182,13 +182,13 @@
     <button class="add-child-btn" onclick="addChild()">＋ 新增子女</button>
   </div>
 
-  <!-- 進階法律功能：策略建議 -->
-  <div class="card lawyer-only">
-    <div class="panel-title">⚖ 訴訟策略提示</div>
-    <div class="tip-item"><span class="tip-tag">§1116-2</span>父母對未成年子女負連帶扶養義務，收入比例為法院主要參考依據。</div>
-    <div class="tip-item"><span class="tip-tag">調整</span>可主張對方有隱匿收入（調薪紀錄、匯款、資產）要求法院命提出財產聲明。</div>
-    <div class="tip-item"><span class="tip-tag">起算</span>扶養費得請求自起訴時起算，亦可主張自提出請求之日起算（有催告紀錄較有利）。</div>
-    <div class="tip-item"><span class="tip-tag">調整</span>扶養費得隨物價、子女需求或雙方收入變動聲請法院酌定調整（非永久固定）。</div>
+  <!-- 自保須知 -->
+  <div class="card">
+    <div class="panel-title">自保須知：爭取扶養費要注意的事</div>
+    <div class="tip-item"><span class="tip-tag">§1116-2</span>父母雙方對未成年子女都有扶養義務，不會因為離婚就消失。法院通常按雙方收入比例來分配負擔。</div>
+    <div class="tip-item"><span class="tip-tag">對方收入</span>如果懷疑對方隱瞞收入，可以請法院調閱對方的所得稅申報資料、勞保投保紀錄或銀行帳戶（家事事件法§100）。</div>
+    <div class="tip-item"><span class="tip-tag">起算時間</span>扶養費可以從向法院提出請求那天起算。建議先用存證信函向對方催告並保留紀錄，有助於爭取更早的起算日。</div>
+    <div class="tip-item"><span class="tip-tag">日後調整</span>扶養費不是永久固定的。如果物價上漲、子女有新的開銷（如就學、就醫），或雙方收入有明顯變動，任一方都可以向法院聲請調整金額。</div>
   </div>
 
   <button class="calc-btn" onclick="calculate()">計算扶養費分擔</button>
@@ -457,7 +457,6 @@
     const today = new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' });
     const resultsHTML = document.getElementById('results').innerHTML;
     const html = `<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>InheritancePro 計算報告</title><style>@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap');*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans TC',sans-serif;background:#fff;color:#1a1410;font-size:13px;padding:40px;max-width:700px;margin:0 auto;}.pdf-header{border-bottom:3px solid #1a1410;padding-bottom:20px;margin-bottom:28px;display:flex;justify-content:space-between;align-items:flex-end;}.pdf-logo{font-family:'Noto Serif TC',serif;font-size:24px;font-weight:700;}.pdf-logo span{color:#c4932a;}.pdf-meta{font-size:11px;color:#7a6f62;text-align:right;line-height:1.8;font-family:'Noto Serif TC',monospace;}.result-card{background:#1a1410;color:#f5f0e8;border-radius:12px;padding:24px;margin-bottom:14px;break-inside:avoid;}.result-title{font-family:'Noto Serif TC',monospace;font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:16px;}.result-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.07);}.result-row:last-child{border-bottom:none;}.lbl{font-size:13px;color:rgba(245,240,232,0.65);}.val{font-family:'Noto Serif TC',monospace;font-size:14px;font-weight:500;color:#f5f0e8;}.val.red{color:#e8a0a0;}.val.green{color:#a8d8bc;}.val.big{font-size:18px;color:#c4932a;}.total-band{background:rgba(196,147,42,0.15);border-radius:8px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;margin-top:8px;}.law-note{background:#f8f8f8;border-left:3px solid #c4932a;border-radius:0 8px 8px 0;padding:10px 14px;font-size:11px;color:#7a6f62;line-height:1.7;margin:14px 0;}.pdf-footer{margin-top:40px;padding-top:16px;border-top:1px solid #c8bfb0;font-size:11px;color:#7a6f62;line-height:1.8;text-align:center;}.pdf-disc{font-size:10px;color:#aaa;margin-top:8px;}button{display:none!important;}@media print{body{padding:20px;}}</style></head><body><div class="pdf-header"><div><div class="pdf-logo">Inheritance<span>Pro</span></div><div style="font-size:12px;color:#7a6f62;margin-top:4px">子女扶養費試算</div></div><div class="pdf-meta">產出日期：${today}</div></div>${resultsHTML}<div class="pdf-footer">© ${new Date().getFullYear()} InheritancePro · inheritance.choulegal.com<div class="pdf-disc">本報告僅供參考，不構成法律意見。實際個案請諮詢執業律師或法律顧問。</div></div><script defer src="js/coffee-button.js"><\/script>
-<script type="module" src="js/auth-bar.js"></script>
 </body></html>`;
     exportPDF(html, 'InheritancePro-子女扶養費');
   }

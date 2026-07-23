@@ -99,7 +99,7 @@
 
   /* Summary bar */
   .summary-bar{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
-  .summary-pill{font-family:'Noto Serif TC',monospace;font-size:11px;padding:4px 10px;border-radius:20px;letter-spacing:0.06em;}
+  .summary-pill{font-family:'Noto Serif TC',monospace;font-size:11px;padding:4px 10px;border-radius:8px;letter-spacing:0.06em;}
   .summary-pill.urgent{background:#fde8e8;color:var(--danger);}
   .summary-pill.warn{background:#fdf0d0;color:var(--warn);}
   .summary-pill.ok{background:#dce8f4;color:var(--accent);}
@@ -247,7 +247,7 @@
     <button class="btn-reset" onclick="reset()">🔄 重新輸入</button>
     <div id="save-btn-container"></div>
 
-    <div class="accountant-only" style="background:#eef8f2;border:1.5px solid #2a6b4a;border-radius:12px;padding:16px 20px;margin-top:16px">
+    <div style="background:#eef8f2;border:1.5px solid #2a6b4a;border-radius:12px;padding:16px 20px;margin-top:16px">
       <div style="font-size:12px;font-weight:700;color:#2a6b4a;letter-spacing:0.04em;margin-bottom:10px">📊 遺產稅申報文件清單</div>
       <div style="font-size:12px;color:#1a3a28;line-height:1.9">
         <strong>不動產</strong>：土地登記謄本、繼承日公告現值（地政事務所）、建物謄本、房屋稅籍證明。<br>
@@ -257,13 +257,13 @@
         <strong>申報期限</strong>：6 個月（遺贈稅法 §23），若繼承人在國外可延長，但須事先申請。
       </div>
     </div>
-    <div class="lawyer-only" style="background:#eef3fa;border:1.5px solid #3a5a80;border-radius:12px;padding:16px 20px;margin-top:16px">
-      <div style="font-size:12px;font-weight:700;color:#1a3a5c;letter-spacing:0.04em;margin-bottom:10px">⚖ 律師策略備忘</div>
+    <div style="background:#eef3fa;border:1.5px solid #3a5a80;border-radius:12px;padding:16px 20px;margin-top:16px">
+      <div style="font-size:12px;font-weight:700;color:#1a3a5c;letter-spacing:0.04em;margin-bottom:10px">⚖ 繼承常見爭議與注意事項</div>
       <div style="font-size:12px;color:#1a2a3a;line-height:1.9">
-        <strong>遺囑效力</strong>：若遺囑效力有爭議（形式不符、受脅迫），應於繼承開始後盡早提出確認訴訟，拖延越久越不利。<br>
-        <strong>拋棄繼承決策</strong>：3 個月期限緊迫（自知悉得繼承之時起算，§1174 II），若遺產中有不明債務，建議先陳報遺產清冊（§1156）做限定繼承，而非倉促拋棄。<br>
-        <strong>特留分侵害</strong>：扣減請求權行使期限民法未明文，實務及學說分別援用民法§1146（繼承回復請求權，知悉起 2 年／繼承開始起 10 年）或民法§197 之 2（侵權請求權，知悉起 2 年／行為起 10 年），見解分歧，應及早清查遺囑及生前贈與並諮詢律師。<br>
-        <strong>遺產分割訴訟</strong>：若繼承人意見不一致，可提起遺產分割之訴（家事事件法），法院得斟酌各繼承人需求決定分割方法，非必然均分現金。
+        <strong>遺囑效力</strong>：如果懷疑遺囑有問題（格式不對、被脅迫簽署等），應盡早向法院提出確認訴訟，拖越久對自己越不利。<br>
+        <strong>拋棄繼承決策</strong>：期限只有 3 個月（從知道自己可以繼承時起算，民法 §1174 II）。如果不確定遺產裡有沒有債務，建議先向法院陳報遺產清冊（民法 §1156）做限定繼承，不要急著拋棄。<br>
+        <strong>特留分被侵害怎麼辦</strong>：如果遺囑把遺產全給了某人、侵害到你的特留分，可以主張扣減。但行使期限法律沒有明文規定，實務上有不同見解，建議盡早清查遺囑及生前贈與狀況，必要時諮詢律師。<br>
+        <strong>繼承人談不攏</strong>：如果大家對遺產怎麼分無法達成共識，可以向法院聲請遺產分割（家事事件法），法院會考量各繼承人的需求來決定分法，不一定是全部換成現金平分。
       </div>
     </div>
   </div>
@@ -650,7 +650,7 @@ body{font-family:'Noto Sans TC',sans-serif;padding:40px;max-width:720px;margin:0
 .hero .dt{font-family:'Noto Serif TC',serif;font-size:18px;font-weight:700;}
 .hero .big{font-size:36px;font-weight:500;color:#c4932a;font-family:monospace;}
 .summary{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
-.spill{font-family:monospace;font-size:11px;padding:3px 10px;border-radius:20px;}
+.spill{font-family:monospace;font-size:11px;padding:3px 10px;border-radius:8px;}
 .spill.u{background:#fde8e8;color:#8b2020;}
 .spill.w{background:#fdf0d0;color:#b8600a;}
 .spill.t{background:#e8e4e0;color:#5a5550;}

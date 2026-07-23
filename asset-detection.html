@@ -104,9 +104,17 @@
   .tx-table tr:last-child td { border-bottom: none; }
   .tx-table input, .tx-table select { width: 100%; padding: 7px 10px; border: 1.5px solid var(--border); border-radius: 6px; font-size: 13px; font-family: 'Noto Sans TC', sans-serif; background: var(--paper); color: var(--ink); }
   .tx-table input:focus, .tx-table select:focus { outline: none; border-color: var(--gold); background: #fff; }
-  .tx-table input[type="number"] { font-family: 'Noto Serif TC', serif; }
+	  .tx-table input[type="number"] { font-family: 'Noto Serif TC', serif; }
+	  .card { overflow-x: auto; }
+	  @media (max-width: 560px) {
+	    .tx-table { table-layout: fixed; }
+	    .tx-table th,
+	    .tx-table td { padding-left: 4px; padding-right: 4px; }
+	    .tx-table th { width: auto !important; }
+	    .tx-table .del-btn { width: 24px; }
+	  }
 
-  .add-row-btn { margin-top: 12px; padding: 8px 16px; border: 1.5px dashed var(--border); border-radius: 6px; background: transparent; cursor: pointer; font-size: 13px; color: var(--muted); font-family: 'Noto Sans TC', sans-serif; width: 100%; transition: all 0.2s; }
+	  .add-row-btn { margin-top: 12px; padding: 8px 16px; border: 1.5px dashed var(--border); border-radius: 6px; background: transparent; cursor: pointer; font-size: 13px; color: var(--muted); font-family: 'Noto Sans TC', sans-serif; width: 100%; transition: all 0.2s; }
   .add-row-btn:hover { border-color: var(--gold); color: var(--gold); background: var(--paper); }
 
   .del-btn { width: 28px; height: 28px; border: none; background: none; cursor: pointer; color: var(--border); font-size: 16px; transition: color 0.2s; padding: 0; display: flex; align-items: center; justify-content: center; }
@@ -447,14 +455,14 @@
     <button class="pdf-btn" onclick="downloadReport()">⬇ 下載風險分析報告 PDF</button>
     <div id="save-btn-container"></div>
 
-    <div class="lawyer-only" style="background:#eef3fa;border:1.5px solid #3a5a80;border-radius:12px;padding:16px 20px;margin-top:16px">
-      <div style="font-size:12px;font-weight:700;color:#2a4a6c;letter-spacing:0.04em;margin-bottom:10px">⚖ 律師訴訟策略備忘</div>
+    <div style="background:#eef3fa;border:1.5px solid #3a5a80;border-radius:12px;padding:16px 20px;margin-top:16px">
+      <div style="font-size:12px;font-weight:700;color:#2a4a6c;letter-spacing:0.04em;margin-bottom:10px">⚖ 發現異常移轉後您可以做的事</div>
       <div style="font-size:12px;color:#1a2a3a;line-height:1.9">
-        <strong>遺贈稅 §15（稅面）</strong>：死亡前 <strong>2 年內</strong>贈與配偶、民法 §1138 / §1140 各順序繼承人及其配偶者，須併入遺產總額課稅。<br>
-        <strong>民法 §1148-1（限定繼承責任面）</strong>：繼承人於繼承開始前 <strong>2 年內</strong>從被繼承人受贈之財產，視為所得遺產——<strong>僅被繼承人之債權人得主張</strong>（用於限定繼承責任範圍；不擴張稅基、不等於特留分加回）。<br>
-        <strong>民法§244（要件）＋ 民法§245（除斥期間）撤銷詐害債權</strong>：被繼承人生前以詐害債權人為目的而處分財產者，依民法§244 得聲請撤銷；撤銷權依民法§245 自知悉起 <strong>1 年</strong>、行為起 <strong>10 年</strong>除斥期間（可追溯範圍遠大於稅面 2 年）。<br>
-        <strong>假扣押保全</strong>：發現高風險異動後，應儘速向法院聲請假扣押，凍結受讓人財產以備將來執行。<br>
-        <strong>刑事途徑</strong>：若有偽造文書、隱匿遺產或詐欺情事，可考慮同步提出刑事告訴，增加談判籌碼。
+        <strong>死亡前 2 年內的贈與要注意稅務</strong>：依遺贈稅法§15，過世前 2 年內贈與配偶或繼承人的財產，要併入遺產總額課稅。如果漏報，國稅局可能會補稅加罰。<br>
+        <strong>被贈與的繼承人可能要多負擔債務</strong>：依民法§1148-1，繼承人在繼承前 2 年內從過世者收到的贈與，會被視為遺產的一部分，被過世者的債權人用來主張清償。<br>
+        <strong>更久以前的脫產也可以追</strong>：依民法§244，如果過世者生前故意移轉財產損害債權人權益，債權人可以向法院聲請撤銷。這個追溯期間依民法§245，從知道起 <strong>1 年</strong>、從行為發生起 <strong>10 年</strong>，比稅務的 2 年長很多。<br>
+        <strong>可以聲請假扣押保全財產</strong>：發現高風險異動後，可以向法院聲請假扣押，先凍結受讓人的財產，避免財產再被移轉。<br>
+        <strong>如果涉及偽造或詐欺</strong>：若有偽造文書、隱匿遺產或詐欺的情形，可以向檢察署提出刑事告訴。建議就具體情形諮詢執業律師評估。
       </div>
     </div>
 
@@ -1043,7 +1051,7 @@ ${declaredAmt > 0 ? `
 </div>
 <div class="footer">
   © ${new Date().getFullYear()} InheritancePro &nbsp;·&nbsp; inheritance.choulegal.com<br>
-  本報告由系統自動分析產生，僅供律師參考使用，不構成法律意見。實際案件請由執業律師綜合判斷。
+  本報告由系統自動分析產生，僅供本人初步參考，不構成法律意見。如需進一步處理建議諮詢執業律師。
 </div>
 <script defer src="js/coffee-button.js"><\/script>
 </body></html>`;

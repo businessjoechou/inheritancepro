@@ -75,7 +75,7 @@
   .heir-row-label { font-size: 13px; color: var(--muted); }
   .heir-row-val { font-family: 'Noto Serif TC', serif; font-size: 14px; font-weight: 500; color: var(--success); }
   .divider { height: 1px; background: var(--soft); margin: 18px 0; }
-  .chip { display: inline-block; padding: 3px 10px; background: #fff0e8; border-radius: 20px; font-size: 12px; color: var(--accent); font-weight: 500; margin-left: 8px; }
+  .chip { display: inline-block; padding: 3px 10px; background: #fff0e8; border-radius: 8px; font-size: 12px; color: var(--accent); font-weight: 500; margin-left: 8px; }
   /* Asset rows in step 1 */
   .asset-subrow { border: 1.5px solid var(--border); border-radius: 10px; padding: 14px; margin-bottom: 10px; background: var(--paper); position: relative; }
   .asset-subrow-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
@@ -132,7 +132,7 @@
   <h2>遺產項目</h2>
   <p class="subtitle">輸入各類遺產，系統自動加總並分項試算稅務，無需再分頁計算。</p>
   <div class="card" style="margin-bottom:20px">
-    <div class="section-title">案件資訊 <span class="law-pill" style="font-weight:400;font-size:11px">選填，供工作底稿使用</span></div>
+    <div class="section-title">案件資訊 <span class="law-pill" style="font-weight:400;font-size:11px">選填，供計算明細使用</span></div>
     <div class="two-col">
       <div class="input-group" style="margin-bottom:0">
         <label>案件名稱</label>
@@ -696,7 +696,7 @@
   <div id="taxPlanContainer"></div>
   <div style="display:flex;gap:10px;margin-top:20px">
     <button onclick="downloadPDF()" style="flex:1;padding:12px;background:var(--ink);color:var(--paper);border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Noto Sans TC',sans-serif">↓ PDF 報告</button>
-    <button onclick="downloadWorkpaper()" class="accountant-only" style="flex:1;padding:12px;background:#1a3a5c;color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Noto Sans TC',sans-serif">↓ 工作底稿</button>
+    <button onclick="downloadWorkpaper()" class="accountant-only" style="flex:1;padding:12px;background:#1a3a5c;color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Noto Sans TC',sans-serif">↓ 計算明細</button>
   </div>
   <a href="inheritance-timeline.html" style="display:block;text-align:center;margin:16px 0 10px;padding:13px;border:1.5px solid var(--border);border-radius:10px;font-size:13px;color:var(--accent);text-decoration:none;background:#f4f7fb">📅 查看繼承辦理流程與期限時間軸 →</a>
   <div id="save-btn-container"></div>
@@ -1882,7 +1882,7 @@ ${stockHTML ? `<div class="section-title">股票估值明細</div>${stockHTML}` 
       ${dOther > 0 ? `<tr><td>其他扣除額</td><td style="text-align:right">${fmtN(dOther)}</td></tr>` : ''}`;
 
     return `<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8">
-<title>遺產稅申報工作底稿－${escHtml(caseName)}</title>
+<title>遺產稅計算明細－${escHtml(caseName)}</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Noto Sans TC','微軟正黑體',sans-serif;font-size:12px;color:#111;background:#fff;padding:32px 40px;max-width:800px;margin:0 auto;}
@@ -1896,14 +1896,12 @@ th{background:#f8f8f8;text-align:left;padding:6px 10px;font-size:11px;border:1px
 td{padding:5px 10px;border:1px solid #ddd;font-size:12px;vertical-align:top;}
 .total-row td{font-weight:700;background:#f8f8f8;border-top:2px solid #111;}
 .tax-row td{font-weight:700;font-size:13px;background:#fff8e8;}
-.sig-block{margin-top:40px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;}
-.sig-box{border-top:1px solid #aaa;padding-top:8px;font-size:11px;color:#555;}
-.sig-box strong{display:block;margin-bottom:20px;color:#111;}
+
 .disclaimer{margin-top:24px;font-size:10px;color:#888;line-height:1.7;border-top:1px solid #ddd;padding-top:10px;}
 @media print{body{padding:16px;}}
 </style></head><body>
 <div class="wp-header">
-  <div class="wp-title">遺產稅申報工作底稿</div>
+  <div class="wp-title">遺產稅計算明細</div>
   <div class="wp-meta">
     <span><strong>案件名稱</strong>${escHtml(caseName)}</span>
     <span><strong>案件編號</strong>${escHtml(caseRef)}</span>
@@ -1938,13 +1936,12 @@ td{padding:5px 10px;border:1px solid #ddd;font-size:12px;vertical-align:top;}
   <tr class="tax-row"><td>預估應納遺產稅</td><td style="text-align:right">${tax === 0 ? '免稅' : fmtN(tax)}</td></tr>
 </table>
 
-<div class="sig-block">
-  <div class="sig-box"><strong>製表人</strong>簽章：________________<br>日期：________________</div>
-  <div class="sig-box"><strong>複核人</strong>簽章：________________<br>日期：________________</div>
-  <div class="sig-box"><strong>負責會計師</strong>簽章：________________<br>日期：________________</div>
+<div style="margin-top:40px;display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+  <div style="font-size:12px;color:#555;"><strong>試算日期</strong>：${today}</div>
+  <div style="font-size:12px;color:#555;"><strong>備註</strong>：________________</div>
 </div>
 <div class="disclaimer">
-  本工作底稿由 InheritancePro 系統產出，僅供申報前初步試算參考。實際申報數字應以國稅局核定及原始憑證為準。<br>
+  本計算明細由 InheritancePro 系統產出，僅供申報前初步試算參考。實際申報數字應以國稅局核定及原始憑證為準。<br>
   稅法依據：遺產及贈與稅法（2026年）。申報期限：被繼承人死亡後6個月內。
 </div>
 <script defer src="js/coffee-button.js"><\/script>
@@ -1953,7 +1950,7 @@ td{padding:5px 10px;border:1px solid #ddd;font-size:12px;vertical-align:top;}
 
   async function downloadWorkpaper() {
     const html = buildWorkpaperHtml();
-    exportPDF(html, 'InheritancePro-工作底稿');
+    exportPDF(html, 'InheritancePro-計算明細');
   }
 
   function restart() {

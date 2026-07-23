@@ -66,6 +66,11 @@
   .person-row input[type="text"]{padding:8px 10px;font-size:13px;font-family:'Noto Sans TC',sans-serif;}
   .person-row select{padding:8px 10px;font-size:12px;font-family:'Noto Sans TC',sans-serif;}
   .person-row .del-btn{background:none;border:1.5px solid var(--border);border-radius:6px;color:var(--muted);cursor:pointer;font-size:14px;padding:0;height:34px;}
+  @media (max-width: 560px) {
+    .person-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 28px; gap: 6px; }
+    .person-row .del-btn { width: 28px; min-width: 28px; }
+    .tier { overflow-x: hidden; }
+  }
   .alive-chk{display:flex;align-items:center;justify-content:center;gap:4px;font-size:11px;color:var(--muted);}
   .alive-chk input{width:16px;height:16px;accent-color:var(--success);cursor:pointer;}
   .add-btn{width:100%;padding:8px;border:1.5px dashed var(--border);border-radius:6px;background:none;color:var(--muted);font-size:12px;cursor:pointer;}
@@ -198,12 +203,12 @@
     </div>
   </div>
 
-  <div class="card lawyer-only">
-    <div class="panel-title">⚖ 實務爭議要點</div>
+  <div class="card">
+    <div class="panel-title">常見爭議</div>
     <div class="tip-item"><span class="tip-tag">保險法§113</span>：受益人全部於被保險人前死亡，未指定受益人者，保險金作為被保險人遺產。</div>
     <div class="tip-item"><span class="tip-tag">保險法§112</span>受益人於被保險人後死亡，該受益人已取得受益權，保險金列入該受益人遺產由其繼承人繼承。</div>
     <div class="tip-item"><span class="tip-tag">爭議</span>「法定繼承人」條款之爭點：依被保險人死亡時判斷或保險事故發生時判斷？實務多數見解採「事故發生時」。</div>
-    <div class="tip-item"><span class="tip-tag">扣減</span>若分配結果侵害特留分，他繼承人仍得依 107 台上 1395 號見解主張扣減。</div>
+    <div class="tip-item"><span class="tip-tag">扣減</span>若分配結果侵害特留分，其他繼承人可能依法院實務見解主張扣減（最高法院曾就此作成相關裁判）。</div>
   <div class="tip-item"><span class="tip-tag">注意</span>受益人為「法定繼承人」時，分配比例為民法§1138 順位 + 民法§1144 應繼分，非均分。</div>
   </div>
 

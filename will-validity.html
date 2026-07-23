@@ -356,14 +356,14 @@
       <a class="link-btn" href="forced-share.html">→ 前往特留分侵害試算</a>
     </div>
 
-    <!-- 律師備忘 -->
-    <div class="lawyer-only" style="background:#eef3fa;border:1.5px solid #3a5a80;border-radius:12px;padding:16px 20px;margin-top:16px">
-      <div style="font-size:12px;font-weight:700;color:#1a3a5c;margin-bottom:8px;letter-spacing:0.04em">⚖ 律師訴訟策略備忘</div>
+    <!-- 遺囑相關補充 -->
+    <div style="background:#eef3fa;border:1.5px solid #3a5a80;border-radius:12px;padding:16px 20px;margin-top:16px">
+      <div style="font-size:12px;font-weight:700;color:#1a3a5c;margin-bottom:8px;letter-spacing:0.04em">📋 遺囑有效後的下一步</div>
       <div style="font-size:12px;color:#1a2a3a;line-height:1.9">
-        <strong>遺囑執行人之選任（民法§1209）：</strong>遺囑有效時，遺囑人得指定遺囑執行人，若未指定，繼承人得選定或聲請法院指定。<br>
-        <strong>舉證責任：</strong>主張遺囑有效者負舉證責任，應證明遺囑人於作成時具完全行為能力且無意思表示瑕疵。爭議案件中常見以醫療紀錄、見證人證詞等佐證。<br>
-        <strong>死後認領：</strong>父對非婚生子女可以遺囑為死後認領（民法§1065第2項），此時遺囑兼具身份法效力，需特別注意形式要件更為嚴格。<br>
-        <strong>代書律師：</strong>實務上代筆遺囑之「見證人」若為協助代書之律師本人，應注意其是否具利害關係（如預計收取遺囑執行費用）。
+        <strong>誰來執行遺囑（民法§1209）：</strong>遺囑人可以在遺囑裡指定執行人；如果沒有指定，繼承人可以自行選定或向法院聲請指定。<br>
+        <strong>遺囑有效要怎麼證明：</strong>如果有人質疑遺囑效力，主張遺囑有效的一方要提出證據，例如醫療紀錄證明立遺囑時心智正常、見證人的證詞等。<br>
+        <strong>遺囑認領子女：</strong>父親可以用遺囑對非婚生子女做死後認領（民法§1065第2項），這種遺囑同時具有身份法效力，形式要件會被更嚴格審查。<br>
+        <strong>代筆遺囑的見證人：</strong>如果幫忙代筆的律師同時擔任見證人，要注意他是否有利害關係（例如預計收取遺囑執行費用），這可能影響遺囑效力。
       </div>
     </div>
 
@@ -521,7 +521,6 @@
     const today = new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' });
     const resultsHTML = document.getElementById('results').innerHTML;
     const html = `<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>InheritancePro 計算報告</title><style>@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap');*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans TC',sans-serif;background:#fff;color:#1a1410;font-size:13px;padding:40px;max-width:700px;margin:0 auto;}.pdf-header{border-bottom:3px solid #1a1410;padding-bottom:20px;margin-bottom:28px;display:flex;justify-content:space-between;align-items:flex-end;}.pdf-logo{font-family:'Noto Serif TC',serif;font-size:24px;font-weight:700;}.pdf-logo span{color:#c4932a;}.pdf-meta{font-size:11px;color:#7a6f62;text-align:right;line-height:1.8;font-family:'Noto Serif TC',monospace;}.result-card{background:#1a1410;color:#f5f0e8;border-radius:12px;padding:24px;margin-bottom:14px;break-inside:avoid;}.result-title{font-family:'Noto Serif TC',monospace;font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:16px;}.result-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.07);}.result-row:last-child{border-bottom:none;}.lbl{font-size:13px;color:rgba(245,240,232,0.65);}.val{font-family:'Noto Serif TC',monospace;font-size:14px;font-weight:500;color:#f5f0e8;}.check-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.07);font-size:13px;}.check-icon{font-size:16px;flex-shrink:0;margin-top:1px;}.law-note{background:#f8f8f8;border-left:3px solid #c4932a;border-radius:0 8px 8px 0;padding:10px 14px;font-size:11px;color:#7a6f62;line-height:1.7;margin:14px 0;}.pdf-footer{margin-top:40px;padding-top:16px;border-top:1px solid #c8bfb0;font-size:11px;color:#7a6f62;line-height:1.8;text-align:center;}.pdf-disc{font-size:10px;color:#aaa;margin-top:8px;}button{display:none!important;}@media print{body{padding:20px;}}</style></head><body><div class="pdf-header"><div><div class="pdf-logo">Inheritance<span>Pro</span></div><div style="font-size:12px;color:#7a6f62;margin-top:4px">遺囑效力評估</div></div><div class="pdf-meta">產出日期：${today}</div></div>${resultsHTML}<div class="pdf-footer">© ${new Date().getFullYear()} InheritancePro · inheritance.choulegal.com<div class="pdf-disc">本報告僅供參考，不構成法律意見。實際個案請諮詢執業律師或法律顧問。</div></div><script defer src="js/coffee-button.js"><\/script>
-<script type="module" src="js/auth-bar.js"></script>
 </body></html>`;
     exportPDF(html, 'InheritancePro-遺囑效力');
   }

@@ -48,9 +48,9 @@
   "@context": "https://schema.org",
   "@type": "HowTo",
   "name": "如何使用訴訟強度評估工具評估繼承訴訟勝率",
-  "description": "依事實面、法律面、對造面、客戶面共 11 項因素加權評分，產出訴訟強度與策略建議。",
+  "description": "依事實面、法律面、對造面、自身狀況面共 11 項因素加權評分，產出訴訟強度與策略建議。",
   "step": [
-    {"@type": "HowToStep", "position": 1, "name": "逐項評分 11 項因素", "text": "依事實清晰度、書面證據充分度、證人可信度、法律依據明確度、有利判例、時效狀態、對造財力、對造律師強度、反訴風險、客戶心理承受度、預算共 11 項，各項 1–5 分。"},
+    {"@type": "HowToStep", "position": 1, "name": "逐項評分 11 項因素", "text": "依事實清晰度、書面證據充分度、證人可信度、法律依據明確度、有利判例、時效狀態、對造財力、對造律師強度、反訴風險、自身心理承受度、預算共 11 項，各項 1–5 分。"},
     {"@type": "HowToStep", "position": 2, "name": "查看加權總分與勝率推估", "text": "系統依各因素權重（證據×1.5、法律×1.5、判例×1.3 為高權重）計算加權總分，並推估勝率百分比區間。"},
     {"@type": "HowToStep", "position": 3, "name": "閱讀策略建議與弱點清單", "text": "依分數區間給出策略：極強（積極訴訟）、強（提訴並備和解）、中（先調解）、弱（和解優先）、極弱（不建議訴訟）。同時列出評分 ≤2 之弱點及其影響度。"},
     {"@type": "HowToStep", "position": 4, "name": "選擇下一步：和解試算或諮詢律師", "text": "可帶入分數至和解金額試算工具評估合理和解區間；中高風險案件建議委請繼承法律師完整評估訴訟成本與勝訴機率。"}
@@ -183,7 +183,7 @@
   <section style="margin:32px auto 24px;padding:0 4px;max-width:680px">
     <div style="font-family:'Noto Serif TC',serif;font-size:11px;color:var(--muted);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)">使用步驟</div>
     <ol style="padding-left:20px;color:var(--ink);font-size:13px;line-height:1.9">
-      <li><strong>逐項評分 11 項因素：</strong>事實面 3 項、法律面 3 項、對造面 3 項、客戶面 2 項，各項 1–5 分。</li>
+      <li><strong>逐項評分 11 項因素：</strong>事實面 3 項、法律面 3 項、對造面 3 項、自身狀況面 2 項，各項 1–5 分。</li>
       <li><strong>查看加權總分與勝率推估：</strong>系統依權重（證據×1.5、法律×1.5、判例×1.3）計算 0–55 分區間並推估勝率。</li>
       <li><strong>閱讀策略建議與弱點清單：</strong>5 級評等（極強／強／中／弱／極弱）對應不同策略；列出評分 ≤2 的弱點及影響度。</li>
       <li><strong>選擇下一步：</strong>可帶分數至和解金額試算，或諮詢繼承法律師完整評估。</li>
@@ -236,8 +236,8 @@
     { id: 'capacity', cat: '對造面', label: '對造財力', weight: 0.8, hint: '1 = 對造無財力（勝訴也難執行）；5 = 財力充足可執行', low: '無財力', high: '財力充足' },
     { id: 'opposing', cat: '對造面', label: '對造律師強度（預估）', weight: 0.8, hint: '1 = 對造有強力律師；5 = 對造無律師或律師實力弱', low: '強力律師', high: '無律師' },
     { id: 'counter', cat: '對造面', label: '反訴風險', weight: 0.9, hint: '1 = 高反訴風險；5 = 無可能反訴', low: '高反訴風險', high: '無反訴' },
-    { id: 'mental', cat: '客戶面', label: '客戶心理承受度', weight: 0.5, hint: '1 = 無法承受長期訴訟壓力；5 = 可全程配合長期抗戰', low: '無法長期', high: '可長期' },
-    { id: 'budget', cat: '客戶面', label: '訴訟費用可負擔', weight: 0.5, hint: '1 = 預算嚴重不足；5 = 預算充足', low: '預算不足', high: '預算充足' },
+    { id: 'mental', cat: '自身狀況面', label: '自身心理承受度', weight: 0.5, hint: '1 = 無法承受長期訴訟壓力；5 = 可全程配合長期抗戰', low: '無法長期', high: '可長期' },
+    { id: 'budget', cat: '自身狀況面', label: '訴訟費用可負擔', weight: 0.5, hint: '1 = 預算嚴重不足；5 = 預算充足', low: '預算不足', high: '預算充足' },
   ];
 
   const MAX_WEIGHTED = FACTORS.reduce((sum, f) => sum + f.weight * 5, 0); // ~55.5
@@ -379,7 +379,6 @@
     const today = new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' });
     const resultsHTML = document.getElementById('results').innerHTML;
     const html = `<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><title>InheritancePro 計算報告</title><style>@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap');*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans TC',sans-serif;background:#fff;color:#1a1410;font-size:13px;padding:40px;max-width:700px;margin:0 auto;}.pdf-header{border-bottom:3px solid #1a1410;padding-bottom:20px;margin-bottom:28px;display:flex;justify-content:space-between;align-items:flex-end;}.pdf-logo{font-family:'Noto Serif TC',serif;font-size:24px;font-weight:700;}.pdf-logo span{color:#c4932a;}.pdf-meta{font-size:11px;color:#7a6f62;text-align:right;line-height:1.8;font-family:'Noto Serif TC',monospace;}.result-card{background:#1a1410;color:#f5f0e8;border-radius:12px;padding:24px;margin-bottom:14px;break-inside:avoid;}.result-title{font-family:'Noto Serif TC',monospace;font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:16px;}.result-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.07);}.result-row:last-child{border-bottom:none;}.lbl{font-size:13px;color:rgba(245,240,232,0.65);}.val{font-family:'Noto Serif TC',monospace;font-size:14px;font-weight:500;color:#f5f0e8;}.val.red{color:#e8a0a0;}.val.green{color:#a8d8bc;}.val.big{font-size:18px;color:#c4932a;}.score-display{text-align:center;padding:16px 0;}.score-big{font-family:'Noto Serif TC',serif;font-size:48px;font-weight:700;color:#c4932a;}.score-band{margin-top:8px;font-size:14px;font-weight:600;}.bar-group{margin-bottom:12px;}.bar-group-name{font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:0.1em;margin-bottom:6px;}.bar-item{display:flex;align-items:center;gap:8px;margin-bottom:4px;}.bar-label{font-size:12px;color:rgba(245,240,232,0.7);width:100px;flex-shrink:0;}.bar-track{flex:1;height:6px;background:rgba(255,255,255,0.1);border-radius:3px;}.bar-fill{height:100%;border-radius:3px;}.bar-score{font-family:'Noto Serif TC',monospace;font-size:11px;color:rgba(255,255,255,0.5);width:24px;text-align:right;}.law-note{background:#f8f8f8;border-left:3px solid #c4932a;border-radius:0 8px 8px 0;padding:10px 14px;font-size:11px;color:#7a6f62;line-height:1.7;margin:14px 0;}.pdf-footer{margin-top:40px;padding-top:16px;border-top:1px solid #c8bfb0;font-size:11px;color:#7a6f62;line-height:1.8;text-align:center;}.pdf-disc{font-size:10px;color:#aaa;margin-top:8px;}button,.copy-btn,a{display:none!important;}@media print{body{padding:20px;}}</style></head><body><div class="pdf-header"><div><div class="pdf-logo">Inheritance<span>Pro</span></div><div style="font-size:12px;color:#7a6f62;margin-top:4px">訴訟強度評估</div></div><div class="pdf-meta">產出日期：${today}</div></div>${resultsHTML}<div class="pdf-footer">© ${new Date().getFullYear()} InheritancePro · inheritance.choulegal.com<div class="pdf-disc">本報告僅供參考，不構成法律意見。實際個案請諮詢執業律師或法律顧問。</div></div><script defer src="js/coffee-button.js"><\/script>
-<script type="module" src="js/auth-bar.js"></script>
 </body></html>`;
     exportPDF(html, 'InheritancePro-訴訟勝率');
   }

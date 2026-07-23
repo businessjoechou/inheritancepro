@@ -90,7 +90,7 @@
   .result-hero .label { font-size: 12px; color: var(--muted); letter-spacing: 0.12em; font-family: 'Noto Serif TC', serif; text-transform: uppercase; margin-bottom: 10px; }
   .result-total { font-family: 'Noto Serif TC', serif; font-size: 28px; font-weight: 700; color: var(--gold); margin-bottom: 6px; }
   .result-sub { font-size: 13px; color: var(--muted); }
-  .spouse-exempt-banner { background: #e8f5e9; border: 2px solid var(--success); border-radius: 16px; padding: 28px 24px; margin-bottom: 14px; text-align: center; }
+  .spouse-exempt-banner { background: #e8f5e9; border: 2px solid var(--success); border-radius: 8px; padding: 28px 24px; margin-bottom: 14px; text-align: center; }
   .spouse-exempt-text { font-family: 'Noto Serif TC', serif; font-size: 26px; font-weight: 700; color: var(--success); margin-bottom: 6px; }
   .spouse-exempt-sub { font-size: 13px; color: var(--muted); line-height: 1.6; }
   .heir-card { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 10px; }
@@ -262,27 +262,27 @@
       <div class="tip-body" id="tipBody"></div>
     </div>
 
-    <!-- 會計師備忘卡 -->
-    <div class="accountant-only" style="background:#eef8f2;border:1.5px solid #2a6b4a;border-radius:12px;padding:16px 20px;margin-top:16px">
-      <div style="font-size:12px;font-weight:700;color:#2a6b4a;margin-bottom:8px;font-family:'Noto Serif TC',monospace;letter-spacing:0.06em">MEMO &middot; 會計師備忘</div>
+    <!-- 申報流程說明 -->
+    <div style="background:#eef8f2;border:1.5px solid #2a6b4a;border-radius:12px;padding:16px 20px;margin-top:16px">
+      <div style="font-size:12px;font-weight:700;color:#2a6b4a;margin-bottom:8px">📊 怎麼申報贈與稅</div>
       <div style="font-size:12px;color:#1a3a28;line-height:1.9">
-        <strong>申報期限</strong>：要保人變更日起 30 日內向戶籍所在地國稅局申報贈與稅。<br>
-        <strong>保價金查詢</strong>：向保險公司申請「變更日保單價值準備金證明」，需載明變更基準日、保價金金額。部分保險公司可線上查詢或電話申請。<br>
-        <strong>申報書填寫重點</strong>：贈與稅申報書第二聯「贈與財產明細」，財產種類勾選「其他」，說明欄填「保單要保人變更（保單號碼：XXX）」，金額填保價金。<br>
-        <strong>多筆保單</strong>：同一年度內多次變更需合併申報，累計計算是否超過免稅額。<br>
-        <strong>附件</strong>：保險契約影本、變更申請書影本、保價金證明。
+        <strong>申報期限</strong>：要保人變更日起 30 日內，向戶籍所在地國稅局申報贈與稅。<br>
+        <strong>查保價金</strong>：向保險公司申請「變更日保單價值準備金證明」，上面要載明變更基準日和保價金金額。有些保險公司可以線上查詢或電話申請。<br>
+        <strong>申報書怎麼填</strong>：贈與稅申報書第二聯「贈與財產明細」，財產種類勾「其他」，說明欄寫「保單要保人變更（保單號碼：XXX）」，金額填保價金。<br>
+        <strong>多筆保單</strong>：同一年度內有多次變更的話，要合併申報，累計計算是否超過免稅額。<br>
+        <strong>要附的文件</strong>：保險契約影本、變更申請書影本、保價金證明。
       </div>
     </div>
 
-    <!-- 律師備忘卡 -->
-    <div class="lawyer-only" style="background:#eef3fa;border:1.5px solid #3a5a80;border-radius:12px;padding:16px 20px;margin-top:16px">
-      <div style="font-size:12px;font-weight:700;color:#1a3a5c;margin-bottom:8px;font-family:'Noto Serif TC',monospace;letter-spacing:0.06em">MEMO &middot; 律師備忘</div>
+    <!-- 常見爭議與注意事項 -->
+    <div style="background:#eef3fa;border:1.5px solid #3a5a80;border-radius:12px;padding:16px 20px;margin-top:16px">
+      <div style="font-size:12px;font-weight:700;color:#1a3a5c;margin-bottom:8px">📋 常見爭議與注意事項</div>
       <div style="font-size:12px;color:#1a2a3a;line-height:1.9">
-        <strong>&sect;5-1 適用爭議</strong>：2006年以前之要保人變更不適用本條。實務上曾有納稅義務人主張變更日在施行前而免課贈與稅之案例。<br>
-        <strong>保價金認定爭議</strong>：國稅局以「變更日」之保價金為課稅基礎，非保單面額或解約金。若保險公司出具之保價金有異議，可申請重新鑑價。<br>
-        <strong>生前變更 vs 遺囑指定</strong>：生前變更要保人屬贈與行為，適用贈與稅；若要保人死亡後由遺囑指定新要保人，則該保單價值計入遺產課徵遺產稅（&sect;16）。<br>
-        <strong>實質課稅原則</strong>：若短期內反覆變更要保人，國稅局可能援引實質課稅原則認定為規避稅負行為。<br>
-        <strong>撤銷贈與</strong>：要保人變更後若欲撤銷，需於贈與稅核定前向國稅局舉證並申請撤回申報。
+        <strong>2006年以前的變更</strong>：遺贈稅法§5-1 是 2006 年才新增的，之前的要保人變更不適用這條，不用課贈與稅。<br>
+        <strong>保價金怎麼認定</strong>：國稅局是以「變更當天」的保價金來課稅，不是保單面額也不是解約金。如果對保險公司提供的保價金有異議，可以申請重新鑑價。<br>
+        <strong>生前變更 vs 遺囑指定</strong>：生前變更要保人算贈與行為，課贈與稅；如果是要保人過世後由遺囑指定新要保人，保單價值會計入遺產課遺產稅（§16）。<br>
+        <strong>反覆變更的風險</strong>：如果短期內反覆變更要保人，國稅局可能認定是刻意規避稅負，援引實質課稅原則處理。<br>
+        <strong>想撤銷怎麼辦</strong>：要保人變更後如果想撤銷，要在贈與稅核定之前向國稅局提出證據並申請撤回申報。
       </div>
     </div>
 
