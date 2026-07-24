@@ -20,7 +20,7 @@
     "@capacitor/ios": "^8.3.0",
     "@capacitor/status-bar": "^8.0.2",
     "@supabase/supabase-js": "^2.110.0",
-    "avs": "file:third_party/avs-1.1.0.tgz",
+    "avs": "file:third_party/avs-1.1.0-choulegal.1.tgz",
     "jsonwebtoken": "^9.0.3",
     "pdfkit": "^0.18.0"
   },
