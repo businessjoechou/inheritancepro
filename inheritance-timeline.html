@@ -24,9 +24,6 @@
 <meta name="twitter:title" content="繼承流程時間軸｜InheritancePro">
 <meta name="twitter:description" content="輸入死亡日期，自動產生繼承期限倒數清單。">
 <link rel="canonical" href="https://inheritance.choulegal.com/inheritance-timeline.html">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/tool-page.css">
 <script src="js/pdf-export.js"></script>
 <script src="js/persona.js"></script>
@@ -181,14 +178,14 @@
   <div class="card">
     <div class="card-title"><span class="icon">📅</span>被繼承人死亡日期</div>
     <div class="input-prefix">
-      <input type="date" id="deathDate" max="">
+      <input type="date" id="deathDate" max="" aria-label="被繼承人死亡日期">
     </div>
   </div>
 
   <div class="card">
     <div class="card-title"><span class="icon">🔔</span>知悉得繼承之日（拋棄/限定繼承期限起算）</div>
     <div class="input-prefix">
-      <input type="date" id="knowDate" max="">
+      <input type="date" id="knowDate" max="" aria-label="知悉得繼承之日">
     </div>
     <div style="font-size:12px;color:var(--muted);line-height:1.7;margin-top:8px">
       依民法§1174 II，拋棄繼承 3 個月期限自<strong>「知悉其得繼承之時」</strong>起算，非一律以死亡日起算。若不確定或為一般情形，可留空，系統將以死亡日為起算日。
@@ -694,5 +691,6 @@ td{padding:9px 12px;border-bottom:1px solid #e8e0d0;vertical-align:top;}
 <script src="js/supabase-config.js"></script>
 <script type="module" src="js/auth-bar.js"></script>
 <script defer src="js/coffee-button.js"></script>
+<script type="module" src="js/choulegal-plain-language-ui.js"></script>
 </body>
 </html>

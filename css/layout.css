@@ -92,8 +92,8 @@ header.ip-header {
   background: none;
   border: 1px solid var(--ip-border);
   color: var(--ip-muted);
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   cursor: pointer;
   font-size: 14px;

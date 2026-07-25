@@ -24,9 +24,6 @@
 <meta name="twitter:title" content="脫產偵測分析｜InheritancePro">
 <meta name="twitter:description" content="分析被繼承人生前財產異動風險，依中華民國法律自動標記可疑移轉。">
 <link rel="canonical" href="https://inheritance.choulegal.com/asset-detection.html">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/tool-page.css">
 <script src="js/pdf-export.js"></script>
 <script src="js/persona.js"></script>
@@ -288,7 +285,7 @@
         </thead>
         <tbody id="manualRows">
           <tr>
-            <td><input type="date" class="tx-date-input"></td>
+            <td><input type="date" class="tx-date-input" aria-label="交易日期"></td>
             <td><input type="number" class="tx-amount-input" placeholder="0" min="0"></td>
             <td>
               <select class="tx-type-input">
@@ -323,7 +320,7 @@
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
         <div>
           <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">被繼承人死亡日期</label>
-          <input type="date" id="deathDate" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;background:var(--paper);color:var(--ink)">
+          <input type="date" id="deathDate" aria-label="被繼承人死亡日期" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;background:var(--paper);color:var(--ink)">
         </div>
         <div>
           <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">遺產申報總額（萬元）</label>
@@ -545,7 +542,7 @@
     const tbody = document.getElementById('manualRows');
     const tr = document.createElement('tr');
     tr.innerHTML = `
-      <td><input type="date" class="tx-date-input"></td>
+      <td><input type="date" class="tx-date-input" aria-label="交易日期"></td>
       <td><input type="number" class="tx-amount-input" placeholder="0" min="0"></td>
       <td><select class="tx-type-input">
         <option value="">選擇類型</option>
@@ -959,8 +956,8 @@
   }
 
   // PDF report
-  async function downloadReport() {
-    if (!analysisResult) return;
+  function buildPrintHtml() {
+    if (!analysisResult) return '';
     const { results, deathDate, declaredAmt } = analysisResult;
     const today = new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' });
     const totalScore = Math.min(100, Math.round(results.reduce((s, r) => s + r.score, 0) / results.length));
@@ -1056,7 +1053,13 @@ ${declaredAmt > 0 ? `
 <script defer src="js/coffee-button.js"><\/script>
 </body></html>`;
 
-    exportPDF(html, 'InheritancePro-脫產風險分析');
+    return html;
+  }
+
+  async function downloadReport() {
+    const html = buildPrintHtml();
+    if (!html) return;
+    await exportPDF(html, 'InheritancePro-脫產風險分析');
   }
 
 </script>
@@ -1065,5 +1068,6 @@ ${declaredAmt > 0 ? `
 <script src="js/supabase-config.js"></script>
 <script type="module" src="js/auth-bar.js"></script>
 <script defer src="js/coffee-button.js"></script>
+<script type="module" src="js/choulegal-plain-language-ui.js"></script>
 </body>
 </html>

@@ -10,7 +10,8 @@ const DATA_FILE = path.join(ROOT, 'js', 'case-law-data.js');
 const RENDERER_FILE = path.join(ROOT, 'js', 'case-law-render.js');
 const CASE_NUMBER_PATTERN = /\b\d{2,3}\s*年(?:度)?\s*(?:台上|台抗|上易|上|家上|家財訴|家繼訴|婚|重訴|訴|簡|勞訴|勞上更一|勞上易|勞上|簡上|判)字\s*第?\s*(?:\d+|X+)\s*號?/gu;
 const SKIP_DIRS = new Set([
-  '.git', '.vercel', 'node_modules', 'ios', 'www', 'vendor', '.agents', '.claude', '_generated',
+  '.git', '.vercel', 'node_modules', 'ios', 'www', 'vendor', '.agents', '.claude',
+  '.playwright-cli', '.turbo', 'dist', 'output', '_generated',
 ]);
 const SCAN_EXTENSIONS = new Set(['.html', '.js']);
 const LAW_ALIASES = {

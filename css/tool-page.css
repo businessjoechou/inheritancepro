@@ -118,3 +118,197 @@
 
   a { text-decoration: none !important; }
 }
+
+/* ===== ChouLegal Rights UI baseline, 2026-07 ===== */
+:root {
+  --ip-ink: #081220;
+  --ip-paper: #f7f5f0;
+  --ip-gold: #d4af37;
+  --ip-muted: #47628f;
+  --ip-border: #c2cfe0;
+  --ip-soft: #eeeae0;
+  --ip-content-max-w: 920px;
+}
+
+html { overflow-x: hidden; }
+
+body {
+  overflow-x: hidden;
+  font-size: 16px;
+  line-height: 1.72;
+}
+
+:focus-visible {
+  outline: 3px solid #9b6b00;
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 1200;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: var(--ip-ink);
+  color: #fff;
+  transform: translateY(-160%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  white-space: nowrap !important;
+}
+
+.step-label, .cat-label, .dual-header, .module-badge, .tx-badge,
+.gap-badge, .law-sum-label, .planner-result-title, .planner-compare-table th,
+.cal-table th, .person-label, .result-title, .panel-title, .tip-tag,
+.tier-hint, .asset-total-label, .faq-label, .progress-label, .q-num,
+.breadcrumb-item, .breadcrumb-sep, .disclaimer-bar, .type-law, .type-note,
+.item-law, .sub-total .lbl, .lbl, .type-desc, .type-badge, .order-num,
+.alive-chk, .paste-hint, .slider-label, .law-tag, .child-row-title,
+.cal-progress-label, .eyebrow, .doc-law, .section-heading,
+[style*="font-size:10px"], [style*="font-size: 10px"],
+[style*="font-size:11px"], [style*="font-size: 11px"] {
+  font-size: 13px !important;
+  letter-spacing: 0 !important;
+}
+
+th,
+.disclaimer,
+.result-hero-label {
+  font-size: 12px !important;
+}
+
+.parent-brand, .ip-parent-brand, .logo, .ip-logo, .home-link, .ip-home-link,
+.page-sub, .ip-page-sub, .section-title, .ip-section-title,
+.result-card-title, .wizard-section-title, .badge {
+  letter-spacing: 0;
+}
+
+header,
+.ip-header,
+header.ip-header {
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.18);
+  gap: 14px;
+}
+
+main,
+.ip-main,
+main.ip-main {
+  width: min(100%, var(--ip-content-max-w));
+  max-width: var(--ip-content-max-w);
+  padding: 36px 24px calc(124px + env(safe-area-inset-bottom, 0px));
+}
+
+main h1,
+.ip-main h1,
+.ip-h1 {
+  font-size: 28px;
+  line-height: 1.36;
+}
+
+.card, .ip-card, .result-card, .action-card, .score-meter, .notice-card {
+  border-radius: 8px;
+  padding: 24px;
+}
+
+table {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.input-group input[type="number"], .input-group input[type="text"],
+.input-group input[type="email"], .input-group input[type="date"],
+.ip-input-group input[type="number"], .ip-input-group input[type="text"],
+.ip-input-group input[type="email"], .ip-input-group input[type="date"],
+select, textarea {
+  min-height: 44px;
+  font-size: 16px;
+  border-radius: 8px;
+}
+
+.calc-btn, .ip-btn-calc, .ip-btn, .btn, .btn-primary, .btn-secondary,
+.btn-reset, .btn-print {
+  border-radius: 8px;
+  min-height: 46px;
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease, background-color 160ms ease;
+}
+
+.toggle-btn,
+.cnt-btn,
+.add-row-btn,
+button,
+[role="button"] {
+  min-height: 44px;
+}
+
+.calc-btn,
+.ip-btn-calc,
+.btn-primary,
+.btn-primary:hover {
+  background: #d4af37;
+  color: #081220;
+  filter: none;
+  animation: none;
+}
+
+@media (min-width: 900px) {
+  main,
+  .ip-main,
+  main.ip-main {
+    padding-top: 44px;
+  }
+
+  .two-col {
+    gap: 16px;
+  }
+
+  .card,
+  .ip-card,
+  .result-card,
+  .action-card,
+  .score-meter,
+  .notice-card {
+    margin-bottom: 18px;
+  }
+}
+
+@media (max-width: 560px) {
+  header,
+  .ip-header,
+  header.ip-header {
+    position: static;
+    align-items: flex-start;
+    padding: 14px 16px;
+  }
+
+  main,
+  .ip-main,
+  main.ip-main {
+    padding: 24px 16px calc(110px + env(safe-area-inset-bottom, 0px));
+  }
+
+  main h1,
+  .ip-main h1,
+  .ip-h1 {
+    font-size: 26px;
+  }
+
+  .card, .ip-card, .result-card, .action-card, .score-meter, .notice-card {
+    padding: 18px;
+  }
+}

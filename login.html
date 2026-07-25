@@ -10,9 +10,6 @@
 <title>登入｜InheritancePro</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="canonical" href="https://inheritance.choulegal.com/login.html">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="js/supabase-config.js"></script>
 <style>
   :root {
@@ -85,7 +82,7 @@
   .login-card {
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(200, 191, 176, 0.18);
-    border-radius: 16px;
+    border-radius: 8px;
     padding: 28px 24px;
     margin-bottom: 20px;
   }
@@ -270,6 +267,7 @@
 </head>
 <body>
 
+<main class="login-wrap">
 <div class="login-wrap">
 
   <div class="login-header">
@@ -314,6 +312,7 @@
   </p>
 
 </div>
+</main>
 
 <script type="module">
   import { signInWithApple, signInWithEmail, supabase } from './js/auth.js';

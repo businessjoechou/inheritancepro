@@ -1,5 +1,5 @@
 /**
- * doc-generator.js — 民眾版通用「法律文件產生器」UI 元件（各站共用，drop-in）
+ * doc-generator.js — 權益工具通用「法律文件產生器」UI 元件（各站共用，drop-in）
  *
  * 提供存證信函／協議書等文字產生器：渲染按鈕 → 開 dialog 表單（可一鍵帶入計算結果）
  * → 呼叫 build() 產文字 → 可複製／下載 .txt／列印（瀏覽器存 PDF）。
@@ -36,7 +36,7 @@
       'width:min(680px,94vw);max-height:90vh;border:1.5px solid var(--border-2,#3a4768);',
       'border-radius:var(--radius-lg,14px);padding:0;background:var(--card,#1a2233);color:var(--paper,#eef2f8);',
       'overflow:hidden}',
-      '.dg-dialog::backdrop{background:rgba(8,12,20,.62);backdrop-filter:blur(2px)}',
+      '.dg-dialog::backdrop{background:rgba(8,12,20,.62);}',
       '.dg-wrap{display:flex;flex-direction:column;max-height:90vh}',
       '.dg-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;',
       'padding:20px 24px 14px;border-bottom:1px solid var(--border,#2a3550)}',
@@ -69,7 +69,7 @@
       '.dg-disc{margin-top:14px;font-size:11.5px;color:var(--paper-3,#889);line-height:1.6;',
       'border-top:1px dashed var(--border,#2a3550);padding-top:10px}',
       '.dg-toast{position:fixed;left:50%;bottom:32px;transform:translateX(-50%);background:var(--success,#2a6b4a);',
-      'color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;z-index:99999;box-shadow:0 6px 24px rgba(0,0,0,.3)}',
+      'color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;z-index:99999;box-shadow:0 6px 24px rgba(0,0,0,.3)}',
       '@media print{body *{visibility:hidden}}',
     ].join('');
     var s = document.createElement('style');

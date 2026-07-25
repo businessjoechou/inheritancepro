@@ -163,6 +163,60 @@
   scroll-margin-top: 9rem;
 }
 
+.guide-chapter-summary {
+  min-height: 44px;
+  display: grid;
+  gap: var(--space-2);
+  cursor: pointer;
+  list-style: none;
+}
+
+.guide-chapter-summary::-webkit-details-marker {
+  display: none;
+}
+
+.guide-chapter-summary:focus-visible,
+.chapter-sources-block > summary:focus-visible {
+  outline: 3px solid var(--domain-marker);
+  outline-offset: 4px;
+}
+
+.guide-chapter-summary::after {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: center;
+  color: var(--domain-marker);
+  content: "＋";
+  font-size: var(--text-xl);
+}
+
+.guide-chapter[open] > .guide-chapter-summary::after {
+  content: "−";
+}
+
+.guide-chapter-title {
+  max-width: 17ch;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.guide-chapter-preview {
+  grid-column: 1 / -1;
+  max-width: 65ch;
+  color: var(--muted);
+}
+
+.guide-chapter[open] .guide-chapter-preview {
+  display: none;
+}
+
+.guide-chapter-content {
+  padding-block-start: var(--space-4);
+}
+
 .guide-chapter:first-child {
   padding-block-start: 0;
   border-block-start: 0;
@@ -330,6 +384,27 @@
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+.chapter-sources-block > summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.chapter-sources-block > summary::after {
+  color: var(--domain-marker);
+  content: "＋";
+}
+
+.chapter-sources-block[open] > summary::after {
+  content: "−";
 }
 
 .chapter-sources li {

@@ -1,5 +1,5 @@
 /**
- * law-basis.js — 民眾版計算頁「本計算依據條文」widget
+ * law-basis.js — 權益工具計算頁「本計算依據條文」widget
  *
  * Phase 3 對外 surface（北極星：法律結構化資料公司）
  *   - 顯示計算頁所依據的條文清單 + 最後修正日期
@@ -11,7 +11,7 @@
  *   <script defer src="js/law-basis.js"></script>
  *
  * 資料源 = ai-triage worker `/law-impact/by-formulas` lean endpoint。
- * 不直接打民眾版 Supabase（民眾版用 nayqg... 專案；law_corpus / diffs 在 brbz... 專案 = ai-triage）。
+ * 不直接打前台 Supabase（權益工具用 nayqg... 專案；law_corpus / diffs 在 brbz... 專案 = ai-triage）。
  *
  * 故意不擋 init 失敗：widget 失敗就靜默不渲染，計算頁主體不受影響。
  */
@@ -35,13 +35,13 @@
       .law-basis__item { padding: 3px 0; }
       .law-basis__item a { color: #5b5648; text-decoration: none; border-bottom: 1px dotted #b5ad97; }
       .law-basis__item a:hover { color: #1a1a1a; border-bottom-color: #5b5648; }
-      .law-basis__date { color: #908a78; font-size: 12px; margin-left: 6px; }
+      .law-basis__date { color: #655e52; font-size: 12px; margin-left: 6px; }
       .law-basis__chip { display: inline-block; margin-left: 8px; padding: 1px 8px; border-radius: 10px;
         font-size: 11px; font-weight: 600; vertical-align: middle; }
       .law-basis__chip--high { background: #fce8e8; color: #a13a3a; }
       .law-basis__chip--medium { background: #fdf3dc; color: #8a6a1f; }
       .law-basis__chip--low { background: #e9efe5; color: #4d6647; }
-      .law-basis__empty { color: #908a78; font-size: 12px; }
+      .law-basis__empty { color: #655e52; font-size: 12px; }
     `;
     document.head.appendChild(s);
   }

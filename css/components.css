@@ -741,7 +741,7 @@
   padding: 3px 10px;
   background: rgba(196, 147, 42, 0.12);
   border: 1px solid rgba(196, 147, 42, 0.35);
-  border-radius: 20px;
+  border-radius: 8px;
   font-size: var(--ip-fs-sm);
   color: var(--ip-gold);
   font-family: var(--ip-font-mono);
@@ -1147,7 +1147,6 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  backdrop-filter: blur(8px);
 }
 .site-header .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
 .site-header .brand .brand-icon { width: 32px; height: 32px; border-radius: 6px; flex-shrink: 0; }
@@ -1246,6 +1245,6 @@
 }
 .ip-btn-primary,
 .btn-primary {
-  background: linear-gradient(135deg, #e5c45f, #d4af37 55%, #b8941f);
+  background: #d4af37;
   color: #081220;
 }

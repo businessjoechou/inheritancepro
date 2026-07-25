@@ -30,8 +30,6 @@ async function initAuthBar() {
       font-size: 12px;
       font-weight: 600;
       box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
       cursor: pointer;
     }
     .auth-pill:hover { border-color: rgba(198, 151, 52, 0.72); }
@@ -45,7 +43,7 @@ async function initAuthBar() {
       border-radius: 50%;
       display: grid;
       place-items: center;
-      background: linear-gradient(135deg, #8f1f2b, #c69734);
+      background: #8f1f2b;
       color: #fffaf0;
       font-size: 11px;
       font-weight: 800;
@@ -110,8 +108,6 @@ async function initAuthBar() {
       color: #fffaf0;
       text-decoration: none;
       font: 600 12px/1 'Noto Sans TC', sans-serif;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
     }
     .auth-back-btn:hover { border-color: rgba(198, 151, 52, 0.58); }
     @media (max-width: 520px) {
@@ -167,7 +163,7 @@ async function initAuthBar() {
       dropdown.innerHTML = `
         <div class="auth-dropdown-meta">${user.email || '已登入'}</div>
         <a href="/account.html" role="menuitem">帳號與資料</a>
-        <a href="https://choulegal.com/professional.html" role="menuitem">專業版</a>
+        <a href="https://choulegal.com/professional.html" role="menuitem">企業合規</a>
         <a href="https://choulegal.com/education.html" role="menuitem">法律教育平台</a>
         <div class="auth-dropdown-divider"></div>
         <button type="button" id="auth-signout-btn" role="menuitem">登出</button>
